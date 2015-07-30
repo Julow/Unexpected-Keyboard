@@ -92,66 +92,51 @@ public class Keyboard2View extends View
 	@Override
 	public boolean		onTouch(View v, MotionEvent event)
 	{
-		String log;
-
-		log = "Action: ";
-		switch (event.getAction())
-		{
-		case MotionEvent.ACTION_POINTER_DOWN:
-			log += "NEW POINTER DOWN";
-			break ;
-		case MotionEvent.ACTION_POINTER_UP:
-			log += "NEW POINTER UP";
-			break ;
-		case MotionEvent.ACTION_DOWN:
-			log += "DOWN";
-			break ;
-		case MotionEvent.ACTION_UP:
-			log += "UP";
-			break ;
-		case MotionEvent.ACTION_MOVE:
-			log += "MOVE";
-			break ;
-		case MotionEvent.ACTION_CANCEL:
-			log += "CANCEL";
-			break ;
-		default:
-			log += "UNKNOW";
-			break ;
-		}
-		for (int p = 0; p < event.getPointerCount(); p++)
-		{
-			log += ", P#";
-			log += String.valueOf(p);
-			log += ": ";
-			log += String.valueOf(event.getX(p));
-			log += "/";
-			log += String.valueOf(event.getY(p));
-		}
-		Keyboard2.log(log);
-		return (true);
-	}
-
-	private Key			getKeyAt(float at_x, float at_y)
-	{
 		float				x;
 		float				y;
+		float				keyW;
+		boolean				key_down;
+		int					pointer_up;
 
+		if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_POINTER_UP)
+			pointer_up = event.getActionIndex();
+		else
+			pointer_up = -1;
 		y = _keyMargin;
 		for (Row row : _rows)
 		{
 			x = (KEY_PER_ROW * (_keyMargin + _keyWidth) - _keyMargin - row.getWidth()) / 2 + _keyMargin;
 			for (Key k : row)
 			{
-				float keyW = _keyWidth * k.width;
-				if (at_x >= x && at_x < (x + keyW)
-					&& at_y >= y && at_y < (y + _keyHeight))
-					return (k);
+				key_down = k.down;
+				keyW = _keyWidth * k.width;
+				for (int p = 0; p < event.getPointerCount(); p++)
+				{
+					if (pointer_up != p && event.getX(p) >= x && event.getX(p) < (x + keyW)
+						&& event.getY(p) >= y && event.getY(p) < (y + _keyHeight))
+					{
+						if (!k.down && !key_down)
+						{
+							if (k.key0 != null)
+								Keyboard2.log("Key down " + k.key0.getName());
+							key_down = true;
+							invalidate();
+						}
+					}
+					else if (k.down && key_down)
+					{
+						if (k.key0 != null)
+							Keyboard2.log("Key up " + k.key0.getName());
+						key_down = false;
+						invalidate();
+					}
+				}
+				k.down = key_down;
 				x += keyW + _keyMargin;
 			}
 			y += _keyHeight + _keyMargin;
 		}
-		return (null);
+		return (true);
 	}
 
 	@Override
@@ -182,9 +167,9 @@ public class Keyboard2View extends View
 			{
 				float keyW = _keyWidth * k.width;
 				if (k.down)
-					canvas.drawRect(x, y, x + keyW, y + _keyHeight, _keyBgPaint);
-				else
 					canvas.drawRect(x, y, x + keyW, y + _keyHeight, _keyDownBgPaint);
+				else
+					canvas.drawRect(x, y, x + keyW, y + _keyHeight, _keyBgPaint);
 				if (k.key0 != null)
 					canvas.drawText(new char[]{k.key0.getChar()}, 0, 1,
 						keyW / 2 + x, (_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y, _keyLabelPaint);
