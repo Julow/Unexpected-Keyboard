@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard>
+	<row>
+		<key key0="a" key2="1" />
+		<key key0="z" key2="2" />
+		<key key0="e" key2="3" />
+		<key key0="r" key2="4" />
+		<key key0="t" key2="5" />
+		<key key0="y" key2="6" />
+		<key key0="u" key2="7" />
+		<key key0="i" key2="8" />
+		<key key0="o" key2="9" />
+		<key key0="p" key2="0" />
+	</row>
+	<row>
+		<key key0="q" />
+		<key key0="s" />
+		<key key0="d" />
+		<key key0="f" />
+		<key key0="g" />
+		<key key0="h" />
+		<key key0="j" />
+		<key key0="k" />
+		<key key0="l" />
+		<key key0="m" />
+	</row>
+	<row>
+		<key key0="w" />
+		<key key0="x" />
+		<key key0="c" />
+		<key key0="v" />
+		<key key0="b" />
+		<key key0="n" />
+	</row>
+	<row>
+		<key width="4.0" key0="space" />
+		<key width="1.5" key0="enter" />
+	</row>
+</keyboard>

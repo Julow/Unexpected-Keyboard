@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item name="bg" type="color">#111111</item>
+	<item name="key_bg" type="color">#303030</item>
+	<item name="key_down_bg" type="color">#000000</item>
+	<item name="key_label" type="color">#BFBFBF</item>
+</resources>
