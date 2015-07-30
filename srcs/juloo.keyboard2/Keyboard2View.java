@@ -95,48 +95,71 @@ public class Keyboard2View extends View
 		float				x;
 		float				y;
 		float				keyW;
-		boolean				key_down;
-		int					pointer_up;
 
-		if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_POINTER_UP)
-			pointer_up = event.getActionIndex();
-		else
-			pointer_up = -1;
-		y = _keyMargin;
+		switch (event.getActionMasked())
+		{
+		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_POINTER_UP:
+			onTouchUp(event.getPointerId(event.getActionIndex()));
+			break ;
+		case MotionEvent.ACTION_DOWN:
+		case MotionEvent.ACTION_POINTER_DOWN:
+			int p = event.getActionIndex();
+			onTouchDown(event.getX(p), event.getY(p), event.getPointerId(p));
+			break ;
+		default:
+			return (false);
+		}
+		return (true);
+	}
+
+	private void		onTouchDown(float touch_x, float touch_y, int pointerId)
+	{
+		float				x;
+		float				y;
+		float				keyW;
+
+		y = -_keyHeight;
 		for (Row row : _rows)
 		{
+			y += _keyHeight + _keyMargin;
+			if (touch_y < y || touch_y >= (y + _keyHeight))
+				continue ;
 			x = (KEY_PER_ROW * (_keyMargin + _keyWidth) - _keyMargin - row.getWidth()) / 2 + _keyMargin;
 			for (Key k : row)
 			{
-				key_down = k.down;
 				keyW = _keyWidth * k.width;
-				for (int p = 0; p < event.getPointerCount(); p++)
+				if (touch_x >= x && touch_x < (x + keyW))
 				{
-					if (pointer_up != p && event.getX(p) >= x && event.getX(p) < (x + keyW)
-						&& event.getY(p) >= y && event.getY(p) < (y + _keyHeight))
-					{
-						if (!k.down && !key_down)
-						{
-							if (k.key0 != null)
-								Keyboard2.log("Key down " + k.key0.getName());
-							key_down = true;
-							invalidate();
-						}
-					}
-					else if (k.down && key_down)
+					if (k.down_pointer == -1)
 					{
 						if (k.key0 != null)
-							Keyboard2.log("Key up " + k.key0.getName());
-						key_down = false;
+							Keyboard2.log("Key down " + k.key0.getName());
+						k.down_pointer = pointerId;
 						invalidate();
+						return ;
 					}
 				}
-				k.down = key_down;
 				x += keyW + _keyMargin;
 			}
-			y += _keyHeight + _keyMargin;
 		}
-		return (true);
+	}
+
+	private void		onTouchUp(int pointerId)
+	{
+		for (Row row : _rows)
+		{
+			for (Key k : row)
+			{
+				if (k.down_pointer == pointerId)
+				{
+					if (k.key0 != null)
+						Keyboard2.log("Key up " + k.key0.getName());
+					k.down_pointer = -1;
+					invalidate();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -166,7 +189,7 @@ public class Keyboard2View extends View
 			for (Key k : row)
 			{
 				float keyW = _keyWidth * k.width;
-				if (k.down)
+				if (k.down_pointer != -1)
 					canvas.drawRect(x, y, x + keyW, y + _keyHeight, _keyDownBgPaint);
 				else
 					canvas.drawRect(x, y, x + keyW, y + _keyHeight, _keyBgPaint);
@@ -236,11 +259,11 @@ public class Keyboard2View extends View
 
 		public float		width;
 
-		public boolean		down;
+		public int			down_pointer;
 
 		public Key(XmlResourceParser parser) throws Exception
 		{
-			down = false;
+			down_pointer = -1;
 			key0 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key0"));
 			key1 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key1"));
 			key2 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key2"));
