@@ -3,5 +3,6 @@
 	<item name="bg" type="color">#111111</item>
 	<item name="key_bg" type="color">#303030</item>
 	<item name="key_down_bg" type="color">#FFFFFF</item>
-	<item name="key_label" type="color">#BFBFBF</item>
+	<item name="key_label" type="color">#DFDFDF</item>
+	<item name="key_sub_label" type="color">#BFBFBF</item>
 </resources>

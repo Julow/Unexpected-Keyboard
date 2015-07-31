@@ -14,10 +14,10 @@ public class Keyboard2View extends View
 {
 	private static final float	KEY_PER_ROW = 10;
 	private static final float	KEY_MARGIN_DPI = 2;
-	private static final float	KEY_PADDING_DPI = 6;
+	private static final float	KEY_PADDING_DPI = 5;
 	private static final float	KEY_HEIGHT_DPI = 40;
 	private static final float	KEY_LABEL_DPI = 16;
-	private static final float	KEY_SUBLABEL_DPI = 12;
+	private static final float	KEY_SUBLABEL_DPI = 10;
 
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
@@ -44,12 +44,12 @@ public class Keyboard2View extends View
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
 		_keyDownBgPaint = new Paint();
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
-		_keyLabelPaint = new Paint();
+		_keyLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_keyLabelPaint.setColor(getResources().getColor(R.color.key_label));
 		_keyLabelPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_LABEL_DPI, dm));
 		_keyLabelPaint.setTextAlign(Paint.Align.CENTER);
-		_keySubLabelPaint = new Paint();
-		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_label));
+		_keySubLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
 		_keySubLabelPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_SUBLABEL_DPI, dm));
 		_keySubLabelPaint.setTextAlign(Paint.Align.CENTER);
 		setOnTouchListener(this);
@@ -190,18 +190,20 @@ public class Keyboard2View extends View
 				if (k.key0 != null)
 					canvas.drawText(new char[]{k.key0.getChar()}, 0, 1,
 						keyW / 2 + x, (_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y, _keyLabelPaint);
+				float textOffsetY = _keySubLabelPaint.getTextSize() / 2;
 				if (k.key1 != null)
 					canvas.drawText(new char[]{k.key1.getChar()}, 0, 1,
-						x + _keyPadding, y + _keyPadding, _keySubLabelPaint);
+						x + _keyPadding, y + _keyPadding + textOffsetY, _keySubLabelPaint);
 				if (k.key2 != null)
 					canvas.drawText(new char[]{k.key2.getChar()}, 0, 1,
-						x + keyW - _keyPadding, y + _keyPadding, _keySubLabelPaint);
+						x + keyW - _keyPadding, y + _keyPadding + textOffsetY, _keySubLabelPaint);
+				textOffsetY /= 2; // WTF it work
 				if (k.key3 != null)
 					canvas.drawText(new char[]{k.key3.getChar()}, 0, 1,
-						x + _keyPadding, y + _keyHeight - _keyPadding, _keySubLabelPaint);
+						x + _keyPadding, y + _keyHeight - _keyPadding + textOffsetY, _keySubLabelPaint);
 				if (k.key4 != null)
 					canvas.drawText(new char[]{k.key4.getChar()}, 0, 1,
-						x + keyW - _keyPadding, y + _keyHeight - _keyPadding, _keySubLabelPaint);
+						x + keyW - _keyPadding, y + _keyHeight - _keyPadding + textOffsetY, _keySubLabelPaint);
 				x += keyW + _keyMargin;
 			}
 			y += _keyHeight + _keyMargin;

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
 	<row>
-		<key key0="a" key2="1" />
-		<key key0="z" key2="2" />
-		<key key0="e" key2="3" />
-		<key key0="r" key2="4" />
-		<key key0="t" key2="5" />
-		<key key0="y" key2="6" />
-		<key key0="u" key2="7" />
-		<key key0="i" key2="8" />
-		<key key0="o" key2="9" />
-		<key key0="p" key2="0" />
+		<key key0="a" key2="1" key3="&amp;" />
+		<key key0="z" key2="2" key3="é" key4="~" />
+		<key key0="e" key2="3" key3="&quot;" key4="\#" />
+		<key key0="r" key2="4" key3="'" key4="{" />
+		<key key0="t" key2="5" key3="(" key4="[" />
+		<key key0="y" key2="6" key3="-" key4="|" />
+		<key key0="u" key2="7" key3="è" key4="`" />
+		<key key0="i" key2="8" key3="_" key4="\" />
+		<key key0="o" key2="9" key3="ç" key4="^" />
+		<key key0="p" key2="0" key3="à" key4="\@" />
 	</row>
 	<row>
-		<key key0="q" />
+		<key key0="q" key1="1" key2="2" key3="3" key4="4" />
 		<key key0="s" />
 		<key key0="d" />
 		<key key0="f" />
@@ -31,6 +31,7 @@
 		<key key0="v" />
 		<key key0="b" />
 		<key key0="n" />
+		<key width="1.5" key0="del" />
 	</row>
 	<row>
 		<key width="4.0" key0="space" />

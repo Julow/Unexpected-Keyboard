@@ -41,8 +41,28 @@ enum KeyValue
 	KEY_7("7", '7'),
 	KEY_8("8", '8'),
 	KEY_9("9", '9'),
+	KEY_AND("&", '&'),
+	KEY_E2("é", 'é'),
+	KEY_DQUOTE("\"", '"'),
+	KEY_QUOTE("'", '\''),
+	KEY_PARENTHESIS("(", '('),
+	KEY_MINUS("-", '-'),
+	KEY_E3("è", 'è'),
+	KEY_UNDERSCORE("_", '_'),
+	KEY_C2("ç", 'ç'),
+	KEY_A2("à", 'à'),
+	KEY_TILDE("~", '~'),
+	KEY_DIESE("#", '#'),
+	KEY_BLOCK("{", '{'),
+	KEY_SQUARE("[", '['),
+	KEY_PIPE("|", '|'),
+	KEY_BACKQUOTE("`", '`'),
+	KEY_BACKSLASH("\\", '\\'),
+	KEY_XOR("^", '^'),
+	KEY_AROBASE("@", '@'),
 	KEY_ENTER("enter", '\n'),
-	KEY_SPACE("space", ' ');
+	KEY_SPACE("space", ' '),
+	KEY_DEL("del", '\u007F');
 
 	private String		_name;
 	private char		_char;
