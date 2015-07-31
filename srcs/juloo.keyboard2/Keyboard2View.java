@@ -13,11 +13,6 @@ public class Keyboard2View extends View
 	implements View.OnTouchListener
 {
 	private static final float	KEY_PER_ROW = 10;
-	private static final float	KEY_MARGIN_DPI = 2;
-	private static final float	KEY_PADDING_DPI = 5;
-	private static final float	KEY_HEIGHT_DPI = 40;
-	private static final float	KEY_LABEL_DPI = 16;
-	private static final float	KEY_SUBLABEL_DPI = 10;
 
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
@@ -36,9 +31,9 @@ public class Keyboard2View extends View
 	{
 		super(context, attrs);
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
-		_keyMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_MARGIN_DPI, dm);
-		_keyHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_HEIGHT_DPI, dm);
-		_keyPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_PADDING_DPI, dm);
+		_keyMargin = getResources().getDimension(R.dimen.key_margin);
+		_keyHeight = getResources().getDimension(R.dimen.key_height);
+		_keyPadding = getResources().getDimension(R.dimen.key_padding);
 		_keyWidth = (dm.widthPixels - _keyMargin) / KEY_PER_ROW - _keyMargin;
 		_keyBgPaint = new Paint();
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
@@ -46,11 +41,11 @@ public class Keyboard2View extends View
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
 		_keyLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_keyLabelPaint.setColor(getResources().getColor(R.color.key_label));
-		_keyLabelPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_LABEL_DPI, dm));
+		_keyLabelPaint.setTextSize(getResources().getDimension(R.dimen.label_text_size));
 		_keyLabelPaint.setTextAlign(Paint.Align.CENTER);
 		_keySubLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
-		_keySubLabelPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_SUBLABEL_DPI, dm));
+		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
 		_keySubLabelPaint.setTextAlign(Paint.Align.CENTER);
 		setOnTouchListener(this);
 	}
@@ -197,7 +192,7 @@ public class Keyboard2View extends View
 				if (k.key2 != null)
 					canvas.drawText(new char[]{k.key2.getChar()}, 0, 1,
 						x + keyW - _keyPadding, y + _keyPadding + textOffsetY, _keySubLabelPaint);
-				textOffsetY /= 2; // WTF it work
+				textOffsetY /= 2; // lol
 				if (k.key3 != null)
 					canvas.drawText(new char[]{k.key3.getChar()}, 0, 1,
 						x + _keyPadding, y + _keyHeight - _keyPadding + textOffsetY, _keySubLabelPaint);
