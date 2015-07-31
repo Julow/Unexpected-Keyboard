@@ -40,7 +40,9 @@ enum KeyValue
 	KEY_6("6", '6'),
 	KEY_7("7", '7'),
 	KEY_8("8", '8'),
-	KEY_9("9", '9');
+	KEY_9("9", '9'),
+	KEY_ENTER("enter", '\n'),
+	KEY_SPACE("space", ' ');
 
 	private String		_name;
 	private char		_char;

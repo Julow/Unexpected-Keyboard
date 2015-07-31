@@ -1,7 +1,6 @@
 package juloo.keyboard2;
 
 import android.content.Context;
-import android.content.res.XmlResourceParser;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -9,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import java.util.ArrayList;
 
 public class Keyboard2View extends View
 	implements View.OnTouchListener
@@ -21,7 +19,8 @@ public class Keyboard2View extends View
 	private static final float	KEY_LABEL_DPI = 16;
 	private static final float	KEY_SUBLABEL_DPI = 12;
 
-	private ArrayList<Row>	_rows;
+	private Keyboard2		_ime;
+	private KeyboardData	_keyboard;
 
 	private float			_keyWidth;
 	private float			_keyHeight;
@@ -36,7 +35,6 @@ public class Keyboard2View extends View
 	public Keyboard2View(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-		_rows = null;
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
 		_keyMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_MARGIN_DPI, dm);
 		_keyHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, KEY_HEIGHT_DPI, dm);
@@ -57,36 +55,10 @@ public class Keyboard2View extends View
 		setOnTouchListener(this);
 	}
 
-	public void			loadKeyboard(int res)
+	public void			setKeyboard(Keyboard2 ime, KeyboardData keyboardData)
 	{
-		XmlResourceParser parser = getContext().getResources().getXml(res);
-		ArrayList<Row> rows = new ArrayList<Row>();
-
-		try
-		{
-			int status;
-
-			while (parser.next() != XmlResourceParser.START_TAG)
-				continue ;
-			if (!parser.getName().equals("keyboard"))
-				throw new Exception("Unknow tag: " + parser.getName());
-			while ((status = parser.next()) != XmlResourceParser.END_DOCUMENT)
-			{
-				if (status == XmlResourceParser.START_TAG)
-				{
-					String tag = parser.getName();
-					if (tag.equals("row"))
-						rows.add(new Row(parser, _keyWidth, _keyMargin));
-					else
-						throw new Exception("Unknow keyboard tag: " + tag);
-				}
-			}
-			_rows = rows;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		_ime = ime;
+		_keyboard = keyboardData;
 	}
 
 	@Override
@@ -95,6 +67,7 @@ public class Keyboard2View extends View
 		float				x;
 		float				y;
 		float				keyW;
+		int					p;
 
 		switch (event.getActionMasked())
 		{
@@ -104,8 +77,12 @@ public class Keyboard2View extends View
 			break ;
 		case MotionEvent.ACTION_DOWN:
 		case MotionEvent.ACTION_POINTER_DOWN:
-			int p = event.getActionIndex();
+			p = event.getActionIndex();
 			onTouchDown(event.getX(p), event.getY(p), event.getPointerId(p));
+			break ;
+		case MotionEvent.ACTION_MOVE:
+			for (p = 0; p < event.getPointerCount(); p++)
+				onTouchMove(event.getX(p), event.getY(p), event.getPointerId(p));
 			break ;
 		default:
 			return (false);
@@ -113,32 +90,51 @@ public class Keyboard2View extends View
 		return (true);
 	}
 
-	private void		onTouchDown(float touch_x, float touch_y, int pointerId)
+	private void		onTouchMove(float moveX, float moveY, int pointerId)
+	{
+		for (KeyboardData.Row row : _keyboard.getRows())
+		{
+			for (KeyboardData.Key k : row)
+			{
+				if (k.downPointer == pointerId)
+				{
+					KeyValue v = k.getDownValue(moveX, moveY);
+					if (v != k.downValue)
+					{
+						k.downValue = v;
+						Keyboard2.log("Key down " + v.getName());
+					}
+				}
+			}
+		}
+	}
+
+	private void		onTouchDown(float touchX, float touchY, int pointerId)
 	{
 		float				x;
 		float				y;
 		float				keyW;
 
 		y = -_keyHeight;
-		for (Row row : _rows)
+		for (KeyboardData.Row row : _keyboard.getRows())
 		{
 			y += _keyHeight + _keyMargin;
-			if (touch_y < y || touch_y >= (y + _keyHeight))
+			if (touchY < y || touchY >= (y + _keyHeight))
 				continue ;
-			x = (KEY_PER_ROW * (_keyMargin + _keyWidth) - _keyMargin - row.getWidth()) / 2 + _keyMargin;
-			for (Key k : row)
+			x = (KEY_PER_ROW * (_keyMargin + _keyWidth) - _keyMargin - row.getWidth(_keyWidth, _keyMargin)) / 2 + _keyMargin;
+			for (KeyboardData.Key k : row)
 			{
 				keyW = _keyWidth * k.width;
-				if (touch_x >= x && touch_x < (x + keyW))
+				if (touchX >= x && touchX < (x + keyW) && k.downPointer == -1)
 				{
-					if (k.down_pointer == -1)
-					{
-						if (k.key0 != null)
-							Keyboard2.log("Key down " + k.key0.getName());
-						k.down_pointer = pointerId;
-						invalidate();
-						return ;
-					}
+					if (k.key0 != null)
+						Keyboard2.log("Key down " + k.key0.getName());
+					k.downPointer = pointerId;
+					k.downValue = k.key0;
+					k.downX = touchX;
+					k.downY = touchY;
+					invalidate();
+					return ;
 				}
 				x += keyW + _keyMargin;
 			}
@@ -147,15 +143,15 @@ public class Keyboard2View extends View
 
 	private void		onTouchUp(int pointerId)
 	{
-		for (Row row : _rows)
+		for (KeyboardData.Row row : _keyboard.getRows())
 		{
-			for (Key k : row)
+			for (KeyboardData.Key k : row)
 			{
-				if (k.down_pointer == pointerId)
+				if (k.downPointer == pointerId)
 				{
-					if (k.key0 != null)
-						Keyboard2.log("Key up " + k.key0.getName());
-					k.down_pointer = -1;
+					if (k.downValue != null)
+						Keyboard2.log("Key up " + k.downValue.getName());
+					k.downPointer = -1;
 					invalidate();
 				}
 			}
@@ -167,10 +163,10 @@ public class Keyboard2View extends View
 	{
 		int					height;
 
-		if (_rows == null)
+		if (_keyboard.getRows() == null)
 			height = 0;
 		else
-			height = (int)((_keyHeight + _keyMargin) * (float)_rows.size() + _keyMargin);
+			height = (int)((_keyHeight + _keyMargin) * ((float)_keyboard.getRows().size()) + _keyMargin);
 		setMeasuredDimension(MeasureSpec.getSize(wSpec), height);
 	}
 
@@ -180,16 +176,14 @@ public class Keyboard2View extends View
 		float				x;
 		float				y;
 
-		if (_rows == null)
-			return ;
 		y = _keyMargin;
-		for (Row row : _rows)
+		for (KeyboardData.Row row : _keyboard.getRows())
 		{
-			x = (KEY_PER_ROW * (_keyMargin + _keyWidth) - _keyMargin - row.getWidth()) / 2 + _keyMargin;
-			for (Key k : row)
+			x = (KEY_PER_ROW * (_keyMargin + _keyWidth) - _keyMargin - row.getWidth(_keyWidth, _keyMargin)) / 2 + _keyMargin;
+			for (KeyboardData.Key k : row)
 			{
 				float keyW = _keyWidth * k.width;
-				if (k.down_pointer != -1)
+				if (k.downPointer != -1)
 					canvas.drawRect(x, y, x + keyW, y + _keyHeight, _keyDownBgPaint);
 				else
 					canvas.drawRect(x, y, x + keyW, y + _keyHeight, _keyBgPaint);
@@ -211,74 +205,6 @@ public class Keyboard2View extends View
 				x += keyW + _keyMargin;
 			}
 			y += _keyHeight + _keyMargin;
-		}
-	}
-
-	private class Row extends ArrayList<Key>
-	{
-		private float		_width;
-
-		public Row(XmlResourceParser parser, float keyWidth, float keyMargin) throws Exception
-		{
-			super();
-
-			int status;
-			_width = 0;
-			while ((status = parser.next()) != XmlResourceParser.END_TAG)
-			{
-				if (status == XmlResourceParser.START_TAG)
-				{
-					String tag = parser.getName();
-					if (tag.equals("key"))
-					{
-						Key k = new Key(parser);
-						if (_width != 0f)
-							_width += keyMargin;
-						_width += keyWidth * k.width;
-						add(k);
-					}
-					else
-						throw new Exception("Unknow row tag: " + tag);
-				}
-			}
-		}
-
-		public float		getWidth()
-		{
-			return (_width);
-		}
-	}
-
-	private class Key
-	{
-		public KeyValue		key0;
-		public KeyValue		key1;
-		public KeyValue		key2;
-		public KeyValue		key3;
-		public KeyValue		key4;
-
-		public float		width;
-
-		public int			down_pointer;
-
-		public Key(XmlResourceParser parser) throws Exception
-		{
-			down_pointer = -1;
-			key0 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key0"));
-			key1 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key1"));
-			key2 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key2"));
-			key3 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key3"));
-			key4 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key4"));
-			try
-			{
-				width = parser.getAttributeFloatValue(null, "width", 1f);
-			}
-			catch (Exception e)
-			{
-				width = 1f;
-			}
-			while (parser.next() != XmlResourceParser.END_TAG)
-				continue ;
 		}
 	}
 }
