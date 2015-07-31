@@ -70,9 +70,9 @@ class KeyboardData
 			}
 		}
 
-		public float		getWidth(float keyWidth, float keyMargin)
+		public float		getWidth(float keyWidth)
 		{
-			return (keyWidth * _keysWidth + ((size() - 1) * keyMargin));
+			return (keyWidth * _keysWidth);
 		}
 	}
 

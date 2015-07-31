@@ -13,7 +13,7 @@
 		<key key0="p" key2="0" key3="à" key4="\@" />
 	</row>
 	<row>
-		<key key0="q" />
+		<key key0="q" key1="tab" />
 		<key key0="s" />
 		<key key0="d" />
 		<key key0="f" />
@@ -25,16 +25,21 @@
 		<key key0="m" key2="µ" key4="*" />
 	</row>
 	<row>
+		<key width="1.4" key0="shift" />
 		<key key0="w" key1="&gt;" key3="&lt;" />
 		<key key0="x" />
 		<key key0="c" key2="\?" key4="," />
 		<key key0="v" key2="." key4=";" />
 		<key key0="b" key2="/" key4=":" />
 		<key key0="n" key2="§" key4="!" />
-		<key width="1.5" key0="\u007F" />
+		<key key0="n" key2="§" key4="!" />
+		<key width="1.6" key0="back" key2="del" />
 	</row>
 	<row>
-		<key width="4.5" key0=" " />
-		<key width="2" key0="\u000A" />
+		<key width="1.7" key0="ctrl" />
+		<key width="1.3" key0="alt" key1="page_up" key2="end" key3="home" key4="page_down" />
+		<key width="4.0" key0=" " />
+		<key key1="up" key2="right" key3="down" key4="left" />
+		<key width="2.0" key0="return" />
 	</row>
 </keyboard>
