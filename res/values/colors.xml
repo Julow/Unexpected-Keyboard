@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<item name="bg" type="color">#111111</item>
-	<item name="key_bg" type="color">#303030</item>
-	<item name="key_down_bg" type="color">#FFFFFF</item>
-	<item name="key_label" type="color">#DFDFDF</item>
-	<item name="key_sub_label" type="color">#BFBFBF</item>
+	<item name="bg" type="color">#191919</item>
+	<item name="key_bg" type="color">#282828</item>
+	<item name="key_down_bg" type="color">#1B1B1B</item>
+	<item name="key_label" type="color">#DDDDDD</item>
+	<item name="key_sub_label" type="color">#BDBDBD</item>
 </resources>

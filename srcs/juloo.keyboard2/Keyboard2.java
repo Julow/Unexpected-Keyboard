@@ -27,9 +27,26 @@ public class Keyboard2 extends InputMethodService
 		return (_inputView);
 	}
 
-	public void				handleKey(KeyValue key)
+	public void				handleKeyUp(KeyValue key)
 	{
-		Keyboard2.log("Key up " + key.getName());
+		int			eventCode = key.getEventCode();
+
+		switch (eventCode)
+		{
+		case KeyValue.EVENT_NONE:
+			sendKeyChar(key.getChar());
+			break ;
+		case KeyValue.EVENT_DELETE:
+			getCurrentInputConnection().deleteSurroundingText(0, 1);
+			break ;
+		case KeyValue.EVENT_BACKSPACE:
+			getCurrentInputConnection().deleteSurroundingText(1, 0);
+			break ;
+		default:
+			getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, eventCode));
+			getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, eventCode));
+			break ;
+		}
 	}
 
 	public static void		log(String str)

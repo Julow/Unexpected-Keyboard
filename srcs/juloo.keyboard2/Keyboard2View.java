@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -26,6 +27,7 @@ public class Keyboard2View extends View
 	private float			_keyHeight;
 	private float			_keyPadding;
 	private float			_keyBgPadding;
+	private float			_keyRound;
 
 	private Paint			_keyBgPaint;
 	private Paint			_keyDownBgPaint;
@@ -42,6 +44,7 @@ public class Keyboard2View extends View
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
 		_keyPadding = getResources().getDimension(R.dimen.key_padding);
 		_keyBgPadding = getResources().getDimension(R.dimen.key_bg_padding);
+		_keyRound = getResources().getDimension(R.dimen.key_round);
 		_keyWidth = (dm.widthPixels - (_horizontalMargin * 2)) / KEY_PER_ROW;
 		_keyBgPaint = new Paint();
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
@@ -118,7 +121,9 @@ public class Keyboard2View extends View
 		KeyDown				k = getKeyDown(pointerId);
 
 		if (k != null)
+		{
 			k.updateDown(moveX, moveY);
+		}
 	}
 
 	private void		onTouchDown(float touchX, float touchY, int pointerId)
@@ -155,7 +160,7 @@ public class Keyboard2View extends View
 		if (k != null)
 		{
 			if (k.value != null)
-				_ime.handleKey(k.value);
+				_ime.handleKeyUp(k.value);
 			_downKeys.remove(k);
 			invalidate();
 			return ;
@@ -192,8 +197,8 @@ public class Keyboard2View extends View
 					canvas.drawRect(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding, _keyDownBgPaint);
 				else
-					canvas.drawRect(x + _keyBgPadding, y + _keyBgPadding,
-						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding, _keyBgPaint);
+					canvas.drawRoundRect(new RectF(x + _keyBgPadding, y + _keyBgPadding,
+						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding), _keyRound, _keyRound, _keyBgPaint);
 				if (k.key0 != null)
 					canvas.drawText(k.key0.getSymbol(), keyW / 2 + x,
 						(_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y, _keyLabelPaint);
@@ -231,17 +236,22 @@ public class Keyboard2View extends View
 		public KeyDown(int pointerId, KeyboardData.Key key, float x, float y)
 		{
 			this.pointerId = pointerId;
-			this.value = key.key0;
+			value = key.key0;
 			this.key = key;
-			this.downX = x;
-			this.downY = y;
+			downX = x;
+			downY = y;
 		}
 
-		public void				updateDown(float x, float y)
+		public boolean			updateDown(float x, float y)
 		{
-			value = getDownValue(x - downX, y - downY);
-			if (value == null)
-				value = key.key0;
+			KeyValue		newValue = getDownValue(x - downX, y - downY);
+
+			if (newValue != null && newValue != value)
+			{
+				value = newValue;
+				return (true);
+			}
+			return (false);
 		}
 
 		private KeyValue		getDownValue(float x, float y)

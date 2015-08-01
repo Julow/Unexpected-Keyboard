@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="vertical_margin">2dp</dimen>
+	<dimen name="vertical_margin">3dp</dimen>
 	<dimen name="horizontal_margin">2dp</dimen>
 	<dimen name="key_padding">5dp</dimen>
 	<dimen name="key_bg_padding">1dp</dimen>
 	<dimen name="key_height">44dp</dimen>
+	<dimen name="key_round">3dp</dimen>
 	<dimen name="label_text_size">16dp</dimen>
 	<dimen name="sublabel_text_size">10dp</dimen>
 </resources>
