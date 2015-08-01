@@ -17,6 +17,8 @@ public class Keyboard2View extends View
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
 
+	private KeyValue		_downValue;
+
 	private float			_verticalMargin;
 	private float			_horizontalMargin;
 	private float			_keyWidth;
@@ -33,6 +35,7 @@ public class Keyboard2View extends View
 	{
 		super(context, attrs);
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
+		_downValue = null;
 		_verticalMargin = getResources().getDimension(R.dimen.vertical_margin);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
@@ -101,7 +104,8 @@ public class Keyboard2View extends View
 					if (v != k.downValue)
 					{
 						k.downValue = v;
-						Keyboard2.log("Key down " + v.getName());
+						if (v != null)
+							_downValue = v;
 					}
 				}
 			}
@@ -127,7 +131,7 @@ public class Keyboard2View extends View
 				if (touchX >= x && touchX < (x + keyW) && k.downPointer == -1)
 				{
 					if (k.key0 != null)
-						Keyboard2.log("Key down " + k.key0.getName());
+						_downValue = k.key0;
 					k.downPointer = pointerId;
 					k.downValue = k.key0;
 					k.downX = touchX;
@@ -149,9 +153,27 @@ public class Keyboard2View extends View
 				if (k.downPointer == pointerId)
 				{
 					if (k.downValue != null)
-						Keyboard2.log("Key up " + k.downValue.getName());
+						_ime.handleKey(k.downValue);
+					_downValue = null;
 					k.downPointer = -1;
+					nextDownValue();
 					invalidate();
+					return ;
+				}
+			}
+		}
+	}
+
+	private void		nextDownValue()
+	{
+		for (keyboardData.Row row : _keyboard.getRows())
+		{
+			for (KeyboardData.Key k : row)
+			{
+				if (k.downPointer != -1)
+				{
+					_downValue = k.downValue;
+					return ;
 				}
 			}
 		}
@@ -190,22 +212,22 @@ public class Keyboard2View extends View
 					canvas.drawRect(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding, _keyBgPaint);
 				if (k.key0 != null)
-					canvas.drawText(k.key0.getName(), keyW / 2 + x,
+					canvas.drawText(k.key0.getSymbol(), keyW / 2 + x,
 						(_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y, _keyLabelPaint);
 				float textOffsetY = _keySubLabelPaint.getTextSize() / 2;
 				float subPadding = _keyPadding + _keyBgPadding;
 				if (k.key1 != null)
-					canvas.drawText(k.key1.getName(), x + subPadding,
+					canvas.drawText(k.key1.getSymbol(), x + subPadding,
 						y + subPadding + textOffsetY, _keySubLabelPaint);
 				if (k.key2 != null)
-					canvas.drawText(k.key2.getName(), x + keyW - subPadding,
+					canvas.drawText(k.key2.getSymbol(), x + keyW - subPadding,
 						y + subPadding + textOffsetY, _keySubLabelPaint);
 				textOffsetY /= 2; // lol
 				if (k.key3 != null)
-					canvas.drawText(k.key3.getName(), x + subPadding,
+					canvas.drawText(k.key3.getSymbol(), x + subPadding,
 						y + _keyHeight - subPadding + textOffsetY, _keySubLabelPaint);
 				if (k.key4 != null)
-					canvas.drawText(k.key4.getName(), x + keyW - subPadding,
+					canvas.drawText(k.key4.getSymbol(), x + keyW - subPadding,
 						y + _keyHeight - subPadding + textOffsetY, _keySubLabelPaint);
 				x += keyW;
 			}

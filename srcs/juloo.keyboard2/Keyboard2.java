@@ -27,6 +27,11 @@ public class Keyboard2 extends InputMethodService
 		return (_inputView);
 	}
 
+	public void				handleKey(KeyValue key)
+	{
+		Keyboard2.log("Key up " + key.getName());
+	}
+
 	public static void		log(String str)
 	{
 		Log.d(TAG, str);

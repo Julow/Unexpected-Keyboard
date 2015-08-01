@@ -32,14 +32,13 @@
 		<key key0="v" key2="." key4=";" />
 		<key key0="b" key2="/" key4=":" />
 		<key key0="n" key2="§" key4="!" />
-		<key key0="n" key2="§" key4="!" />
-		<key width="1.6" key0="back" key2="del" />
+		<key key1="up" key2="right" key3="left" key4="down" />
+		<key width="1.6" key0="back" key2="delete" />
 	</row>
 	<row>
 		<key width="1.7" key0="ctrl" />
 		<key width="1.3" key0="alt" key1="page_up" key2="end" key3="home" key4="page_down" />
-		<key width="4.0" key0=" " />
-		<key key1="up" key2="right" key3="down" key4="left" />
-		<key width="2.0" key0="return" />
+		<key width="4.0" key0="space" />
+		<key width="3.0" key0="return" />
 	</row>
 </keyboard>
