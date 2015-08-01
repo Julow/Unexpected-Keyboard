@@ -27,14 +27,14 @@ public class Keyboard2 extends InputMethodService
 		return (_inputView);
 	}
 
-	public void				handleKeyUp(KeyValue key)
+	public void				handleKeyUp(KeyValue key, int flags)
 	{
 		int			eventCode = key.getEventCode();
 
 		switch (eventCode)
 		{
 		case KeyValue.EVENT_NONE:
-			sendKeyChar(key.getChar());
+			sendKeyChar(key.getChar((flags & KeyValue.FLAG_SHIFT) != 0));
 			break ;
 		case KeyValue.EVENT_DELETE:
 			getCurrentInputConnection().deleteSurroundingText(0, 1);

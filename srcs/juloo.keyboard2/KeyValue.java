@@ -9,23 +9,33 @@ class KeyValue
 	public static final int	EVENT_BACKSPACE = -2;
 	public static final int	EVENT_DELETE = -3;
 
+	public static final int FLAG_KEEP_ON = 1;
+	public static final int FLAG_CTRL = (1 << 1);
+	public static final int FLAG_SHIFT = (1 << 2);
+	public static final int FLAG_ALT = (1 << 3);
+
 	private String		_name;
 	private String		_symbol;
 	private char		_char;
 	private int			_eventCode;
+	private int			_flags;
 
 	public String		getName()
 	{
 		return (_name);
 	}
 
-	public String		getSymbol()
+	public String		getSymbol(boolean upperCase)
 	{
+		if (upperCase)
+			return (_symbol.toUpperCase());
 		return (_symbol);
 	}
 
-	public char			getChar()
+	public char			getChar(boolean upperCase)
 	{
+		if (upperCase)
+			return (Character.toUpperCase(_char));
 		return (_char);
 	}
 
@@ -34,29 +44,35 @@ class KeyValue
 		return (_eventCode);
 	}
 
+	public int			getFlags()
+	{
+		return (_flags);
+	}
+
 	private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
 	private KeyValue(String name)
 	{
-		this(name, name, name.charAt(0), EVENT_NONE);
+		this(name, name, name.charAt(0), EVENT_NONE, 0);
 	}
 
 	private KeyValue(String name, String symbol, char c)
 	{
-		this(name, symbol, c, EVENT_NONE);
+		this(name, symbol, c, EVENT_NONE, 0);
 	}
 
 	private KeyValue(String name, String symbol, int eventCode)
 	{
-		this(name, symbol, name.charAt(0), eventCode);
+		this(name, symbol, '\0', eventCode, 0);
 	}
 
-	private KeyValue(String name, String symbol, char c, int eventCode)
+	private KeyValue(String name, String symbol, char c, int eventCode, int flags)
 	{
 		_name = name;
 		_symbol = symbol;
 		_char = c;
 		_eventCode = eventCode;
+		_flags = flags;
 		KeyValue.keys.put(name, this);
 	}
 
@@ -76,9 +92,9 @@ class KeyValue
 		for (int i = 0; i < chars.length(); i++)
 			new KeyValue(chars.substring(i, i + 1));
 
-		new KeyValue("shift", "Shift", EVENT_NONE);
-		new KeyValue("ctrl", "Ctrl", EVENT_NONE);
-		new KeyValue("alt", "Alt", EVENT_NONE);
+		new KeyValue("shift", "⇧", '\0', EVENT_NONE, FLAG_KEEP_ON | FLAG_SHIFT);
+		new KeyValue("ctrl", "Ctrl", '\0', EVENT_NONE, FLAG_KEEP_ON | FLAG_CTRL);
+		new KeyValue("alt", "Alt", '\0', EVENT_NONE, FLAG_KEEP_ON | FLAG_ALT);
 
 		new KeyValue("backspace", "⌫", EVENT_BACKSPACE);
 		new KeyValue("delete", "⌦", EVENT_DELETE);

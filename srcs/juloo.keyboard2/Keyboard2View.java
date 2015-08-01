@@ -6,10 +6,9 @@ import android.graphics.RectF;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import java.util.Vector;
+import java.util.LinkedList;
 
 public class Keyboard2View extends View
 	implements View.OnTouchListener
@@ -19,7 +18,9 @@ public class Keyboard2View extends View
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
 
-	private Vector<KeyDown>	_downKeys;
+	private LinkedList<KeyDown>	_downKeys = new LinkedList<KeyDown>();
+
+	private int				_flags = 0;
 
 	private float			_verticalMargin;
 	private float			_horizontalMargin;
@@ -29,16 +30,15 @@ public class Keyboard2View extends View
 	private float			_keyBgPadding;
 	private float			_keyRound;
 
-	private Paint			_keyBgPaint;
-	private Paint			_keyDownBgPaint;
-	private Paint			_keyLabelPaint;
-	private Paint			_keySubLabelPaint;
+	private Paint			_keyBgPaint = new Paint();
+	private Paint			_keyDownBgPaint = new Paint();
+	private Paint			_keyLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private Paint			_keySubLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 	public Keyboard2View(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
-		_downKeys = new Vector<KeyDown>();
 		_verticalMargin = getResources().getDimension(R.dimen.vertical_margin);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
@@ -46,15 +46,11 @@ public class Keyboard2View extends View
 		_keyBgPadding = getResources().getDimension(R.dimen.key_bg_padding);
 		_keyRound = getResources().getDimension(R.dimen.key_round);
 		_keyWidth = (dm.widthPixels - (_horizontalMargin * 2)) / KEY_PER_ROW;
-		_keyBgPaint = new Paint();
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
-		_keyDownBgPaint = new Paint();
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
-		_keyLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_keyLabelPaint.setColor(getResources().getColor(R.color.key_label));
 		_keyLabelPaint.setTextSize(getResources().getDimension(R.dimen.label_text_size));
 		_keyLabelPaint.setTextAlign(Paint.Align.CENTER);
-		_keySubLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
 		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
 		_keySubLabelPaint.setTextAlign(Paint.Align.CENTER);
@@ -120,10 +116,8 @@ public class Keyboard2View extends View
 	{
 		KeyDown				k = getKeyDown(pointerId);
 
-		if (k != null)
-		{
-			k.updateDown(moveX, moveY);
-		}
+		if (k != null && k.updateDown(moveX, moveY))
+			updateFlags();
 	}
 
 	private void		onTouchDown(float touchX, float touchY, int pointerId)
@@ -145,6 +139,7 @@ public class Keyboard2View extends View
 				if (touchX >= x && touchX < (x + keyW))
 				{
 					_downKeys.add(new KeyDown(pointerId, key, touchX, touchY));
+					updateFlags();
 					invalidate();
 					return ;
 				}
@@ -159,12 +154,34 @@ public class Keyboard2View extends View
 
 		if (k != null)
 		{
+			if ((k.flags & KeyValue.FLAG_KEEP_ON) != 0)
+			{
+				k.flags ^= KeyValue.FLAG_KEEP_ON;
+				k.pointerId = -1;
+				return ;
+			}
+			for (int i = 0; i < _downKeys.size(); i++)
+			{
+				KeyDown downKey = _downKeys.get(i);
+				if (downKey.pointerId == -1)
+					_downKeys.remove(i--);
+				else if ((downKey.flags & KeyValue.FLAG_KEEP_ON) != 0)
+					downKey.flags ^= KeyValue.FLAG_KEEP_ON;
+			}
 			if (k.value != null)
-				_ime.handleKeyUp(k.value);
+				_ime.handleKeyUp(k.value, _flags);
 			_downKeys.remove(k);
+			updateFlags();
 			invalidate();
 			return ;
 		}
+	}
+
+	private void		updateFlags()
+	{
+		_flags = 0;
+		for (KeyDown k : _downKeys)
+			_flags |= k.flags;
 	}
 
 	@Override
@@ -185,6 +202,7 @@ public class Keyboard2View extends View
 	{
 		float				x;
 		float				y;
+		boolean				upperCase = ((_flags & KeyValue.FLAG_SHIFT) != 0);
 
 		y = _verticalMargin;
 		for (KeyboardData.Row row : _keyboard.getRows())
@@ -200,22 +218,22 @@ public class Keyboard2View extends View
 					canvas.drawRoundRect(new RectF(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding), _keyRound, _keyRound, _keyBgPaint);
 				if (k.key0 != null)
-					canvas.drawText(k.key0.getSymbol(), keyW / 2 + x,
+					canvas.drawText(k.key0.getSymbol(upperCase), keyW / 2 + x,
 						(_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y, _keyLabelPaint);
 				float textOffsetY = _keySubLabelPaint.getTextSize() / 2;
 				float subPadding = _keyPadding + _keyBgPadding;
 				if (k.key1 != null)
-					canvas.drawText(k.key1.getSymbol(), x + subPadding,
+					canvas.drawText(k.key1.getSymbol(upperCase), x + subPadding,
 						y + subPadding + textOffsetY, _keySubLabelPaint);
 				if (k.key2 != null)
-					canvas.drawText(k.key2.getSymbol(), x + keyW - subPadding,
+					canvas.drawText(k.key2.getSymbol(upperCase), x + keyW - subPadding,
 						y + subPadding + textOffsetY, _keySubLabelPaint);
 				textOffsetY /= 2; // lol
 				if (k.key3 != null)
-					canvas.drawText(k.key3.getSymbol(), x + subPadding,
+					canvas.drawText(k.key3.getSymbol(upperCase), x + subPadding,
 						y + _keyHeight - subPadding + textOffsetY, _keySubLabelPaint);
 				if (k.key4 != null)
-					canvas.drawText(k.key4.getSymbol(), x + keyW - subPadding,
+					canvas.drawText(k.key4.getSymbol(upperCase), x + keyW - subPadding,
 						y + _keyHeight - subPadding + textOffsetY, _keySubLabelPaint);
 				x += keyW;
 			}
@@ -232,6 +250,7 @@ public class Keyboard2View extends View
 		public KeyboardData.Key	key;
 		public float			downX;
 		public float			downY;
+		public int				flags;
 
 		public KeyDown(int pointerId, KeyboardData.Key key, float x, float y)
 		{
@@ -240,6 +259,7 @@ public class Keyboard2View extends View
 			this.key = key;
 			downX = x;
 			downY = y;
+			flags = value.getFlags();
 		}
 
 		public boolean			updateDown(float x, float y)
@@ -249,6 +269,7 @@ public class Keyboard2View extends View
 			if (newValue != null && newValue != value)
 			{
 				value = newValue;
+				flags = newValue.getFlags();
 				return (true);
 			}
 			return (false);
