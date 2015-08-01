@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import java.util.Vector;
 
 public class Keyboard2View extends View
 	implements View.OnTouchListener
@@ -17,7 +18,7 @@ public class Keyboard2View extends View
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
 
-	private KeyValue		_downValue;
+	private Vector<KeyDown>	_downKeys;
 
 	private float			_verticalMargin;
 	private float			_horizontalMargin;
@@ -35,7 +36,7 @@ public class Keyboard2View extends View
 	{
 		super(context, attrs);
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
-		_downValue = null;
+		_downKeys = new Vector<KeyDown>();
 		_verticalMargin = getResources().getDimension(R.dimen.vertical_margin);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
@@ -92,24 +93,32 @@ public class Keyboard2View extends View
 		return (true);
 	}
 
+	private KeyDown		getKeyDown(int pointerId)
+	{
+		for (KeyDown k : _downKeys)
+		{
+			if (k.pointerId == pointerId)
+				return (k);
+		}
+		return (null);
+	}
+
+	private boolean		isKeyDown(KeyboardData.Key key)
+	{
+		for (KeyDown k : _downKeys)
+		{
+			if (k.key == key)
+				return (true);
+		}
+		return (false);
+	}
+
 	private void		onTouchMove(float moveX, float moveY, int pointerId)
 	{
-		for (KeyboardData.Row row : _keyboard.getRows())
-		{
-			for (KeyboardData.Key k : row)
-			{
-				if (k.downPointer == pointerId)
-				{
-					KeyValue v = k.getDownValue(moveX, moveY);
-					if (v != k.downValue)
-					{
-						k.downValue = v;
-						if (v != null)
-							_downValue = v;
-					}
-				}
-			}
-		}
+		KeyDown				k = getKeyDown(pointerId);
+
+		if (k != null)
+			k.updateDown(moveX, moveY);
 	}
 
 	private void		onTouchDown(float touchX, float touchY, int pointerId)
@@ -125,17 +134,12 @@ public class Keyboard2View extends View
 			if (touchY < y || touchY >= (y + _keyHeight))
 				continue ;
 			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2 + _horizontalMargin;
-			for (KeyboardData.Key k : row)
+			for (KeyboardData.Key key : row)
 			{
-				keyW = _keyWidth * k.width;
-				if (touchX >= x && touchX < (x + keyW) && k.downPointer == -1)
+				keyW = _keyWidth * key.width;
+				if (touchX >= x && touchX < (x + keyW))
 				{
-					if (k.key0 != null)
-						_downValue = k.key0;
-					k.downPointer = pointerId;
-					k.downValue = k.key0;
-					k.downX = touchX;
-					k.downY = touchY;
+					_downKeys.add(new KeyDown(pointerId, key, touchX, touchY));
 					invalidate();
 					return ;
 				}
@@ -146,36 +150,15 @@ public class Keyboard2View extends View
 
 	private void		onTouchUp(int pointerId)
 	{
-		for (KeyboardData.Row row : _keyboard.getRows())
-		{
-			for (KeyboardData.Key k : row)
-			{
-				if (k.downPointer == pointerId)
-				{
-					if (k.downValue != null)
-						_ime.handleKey(k.downValue);
-					_downValue = null;
-					k.downPointer = -1;
-					nextDownValue();
-					invalidate();
-					return ;
-				}
-			}
-		}
-	}
+		KeyDown				k = getKeyDown(pointerId);
 
-	private void		nextDownValue()
-	{
-		for (keyboardData.Row row : _keyboard.getRows())
+		if (k != null)
 		{
-			for (KeyboardData.Key k : row)
-			{
-				if (k.downPointer != -1)
-				{
-					_downValue = k.downValue;
-					return ;
-				}
-			}
+			if (k.value != null)
+				_ime.handleKey(k.value);
+			_downKeys.remove(k);
+			invalidate();
+			return ;
 		}
 	}
 
@@ -205,7 +188,7 @@ public class Keyboard2View extends View
 			for (KeyboardData.Key k : row)
 			{
 				float keyW = _keyWidth * k.width;
-				if (k.downPointer != -1)
+				if (isKeyDown(k))
 					canvas.drawRect(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding, _keyDownBgPaint);
 				else
@@ -232,6 +215,48 @@ public class Keyboard2View extends View
 				x += keyW;
 			}
 			y += _keyHeight;
+		}
+	}
+
+	private class KeyDown
+	{
+		private static final float	SUB_VALUE_DIST = 6f;
+
+		public int				pointerId;
+		public KeyValue			value;
+		public KeyboardData.Key	key;
+		public float			downX;
+		public float			downY;
+
+		public KeyDown(int pointerId, KeyboardData.Key key, float x, float y)
+		{
+			this.pointerId = pointerId;
+			this.value = key.key0;
+			this.key = key;
+			this.downX = x;
+			this.downY = y;
+		}
+
+		public void				updateDown(float x, float y)
+		{
+			value = getDownValue(x - downX, y - downY);
+			if (value == null)
+				value = key.key0;
+		}
+
+		private KeyValue		getDownValue(float x, float y)
+		{
+			if ((Math.abs(x) + Math.abs(y)) < SUB_VALUE_DIST)
+				return (key.key0);
+			if (x < 0)
+			{
+				if (y < 0)
+					return (key.key1);
+				return (key.key3);
+			}
+			else if (y < 0)
+				return (key.key2);
+			return (key.key4);
 		}
 	}
 }

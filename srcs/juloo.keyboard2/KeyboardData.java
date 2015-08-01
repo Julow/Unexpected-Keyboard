@@ -93,7 +93,6 @@ class KeyboardData
 
 		public Key(XmlResourceParser parser) throws Exception
 		{
-			downPointer = -1;
 			key0 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key0"));
 			key1 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key1"));
 			key2 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key2"));
@@ -109,31 +108,6 @@ class KeyboardData
 			}
 			while (parser.next() != XmlResourceParser.END_TAG)
 				continue ;
-		}
-
-		// TODO move it in Keyboard2View
-		private static final float	SUB_VALUE_DIST = 5f;
-
-		public int				downPointer;
-		public KeyValue			downValue;
-		public float			downX;
-		public float			downY;
-
-		public KeyValue			getDownValue(float x, float y)
-		{
-			x -= downX;
-			y -= downY;
-			if ((Math.abs(x) + Math.abs(y)) < SUB_VALUE_DIST)
-				return (key0);
-			if (x < 0)
-			{
-				if (y < 0)
-					return ((key1 == null) ? key0 : key1);
-				return ((key3 == null) ? key0 : key3);
-			}
-			else if (y < 0)
-				return ((key2 == null) ? key0 : key2);
-			return ((key4 == null) ? key0 : key4);
 		}
 	}
 }
