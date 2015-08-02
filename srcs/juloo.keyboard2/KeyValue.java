@@ -10,9 +10,12 @@ class KeyValue
 	public static final int	EVENT_DELETE = -3;
 
 	public static final int FLAG_KEEP_ON = 1;
-	public static final int FLAG_CTRL = (1 << 1);
-	public static final int FLAG_SHIFT = (1 << 2);
-	public static final int FLAG_ALT = (1 << 3);
+	public static final int FLAG_LOCK = (1 << 1);
+	public static final int FLAG_CTRL = (1 << 2);
+	public static final int FLAG_SHIFT = (1 << 3);
+	public static final int FLAG_ALT = (1 << 4);
+	public static final int FLAG_NOCHAR = (1 << 5);
+	public static final int FLAG_LOCKED = (1 << 8);
 
 	private String		_name;
 	private String		_symbol;
@@ -92,9 +95,9 @@ class KeyValue
 		for (int i = 0; i < chars.length(); i++)
 			new KeyValue(chars.substring(i, i + 1));
 
-		new KeyValue("shift", "⇧", '\0', EVENT_NONE, FLAG_KEEP_ON | FLAG_SHIFT);
-		new KeyValue("ctrl", "Ctrl", '\0', EVENT_NONE, FLAG_KEEP_ON | FLAG_CTRL);
-		new KeyValue("alt", "Alt", '\0', EVENT_NONE, FLAG_KEEP_ON | FLAG_ALT);
+		new KeyValue("shift", "⇧", 'S', EVENT_NONE, FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_LOCK | FLAG_SHIFT);
+		new KeyValue("ctrl", "Ctrl", 'C', EVENT_NONE, FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_CTRL);
+		new KeyValue("alt", "Alt", 'A', EVENT_NONE, FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ALT);
 
 		new KeyValue("backspace", "⌫", EVENT_BACKSPACE);
 		new KeyValue("delete", "⌦", EVENT_DELETE);

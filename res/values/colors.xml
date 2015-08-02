@@ -4,5 +4,6 @@
 	<item name="key_bg" type="color">#282828</item>
 	<item name="key_down_bg" type="color">#1B1B1B</item>
 	<item name="key_label" type="color">#DDDDDD</item>
+	<item name="key_label_locked" type="color">#229933</item>
 	<item name="key_sub_label" type="color">#BDBDBD</item>
 </resources>

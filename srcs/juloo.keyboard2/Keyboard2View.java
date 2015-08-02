@@ -33,6 +33,7 @@ public class Keyboard2View extends View
 	private Paint			_keyBgPaint = new Paint();
 	private Paint			_keyDownBgPaint = new Paint();
 	private Paint			_keyLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private Paint			_keyLabelLockedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private Paint			_keySubLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 	public Keyboard2View(Context context, AttributeSet attrs)
@@ -51,6 +52,9 @@ public class Keyboard2View extends View
 		_keyLabelPaint.setColor(getResources().getColor(R.color.key_label));
 		_keyLabelPaint.setTextSize(getResources().getDimension(R.dimen.label_text_size));
 		_keyLabelPaint.setTextAlign(Paint.Align.CENTER);
+		_keyLabelLockedPaint.setColor(getResources().getColor(R.color.key_label_locked));
+		_keyLabelLockedPaint.setTextSize(getResources().getDimension(R.dimen.label_text_size));
+		_keyLabelLockedPaint.setTextAlign(Paint.Align.CENTER);
 		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
 		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
 		_keySubLabelPaint.setTextAlign(Paint.Align.CENTER);
@@ -141,7 +145,12 @@ public class Keyboard2View extends View
 					KeyDown down = getKeyDown(key);
 					if (down != null)
 					{
-						if (down.pointerId == -1)
+						if ((down.flags & KeyValue.FLAG_LOCK) != 0)
+						{
+							down.flags ^= KeyValue.FLAG_LOCK;
+							down.flags |= KeyValue.FLAG_LOCKED;
+						}
+						else if (down.pointerId == -1)
 							down.pointerId = pointerId;
 					}
 					else
@@ -170,12 +179,12 @@ public class Keyboard2View extends View
 			for (int i = 0; i < _downKeys.size(); i++)
 			{
 				KeyDown downKey = _downKeys.get(i);
-				if (downKey.pointerId == -1)
+				if (downKey.pointerId == -1 && (downKey.flags & KeyValue.FLAG_LOCKED) == 0)
 					_downKeys.remove(i--);
 				else if ((downKey.flags & KeyValue.FLAG_KEEP_ON) != 0)
 					downKey.flags ^= KeyValue.FLAG_KEEP_ON;
 			}
-			if (k.value != null)
+			if (k.value != null && (k.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
 				_ime.handleKeyUp(k.value, _flags);
 			_downKeys.remove(k);
 			updateFlags();
@@ -218,7 +227,8 @@ public class Keyboard2View extends View
 			for (KeyboardData.Key k : row)
 			{
 				float keyW = _keyWidth * k.width;
-				if (getKeyDown(k) != null)
+				KeyDown keyDown = getKeyDown(k);
+				if (keyDown != null)
 					canvas.drawRect(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding, _keyDownBgPaint);
 				else
@@ -226,7 +236,9 @@ public class Keyboard2View extends View
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding), _keyRound, _keyRound, _keyBgPaint);
 				if (k.key0 != null)
 					canvas.drawText(k.key0.getSymbol(upperCase), keyW / 2 + x,
-						(_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y, _keyLabelPaint);
+						(_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y,
+						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0)
+							? _keyLabelLockedPaint : _keyLabelPaint);
 				float textOffsetY = _keySubLabelPaint.getTextSize() / 2;
 				float subPadding = _keyPadding + _keyBgPadding;
 				if (k.key1 != null)
