@@ -6,6 +6,7 @@ import android.graphics.RectF;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import java.util.LinkedList;
@@ -14,6 +15,8 @@ public class Keyboard2View extends View
 	implements View.OnTouchListener
 {
 	private static final float	KEY_PER_ROW = 10;
+	private static final long	VIBRATE_LONG = 25;
+	private static final long	VIBRATE_MIN_INTERVAL = 100;
 
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
@@ -21,6 +24,9 @@ public class Keyboard2View extends View
 	private LinkedList<KeyDown>	_downKeys = new LinkedList<KeyDown>();
 
 	private int				_flags = 0;
+
+	private Vibrator		_vibratorService;
+	private long			_lastVibration = 0;
 
 	private float			_verticalMargin;
 	private float			_horizontalMargin;
@@ -39,6 +45,7 @@ public class Keyboard2View extends View
 	public Keyboard2View(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_verticalMargin = getResources().getDimension(R.dimen.vertical_margin);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
@@ -119,7 +126,10 @@ public class Keyboard2View extends View
 		KeyDown				k = getKeyDown(pointerId);
 
 		if (k != null && k.updateDown(moveX, moveY))
+		{
 			updateFlags();
+			vibrate();
+		}
 	}
 
 	private void		onTouchDown(float touchX, float touchY, int pointerId)
@@ -153,6 +163,7 @@ public class Keyboard2View extends View
 					}
 					else
 						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY));
+					vibrate();
 					updateFlags();
 					invalidate();
 					return ;
@@ -196,6 +207,24 @@ public class Keyboard2View extends View
 		_flags = 0;
 		for (KeyDown k : _downKeys)
 			_flags |= k.flags;
+	}
+
+	private void		vibrate()
+	{
+		long		now = System.currentTimeMillis();
+
+		if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
+		{
+			_lastVibration = now;
+			try
+			{
+				_vibratorService.vibrate(VIBRATE_LONG);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
