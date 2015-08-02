@@ -132,7 +132,7 @@ class KeyValue
 		new KeyValue("end",		"↗", 	CHAR_NONE,	KeyEvent.KEYCODE_MOVE_END,	0);
 		new KeyValue("backspace", "⌫",	CHAR_NONE,	KeyEvent.KEYCODE_DEL,		0);
 		new KeyValue("delete",	"⌦",	CHAR_NONE,	KeyEvent.KEYCODE_FORWARD_DEL, 0);
-		new KeyValue("insert",	"Insert",	CHAR_NONE,	KeyEvent.KEYCODE_INSERT,	0);
+		new KeyValue("insert",	"Ins",	CHAR_NONE,	KeyEvent.KEYCODE_INSERT,	0);
 
 		new KeyValue("tab",		"↹",	'\t',		EVENT_NONE,			0);
 		new KeyValue("space",	" ",	' ',		EVENT_NONE,			0);

@@ -223,7 +223,7 @@ public class Keyboard2View extends View
 		y = _verticalMargin;
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
-			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2 + _horizontalMargin;
+			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2f + _horizontalMargin;
 			for (KeyboardData.Key k : row)
 			{
 				float keyW = _keyWidth * k.width;
@@ -235,25 +235,37 @@ public class Keyboard2View extends View
 					canvas.drawRoundRect(new RectF(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding), _keyRound, _keyRound, _keyBgPaint);
 				if (k.key0 != null)
-					canvas.drawText(k.key0.getSymbol(upperCase), keyW / 2 + x,
-						(_keyHeight + _keyLabelPaint.getTextSize()) / 2 + y,
+					canvas.drawText(k.key0.getSymbol(upperCase), keyW / 2f + x,
+						(_keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0)
 							? _keyLabelLockedPaint : _keyLabelPaint);
-				float textOffsetY = _keySubLabelPaint.getTextSize() / 2;
-				float subPadding = _keyPadding + _keyBgPadding;
+				float textOffsetY = -_keySubLabelPaint.ascent();
+				float subPadding = _keyBgPadding + _keyPadding;
 				if (k.key1 != null)
+				{
+					_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 					canvas.drawText(k.key1.getSymbol(upperCase), x + subPadding,
 						y + subPadding + textOffsetY, _keySubLabelPaint);
+				}
 				if (k.key2 != null)
+				{
+					_keySubLabelPaint.setTextAlign(Paint.Align.RIGHT);
 					canvas.drawText(k.key2.getSymbol(upperCase), x + keyW - subPadding,
 						y + subPadding + textOffsetY, _keySubLabelPaint);
-				textOffsetY /= 2; // lol
+				}
+				textOffsetY = _keySubLabelPaint.descent();
 				if (k.key3 != null)
+				{
+					_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 					canvas.drawText(k.key3.getSymbol(upperCase), x + subPadding,
-						y + _keyHeight - subPadding + textOffsetY, _keySubLabelPaint);
+						y + _keyHeight - subPadding - textOffsetY, _keySubLabelPaint);
+				}
 				if (k.key4 != null)
+				{
+					_keySubLabelPaint.setTextAlign(Paint.Align.RIGHT);
 					canvas.drawText(k.key4.getSymbol(upperCase), x + keyW - subPadding,
-						y + _keyHeight - subPadding + textOffsetY, _keySubLabelPaint);
+						y + _keyHeight - subPadding - textOffsetY, _keySubLabelPaint);
+				}
 				x += keyW;
 			}
 			y += _keyHeight;

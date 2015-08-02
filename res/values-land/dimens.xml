@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="horizontal_margin">10dp</dimen>
-	<dimen name="key_padding">7dp</dimen>
+	<dimen name="horizontal_margin">12dp</dimen>
+	<dimen name="key_padding">3dp</dimen>
 	<dimen name="key_height">37dp</dimen>
 	<dimen name="label_text_size">18dp</dimen>
 	<dimen name="sublabel_text_size">11dp</dimen>

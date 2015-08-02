@@ -2,7 +2,7 @@
 <resources>
 	<dimen name="vertical_margin">3dp</dimen>
 	<dimen name="horizontal_margin">2dp</dimen>
-	<dimen name="key_padding">5dp</dimen>
+	<dimen name="key_padding">1dp</dimen>
 	<dimen name="key_bg_padding">1dp</dimen>
 	<dimen name="key_height">44dp</dimen>
 	<dimen name="key_round">4dp</dimen>
