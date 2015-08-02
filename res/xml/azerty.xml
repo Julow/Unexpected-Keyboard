@@ -33,7 +33,7 @@
 		<key key0="b" key2="/" key4=":" />
 		<key key0="n" key2="§" key4="!" />
 		<key key1="up" key2="right" key3="left" key4="down" />
-		<key width="1.6" key0="backspace" key2="delete" />
+		<key width="1.6" key0="backspace" key1="insert" key2="delete" />
 	</row>
 	<row>
 		<key width="1.6" key0="ctrl" />
