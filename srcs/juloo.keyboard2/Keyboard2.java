@@ -31,6 +31,8 @@ public class Keyboard2 extends InputMethodService
 	{
 		int			eventCode = key.getEventCode();
 
+		if (getCurrentInputConnection() == null)
+			return ; // TODO wait a little before give up
 		switch (eventCode)
 		{
 		case KeyValue.EVENT_NONE:

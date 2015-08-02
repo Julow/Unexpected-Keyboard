@@ -102,14 +102,14 @@ public class Keyboard2View extends View
 		return (null);
 	}
 
-	private boolean		isKeyDown(KeyboardData.Key key)
+	private KeyDown		getKeyDown(KeyboardData.Key key)
 	{
 		for (KeyDown k : _downKeys)
 		{
 			if (k.key == key)
-				return (true);
+				return (k);
 		}
-		return (false);
+		return (null);
 	}
 
 	private void		onTouchMove(float moveX, float moveY, int pointerId)
@@ -138,7 +138,14 @@ public class Keyboard2View extends View
 				keyW = _keyWidth * key.width;
 				if (touchX >= x && touchX < (x + keyW))
 				{
-					_downKeys.add(new KeyDown(pointerId, key, touchX, touchY));
+					KeyDown down = getKeyDown(key);
+					if (down != null)
+					{
+						if (down.pointerId == -1)
+							down.pointerId = pointerId;
+					}
+					else
+						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY));
 					updateFlags();
 					invalidate();
 					return ;
@@ -211,7 +218,7 @@ public class Keyboard2View extends View
 			for (KeyboardData.Key k : row)
 			{
 				float keyW = _keyWidth * k.width;
-				if (isKeyDown(k))
+				if (getKeyDown(k) != null)
 					canvas.drawRect(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding, _keyDownBgPaint);
 				else
@@ -259,7 +266,7 @@ public class Keyboard2View extends View
 			this.key = key;
 			downX = x;
 			downY = y;
-			flags = value.getFlags();
+			flags = (value == null) ? 0 : value.getFlags();
 		}
 
 		public boolean			updateDown(float x, float y)
