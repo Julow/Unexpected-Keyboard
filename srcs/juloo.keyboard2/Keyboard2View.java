@@ -39,14 +39,12 @@ public class Keyboard2View extends View
 	public Keyboard2View(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-		DisplayMetrics dm = context.getResources().getDisplayMetrics();
 		_verticalMargin = getResources().getDimension(R.dimen.vertical_margin);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
 		_keyPadding = getResources().getDimension(R.dimen.key_padding);
 		_keyBgPadding = getResources().getDimension(R.dimen.key_bg_padding);
 		_keyRound = getResources().getDimension(R.dimen.key_round);
-		_keyWidth = (dm.widthPixels - (_horizontalMargin * 2)) / KEY_PER_ROW;
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
 		_keyLabelPaint.setColor(getResources().getColor(R.color.key_label));
@@ -203,6 +201,7 @@ public class Keyboard2View extends View
 	@Override
 	public void			onMeasure(int wSpec, int hSpec)
 	{
+		DisplayMetrics		dm = getContext().getResources().getDisplayMetrics();
 		int					height;
 
 		if (_keyboard.getRows() == null)
@@ -210,7 +209,8 @@ public class Keyboard2View extends View
 		else
 			height = (int)(_keyHeight * ((float)_keyboard.getRows().size())
 				+ (_verticalMargin * 2));
-		setMeasuredDimension(MeasureSpec.getSize(wSpec), height);
+		setMeasuredDimension(dm.widthPixels, height);
+		_keyWidth = (getWidth() - (_horizontalMargin * 2)) / KEY_PER_ROW;
 	}
 
 	@Override
