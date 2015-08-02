@@ -29,25 +29,43 @@ public class Keyboard2 extends InputMethodService
 
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
-		int			eventCode = key.getEventCode();
-
 		if (getCurrentInputConnection() == null)
-			return ; // TODO wait a little before give up
-		switch (eventCode)
+			return ;
+		if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 		{
-		case KeyValue.EVENT_NONE:
-			sendKeyChar(key.getChar((flags & KeyValue.FLAG_SHIFT) != 0));
-			break ;
-		case KeyValue.EVENT_DELETE:
-			getCurrentInputConnection().deleteSurroundingText(0, 1);
-			break ;
-		case KeyValue.EVENT_BACKSPACE:
+			int			metaState = 0;
+			KeyEvent	event;
+
+			if (key.getEventCode() == KeyValue.EVENT_NONE)
+				return ;
+			if ((flags & KeyValue.FLAG_CTRL) != 0)
+				metaState |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON;
+			if ((flags & KeyValue.FLAG_ALT) != 0)
+				metaState |= KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON;
+			if ((flags & KeyValue.FLAG_SHIFT) != 0)
+				metaState |= KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON;
+			event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.getEventCode(), 1, metaState);
+			getCurrentInputConnection().sendKeyEvent(event);
+			getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+		}
+		else if (key.getEventCode() == KeyEvent.KEYCODE_DEL)
+		{
 			getCurrentInputConnection().deleteSurroundingText(1, 0);
-			break ;
-		default:
-			getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, eventCode));
-			getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, eventCode));
-			break ;
+		}
+		else if (key.getEventCode() == KeyEvent.KEYCODE_FORWARD_DEL)
+		{
+			getCurrentInputConnection().deleteSurroundingText(0, 1);
+		}
+		else if (key.getChar(false) == KeyValue.CHAR_NONE && key.getEventCode() != KeyValue.EVENT_NONE)
+		{
+			KeyEvent	event = new KeyEvent(KeyEvent.ACTION_DOWN, key.getEventCode());
+
+			getCurrentInputConnection().sendKeyEvent(event);
+			getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+		}
+		else
+		{
+			sendKeyChar(key.getChar((flags & KeyValue.FLAG_SHIFT) != 0));
 		}
 	}
 
