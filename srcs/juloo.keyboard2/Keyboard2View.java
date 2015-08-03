@@ -15,8 +15,14 @@ public class Keyboard2View extends View
 	implements View.OnTouchListener
 {
 	private static final float	KEY_PER_ROW = 10;
+
+	private static final float	SUB_VALUE_DIST = 6f;
+
 	private static final long	VIBRATE_LONG = 25;
 	private static final long	VIBRATE_MIN_INTERVAL = 100;
+
+	private static final long	LONGPRESS_TIMEOUT = 800;
+	private static final long	LONGPRESS_INTERVAL = 90;
 
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
@@ -62,7 +68,6 @@ public class Keyboard2View extends View
 		_keyLabelLockedPaint.setTextAlign(Paint.Align.CENTER);
 		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
 		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
-		_keySubLabelPaint.setTextAlign(Paint.Align.CENTER);
 		setOnTouchListener(this);
 	}
 
@@ -123,12 +128,38 @@ public class Keyboard2View extends View
 
 	private void		onTouchMove(float moveX, float moveY, int pointerId)
 	{
-		KeyDown				k = getKeyDown(pointerId);
+		KeyDown				key = getKeyDown(pointerId);
+		KeyValue			newValue;
 
-		if (k != null && k.updateDown(moveX, moveY))
+		if (key != null)
 		{
-			updateFlags();
-			vibrate();
+			moveX -= key.downX;
+			moveY -= key.downY;
+			if ((Math.abs(moveX) + Math.abs(moveY)) < SUB_VALUE_DIST)
+				newValue = key.key.key0;
+			else if (moveX < 0)
+				newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
+			else if (moveY < 0)
+				newValue = key.key.key2;
+			else
+				newValue = key.key.key4;
+			if (newValue != null && newValue != key.value)
+			{
+				key.setValue(newValue);
+				updateFlags();
+				vibrate();
+			}
+			else if (key.value != null && (key.flags & KeyValue.FLAG_NOCHAR) == 0)
+			{
+				long		now = System.currentTimeMillis();
+
+				if (now >= key.nextPress)
+				{
+					key.nextPress = now + LONGPRESS_INTERVAL;
+					_ime.handleKeyUp(key.value, _flags);
+					vibrate();
+				}
+			}
 		}
 	}
 
@@ -268,33 +299,21 @@ public class Keyboard2View extends View
 						(_keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0)
 							? _keyLabelLockedPaint : _keyLabelPaint);
-				float textOffsetY = -_keySubLabelPaint.ascent();
 				float subPadding = _keyBgPadding + _keyPadding;
+				_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 				if (k.key1 != null)
-				{
-					_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 					canvas.drawText(k.key1.getSymbol(upperCase), x + subPadding,
-						y + subPadding + textOffsetY, _keySubLabelPaint);
-				}
-				if (k.key2 != null)
-				{
-					_keySubLabelPaint.setTextAlign(Paint.Align.RIGHT);
-					canvas.drawText(k.key2.getSymbol(upperCase), x + keyW - subPadding,
-						y + subPadding + textOffsetY, _keySubLabelPaint);
-				}
-				textOffsetY = _keySubLabelPaint.descent();
+						y + subPadding - _keySubLabelPaint.ascent(), _keySubLabelPaint);
 				if (k.key3 != null)
-				{
-					_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 					canvas.drawText(k.key3.getSymbol(upperCase), x + subPadding,
-						y + _keyHeight - subPadding - textOffsetY, _keySubLabelPaint);
-				}
+						y + _keyHeight - subPadding - _keySubLabelPaint.descent(), _keySubLabelPaint);
+				_keySubLabelPaint.setTextAlign(Paint.Align.RIGHT);
+				if (k.key2 != null)
+					canvas.drawText(k.key2.getSymbol(upperCase), x + keyW - subPadding,
+						y + subPadding - _keySubLabelPaint.ascent(), _keySubLabelPaint);
 				if (k.key4 != null)
-				{
-					_keySubLabelPaint.setTextAlign(Paint.Align.RIGHT);
 					canvas.drawText(k.key4.getSymbol(upperCase), x + keyW - subPadding,
-						y + _keyHeight - subPadding - textOffsetY, _keySubLabelPaint);
-				}
+						y + _keyHeight - subPadding - _keySubLabelPaint.descent(), _keySubLabelPaint);
 				x += keyW;
 			}
 			y += _keyHeight;
@@ -303,51 +322,28 @@ public class Keyboard2View extends View
 
 	private class KeyDown
 	{
-		private static final float	SUB_VALUE_DIST = 6f;
-
 		public int				pointerId;
 		public KeyValue			value;
 		public KeyboardData.Key	key;
 		public float			downX;
 		public float			downY;
 		public int				flags;
+		public long				nextPress;
 
 		public KeyDown(int pointerId, KeyboardData.Key key, float x, float y)
 		{
 			this.pointerId = pointerId;
-			value = key.key0;
 			this.key = key;
 			downX = x;
 			downY = y;
-			flags = (value == null) ? 0 : value.getFlags();
+			setValue(key.key0);
 		}
 
-		public boolean			updateDown(float x, float y)
+		public void				setValue(KeyValue v)
 		{
-			KeyValue		newValue = getDownValue(x - downX, y - downY);
-
-			if (newValue != null && newValue != value)
-			{
-				value = newValue;
-				flags = newValue.getFlags();
-				return (true);
-			}
-			return (false);
-		}
-
-		private KeyValue		getDownValue(float x, float y)
-		{
-			if ((Math.abs(x) + Math.abs(y)) < SUB_VALUE_DIST)
-				return (key.key0);
-			if (x < 0)
-			{
-				if (y < 0)
-					return (key.key1);
-				return (key.key3);
-			}
-			else if (y < 0)
-				return (key.key2);
-			return (key.key4);
+			value = v;
+			flags = (value == null) ? 0 : v.getFlags();
+			nextPress = System.currentTimeMillis() + LONGPRESS_TIMEOUT;
 		}
 	}
 }

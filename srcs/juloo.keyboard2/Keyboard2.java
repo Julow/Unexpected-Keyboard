@@ -63,7 +63,7 @@ public class Keyboard2 extends InputMethodService
 			getCurrentInputConnection().sendKeyEvent(event);
 			getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
 		}
-		else
+		else if (key.getChar(false) != KeyValue.CHAR_NONE)
 		{
 			sendKeyChar(key.getChar((flags & KeyValue.FLAG_SHIFT) != 0));
 		}
