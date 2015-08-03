@@ -16,7 +16,7 @@ public class Keyboard2View extends View
 {
 	private static final float	KEY_PER_ROW = 10;
 
-	private static final float	SUB_VALUE_DIST = 6f;
+	private static final float	SUB_VALUE_DIST = 7f;
 
 	private static final long	VIBRATE_LONG = 25;
 	private static final long	VIBRATE_MIN_INTERVAL = 100;
