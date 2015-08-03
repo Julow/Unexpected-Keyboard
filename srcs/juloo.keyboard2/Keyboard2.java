@@ -10,13 +10,13 @@ public class Keyboard2 extends InputMethodService
 	public static final String		TAG = "Keyboard_2.0";
 
 	private KeyboardData	_keyboardData;
-	private Keyboard2View	_inputView;
+	private Keyboard2View	_inputView = null;
 
 	@Override
 	public void				onCreate()
 	{
 		super.onCreate();
-		_keyboardData = new KeyboardData(getResources().getXml(R.xml.azerty));
+		setKeyboard(R.xml.azerty);
 	}
 
 	@Override
@@ -27,11 +27,42 @@ public class Keyboard2 extends InputMethodService
 		return (_inputView);
 	}
 
+	private void			setKeyboard(int res)
+	{
+		_keyboardData = new KeyboardData(getResources().getXml(res));
+		if (_inputView != null)
+			_inputView.setKeyboard(this, _keyboardData);
+	}
+
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
 		if (getCurrentInputConnection() == null)
 			return ;
-		if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
+		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
+		{
+			// TODO improve this shit
+			final CharSequence layouts[] = new CharSequence[]{"Azerty", "Qwerty"};
+			final int layout_res[] = new int[]{R.xml.azerty, R.xml.qwerty};
+			final Keyboard2 self = this;
+			android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this)
+				.setTitle("Change keyboard layout")
+				.setItems(layouts, new android.content.DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(android.content.DialogInterface dialog, int which)
+					{
+						self.setKeyboard(layout_res[which]);
+					}
+				})
+				.create();
+			android.view.WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+				lp.token = _inputView.getWindowToken();
+				lp.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+				dialog.getWindow().setAttributes(lp);
+				dialog.getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+			dialog.show();
+		}
+		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
 		else if (key.getEventCode() == KeyEvent.KEYCODE_DEL)
 			handleDelKey(1, 0);

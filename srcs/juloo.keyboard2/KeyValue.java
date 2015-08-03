@@ -6,6 +6,7 @@ import java.util.HashMap;
 class KeyValue
 {
 	public static final int		EVENT_NONE = -1;
+	public static final int		EVENT_CONFIG = -2;
 	public static final char	CHAR_NONE = '\0';
 
 	public static final int		FLAG_KEEP_ON = 1;
@@ -121,6 +122,7 @@ class KeyValue
 		new KeyValue("8",		"8",	'8',		KeyEvent.KEYCODE_8,	0);
 		new KeyValue("9",		"9",	'9',		KeyEvent.KEYCODE_9,	0);
 
+		new KeyValue("config",	"Conf", CHAR_NONE,	EVENT_CONFIG,				0);
 		new KeyValue("enter",	"↵", 	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,		0);
 		new KeyValue("up",		"↑", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_UP,	0);
 		new KeyValue("right",	"→", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_RIGHT, 0);

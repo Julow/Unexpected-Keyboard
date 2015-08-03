@@ -75,6 +75,8 @@ public class Keyboard2View extends View
 	{
 		_ime = ime;
 		_keyboard = keyboardData;
+		requestLayout();
+		invalidate();
 	}
 
 	@Override
