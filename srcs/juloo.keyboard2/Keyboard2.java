@@ -38,6 +38,18 @@ public class Keyboard2 extends InputMethodService
 	{
 		if (getCurrentInputConnection() == null)
 			return ;
+		// DEBUG
+		if (_inputView.isHardwareAccelerated())
+			log("LOL isHardwareAccelerated");
+		String k = "Key ";
+		if ((flags & KeyValue.FLAG_CTRL) != 0)
+			k += "Ctrl-";
+		if ((flags & KeyValue.FLAG_ALT) != 0)
+			k += "Alt-";
+		if ((flags & KeyValue.FLAG_SHIFT) != 0)
+			k += "Shift-";
+		log(k + key.getName());
+		// -
 		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
 		{
 			// TODO improve this shit
