@@ -6,23 +6,25 @@ import android.graphics.RectF;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import java.util.LinkedList;
 
 public class Keyboard2View extends View
-	implements View.OnTouchListener
+	implements View.OnTouchListener, Handler.Callback
 {
 	private static final float	KEY_PER_ROW = 10;
 
 	private static final float	SUB_VALUE_DIST = 7f;
 
-	private static final long	VIBRATE_LONG = 25;
+	private static final long	VIBRATE_DURATION = 20;
 	private static final long	VIBRATE_MIN_INTERVAL = 100;
 
-	private static final long	LONGPRESS_TIMEOUT = 800;
-	private static final long	LONGPRESS_INTERVAL = 90;
+	private static final long	LONGPRESS_TIMEOUT = 600;
+	private static final long	LONGPRESS_INTERVAL = 65;
 
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
@@ -33,6 +35,9 @@ public class Keyboard2View extends View
 
 	private Vibrator		_vibratorService;
 	private long			_lastVibration = 0;
+
+	private Handler			_handler;
+	private static int		_currentWhat = 0;
 
 	private float			_verticalMargin;
 	private float			_horizontalMargin;
@@ -52,6 +57,7 @@ public class Keyboard2View extends View
 	{
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+		_handler = new Handler(this);
 		_verticalMargin = getResources().getDimension(R.dimen.vertical_margin);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
@@ -147,20 +153,15 @@ public class Keyboard2View extends View
 				newValue = key.key.key4;
 			if (newValue != null && newValue != key.value)
 			{
-				key.setValue(newValue);
+				if (key.timeoutWhat != -1)
+				{
+					_handler.removeMessages(key.timeoutWhat);
+					_handler.sendEmptyMessageDelayed(key.timeoutWhat, LONGPRESS_TIMEOUT);
+				}
+				key.value = newValue;
+				key.flags = newValue.getFlags();
 				updateFlags();
 				vibrate();
-			}
-			else if (key.value != null && (key.flags & KeyValue.FLAG_NOCHAR) == 0)
-			{
-				long		now = System.currentTimeMillis();
-
-				if (now >= key.nextPress)
-				{
-					key.nextPress = now + LONGPRESS_INTERVAL;
-					_ime.handleKeyUp(key.value, _flags);
-					vibrate();
-				}
 			}
 		}
 	}
@@ -195,7 +196,11 @@ public class Keyboard2View extends View
 							down.pointerId = pointerId;
 					}
 					else
-						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY));
+					{
+						int what = _currentWhat++;
+						_handler.sendEmptyMessageDelayed(what, LONGPRESS_TIMEOUT);
+						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
+					}
 					vibrate();
 					updateFlags();
 					invalidate();
@@ -212,6 +217,11 @@ public class Keyboard2View extends View
 
 		if (k != null)
 		{
+			if (k.timeoutWhat != -1)
+			{
+				_handler.removeMessages(k.timeoutWhat);
+				k.timeoutWhat = -1;
+			}
 			if ((k.flags & KeyValue.FLAG_KEEP_ON) != 0)
 			{
 				k.flags ^= KeyValue.FLAG_KEEP_ON;
@@ -251,13 +261,32 @@ public class Keyboard2View extends View
 			_lastVibration = now;
 			try
 			{
-				_vibratorService.vibrate(VIBRATE_LONG);
+				_vibratorService.vibrate(VIBRATE_DURATION);
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public boolean		handleMessage(Message msg)
+	{
+		long				now = System.currentTimeMillis();
+
+		for (KeyDown key : _downKeys)
+		{
+			if (key.timeoutWhat == msg.what)
+			{
+				_handler.sendEmptyMessageDelayed(msg.what, LONGPRESS_INTERVAL);
+				_ime.handleKeyUp(key.value, _flags);
+				vibrate();
+				return (true);
+			}
+		}
+		Keyboard2.log("problem: cannot handle this message");
+		return (false);
 	}
 
 	@Override
@@ -330,22 +359,17 @@ public class Keyboard2View extends View
 		public float			downX;
 		public float			downY;
 		public int				flags;
-		public long				nextPress;
+		public int				timeoutWhat;
 
-		public KeyDown(int pointerId, KeyboardData.Key key, float x, float y)
+		public KeyDown(int pointerId, KeyboardData.Key key, float x, float y, int what)
 		{
 			this.pointerId = pointerId;
+			value = key.key0;
 			this.key = key;
 			downX = x;
 			downY = y;
-			setValue(key.key0);
-		}
-
-		public void				setValue(KeyValue v)
-		{
-			value = v;
-			flags = (value == null) ? 0 : v.getFlags();
-			nextPress = System.currentTimeMillis() + LONGPRESS_TIMEOUT;
+			flags = (value == null) ? 0 : value.getFlags();
+			timeoutWhat = what;
 		}
 	}
 }
