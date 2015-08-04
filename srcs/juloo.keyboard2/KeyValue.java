@@ -136,7 +136,7 @@ class KeyValue
 		new KeyValue("delete",	"⌦",	CHAR_NONE,	KeyEvent.KEYCODE_FORWARD_DEL, 0);
 		new KeyValue("insert",	"Ins",	CHAR_NONE,	KeyEvent.KEYCODE_INSERT,	0);
 
-		new KeyValue("tab",		"↹",	'\t',		EVENT_NONE,			0);
-		new KeyValue("space",	" ",	' ',		EVENT_NONE,			0);
+		new KeyValue("tab",		"↹",	'\t',		KeyEvent.KEYCODE_TAB,		0);
+		new KeyValue("space",	" ",	' ',		KeyEvent.KEYCODE_SPACE,		0);
 	}
 }
