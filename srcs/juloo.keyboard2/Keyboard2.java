@@ -39,8 +39,6 @@ public class Keyboard2 extends InputMethodService
 		if (getCurrentInputConnection() == null)
 			return ;
 		// DEBUG
-		if (_inputView.isHardwareAccelerated())
-			log("LOL isHardwareAccelerated");
 		String k = "Key ";
 		if ((flags & KeyValue.FLAG_CTRL) != 0)
 			k += "Ctrl-";
