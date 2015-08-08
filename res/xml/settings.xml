@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/pref_category_layout">
+		<!-- Keyboard layout -->
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_category_typing">
+		<!-- Precision (SUB_VALUE_DIST) -->
+		<!-- Key repeat timeout (LONGPRESS_TIMEOUT) -->
+		<!-- Key repeat interval (LONGPRESS_INTERVAL) -->
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_category_vibrate">
+		<CheckBoxPreference
+			android:key="vibrate_enabled"
+			android:title="@string/pref_vibrate_text"
+			android:summary="@string/pref_vibrate_summary"
+			android:defaultValue="true" />
+		<!-- Duration (VIBRATE_DURATION) -->
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_category_misc">
+		<!-- Keys height (_keyHeight) -->
+		<!-- Offset height (_marginBottom) -->
+	</PreferenceCategory>
+</PreferenceScreen>

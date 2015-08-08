@@ -1,35 +1,35 @@
 package juloo.keyboard2;
 
+import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 
 public class Keyboard2 extends InputMethodService
+	implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-	private KeyboardData	_keyboardData; // TODO: settings
 	private Keyboard2View	_inputView = null;
 
 	@Override
 	public void				onCreate()
 	{
 		super.onCreate();
-		setKeyboard(R.xml.azerty);
+		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+		_inputView = (Keyboard2View)getLayoutInflater().inflate(R.layout.input, null);
+		_inputView.reset_prefs(this);
 	}
 
 	@Override
 	public View				onCreateInputView()
 	{
-		_inputView = (Keyboard2View)getLayoutInflater().inflate(R.layout.input, null);
-		_inputView.setKeyboard(this, _keyboardData);
+		_inputView.reset();
 		return (_inputView);
 	}
 
-	private void			setKeyboard(int res)
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
-		_keyboardData = new KeyboardData(getResources().getXml(res));
-		if (_inputView != null)
-			_inputView.setKeyboard(this, _keyboardData);
+		_inputView.reset_prefs(this);
 	}
 
 	public void				handleKeyUp(KeyValue key, int flags)
@@ -38,27 +38,7 @@ public class Keyboard2 extends InputMethodService
 			return ;
 		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
 		{
-			// TODO improve this shit
-			final CharSequence layouts[] = new CharSequence[]{"Azerty", "Qwerty"};
-			final int layout_res[] = new int[]{R.xml.azerty, R.xml.qwerty};
-			final Keyboard2 self = this;
-			android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this)
-				.setTitle("Change keyboard layout")
-				.setItems(layouts, new android.content.DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(android.content.DialogInterface dialog, int which)
-					{
-						self.setKeyboard(layout_res[which]);
-					}
-				})
-				.create();
-			android.view.WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-				lp.token = _inputView.getWindowToken();
-				lp.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
-				dialog.getWindow().setAttributes(lp);
-				dialog.getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-			dialog.show();
+			// TODO: go to settings activity
 		}
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);

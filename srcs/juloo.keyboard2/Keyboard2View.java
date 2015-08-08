@@ -1,9 +1,11 @@
 package juloo.keyboard2;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.os.Handler;
@@ -18,14 +20,7 @@ public class Keyboard2View extends View
 {
 	private static final float		KEY_PER_ROW = 10;
 
-	private static final float		SUB_VALUE_DIST = 7f; // TODO: settings
-
-	private static final boolean	VIBRATE_ENABLED = true; // TODO: settings
-	private static final long		VIBRATE_DURATION = 20; // TODO: settings
 	private static final long		VIBRATE_MIN_INTERVAL = 100;
-
-	private static final long		LONGPRESS_TIMEOUT = 600; // TODO: settings
-	private static final long		LONGPRESS_INTERVAL = 65; // TODO: settings
 
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
@@ -42,12 +37,18 @@ public class Keyboard2View extends View
 
 	private float			_horizontalMargin;
 	private float			_marginTop;
-	private float			_marginBottom; // TODO: settings
 	private float			_keyWidth;
-	private float			_keyHeight; // TODO: settings
+	private float			_keyHeight;
 	private float			_keyPadding;
 	private float			_keyBgPadding;
 	private float			_keyRound;
+
+	private float			_subValueDist = 7f;
+	private boolean			_vibrateEnabled = true;
+	private long			_vibrateDuration = 20;
+	private long			_longPressTimeout = 600;
+	private long			_longPressInterval = 65;
+	private float			_marginBottom;
 
 	private Paint			_keyBgPaint = new Paint();
 	private Paint			_keyDownBgPaint = new Paint();
@@ -78,13 +79,31 @@ public class Keyboard2View extends View
 		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
 		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
 		setOnTouchListener(this);
-		requestLayout();
 	}
 
-	public void			setKeyboard(Keyboard2 ime, KeyboardData keyboardData)
+	public void			reset_prefs(Keyboard2 ime)
 	{
+		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(ime);
+
 		_ime = ime;
-		_keyboard = keyboardData;
+		_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
+		_vibrateEnabled = prefs.getBoolean("vibrate_enabled", _vibrateEnabled);
+		_vibrateDuration = prefs.getLong("vibrate_duration", _vibrateDuration);
+		_longPressTimeout = prefs.getLong("longpress_timeout", _longPressTimeout);
+		_longPressInterval = prefs.getLong("longpress_interval", _longPressInterval);
+		_marginBottom = prefs.getFloat("margin_bottom", _marginBottom);
+
+		String				keyboardLayout = prefs.getString("keyboard_layout", "azerty");
+
+		if (keyboardLayout.equals("azerty")) // TODO change this
+			_keyboard = new KeyboardData(ime.getResources().getXml(R.xml.azerty));
+		else
+			_keyboard = new KeyboardData(ime.getResources().getXml(R.xml.qwerty));
+	}
+
+	public void			reset()
+	{
+		_flags = 0;
 		requestLayout();
 		invalidate();
 	}
@@ -147,7 +166,7 @@ public class Keyboard2View extends View
 		{
 			moveX -= key.downX;
 			moveY -= key.downY;
-			if ((Math.abs(moveX) + Math.abs(moveY)) < SUB_VALUE_DIST)
+			if ((Math.abs(moveX) + Math.abs(moveY)) < _subValueDist)
 				newValue = key.key.key0;
 			else if (moveX < 0)
 				newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
@@ -160,7 +179,7 @@ public class Keyboard2View extends View
 				if (key.timeoutWhat != -1)
 				{
 					_handler.removeMessages(key.timeoutWhat);
-					_handler.sendEmptyMessageDelayed(key.timeoutWhat, LONGPRESS_TIMEOUT);
+					_handler.sendEmptyMessageDelayed(key.timeoutWhat, _longPressTimeout);
 				}
 				key.value = newValue;
 				key.flags = newValue.getFlags();
@@ -202,7 +221,7 @@ public class Keyboard2View extends View
 					else
 					{
 						int what = _currentWhat++;
-						_handler.sendEmptyMessageDelayed(what, LONGPRESS_TIMEOUT);
+						_handler.sendEmptyMessageDelayed(what, _longPressTimeout);
 						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
 					}
 					vibrate();
@@ -258,7 +277,7 @@ public class Keyboard2View extends View
 
 	private void		vibrate()
 	{
-		if (!VIBRATE_ENABLED)
+		if (!_vibrateEnabled)
 			return ;
 		long now = System.currentTimeMillis();
 		if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
@@ -266,7 +285,7 @@ public class Keyboard2View extends View
 			_lastVibration = now;
 			try
 			{
-				_vibratorService.vibrate(VIBRATE_DURATION);
+				_vibratorService.vibrate(_vibrateDuration);
 			}
 			catch (Exception e)
 			{
@@ -284,7 +303,7 @@ public class Keyboard2View extends View
 		{
 			if (key.timeoutWhat == msg.what)
 			{
-				_handler.sendEmptyMessageDelayed(msg.what, LONGPRESS_INTERVAL);
+				_handler.sendEmptyMessageDelayed(msg.what, _longPressInterval);
 				_ime.handleKeyUp(key.value, _flags);
 				vibrate();
 				return (true);
