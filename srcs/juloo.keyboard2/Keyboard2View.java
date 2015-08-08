@@ -16,15 +16,16 @@ import java.util.LinkedList;
 public class Keyboard2View extends View
 	implements View.OnTouchListener, Handler.Callback
 {
-	private static final float	KEY_PER_ROW = 10;
+	private static final float		KEY_PER_ROW = 10;
 
-	private static final float	SUB_VALUE_DIST = 7f;
+	private static final float		SUB_VALUE_DIST = 7f; // TODO: settings
 
-	private static final long	VIBRATE_DURATION = 20;
-	private static final long	VIBRATE_MIN_INTERVAL = 100;
+	private static final boolean	VIBRATE_ENABLED = true; // TODO: settings
+	private static final long		VIBRATE_DURATION = 20; // TODO: settings
+	private static final long		VIBRATE_MIN_INTERVAL = 100;
 
-	private static final long	LONGPRESS_TIMEOUT = 600;
-	private static final long	LONGPRESS_INTERVAL = 65;
+	private static final long		LONGPRESS_TIMEOUT = 600; // TODO: settings
+	private static final long		LONGPRESS_INTERVAL = 65; // TODO: settings
 
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
@@ -39,10 +40,11 @@ public class Keyboard2View extends View
 	private Handler			_handler;
 	private static int		_currentWhat = 0;
 
-	private float			_verticalMargin;
 	private float			_horizontalMargin;
+	private float			_marginTop;
+	private float			_marginBottom; // TODO: settings
 	private float			_keyWidth;
-	private float			_keyHeight;
+	private float			_keyHeight; // TODO: settings
 	private float			_keyPadding;
 	private float			_keyBgPadding;
 	private float			_keyRound;
@@ -58,8 +60,9 @@ public class Keyboard2View extends View
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
-		_verticalMargin = getResources().getDimension(R.dimen.vertical_margin);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
+		_marginTop = getResources().getDimension(R.dimen.margin_top);
+		_marginBottom = getResources().getDimension(R.dimen.margin_bottom);
 		_keyHeight = getResources().getDimension(R.dimen.key_height);
 		_keyPadding = getResources().getDimension(R.dimen.key_padding);
 		_keyBgPadding = getResources().getDimension(R.dimen.key_bg_padding);
@@ -75,6 +78,7 @@ public class Keyboard2View extends View
 		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
 		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
 		setOnTouchListener(this);
+		requestLayout();
 	}
 
 	public void			setKeyboard(Keyboard2 ime, KeyboardData keyboardData)
@@ -172,7 +176,7 @@ public class Keyboard2View extends View
 		float				y;
 		float				keyW;
 
-		y = _verticalMargin - _keyHeight;
+		y = _marginTop - _keyHeight;
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
 			y += _keyHeight;
@@ -254,8 +258,9 @@ public class Keyboard2View extends View
 
 	private void		vibrate()
 	{
-		long		now = System.currentTimeMillis();
-
+		if (!VIBRATE_ENABLED)
+			return ;
+		long now = System.currentTimeMillis();
 		if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
 		{
 			_lastVibration = now;
@@ -285,7 +290,6 @@ public class Keyboard2View extends View
 				return (true);
 			}
 		}
-		Keyboard2.log("problem: cannot handle this message");
 		return (false);
 	}
 
@@ -299,7 +303,7 @@ public class Keyboard2View extends View
 			height = 0;
 		else
 			height = (int)(_keyHeight * ((float)_keyboard.getRows().size())
-				+ (_verticalMargin * 2));
+				+ _marginTop + _marginBottom);
 		setMeasuredDimension(dm.widthPixels, height);
 		_keyWidth = (getWidth() - (_horizontalMargin * 2)) / KEY_PER_ROW;
 	}
@@ -311,7 +315,7 @@ public class Keyboard2View extends View
 		float				y;
 		boolean				upperCase = ((_flags & KeyValue.FLAG_SHIFT) != 0);
 
-		y = _verticalMargin;
+		y = _marginTop;
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
 			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2f + _horizontalMargin;

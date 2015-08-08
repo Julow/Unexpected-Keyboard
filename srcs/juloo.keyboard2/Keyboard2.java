@@ -7,9 +7,7 @@ import android.view.View;
 
 public class Keyboard2 extends InputMethodService
 {
-	public static final String		TAG = "Keyboard_2.0";
-
-	private KeyboardData	_keyboardData;
+	private KeyboardData	_keyboardData; // TODO: settings
 	private Keyboard2View	_inputView = null;
 
 	@Override
@@ -38,16 +36,6 @@ public class Keyboard2 extends InputMethodService
 	{
 		if (getCurrentInputConnection() == null)
 			return ;
-		// DEBUG
-		String k = "Key ";
-		if ((flags & KeyValue.FLAG_CTRL) != 0)
-			k += "Ctrl-";
-		if ((flags & KeyValue.FLAG_ALT) != 0)
-			k += "Alt-";
-		if ((flags & KeyValue.FLAG_SHIFT) != 0)
-			k += "Shift-";
-		log(k + key.getName());
-		// -
 		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
 		{
 			// TODO improve this shit
@@ -110,10 +98,5 @@ public class Keyboard2 extends InputMethodService
 		event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.getEventCode(), 1, metaState);
 		getCurrentInputConnection().sendKeyEvent(event);
 		getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
-	}
-
-	public static void		log(String str)
-	{
-		Log.d(TAG, str);
 	}
 }
