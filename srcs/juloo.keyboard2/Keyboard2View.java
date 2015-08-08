@@ -43,7 +43,7 @@ public class Keyboard2View extends View
 	private float			_keyBgPadding;
 	private float			_keyRound;
 
-	private float			_subValueDist = 7f;
+	private float			_subValueDist = 10f;
 	private boolean			_vibrateEnabled = true;
 	private long			_vibrateDuration = 20;
 	private long			_longPressTimeout = 600;
@@ -86,18 +86,11 @@ public class Keyboard2View extends View
 		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(ime);
 
 		_ime = ime;
-		try
-		{
-			_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
-		}
-		catch (Exception e)
-		{
-			_subValueDist = 7.0f;
-		}
+		_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
 		_vibrateEnabled = prefs.getBoolean("vibrate_enabled", _vibrateEnabled);
-		_vibrateDuration = prefs.getLong("vibrate_duration", _vibrateDuration);
-		_longPressTimeout = prefs.getLong("longpress_timeout", _longPressTimeout);
-		_longPressInterval = prefs.getLong("longpress_interval", _longPressInterval);
+		_vibrateDuration = prefs.getInt("vibrate_duration", (int)_vibrateDuration);
+		_longPressTimeout = prefs.getInt("longpress_timeout", (int)_longPressTimeout);
+		_longPressInterval = prefs.getInt("longpress_interval", (int)_longPressInterval);
 		_marginBottom = prefs.getFloat("margin_bottom", _marginBottom);
 
 		String				keyboardLayout = prefs.getString("keyboard_layout", null);

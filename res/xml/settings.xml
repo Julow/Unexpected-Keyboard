@@ -14,13 +14,26 @@
 			android:key="sub_value_dist"
 			android:title="@string/pref_preci_title"
 			android:summary="@string/pref_preci_summary"
-			android:defaultValue="8.0"
+			android:defaultValue="10.0"
 			min="5.0"
-			max="20.0"
+			max="25.0"
 			/>
-		<!-- Precision (sub_value_dist) -->
-		<!-- Key repeat timeout (longpress_timeout) -->
-		<!-- Key repeat interval (longpress_interval) -->
+		<juloo.common.IntSlideBarPreference
+			android:key="longpress_timeout"
+			android:title="@string/pref_long_timeout_title"
+			android:summary="@string/pref_long_timeout_summary"
+			android:defaultValue="600"
+			min="50"
+			max="2000"
+			/>
+		<juloo.common.IntSlideBarPreference
+			android:key="longpress_interval"
+			android:title="@string/pref_long_interval_title"
+			android:summary="@string/pref_long_interval_summary"
+			android:defaultValue="25"
+			min="5"
+			max="100"
+			/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_vibrate">
 		<CheckBoxPreference
@@ -28,9 +41,13 @@
 			android:title="@string/pref_vibrate_title"
 			android:summary="@string/pref_vibrate_summary"
 			android:defaultValue="true" />
-		<!-- Duration (vibrate_duration) -->
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_category_misc">
-		<!-- Offset height (margin_bottom) -->
+		<juloo.common.IntSlideBarPreference
+			android:key="vibrate_duration"
+			android:title="@string/pref_vibrate_duration_title"
+			android:summary="@string/pref_vibrate_duration_summary"
+			android:defaultValue="20"
+			min="5"
+			max="50"
+			/>
 	</PreferenceCategory>
 </PreferenceScreen>
