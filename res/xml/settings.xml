@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/pref_category_layout">
-		<!-- Keyboard layout -->
+		<ListPreference
+			android:key="keyboard_layout"
+			android:title="@string/pref_layout_title"
+			android:summary="@string/pref_layout_summary"
+			android:defaultValue="azerty"
+			android:entries="@array/pref_layout_entries"
+			android:entryValues="@array/pref_layout_values" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_typing">
-		<!-- Precision (SUB_VALUE_DIST) -->
-		<!-- Key repeat timeout (LONGPRESS_TIMEOUT) -->
-		<!-- Key repeat interval (LONGPRESS_INTERVAL) -->
+		<juloo.common.SlideBarPreference
+			android:key="sub_value_dist"
+			android:title="@string/pref_preci_title"
+			android:summary="@string/pref_preci_summary"
+			android:defaultValue="8.0"
+			min="5.0"
+			max="20.0"
+			/>
+		<!-- Precision (sub_value_dist) -->
+		<!-- Key repeat timeout (longpress_timeout) -->
+		<!-- Key repeat interval (longpress_interval) -->
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_vibrate">
 		<CheckBoxPreference
 			android:key="vibrate_enabled"
-			android:title="@string/pref_vibrate_text"
+			android:title="@string/pref_vibrate_title"
 			android:summary="@string/pref_vibrate_summary"
 			android:defaultValue="true" />
-		<!-- Duration (VIBRATE_DURATION) -->
+		<!-- Duration (vibrate_duration) -->
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_misc">
-		<!-- Keys height (_keyHeight) -->
-		<!-- Offset height (_marginBottom) -->
+		<!-- Offset height (margin_bottom) -->
 	</PreferenceCategory>
 </PreferenceScreen>

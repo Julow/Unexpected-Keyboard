@@ -86,24 +86,35 @@ public class Keyboard2View extends View
 		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(ime);
 
 		_ime = ime;
-		_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
+		try
+		{
+			_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
+		}
+		catch (Exception e)
+		{
+			_subValueDist = 7.0f;
+		}
 		_vibrateEnabled = prefs.getBoolean("vibrate_enabled", _vibrateEnabled);
 		_vibrateDuration = prefs.getLong("vibrate_duration", _vibrateDuration);
 		_longPressTimeout = prefs.getLong("longpress_timeout", _longPressTimeout);
 		_longPressInterval = prefs.getLong("longpress_interval", _longPressInterval);
 		_marginBottom = prefs.getFloat("margin_bottom", _marginBottom);
 
-		String				keyboardLayout = prefs.getString("keyboard_layout", "azerty");
+		String				keyboardLayout = prefs.getString("keyboard_layout", null);
+		int					xmlRes = 0;
 
-		if (keyboardLayout.equals("azerty")) // TODO change this
-			_keyboard = new KeyboardData(ime.getResources().getXml(R.xml.azerty));
-		else
-			_keyboard = new KeyboardData(ime.getResources().getXml(R.xml.qwerty));
+		if (keyboardLayout != null)
+			xmlRes = ime.getResources().getIdentifier(keyboardLayout, "xml", ime.getPackageName());
+		if (xmlRes == 0)
+			xmlRes = R.xml.azerty;
+		_keyboard = new KeyboardData(ime.getResources().getXml(xmlRes));
+		reset();
 	}
 
 	public void			reset()
 	{
 		_flags = 0;
+		_downKeys.clear();
 		requestLayout();
 		invalidate();
 	}

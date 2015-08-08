@@ -5,13 +5,21 @@
 	<string name="settings_activity_label">Keyboard 2.0 Settings</string>
 
 	<string name="pref_category_layout">Layout</string>
+	<string name="pref_layout_title">Change keyboard layout</string>
+	<string name="pref_layout_summary">%s</string>
+	<string-array name="pref_layout_entries">
+		<item>Azerty</item>
+		<item>Qwerty</item>
+	</string-array>
 
 	<string name="pref_category_typing">Typing</string>
+	<string name="pref_preci_title">Precision</string>
+	<string name="pref_preci_summary">Distance of corner values (%spx)</string>
 
 	<string name="pref_category_vibrate">Vibration</string>
-	<string name="pref_vibrate_text">Vibration</string>
+	<string name="pref_vibrate_title">Vibration</string>
 	<string name="pref_vibrate_summary">Enable/Disable vibrations</string>
-	<string name="pref_vibrate_duration_text">Duration</string>
+	<string name="pref_vibrate_duration_title">Duration</string>
 	<string name="pref_vibrate_duration_summary">Change vibrations duration</string>
 
 	<string name="pref_category_misc">Other</string>

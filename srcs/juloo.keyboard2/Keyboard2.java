@@ -6,6 +6,7 @@ import android.inputmethodservice.InputMethodService;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -25,10 +26,15 @@ public class Keyboard2 extends InputMethodService
 	@Override
 	public View				onCreateInputView()
 	{
+		ViewGroup		parent = (ViewGroup)_inputView.getParent();
+
+		if (parent != null)
+			parent.removeView(_inputView);
 		_inputView.reset();
 		return (_inputView);
 	}
 
+	@Override
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
 		_inputView.reset_prefs(this);
