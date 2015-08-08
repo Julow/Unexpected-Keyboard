@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.preference.PreferenceManager;
@@ -16,6 +17,7 @@ public class Keyboard2 extends InputMethodService
 	{
 		super.onCreate();
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 		_inputView = (Keyboard2View)getLayoutInflater().inflate(R.layout.input, null);
 		_inputView.reset_prefs(this);
 	}
@@ -27,7 +29,7 @@ public class Keyboard2 extends InputMethodService
 		return (_inputView);
 	}
 
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
 		_inputView.reset_prefs(this);
 	}
@@ -38,7 +40,9 @@ public class Keyboard2 extends InputMethodService
 			return ;
 		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
 		{
-			// TODO: go to settings activity
+			Intent intent = new Intent(this, SettingsActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
 		}
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
