@@ -56,10 +56,10 @@ public class Keyboard2 extends InputMethodService
 			handleDelKey(1, 0);
 		else if (key.getEventCode() == KeyEvent.KEYCODE_FORWARD_DEL)
 			handleDelKey(0, 1);
-		else if (key.getChar(false) == KeyValue.CHAR_NONE && key.getEventCode() != KeyValue.EVENT_NONE)
+		else if (key.getChar(flags) == KeyValue.CHAR_NONE && key.getEventCode() != KeyValue.EVENT_NONE)
 			handleMetaKeyUp(key, flags);
-		else if (key.getChar(false) != KeyValue.CHAR_NONE)
-			sendKeyChar(key.getChar((flags & KeyValue.FLAG_SHIFT) != 0));
+		else if (key.getChar(flags) != KeyValue.CHAR_NONE)
+			sendKeyChar(key.getChar(flags));
 	}
 
 	private void			handleDelKey(int before, int after)

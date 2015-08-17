@@ -183,11 +183,13 @@ public class Keyboard2View extends View
 				if (key.timeoutWhat != -1)
 				{
 					_handler.removeMessages(key.timeoutWhat);
-					_handler.sendEmptyMessageDelayed(key.timeoutWhat, _longPressTimeout);
+					if ((newValue.getFlags() & KeyValue.FLAG_NOCHAR) == 0)
+						_handler.sendEmptyMessageDelayed(key.timeoutWhat, _longPressTimeout);
 				}
 				key.value = newValue;
 				key.flags = newValue.getFlags();
 				updateFlags();
+				invalidate();
 				vibrate();
 			}
 		}
@@ -337,7 +339,6 @@ public class Keyboard2View extends View
 	{
 		float				x;
 		float				y;
-		boolean				upperCase = ((_flags & KeyValue.FLAG_SHIFT) != 0);
 
 		y = _marginTop;
 		for (KeyboardData.Row row : _keyboard.getRows())
@@ -354,24 +355,24 @@ public class Keyboard2View extends View
 					canvas.drawRoundRect(new RectF(x + _keyBgPadding, y + _keyBgPadding,
 						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding), _keyRound, _keyRound, _keyBgPaint);
 				if (k.key0 != null)
-					canvas.drawText(k.key0.getSymbol(upperCase), keyW / 2f + x,
+					canvas.drawText(k.key0.getSymbol(_flags), keyW / 2f + x,
 						(_keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0)
 							? _keyLabelLockedPaint : _keyLabelPaint);
 				float subPadding = _keyBgPadding + _keyPadding;
 				_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 				if (k.key1 != null)
-					canvas.drawText(k.key1.getSymbol(upperCase), x + subPadding,
+					canvas.drawText(k.key1.getSymbol(_flags), x + subPadding,
 						y + subPadding - _keySubLabelPaint.ascent(), _keySubLabelPaint);
 				if (k.key3 != null)
-					canvas.drawText(k.key3.getSymbol(upperCase), x + subPadding,
+					canvas.drawText(k.key3.getSymbol(_flags), x + subPadding,
 						y + _keyHeight - subPadding - _keySubLabelPaint.descent(), _keySubLabelPaint);
 				_keySubLabelPaint.setTextAlign(Paint.Align.RIGHT);
 				if (k.key2 != null)
-					canvas.drawText(k.key2.getSymbol(upperCase), x + keyW - subPadding,
+					canvas.drawText(k.key2.getSymbol(_flags), x + keyW - subPadding,
 						y + subPadding - _keySubLabelPaint.ascent(), _keySubLabelPaint);
 				if (k.key4 != null)
-					canvas.drawText(k.key4.getSymbol(upperCase), x + keyW - subPadding,
+					canvas.drawText(k.key4.getSymbol(_flags), x + keyW - subPadding,
 						y + _keyHeight - subPadding - _keySubLabelPaint.descent(), _keySubLabelPaint);
 				x += keyW;
 			}
