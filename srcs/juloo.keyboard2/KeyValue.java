@@ -23,6 +23,7 @@ class KeyValue
 	public static final int		FLAG_ACCENT3 = (1 << 18);
 	public static final int		FLAG_ACCENT4 = (1 << 19);
 	public static final int		FLAG_ACCENT5 = (1 << 20);
+	public static final int		FLAG_ACCENT6 = (1 << 21);
 
 	private String		_name;
 	private String		_symbol;
@@ -59,6 +60,8 @@ class KeyValue
 				c = (char)KeyCharacterMap.getDeadChar('\u02DC', (int)c);
 			if ((flags & FLAG_ACCENT5) != 0)
 				c = (char)KeyCharacterMap.getDeadChar('\u00B8', (int)c);
+			if ((flags & FLAG_ACCENT6) != 0)
+				c = (char)KeyCharacterMap.getDeadChar('\u00A8', (int)c);
 			if (c != 0)
 				return (c);
 		}
@@ -111,6 +114,7 @@ class KeyValue
 		new KeyValue("accent3",	"\u02C6",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT3);
 		new KeyValue("accent4",	"\u02DC",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT4);
 		new KeyValue("accent5",	"\u00B8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT5);
+		new KeyValue("accent6",	"\u00A8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT6);
 
 		new KeyValue("a",		null,	'a',		KeyEvent.KEYCODE_A,	0);
 		new KeyValue("b",		null,	'b',		KeyEvent.KEYCODE_B,	0);
