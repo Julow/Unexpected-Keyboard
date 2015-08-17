@@ -225,7 +225,8 @@ public class Keyboard2View extends View
 					else
 					{
 						int what = _currentWhat++;
-						_handler.sendEmptyMessageDelayed(what, _longPressTimeout);
+						if (key.key0 != null && (key.key0.getFlags() & KeyValue.FLAG_NOCHAR) == 0)
+							_handler.sendEmptyMessageDelayed(what, _longPressTimeout);
 						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
 					}
 					vibrate();
