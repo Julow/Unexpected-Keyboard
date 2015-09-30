@@ -3,14 +3,15 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.RectF;
 import android.graphics.Paint;
-import android.preference.PreferenceManager;
-import android.util.AttributeSet;
-import android.util.DisplayMetrics;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import java.util.LinkedList;
@@ -35,10 +36,8 @@ public class Keyboard2View extends View
 	private Handler			_handler;
 	private static int		_currentWhat = 0;
 
-	private float			_horizontalMargin;
 	private float			_marginTop;
 	private float			_keyWidth;
-	private float			_keyHeight;
 	private float			_keyPadding;
 	private float			_keyBgPadding;
 	private float			_keyRound;
@@ -49,6 +48,8 @@ public class Keyboard2View extends View
 	private long			_longPressTimeout = 600;
 	private long			_longPressInterval = 65;
 	private float			_marginBottom;
+	private float			_keyHeight;
+	private float			_horizontalMargin;
 
 	private Paint			_keyBgPaint = new Paint();
 	private Paint			_keyDownBgPaint = new Paint();
@@ -91,7 +92,9 @@ public class Keyboard2View extends View
 		_vibrateDuration = prefs.getInt("vibrate_duration", (int)_vibrateDuration);
 		_longPressTimeout = prefs.getInt("longpress_timeout", (int)_longPressTimeout);
 		_longPressInterval = prefs.getInt("longpress_interval", (int)_longPressInterval);
-		_marginBottom = prefs.getFloat("margin_bottom", _marginBottom);
+		_marginBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("margin_bottom", (int)_marginBottom), getResources().getDisplayMetrics());
+		_keyHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("key_height", (int)_keyHeight), getResources().getDisplayMetrics());
+		_horizontalMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("horizontal_margin", (int)_horizontalMargin), getResources().getDisplayMetrics());
 
 		String				keyboardLayout = prefs.getString("keyboard_layout", null);
 		int					xmlRes = 0;
