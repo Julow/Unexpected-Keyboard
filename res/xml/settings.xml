@@ -50,4 +50,30 @@
 			max="50"
 			/>
 	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_category_style">
+		<juloo.common.IntSlideBarPreference
+			android:key="margin_bottom"
+			android:title="@string/pref_margin_bottom_title"
+			android:summary="@string/pref_margin_bottom_summary"
+			android:defaultValue="5"
+			min="0"
+			max="50"
+			/>
+		<juloo.common.IntSlideBarPreference
+			android:key="key_height"
+			android:title="@string/pref_key_height_title"
+			android:summary="@string/pref_key_height_summary"
+			android:defaultValue="50"
+			min="30"
+			max="70"
+			/>
+		<juloo.common.IntSlideBarPreference
+			android:key="horizontal_margin"
+			android:title="@string/pref_horizontal_margin_title"
+			android:summary="@string/pref_horizontal_margin_summary"
+			android:defaultValue="3"
+			min="0"
+			max="15"
+			/>
+	</PreferenceCategory>
 </PreferenceScreen>

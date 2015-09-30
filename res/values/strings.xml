@@ -27,4 +27,12 @@
 	<string name="pref_vibrate_duration_title">Duration</string>
 	<string name="pref_vibrate_duration_summary">%sms</string>
 
+	<string name="pref_category_style">Style</string>
+	<string name="pref_margin_bottom_title">Margin bottom</string>
+	<string name="pref_margin_bottom_summary">%sdp</string>
+	<string name="pref_key_height_title">Key height</string>
+	<string name="pref_key_height_summary">%sdp</string>
+	<string name="pref_horizontal_margin_title">Horizontal margin</string>
+	<string name="pref_horizontal_margin_summary">%sdp</string>
+
 </resources>
