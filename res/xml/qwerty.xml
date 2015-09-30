@@ -21,7 +21,7 @@
 		<key key0="h" key2="=" key3="+" />
 		<key key0="j" key4="}" key3="{" />
 		<key key0="k" key4="]" key3="[" />
-		<key key0="l" key2="|" key3="\" />
+		<key key0="l" key2="|" key3="\\" />
 	</row>
 	<row>
 		<key width="1.5" key0="shift" />
