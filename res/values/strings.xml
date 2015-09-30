@@ -11,6 +11,7 @@
 	<string-array name="pref_layout_entries">
 		<item>Azerty</item>
 		<item>Qwerty</item>
+		<item>Numeric</item>
 	</string-array>
 
 	<string name="pref_category_typing">Typing</string>
