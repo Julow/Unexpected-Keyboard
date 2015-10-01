@@ -1,8 +1,10 @@
 package juloo.keyboard2;
 
+import android.content.res.Configuration;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,6 +30,7 @@ public class Keyboard2 extends InputMethodService
 	{
 		ViewGroup		parent = (ViewGroup)_inputView.getParent();
 
+		System.out.println("create input view");
 		if (parent != null)
 			parent.removeView(_inputView);
 		_inputView.reset();
@@ -40,10 +43,24 @@ public class Keyboard2 extends InputMethodService
 		_inputView.reset_prefs(this);
 	}
 
+	@Override
+	public void				onAppPrivateCommand(String command, Bundle data)
+	{
+		System.out.println("App private command: " + command);
+	}
+
+	@Override
+	public void				onConfigurationChanged(Configuration newConfig)
+	{
+		_inputView.reset();
+		System.out.println("configuration change");
+	}
+
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
 		if (getCurrentInputConnection() == null)
 			return ;
+		System.out.println("key up ");
 		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
 		{
 			Intent intent = new Intent(this, SettingsActivity.class);
