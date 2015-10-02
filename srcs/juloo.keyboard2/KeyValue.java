@@ -31,6 +31,9 @@ class KeyValue
 	private int			_eventCode;
 	private int			_flags;
 
+	private int			_cacheFlags;
+	private String		_cacheSymbol;
+
 	public String		getName()
 	{
 		return (_name);
@@ -39,7 +42,14 @@ class KeyValue
 	public String		getSymbol(int flags)
 	{
 		if (_symbol == null)
-			return (String.valueOf(getChar(flags)));
+		{
+			if (flags != _cacheFlags)
+			{
+				_cacheSymbol = String.valueOf(getChar(flags));
+				_cacheFlags = flags;
+			}
+			return (_cacheSymbol);
+		}
 		return (_symbol);
 	}
 
@@ -87,6 +97,7 @@ class KeyValue
 		_char = c;
 		_eventCode = eventCode;
 		_flags = flags;
+		_cacheFlags = -1;
 		KeyValue.keys.put(name, this);
 	}
 

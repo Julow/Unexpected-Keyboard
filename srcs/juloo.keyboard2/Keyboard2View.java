@@ -14,7 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Keyboard2View extends View
 	implements View.OnTouchListener, Handler.Callback
@@ -26,7 +26,7 @@ public class Keyboard2View extends View
 	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
 
-	private LinkedList<KeyDown>	_downKeys = new LinkedList<KeyDown>();
+	private ArrayList<KeyDown>	_downKeys = new ArrayList<KeyDown>();
 
 	private int				_flags = 0;
 
@@ -56,6 +56,9 @@ public class Keyboard2View extends View
 	private Paint			_keyLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private Paint			_keyLabelLockedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private Paint			_keySubLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private Paint			_keySubLabelRightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+	private static RectF	_tmpRect = new RectF();
 
 	public Keyboard2View(Context context, AttributeSet attrs)
 	{
@@ -77,8 +80,12 @@ public class Keyboard2View extends View
 		_keyLabelLockedPaint.setColor(getResources().getColor(R.color.key_label_locked));
 		_keyLabelLockedPaint.setTextSize(getResources().getDimension(R.dimen.label_text_size));
 		_keyLabelLockedPaint.setTextAlign(Paint.Align.CENTER);
+		_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
 		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
+		_keySubLabelRightPaint.setTextAlign(Paint.Align.RIGHT);
+		_keySubLabelRightPaint.setColor(getResources().getColor(R.color.key_sub_label));
+		_keySubLabelRightPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
 		setOnTouchListener(this);
 	}
 
@@ -351,32 +358,30 @@ public class Keyboard2View extends View
 			{
 				float keyW = _keyWidth * k.width;
 				KeyDown keyDown = getKeyDown(k);
+				_tmpRect.set(x + _keyBgPadding, y + _keyBgPadding,
+					x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding);
 				if (keyDown != null)
-					canvas.drawRect(x + _keyBgPadding, y + _keyBgPadding,
-						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding, _keyDownBgPaint);
+					canvas.drawRect(_tmpRect, _keyDownBgPaint);
 				else
-					canvas.drawRoundRect(new RectF(x + _keyBgPadding, y + _keyBgPadding,
-						x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding), _keyRound, _keyRound, _keyBgPaint);
+					canvas.drawRoundRect(_tmpRect, _keyRound, _keyRound, _keyBgPaint);
 				if (k.key0 != null)
 					canvas.drawText(k.key0.getSymbol(_flags), keyW / 2f + x,
 						(_keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0)
 							? _keyLabelLockedPaint : _keyLabelPaint);
 				float subPadding = _keyBgPadding + _keyPadding;
-				_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
 				if (k.key1 != null)
 					canvas.drawText(k.key1.getSymbol(_flags), x + subPadding,
 						y + subPadding - _keySubLabelPaint.ascent(), _keySubLabelPaint);
 				if (k.key3 != null)
 					canvas.drawText(k.key3.getSymbol(_flags), x + subPadding,
 						y + _keyHeight - subPadding - _keySubLabelPaint.descent(), _keySubLabelPaint);
-				_keySubLabelPaint.setTextAlign(Paint.Align.RIGHT);
 				if (k.key2 != null)
 					canvas.drawText(k.key2.getSymbol(_flags), x + keyW - subPadding,
-						y + subPadding - _keySubLabelPaint.ascent(), _keySubLabelPaint);
+						y + subPadding - _keySubLabelRightPaint.ascent(), _keySubLabelRightPaint);
 				if (k.key4 != null)
 					canvas.drawText(k.key4.getSymbol(_flags), x + keyW - subPadding,
-						y + _keyHeight - subPadding - _keySubLabelPaint.descent(), _keySubLabelPaint);
+						y + _keyHeight - subPadding - _keySubLabelRightPaint.descent(), _keySubLabelRightPaint);
 				x += keyW;
 			}
 			y += _keyHeight;

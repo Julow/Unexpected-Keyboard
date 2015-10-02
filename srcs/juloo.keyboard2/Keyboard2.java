@@ -30,7 +30,6 @@ public class Keyboard2 extends InputMethodService
 	{
 		ViewGroup		parent = (ViewGroup)_inputView.getParent();
 
-		System.out.println("create input view");
 		if (parent != null)
 			parent.removeView(_inputView);
 		_inputView.reset();
@@ -46,21 +45,18 @@ public class Keyboard2 extends InputMethodService
 	@Override
 	public void				onAppPrivateCommand(String command, Bundle data)
 	{
-		System.out.println("App private command: " + command);
 	}
 
 	@Override
 	public void				onConfigurationChanged(Configuration newConfig)
 	{
 		_inputView.reset();
-		System.out.println("configuration change");
 	}
 
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
 		if (getCurrentInputConnection() == null)
 			return ;
-		System.out.println("key up ");
 		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
 		{
 			Intent intent = new Intent(this, SettingsActivity.class);
