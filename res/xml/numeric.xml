@@ -30,7 +30,7 @@
 		<key width="1.0" key0="enter" key1="config" />
 	</row>
 	<row>
-		<key width="1.0" key0="ctrl" />
+		<key width="1.0" key0="ctrl" key3="switch_text" />
 		<key width="1.0" key0="space" />
 		<key width="1.0" key0="space" />
 		<key width="3.0" key0="0" />

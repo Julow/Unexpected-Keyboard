@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
+import android.text.InputType;
 import android.preference.PreferenceManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 	private Keyboard2View	_inputView = null;
+	private KeyboardData	_textKeyboard = null;
+	private KeyboardData	_numericKeyboard = null;
 
 	@Override
 	public void				onCreate()
@@ -21,6 +25,7 @@ public class Keyboard2 extends InputMethodService
 		super.onCreate();
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+		updateConfig();
 		_inputView = (Keyboard2View)getLayoutInflater().inflate(R.layout.input, null);
 		_inputView.reset_prefs(this);
 	}
@@ -32,13 +37,22 @@ public class Keyboard2 extends InputMethodService
 
 		if (parent != null)
 			parent.removeView(_inputView);
-		_inputView.reset();
 		return (_inputView);
+	}
+
+	@Override
+	public void				onStartInputView(EditorInfo info, boolean restarting)
+	{
+		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
+			_inputView.setKeyboard(_numericKeyboard);
+		else
+			_inputView.setKeyboard(_textKeyboard);
 	}
 
 	@Override
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
+		updateConfig();
 		_inputView.reset_prefs(this);
 	}
 
@@ -53,6 +67,20 @@ public class Keyboard2 extends InputMethodService
 		_inputView.reset();
 	}
 
+	private void			updateConfig()
+	{
+		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String				keyboardLayout = prefs.getString("keyboard_layout", null);
+		int					xmlRes = 0;
+
+		if (keyboardLayout != null)
+			xmlRes = getResources().getIdentifier(keyboardLayout, "xml", getPackageName());
+		if (xmlRes == 0)
+			xmlRes = R.xml.azerty;
+		_textKeyboard = new KeyboardData(getResources().getXml(xmlRes));
+		_numericKeyboard = new KeyboardData(getResources().getXml(R.xml.numeric));
+	}
+
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
 		if (getCurrentInputConnection() == null)
@@ -63,6 +91,10 @@ public class Keyboard2 extends InputMethodService
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		}
+		else if (key.getEventCode() == KeyValue.EVENT_SWITCH_TEXT)
+			_inputView.setKeyboard(_textKeyboard);
+		else if (key.getEventCode() == KeyValue.EVENT_SWITCH_NUMERIC)
+			_inputView.setKeyboard(_numericKeyboard);
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
 		else if (key.getEventCode() == KeyEvent.KEYCODE_DEL)

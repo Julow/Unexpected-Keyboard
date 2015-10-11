@@ -102,15 +102,12 @@ public class Keyboard2View extends View
 		_marginBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("margin_bottom", (int)_marginBottom), getResources().getDisplayMetrics());
 		_keyHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("key_height", (int)_keyHeight), getResources().getDisplayMetrics());
 		_horizontalMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("horizontal_margin", (int)_horizontalMargin), getResources().getDisplayMetrics());
+		reset();
+	}
 
-		String				keyboardLayout = prefs.getString("keyboard_layout", null);
-		int					xmlRes = 0;
-
-		if (keyboardLayout != null)
-			xmlRes = ime.getResources().getIdentifier(keyboardLayout, "xml", ime.getPackageName());
-		if (xmlRes == 0)
-			xmlRes = R.xml.azerty;
-		_keyboard = new KeyboardData(ime.getResources().getXml(xmlRes));
+	public void			setKeyboard(KeyboardData keyboard)
+	{
+		_keyboard = keyboard;
 		reset();
 	}
 

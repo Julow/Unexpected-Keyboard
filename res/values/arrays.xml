@@ -3,6 +3,5 @@
 	<string-array name="pref_layout_values">
 		<item>azerty</item>
 		<item>qwerty</item>
-		<item>numeric</item>
 	</string-array>
 </resources>

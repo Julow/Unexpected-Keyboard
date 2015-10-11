@@ -8,6 +8,8 @@ class KeyValue
 {
 	public static final int		EVENT_NONE = -1;
 	public static final int		EVENT_CONFIG = -2;
+	public static final int		EVENT_SWITCH_TEXT = -3;
+	public static final int		EVENT_SWITCH_NUMERIC = -4;
 	public static final char	CHAR_NONE = '\0';
 
 	public static final int		FLAG_KEEP_ON = 1;
@@ -164,7 +166,10 @@ class KeyValue
 		new KeyValue("8",		null,	'8',		KeyEvent.KEYCODE_8,	0);
 		new KeyValue("9",		null,	'9',		KeyEvent.KEYCODE_9,	0);
 
-		new KeyValue("config",	"Conf", CHAR_NONE,	EVENT_CONFIG,				0);
+		new KeyValue("config",			"Conf",	CHAR_NONE,	EVENT_CONFIG,			0);
+		new KeyValue("switch_text",		"ABC",	CHAR_NONE,	EVENT_SWITCH_TEXT,		0);
+		new KeyValue("switch_numeric",	"123+",	CHAR_NONE,	EVENT_SWITCH_NUMERIC,	0);
+
 		new KeyValue("enter",	"↵", 	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,		0);
 		new KeyValue("up",		"↑", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_UP,	0);
 		new KeyValue("right",	"→", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_RIGHT, 0);
