@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
 	<row>
-		<key key0="a" key2="1" key3="&amp;" />
+		<key key0="a" key1="esc" key2="1" key3="&amp;" />
 		<key key0="z" key2="2" key3="accent2" key4="~" />
 		<key key0="e" key2="3" key3="&quot;" key4="\#" />
 		<key key0="r" key2="4" key3="'" key4="{" />

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
@@ -53,10 +54,14 @@ public class Keyboard2View extends View
 
 	private Paint			_keyBgPaint = new Paint();
 	private Paint			_keyDownBgPaint = new Paint();
-	private Paint			_keyLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	private Paint			_keyLabelLockedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	private Paint			_keySubLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	private Paint			_keySubLabelRightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private Paint			_keyLabelPaint;
+	private Paint			_keyLabelLockedPaint;
+	private Paint			_keySubLabelPaint;
+	private Paint			_keySubLabelRightPaint;
+	private Paint			_specialKeyLabelPaint;
+	private Paint			_specialKeyLabelLockedPaint;
+	private Paint			_specialKeySubLabelPaint;
+	private Paint			_specialKeySubLabelRightPaint;
 
 	private static RectF	_tmpRect = new RectF();
 
@@ -65,6 +70,7 @@ public class Keyboard2View extends View
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
+		Typeface	specialKeysFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/keys.ttf");
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_marginTop = getResources().getDimension(R.dimen.margin_top);
 		_marginBottom = getResources().getDimension(R.dimen.margin_bottom);
@@ -74,19 +80,27 @@ public class Keyboard2View extends View
 		_keyRound = getResources().getDimension(R.dimen.key_round);
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
-		_keyLabelPaint.setColor(getResources().getColor(R.color.key_label));
-		_keyLabelPaint.setTextSize(getResources().getDimension(R.dimen.label_text_size));
-		_keyLabelPaint.setTextAlign(Paint.Align.CENTER);
-		_keyLabelLockedPaint.setColor(getResources().getColor(R.color.key_label_locked));
-		_keyLabelLockedPaint.setTextSize(getResources().getDimension(R.dimen.label_text_size));
-		_keyLabelLockedPaint.setTextAlign(Paint.Align.CENTER);
-		_keySubLabelPaint.setTextAlign(Paint.Align.LEFT);
-		_keySubLabelPaint.setColor(getResources().getColor(R.color.key_sub_label));
-		_keySubLabelPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
-		_keySubLabelRightPaint.setTextAlign(Paint.Align.RIGHT);
-		_keySubLabelRightPaint.setColor(getResources().getColor(R.color.key_sub_label));
-		_keySubLabelRightPaint.setTextSize(getResources().getDimension(R.dimen.sublabel_text_size));
+		_keyLabelPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, null);
+		_keyLabelLockedPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label_locked, R.dimen.label_text_size, null);
+		_keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, R.color.key_sub_label, R.dimen.sublabel_text_size, null);
+		_keySubLabelRightPaint = initLabelPaint(Paint.Align.RIGHT, R.color.key_sub_label, R.dimen.sublabel_text_size, null);
+		_specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, specialKeysFont);
+		_specialKeyLabelLockedPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label_locked, R.dimen.label_text_size, specialKeysFont);
+		_specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, R.color.key_sub_label, R.dimen.sublabel_text_size, specialKeysFont);
+		_specialKeySubLabelRightPaint = initLabelPaint(Paint.Align.RIGHT, R.color.key_sub_label, R.dimen.sublabel_text_size, specialKeysFont);
 		setOnTouchListener(this);
+	}
+
+	private Paint		initLabelPaint(Paint.Align align, int color, int size, Typeface font)
+	{
+		Paint				paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+		paint.setTextAlign(align);
+		paint.setColor(getResources().getColor(color));
+		paint.setTextSize(getResources().getDimension(size));
+		if (font != null)
+			paint.setTypeface(font);
+		return (paint);
 	}
 
 	public void			reset_prefs(Keyboard2 ime)
@@ -99,9 +113,12 @@ public class Keyboard2View extends View
 		_vibrateDuration = prefs.getInt("vibrate_duration", (int)_vibrateDuration);
 		_longPressTimeout = prefs.getInt("longpress_timeout", (int)_longPressTimeout);
 		_longPressInterval = prefs.getInt("longpress_interval", (int)_longPressInterval);
-		_marginBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("margin_bottom", (int)_marginBottom), getResources().getDisplayMetrics());
-		_keyHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("key_height", (int)_keyHeight), getResources().getDisplayMetrics());
-		_horizontalMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, prefs.getInt("horizontal_margin", (int)_horizontalMargin), getResources().getDisplayMetrics());
+		_marginBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+			prefs.getInt("margin_bottom", (int)_marginBottom), getResources().getDisplayMetrics());
+		_keyHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+			prefs.getInt("key_height", (int)_keyHeight), getResources().getDisplayMetrics());
+		_horizontalMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+			prefs.getInt("horizontal_margin", (int)_horizontalMargin), getResources().getDisplayMetrics());
 		reset();
 	}
 
@@ -362,27 +379,37 @@ public class Keyboard2View extends View
 				else
 					canvas.drawRoundRect(_tmpRect, _keyRound, _keyRound, _keyBgPaint);
 				if (k.key0 != null)
-					canvas.drawText(k.key0.getSymbol(_flags), keyW / 2f + x,
-						(_keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
-						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0)
-							? _keyLabelLockedPaint : _keyLabelPaint);
+					drawLabel(canvas, k.key0, keyW / 2f + x, (_keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
+						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0));
 				float subPadding = _keyBgPadding + _keyPadding;
 				if (k.key1 != null)
-					canvas.drawText(k.key1.getSymbol(_flags), x + subPadding,
-						y + subPadding - _keySubLabelPaint.ascent(), _keySubLabelPaint);
+					drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding - _keySubLabelPaint.ascent(), false);
 				if (k.key3 != null)
-					canvas.drawText(k.key3.getSymbol(_flags), x + subPadding,
-						y + _keyHeight - subPadding - _keySubLabelPaint.descent(), _keySubLabelPaint);
+					drawSubLabel(canvas, k.key3, x + subPadding, y + _keyHeight - subPadding - _keySubLabelPaint.descent(), false);
 				if (k.key2 != null)
-					canvas.drawText(k.key2.getSymbol(_flags), x + keyW - subPadding,
-						y + subPadding - _keySubLabelRightPaint.ascent(), _keySubLabelRightPaint);
+					drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding - _keySubLabelRightPaint.ascent(), true);
 				if (k.key4 != null)
-					canvas.drawText(k.key4.getSymbol(_flags), x + keyW - subPadding,
-						y + _keyHeight - subPadding - _keySubLabelRightPaint.descent(), _keySubLabelRightPaint);
+					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + _keyHeight - subPadding - _keySubLabelRightPaint.descent(), true);
 				x += keyW;
 			}
 			y += _keyHeight;
 		}
+	}
+
+	private void		drawLabel(Canvas canvas, KeyValue k, float x, float y, boolean locked)
+	{
+		if ((k.getFlags() & KeyValue.FLAG_KEY_FONT) != 0)
+			canvas.drawText(k.getSymbol(_flags), x, y, locked ? _specialKeyLabelLockedPaint : _specialKeyLabelPaint);
+		else
+			canvas.drawText(k.getSymbol(_flags), x, y, locked ? _keyLabelLockedPaint : _keyLabelPaint);
+	}
+
+	private void		drawSubLabel(Canvas canvas, KeyValue k, float x, float y, boolean right)
+	{
+		if ((k.getFlags() & KeyValue.FLAG_KEY_FONT) != 0)
+			canvas.drawText(k.getSymbol(_flags), x, y, right ? _specialKeySubLabelRightPaint : _specialKeySubLabelPaint);
+		else
+			canvas.drawText(k.getSymbol(_flags), x, y, right ? _keySubLabelRightPaint : _keySubLabelPaint);
 	}
 
 	private class KeyDown

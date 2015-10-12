@@ -20,6 +20,8 @@ class KeyValue
 	public static final int		FLAG_NOCHAR = (1 << 5);
 	public static final int		FLAG_LOCKED = (1 << 8);
 
+	public static final int		FLAG_KEY_FONT = (1 << 12);
+
 	public static final int		FLAG_ACCENT1 = (1 << 16);
 	public static final int		FLAG_ACCENT2 = (1 << 17);
 	public static final int		FLAG_ACCENT3 = (1 << 18);
@@ -170,20 +172,21 @@ class KeyValue
 		new KeyValue("switch_text",		"ABC",	CHAR_NONE,	EVENT_SWITCH_TEXT,		0);
 		new KeyValue("switch_numeric",	"123+",	CHAR_NONE,	EVENT_SWITCH_NUMERIC,	0);
 
-		new KeyValue("enter",	"↵", 	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,		0);
-		new KeyValue("up",		"↑", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_UP,	0);
-		new KeyValue("right",	"→", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_RIGHT, 0);
-		new KeyValue("down",	"↓", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_DOWN,	0);
-		new KeyValue("left",	"←", 	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_LEFT,	0);
-		new KeyValue("page_up",	"⇞", 	CHAR_NONE,	KeyEvent.KEYCODE_PAGE_DOWN,	0);
-		new KeyValue("page_down", "⇟", 	CHAR_NONE,	KeyEvent.KEYCODE_PAGE_UP,	0);
-		new KeyValue("home",	"↖", 	CHAR_NONE,	KeyEvent.KEYCODE_HOME,		0);
-		new KeyValue("end",		"↗", 	CHAR_NONE,	KeyEvent.KEYCODE_MOVE_END,	0);
-		new KeyValue("backspace", "⌫",	CHAR_NONE,	KeyEvent.KEYCODE_DEL,		0);
-		new KeyValue("delete",	"⌦",	CHAR_NONE,	KeyEvent.KEYCODE_FORWARD_DEL, 0);
-		new KeyValue("insert",	"Ins",	CHAR_NONE,	KeyEvent.KEYCODE_INSERT,	0);
+		new KeyValue("esc",		"Esc",		CHAR_NONE,	KeyEvent.KEYCODE_ESCAPE,		0);
+		new KeyValue("enter",	"\uE800",	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,			FLAG_KEY_FONT);
+		new KeyValue("up",		"\uE80B",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_UP,		FLAG_KEY_FONT);
+		new KeyValue("right",	"\uE80C",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_RIGHT,	FLAG_KEY_FONT);
+		new KeyValue("down",	"\uE809",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_DOWN,		FLAG_KEY_FONT);
+		new KeyValue("left",	"\uE80A",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_LEFT,		FLAG_KEY_FONT);
+		new KeyValue("page_up",	"⇞",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_DOWN,		0);
+		new KeyValue("page_down", "⇟",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_UP,		0);
+		new KeyValue("home",	"↖",		CHAR_NONE,	KeyEvent.KEYCODE_HOME,			0);
+		new KeyValue("end",		"↗",		CHAR_NONE,	KeyEvent.KEYCODE_MOVE_END,		0);
+		new KeyValue("backspace", "⌫",		CHAR_NONE,	KeyEvent.KEYCODE_DEL,			0);
+		new KeyValue("delete",	"⌦",		CHAR_NONE,	KeyEvent.KEYCODE_FORWARD_DEL,	0);
+		new KeyValue("insert",	"Ins",		CHAR_NONE,	KeyEvent.KEYCODE_INSERT,		0);
 
-		new KeyValue("tab",		"↹",	'\t',		KeyEvent.KEYCODE_TAB,		0);
-		new KeyValue("space",	null,	' ',		KeyEvent.KEYCODE_SPACE,		0);
+		new KeyValue("tab",		"↹",		'\t',		KeyEvent.KEYCODE_TAB,			0);
+		new KeyValue("space",	null,		' ',		KeyEvent.KEYCODE_SPACE,			0);
 	}
 }
