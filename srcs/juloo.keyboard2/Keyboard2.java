@@ -97,25 +97,25 @@ public class Keyboard2 extends InputMethodService
 			_inputView.setKeyboard(_numericKeyboard);
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
-		else if (key.getEventCode() == KeyEvent.KEYCODE_DEL)
-			handleDelKey(1, 0);
-		else if (key.getEventCode() == KeyEvent.KEYCODE_FORWARD_DEL)
-			handleDelKey(0, 1);
+		// else if (key.getEventCode() == KeyEvent.KEYCODE_DEL)
+		// 	handleDelKey(1, 0);
+		// else if (key.getEventCode() == KeyEvent.KEYCODE_FORWARD_DEL)
+		// 	handleDelKey(0, 1);
 		else if (key.getChar(flags) == KeyValue.CHAR_NONE && key.getEventCode() != KeyValue.EVENT_NONE)
 			handleMetaKeyUp(key, flags);
 		else if (key.getChar(flags) != KeyValue.CHAR_NONE)
 			sendKeyChar(key.getChar(flags));
 	}
 
-	private void			handleDelKey(int before, int after)
-	{
-		CharSequence	selection = getCurrentInputConnection().getSelectedText(0);
+	// private void			handleDelKey(int before, int after)
+	// {
+	// 	CharSequence	selection = getCurrentInputConnection().getSelectedText(0);
 
-		if (selection != null && selection.length() > 0)
-			getCurrentInputConnection().commitText("", 1);
-		else
-			getCurrentInputConnection().deleteSurroundingText(before, after);
-	}
+	// 	if (selection != null && selection.length() > 0)
+	// 		getCurrentInputConnection().commitText("", 1);
+	// 	else
+	// 		getCurrentInputConnection().deleteSurroundingText(before, after);
+	// }
 
 	private void			handleMetaKeyUp(KeyValue key, int flags)
 	{
