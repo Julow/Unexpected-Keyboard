@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VerticalLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:hardwareAccelerated="false">
+	<juloo.keyboard2.EmojiGridView
+		android:background="@color/bg"
+	/>
+</VerticalLayout>

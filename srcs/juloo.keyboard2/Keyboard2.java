@@ -12,10 +12,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+/*
+** TODO: move config values in a Config object
+*/
 public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-	private Keyboard2View	_inputView = null;
+	private Keyboard2View	_keyboardView;
+	private ViewGroup		_emojiPane = null;
 	private KeyboardData	_textKeyboard = null;
 	private KeyboardData	_numericKeyboard = null;
 
@@ -26,34 +30,43 @@ public class Keyboard2 extends InputMethodService
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 		updateConfig();
-		_inputView = (Keyboard2View)getLayoutInflater().inflate(R.layout.input, null);
-		_inputView.reset_prefs(this);
+		_keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
+		_keyboardView.reset_prefs(this);
+	}
+
+	private View			getEmojiPane()
+	{
+		if (_emojiPane == null)
+		{
+		}
+		return (_emojiPane);
 	}
 
 	@Override
 	public View				onCreateInputView()
 	{
-		ViewGroup		parent = (ViewGroup)_inputView.getParent();
+		// return (new EmojiGridView(this)); // TMP
+		ViewGroup		parent = (ViewGroup)_keyboardView.getParent();
 
 		if (parent != null)
-			parent.removeView(_inputView);
-		return (_inputView);
+			parent.removeView(_keyboardView);
+		return (_keyboardView);
 	}
 
 	@Override
 	public void				onStartInputView(EditorInfo info, boolean restarting)
 	{
 		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
-			_inputView.setKeyboard(_numericKeyboard);
+			_keyboardView.setKeyboard(_numericKeyboard);
 		else
-			_inputView.setKeyboard(_textKeyboard);
+			_keyboardView.setKeyboard(_textKeyboard);
 	}
 
 	@Override
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
 		updateConfig();
-		_inputView.reset_prefs(this);
+		_keyboardView.reset_prefs(this);
 	}
 
 	@Override
@@ -64,7 +77,7 @@ public class Keyboard2 extends InputMethodService
 	@Override
 	public void				onConfigurationChanged(Configuration newConfig)
 	{
-		_inputView.reset();
+		_keyboardView.reset();
 	}
 
 	private void			updateConfig()
@@ -83,28 +96,31 @@ public class Keyboard2 extends InputMethodService
 
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
+		int				eventCode = key.getEventCode();
+		char			keyChar = key.getChar(flags);
+
 		if (getCurrentInputConnection() == null)
 			return ;
-		if (key.getEventCode() == KeyValue.EVENT_CONFIG)
+		if (eventCode == KeyValue.EVENT_CONFIG)
 		{
 			Intent intent = new Intent(this, SettingsActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		}
-		else if (key.getEventCode() == KeyValue.EVENT_SWITCH_TEXT)
-			_inputView.setKeyboard(_textKeyboard);
-		else if (key.getEventCode() == KeyValue.EVENT_SWITCH_NUMERIC)
-			_inputView.setKeyboard(_numericKeyboard);
+		else if (eventCode == KeyValue.EVENT_SWITCH_TEXT)
+			_keyboardView.setKeyboard(_textKeyboard);
+		else if (eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
+			_keyboardView.setKeyboard(_numericKeyboard);
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
-		// else if (key.getEventCode() == KeyEvent.KEYCODE_DEL)
+		// else if (eventCode == KeyEvent.KEYCODE_DEL)
 		// 	handleDelKey(1, 0);
-		// else if (key.getEventCode() == KeyEvent.KEYCODE_FORWARD_DEL)
+		// else if (eventCode == KeyEvent.KEYCODE_FORWARD_DEL)
 		// 	handleDelKey(0, 1);
-		else if (key.getChar(flags) == KeyValue.CHAR_NONE && key.getEventCode() != KeyValue.EVENT_NONE)
+		else if (keyChar == KeyValue.CHAR_NONE && eventCode != KeyValue.EVENT_NONE)
 			handleMetaKeyUp(key, flags);
-		else if (key.getChar(flags) != KeyValue.CHAR_NONE)
-			sendKeyChar(key.getChar(flags));
+		else if (keyChar != KeyValue.CHAR_NONE)
+			sendKeyChar(keyChar);
 	}
 
 	// private void			handleDelKey(int before, int after)

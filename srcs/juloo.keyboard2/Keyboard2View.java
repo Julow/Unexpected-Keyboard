@@ -412,7 +412,7 @@ public class Keyboard2View extends View
 			canvas.drawText(k.getSymbol(_flags), x, y, right ? _keySubLabelRightPaint : _keySubLabelPaint);
 	}
 
-	private class KeyDown
+	private static class KeyDown
 	{
 		public int				pointerId;
 		public KeyValue			value;
