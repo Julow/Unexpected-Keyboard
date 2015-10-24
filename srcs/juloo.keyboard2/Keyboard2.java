@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.content.res.Configuration;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.text.InputType;
@@ -12,40 +13,35 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-/*
-** TODO: move config values in a Config object
-*/
 public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 	private Keyboard2View	_keyboardView;
-	private ViewGroup		_emojiPane = null;
 	private KeyboardData	_textKeyboard = null;
 	private KeyboardData	_numericKeyboard = null;
+	private ViewGroup		_emojiPane = null;
+	private Typeface		_specialKeyFont = null;
 
 	@Override
 	public void				onCreate()
 	{
 		super.onCreate();
+		_specialKeyFont = Typeface.createFromAsset(getAssets(), "fonts/keys.ttf");
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 		updateConfig();
 		_keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
-		_keyboardView.reset_prefs(this);
+		_keyboardView.reset_prefs();
 	}
 
-	private View			getEmojiPane()
+	public Typeface			getSpecialKeyFont()
 	{
-		if (_emojiPane == null)
-		{
-		}
-		return (_emojiPane);
+		return (_specialKeyFont);
 	}
 
 	@Override
 	public View				onCreateInputView()
 	{
-		// return (new EmojiGridView(this)); // TMP
 		ViewGroup		parent = (ViewGroup)_keyboardView.getParent();
 
 		if (parent != null)
@@ -66,7 +62,7 @@ public class Keyboard2 extends InputMethodService
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
 		updateConfig();
-		_keyboardView.reset_prefs(this);
+		_keyboardView.reset_prefs();
 	}
 
 	@Override
@@ -92,6 +88,7 @@ public class Keyboard2 extends InputMethodService
 			xmlRes = R.xml.azerty;
 		_textKeyboard = new KeyboardData(getResources().getXml(xmlRes));
 		_numericKeyboard = new KeyboardData(getResources().getXml(R.xml.numeric));
+		_emojiPane = null;
 	}
 
 	public void				handleKeyUp(KeyValue key, int flags)
@@ -111,16 +108,32 @@ public class Keyboard2 extends InputMethodService
 			_keyboardView.setKeyboard(_textKeyboard);
 		else if (eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
 			_keyboardView.setKeyboard(_numericKeyboard);
+		else if (eventCode == KeyValue.EVENT_SWITCH_EMOJI)
+			setInputView(getEmojiPane());
+		else if (eventCode == KeyValue.EVENT_SWITCH_BACK_EMOJI)
+			setInputView(_keyboardView);
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
 		// else if (eventCode == KeyEvent.KEYCODE_DEL)
 		// 	handleDelKey(1, 0);
 		// else if (eventCode == KeyEvent.KEYCODE_FORWARD_DEL)
 		// 	handleDelKey(0, 1);
-		else if (keyChar == KeyValue.CHAR_NONE && eventCode != KeyValue.EVENT_NONE)
-			handleMetaKeyUp(key, flags);
+		else if (keyChar == KeyValue.CHAR_NONE)
+		{
+			if (eventCode != KeyValue.EVENT_NONE)
+				handleMetaKeyUp(key, flags);
+			else
+				getCurrentInputConnection().commitText(key.getSymbol(flags), 1);
+		}
 		else if (keyChar != KeyValue.CHAR_NONE)
 			sendKeyChar(keyChar);
+	}
+
+	private ViewGroup		getEmojiPane()
+	{
+		if (_emojiPane == null)
+			_emojiPane = (ViewGroup)getLayoutInflater().inflate(R.layout.emoji_pane, null);
+		return (_emojiPane);
 	}
 
 	// private void			handleDelKey(int before, int after)

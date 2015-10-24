@@ -1,6 +1,8 @@
 package juloo.keyboard2;
 
+import android.content.Context;
 import android.graphics.Typeface;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +15,36 @@ public class EmojiGridView extends GridView
 	implements GridView.OnItemClickListener
 {
 	public static final int			COLUMN_WIDTH = 192;
-	public static final int			EMOJI_PANE_HEIGHT = 720;
-	public static final int			EMOJI_PANE_BG = 0xFF191919;
 	public static final float		EMOJI_SIZE = 32.f;
 
-	public EmojiGridView(Keyboard2 context)
+	private int				_emojiType = Emoji.TYPE_EMOTICONS;
+
+	/*
+	** TODO: save last emoji type
+	** TODO: adapt column width and emoji size
+	*/
+	public EmojiGridView(Context context, AttributeSet attrs)
 	{
-		super(context);
+		super(context, attrs);
 		setOnItemClickListener(this);
-		EmojiViewAdpater adpater = new EmojiViewAdpater(context);
-		adpater.setEmojiSet(Emoji.getEmojiByType(Emoji.TYPE_EMOTICONS));
 		setColumnWidth(COLUMN_WIDTH);
-		setBackgroundColor(EMOJI_PANE_BG);
-		setAdapter(adpater);
+		setEmojiType(Emoji.TYPE_EMOTICONS);
+	}
+
+	/*
+	** TODO: type (-1) for lastest used
+	*/
+	public void			setEmojiType(int type)
+	{
+		_emojiType = type;
+		setAdapter(new EmojiViewAdpater((Keyboard2)getContext(), type));
 	}
 
 	public void			onItemClick(AdapterView<?> parent, View v, int pos, long id)
 	{
-		System.out.println("Lol emoji: " + Emoji.getEmojiByType(Emoji.TYPE_EMOTICONS)[pos].getName());
+		Keyboard2			main = (Keyboard2)getContext();
+
+		main.handleKeyUp(Emoji.getEmojisByType(_emojiType)[pos], 0);
 	}
 
 	@Override
@@ -38,7 +52,6 @@ public class EmojiGridView extends GridView
 	{
 		super.onMeasure(wSpec, hSpec);
 		setNumColumns(getMeasuredWidth() / COLUMN_WIDTH);
-		setMeasuredDimension(wSpec, EMOJI_PANE_HEIGHT);
 	}
 
 	private static class EmojiView extends TextView
@@ -57,7 +70,7 @@ public class EmojiGridView extends GridView
 
 		public void			setEmoji(Emoji emoji)
 		{
-			setText(emoji.getBytecode());
+			setText(emoji.getSymbol(0));
 		}
 	}
 
@@ -67,14 +80,10 @@ public class EmojiGridView extends GridView
 
 		private Emoji[]		_emojiSet = null;
 
-		public EmojiViewAdpater(Keyboard2 main)
+		public EmojiViewAdpater(Keyboard2 main, int type)
 		{
 			_main = main;
-		}
-
-		public void			setEmojiSet(Emoji[] set)
-		{
-			_emojiSet = set;
+			_emojiSet = Emoji.getEmojisByType(type);
 		}
 
 		public int			getCount()

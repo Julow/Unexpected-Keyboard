@@ -6,4 +6,5 @@
 	<dimen name="key_height">36dp</dimen>
 	<dimen name="label_text_size">18dp</dimen>
 	<dimen name="sublabel_text_size">11dp</dimen>
+	<dimen name="emoji_type_button_height">48dp</dimen>
 </resources>

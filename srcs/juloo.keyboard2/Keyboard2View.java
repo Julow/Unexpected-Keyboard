@@ -24,7 +24,6 @@ public class Keyboard2View extends View
 
 	private static final long		VIBRATE_MIN_INTERVAL = 100;
 
-	private Keyboard2		_ime;
 	private KeyboardData	_keyboard;
 
 	private ArrayList<KeyDown>	_downKeys = new ArrayList<KeyDown>();
@@ -37,6 +36,9 @@ public class Keyboard2View extends View
 	private Handler			_handler;
 	private static int		_currentWhat = 0;
 
+	/*
+	** TODO: move config values in a Config object
+	*/
 	private float			_marginTop;
 	private float			_keyWidth;
 	private float			_keyPadding;
@@ -52,16 +54,16 @@ public class Keyboard2View extends View
 	private float			_keyHeight;
 	private float			_horizontalMargin;
 
-	private Paint			_keyBgPaint = new Paint();
-	private Paint			_keyDownBgPaint = new Paint();
-	private Paint			_keyLabelPaint;
-	private Paint			_keyLabelLockedPaint;
-	private Paint			_keySubLabelPaint;
-	private Paint			_keySubLabelRightPaint;
-	private Paint			_specialKeyLabelPaint;
-	private Paint			_specialKeyLabelLockedPaint;
-	private Paint			_specialKeySubLabelPaint;
-	private Paint			_specialKeySubLabelRightPaint;
+	private static Paint	_keyBgPaint = new Paint();
+	private static Paint	_keyDownBgPaint = new Paint();
+	private static Paint	_keyLabelPaint;
+	private static Paint	_keyLabelLockedPaint;
+	private static Paint	_keySubLabelPaint;
+	private static Paint	_keySubLabelRightPaint;
+	private static Paint	_specialKeyLabelPaint;
+	private static Paint	_specialKeyLabelLockedPaint;
+	private static Paint	_specialKeySubLabelPaint;
+	private static Paint	_specialKeySubLabelRightPaint;
 
 	private static RectF	_tmpRect = new RectF();
 
@@ -70,7 +72,6 @@ public class Keyboard2View extends View
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
-		Typeface	specialKeysFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/keys.ttf");
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_marginTop = getResources().getDimension(R.dimen.margin_top);
 		_marginBottom = getResources().getDimension(R.dimen.margin_bottom);
@@ -80,34 +81,36 @@ public class Keyboard2View extends View
 		_keyRound = getResources().getDimension(R.dimen.key_round);
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
-		_keyLabelPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, null);
-		_keyLabelLockedPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label_locked, R.dimen.label_text_size, null);
-		_keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, R.color.key_sub_label, R.dimen.sublabel_text_size, null);
-		_keySubLabelRightPaint = initLabelPaint(Paint.Align.RIGHT, R.color.key_sub_label, R.dimen.sublabel_text_size, null);
-		_specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, specialKeysFont);
-		_specialKeyLabelLockedPaint = initLabelPaint(Paint.Align.CENTER, R.color.key_label_locked, R.dimen.label_text_size, specialKeysFont);
-		_specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, R.color.key_sub_label, R.dimen.sublabel_text_size, specialKeysFont);
-		_specialKeySubLabelRightPaint = initLabelPaint(Paint.Align.RIGHT, R.color.key_sub_label, R.dimen.sublabel_text_size, specialKeysFont);
+		_keyLabelPaint = initLabelPaint(_keyLabelPaint, Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, null);
+		_keyLabelLockedPaint = initLabelPaint(_keyLabelLockedPaint, Paint.Align.CENTER, R.color.key_label_locked, R.dimen.label_text_size, null);
+		_keySubLabelPaint = initLabelPaint(_keySubLabelPaint, Paint.Align.LEFT, R.color.key_sub_label, R.dimen.sublabel_text_size, null);
+		_keySubLabelRightPaint = initLabelPaint(_keySubLabelRightPaint, Paint.Align.RIGHT, R.color.key_sub_label, R.dimen.sublabel_text_size, null);
+		Typeface	specialKeysFont = ((Keyboard2)getContext()).getSpecialKeyFont();
+		_specialKeyLabelPaint = initLabelPaint(_specialKeyLabelPaint, Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, specialKeysFont);
+		_specialKeyLabelLockedPaint = initLabelPaint(_specialKeyLabelLockedPaint, Paint.Align.CENTER, R.color.key_label_locked, R.dimen.label_text_size, specialKeysFont);
+		_specialKeySubLabelPaint = initLabelPaint(_specialKeySubLabelPaint, Paint.Align.LEFT, R.color.key_sub_label, R.dimen.sublabel_text_size, specialKeysFont);
+		_specialKeySubLabelRightPaint = initLabelPaint(_specialKeySubLabelRightPaint, Paint.Align.RIGHT, R.color.key_sub_label, R.dimen.sublabel_text_size, specialKeysFont);
 		setOnTouchListener(this);
 	}
 
-	private Paint		initLabelPaint(Paint.Align align, int color, int size, Typeface font)
+	private Paint		initLabelPaint(Paint paint, Paint.Align align, int color, int size, Typeface font)
 	{
-		Paint				paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-		paint.setTextAlign(align);
-		paint.setColor(getResources().getColor(color));
-		paint.setTextSize(getResources().getDimension(size));
-		if (font != null)
-			paint.setTypeface(font);
+		if (paint == null)
+		{
+			paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			paint.setTextAlign(align);
+			paint.setColor(getResources().getColor(color));
+			paint.setTextSize(getResources().getDimension(size));
+			if (font != null)
+				paint.setTypeface(font);
+		}
 		return (paint);
 	}
 
-	public void			reset_prefs(Keyboard2 ime)
+	public void			reset_prefs()
 	{
-		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(ime);
+		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-		_ime = ime;
 		_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
 		_vibrateEnabled = prefs.getBoolean("vibrate_enabled", _vibrateEnabled);
 		_vibrateDuration = prefs.getInt("vibrate_duration", (int)_vibrateDuration);
@@ -291,7 +294,7 @@ public class Keyboard2View extends View
 					downKey.flags ^= KeyValue.FLAG_KEEP_ON;
 			}
 			if (k.value != null && (k.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
-				_ime.handleKeyUp(k.value, _flags);
+				((Keyboard2)getContext()).handleKeyUp(k.value, _flags);
 			_downKeys.remove(k);
 			updateFlags();
 			invalidate();
@@ -335,7 +338,7 @@ public class Keyboard2View extends View
 			if (key.timeoutWhat == msg.what)
 			{
 				_handler.sendEmptyMessageDelayed(msg.what, _longPressInterval);
-				_ime.handleKeyUp(key.value, _flags);
+				((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
 				vibrate();
 				return (true);
 			}

@@ -2,7 +2,7 @@ package juloo.keyboard2;
 
 import java.util.HashMap;
 
-public class Emoji
+public class Emoji extends KeyValue
 {
 	public static final int		TYPE_EMOTICONS = 1;
 	public static final int		TYPE_DINGBATS = 2;
@@ -10,25 +10,12 @@ public class Emoji
 	public static final int		TYPE_UNCATEGORIZED = 4;
 	public static final int		TYPE_ENCLOSED_CHARACTERS = 5;
 
-	private final String	_name;
-	private final String	_bytecode;
 	private final String	_desc;
 
-	private Emoji(String name, String bytecode, String desc)
+	protected Emoji(String name, String bytecode, String desc)
 	{
-		_name = name;
-		_bytecode = bytecode;
+		super(name, bytecode, CHAR_NONE, EVENT_NONE, 0);
 		_desc = desc;
-	}
-
-	public String			getName()
-	{
-		return (_name);
-	}
-
-	public String			getBytecode()
-	{
-		return (_bytecode);
 	}
 
 	public String			getDescription()
@@ -38,7 +25,7 @@ public class Emoji
 
 	private static final HashMap<Integer, Emoji[]>	emoji_type_map = new HashMap<Integer, Emoji[]>();
 
-	public static Emoji[]	getEmojiByType(int type)
+	public static Emoji[]	getEmojisByType(int type)
 	{
 		return (emoji_type_map.get(type));
 	}

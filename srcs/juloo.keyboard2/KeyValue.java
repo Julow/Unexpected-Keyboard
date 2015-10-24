@@ -10,6 +10,8 @@ class KeyValue
 	public static final int		EVENT_CONFIG = -2;
 	public static final int		EVENT_SWITCH_TEXT = -3;
 	public static final int		EVENT_SWITCH_NUMERIC = -4;
+	public static final int		EVENT_SWITCH_EMOJI = -5;
+	public static final int		EVENT_SWITCH_BACK_EMOJI = -6;
 	public static final char	CHAR_NONE = '\0';
 
 	public static final int		FLAG_KEEP_ON = 1;
@@ -94,7 +96,7 @@ class KeyValue
 
 	private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
-	private KeyValue(String name, String symbol, char c, int eventCode, int flags)
+	protected KeyValue(String name, String symbol, char c, int eventCode, int flags)
 	{
 		_name = name;
 		_symbol = symbol;
@@ -131,46 +133,48 @@ class KeyValue
 		new KeyValue("accent5",	"\u00B8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT5);
 		new KeyValue("accent6",	"\u00A8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT6);
 
-		new KeyValue("a",		null,	'a',		KeyEvent.KEYCODE_A,	0);
-		new KeyValue("b",		null,	'b',		KeyEvent.KEYCODE_B,	0);
-		new KeyValue("c",		null,	'c',		KeyEvent.KEYCODE_C,	0);
-		new KeyValue("d",		null,	'd',		KeyEvent.KEYCODE_D,	0);
-		new KeyValue("e",		null,	'e',		KeyEvent.KEYCODE_E,	0);
-		new KeyValue("f",		null,	'f',		KeyEvent.KEYCODE_F,	0);
-		new KeyValue("g",		null,	'g',		KeyEvent.KEYCODE_G,	0);
-		new KeyValue("h",		null,	'h',		KeyEvent.KEYCODE_H,	0);
-		new KeyValue("i",		null,	'i',		KeyEvent.KEYCODE_I,	0);
-		new KeyValue("j",		null,	'j',		KeyEvent.KEYCODE_J,	0);
-		new KeyValue("k",		null,	'k',		KeyEvent.KEYCODE_K,	0);
-		new KeyValue("l",		null,	'l',		KeyEvent.KEYCODE_L,	0);
-		new KeyValue("m",		null,	'm',		KeyEvent.KEYCODE_M,	0);
-		new KeyValue("n",		null,	'n',		KeyEvent.KEYCODE_N,	0);
-		new KeyValue("o",		null,	'o',		KeyEvent.KEYCODE_O,	0);
-		new KeyValue("p",		null,	'p',		KeyEvent.KEYCODE_P,	0);
-		new KeyValue("q",		null,	'q',		KeyEvent.KEYCODE_Q,	0);
-		new KeyValue("r",		null,	'r',		KeyEvent.KEYCODE_R,	0);
-		new KeyValue("s",		null,	's',		KeyEvent.KEYCODE_S,	0);
-		new KeyValue("t",		null,	't',		KeyEvent.KEYCODE_T,	0);
-		new KeyValue("u",		null,	'u',		KeyEvent.KEYCODE_U,	0);
-		new KeyValue("v",		null,	'v',		KeyEvent.KEYCODE_V,	0);
-		new KeyValue("w",		null,	'w',		KeyEvent.KEYCODE_W,	0);
-		new KeyValue("x",		null,	'x',		KeyEvent.KEYCODE_X,	0);
-		new KeyValue("y",		null,	'y',		KeyEvent.KEYCODE_Y,	0);
-		new KeyValue("z",		null,	'z',		KeyEvent.KEYCODE_Z,	0);
-		new KeyValue("0",		null,	'0',		KeyEvent.KEYCODE_0,	0);
-		new KeyValue("1",		null,	'1',		KeyEvent.KEYCODE_1,	0);
-		new KeyValue("2",		null,	'2',		KeyEvent.KEYCODE_2,	0);
-		new KeyValue("3",		null,	'3',		KeyEvent.KEYCODE_3,	0);
-		new KeyValue("4",		null,	'4',		KeyEvent.KEYCODE_4,	0);
-		new KeyValue("5",		null,	'5',		KeyEvent.KEYCODE_5,	0);
-		new KeyValue("6",		null,	'6',		KeyEvent.KEYCODE_6,	0);
-		new KeyValue("7",		null,	'7',		KeyEvent.KEYCODE_7,	0);
-		new KeyValue("8",		null,	'8',		KeyEvent.KEYCODE_8,	0);
-		new KeyValue("9",		null,	'9',		KeyEvent.KEYCODE_9,	0);
+		new KeyValue("a",		null,	'a',		KeyEvent.KEYCODE_A,		0);
+		new KeyValue("b",		null,	'b',		KeyEvent.KEYCODE_B,		0);
+		new KeyValue("c",		null,	'c',		KeyEvent.KEYCODE_C,		0);
+		new KeyValue("d",		null,	'd',		KeyEvent.KEYCODE_D,		0);
+		new KeyValue("e",		null,	'e',		KeyEvent.KEYCODE_E,		0);
+		new KeyValue("f",		null,	'f',		KeyEvent.KEYCODE_F,		0);
+		new KeyValue("g",		null,	'g',		KeyEvent.KEYCODE_G,		0);
+		new KeyValue("h",		null,	'h',		KeyEvent.KEYCODE_H,		0);
+		new KeyValue("i",		null,	'i',		KeyEvent.KEYCODE_I,		0);
+		new KeyValue("j",		null,	'j',		KeyEvent.KEYCODE_J,		0);
+		new KeyValue("k",		null,	'k',		KeyEvent.KEYCODE_K,		0);
+		new KeyValue("l",		null,	'l',		KeyEvent.KEYCODE_L,		0);
+		new KeyValue("m",		null,	'm',		KeyEvent.KEYCODE_M,		0);
+		new KeyValue("n",		null,	'n',		KeyEvent.KEYCODE_N,		0);
+		new KeyValue("o",		null,	'o',		KeyEvent.KEYCODE_O,		0);
+		new KeyValue("p",		null,	'p',		KeyEvent.KEYCODE_P,		0);
+		new KeyValue("q",		null,	'q',		KeyEvent.KEYCODE_Q,		0);
+		new KeyValue("r",		null,	'r',		KeyEvent.KEYCODE_R,		0);
+		new KeyValue("s",		null,	's',		KeyEvent.KEYCODE_S,		0);
+		new KeyValue("t",		null,	't',		KeyEvent.KEYCODE_T,		0);
+		new KeyValue("u",		null,	'u',		KeyEvent.KEYCODE_U,		0);
+		new KeyValue("v",		null,	'v',		KeyEvent.KEYCODE_V,		0);
+		new KeyValue("w",		null,	'w',		KeyEvent.KEYCODE_W,		0);
+		new KeyValue("x",		null,	'x',		KeyEvent.KEYCODE_X,		0);
+		new KeyValue("y",		null,	'y',		KeyEvent.KEYCODE_Y,		0);
+		new KeyValue("z",		null,	'z',		KeyEvent.KEYCODE_Z,		0);
+		new KeyValue("0",		null,	'0',		KeyEvent.KEYCODE_0,		0);
+		new KeyValue("1",		null,	'1',		KeyEvent.KEYCODE_1,		0);
+		new KeyValue("2",		null,	'2',		KeyEvent.KEYCODE_2,		0);
+		new KeyValue("3",		null,	'3',		KeyEvent.KEYCODE_3,		0);
+		new KeyValue("4",		null,	'4',		KeyEvent.KEYCODE_4,		0);
+		new KeyValue("5",		null,	'5',		KeyEvent.KEYCODE_5,		0);
+		new KeyValue("6",		null,	'6',		KeyEvent.KEYCODE_6,		0);
+		new KeyValue("7",		null,	'7',		KeyEvent.KEYCODE_7,		0);
+		new KeyValue("8",		null,	'8',		KeyEvent.KEYCODE_8,		0);
+		new KeyValue("9",		null,	'9',		KeyEvent.KEYCODE_9,		0);
 
-		new KeyValue("config",			"Conf",	CHAR_NONE,	EVENT_CONFIG,			0);
-		new KeyValue("switch_text",		"ABC",	CHAR_NONE,	EVENT_SWITCH_TEXT,		0);
-		new KeyValue("switch_numeric",	"123+",	CHAR_NONE,	EVENT_SWITCH_NUMERIC,	0);
+		new KeyValue("config",				"Conf",			CHAR_NONE,	EVENT_CONFIG,				0);
+		new KeyValue("switch_text",			"ABC",			CHAR_NONE,	EVENT_SWITCH_TEXT,			0);
+		new KeyValue("switch_numeric",		"123+",			CHAR_NONE,	EVENT_SWITCH_NUMERIC,		0);
+		new KeyValue("switch_emoji",		"\uD83D\uDE03",	CHAR_NONE,	EVENT_SWITCH_EMOJI,			0);
+		new KeyValue("switch_back_emoji",	"ABC",			CHAR_NONE,	EVENT_SWITCH_BACK_EMOJI,	0);
 
 		new KeyValue("esc",		"Esc",		CHAR_NONE,	KeyEvent.KEYCODE_ESCAPE,		0);
 		new KeyValue("enter",	"\uE800",	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,			FLAG_KEY_FONT);
