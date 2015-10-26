@@ -13,6 +13,15 @@
 			android:layout_weight="1"
 			android:background="@color/emoji_button_bg"
 			android:padding="0px"
+			android:text="\uD83D\uDD59"
+			emoji_type="LAST_USE"
+		/>
+		<juloo.keyboard2.EmojiTypeButton
+			android:layout_width="0px"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:background="@color/emoji_button_bg"
+			android:padding="0px"
 			android:text="\uD83D\uDE03"
 			emoji_type="EMOTICONS"
 		/>

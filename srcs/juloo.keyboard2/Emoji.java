@@ -10,12 +10,19 @@ public class Emoji extends KeyValue
 	public static final int		TYPE_UNCATEGORIZED = 4;
 	public static final int		TYPE_ENCLOSED_CHARACTERS = 5;
 
+	private final String	_emojiName;
 	private final String	_desc;
 
 	protected Emoji(String name, String bytecode, String desc)
 	{
-		super(name, bytecode, CHAR_NONE, EVENT_NONE, 0);
+		super(bytecode, bytecode, CHAR_NONE, EVENT_NONE, 0);
+		_emojiName = name;
 		_desc = desc;
+	}
+
+	public String			getEmojiName()
+	{
+		return (_emojiName);
 	}
 
 	public String			getDescription()

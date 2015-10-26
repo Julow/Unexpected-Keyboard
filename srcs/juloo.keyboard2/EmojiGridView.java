@@ -1,7 +1,9 @@
 package juloo.keyboard2;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -10,41 +12,51 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 
 public class EmojiGridView extends GridView
 	implements GridView.OnItemClickListener
 {
+	public static final int			TYPE_LAST_USE = -1;
+
 	public static final int			COLUMN_WIDTH = 192;
 	public static final float		EMOJI_SIZE = 32.f;
 
-	private int				_emojiType = Emoji.TYPE_EMOTICONS;
+	private static final String		LAST_USE_PREF = "emoji_last_use";
+
+	private Emoji[]					_emojiArray;
+	private HashMap<Emoji, Integer>	_lastUsed;
 
 	/*
-	** TODO: save last emoji type
 	** TODO: adapt column width and emoji size
+	** TODO: use ArraySet instead of Emoji[]
 	*/
 	public EmojiGridView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		setOnItemClickListener(this);
 		setColumnWidth(COLUMN_WIDTH);
-		setEmojiType(Emoji.TYPE_EMOTICONS);
+		loadLastUsed();
+		setEmojiType((_lastUsed.size() == 0) ? Emoji.TYPE_EMOTICONS : TYPE_LAST_USE);
 	}
 
-	/*
-	** TODO: type (-1) for lastest used
-	*/
 	public void			setEmojiType(int type)
 	{
-		_emojiType = type;
-		setAdapter(new EmojiViewAdpater((Keyboard2)getContext(), type));
+		_emojiArray = (type == TYPE_LAST_USE) ? getLastEmojis() : Emoji.getEmojisByType(type);
+		setAdapter(new EmojiViewAdpater((Keyboard2)getContext(), _emojiArray));
 	}
 
 	public void			onItemClick(AdapterView<?> parent, View v, int pos, long id)
 	{
 		Keyboard2			main = (Keyboard2)getContext();
+		Integer				used = _lastUsed.get(_emojiArray[pos]);
 
-		main.handleKeyUp(Emoji.getEmojisByType(_emojiType)[pos], 0);
+		_lastUsed.put(_emojiArray[pos], (used == null) ? 1 : used.intValue() + 1);
+		main.handleKeyUp(_emojiArray[pos], 0);
 	}
 
 	@Override
@@ -52,6 +64,58 @@ public class EmojiGridView extends GridView
 	{
 		super.onMeasure(wSpec, hSpec);
 		setNumColumns(getMeasuredWidth() / COLUMN_WIDTH);
+	}
+
+	@Override
+	public void			onDetachedFromWindow()
+	{
+		saveLastUsed();
+	}
+
+	private Emoji[]		getLastEmojis()
+	{
+		final HashMap<Emoji, Integer>	map = _lastUsed;
+		Emoji[]							array = new Emoji[map.size()];
+
+		map.keySet().toArray(array);
+		Arrays.sort(array, 0, array.length, new Comparator<Emoji>()
+		{
+			public int		compare(Emoji a, Emoji b)
+			{
+				return (map.get(b).intValue() - map.get(a).intValue());
+			}
+		});
+		return (array);
+	}
+
+	private void		saveLastUsed()
+	{
+		SharedPreferences.Editor	edit = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+		HashSet<String>				set = new HashSet<String>();
+
+		for (Emoji emoji : _lastUsed.keySet())
+			set.add(String.valueOf(_lastUsed.get(emoji)) + "-" + emoji.getName());
+		edit.putStringSet(LAST_USE_PREF, set);
+	}
+
+	private void		loadLastUsed()
+	{
+		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+		Set<String>			lastUseSet = prefs.getStringSet(LAST_USE_PREF, null);
+
+		_lastUsed = new HashMap<Emoji, Integer>();
+		if (lastUseSet != null)
+			for (String emojiData : lastUseSet)
+			{
+				String[]	emoji = emojiData.split("-", 1);
+
+				if (emoji.length != 2)
+				{
+					System.out.println("Warn: Bad emoji data: " + emojiData);
+					continue ;
+				}
+				_lastUsed.put((Emoji)KeyValue.getKeyByName(emoji[1]), Integer.getInteger(emoji[0]));
+			}
 	}
 
 	private static class EmojiView extends TextView
@@ -63,6 +127,7 @@ public class EmojiGridView extends GridView
 			super(context);
 			setTextSize(EMOJI_SIZE);
 			setGravity(Gravity.CENTER);
+			setBackgroundColor(getResources().getColor(R.color.emoji_emoji_bg));
 			if (_layoutParams == null)
 				_layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
 			setLayoutParams(_layoutParams);
@@ -76,26 +141,26 @@ public class EmojiGridView extends GridView
 
 	private static class EmojiViewAdpater extends BaseAdapter
 	{
-		private Keyboard2	_main;
+		private Keyboard2		_main;
 
-		private Emoji[]		_emojiSet = null;
+		private Emoji[]			_emojiArray;
 
-		public EmojiViewAdpater(Keyboard2 main, int type)
+		public EmojiViewAdpater(Keyboard2 main, Emoji[] emojiArray)
 		{
 			_main = main;
-			_emojiSet = Emoji.getEmojisByType(type);
+			_emojiArray = emojiArray;
 		}
 
 		public int			getCount()
 		{
-			if (_emojiSet == null)
+			if (_emojiArray == null)
 				return (0);
-			return (_emojiSet.length);
+			return (_emojiArray.length);
 		}
 
 		public Object		getItem(int pos)
 		{
-			return (_emojiSet[pos]);
+			return (_emojiArray[pos]);
 		}
 
 		public long			getItemId(int pos)
@@ -109,7 +174,7 @@ public class EmojiGridView extends GridView
 
 			if (view == null)
 				view = new EmojiView(_main);
-			view.setEmoji(_emojiSet[pos]);
+			view.setEmoji(_emojiArray[pos]);
 			return (view);
 		}
 	}

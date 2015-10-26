@@ -7,6 +7,7 @@
 	<item name="key_label_locked" type="color">#229933</item>
 	<item name="key_sub_label" type="color">#BDBDBD</item>
 	<item name="emoji_button_bg" type="color">#202020</item>
+	<item name="emoji_emoji_bg" type="color">#00FFFFFF</item>
 	<item name="emoji_key_bg" type="color">@color/emoji_button_bg</item>
 	<item name="emoji_key_text" type="color">@color/key_label</item>
 </resources>

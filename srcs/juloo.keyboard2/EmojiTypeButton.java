@@ -33,6 +33,8 @@ public class EmojiTypeButton extends Button
 	public static int		getTypeByString(String str)
 	{
 		// caca
+		if (str.equals("LAST_USE"))
+			return (EmojiGridView.TYPE_LAST_USE);
 		if (str.equals("EMOTICONS"))
 			return (Emoji.TYPE_EMOTICONS);
 		if (str.equals("DINGBATS"))

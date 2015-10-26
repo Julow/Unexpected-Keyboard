@@ -66,11 +66,6 @@ public class Keyboard2 extends InputMethodService
 	}
 
 	@Override
-	public void				onAppPrivateCommand(String command, Bundle data)
-	{
-	}
-
-	@Override
 	public void				onConfigurationChanged(Configuration newConfig)
 	{
 		_keyboardView.reset();
@@ -109,7 +104,11 @@ public class Keyboard2 extends InputMethodService
 		else if (eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
 			_keyboardView.setKeyboard(_numericKeyboard);
 		else if (eventCode == KeyValue.EVENT_SWITCH_EMOJI)
-			setInputView(getEmojiPane());
+		{
+			if (_emojiPane == null)
+				_emojiPane = (ViewGroup)getLayoutInflater().inflate(R.layout.emoji_pane, null);
+			setInputView(_emojiPane);
+		}
 		else if (eventCode == KeyValue.EVENT_SWITCH_BACK_EMOJI)
 			setInputView(_keyboardView);
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
@@ -125,15 +124,8 @@ public class Keyboard2 extends InputMethodService
 			else
 				getCurrentInputConnection().commitText(key.getSymbol(flags), 1);
 		}
-		else if (keyChar != KeyValue.CHAR_NONE)
+		else
 			sendKeyChar(keyChar);
-	}
-
-	private ViewGroup		getEmojiPane()
-	{
-		if (_emojiPane == null)
-			_emojiPane = (ViewGroup)getLayoutInflater().inflate(R.layout.emoji_pane, null);
-		return (_emojiPane);
 	}
 
 	// private void			handleDelKey(int before, int after)

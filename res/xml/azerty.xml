@@ -39,6 +39,6 @@
 		<key width="1.0" key0="alt" key1="page_up" key2="end" key3="home" key4="page_down" />
 		<key width="4.4" key0="space" />
 		<key key1="up" key2="right" key3="left" key4="down" />
-		<key width="1.8" key0="enter" key1="config" />
+		<key width="1.8" key0="enter" key1="config" key2="switch_emoji" />
 	</row>
 </keyboard>
