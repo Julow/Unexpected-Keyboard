@@ -57,6 +57,7 @@ public class EmojiGridView extends GridView
 
 		_lastUsed.put(_emojiArray[pos], (used == null) ? 1 : used.intValue() + 1);
 		main.handleKeyUp(_emojiArray[pos], 0);
+		saveLastUsed(); // TODO: opti
 	}
 
 	@Override
@@ -64,12 +65,6 @@ public class EmojiGridView extends GridView
 	{
 		super.onMeasure(wSpec, hSpec);
 		setNumColumns(getMeasuredWidth() / COLUMN_WIDTH);
-	}
-
-	@Override
-	public void			onDetachedFromWindow()
-	{
-		saveLastUsed();
 	}
 
 	private Emoji[]		getLastEmojis()
@@ -96,6 +91,7 @@ public class EmojiGridView extends GridView
 		for (Emoji emoji : _lastUsed.keySet())
 			set.add(String.valueOf(_lastUsed.get(emoji)) + "-" + emoji.getName());
 		edit.putStringSet(LAST_USE_PREF, set);
+		edit.apply();
 	}
 
 	private void		loadLastUsed()
@@ -107,14 +103,15 @@ public class EmojiGridView extends GridView
 		if (lastUseSet != null)
 			for (String emojiData : lastUseSet)
 			{
-				String[]	emoji = emojiData.split("-", 1);
+				String[]	data = emojiData.split("-", 2);
+				Emoji		emoji;
 
-				if (emoji.length != 2)
-				{
-					System.out.println("Warn: Bad emoji data: " + emojiData);
+				if (data.length != 2)
 					continue ;
-				}
-				_lastUsed.put((Emoji)KeyValue.getKeyByName(emoji[1]), Integer.getInteger(emoji[0]));
+				emoji = Emoji.getEmojiByName(data[1]);
+				if (emoji == null)
+					continue ;
+				_lastUsed.put(emoji, Integer.getInteger(data[0]));
 			}
 	}
 

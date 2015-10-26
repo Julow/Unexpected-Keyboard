@@ -11,7 +11,6 @@
 			android:layout_width="0px"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
-			android:background="@color/emoji_button_bg"
 			android:padding="0px"
 			android:text="\uD83D\uDD59"
 			emoji_type="LAST_USE"
@@ -20,7 +19,6 @@
 			android:layout_width="0px"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
-			android:background="@color/emoji_button_bg"
 			android:padding="0px"
 			android:text="\uD83D\uDE03"
 			emoji_type="EMOTICONS"
@@ -29,16 +27,6 @@
 			android:layout_width="0px"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
-			android:background="@color/emoji_button_bg"
-			android:padding="0px"
-			android:text="\u2708"
-			emoji_type="DINGBATS"
-		/>
-		<juloo.keyboard2.EmojiTypeButton
-			android:layout_width="0px"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:background="@color/emoji_button_bg"
 			android:padding="0px"
 			android:text="\uD83D\uDE8C"
 			emoji_type="TRANSPORT"
@@ -47,19 +35,57 @@
 			android:layout_width="0px"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
-			android:background="@color/emoji_button_bg"
 			android:padding="0px"
-			android:text="\uD83C\uDF4C"
-			emoji_type="UNCATEGORIZED"
+			emoji_type="FOOD"
+			android:text="\uD83C\uDF55"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			android:layout_width="0px"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
-			android:background="@color/emoji_button_bg"
 			android:padding="0px"
-			android:text="\uD83C\uDD92"
-			emoji_type="ENCLOSED_CHARACTERS"
+			emoji_type="NATURE"
+			android:text="\uD83C\uDF37"
+		/>
+		<juloo.keyboard2.EmojiTypeButton
+			android:layout_width="0px"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:padding="0px"
+			emoji_type="FEST"
+			android:text="\uD83C\uDF88"
+		/>
+		<juloo.keyboard2.EmojiTypeButton
+			android:layout_width="0px"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:padding="0px"
+			emoji_type="ANIMAL"
+			android:text="\uD83D\uDC31"
+		/>
+		<juloo.keyboard2.EmojiTypeButton
+			android:layout_width="0px"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:padding="0px"
+			emoji_type="HUMAN"
+			android:text="\uD83D\uDC9C"
+		/>
+		<juloo.keyboard2.EmojiTypeButton
+			android:layout_width="0px"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:padding="0px"
+			emoji_type="UNCATEGORIZED"
+			android:text="\uD83D\uDCA5"
+		/>
+		<juloo.keyboard2.EmojiTypeButton
+			android:layout_width="0px"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:padding="0px"
+			emoji_type="DINGBATS"
+			android:text="\u2705"
 		/>
 	</LinearLayout>
 	<juloo.keyboard2.EmojiGridView

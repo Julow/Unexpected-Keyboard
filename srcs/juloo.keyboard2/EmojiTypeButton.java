@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class EmojiTypeButton extends Button
 	implements View.OnTouchListener
@@ -14,9 +15,10 @@ public class EmojiTypeButton extends Button
 
 	public EmojiTypeButton(Context context, AttributeSet attrs)
 	{
-		super(context, attrs);
-		_emojiType = getTypeByString(attrs.getAttributeValue(null, "emoji_type"));
+		super(context);
+		setBackgroundColor(getResources().getColor(R.color.emoji_button_bg));
 		setOnTouchListener(this);
+		_emojiType = getTypeByString(attrs.getAttributeValue(null, "emoji_type"));
 	}
 
 	public boolean			onTouch(View view, MotionEvent event)
@@ -37,14 +39,22 @@ public class EmojiTypeButton extends Button
 			return (EmojiGridView.TYPE_LAST_USE);
 		if (str.equals("EMOTICONS"))
 			return (Emoji.TYPE_EMOTICONS);
-		if (str.equals("DINGBATS"))
-			return (Emoji.TYPE_DINGBATS);
 		if (str.equals("TRANSPORT"))
 			return (Emoji.TYPE_TRANSPORT);
+		if (str.equals("FOOD"))
+			return (Emoji.TYPE_FOOD);
+		if (str.equals("NATURE"))
+			return (Emoji.TYPE_NATURE);
+		if (str.equals("FEST"))
+			return (Emoji.TYPE_FEST);
+		if (str.equals("ANIMAL"))
+			return (Emoji.TYPE_ANIMAL);
+		if (str.equals("HUMAN"))
+			return (Emoji.TYPE_HUMAN);
 		if (str.equals("UNCATEGORIZED"))
 			return (Emoji.TYPE_UNCATEGORIZED);
-		if (str.equals("ENCLOSED_CHARACTERS"))
-			return (Emoji.TYPE_ENCLOSED_CHARACTERS);
+		if (str.equals("DINGBATS"))
+			return (Emoji.TYPE_DINGBATS);
 		return (-1);
 	}
 }
