@@ -117,17 +117,14 @@ public class EmojiGridView extends GridView
 
 	private static class EmojiView extends TextView
 	{
-		private static ViewGroup.LayoutParams	_layoutParams = null;
-
 		public EmojiView(Keyboard2 context)
 		{
 			super(context);
 			setTextSize(EMOJI_SIZE);
 			setGravity(Gravity.CENTER);
-			setBackgroundColor(getResources().getColor(R.color.emoji_emoji_bg));
-			if (_layoutParams == null)
-				_layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
-			setLayoutParams(_layoutParams);
+			setBackgroundColor(0x0);
+			setTextColor(getResources().getColor(R.color.emoji_color));
+			setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
 		}
 
 		public void			setEmoji(Emoji emoji)

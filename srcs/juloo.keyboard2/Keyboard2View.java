@@ -15,6 +15,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.PopupWindow;
 import java.util.ArrayList;
 
 public class Keyboard2View extends View
@@ -35,6 +36,8 @@ public class Keyboard2View extends View
 
 	private Handler			_handler;
 	private static int		_currentWhat = 0;
+
+	private KeyPreviewPopup	_previewPopup;
 
 	/*
 	** TODO: move config values in a Config object
@@ -72,6 +75,7 @@ public class Keyboard2View extends View
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
+		_previewPopup = new KeyPreviewPopup(this);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_marginTop = getResources().getDimension(R.dimen.margin_top);
 		_marginBottom = getResources().getDimension(R.dimen.margin_bottom);
@@ -210,14 +214,14 @@ public class Keyboard2View extends View
 				if (key.timeoutWhat != -1)
 				{
 					_handler.removeMessages(key.timeoutWhat);
-					if ((newValue.getFlags() & KeyValue.FLAG_NOCHAR) == 0)
+					if ((newValue.getFlags() & KeyValue.FLAG_NOREPEAT) == 0)
 						_handler.sendEmptyMessageDelayed(key.timeoutWhat, _longPressTimeout);
 				}
 				key.value = newValue;
 				key.flags = newValue.getFlags();
 				updateFlags();
 				invalidate();
-				vibrate();
+				handleKeyDown(newValue);
 			}
 		}
 	}
@@ -254,11 +258,11 @@ public class Keyboard2View extends View
 					else
 					{
 						int what = _currentWhat++;
-						if (key.key0 != null && (key.key0.getFlags() & KeyValue.FLAG_NOCHAR) == 0)
+						if (key.key0 != null && (key.key0.getFlags() & KeyValue.FLAG_NOREPEAT) == 0)
 							_handler.sendEmptyMessageDelayed(what, _longPressTimeout);
 						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
 					}
-					vibrate();
+					handleKeyDown(key.key0);
 					updateFlags();
 					invalidate();
 					return ;
@@ -293,13 +297,26 @@ public class Keyboard2View extends View
 				else if ((downKey.flags & KeyValue.FLAG_KEEP_ON) != 0)
 					downKey.flags ^= KeyValue.FLAG_KEEP_ON;
 			}
-			if (k.value != null && (k.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
-				((Keyboard2)getContext()).handleKeyUp(k.value, _flags);
 			_downKeys.remove(k);
+			handleKeyUp(k);
 			updateFlags();
 			invalidate();
 			return ;
 		}
+	}
+
+	private void		handleKeyUp(KeyDown key)
+	{
+		if (key.value != null && (key.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
+			((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
+		_previewPopup.setPreview(null); // TODO: preview next down key
+	}
+
+	private void		handleKeyDown(KeyValue key)
+	{
+		if (key != null)
+			_previewPopup.setPreview(key.getSymbol(_flags));
+		vibrate();
 	}
 
 	private void		updateFlags()
@@ -397,6 +414,13 @@ public class Keyboard2View extends View
 			}
 			y += _keyHeight;
 		}
+	}
+
+	@Override
+	public void			onDetachedFromWindow()
+	{
+		super.onDetachedFromWindow();
+		_previewPopup.setPreview(null);
 	}
 
 	private void		drawLabel(Canvas canvas, KeyValue k, float x, float y, boolean locked)

@@ -51,7 +51,6 @@
 	<juloo.keyboard2.EmojiGridView
 		android:id="@+id/emoji_grid"
 		android:background="@color/bg"
-		android:textColor="@color/emoji_key_text"
 		android:layout_width="fill_parent"
 		android:layout_height="@dimen/emoji_grid_height"
 	/>

@@ -19,7 +19,8 @@ class KeyValue
 	public static final int		FLAG_CTRL = (1 << 2);
 	public static final int		FLAG_SHIFT = (1 << 3);
 	public static final int		FLAG_ALT = (1 << 4);
-	public static final int		FLAG_NOCHAR = (1 << 5);
+	public static final int		FLAG_NOREPEAT = (1 << 5);
+	public static final int		FLAG_NOCHAR = (1 << 6);
 	public static final int		FLAG_LOCKED = (1 << 8);
 
 	public static final int		FLAG_KEY_FONT = (1 << 12);
@@ -123,15 +124,15 @@ class KeyValue
 			new KeyValue(key, key, key.charAt(0), EVENT_NONE, 0);
 		}
 
-		new KeyValue("shift",	"⇧",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_LOCK | FLAG_SHIFT);
-		new KeyValue("ctrl",	"Ctrl",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_CTRL);
-		new KeyValue("alt",		"Alt",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ALT);
-		new KeyValue("accent1",	"\u02CB",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT1);
-		new KeyValue("accent2",	"\u00B4",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT2);
-		new KeyValue("accent3",	"\u02C6",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT3);
-		new KeyValue("accent4",	"\u02DC",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT4);
-		new KeyValue("accent5",	"\u00B8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT5);
-		new KeyValue("accent6",	"\u00A8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_ACCENT6);
+		new KeyValue("shift",	"⇧",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_LOCK | FLAG_SHIFT);
+		new KeyValue("ctrl",	"Ctrl",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_CTRL);
+		new KeyValue("alt",		"Alt",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ALT);
+		new KeyValue("accent1",	"\u02CB",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT1);
+		new KeyValue("accent2",	"\u00B4",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT2);
+		new KeyValue("accent3",	"\u02C6",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT3);
+		new KeyValue("accent4",	"\u02DC",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT4);
+		new KeyValue("accent5",	"\u00B8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT5);
+		new KeyValue("accent6",	"\u00A8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT6);
 
 		new KeyValue("a",		null,	'a',		KeyEvent.KEYCODE_A,		0);
 		new KeyValue("b",		null,	'b',		KeyEvent.KEYCODE_B,		0);
@@ -170,11 +171,11 @@ class KeyValue
 		new KeyValue("8",		null,	'8',		KeyEvent.KEYCODE_8,		0);
 		new KeyValue("9",		null,	'9',		KeyEvent.KEYCODE_9,		0);
 
-		new KeyValue("config",				"Conf",			CHAR_NONE,	EVENT_CONFIG,				0);
-		new KeyValue("switch_text",			"ABC",			CHAR_NONE,	EVENT_SWITCH_TEXT,			0);
-		new KeyValue("switch_numeric",		"123+",			CHAR_NONE,	EVENT_SWITCH_NUMERIC,		0);
-		new KeyValue("switch_emoji",		"\uD83D\uDE03",	CHAR_NONE,	EVENT_SWITCH_EMOJI,			0);
-		new KeyValue("switch_back_emoji",	"ABC",			CHAR_NONE,	EVENT_SWITCH_BACK_EMOJI,	0);
+		new KeyValue("config",				"Conf",			CHAR_NONE,	EVENT_CONFIG,				FLAG_NOREPEAT);
+		new KeyValue("switch_text",			"ABC",			CHAR_NONE,	EVENT_SWITCH_TEXT,			FLAG_NOREPEAT);
+		new KeyValue("switch_numeric",		"123+",			CHAR_NONE,	EVENT_SWITCH_NUMERIC,		FLAG_NOREPEAT);
+		new KeyValue("switch_emoji",		"\uD83D\uDE03",	CHAR_NONE,	EVENT_SWITCH_EMOJI,			FLAG_NOREPEAT);
+		new KeyValue("switch_back_emoji",	"ABC",			CHAR_NONE,	EVENT_SWITCH_BACK_EMOJI,	FLAG_NOREPEAT);
 
 		new KeyValue("esc",		"Esc",		CHAR_NONE,	KeyEvent.KEYCODE_ESCAPE,		0);
 		new KeyValue("enter",	"\uE800",	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,			FLAG_KEY_FONT);
