@@ -9,53 +9,43 @@
 	>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
-			android:text="\uD83D\uDD59"
 			emoji_type="LAST_USE"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
-			android:text="\uD83D\uDE03"
 			emoji_type="EMOTICONS"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
-			android:text="\uD83D\uDE8C"
 			emoji_type="TRANSPORT"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
 			emoji_type="FOOD"
-			android:text="\uD83C\uDF55"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
 			emoji_type="NATURE"
-			android:text="\uD83C\uDF37"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
 			emoji_type="FEST"
-			android:text="\uD83C\uDF88"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
 			emoji_type="ANIMAL"
-			android:text="\uD83D\uDC31"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
 			emoji_type="HUMAN"
-			android:text="\uD83D\uDC9C"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
 			emoji_type="UNCATEGORIZED"
-			android:text="\uD83D\uDCA5"
 		/>
 		<juloo.keyboard2.EmojiTypeButton
 			style="@style/emojiTypeButton"
 			emoji_type="DINGBATS"
-			android:text="\u2705"
 		/>
 	</LinearLayout>
 	<juloo.keyboard2.EmojiGridView
@@ -71,43 +61,20 @@
 		android:layout_height="wrap_content"
 	>
 		<juloo.keyboard2.EmojiKeyButton
-			android:layout_width="0px"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:background="@color/emoji_key_bg"
-			android:textColor="@color/emoji_key_text"
-			android:textSize="@dimen/label_text_size"
-			android:padding="0px"
+			style="@style/emojiKeyButton"
 			key="switch_back_emoji"
 		/>
 		<juloo.keyboard2.EmojiKeyButton
-			android:layout_width="0px"
-			android:layout_height="wrap_content"
+			style="@style/emojiKeyButton"
 			android:layout_weight="4"
-			android:background="@color/emoji_key_bg"
-			android:textColor="@color/emoji_key_text"
-			android:textSize="@dimen/label_text_size"
-			android:padding="0px"
 			key="space"
 		/>
 		<juloo.keyboard2.EmojiKeyButton
-			android:layout_width="0px"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:background="@color/emoji_key_bg"
-			android:textColor="@color/emoji_key_text"
-			android:textSize="@dimen/label_text_size"
-			android:padding="0px"
+			style="@style/emojiKeyButton"
 			key="backspace"
 		/>
 		<juloo.keyboard2.EmojiKeyButton
-			android:layout_width="0px"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:background="@color/emoji_key_bg"
-			android:textColor="@color/emoji_key_text"
-			android:textSize="@dimen/label_text_size"
-			android:padding="0px"
+			style="@style/emojiKeyButton"
 			key="enter"
 		/>
 	</LinearLayout>
