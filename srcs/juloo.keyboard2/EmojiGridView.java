@@ -111,7 +111,7 @@ public class EmojiGridView extends GridView
 				emoji = Emoji.getEmojiByName(data[1]);
 				if (emoji == null)
 					continue ;
-				_lastUsed.put(emoji, Integer.getInteger(data[0]));
+				_lastUsed.put(emoji, Integer.valueOf(data[0]));
 			}
 	}
 

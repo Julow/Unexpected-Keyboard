@@ -15,8 +15,7 @@ public class EmojiTypeButton extends Button
 
 	public EmojiTypeButton(Context context, AttributeSet attrs)
 	{
-		super(context);
-		setBackgroundColor(getResources().getColor(R.color.emoji_button_bg));
+		super(context, attrs);
 		setOnTouchListener(this);
 		_emojiType = getTypeByString(attrs.getAttributeValue(null, "emoji_type"));
 	}

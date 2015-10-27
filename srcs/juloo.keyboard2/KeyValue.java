@@ -94,11 +94,6 @@ class KeyValue
 		return (_flags);
 	}
 
-	public boolean		equals(Object o)
-	{
-		return (o instanceof KeyValue && ((KeyValue)o).getName().equals(_name));
-	}
-
 	private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
 	protected KeyValue(String name, String symbol, char c, int eventCode, int flags)
