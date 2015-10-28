@@ -7,7 +7,8 @@
 			android:summary="@string/pref_layout_summary"
 			android:defaultValue="azerty"
 			android:entries="@array/pref_layout_entries"
-			android:entryValues="@array/pref_layout_values" />
+			android:entryValues="@array/pref_layout_values"
+		/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_typing">
 		<juloo.common.SlideBarPreference
@@ -17,7 +18,7 @@
 			android:defaultValue="10.0"
 			min="5.0"
 			max="25.0"
-			/>
+		/>
 		<juloo.common.IntSlideBarPreference
 			android:key="longpress_timeout"
 			android:title="@string/pref_long_timeout_title"
@@ -25,7 +26,7 @@
 			android:defaultValue="600"
 			min="50"
 			max="2000"
-			/>
+		/>
 		<juloo.common.IntSlideBarPreference
 			android:key="longpress_interval"
 			android:title="@string/pref_long_interval_title"
@@ -33,14 +34,15 @@
 			android:defaultValue="25"
 			min="5"
 			max="100"
-			/>
+		/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_vibrate">
 		<CheckBoxPreference
 			android:key="vibrate_enabled"
 			android:title="@string/pref_vibrate_title"
 			android:summary="@string/pref_vibrate_summary"
-			android:defaultValue="true" />
+			android:defaultValue="true"
+		/>
 		<juloo.common.IntSlideBarPreference
 			android:key="vibrate_duration"
 			android:title="@string/pref_vibrate_duration_title"
@@ -48,7 +50,15 @@
 			android:defaultValue="20"
 			min="5"
 			max="50"
-			/>
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_category_preview">
+		<CheckBoxPreference
+			android:key="preview_enabled"
+			android:title="@string/pref_preview_title"
+			android:summary="@string/pref_preview_summary"
+			android:defaultValue="false"
+		/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_style">
 		<juloo.common.IntSlideBarPreference
@@ -58,7 +68,7 @@
 			android:defaultValue="5"
 			min="0"
 			max="100"
-			/>
+		/>
 		<juloo.common.IntSlideBarPreference
 			android:key="key_height"
 			android:title="@string/pref_key_height_title"
@@ -66,7 +76,7 @@
 			android:defaultValue="50"
 			min="30"
 			max="60"
-			/>
+		/>
 		<juloo.common.IntSlideBarPreference
 			android:key="horizontal_margin"
 			android:title="@string/pref_horizontal_margin_title"
@@ -74,6 +84,6 @@
 			android:defaultValue="3"
 			min="0"
 			max="20"
-			/>
+		/>
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -23,7 +23,7 @@
 
 	<string name="pref_category_vibrate">Vibration</string>
 	<string name="pref_vibrate_title">Vibration</string>
-	<string name="pref_vibrate_summary">Enable/Disable vibrations</string>
+	<string name="pref_vibrate_summary">Enable/Disable vibrations on key down</string>
 	<string name="pref_vibrate_duration_title">Duration</string>
 	<string name="pref_vibrate_duration_summary">%sms</string>
 
@@ -35,4 +35,7 @@
 	<string name="pref_horizontal_margin_title">Horizontal margin</string>
 	<string name="pref_horizontal_margin_summary">%sdp</string>
 
+	<string name="pref_category_preview">Preview</string>
+	<string name="pref_preview_title">Preview</string>
+	<string name="pref_preview_summary">Enable/Disable preview on key down</string>
 </resources>

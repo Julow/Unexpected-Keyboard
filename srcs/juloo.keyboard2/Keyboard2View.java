@@ -41,12 +41,12 @@ public class Keyboard2View extends View
 
 	/*
 	** TODO: move config values in a Config object
-	** TODO: settings: preview_enabled
 	** TODO: settings: preview_text_size
 	** TODO: settings: preview_timeout
 	** TODO: disable preview in password fields
 	*/
 	private long			_previewDismissTimeout = 150; // especialy this one
+	private boolean			_previewEnabled = false;
 
 	private float			_marginTop;
 	private float			_keyWidth;
@@ -121,6 +121,7 @@ public class Keyboard2View extends View
 	{
 		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
+		_previewEnabled = prefs.getBoolean("preview_enabled", _previewEnabled);
 		_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
 		_vibrateEnabled = prefs.getBoolean("vibrate_enabled", _vibrateEnabled);
 		_vibrateDuration = prefs.getInt("vibrate_duration", (int)_vibrateDuration);
@@ -316,6 +317,8 @@ public class Keyboard2View extends View
 		if (key.value != null && (key.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
 			((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
 		// previewNextKeyDown
+		if (!_previewEnabled)
+			return ;
 		for (KeyDown k : _downKeys)
 			if ((k.value.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
 			{
@@ -329,7 +332,7 @@ public class Keyboard2View extends View
 	{
 		if (key == null)
 			return ;
-		if ((key.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
+		if (_previewEnabled && (key.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
 			_previewPopup.setPreview(key, _flags);
 		vibrate();
 	}
