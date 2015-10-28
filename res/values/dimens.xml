@@ -3,12 +3,17 @@
 	<dimen name="horizontal_margin">3dp</dimen>
 	<dimen name="margin_top">2dp</dimen>
 	<dimen name="margin_bottom">5dp</dimen>
-	<dimen name="key_padding">1dp</dimen>
-	<dimen name="key_bg_padding">1dp</dimen>
+	<dimen name="key_padding">2dp</dimen>
+	<dimen name="key_bg_padding">1.4dp</dimen>
 	<dimen name="key_height">50dp</dimen>
 	<dimen name="key_round">4dp</dimen>
 	<dimen name="label_text_size">16dp</dimen>
 	<dimen name="sublabel_text_size">10dp</dimen>
+	<dimen name="preview_text">18dp</dimen>
+	<dimen name="preview_corners">6dp</dimen>
+	<dimen name="preview_stroke">1dp</dimen>
+	<dimen name="preview_margin">4dp</dimen>
+	<dimen name="preview_padding">8dp</dimen>
 	<dimen name="emoji_type_button_height">56dp</dimen>
 	<dimen name="emoji_grid_height">250dp</dimen>
 </resources>

@@ -41,6 +41,8 @@ public class Keyboard2View extends View
 
 	/*
 	** TODO: move config values in a Config object
+	** TODO: settings: preview_enabled
+	** TODO: settings: preview_text_size
 	*/
 	private float			_marginTop;
 	private float			_keyWidth;
