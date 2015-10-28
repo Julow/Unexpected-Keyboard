@@ -43,7 +43,11 @@ public class Keyboard2View extends View
 	** TODO: move config values in a Config object
 	** TODO: settings: preview_enabled
 	** TODO: settings: preview_text_size
+	** TODO: settings: preview_timeout
+	** TODO: disable preview in password fields
 	*/
+	private long			_previewDismissTimeout = 150; // especialy this one
+
 	private float			_marginTop;
 	private float			_keyWidth;
 	private float			_keyPadding;
@@ -77,7 +81,7 @@ public class Keyboard2View extends View
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
-		_previewPopup = new KeyPreviewPopup(this);
+		_previewPopup = new KeyPreviewPopup(this, _previewDismissTimeout);
 		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
 		_marginTop = getResources().getDimension(R.dimen.margin_top);
 		_marginBottom = getResources().getDimension(R.dimen.margin_bottom);
@@ -311,13 +315,22 @@ public class Keyboard2View extends View
 	{
 		if (key.value != null && (key.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
 			((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
-		_previewPopup.setPreview(null); // TODO: preview next down key
+		// previewNextKeyDown
+		for (KeyDown k : _downKeys)
+			if ((k.value.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
+			{
+				_previewPopup.setPreview(k.value, _flags);
+				return ;
+			}
+		_previewPopup.setPreview(null, 0);
 	}
 
 	private void		handleKeyDown(KeyValue key)
 	{
-		if (key != null)
-			_previewPopup.setPreview(key.getSymbol(_flags));
+		if (key == null)
+			return ;
+		if ((key.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
+			_previewPopup.setPreview(key, _flags);
 		vibrate();
 	}
 
@@ -422,7 +435,7 @@ public class Keyboard2View extends View
 	public void			onDetachedFromWindow()
 	{
 		super.onDetachedFromWindow();
-		_previewPopup.setPreview(null);
+		_previewPopup.forceDismiss();
 	}
 
 	private void		drawLabel(Canvas canvas, KeyValue k, float x, float y, boolean locked)

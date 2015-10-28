@@ -1,5 +1,7 @@
 package juloo.keyboard2;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -8,12 +10,19 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 class KeyPreviewPopup extends PopupWindow
+	implements Handler.Callback
 {
-	private TextView	_content;
-	private View		_anchor;
-	private int			_bottomMargin;
+	private final TextView	_content;
+	private final View		_anchor;
 
-	public KeyPreviewPopup(View anchor)
+	private final int		_bottomMargin;
+	private final long		_dismissTimeout;
+
+	private final Handler	_handler;
+
+	private int				_minWidth;
+
+	public KeyPreviewPopup(View anchor, long dismissTimeout)
 	{
 		super(anchor.getContext());
 		_content = new TextView(anchor.getContext());
@@ -25,6 +34,9 @@ class KeyPreviewPopup extends PopupWindow
 		_content.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 		_anchor = anchor;
 		_bottomMargin = (int)anchor.getResources().getDimension(R.dimen.preview_margin);
+		_dismissTimeout = dismissTimeout;
+		_handler = new Handler(this);
+		setMinWidth(0);
 		setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
 		setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 		setBackgroundDrawable(anchor.getResources().getDrawable(R.drawable.preview_popup));
@@ -33,26 +45,63 @@ class KeyPreviewPopup extends PopupWindow
 		setTouchable(false);
 	}
 
-	public void			setPreview(String preview)
+	@Override
+	public boolean		handleMessage(Message msg)
 	{
-		if (preview == null)
+		forceDismiss();
+		return (true);
+	}
+
+	public void			forceDismiss()
+	{
+		setMinWidth(0);
+		dismiss();
+	}
+
+	public void			setPreview(KeyValue key, int flags)
+	{
+		StringBuilder		preview;
+
+		if (key == null)
 		{
-			System.out.println("popup preview dismiss");
-			dismiss();
+			_handler.sendEmptyMessageDelayed(0, _dismissTimeout);
+			return ;
 		}
-		else
-		{
-			System.out.println("popup preview: " + preview);
-			_content.setText(preview);
-			if (!isShowing())
-				show();
-		}
+		_handler.removeMessages(0);
+		preview = new StringBuilder();
+		if ((flags & KeyValue.FLAG_CTRL) != 0)
+			preview.append("Ctrl-");
+		if ((flags & KeyValue.FLAG_ALT) != 0)
+			preview.append("Alt-");
+		if ((flags & KeyValue.FLAG_SHIFT) != 0 && !Character.isLetter(key.getChar(0)))
+			preview.append("Shift-");
+		preview.append(key.getSymbol(flags));
+		_content.setText(preview.toString());
+		show();
+	}
+
+	private void		setMinWidth(int minWidth)
+	{
+		_minWidth = minWidth;
+		_content.setMinWidth(minWidth);
 	}
 
 	private void		show()
 	{
+		int					x;
+		int					y;
+		int					width;
+		int					height;
+
 		_content.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
-		showAtLocation(_anchor, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0,
-			-(_content.getMeasuredHeight() + _bottomMargin));
+		width = _content.getMeasuredWidth();
+		height = _content.getMeasuredHeight();
+		if (width > _minWidth)
+			setMinWidth(width);
+		x = (_anchor.getMeasuredWidth() - width) / 2;
+		y = -(height + _bottomMargin);
+		if (!isShowing())
+			showAtLocation(_anchor, Gravity.NO_GRAVITY, x, y);
+		update(x, y, width, height);
 	}
 }
