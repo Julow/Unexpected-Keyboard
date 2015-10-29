@@ -22,6 +22,8 @@ public class Keyboard2 extends InputMethodService
 	private ViewGroup		_emojiPane = null;
 	private Typeface		_specialKeyFont = null;
 
+	private Config			_config;
+
 	@Override
 	public void				onCreate()
 	{
@@ -29,9 +31,15 @@ public class Keyboard2 extends InputMethodService
 		_specialKeyFont = Typeface.createFromAsset(getAssets(), "fonts/keys.ttf");
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+		_config = new Config(this);
 		updateConfig();
 		_keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
-		_keyboardView.reset_prefs();
+		_keyboardView.reset();
+	}
+
+	public Config			getConfig()
+	{
+		return (_config);
 	}
 
 	public Typeface			getSpecialKeyFont()
@@ -61,8 +69,9 @@ public class Keyboard2 extends InputMethodService
 	@Override
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
+		_config.refresh();
 		updateConfig();
-		_keyboardView.reset_prefs();
+		_keyboardView.reset();
 	}
 
 	@Override
@@ -71,6 +80,9 @@ public class Keyboard2 extends InputMethodService
 		_keyboardView.reset();
 	}
 
+	/*
+	** TODO: move this to Config object
+	*/
 	private void			updateConfig()
 	{
 		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(this);

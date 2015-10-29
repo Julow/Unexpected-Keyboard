@@ -1,7 +1,6 @@
 package juloo.keyboard2;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -9,10 +8,8 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -25,70 +22,49 @@ public class Keyboard2View extends View
 
 	private static final long		VIBRATE_MIN_INTERVAL = 100;
 
-	private KeyboardData	_keyboard;
+	private KeyboardData		_keyboard;
 
 	private ArrayList<KeyDown>	_downKeys = new ArrayList<KeyDown>();
 
-	private int				_flags = 0;
+	private int					_flags = 0;
 
-	private Vibrator		_vibratorService;
-	private long			_lastVibration = 0;
+	private Vibrator			_vibratorService;
+	private long				_lastVibration = 0;
 
-	private Handler			_handler;
-	private static int		_currentWhat = 0;
+	private Handler				_handler;
+	private static int			_currentWhat = 0;
 
-	private KeyPreviewPopup	_previewPopup;
+	private KeyPreviewPopup		_previewPopup;
 
 	/*
-	** TODO: move config values in a Config object
 	** TODO: settings: preview_text_size
 	** TODO: settings: preview_timeout
 	** TODO: disable preview in password fields
 	*/
-	private long			_previewDismissTimeout = 150; // especialy this one
-	private boolean			_previewEnabled = false;
+	private Config				_config;
 
-	private float			_marginTop;
-	private float			_keyWidth;
-	private float			_keyPadding;
-	private float			_keyBgPadding;
-	private float			_keyRound;
+	private float				_keyWidth;
 
-	private float			_subValueDist = 10f;
-	private boolean			_vibrateEnabled = true;
-	private long			_vibrateDuration = 20;
-	private long			_longPressTimeout = 600;
-	private long			_longPressInterval = 65;
-	private float			_marginBottom;
-	private float			_keyHeight;
-	private float			_horizontalMargin;
+	private static Paint		_keyBgPaint = new Paint();
+	private static Paint		_keyDownBgPaint = new Paint();
+	private static Paint		_keyLabelPaint;
+	private static Paint		_keyLabelLockedPaint;
+	private static Paint		_keySubLabelPaint;
+	private static Paint		_keySubLabelRightPaint;
+	private static Paint		_specialKeyLabelPaint;
+	private static Paint		_specialKeyLabelLockedPaint;
+	private static Paint		_specialKeySubLabelPaint;
+	private static Paint		_specialKeySubLabelRightPaint;
 
-	private static Paint	_keyBgPaint = new Paint();
-	private static Paint	_keyDownBgPaint = new Paint();
-	private static Paint	_keyLabelPaint;
-	private static Paint	_keyLabelLockedPaint;
-	private static Paint	_keySubLabelPaint;
-	private static Paint	_keySubLabelRightPaint;
-	private static Paint	_specialKeyLabelPaint;
-	private static Paint	_specialKeyLabelLockedPaint;
-	private static Paint	_specialKeySubLabelPaint;
-	private static Paint	_specialKeySubLabelRightPaint;
-
-	private static RectF	_tmpRect = new RectF();
+	private static RectF		_tmpRect = new RectF();
 
 	public Keyboard2View(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
-		_previewPopup = new KeyPreviewPopup(this, _previewDismissTimeout);
-		_horizontalMargin = getResources().getDimension(R.dimen.horizontal_margin);
-		_marginTop = getResources().getDimension(R.dimen.margin_top);
-		_marginBottom = getResources().getDimension(R.dimen.margin_bottom);
-		_keyHeight = getResources().getDimension(R.dimen.key_height);
-		_keyPadding = getResources().getDimension(R.dimen.key_padding);
-		_keyBgPadding = getResources().getDimension(R.dimen.key_bg_padding);
-		_keyRound = getResources().getDimension(R.dimen.key_round);
+		_config = ((Keyboard2)context).getConfig();
+		_previewPopup = new KeyPreviewPopup(this, _config);
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
 		_keyLabelPaint = initLabelPaint(_keyLabelPaint, Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, null);
@@ -115,25 +91,6 @@ public class Keyboard2View extends View
 				paint.setTypeface(font);
 		}
 		return (paint);
-	}
-
-	public void			reset_prefs()
-	{
-		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-		_previewEnabled = prefs.getBoolean("preview_enabled", _previewEnabled);
-		_subValueDist = prefs.getFloat("sub_value_dist", _subValueDist);
-		_vibrateEnabled = prefs.getBoolean("vibrate_enabled", _vibrateEnabled);
-		_vibrateDuration = prefs.getInt("vibrate_duration", (int)_vibrateDuration);
-		_longPressTimeout = prefs.getInt("longpress_timeout", (int)_longPressTimeout);
-		_longPressInterval = prefs.getInt("longpress_interval", (int)_longPressInterval);
-		_marginBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-			prefs.getInt("margin_bottom", (int)_marginBottom), getResources().getDisplayMetrics());
-		_keyHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-			prefs.getInt("key_height", (int)_keyHeight), getResources().getDisplayMetrics());
-		_horizontalMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-			prefs.getInt("horizontal_margin", (int)_horizontalMargin), getResources().getDisplayMetrics());
-		reset();
 	}
 
 	public void			setKeyboard(KeyboardData keyboard)
@@ -208,7 +165,7 @@ public class Keyboard2View extends View
 		{
 			moveX -= key.downX;
 			moveY -= key.downY;
-			if ((Math.abs(moveX) + Math.abs(moveY)) < _subValueDist)
+			if ((Math.abs(moveX) + Math.abs(moveY)) < _config.subValueDist)
 				newValue = key.key.key0;
 			else if (moveX < 0)
 				newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
@@ -222,7 +179,7 @@ public class Keyboard2View extends View
 				{
 					_handler.removeMessages(key.timeoutWhat);
 					if ((newValue.getFlags() & KeyValue.FLAG_NOREPEAT) == 0)
-						_handler.sendEmptyMessageDelayed(key.timeoutWhat, _longPressTimeout);
+						_handler.sendEmptyMessageDelayed(key.timeoutWhat, _config.longPressTimeout);
 				}
 				key.value = newValue;
 				key.flags = newValue.getFlags();
@@ -239,13 +196,13 @@ public class Keyboard2View extends View
 		float				y;
 		float				keyW;
 
-		y = _marginTop - _keyHeight;
+		y = _config.marginTop - _config.keyHeight;
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
-			y += _keyHeight;
-			if (touchY < y || touchY >= (y + _keyHeight))
+			y += _config.keyHeight;
+			if (touchY < y || touchY >= (y + _config.keyHeight))
 				continue ;
-			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2 + _horizontalMargin;
+			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2 + _config.horizontalMargin;
 			for (KeyboardData.Key key : row)
 			{
 				keyW = _keyWidth * key.width;
@@ -266,7 +223,7 @@ public class Keyboard2View extends View
 					{
 						int what = _currentWhat++;
 						if (key.key0 != null && (key.key0.getFlags() & KeyValue.FLAG_NOREPEAT) == 0)
-							_handler.sendEmptyMessageDelayed(what, _longPressTimeout);
+							_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
 						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
 					}
 					handleKeyDown(key.key0);
@@ -317,7 +274,7 @@ public class Keyboard2View extends View
 		if (key.value != null && (key.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
 			((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
 		// previewNextKeyDown
-		if (!_previewEnabled)
+		if (!_config.previewEnabled)
 			return ;
 		for (KeyDown k : _downKeys)
 			if ((k.value.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
@@ -332,7 +289,7 @@ public class Keyboard2View extends View
 	{
 		if (key == null)
 			return ;
-		if (_previewEnabled && (key.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
+		if (_config.previewEnabled && (key.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
 			_previewPopup.setPreview(key, _flags);
 		vibrate();
 	}
@@ -346,7 +303,7 @@ public class Keyboard2View extends View
 
 	private void		vibrate()
 	{
-		if (!_vibrateEnabled)
+		if (!_config.vibrateEnabled)
 			return ;
 		long now = System.currentTimeMillis();
 		if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
@@ -354,7 +311,7 @@ public class Keyboard2View extends View
 			_lastVibration = now;
 			try
 			{
-				_vibratorService.vibrate(_vibrateDuration);
+				_vibratorService.vibrate(_config.vibrateDuration);
 			}
 			catch (Exception e)
 			{
@@ -372,7 +329,7 @@ public class Keyboard2View extends View
 		{
 			if (key.timeoutWhat == msg.what)
 			{
-				_handler.sendEmptyMessageDelayed(msg.what, _longPressInterval);
+				_handler.sendEmptyMessageDelayed(msg.what, _config.longPressInterval);
 				((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
 				vibrate();
 				return (true);
@@ -390,10 +347,10 @@ public class Keyboard2View extends View
 		if (_keyboard.getRows() == null)
 			height = 0;
 		else
-			height = (int)(_keyHeight * ((float)_keyboard.getRows().size())
-				+ _marginTop + _marginBottom);
+			height = (int)(_config.keyHeight * ((float)_keyboard.getRows().size())
+				+ _config.marginTop + _config.marginBottom);
 		setMeasuredDimension(dm.widthPixels, height);
-		_keyWidth = (getWidth() - (_horizontalMargin * 2)) / KEY_PER_ROW;
+		_keyWidth = (getWidth() - (_config.horizontalMargin * 2)) / KEY_PER_ROW;
 	}
 
 	@Override
@@ -402,35 +359,35 @@ public class Keyboard2View extends View
 		float				x;
 		float				y;
 
-		y = _marginTop;
+		y = _config.marginTop;
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
-			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2f + _horizontalMargin;
+			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2f + _config.horizontalMargin;
 			for (KeyboardData.Key k : row)
 			{
 				float keyW = _keyWidth * k.width;
 				KeyDown keyDown = getKeyDown(k);
-				_tmpRect.set(x + _keyBgPadding, y + _keyBgPadding,
-					x + keyW - _keyBgPadding, y + _keyHeight - _keyBgPadding);
+				_tmpRect.set(x + _config.keyBgPadding, y + _config.keyBgPadding,
+					x + keyW - _config.keyBgPadding, y + _config.keyHeight - _config.keyBgPadding);
 				if (keyDown != null)
 					canvas.drawRect(_tmpRect, _keyDownBgPaint);
 				else
-					canvas.drawRoundRect(_tmpRect, _keyRound, _keyRound, _keyBgPaint);
+					canvas.drawRoundRect(_tmpRect, _config.keyRound, _config.keyRound, _keyBgPaint);
 				if (k.key0 != null)
-					drawLabel(canvas, k.key0, keyW / 2f + x, (_keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
+					drawLabel(canvas, k.key0, keyW / 2f + x, (_config.keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0));
-				float subPadding = _keyBgPadding + _keyPadding;
+				float subPadding = _config.keyBgPadding + _config.keyPadding;
 				if (k.key1 != null)
 					drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding - _keySubLabelPaint.ascent(), false);
 				if (k.key3 != null)
-					drawSubLabel(canvas, k.key3, x + subPadding, y + _keyHeight - subPadding - _keySubLabelPaint.descent(), false);
+					drawSubLabel(canvas, k.key3, x + subPadding, y + _config.keyHeight - subPadding - _keySubLabelPaint.descent(), false);
 				if (k.key2 != null)
 					drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding - _keySubLabelRightPaint.ascent(), true);
 				if (k.key4 != null)
-					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + _keyHeight - subPadding - _keySubLabelRightPaint.descent(), true);
+					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + _config.keyHeight - subPadding - _keySubLabelRightPaint.descent(), true);
 				x += keyW;
 			}
-			y += _keyHeight;
+			y += _config.keyHeight;
 		}
 	}
 
