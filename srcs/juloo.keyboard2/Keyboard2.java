@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.preference.PreferenceManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.util.Log;
 
 public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -123,6 +125,12 @@ public class Keyboard2 extends InputMethodService
 		}
 		else if (eventCode == KeyValue.EVENT_SWITCH_BACK_EMOJI)
 			setInputView(_keyboardView);
+		else if (eventCode == KeyValue.EVENT_CHANGE_METHOD)
+		{
+			InputMethodManager	imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+
+			imm.switchToNextInputMethod(getWindow().getWindow().getAttributes().token, false);
+		}
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
 		// else if (eventCode == KeyEvent.KEYCODE_DEL)

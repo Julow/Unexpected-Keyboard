@@ -35,7 +35,7 @@
 		<key width="1.5" key0="backspace" key2="delete" />
 	</row>
 	<row>
-		<key width="1.8" key0="ctrl" key3="switch_numeric" />
+		<key width="1.8" key0="ctrl" key1="change_method" key3="switch_numeric" />
 		<key key0="alt" key1="page_up" key2="end" key3="home" key4="page_down" />
 		<key width="4.4" key0="space" />
 		<key key1="up" key2="right" key3="left" key4="down" />

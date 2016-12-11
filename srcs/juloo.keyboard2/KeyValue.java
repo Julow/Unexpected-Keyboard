@@ -12,6 +12,7 @@ class KeyValue
 	public static final int		EVENT_SWITCH_NUMERIC = -4;
 	public static final int		EVENT_SWITCH_EMOJI = -5;
 	public static final int		EVENT_SWITCH_BACK_EMOJI = -6;
+	public static final int		EVENT_CHANGE_METHOD = -7;
 	public static final char	CHAR_NONE = '\0';
 
 	public static final int		FLAG_KEEP_ON = 1;
@@ -193,5 +194,6 @@ class KeyValue
 
 		new KeyValue("tab",		"↹",		'\t',		KeyEvent.KEYCODE_TAB,			0);
 		new KeyValue("space",	null,		' ',		KeyEvent.KEYCODE_SPACE,			0);
+		new KeyValue("change_method", "⊞",	CHAR_NONE,	EVENT_CHANGE_METHOD,			FLAG_NOREPEAT);
 	}
 }
