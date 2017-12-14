@@ -1,0 +1,2 @@
+let () =
+	Callback.register "add" (+)

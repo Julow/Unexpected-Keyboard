@@ -14,6 +14,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
+import juloo.ocaml.OCaml;
+import test.Test;
 
 public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -25,6 +27,13 @@ public class Keyboard2 extends InputMethodService
 	private Typeface		_specialKeyFont = null;
 
 	private Config			_config;
+
+	static
+	{
+		System.loadLibrary("unexpected-keyboard");
+		OCaml.startup();
+		Log.i("OCAML", "1 + 2 = " + String.valueOf(Test.add(1, 2)));
+	}
 
 	@Override
 	public void				onCreate()
