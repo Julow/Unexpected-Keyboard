@@ -14,7 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
-import juloo.ocaml.OCaml;
+import fr.inria.caml.camljava.Caml;
 import test.Test;
 
 public class Keyboard2 extends InputMethodService
@@ -31,8 +31,9 @@ public class Keyboard2 extends InputMethodService
 	static
 	{
 		System.loadLibrary("unexpected-keyboard");
-		OCaml.startup();
+		Caml.startup(new String[0]);
 		Log.i("OCAML", "1 + 2 = " + String.valueOf(Test.add(1, 2)));
+		Log.i("OCAML", "time = " + String.valueOf(Test.time()));
 	}
 
 	@Override

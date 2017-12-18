@@ -1,0 +1,3 @@
+[submodule "libs/camljava"]
+	path = libs/camljava
+	url = https://github.com/Julow/camljava

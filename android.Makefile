@@ -1,6 +1,6 @@
 # Required variables:
 # 	NAME
-# 	LIBS
+# 	ARCHS
 
 BIN_DIR = bin
 OBJ_DIR = $(BIN_DIR)/objs
@@ -13,7 +13,9 @@ ANDROID_FRAMEWORK = $(ANDROID_PLATFORM)/android.jar
 MANIFEST_FILE = AndroidManifest.xml
 
 ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f)
-LIBS_FILES = $(foreach a,$(LIBS),$(BIN_DIR)/lib/$(a)/lib$(NAME).so)
+LIBS_FILES = $(foreach a,$(ARCHS),$(BIN_DIR)/lib/$(a)/lib$(NAME).so)
+
+CLASSPATHS = libs/camljava/lib/camljava.jar
 
 all: $(BIN_DIR)/$(NAME).apk
 
@@ -27,7 +29,10 @@ JAVA_FILES = $(shell find $(SRC_DIR) -name '*.java')
 # A$B.class files are ignored
 CLASS_FILES = $(JAVA_FILES:$(SRC_DIR)/%.java=$(OBJ_DIR)/%.class)
 
-$(BIN_DIR)/$(NAME).dex: $(CLASS_FILES)
+$(BIN_DIR)/$(NAME).dex: $(CLASS_FILES) $(OBJ_DIR)/camljava.jar
+
+$(OBJ_DIR)/camljava.jar: libs/camljava/lib/camljava.jar
+	ln -sf "`pwd`/$<" "$@"
 
 #
 
@@ -40,7 +45,7 @@ $(BIN_DIR)/%.apk: $(BIN_DIR)/%.signed.apk | $(BIN_DIR)
 #  it is interpreted as a shell script
 # OPTS can be used to pass -storepass or -keypass options to jarsigner
 $(BIN_DIR)/%.signed.apk: $(BIN_DIR)/%.unsigned.apk %-keystore.conf | $(BIN_DIR)
-	eval `cat $(word 2,$^)`; \
+	eval `cat $(word 2,$^)` && \
 	jarsigner -keystore "$$KEYSTORE" $$OPTS -signedjar "$@" "$<" "$$KEYNAME"
 
 # package the apk
@@ -50,7 +55,7 @@ $(BIN_DIR)/%.unsigned.apk: $(BIN_DIR)/%.dex $(MANIFEST_FILE) $(ASSETS_FILES) $(L
 	aapt package -f -M $(MANIFEST_FILE) -S $(RES_DIR) \
 		-I $(ANDROID_FRAMEWORK) -F "$@"
 	aapt add "$@" $(ASSETS_FILES)
-	ln -fs $(<F) $(@D)/classes.dex; cd $(@D); \
+	ln -fs $(<F) $(@D)/classes.dex; cd $(@D) && \
 	aapt add $(@F) classes.dex $(subst $(BIN_DIR)/,,$(LIBS_FILES))
 
 # generate R.java
@@ -66,8 +71,9 @@ $(BIN_DIR)/%.dex: $(R_FILE) | $(BIN_DIR)
 
 # build java classes
 $(OBJ_DIR)/%.class: $(SRC_DIR)/%.java | $(OBJ_DIR)
-	javac -d $(OBJ_DIR) -source 1.7 -target 1.7 -encoding utf8 \
-		-classpath $(ANDROID_FRAMEWORK) -sourcepath $(SRC_DIR):$(GEN_DIR) \
+	javac -d $(OBJ_DIR) $(JAVACFLAGS) \
+		-classpath $(ANDROID_FRAMEWORK):$(CLASSPATHS) \
+		-sourcepath $(SRC_DIR):$(GEN_DIR) \
 		$^
 
 $(BIN_DIR):

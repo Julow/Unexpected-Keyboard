@@ -4,23 +4,35 @@
 
 NAME = unexpected-keyboard
 
-all:
-	make $(LIBS)
-	make apk
+export JAVACFLAGS = -source 1.7 -target 1.7 -encoding utf8
 
-apk:
-	make -f android.Makefile \
-		NAME=$(NAME) LIBS=$(LIBS)
+export OCAMLFIND = ocamlfind -toolchain android
 
-LIBS = armeabi-v7a
+ARCHS = armeabi-v7a
 
 armeabi-v7a: SWITCH = 4.04.0-armeabi
 
-$(LIBS):
+all: $(ARCHS)
+	make -f android.Makefile \
+		NAME=$(NAME) ARCHS=$(ARCHS)
+
+$(ARCHS):
 	mkdir -p bin/lib/$@
 	opam switch $(SWITCH)
-	eval `opam config env`; \
+	eval `opam config env` && \
+	make clean_libs; make libs && \
 	make -f ocaml.Makefile NAME=bin/lib/$@/lib$(NAME).so OBJ_DIR=bin/lib/$@
+
+libs:
+	make -C libs/camljava \
+		JAVACFLAGS="$(JAVACFLAGS)" \
+		OCAMLFIND="$(OCAMLFIND)" \
+		JNICFLAGS= \
+		JNIINCLUDES=-I$(NDK_PLATFORM)/usr/include/ \
+		CFLAGS="-O -Wall -DANDROID"
+
+clean_libs:
+	make -C libs/camljava clean
 
 install:
 	adb install -r bin/$(NAME).apk
@@ -29,4 +41,4 @@ container:
 	docker build -t $(NAME)-build - < Dockerfile
 	docker run -it --rm -v"`pwd`:/app" $(NAME)-build bash
 
-.PHONY: all apk $(LIBS) container
+.PHONY: all apk $(ARCHS) container libs clean_libs
