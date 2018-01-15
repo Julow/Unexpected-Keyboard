@@ -15,7 +15,7 @@ MANIFEST_FILE = AndroidManifest.xml
 ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f)
 LIBS_FILES = $(foreach a,$(ARCHS),$(BIN_DIR)/lib/$(a)/lib$(NAME).so)
 
-CLASSPATHS = libs/camljava/lib/camljava.jar
+CLASSPATHS =
 
 all: $(BIN_DIR)/$(NAME).apk
 
@@ -29,10 +29,7 @@ JAVA_FILES = $(shell find $(SRC_DIR) -name '*.java')
 # A$B.class files are ignored
 CLASS_FILES = $(JAVA_FILES:$(SRC_DIR)/%.java=$(OBJ_DIR)/%.class)
 
-$(BIN_DIR)/$(NAME).dex: $(CLASS_FILES) $(OBJ_DIR)/camljava.jar
-
-$(OBJ_DIR)/camljava.jar: libs/camljava/lib/camljava.jar
-	ln -sf "`pwd`/$<" "$@"
+$(BIN_DIR)/$(NAME).dex: $(CLASS_FILES)
 
 #
 

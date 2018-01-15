@@ -20,19 +20,7 @@ $(ARCHS):
 	mkdir -p bin/lib/$@
 	opam switch $(SWITCH)
 	eval `opam config env` && \
-	make clean_libs; make libs && \
 	make -f ocaml.Makefile NAME=bin/lib/$@/lib$(NAME).so OBJ_DIR=bin/lib/$@
-
-libs:
-	make -C libs/camljava \
-		JAVACFLAGS="$(JAVACFLAGS)" \
-		OCAMLFIND="$(OCAMLFIND)" \
-		JNICFLAGS= \
-		JNIINCLUDES=-I$(NDK_PLATFORM)/usr/include/ \
-		CFLAGS="-O -Wall -DANDROID"
-
-clean_libs:
-	make -C libs/camljava clean
 
 install:
 	adb install -r bin/$(NAME).apk
@@ -41,4 +29,4 @@ container:
 	docker build -t $(NAME)-build - < Dockerfile
 	docker run -it --rm -v"`pwd`:/app" $(NAME)-build bash
 
-.PHONY: all apk $(ARCHS) container libs clean_libs
+.PHONY: all apk $(ARCHS) container

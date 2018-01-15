@@ -12,6 +12,4 @@ OCAMLOPT = $(OCAMLFIND) ocamlopt
 $(NAME): $(ML_FILES) $(C_FILES)
 	$(OCAMLOPT) -linkpkg -output-obj \
 		-ccopt "-shared -I $(NDK_PLATFORM)/usr/include" \
-		-I libs/camljava/lib \
-		jni.cmxa \
 		$^ -o $@
