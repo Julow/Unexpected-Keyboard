@@ -12,4 +12,7 @@ OCAMLOPT = $(OCAMLFIND) ocamlopt
 $(NAME): $(ML_FILES) $(C_FILES)
 	$(OCAMLOPT) -linkpkg -output-obj \
 		-ccopt "-shared -I $(NDK_PLATFORM)/usr/include" \
+		-cclib "-L $(OCAMLJAVA_DIR)" \
+		-I $(OCAMLJAVA_DIR) \
+		javacaml.cmxa \
 		$^ -o $@

@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
+import juloo.javacaml.Caml;
 
 public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -25,6 +26,21 @@ public class Keyboard2 extends InputMethodService
 	private Typeface		_specialKeyFont = null;
 
 	private Config			_config;
+
+	static
+	{
+		System.loadLibrary("unexpected-keyboard");
+		Caml.startup();
+
+		Caml.function(Caml.getCallback("add"));
+		Caml.argInt(1);
+		Caml.argInt(2);
+		Log.i("OCAML", "1 + 2 = " + String.valueOf(Caml.callInt()));
+
+		Caml.function(Caml.getCallback("time"));
+		Caml.argUnit();
+		Log.i("OCAML", "time = " + String.valueOf(Caml.callInt64()));
+	}
 
 	@Override
 	public void				onCreate()

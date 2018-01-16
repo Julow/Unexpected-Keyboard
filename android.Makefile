@@ -1,6 +1,7 @@
 # Required variables:
 # 	NAME
-# 	ARCHS
+# 	ARCHS		Libraries architectures: bin/lib/<arch>/lib$(NAME).so
+# 	EXTRA_JARS	Path to libraries jar files, separated by `:`
 
 BIN_DIR = bin
 OBJ_DIR = $(BIN_DIR)/objs
@@ -14,8 +15,6 @@ MANIFEST_FILE = AndroidManifest.xml
 
 ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f)
 LIBS_FILES = $(foreach a,$(ARCHS),$(BIN_DIR)/lib/$(a)/lib$(NAME).so)
-
-CLASSPATHS =
 
 all: $(BIN_DIR)/$(NAME).apk
 
@@ -64,12 +63,12 @@ $(R_FILE): $(RES_FILES) | $(GEN_DIR)
 
 # dex
 $(BIN_DIR)/%.dex: $(R_FILE) | $(BIN_DIR)
-	dx --dex --output="$@" $(OBJ_DIR)
+	dx --dex --output="$@" $(OBJ_DIR) $(subst :, ,$(EXTRA_JARS))
 
 # build java classes
 $(OBJ_DIR)/%.class: $(SRC_DIR)/%.java | $(OBJ_DIR)
 	javac -d $(OBJ_DIR) $(JAVACFLAGS) \
-		-classpath $(ANDROID_FRAMEWORK):$(CLASSPATHS) \
+		-classpath $(ANDROID_FRAMEWORK):$(EXTRA_JARS) \
 		-sourcepath $(SRC_DIR):$(GEN_DIR) \
 		$^
 

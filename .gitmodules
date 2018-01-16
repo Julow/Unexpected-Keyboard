@@ -1,0 +1,3 @@
+[submodule "libs/ocaml-java"]
+	path = libs/ocaml-java
+	url = https://github.com/Julow/ocaml-java
