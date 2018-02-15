@@ -13,7 +13,7 @@ ASSETS_DIR = assets
 ANDROID_FRAMEWORK = $(ANDROID_PLATFORM)/android.jar
 MANIFEST_FILE = AndroidManifest.xml
 
-ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f)
+ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f 2>/dev/null)
 LIBS_FILES = $(foreach a,$(ARCHS),$(BIN_DIR)/lib/$(a)/lib$(NAME).so)
 
 all: $(BIN_DIR)/$(NAME).apk
@@ -50,14 +50,14 @@ $(BIN_DIR)/%.signed.apk: $(BIN_DIR)/%.unsigned.apk %-keystore.conf | $(BIN_DIR)
 $(BIN_DIR)/%.unsigned.apk: $(BIN_DIR)/%.dex $(MANIFEST_FILE) $(ASSETS_FILES) $(LIBS_FILES) | $(BIN_DIR)
 	aapt package -f -M $(MANIFEST_FILE) -S $(RES_DIR) \
 		-I $(ANDROID_FRAMEWORK) -F "$@"
-	aapt add "$@" $(ASSETS_FILES)
+	[ -z "$(ASSETS_FILES)" ] || aapt add "$@" $(ASSETS_FILES)
 	ln -fs $(<F) $(@D)/classes.dex; cd $(@D) && \
 	aapt add $(@F) classes.dex $(subst $(BIN_DIR)/,,$(LIBS_FILES))
 
 # generate R.java
 R_FILE = $(GEN_DIR)/$(subst .,/,$(PACKAGE_NAME))/R.java
 RES_FILES = $(shell find $(RES_DIR) -type f)
-$(R_FILE): $(RES_FILES) | $(GEN_DIR)
+$(R_FILE): $(RES_FILES) $(MANIFEST_FILE) | $(GEN_DIR)
 	aapt package -f -m -S $(RES_DIR) -J $(GEN_DIR) \
 		-M $(MANIFEST_FILE) -I $(ANDROID_FRAMEWORK)
 

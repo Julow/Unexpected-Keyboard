@@ -45,6 +45,11 @@ ENV NDK_HOME=/root/.opam/4.04.0-armeabi/android-ndk
 ENV NDK_PLATFORM=${NDK_HOME}/platforms/android-23/arch-arm/
 
 # ============================================================================ #
+# Some deps
+
+RUN opam install -y ppx_tools
+
+# ============================================================================ #
 
 RUN mkdir /app
 WORKDIR /app

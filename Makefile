@@ -21,7 +21,7 @@ all: $(ARCHS) $(OCAML_JAVA_JAR)
 
 $(ARCHS):
 	mkdir -p bin/lib/$@
-	opam switch $(SWITCH)
+	opam switch $(SWITCH); \
 	eval `opam config env` && \
 	OCAML_JAVA="$${PWD}/bin/lib/$@/libs/ocaml-java"; \
 	make -C libs/ocaml-java \
@@ -31,10 +31,15 @@ $(ARCHS):
 		JAVA_INCLUDES="-I $(JAVA_HOME)/include" \
 		$${OCAML_JAVA}/javacaml.cmxa \
 		&& \
+	make -C libs/ocaml-java \
+		BUILD_DIR="$${OCAML_JAVA}/bin" \
+		TARGET_DIR="$${OCAML_JAVA}" \
+		$${OCAML_JAVA}/ocaml-java-ppx \
+		&& \
 	make -f ocaml.Makefile \
 		NAME="bin/lib/$@/lib$(NAME).so" \
 		OBJ_DIR="bin/lib/$@" \
-		OCAMLJAVA_DIR="$${OCAML_JAVA}"
+		OCAMLJAVA_DIR="$${OCAML_JAVA}" all
 
 $(OCAML_JAVA_JAR):
 	make -C libs/ocaml-java \
