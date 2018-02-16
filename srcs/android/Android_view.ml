@@ -13,6 +13,10 @@ let motion_event_ACTION_POINTER_UP = 0x00000006
 class%java motion_event "android.view.MotionEvent" =
 object
 	method get_action_masked : int = "getActionMasked"
+	method get_action_index : int = "getActionIndex"
+
+	method get_pointer_count : int = "getPointerCount"
+	method get_pointer_id : int -> int = "getPointerId"
 
 	method get_x : int -> float = "getX"
 	method get_y : int -> float = "getY"
