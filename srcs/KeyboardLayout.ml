@@ -11,6 +11,14 @@ type pos = {
 
 type 'a t = (pos * 'a) array
 
+(* Search the key at the position (x, y) *)
+let pick t x y =
+	let cmp (p, _) = Utils.Cmp.(between p.y (p.y +. p.height) y
+			&&& between p.x (p.x +. p.width) x) in
+	match Utils.Array.binary_search t cmp with
+	| `Should_be_at _	-> None
+	| `Found_at i		-> Some t.(i)
+
 let iter = Array.iter
 
 module Desc =
@@ -42,19 +50,19 @@ struct
 				row.margin row.keys in
 			max max_x x, y +. row.height
 		) (0., 0.) rows in
-		let fold_key y height key (acc, x) =
+		let fold_key y height (acc, x) key =
 			let width = key.width /. size_x in
 			({ x; y; width; height }, key.value) :: acc,
 			x +. width
 		in
-		let fold_row row (acc, y) =
+		let fold_row (acc, y) row =
 			let margin = row.margin /. size_x
 			and height = row.height /. size_y in
-			let acc, x = List.fold_right (fold_key y height)
-				row.keys (acc, margin) in
+			let acc, x = List.fold_left (fold_key y height)
+				(acc, margin) row.keys in
 			acc, y +. height
 		in
-		let keys, _ = List.fold_right fold_row rows ([], 0.) in
-		Array.of_list keys
+		let keys, _ = List.fold_left fold_row ([], 0.) rows in
+		Utils.Array.rev (Array.of_list keys)
 
 end

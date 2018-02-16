@@ -3,15 +3,20 @@ package juloo.keyboard2;
 import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.EditorInfo;
 import android.view.View;
+import android.util.Log;
 import juloo.javacaml.Value;
 import juloo.javacaml.Caml;
 
 public class UnexpectedKeyboardService extends InputMethodService
 {
+	static final String TAG = "KEYBOARD";
 	static
 	{
+		Log.d(TAG, "Starting");
 		System.loadLibrary("unexpected-keyboard");
+		Log.d(TAG, "Library loaded");
 		Caml.startup();
+		Log.d(TAG, "OCaml started");
 	}
 
 	Value			obj;
