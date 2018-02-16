@@ -1,5 +1,6 @@
 class%java resources "android.content.res.Resources" =
 object
+	method get_display_metrics : Android_util.display_metrics = "getDisplayMetrics"
 end
 
 class%java context "android.content.Context" =

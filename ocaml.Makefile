@@ -12,9 +12,9 @@ include ocaml.depend
 
 OCAMLOPT = $(OCAMLFIND) ocamlopt
 OCAMLDEP = $(OCAMLFIND) ocamldep
+PPX = -ppx $(OCAMLJAVA_DIR)/ocaml-java-ppx
 OCAMLOPT_FLAGS = \
-	-I $(OCAMLJAVA_DIR)/javacaml javacaml.cmxa \
-	-ppx $(OCAMLJAVA_DIR)/ocaml-java-ppx \
+	-I $(OCAMLJAVA_DIR)/javacaml javacaml.cmxa $(PPX) \
 	$(addprefix -I ,$(OBJ_TREE))
 
 $(NAME): $(CMX_FILES)
@@ -38,11 +38,11 @@ ocaml.depend:
 	INCLUDE_FLAGS=`for d in $$SRC_TREE; do echo -I "$$d"; done`; \
 	OBJ_TREE=`printf " \\$$(OBJ_DIR)/%s" $$SRC_TREE`; \
 	{	printf "CMX_FILES ="; \
-		for f in `$(OCAMLDEP) -sort $$INCLUDE_FLAGS $$ML_FILES`; do \
+		for f in `$(OCAMLDEP) -sort $$INCLUDE_FLAGS $(PPX) $$ML_FILES`; do \
 			printf " \$$(OBJ_DIR)/$${f%.ml}.cmx"; \
 		done; echo; \
 		echo "OBJ_TREE =" $$OBJ_TREE; \
-		$(OCAMLDEP) -native -one-line $$INCLUDE_FLAGS $$ML_FILES \
+		$(OCAMLDEP) -native -one-line $(PPX) $$INCLUDE_FLAGS $$ML_FILES \
 		| sed 's#[^: ]\+#\$$(OBJ_DIR)/&#g'; \
 	} > ocaml.depend
 
