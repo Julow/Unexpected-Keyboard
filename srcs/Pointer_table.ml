@@ -1,6 +1,10 @@
+(** Pointer table
+	Implemented as a mutable Hashtbl
+	Pointers can be added, moved and removed
+	A pointer store its initial position, current position
+		and attached value *)
 
-(* `down_x` and `down_y` the initial position
-	and `x` and `y` are the current position *)
+(** A pointer *)
 type p = {
 	down_x : float;
 	down_y : float;
@@ -8,37 +12,38 @@ type p = {
 	mutable y : float
 }
 
-(** Pointer table, where the key is the pointer id *)
+(** Change the position of a pointer *)
+let p_move p x y =
+	p.x <- x;
+	p.y <- y
+
 module Tbl = Hashtbl.Make (struct
 	type t = int
 	let equal : int -> int -> bool = (=)
 	let hash id = id
 end)
 
-(** Pointer table
-	Implemented as a mutable Hashtbl *)
+(** Pointer table *)
 type 'a t = (p * 'a) Tbl.t
 
+(** New empty table *)
 let create () = Tbl.create 5
-
-(** Checks if a pointer is in the map *)
-let mem t id = Tbl.mem t id
 
 (** Find a pointer and its value
 	Raises `Not_found` if the pointer is not in the map *)
-let find t id = Tbl.find t id
+let find = Tbl.find
 
-(** Adds a pointer *)
-let add_pointer t id down_x down_y value =
-	Tbl.replace t id
-		({ down_x; down_y; x = down_x; y = down_y }, value)
+(** Adds a pointer
+	With initial position (`x`, `y`) and value `value` *)
+let add t id x y value =
+	let p = { down_x = x; down_y = y; x; y } in
+	Tbl.replace t id (p, value)
 
 (** Removes a pointer by its ID *)
-let rem_pointer t id =
-	Tbl.remove t id
+let remove = Tbl.remove
 
-(** Updates the position of a pointer *)
-let pointer_move t id x y =
+(** Updates the position of a pointer
+	Raises `Not_found` if the pointer is not in the map *)
+let move t id x y =
 	let p, _ = find t id in
-	p.x <- x;
-	p.y <- y
+	p_move p x y
