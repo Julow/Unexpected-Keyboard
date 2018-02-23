@@ -17,8 +17,9 @@ ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f 2>/dev/null)
 LIBS_FILES = $(foreach a,$(ARCHS),$(BIN_DIR)/lib/$(a)/lib$(NAME).so)
 
 all: $(BIN_DIR)/$(NAME).apk
+debug: $(BIN_DIR)/$(NAME).debug.apk
 
-.PHONY: all unsigned
+.PHONY: all debug
 
 #
 
@@ -31,6 +32,23 @@ CLASS_FILES = $(JAVA_FILES:$(SRC_DIR)/%.java=$(OBJ_DIR)/%.class)
 $(BIN_DIR)/$(NAME).dex: $(CLASS_FILES)
 
 #
+
+# debug apk
+$(BIN_DIR)/%.debug.apk: $(BIN_DIR)/%.debug.signed.apk | $(BIN_DIR)
+	zipalign -fp 4 "$<" "$@"
+
+DEBUG_KEYSTORE = $(BIN_DIR)/debug.keystore
+DEBUG_PASSWD = debug0
+
+$(BIN_DIR)/%.debug.signed.apk: $(BIN_DIR)/%.unsigned.apk $(DEBUG_KEYSTORE) | $(BIN_DIR)
+	jarsigner -keystore $(DEBUG_KEYSTORE) \
+		-storepass $(DEBUG_PASSWD) -keypass $(DEBUG_PASSWD) \
+		-signedjar "$@" "$<" debug
+
+$(BIN_DIR)/debug.keystore: | $(BIN_DIR)
+	echo y | keytool -genkeypair -dname "cn=d, ou=e, o=b, c=ug" \
+		-alias debug -keypass $(DEBUG_PASSWD) -keystore "$@" \
+		-keyalg rsa -storepass $(DEBUG_PASSWD) -validity 10000
 
 # zipalign, produce the final apk
 $(BIN_DIR)/%.apk: $(BIN_DIR)/%.signed.apk | $(BIN_DIR)

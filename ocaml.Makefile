@@ -6,9 +6,11 @@
 
 SRC_DIR = srcs
 
+DEPEND_FILE = $(OBJ_DIR)/ocaml.depend
+
 all: $(NAME)
 
-include ocaml.depend
+include $(DEPEND_FILE)
 
 OCAMLOPT = $(OCAMLFIND) ocamlopt
 OCAMLDEP = $(OCAMLFIND) ocamldep
@@ -16,6 +18,9 @@ PPX = -ppx $(OCAMLJAVA_DIR)/ocaml-java-ppx
 OCAMLOPT_FLAGS = \
 	-I $(OCAMLJAVA_DIR)/javacaml javacaml.cmxa $(PPX) \
 	$(addprefix -I ,$(OBJ_TREE))
+
+$(CMX_FILES): $(OCAMLJAVA_DIR)/javacaml/javacaml.cmxa \
+	$(OCAMLJAVA_DIR)/ocaml-java-ppx
 
 $(NAME): $(CMX_FILES)
 	$(OCAMLOPT) -linkpkg -output-obj -ccopt "-shared" \
@@ -32,7 +37,7 @@ $(OBJ_DIR)/%.cmx: %.ml | $(OBJ_TREE)
 $(OBJ_TREE):
 	mkdir -p $@
 
-ocaml.depend:
+$(DEPEND_FILE):
 	ML_FILES=`find $(SRC_DIR) -name '*.ml'`; \
 	SRC_TREE=`find $(SRC_DIR) -type d`; \
 	INCLUDE_FLAGS=`for d in $$SRC_TREE; do echo -I "$$d"; done`; \
@@ -44,7 +49,7 @@ ocaml.depend:
 		echo "OBJ_TREE =" $$OBJ_TREE; \
 		$(OCAMLDEP) -native -one-line $(PPX) $$INCLUDE_FLAGS $$ML_FILES \
 		| sed 's#[^: ]\+#\$$(OBJ_DIR)/&#g'; \
-	} > ocaml.depend
+	} > $(DEPEND_FILE)
 
 clean:
 	rm -f ocaml.depend
