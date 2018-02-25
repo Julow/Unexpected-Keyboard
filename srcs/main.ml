@@ -51,7 +51,7 @@ build [
 		key ~width:1.5 '<';
 	];
 
-	row ~height:1.2 ~margin:1. [
+	row ~height:0.9 ~margin:1. [
 		key ~width:1.5 '.';
 		key ~width:6.0 ' ';
 		key ~width:1.5 '^';
@@ -60,13 +60,14 @@ build [
 
 let keyboard_view context send_key =
 	CustomView.create context (fun view ->
-		let res = Context.get_resources context in
-		let dm = Resources.get_display_metrics res in
-		let text_paint = Paint.create paint_ANTI_ALIAS_FLAG in
-		Paint.set_text_align text_paint (Paint_align.get'center ());
-		Paint.set_text_size text_paint
-			(Display_metrics.get'scaled_density dm *. 16.);
+		let dp =
+			let density = Context.get_resources context
+				|> Resources.get_display_metrics
+				|> Display_metrics.get'scaled_density in
+			fun x -> x *. density
+		in
 		let on_touch = Touch_event.on_touch send_key layout view in
+		let on_draw = Drawing.keyboard dp layout in
 	object
 
 		method onTouchEvent ev =
@@ -74,21 +75,11 @@ let keyboard_view context send_key =
 			true
 
 		method onMeasure w_spec _ =
-			let w = Measure_spec.get_size w_spec in
-			let h = 400 in
+			let w = Measure_spec.get_size w_spec
+			and h = int_of_float (dp 200.) in
 			View.set_measured_dimension view w h
 
-		method onDraw canvas =
-			let width = float (Canvas.get_width canvas)
-			and height = float (Canvas.get_height canvas) in
-			KeyboardLayout.iter (fun (pos, key) ->
-				let x, y = KeyboardLayout.(
-					(pos.x +. pos.width /. 2.) *. width,
-					(pos.y +. pos.height /. 2.) *. height
-				) in
-				let text = String.make 1 key.Key.v in
-				Canvas.draw_text canvas text x y text_paint
-			) layout
+		method onDraw canvas = on_draw canvas
 
 		method onDetachedFromWindow = ()
 
