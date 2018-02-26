@@ -2,8 +2,9 @@ open Android_graphics
 
 (** Initialize the drawer
 	`dp` should convert from the `dp` unit to `px`
+	`render_key` should return the key string symbol
 	See the actual drawing function below (`keyboard`) *)
-let keyboard dp =
+let keyboard dp render_key =
 
 	(* Styles *)
 
@@ -39,9 +40,8 @@ let keyboard dp =
 
 	(** Draw the value of a key (label) *)
 	let key_value paint x y value canvas =
-		let s = String.make 1 value in
 		let y = text_center_y paint y in
-		Canvas.draw_text canvas s x y paint
+		Canvas.draw_text canvas (render_key value) x y paint
 	in
 
 	(** Draw corners values *)

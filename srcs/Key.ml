@@ -1,7 +1,7 @@
-type t = {
-	a : char option;
-	b : char option;
-	c : char option;
-	d : char option;
-	v : char
+type 'a t = {
+	a : 'a option;
+	b : 'a option;
+	c : 'a option;
+	d : 'a option;
+	v : 'a
 }

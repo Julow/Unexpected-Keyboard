@@ -31,3 +31,15 @@ object
 	method get_height : int = "getHeight"
 	method set_measured_dimension : int -> int -> unit = "setMeasuredDimension"
 end
+
+class%java key_event "android.view.KeyEvent" =
+object
+	initializer (create : long -> long -> int -> int -> int -> int -> int -> int -> int -> _)
+	val [@static] action_down : int = "ACTION_DOWN"
+	val [@static] action_up : int = "ACTION_UP"
+	val [@static] flag_keep_touch_mode : int = "FLAG_KEEP_TOUCH_MODE"
+	val [@static] flag_soft_keyboard : int = "FLAG_SOFT_KEYBOARD"
+	val [@static] keycode_escape : int = "KEYCODE_ESCAPE"
+	val [@static] meta_shift_left_on : int = "META_SHIFT_LEFT_ON"
+	method [@static] change_action : key_event -> int -> key_event = "changeAction"
+end
