@@ -47,7 +47,7 @@ ENV NDK_PLATFORM=${NDK_HOME}/platforms/android-23/arch-arm/
 # ============================================================================ #
 # Some deps
 
-RUN opam install -y ppx_tools
+RUN opam install -y ppx_tools ocaml-migrate-parsetree
 
 # ============================================================================ #
 
