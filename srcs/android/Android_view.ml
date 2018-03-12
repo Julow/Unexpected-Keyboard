@@ -30,6 +30,7 @@ object
 	method get_width : int = "getWidth"
 	method get_height : int = "getHeight"
 	method set_measured_dimension : int -> int -> unit = "setMeasuredDimension"
+	method invalidate : unit = "invalidate"
 end
 
 class%java key_event "android.view.KeyEvent" =

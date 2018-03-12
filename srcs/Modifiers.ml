@@ -1,5 +1,10 @@
 (** Functions that transform Key_value.t *)
 
+open Android_view
+open Key_value
+
+type t = Key_value.t -> Key_value.t
+
 (** Do nothing *)
 let default k = k
 

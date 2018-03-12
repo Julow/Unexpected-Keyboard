@@ -19,6 +19,7 @@ let keyboard_view context render_key send_key =
 
 		method onTouchEvent ev =
 			on_touch ev;
+			View.invalidate view;
 			true
 
 		method onMeasure w_spec _ =
@@ -66,27 +67,58 @@ let send_event ims evt meta =
 
 let () = Printexc.record_backtrace true
 
+module Modifier_stack =
+struct
+
+	(** Store activated modifiers
+		Modifiers are associated to the key that activated them *)
+
+	type modifier = Key_value.t * Modifiers.t
+	type t = modifier list
+
+	let empty = []
+
+	(** Add a modifier on top of the stack *)
+	let add key modifier t =
+		(key, modifier) :: t
+
+	(** Add a modifier like `add`
+		Except if a modifier associated with the same key is already activated,
+			it is simply removed, and no modifier is added *)
+	let add_or_cancel key modifier t =
+		if List.mem_assoc key t then
+			List.remove_assoc key t
+		else
+			add key modifier t
+
+	(** Apply the modifiers to the key
+		Starting from the last added *)
+	let apply t k =
+		List.fold_left (fun k (_, m) -> m k) k t
+
+end
+
 let () =
 	UnexpectedKeyboardService.register (fun ims ->
-		let modifier = ref Modifier.default in
+		let open Key_value in
 
-		let set_modifier_once m =
-			modifier := (fun k ->
-				let k = m k in
-				modifier := Modifier.default;
-				k)
+		let modifiers = ref Modifier_stack.empty in
+		let set_mods key modifier =
+			modifiers := Modifier_stack.add_or_cancel key modifier mods
 		in
 
 		let send_key k =
-			match !modifier k with
+			let mods = !modifiers in
+			modifiers := Modifier_stack.empty;
+			match Modifier_stack.apply mods k with
 			| Char c			-> send_char ims c
 			| Event (evt, meta)	-> send_event ims evt meta
-			| Shift				-> set_modifier_once Modifier.shift
-			| Accent acc		-> set_modifier_once (Modifier.accent acc)
+			| Shift as kv		-> set_mods mods kv Modifiers.shift
+			| Accent acc as kv	-> set_mods mods kv (Modifiers.accent acc)
 			| Nothing			-> ()
 
 		and render_key k =
-			match !modifier k with
+			match Modifier_stack.apply !modifiers k with
 			| Char c				->
 				(* TODO: OCaml and Java are useless at unicode *)
 				Java.to_string (java_string_of_code_point c)

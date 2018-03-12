@@ -3,7 +3,7 @@
 type event = [ `Escape ]
 type accent = [ `Acute ]
 
-type key =
+type t =
 	| Char of int
 	| Event of event * int
 	| Shift
