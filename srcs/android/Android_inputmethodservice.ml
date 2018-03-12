@@ -1,6 +1,7 @@
 class%java input_connection "android.view.inputmethod.InputConnection" =
 object
 	method send_key_event : Android_view.key_event -> bool = "sendKeyEvent"
+	method commit_text : Java_lang.char_sequence -> int -> bool = "commitText"
 end
 
 class%java input_method_service "android.inputmethodservice.InputMethodService" =

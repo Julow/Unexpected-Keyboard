@@ -43,3 +43,8 @@ object
 	val [@static] meta_shift_left_on : int = "META_SHIFT_LEFT_ON"
 	method [@static] change_action : key_event -> int -> key_event = "changeAction"
 end
+
+class%java key_character_map "android.view.KeyCharacterMap" =
+object
+	method [@static] get_dead_char : int -> int -> int = "getDeadChar"
+end

@@ -11,23 +11,25 @@ end
 
 let log msg = ignore (Log.d "KEYBOARD" msg)
 
-type event_type = [ `Escape ]
+type event = [ `Escape ]
+type accent = [ `Acute ]
 
 type key =
-	| Char of char
-	| Event of event_type * int
+	| Char of int
+	| Event of event * int
 	| Shift
+	| Accent of accent
 	| Nothing
 
 let layout = KeyboardLayout.Desc.(
 	let key ?(width=1.) ?a ?b ?c ?d v = key ~width Key.{ a; b; c; d; v } in
-	let c c = Char c
-	and e evt = Event (evt, 0) in
+	let c c = Char (Char.code c)
+	and event evt = Event (evt, 0) in
 build [
 	row [
-		key (c 'q') ~b:(c '1') ~d:(c '~') ~a:(e `Escape) ~c:(c '!');
+		key (c 'q') ~b:(c '1') ~d:(c '~') ~a:(event `Escape) ~c:(c '!');
 		key (c 'w') ~b:(c '2') ~d:(c '@');
-		key (c 'e') ~b:(c '3') ~d:(c '#');
+		key (c 'e') ~b:(c '3') ~d:(c '#') ~a:(Accent `Acute);
 		key (c 'r') ~b:(c '4') ~d:(c '$');
 		key (c 't') ~b:(c '5') ~d:(c '%');
 		key (c 'y') ~b:(c '6') ~d:(c '^');
@@ -105,10 +107,24 @@ struct
 	let shift =
 		let meta_shift = Key_event.get'meta_shift_left_on in
 		function
-		| Char c			-> Char (Char.uppercase_ascii c)
+		| Char c			-> Char (Java_lang.Character.to_upper_case c)
 		| Event (evt, meta)	-> Event (evt, meta lor meta_shift ())
-		| Shift
-		| Nothing			-> Nothing
+		| Shift				-> Nothing
+		| evt				-> evt
+
+	let accent acc =
+		let dead_char =
+			match acc with
+			| `Acute		-> 0x00B4
+		in
+		function
+		| Char c as evt		->
+			begin match Key_character_map.get_dead_char dead_char c with
+				| 0		-> evt
+				| c		-> Char c
+			end
+		| Accent acc' when acc' = acc	-> Nothing
+		| evt				-> evt
 
 end
 
@@ -121,7 +137,23 @@ let event_label =
 	function
 	| `Escape	-> "esc"
 
-let send_char = Input_method_service.send_key_char
+let accent_label =
+	function
+	| `Acute		-> "\xCC\x81"
+
+(** Create a String object representing a single character *)
+let java_string_of_code_point =
+	let code_points = Jarray.create_int 1 in
+	fun cp ->
+		Jarray.set_int code_points 0 cp;
+	Java_lang.String.create_cps code_points 0 1
+
+(** Sends a single character *)
+let send_char =
+	fun ims cp ->
+		let ic = Input_method_service.get_current_input_connection ims in
+		let txt = java_string_of_code_point cp in
+		ignore (Input_connection.commit_text ic txt 1)
 
 (** Likes `Input_method_service.send_down_up_key_events`
 		with an extra `meta` parameter *)
@@ -154,13 +186,17 @@ let () =
 			| Char c			-> send_char ims c
 			| Event (evt, meta)	-> send_event ims evt meta
 			| Shift				-> set_modifier_once Modifier.shift
+			| Accent acc		-> set_modifier_once (Modifier.accent acc)
 			| Nothing			-> ()
 
 		and render_key k =
 			match !modifier k with
-			| Char c			-> String.make 1 c
+			| Char c			->
+				(* TODO: OCaml and Java are useless at unicode *)
+				Java.to_string (java_string_of_code_point c)
 			| Event (evt, _)	-> event_label evt
 			| Shift				-> "|^|"
+			| Accent acc		-> accent_label acc
 			| Nothing			-> ""
 		in
 
