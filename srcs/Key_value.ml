@@ -18,9 +18,12 @@ type event = [
 
 type accent = [ `Acute | `Grave | `Circumflex | `Tilde | `Cedilla | `Trema ]
 
+type pad = [ `Default | `Numeric ]
+
 type t =
 	| Char of int
 	| Event of event * int
 	| Shift
 	| Accent of accent
 	| Nothing
+	| Change_pad of pad

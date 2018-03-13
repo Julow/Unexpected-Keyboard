@@ -45,9 +45,39 @@ let qwerty = build [
 		key ~width:1.5 (event `Backspace) ~b:(event `Delete)
 	];
 
-	row ~height:0.9 ~margin:1. [
-		key ~width:1.5 (c '.');
+	row ~height:0.9 ~margin:0.5 [
+		key ~width:1.5 (Change_pad `Numeric);
 		key ~width:6.0 (c ' ');
 		key ~width:1.5 (event `Enter)
+	]
+]
+
+let numeric = build [
+	row [
+		key (c '(') ~c:(c ')') ~a:(c '<') ~b:(c '>');
+		key (c '7');
+		key (c '8');
+		key (c '9');
+		key (event `Backspace) ~b:(event `Delete);
+	];
+	row [
+		key (c '/') ~b:(c '%');
+		key (c '4');
+		key (c '5');
+		key (c '6');
+		key (c '-');
+	];
+	row [
+		key (c '*');
+		key (c '1');
+		key (c '2');
+		key (c '3');
+		key (c '+');
+	];
+	row [
+		key (Change_pad `Default);
+		key ~width:2. (c '0');
+		key (c '.') ~d:(c ',');
+		key (event `Enter);
 	]
 ]

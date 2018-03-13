@@ -4,7 +4,7 @@ open Android_inputmethodservice
 open Android_util
 open Android_view
 
-let keyboard_view context render_key send_key =
+let keyboard_view context get_layout render_key send_key =
 	CustomView.create context (fun view ->
 		let dp =
 			let density = Context.get_resources context
@@ -12,13 +12,12 @@ let keyboard_view context render_key send_key =
 				|> Display_metrics.get'scaled_density in
 			fun x -> x *. density
 		in
-		let layout = Layouts.qwerty in
-		let on_touch = Touch_event.on_touch send_key layout view
-		and on_draw = Drawing.keyboard dp render_key layout in
+		let on_touch = Touch_event.on_touch send_key view
+		and on_draw = Drawing.keyboard dp render_key in
 	object
 
 		method onTouchEvent ev =
-			on_touch ev;
+			on_touch (get_layout ()) ev;
 			View.invalidate view;
 			true
 
@@ -27,7 +26,7 @@ let keyboard_view context render_key send_key =
 			and h = int_of_float (dp 200.) in
 			View.set_measured_dimension view w h
 
-		method onDraw canvas = on_draw canvas
+		method onDraw canvas = on_draw (get_layout ()) canvas
 
 		method onDetachedFromWindow = ()
 
@@ -115,6 +114,8 @@ let () =
 	UnexpectedKeyboardService.register (fun ims ->
 		let open Key_value in
 
+		let layout = ref Layouts.qwerty in
+
 		let modifiers = ref Modifier_stack.empty in
 		let set_mods mods key modifier =
 			modifiers := Modifier_stack.add_or_cancel key modifier mods
@@ -124,11 +125,13 @@ let () =
 			let mods = !modifiers in
 			modifiers := Modifier_stack.empty;
 			match Modifier_stack.apply mods k with
-			| Char c			-> send_char ims c
-			| Event (evt, meta)	-> send_event ims evt meta
-			| Shift as kv		-> set_mods mods kv Modifiers.shift
-			| Accent acc as kv	-> set_mods mods kv (Modifiers.accent acc)
-			| Nothing			-> ()
+			| Char c				-> send_char ims c
+			| Event (evt, meta)		-> send_event ims evt meta
+			| Shift as kv			-> set_mods mods kv Modifiers.shift
+			| Accent acc as kv		-> set_mods mods kv (Modifiers.accent acc)
+			| Nothing				-> ()
+			| Change_pad `Default	-> layout := Layouts.qwerty
+			| Change_pad `Numeric	-> layout := Layouts.numeric
 
 		and render_key k =
 			match Modifier_stack.apply !modifiers k with
@@ -156,13 +159,16 @@ let () =
 			| Accent `Cedilla		-> "\xCC\xA7"
 			| Accent `Trema			-> "\xCC\x88"
 			| Nothing				-> ""
-		in
+			| Change_pad `Default	-> "ABC"
+			| Change_pad `Numeric	-> "123"
+
+		and get_layout () = !layout in
 
 	object
 
 		method onInitializeInterface = ()
 		method onBindInput = ()
-		method onCreateInputView = keyboard_view ims render_key send_key
+		method onCreateInputView = keyboard_view ims get_layout render_key send_key
 		method onCreateCandidatesView = Java.null
 		method onStartInput _ _ = ()
 

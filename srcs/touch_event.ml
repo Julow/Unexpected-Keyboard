@@ -47,9 +47,9 @@ let pointed_value dx dy key =
 (** Handle touch events
 	Use an internal Pointer_table to track pointer positions
 	Send back the value of the keys to `send_key` *)
-let on_touch send_key layout view =
+let on_touch send_key view =
 	let pointers = Pointer_table.create () in
-	let handle action id x y =
+	let handle layout action id x y =
 		let x = x /. float (View.get_width view)
 		and y = y /. float (View.get_height view) in
 		match action with
@@ -69,4 +69,4 @@ let on_touch send_key layout view =
 			end
 		| `Cancel	-> Pointer_table.remove pointers id
 	in
-	handle_motion_event handle
+	fun layout ev -> handle_motion_event (handle layout) ev
