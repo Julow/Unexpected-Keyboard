@@ -21,6 +21,11 @@ let accent acc =
 	let dead_char =
 		match acc with
 		| `Acute		-> 0x00B4
+		| `Grave		-> 0x0060
+		| `Circumflex	-> 0x005E
+		| `Tilde		-> 0x007E
+		| `Cedilla		-> 0x00B8
+		| `Trema		-> 0x00A8
 	in
 	function
 	| Char c as kv		->

@@ -51,8 +51,21 @@ let send_char =
 		with an extra `meta` parameter *)
 let send_event ims evt meta =
 	let code =
+		let open Key_event in
 		match evt with
-		| `Escape	-> Key_event.get'keycode_escape ()
+		| `Escape		-> get'keycode_escape ()
+		| `Tab			-> get'keycode_tab ()
+		| `Backspace	-> get'keycode_del ()
+		| `Delete		-> get'keycode_forward_del ()
+		| `Enter		-> get'keycode_enter ()
+		| `Left			-> get'keycode_dpad_left ()
+		| `Right		-> get'keycode_dpad_right ()
+		| `Up			-> get'keycode_dpad_up ()
+		| `Down			-> get'keycode_dpad_down ()
+		| `Page_up		-> get'keycode_page_up ()
+		| `Page_down	-> get'keycode_page_down ()
+		| `Home			-> get'keycode_home ()
+		| `End			-> get'keycode_move_end ()
 	in
 	let time = Android_os.System_clock.uptime_millis () in
 	let mk_event action =
@@ -103,7 +116,7 @@ let () =
 		let open Key_value in
 
 		let modifiers = ref Modifier_stack.empty in
-		let set_mods key modifier =
+		let set_mods mods key modifier =
 			modifiers := Modifier_stack.add_or_cancel key modifier mods
 		in
 
@@ -122,9 +135,26 @@ let () =
 			| Char c				->
 				(* TODO: OCaml and Java are useless at unicode *)
 				Java.to_string (java_string_of_code_point c)
-			| Event (`Escape, _)	-> "esc"
-			| Shift					-> "|^|"
+			| Event (`Escape, _)	-> "Esc"
+			| Event (`Tab, _)		-> "\xE2\x87\xA5"
+			| Event (`Backspace, _)	-> "\xE2\x8C\xAB"
+			| Event (`Delete, _)	-> "\xE2\x8C\xA6"
+			| Event (`Enter, _)		-> "\xE2\x8F\x8E"
+			| Event (`Left, _)		-> "\xE2\x86\x90"
+			| Event (`Right, _)		-> "\xE2\x86\x92"
+			| Event (`Up, _)		-> "\xE2\x86\x91"
+			| Event (`Down, _)		-> "\xE2\x86\x93"
+			| Event (`Page_up, _)	-> "\xE2\x87\x9E"
+			| Event (`Page_down, _)	-> "\xE2\x87\x9F"
+			| Event (`Home, _)		-> "\xE2\x86\x96"
+			| Event (`End, _)		-> "\xE2\x86\x98"
+			| Shift					-> "\xE2\x87\xA7"
 			| Accent `Acute			-> "\xCC\x81"
+			| Accent `Grave			-> "\xCC\x80"
+			| Accent `Circumflex	-> "\xCC\x82"
+			| Accent `Tilde			-> "\xCC\x83"
+			| Accent `Cedilla		-> "\xCC\xA7"
+			| Accent `Trema			-> "\xCC\x88"
 			| Nothing				-> ""
 		in
 

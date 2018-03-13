@@ -42,12 +42,12 @@ let qwerty = build [
 		key (c 'b');
 		key (c 'n');
 		key (c 'm');
-		key ~width:1.5 Nothing
+		key ~width:1.5 (event `Backspace) ~b:(event `Delete)
 	];
 
 	row ~height:0.9 ~margin:1. [
 		key ~width:1.5 (c '.');
 		key ~width:6.0 (c ' ');
-		key ~width:1.5 Nothing
+		key ~width:1.5 (event `Enter)
 	]
 ]

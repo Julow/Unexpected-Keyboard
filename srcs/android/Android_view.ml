@@ -40,9 +40,22 @@ object
 	val [@static] action_up : int = "ACTION_UP"
 	val [@static] flag_keep_touch_mode : int = "FLAG_KEEP_TOUCH_MODE"
 	val [@static] flag_soft_keyboard : int = "FLAG_SOFT_KEYBOARD"
-	val [@static] keycode_escape : int = "KEYCODE_ESCAPE"
 	val [@static] meta_shift_left_on : int = "META_SHIFT_LEFT_ON"
 	method [@static] change_action : key_event -> int -> key_event = "changeAction"
+
+	val [@static] keycode_escape : int = "KEYCODE_ESCAPE"
+	val [@static] keycode_tab : int = "KEYCODE_TAB"
+	val [@static] keycode_del : int = "KEYCODE_DEL"
+	val [@static] keycode_forward_del : int = "KEYCODE_FORWARD_DEL"
+	val [@static] keycode_enter : int = "KEYCODE_ENTER"
+	val [@static] keycode_dpad_left : int = "KEYCODE_DPAD_LEFT"
+	val [@static] keycode_dpad_right : int = "KEYCODE_DPAD_RIGHT"
+	val [@static] keycode_dpad_up : int = "KEYCODE_DPAD_UP"
+	val [@static] keycode_dpad_down : int = "KEYCODE_DPAD_DOWN"
+	val [@static] keycode_page_up : int = "KEYCODE_PAGE_UP"
+	val [@static] keycode_page_down : int = "KEYCODE_PAGE_DOWN"
+	val [@static] keycode_home : int = "KEYCODE_HOME"
+	val [@static] keycode_move_end : int = "KEYCODE_MOVE_END"
 end
 
 class%java key_character_map "android.view.KeyCharacterMap" =
