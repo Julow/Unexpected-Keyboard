@@ -4,7 +4,7 @@ open Android_graphics
 	`dp` should convert from the `dp` unit to `px`
 	`render_key` should return the key string symbol
 	See the actual drawing function below (`keyboard`) *)
-let keyboard dp render_key =
+let keyboard is_activated dp render_key =
 
 	(* Styles *)
 
@@ -12,6 +12,9 @@ let keyboard dp render_key =
 
 	let p_key_bg = Paint_builder.(default
 		|> argb 255 60 60 60) ()
+
+	and p_key_bg_activated = Paint_builder.(default
+		|> argb 255 30 30 30) ()
 
 	and p_key_label = Paint_builder.(default
 		|> anti_alias
@@ -62,8 +65,10 @@ let keyboard dp render_key =
 	let key rect key canvas =
 		begin
 			let Rect.{ l; r; t; b } = key_bg_padding rect
-			and rd = key_bg_radius in
-			Canvas.draw_round_rect canvas l t r b rd rd p_key_bg
+			and rd = key_bg_radius
+			and bg = if is_activated key
+				then p_key_bg_activated else p_key_bg in
+			Canvas.draw_round_rect canvas l t r b rd rd bg
 		end;
 		key_corners rect key canvas;
 		let mid_x, mid_y = Rect.middle rect in

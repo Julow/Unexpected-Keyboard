@@ -44,29 +44,62 @@ let pointed_value dx dy key =
 		| true, false, { d = Some v }
 		| _, _, { v }		-> v
 
+module Pointers =
+struct
+
+	(** Pointers in a mutable list
+		Pointers store its initial position, id and key *)
+
+	type pointer = {
+		id		: int;
+		down_x	: float;
+		down_y	: float;
+		key		: Key_value.t Key.t
+	}
+
+	type t = pointer list ref
+
+	let create () = ref []
+
+	let pointer id down_x down_y key = { id; down_x; down_y; key }
+
+	let add t ptr = t := ptr :: !t
+	let find t id = List.find (fun p -> p.id = id) !t
+	let exists t id = List.exists (fun p -> p.id = id) !t
+	let key_exists t key = List.exists (fun p -> p.key == key) !t
+	let remove t id = t := List.filter (fun p -> p.id <> id) !t
+
+end
+
 (** Handle touch events
-	Use an internal Pointer_table to track pointer positions
 	Send back the value of the keys to `send_key` *)
-let on_touch send_key view =
-	let pointers = Pointer_table.create () in
+let on_touch invalidate send_key view =
+	let pointers = Pointers.create () in
 	let handle layout action id x y =
 		let x = x /. float (View.get_width view)
 		and y = y /. float (View.get_height view) in
 		match action with
-		| `Move		-> Pointer_table.move pointers id x y
+		| `Move		-> ()
 		| `Down		->
 			begin match KeyboardLayout.pick layout x y with
-				| Some (_, key)	-> Pointer_table.add pointers id x y key
+				| Some (_, key)	->
+					Pointers.add pointers (Pointers.pointer id x y key);
+					invalidate ()
 				| None			-> ()
 			end
 		| `Up		->
-			begin match Pointer_table.find pointers id with
-				| exception Not_found	-> ()
-				| Pointer_table.{ down_x; down_y; x; y }, key ->
+			begin match Pointers.find pointers id with
+				| exception Not_found				-> ()
+				| Pointers.{ down_x; down_y; key }	->
 					let dx = down_x -. x and dy = down_y -. y in
 					send_key (pointed_value dx dy key);
-					Pointer_table.remove pointers id
-			end
-		| `Cancel	-> Pointer_table.remove pointers id
+					Pointers.remove pointers id
+			end;
+			invalidate ();
+		| `Cancel	->
+			Pointers.remove pointers id;
+			invalidate ()
 	in
-	fun layout ev -> handle_motion_event (handle layout) ev
+	let handle layout ev = handle_motion_event (handle layout) ev
+	and is_activated key = Pointers.key_exists pointers key in
+	handle, is_activated
