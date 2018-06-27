@@ -5,8 +5,8 @@ struct
 
 	let (&&&) a b = if a <> 0 then a else b
 
-	let between a b x =
-		if x < a then ~-1 else if x >= b then 1 else 0
+	let between ~cmp a b x =
+		if cmp x a < 0 then ~-1 else if cmp x b >= 0 then 1 else 0
 
 	(** Perform binary search
 		`lo` and `hi` are begin/end indexes (inclusive)

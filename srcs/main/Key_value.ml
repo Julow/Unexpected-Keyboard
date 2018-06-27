@@ -15,10 +15,13 @@ type event = [
 	| `Home
 	| `End
 ]
+	[@@deriving eq]
 
 type accent = [ `Acute | `Grave | `Circumflex | `Tilde | `Cedilla | `Trema ]
+	[@@deriving eq]
 
 type pad = [ `Default | `Numeric ]
+	[@@deriving eq]
 
 type t =
 	| Char of int
@@ -27,3 +30,4 @@ type t =
 	| Accent of accent
 	| Nothing
 	| Change_pad of pad
+	[@@deriving eq]

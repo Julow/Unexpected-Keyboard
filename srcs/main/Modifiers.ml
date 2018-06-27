@@ -47,17 +47,15 @@ struct
 	let empty = []
 
 	(** Add a modifier on top of the stack *)
-	let add key modifier t =
-		(key, modifier) :: t
+	let add key modifier t = (key, modifier) :: t
 
 	(** Add a modifier like `add`
 		Except if a modifier associated with the same key is already activated,
 			it is simply removed, and no modifier is added *)
 	let add_or_cancel key modifier t =
-		if List.mem_assoc key t then
-			List.remove_assoc key t
-		else
-			add key modifier t
+		if List.mem_assoc ~eq:Key_value.equal key t
+		then List.remove_assoc ~eq:Key_value.equal key t
+		else add key modifier t
 
 	(** Apply the modifiers to the key
 		Starting from the last added *)

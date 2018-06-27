@@ -13,8 +13,9 @@ type 'a t = (pos * 'a) array
 
 (* Search the key at the position (x, y) *)
 let pick t x y =
-	let cmp (p, _) = Utils.Cmp.(between p.y (p.y +. p.height) y
-			&&& between p.x (p.x +. p.width) x) in
+	let cmp (p, _) =
+		Utils.Cmp.(between ~cmp:Float.compare p.y (p.y +. p.height) y
+			&&& between ~cmp:Float.compare p.x (p.x +. p.width) x) in
 	match Utils.Array.binary_search t cmp with
 	| `Should_be_at _	-> None
 	| `Found_at i		-> Some t.(i)
@@ -48,7 +49,7 @@ struct
 		let size_x, size_y = List.fold_left (fun (max_x, y) row ->
 			let x = List.fold_left (fun x key -> x +. key.width)
 				row.margin row.keys in
-			max max_x x, y +. row.height
+			Float.max max_x x, y +. row.height
 		) (0., 0.) rows in
 		let fold_key y height (acc, x) key =
 			let width = key.width /. size_x in
