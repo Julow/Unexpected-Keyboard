@@ -1,3 +1,6 @@
 [submodule "libs/ocaml-java"]
 	path = libs/ocaml-java
 	url = https://github.com/Julow/ocaml-java
+[submodule "libs/opam-cross-android"]
+	path = libs/opam-cross-android
+	url = https://github.com/Julow/opam-cross-android
