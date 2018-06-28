@@ -4,12 +4,7 @@ open Android_inputmethodservice
 open Android_util
 open Android_view
 
-(** Create a String object representing a single character *)
-let java_string_of_code_point =
-	let code_points = Jarray.create_int 1 in
-	fun cp ->
-		Jarray.set_int code_points 0 cp;
-		Java_lang.String.create_cps code_points 0 1
+external _hack : unit -> unit = "Java_juloo_javacaml_Caml_startup"
 
 (** Key_value to string *)
 let render_key =
@@ -17,7 +12,7 @@ let render_key =
 	function
 	| Char c				->
 		(* TODO: OCaml and Java are useless at unicode *)
-		Java.to_string (java_string_of_code_point c)
+		Java.to_string (Utils.java_string_of_code_point c)
 	| Event (`Escape, _)	-> "Esc"
 	| Event (`Tab, _)		-> "\xE2\x87\xA5"
 	| Event (`Backspace, _)	-> "\xE2\x8C\xAB"
@@ -85,4 +80,9 @@ let update t = function
 let draw t canvas =
 	let is_activated = Pointers.Table.key_exists t.pointers
 	and render_key k = render_key (Modifiers.Stack.apply t.modifiers k) in
-	Drawing.keyboard is_activated t.dp render_key
+	Drawing.keyboard is_activated t.dp render_key t.layout canvas
+
+let () =
+	Printexc.record_backtrace true;
+	let service = Keyboard_service.keyboard_service create update draw in
+	UnexpectedKeyboardService.register service

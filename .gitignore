@@ -3,3 +3,5 @@ proguard-project.txt
 bin/*
 gen/*
 *.keystore
+srcs/_build/*
+**/.merlin

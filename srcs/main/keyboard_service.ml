@@ -1,10 +1,12 @@
+open Android_content
+open Android_util
 open Android_inputmethodservice
 open Android_view
 
 (** Sends a single character *)
 let send_char ims cp =
 	let ic = Input_method_service.get_current_input_connection ims in
-	let txt = java_string_of_code_point cp in
+	let txt = Utils.java_string_of_code_point cp in
 	ignore (Input_connection.commit_text ic txt 1)
 
 (** Likes `Input_method_service.send_down_up_key_events`
@@ -41,7 +43,7 @@ let send_event ims evt meta =
 (** InputMethodService related stuff
 	defines the main loop of the app
 	The logic is in the [Main] module *)
-let keyboard_service update draw acc ims =
+let keyboard_service create update draw ims =
 	let dp =
 		let density = Context.get_resources ims
 			|> Resources.get_display_metrics
@@ -50,10 +52,10 @@ let keyboard_service update draw acc ims =
 	in
 
 	let keyboard_view view =
-		let acc = ref (Main.create ~view ~dp ()) in
+		let acc = ref (create ~view ~dp ()) in
 
 		let update ev =
-			let acc', actions = Main.update !acc ev in
+			let acc', actions = update !acc ev in
 			acc := acc';
 			List.iter (function
 				| `Send_char c				-> send_char ims c
@@ -72,7 +74,7 @@ let keyboard_service update draw acc ims =
 				and h = int_of_float (dp 200.) in
 				View.set_measured_dimension view w h
 
-			method onDraw canvas = Main.draw !acc canvas
+			method onDraw canvas = draw !acc canvas
 			method onDetachedFromWindow = ()
 		end
 	in
@@ -85,8 +87,3 @@ let keyboard_service update draw acc ims =
 		method onCreateCandidatesView = Java.null
 		method onStartInput _ _ = ()
 	end
-
-let () =
-	Printexc.record_backtrace true;
-	let service = Keyboard_service.keyboard_service update draw empty in
-	UnexpectedKeyboardService.register service
