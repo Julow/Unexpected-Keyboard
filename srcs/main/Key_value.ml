@@ -15,13 +15,13 @@ type event = [
 	| `Home
 	| `End
 ]
-	[@@deriving eq]
+	(* [@@deriving eq] *)
 
 type accent = [ `Acute | `Grave | `Circumflex | `Tilde | `Cedilla | `Trema ]
-	[@@deriving eq]
+	(* [@@deriving eq] *)
 
 type pad = [ `Default | `Numeric ]
-	[@@deriving eq]
+	(* [@@deriving eq] *)
 
 type t =
 	| Char of int
@@ -30,4 +30,8 @@ type t =
 	| Accent of accent
 	| Nothing
 	| Change_pad of pad
-	[@@deriving eq]
+	(* [@@deriving eq] *)
+
+(** Implement equality for the type [t]
+	Should switch to using `ppx_deriving` when it is available for android *)
+let equal = (=)

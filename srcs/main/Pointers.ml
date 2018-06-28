@@ -17,9 +17,9 @@ let corner_dist = 0.1
 		has a size of `corner_dist` or more *)
 let pointed_value dx dy key =
 	let open Key in
-	if dx *. dx +. dy *. dy <. corner_dist *. corner_dist
+	if dx *. dx +. dy *. dy < corner_dist *. corner_dist
 	then key.v
-	else match dx >. 0., dy >. 0., key with
+	else match dx > 0., dy > 0., key with
 		| true, true, { a = Some v }
 		| false, true, { b = Some v }
 		| false, false, { c = Some v }
@@ -44,6 +44,6 @@ struct
 
 	let find t id = List.find (fun p -> p.id = id) t
 	let exists t id = List.exists (fun p -> p.id = id) t
-	let key_exists t key = List.exists (fun p -> Equal.physical p.key key) t
+	let key_exists t key = List.exists (fun p -> p.key == key) t
 
 end

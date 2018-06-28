@@ -7,14 +7,20 @@ let corner_dist = 0.1
 		has a size of `corner_dist` or more *)
 let pointed_value dx dy key =
 	let open Key in
-	if dx *. dx +. dy *. dy <. corner_dist *. corner_dist
+	if dx *. dx +. dy *. dy < corner_dist *. corner_dist
 	then key.v
-	else match dx >. 0., dy >. 0., key with
+	else match dx > 0., dy > 0., key with
 		| true, true, { a = Some v }
 		| false, true, { b = Some v }
 		| false, false, { c = Some v }
 		| true, false, { d = Some v }
 		| _, _, { v }		-> v
+
+let rec list_init f acc i =
+	let i = i - 1 in
+	if i < 0
+	then acc
+	else list_init f (f i :: acc) i
 
 (** Convert a MotionEvent into a more digestible representation *)
 let read_motion_event ev =
@@ -27,7 +33,7 @@ let read_motion_event ev =
 	let action = Motion_event.get_action_masked ev
 	and index ev = Motion_event.get_action_index ev in
 	if action = motion_event_ACTION_MOVE
-	then `Move (List.init (Motion_event.get_pointer_count ev) get)
+	then `Move (list_init get [] (Motion_event.get_pointer_count ev))
 	else if action = motion_event_ACTION_UP
 		|| action = motion_event_ACTION_POINTER_UP
 	then `Up (get (index ev))

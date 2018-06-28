@@ -84,5 +84,5 @@ let update t = function
 
 let draw t canvas =
 	let is_activated = Pointers.Table.key_exists t.pointers
-	and render_key = render_key % Modifiers.Stack.apply t.modifiers in
+	and render_key k = render_key (Modifiers.Stack.apply t.modifiers k) in
 	Drawing.keyboard is_activated t.dp render_key
