@@ -1,5 +1,6 @@
 open Android_content
 open Android_util
+open Android_os
 open Android_inputmethodservice
 open Android_view
 
@@ -15,19 +16,19 @@ let send_event ims evt meta =
 	let code =
 		let open Key_event in
 		match evt with
-		| `Escape		-> get'keycode_escape ()
-		| `Tab			-> get'keycode_tab ()
-		| `Backspace	-> get'keycode_del ()
-		| `Delete		-> get'keycode_forward_del ()
-		| `Enter		-> get'keycode_enter ()
-		| `Left			-> get'keycode_dpad_left ()
-		| `Right		-> get'keycode_dpad_right ()
-		| `Up			-> get'keycode_dpad_up ()
-		| `Down			-> get'keycode_dpad_down ()
-		| `Page_up		-> get'keycode_page_up ()
-		| `Page_down	-> get'keycode_page_down ()
-		| `Home			-> get'keycode_home ()
-		| `End			-> get'keycode_move_end ()
+		| Key.Escape	-> get'keycode_escape ()
+		| Tab			-> get'keycode_tab ()
+		| Backspace		-> get'keycode_del ()
+		| Delete		-> get'keycode_forward_del ()
+		| Enter			-> get'keycode_enter ()
+		| Left			-> get'keycode_dpad_left ()
+		| Right			-> get'keycode_dpad_right ()
+		| Up			-> get'keycode_dpad_up ()
+		| Down			-> get'keycode_dpad_down ()
+		| Page_up		-> get'keycode_page_up ()
+		| Page_down		-> get'keycode_page_down ()
+		| Home			-> get'keycode_home ()
+		| End			-> get'keycode_move_end ()
 	in
 	let time = Android_os.System_clock.uptime_millis () in
 	let mk_event action =
@@ -39,6 +40,40 @@ let send_event ims evt meta =
 	let send = Input_connection.send_key_event ic in
 	ignore (send (mk_event (Key_event.get'action_down ()))
 		&& send (mk_event (Key_event.get'action_up ())))
+
+type ('a, 'b) task = Task of (unit -> ('a -> ('a, 'b) loop) Lwt.t)
+and ('a, 'b) loop = 'b * ('a, 'b) task list
+
+let loop data =
+	let pull, push =
+		let stream, push = Lwt_stream.create () in
+		let pull () = Lwt_stream.next stream in
+		let push e = push (Some e) in
+		pull, push
+	in
+	let pull_task (Task task) = Lwt.on_success (task ()) push in
+	let rec loop t =
+		let%lwt f = pull () in
+		let t, tasks = f t in
+		List.iter pull_task tasks;
+		loop t
+	in
+	Lwt.async (fun () -> loop data);
+	push
+
+let handler = lazy (Handler.create ())
+
+let timeout msec =
+	let t, u = Lwt.wait () in
+	let callback = Jrunnable.create (Lwt.wakeup u) in
+	ignore (Handler.post_delayed (Lazy.force handler) callback msec);
+	t
+
+let send_char ims c =
+	Task (fun () -> send_char ims c; Lwt.return (fun t -> t, []))
+
+let send_event ims ev meta =
+	Task (fun () -> send_event ims ev meta; Lwt.return (fun t -> t, []))
 
 (** InputMethodService related stuff
 	defines the main loop of the app
@@ -52,21 +87,11 @@ let keyboard_service create update draw ims =
 	in
 
 	let keyboard_view view =
-		let acc = ref (create ~view ~dp ()) in
-
-		let update ev =
-			let acc', actions = update !acc ev in
-			acc := acc';
-			List.iter (function
-				| `Send_char c				-> send_char ims c
-				| `Send_event (ev, meta)	-> send_event ims ev meta
-				| `Invalidate				-> View.invalidate view)
-				actions
-		in
+		let push = loop (create ~ims ~view ~dp ()) in
 
 		object
 			method onTouchEvent ev =
-				update (`Touch_event ev);
+				push (update (`Touch_event ev));
 				true
 
 			method onMeasure w_spec _ =
@@ -74,7 +99,7 @@ let keyboard_service create update draw ims =
 				and h = int_of_float (dp 200.) in
 				View.set_measured_dimension view w h
 
-			method onDraw canvas = draw !acc canvas
+			method onDraw canvas = push (fun t -> draw t canvas; t, [])
 			method onDetachedFromWindow = ()
 		end
 	in

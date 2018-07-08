@@ -1,9 +1,9 @@
 (** Functions that transform Key_value.t *)
 
 open Android_view
-open Key_value
+open Key
 
-type t = Key_value.t -> Key_value.t
+type t = value -> value
 
 (** Do nothing *)
 let default k = k
@@ -20,12 +20,12 @@ let shift =
 let accent acc =
 	let dead_char =
 		match acc with
-		| `Acute		-> 0x00B4
-		| `Grave		-> 0x0060
-		| `Circumflex	-> 0x005E
-		| `Tilde		-> 0x007E
-		| `Cedilla		-> 0x00B8
-		| `Trema		-> 0x00A8
+		| Acute		-> 0x00B4
+		| Grave			-> 0x0060
+		| Circumflex	-> 0x005E
+		| Tilde			-> 0x007E
+		| Cedilla		-> 0x00B8
+		| Trema			-> 0x00A8
 	in
 	function
 	| Char c as kv		->
@@ -42,7 +42,7 @@ struct
 		Modifiers are associated to the key that activated them *)
 
 	type modifier = t
-	type t = (Key_value.t * modifier) list
+	type t = (value * modifier) list
 
 	let empty = []
 

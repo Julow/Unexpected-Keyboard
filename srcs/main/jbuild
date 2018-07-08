@@ -1,6 +1,6 @@
 (jbuild_version 1)
 (executable
  ((name main)
-  (libraries (ocamljava ocamljava-javacaml android))
-  (preprocess (pps (ocamljava-ppx)))
+  (libraries (ocamljava ocamljava-javacaml android lwt))
+  (preprocess (pps (lwt_ppx ocamljava-ppx)))
   (modes (shared_object))))

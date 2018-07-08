@@ -22,11 +22,15 @@ let keyboard is_activated dp render_key =
 		|> text_size (dp 16.)
 		|> argb 255 255 255 255) ()
 
-	and p_key_corner_label = Paint_builder.(default
-		|> anti_alias
-		|> text_align `Center
-		|> text_size (dp 10.)
-		|> argb 255 160 160 160) ()
+	and p_key_corner_label_l, p_key_corner_label_r =
+		let open Paint_builder in
+		let p = default
+			|> anti_alias
+			|> text_size (dp 10.)
+			|> argb 255 160 160 160
+		in
+		(p |> text_align `Left) (),
+		(p |> text_align `Right) ()
 	in
 
 	let keyboard_padding = Rect.padding_rect
@@ -49,16 +53,16 @@ let keyboard is_activated dp render_key =
 
 	(** Draw corners values *)
 	let key_corners rect key canvas =
-		let corner x y =
+		let corner paint x y =
 			function
-			| Some v	-> key_value p_key_corner_label x y v canvas
+			| Some v	-> key_value paint x y v canvas
 			| None		-> ()
 		in
 		let Rect.{ l; r; t; b } = corner_padding rect in
-		corner l t key.Key.a;
-		corner r t key.Key.b;
-		corner r b key.Key.c;
-		corner l b key.Key.d
+		corner p_key_corner_label_l l t key.Key.a;
+		corner p_key_corner_label_r r t key.Key.b;
+		corner p_key_corner_label_r r b key.Key.c;
+		corner p_key_corner_label_l l b key.Key.d
 	in
 
 	(** Draw a key inside a rectangle *)

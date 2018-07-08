@@ -1,7 +1,7 @@
 (** Keyboard layouts *)
 
 open KeyboardLayout.Desc
-open Key_value
+open Key
 
 let key ?(width=1.) ?a ?b ?c ?d v = key ~width Key.{ a; b; c; d; v }
 let c c = Char (Char.code c)
@@ -9,9 +9,9 @@ let event evt = Event (evt, 0)
 
 let qwerty = build [
 	row [
-		key (c 'q') ~b:(c '1') ~d:(c '~') ~a:(event `Escape) ~c:(c '!');
+		key (c 'q') ~b:(c '1') ~d:(c '~') ~a:(event Escape) ~c:(c '!');
 		key (c 'w') ~b:(c '2') ~d:(c '@');
-		key (c 'e') ~b:(c '3') ~d:(c '#') ~a:(Accent `Acute);
+		key (c 'e') ~b:(c '3') ~d:(c '#') ~a:(Accent Acute);
 		key (c 'r') ~b:(c '4') ~d:(c '$');
 		key (c 't') ~b:(c '5') ~d:(c '%');
 		key (c 'y') ~b:(c '6') ~d:(c '^');
@@ -42,13 +42,13 @@ let qwerty = build [
 		key (c 'b');
 		key (c 'n');
 		key (c 'm');
-		key ~width:1.5 (event `Backspace) ~b:(event `Delete)
+		key ~width:1.5 (event Backspace) ~b:(event Delete)
 	];
 
 	row ~height:0.9 ~margin:0.5 [
-		key ~width:1.5 (Change_pad `Numeric);
+		key ~width:1.5 (Change_pad Numeric);
 		key ~width:6.0 (c ' ');
-		key ~width:1.5 (event `Enter)
+		key ~width:1.5 (event Enter)
 	]
 ]
 
@@ -58,7 +58,7 @@ let numeric = build [
 		key (c '7');
 		key (c '8');
 		key (c '9');
-		key (event `Backspace) ~b:(event `Delete);
+		key (event Backspace) ~b:(event Delete);
 	];
 	row [
 		key (c '/') ~b:(c '%');
@@ -75,9 +75,9 @@ let numeric = build [
 		key (c '+');
 	];
 	row [
-		key (Change_pad `Default);
+		key (Change_pad Default);
 		key ~width:2. (c '0');
 		key (c '.') ~d:(c ',');
-		key (event `Enter);
+		key (event Enter);
 	]
 ]
