@@ -64,7 +64,7 @@ let loop data =
 let handler = lazy (Handler.create ())
 
 let timeout msec =
-	let t, u = Lwt.wait () in
+	let t, u = Lwt.task () in
 	let callback = Jrunnable.create (Lwt.wakeup u) in
 	ignore (Handler.post_delayed (Lazy.force handler) callback msec);
 	t

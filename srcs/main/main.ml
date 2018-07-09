@@ -38,12 +38,13 @@ let render_key =
 	| Change_pad Numeric	-> "123"
 
 type t = {
-	touch_state	: Touch_event.state;
-	layout		: Key.t KeyboardLayout.t;
-	modifiers	: Modifiers.Stack.t;
-	ims			: Input_method_service.t;
-	view		: View.t;
-	dp			: float -> float
+	touch_state		: Touch_event.state;
+	layout			: Key.t KeyboardLayout.t;
+	modifiers		: Modifiers.Stack.t;
+	ims				: Input_method_service.t;
+	view			: View.t;
+	dp				: float -> float;
+	cancel_repeat	: (unit -> unit) option
 }
 
 let task t = Keyboard_service.Task t
@@ -55,6 +56,7 @@ let create ~ims ~view ~dp () = {
 	touch_state = Touch_event.empty_state;
 	layout = Layouts.qwerty;
 	modifiers = Modifiers.Stack.empty;
+	cancel_repeat = None;
 	ims; view; dp
 }
 
@@ -64,7 +66,8 @@ let handle_key t key =
 		let modifiers = Modifiers.Stack.add kv m t.modifiers in
 		{ t with modifiers }, []
 	and with_layout t layout =
-		let touch_state, modifiers = Touch_event.empty_state, Modifiers.Stack.empty in
+		let touch_state = Touch_event.empty_state
+		and modifiers = Modifiers.Stack.empty in
 		{ t with touch_state; modifiers; layout }, []
 	in
 	match Modifiers.Stack.apply t.modifiers key with
@@ -78,27 +81,44 @@ let handle_key t key =
 	| Change_pad Default	-> with_layout t Layouts.qwerty
 	| Change_pad Numeric	-> with_layout t Layouts.numeric
 
-let rec key_repeat ?(timeout=1000L) key () =
+let rec key_repeat ?(timeout=1000L) key =
 	let later () t =
 		match Touch_event.activated t.touch_state key with
 		| None			-> t, []
 		| Some value	->
+			let task, cancel = key_repeat ~timeout:200L key in
 			let t, tasks = handle_key t value in
-			t, task (key_repeat ~timeout:100L key) :: tasks
+			{ t with cancel_repeat = Some cancel }, task :: tasks
 	in
-	Lwt.map later (Keyboard_service.timeout timeout)
+	let timeout	= Keyboard_service.timeout timeout in
+	let t () = Lwt.map later timeout
+	and cancel () = Lwt.cancel timeout in
+	task t, cancel
 
 let update (`Touch_event ev) t =
 	let invalidate = view_invalidate t.view in
+	let key_repeat t touch_state key =
+		match t.cancel_repeat with
+		| None		->
+			let task, cancel = key_repeat key in
+			{ t with touch_state; cancel_repeat = Some cancel }, [ task ]
+		| Some _	-> { t with touch_state }, []
+	in
+	let cancel_repeat t touch_state =
+		match t.cancel_repeat with
+		| Some cancel	-> cancel (); { t with touch_state; cancel_repeat = None }
+		| None			-> { t with touch_state }
+	in
 	match Touch_event.on_touch t.view t.layout t.touch_state ev with
-	| `Key_up (key, touch_state)	->
-		let t, tasks = handle_key { t with touch_state } key in
+	| `Key_up (key, ts)		->
+		let t, tasks = handle_key (cancel_repeat t ts) key in
 		t, invalidate :: tasks
-	| `Key_down (key, touch_state)	->
-		{ t with touch_state }, [ task (key_repeat key); invalidate ]
-	| `Key_cancelled touch_state	-> { t with touch_state }, [ invalidate ]
-	| `Moved touch_state			-> { t with touch_state }, []
-	| `No_change					-> t, []
+	| `Key_down (key, ts)	->
+		let t, rt = key_repeat t ts key in
+		t, invalidate :: rt
+	| `Key_cancelled ts		-> cancel_repeat t ts, [ invalidate ]
+	| `Moved touch_state	-> { t with touch_state }, []
+	| `No_change			-> t, []
 
 let draw t canvas =
 	let is_activated = Touch_event.is_activated t.touch_state
