@@ -34,6 +34,7 @@ object
 	method set_anti_alias : bool -> unit = "setAntiAlias"
 	method set_color : int32 -> unit = "setColor"
 	method set_style : paint_style -> unit = "setStyle"
+	method set_stroke_width : float -> unit = "setStrokeWidth"
 	method set_text_align : paint_align -> unit = "setTextAlign"
 	method set_text_size : float -> unit = "setTextSize"
 end

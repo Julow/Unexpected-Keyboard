@@ -8,13 +8,20 @@ let keyboard is_activated dp render_key =
 
 	(* Styles *)
 
-	let keyboard_bg = Color.rgb 30 30 30 in
+	let key_bg_radius = dp 4.
+	and key_shadow_offset = Rect.offset (dp 0.5) (dp 0.5) in
+
+	let keyboard_bg = Color.rgb 60 60 50 in
 
 	let p_key_bg = Paint_builder.(default
-		|> argb 255 60 60 60) ()
+		|> argb 255 27 27 27) ()
+
+	and p_key_shadow = Paint_builder.(default
+		|> stroke (dp 1.)
+		|> argb 255 70 70 70) ()
 
 	and p_key_bg_activated = Paint_builder.(default
-		|> argb 255 30 30 30) ()
+		|> argb 255 15 15 15) ()
 
 	and p_key_label = Paint_builder.(default
 		|> anti_alias
@@ -26,8 +33,8 @@ let keyboard is_activated dp render_key =
 		let open Paint_builder in
 		let p = default
 			|> anti_alias
-			|> text_size (dp 10.)
-			|> argb 255 160 160 160
+			|> text_size (dp 9.)
+			|> argb 255 180 180 180
 		in
 		(p |> text_align `Left) (),
 		(p |> text_align `Right) ()
@@ -36,9 +43,7 @@ let keyboard is_activated dp render_key =
 	let keyboard_padding = Rect.padding_rect
 		(Rect.create (dp 3.) (dp 3.) (dp 2.) (dp 6.))
 	and key_bg_padding = Rect.padding (dp 1.3) (dp 1.3)
-	and corner_padding = Rect.padding (dp 6.) (dp 7.5) in
-
-	let key_bg_radius = dp 4. in
+	and corner_padding = Rect.padding (dp 3.5) (dp 7.5) in
 
 	(** Adjust the y coordinate for drawing text centered *)
 	let text_center_y paint y =
@@ -65,15 +70,22 @@ let keyboard is_activated dp render_key =
 		corner p_key_corner_label_l l b key.Key.d
 	in
 
+	let draw_rect canvas Rect.{ l; t; r; b } radius paint =
+		Canvas.draw_round_rect canvas l t r b radius radius paint
+	in
+
+	let key_background rect activated canvas =
+		let rect = key_bg_padding rect in
+		let bg = draw_rect canvas rect key_bg_radius in
+		let shadow = draw_rect canvas (key_shadow_offset rect) key_bg_radius in
+		if activated
+		then bg p_key_bg_activated
+		else (shadow p_key_shadow; bg p_key_bg)
+	in
+
 	(** Draw a key inside a rectangle *)
 	let key rect key canvas =
-		begin
-			let Rect.{ l; r; t; b } = key_bg_padding rect
-			and rd = key_bg_radius
-			and bg = if is_activated key
-				then p_key_bg_activated else p_key_bg in
-			Canvas.draw_round_rect canvas l t r b rd rd bg
-		end;
+		key_background rect (is_activated key) canvas;
 		key_corners rect key canvas;
 		let mid_x, mid_y = Rect.middle rect in
 		key_value p_key_label mid_x mid_y key.Key.v canvas

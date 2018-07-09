@@ -11,73 +11,76 @@ let qwerty = build [
 	row [
 		key (c 'q') ~b:(c '1') ~d:(c '~') ~a:(event Escape) ~c:(c '!');
 		key (c 'w') ~b:(c '2') ~d:(c '@');
-		key (c 'e') ~b:(c '3') ~d:(c '#') ~a:(Accent Acute);
+		key (c 'e') ~b:(c '3') ~c:(c '#') ~d:(Accent Acute);
 		key (c 'r') ~b:(c '4') ~d:(c '$');
 		key (c 't') ~b:(c '5') ~d:(c '%');
 		key (c 'y') ~b:(c '6') ~d:(c '^');
 		key (c 'u') ~b:(c '7') ~d:(c '&');
-		key (c 'i') ~b:(c '8') ~d:(c '*');
+		key (c 'i') ~b:(c '8') ~d:(c '*') ~a:(Accent Trema);
 		key (c 'o') ~b:(c '9') ~d:(c '(') ~c:(c ')');
 		key (c 'p') ~b:(c '0')
 	];
 
 	row ~margin:0.5 [
-		key (c 'a');
+		key (c 'a') ~a:(event Tab) ~b:(c '`') ~c:(Accent Grave);
 		key (c 's');
 		key (c 'd');
 		key (c 'f');
-		key (c 'g');
-		key (c 'h');
-		key (c 'j');
-		key (c 'k');
-		key (c 'l')
+		key (c 'g') ~b:(c '-') ~d:(c '_');
+		key (c 'h') ~b:(c '=') ~d:(c '+') ~a:(event Left);
+		key (c 'j') ~d:(c '{') ~b:(c '}') ~c:(event Down);
+		key (c 'k') ~d:(c '[') ~b:(c ']') ~a:(event Up);
+		key (c 'l') ~b:(c '|') ~d:(c '\\') ~c:(event Right)
 	];
 
 	row [
 		key ~width:1.5 Shift;
-		key (c 'z');
+		key (c 'z') ~a:(Accent Circumflex);
 		key (c 'x');
-		key (c 'c');
-		key (c 'v');
-		key (c 'b');
-		key (c 'n');
-		key (c 'm');
+		key (c 'c') ~a:(c '<') ~d:(c '.') ~c:(Accent Cedilla);
+		key (c 'v') ~b:(c '>') ~d:(c ',');
+		key (c 'b') ~b:(c '?') ~d:(c '/');
+		key (c 'n') ~a:(Accent Tilde) ~b:(c ':') ~d:(c ';');
+		key (c 'm') ~b:(c '"') ~d:(c '\'');
 		key ~width:1.5 (event Backspace) ~b:(event Delete)
 	];
 
 	row ~height:0.9 ~margin:0.5 [
-		key ~width:1.5 (Change_pad Numeric);
+		key ~width:1.5 Nothing ~d:(Change_pad Numeric);
 		key ~width:6.0 (c ' ');
 		key ~width:1.5 (event Enter)
 	]
 ]
 
 let numeric = build [
-	row [
-		key (c '(') ~c:(c ')') ~a:(c '<') ~b:(c '>');
+	row ~margin:0. [
+		key ~width:0.75 (c '(') ~a:(c '<');
+		key ~width:0.75 (c ')') ~b:(c '>');
 		key (c '7');
-		key (c '8');
+		key (c '8') ~b:(event Up);
 		key (c '9');
-		key (event Backspace) ~b:(event Delete);
+		key ~width:0.75 (event Backspace) ~b:(event Delete);
 	];
-	row [
-		key (c '/') ~b:(c '%');
-		key (c '4');
+	row ~margin:0.25 [
+		key ~width:0.75 (event Tab);
+		key ~width:0.75 (c '/') ~b:(c '%');
+		key (c '4') ~d:(event Left);
 		key (c '5');
-		key (c '6');
-		key (c '-');
+		key (c '6') ~b:(event Right);
+		key ~width:0.75 (c '-');
 	];
-	row [
-		key (c '*');
+	row ~margin:0.5 [
+		key ~width:0.75 Shift;
+		key ~width:0.75 (c '*') ~b:(c '^');
 		key (c '1');
-		key (c '2');
+		key (c '2') ~d:(event Down);
 		key (c '3');
-		key (c '+');
+		key ~width:0.75 (c '+');
 	];
-	row [
-		key (Change_pad Default);
+	row ~margin:0.375 [
+		key ~width:1.25 (Change_pad Default);
 		key ~width:2. (c '0');
 		key (c '.') ~d:(c ',');
-		key (event Enter);
+		key ~width:0.75 (event Enter);
 	]
 ]

@@ -31,9 +31,18 @@ let alpha = _set set_alpha
 let anti_alias = _set set_anti_alias true
 let color = _set set_color
 let fill t () = _set set_style (Paint_style.get'fill ()) t ()
-let fill_and_stroke t () =
-	_set set_style (Paint_style.get'fill_and_stroke ()) t ()
-let stroke t () = _set set_style (Paint_style.get'stroke ()) t ()
+
+let fill_and_stroke w t () =
+	let p = t () in
+	set_style p (Paint_style.get'fill_and_stroke ());
+	set_stroke_width p w;
+	p
+
+let stroke w t () =
+	let p = t () in
+	set_style p (Paint_style.get'stroke ());
+	set_stroke_width p w;
+	p
 
 let text_align a t () =
 	match a with

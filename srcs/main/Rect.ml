@@ -12,6 +12,10 @@ let create l r t b = { l; r; t; b }
 let width { l; r } = r -. l
 let height { t; b } = b -. t
 
+(** Move the rectangle *)
+let offset x y { l; r; t; b } =
+	{ l = l +. x; r = r +. x; t = t +. y; b = b +. y }
+
 (** Scale every edges *)
 let scale x y { l; r; t; b } =
 	{ l = l *. x; r = r *. x; t = t *. y; b = b *. y }

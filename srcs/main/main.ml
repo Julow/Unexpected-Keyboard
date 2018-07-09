@@ -60,7 +60,9 @@ let create ~ims ~view ~dp () = {
 
 let handle_key t key =
 	let clear_mods t = { t with modifiers = Modifiers.Stack.empty }
-	and with_mods t modifiers = { t with modifiers }, []
+	and with_mods t m kv =
+		let modifiers = Modifiers.Stack.add kv m t.modifiers in
+		{ t with modifiers }, []
 	and with_layout t layout =
 		let touch_state, modifiers = Touch_event.empty_state, Modifiers.Stack.empty in
 		{ t with touch_state; modifiers; layout }, []
@@ -70,10 +72,8 @@ let handle_key t key =
 		clear_mods t, [ Keyboard_service.send_char t.ims c ]
 	| Event (ev, meta)		->
 		clear_mods t, [ Keyboard_service.send_event t.ims ev meta ]
-	| Shift as kv			->
-		with_mods t Modifiers.(Stack.add kv shift t.modifiers)
-	| Accent acc as kv		->
-		with_mods t Modifiers.(Stack.add kv (accent acc) t.modifiers)
+	| Shift as kv			-> with_mods t Modifiers.shift kv
+	| Accent acc as kv		-> with_mods t (Modifiers.accent acc) kv
 	| Nothing				-> t, []
 	| Change_pad Default	-> with_layout t Layouts.qwerty
 	| Change_pad Numeric	-> with_layout t Layouts.numeric
