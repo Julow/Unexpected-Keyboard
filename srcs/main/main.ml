@@ -127,5 +127,6 @@ let draw t canvas =
 
 let () =
 	Printexc.record_backtrace true;
+	Android_enable_logging.enable "UNEXPECTED KEYBOARD";
 	let service = Keyboard_service.keyboard_service create update draw in
 	UnexpectedKeyboardService.register service

@@ -1,0 +1,5 @@
+(jbuild_version 1)
+(library
+ ((name android_enable_logging)
+  (c_names (logging))
+  (c_library_flags (-llog))))

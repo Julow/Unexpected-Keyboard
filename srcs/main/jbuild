@@ -1,6 +1,6 @@
 (jbuild_version 1)
 (executable
  ((name main)
-  (libraries (ocamljava ocamljava-javacaml android lwt))
+  (libraries (ocamljava ocamljava-javacaml android lwt android_enable_logging))
   (preprocess (pps (lwt_ppx ocamljava-ppx)))
   (modes (shared_object))))
