@@ -4,7 +4,7 @@ open KeyboardLayout.Desc
 open Key
 
 let key ?(width=1.) ?a ?b ?c ?d v = key ~width Key.{ a; b; c; d; v }
-let c c = Char (Char.code c)
+let c c = Char (Char.code c, 0)
 let event evt = Event (evt, 0)
 
 let qwerty = build [
@@ -46,7 +46,7 @@ let qwerty = build [
 	];
 
 	row ~height:0.9 ~margin:0.5 [
-		key ~width:1.5 Nothing ~d:(Change_pad Numeric);
+		key ~width:1.5 Ctrl ~b:Alt ~d:(Change_pad Numeric);
 		key ~width:6.0 (c ' ');
 		key ~width:1.5 (event Enter)
 	]

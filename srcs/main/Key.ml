@@ -18,9 +18,11 @@ type accent = Acute | Grave | Circumflex | Tilde | Cedilla | Trema
 type pad = Default | Numeric
 
 type value =
-	| Char of int
+	| Char of int * int
 	| Event of event * int
 	| Shift
+	| Ctrl
+	| Alt
 	| Accent of accent
 	| Nothing
 	| Change_pad of pad

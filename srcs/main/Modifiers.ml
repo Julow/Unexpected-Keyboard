@@ -12,9 +12,19 @@ let default k = k
 let shift =
 	let meta_shift = Key_event.(get'meta_shift_left_on () lor get'meta_shift_on ()) in
 	function
-	| Char c			-> Char (Java_lang.Character.to_upper_case c)
+	| Char (c, _)		-> Char (Java_lang.Character.to_upper_case c, 0)
 	| Event (kv, meta)	-> Event (kv, meta lor meta_shift)
 	| kv				-> kv
+
+(** Adds meta flags *)
+let meta meta =
+	function
+	| Char (c, m')	-> Char (c, m' lor meta)
+	| Event (e, m')	-> Event (e, m' lor meta)
+	| kv			-> kv
+
+let ctrl = meta Key_event.(get'meta_ctrl_left_on () lor get'meta_ctrl_on ())
+let alt = meta Key_event.(get'meta_alt_left_on () lor get'meta_alt_on ())
 
 (** Adds accents to chars that support it *)
 let accent acc =
@@ -28,12 +38,12 @@ let accent acc =
 		| Trema			-> 0x00A8
 	in
 	function
-	| Char c as kv		->
+	| Char (c, meta) as kv	->
 		begin match Key_character_map.get_dead_char dead_char c with
 			| 0		-> kv
-			| c		-> Char c
+			| c		-> Char (c, meta)
 		end
-	| kv				-> kv
+	| kv					-> kv
 
 module Stack =
 struct

@@ -35,12 +35,24 @@ end
 
 class%java key_event "android.view.KeyEvent" =
 object
+	initializer (create' : long -> long -> int -> int -> int -> int -> _)
 	initializer (create : long -> long -> int -> int -> int -> int -> int -> int -> int -> _)
+
+	method get_action : int = "getAction"
+	method get_key_code : int = "getKeyCode"
+
 	val [@static] action_down : int = "ACTION_DOWN"
 	val [@static] action_up : int = "ACTION_UP"
 	val [@static] flag_keep_touch_mode : int = "FLAG_KEEP_TOUCH_MODE"
 	val [@static] flag_soft_keyboard : int = "FLAG_SOFT_KEYBOARD"
+
 	val [@static] meta_shift_left_on : int = "META_SHIFT_LEFT_ON"
+	val [@static] meta_shift_on : int = "META_SHIFT_ON"
+	val [@static] meta_ctrl_left_on : int = "META_CTRL_LEFT_ON"
+	val [@static] meta_ctrl_on : int = "META_CTRL_ON"
+	val [@static] meta_alt_left_on : int = "META_ALT_LEFT_ON"
+	val [@static] meta_alt_on : int = "META_ALT_ON"
+
 	method [@static] change_action : key_event -> int -> key_event = "changeAction"
 
 	val [@static] keycode_escape : int = "KEYCODE_ESCAPE"
@@ -60,5 +72,9 @@ end
 
 class%java key_character_map "android.view.KeyCharacterMap" =
 object
+	val [@static] virtual_keyboard : int = "VIRTUAL_KEYBOARD"
 	method [@static] get_dead_char : int -> int -> int = "getDeadChar"
+	method [@static] load : int -> key_character_map = "load"
+
+	method get_events : char array -> key_event array = "getEvents"
 end

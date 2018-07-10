@@ -10,7 +10,7 @@ external _hack : unit -> unit = "Java_juloo_javacaml_Caml_startup"
 let render_key =
 	let open Key in
 	function
-	| Char c				->
+	| Char (c, _)			->
 		(* TODO: OCaml and Java are useless at unicode *)
 		Java.to_string (Utils.java_string_of_code_point c)
 	| Event (Escape, _)		-> "Esc"
@@ -27,6 +27,8 @@ let render_key =
 	| Event (Home, _)		-> "\xE2\x86\x96"
 	| Event (End, _)		-> "\xE2\x86\x98"
 	| Shift					-> "\xE2\x87\xA7"
+	| Ctrl					-> "ctrl"
+	| Alt					-> "alt"
 	| Accent Acute			-> "\xCC\x81"
 	| Accent Grave			-> "\xCC\x80"
 	| Accent Circumflex		-> "\xCC\x82"
@@ -63,7 +65,7 @@ let create ~ims ~view ~dp () = {
 let handle_key t key =
 	let clear_mods t = { t with modifiers = Modifiers.Stack.empty }
 	and with_mods t m kv =
-		let modifiers = Modifiers.Stack.add kv m t.modifiers in
+		let modifiers = Modifiers.Stack.add_or_cancel kv m t.modifiers in
 		{ t with modifiers }, []
 	and with_layout t layout =
 		let touch_state = Touch_event.empty_state
@@ -71,11 +73,18 @@ let handle_key t key =
 		{ t with touch_state; modifiers; layout }, []
 	in
 	match Modifiers.Stack.apply t.modifiers key with
-	| Key.Char c			->
-		clear_mods t, [ Keyboard_service.send_char t.ims c ]
+	| Key.Char (c, meta)	->
+		let send =
+			if meta = 0
+			then Keyboard_service.send_char t.ims c
+			else Keyboard_service.send_char_meta t.ims c meta
+		in
+		clear_mods t, [ send ]
 	| Event (ev, meta)		->
 		clear_mods t, [ Keyboard_service.send_event t.ims ev meta ]
 	| Shift as kv			-> with_mods t Modifiers.shift kv
+	| Ctrl as kv			-> with_mods t Modifiers.ctrl kv
+	| Alt as kv				-> with_mods t Modifiers.alt kv
 	| Accent acc as kv		-> with_mods t (Modifiers.accent acc) kv
 	| Nothing				-> t, []
 	| Change_pad Default	-> with_layout t Layouts.qwerty
