@@ -92,9 +92,9 @@ let handle_key t key =
 
 let rec key_repeat ?(timeout=1000L) key =
 	let later () t =
-		match Touch_event.activated t.touch_state key with
-		| None			-> t, []
-		| Some value	->
+		match Touch_event.key_activated t.touch_state key with
+		| exception Not_found	-> t, []
+		| value					->
 			let task, cancel = key_repeat ~timeout:200L key in
 			let t, tasks = handle_key t value in
 			{ t with cancel_repeat = Some cancel }, task :: tasks
@@ -119,18 +119,22 @@ let update (`Touch_event ev) t =
 		| None			-> { t with touch_state }
 	in
 	match Touch_event.on_touch t.view t.layout t.touch_state ev with
-	| `Key_up (key, ts)		->
-		let t, tasks = handle_key (cancel_repeat t ts) key in
-		t, invalidate :: tasks
-	| `Key_down (key, ts)	->
+	| Key_down (key, ts)			->
 		let t, rt = key_repeat t ts key in
 		t, invalidate :: rt
-	| `Key_cancelled ts		-> cancel_repeat t ts, [ invalidate ]
-	| `Moved touch_state	-> { t with touch_state }, []
-	| `No_change			-> t, []
+	| Key_up (key, v, ts)			->
+		let t = cancel_repeat t ts in
+		let t, tasks = handle_key t v in
+		t, invalidate :: tasks
+	| Pointer_changed (key, v, ts)	-> { t with touch_state = ts }, [ invalidate ]
+	| Cancelled (key, ts)			-> cancel_repeat t ts, [ invalidate ]
+	| Ignore						-> t, []
 
 let draw t canvas =
-	let is_activated = Touch_event.is_activated t.touch_state
+	let is_activated key =
+		match Touch_event.key_activated t.touch_state key with
+		| exception Not_found	-> false
+		| _						-> true
 	and render_key k = render_key (Modifiers.Stack.apply t.modifiers k) in
 	Drawing.keyboard is_activated t.dp render_key t.layout canvas
 
