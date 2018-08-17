@@ -1,28 +1,29 @@
 (** Keyboard layouts *)
 
-open KeyboardLayout.Desc
 open Key
+open KeyboardLayout.Desc
 
 let key ?(width=1.) ?a ?b ?c ?d v = key ~width Key.{ a; b; c; d; v }
-let c c = Char (Char.code c, 0)
-let event evt = Event (evt, 0)
+let c c = Typing (Char (Char.code c, 0))
+let event evt = Typing (Event (evt, 0))
+let accent acc = Modifier (Accent acc)
 
 let qwerty = build [
 	row [
 		key (c 'q') ~b:(c '1') ~d:(c '~') ~a:(event Escape) ~c:(c '!');
 		key (c 'w') ~b:(c '2') ~d:(c '@');
-		key (c 'e') ~b:(c '3') ~c:(c '#') ~d:(Accent Acute);
+		key (c 'e') ~b:(c '3') ~c:(c '#') ~d:(accent Acute);
 		key (c 'r') ~b:(c '4') ~d:(c '$');
 		key (c 't') ~b:(c '5') ~d:(c '%');
 		key (c 'y') ~b:(c '6') ~d:(c '^');
 		key (c 'u') ~b:(c '7') ~d:(c '&');
-		key (c 'i') ~b:(c '8') ~d:(c '*') ~a:(Accent Trema);
+		key (c 'i') ~b:(c '8') ~d:(c '*') ~a:(accent Trema);
 		key (c 'o') ~b:(c '9') ~d:(c '(') ~c:(c ')');
 		key (c 'p') ~b:(c '0')
 	];
 
 	row ~margin:0.5 [
-		key (c 'a') ~a:(event Tab) ~b:(c '`') ~c:(Accent Grave);
+		key (c 'a') ~a:(event Tab) ~b:(c '`') ~c:(accent Grave);
 		key (c 's');
 		key (c 'd');
 		key (c 'f');
@@ -34,19 +35,19 @@ let qwerty = build [
 	];
 
 	row [
-		key ~width:1.5 Shift;
-		key (c 'z') ~a:(Accent Circumflex);
+		key ~width:1.5 (Modifier Shift);
+		key (c 'z') ~a:(accent Circumflex);
 		key (c 'x');
-		key (c 'c') ~a:(c '<') ~d:(c '.') ~c:(Accent Cedilla);
+		key (c 'c') ~a:(c '<') ~d:(c '.') ~c:(accent Cedilla);
 		key (c 'v') ~b:(c '>') ~d:(c ',');
 		key (c 'b') ~b:(c '?') ~d:(c '/');
-		key (c 'n') ~a:(Accent Tilde) ~b:(c ':') ~d:(c ';');
+		key (c 'n') ~a:(accent Tilde) ~b:(c ':') ~d:(c ';');
 		key (c 'm') ~b:(c '"') ~d:(c '\'');
 		key ~width:1.5 (event Backspace) ~b:(event Delete)
 	];
 
 	row ~height:0.9 ~margin:0.5 [
-		key ~width:1.5 Ctrl ~b:Alt ~d:(Change_pad Numeric);
+		key ~width:1.5 (Modifier Ctrl) ~b:(Modifier Alt) ~d:(Change_pad Numeric);
 		key ~width:6.0 (c ' ');
 		key ~width:1.5 (event Enter)
 	]
@@ -70,7 +71,7 @@ let numeric = build [
 		key ~width:0.75 (c '-');
 	];
 	row ~margin:0.5 [
-		key ~width:0.75 Shift;
+		key ~width:0.75 (Modifier Shift);
 		key ~width:0.75 (c '*') ~b:(c '^');
 		key (c '1');
 		key (c '2') ~d:(event Down);

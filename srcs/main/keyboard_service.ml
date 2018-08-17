@@ -1,10 +1,10 @@
 open Android_content
-open Android_util
-open Android_os
 open Android_inputmethodservice
+open Android_os
+open Android_util
 open Android_view
 
-(** Sends a single character *)
+(** Send a character through the current input connection *)
 let send_char ims cp =
 	let ic = Input_method_service.get_current_input_connection ims in
 	let txt = Utils.java_string_of_code_point cp in
@@ -12,26 +12,25 @@ let send_char ims cp =
 
 let key_char_map = lazy Key_character_map.(load (get'virtual_keyboard ()))
 
-let send_char_meta ims c meta =
-	let key_char_map = Lazy.force key_char_map in
-	let events =
-		let chars = Jarray.create_char 1 in
-		Jarray.set_char chars 0 c;
-		Key_character_map.get_events key_char_map chars
-	in
-	let ic = Input_method_service.get_current_input_connection ims in
-	for i = 0 to Jarray.length events - 1 do
-		let ev = Jarray.get_object events i in
-		let action = Key_event.get_action ev
-		and code = Key_event.get_key_code ev in
-		let ev = Key_event.create' 1L 1L action code 1 meta in
-		ignore (Input_connection.send_key_event ic ev)
-	done
-
+(** Send a character as 2 key events (down and up)
+	Allows setting the meta field *)
 let send_char_meta ims cp meta =
 	match Char.chr cp with
 	| exception _	-> ()
-	| c				-> send_char_meta ims c meta
+	| c				->
+		let events =
+			let chars = Jarray.create_char 1 in
+			Jarray.set_char chars 0 c;
+			Key_character_map.get_events (Lazy.force key_char_map) chars
+		in
+		let ic = Input_method_service.get_current_input_connection ims in
+		for i = 0 to Jarray.length events - 1 do
+			let ev = Jarray.get_object events i in
+			let action = Key_event.get_action ev
+			and code = Key_event.get_key_code ev in
+			let ev = Key_event.create' 1L 1L action code 1 meta in
+			ignore (Input_connection.send_key_event ic ev)
+		done
 
 (** Likes `Input_method_service.send_down_up_key_events`
 		with an extra `meta` parameter *)
@@ -91,15 +90,6 @@ let timeout msec =
 	let callback = Jrunnable.create (Lwt.wakeup u) in
 	ignore (Handler.post_delayed (Lazy.force handler) callback msec);
 	t
-
-let send_char ims c =
-	Task (fun () -> send_char ims c; Lwt.return (fun t -> t, []))
-
-let send_char_meta ims c meta =
-	Task (fun () -> send_char_meta ims c meta; Lwt.return (fun t -> t, []))
-
-let send_event ims ev meta =
-	Task (fun () -> send_event ims ev meta; Lwt.return (fun t -> t, []))
 
 (** InputMethodService related stuff
 	defines the main loop of the app

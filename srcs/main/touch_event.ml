@@ -20,8 +20,8 @@ type state = pointer list
 type event =
 	| Key_down of Key.t * state
 	| Key_up of Key.t * Key.value * state
-	| Pointer_changed of Key.t * Key.value * state
-	| Cancelled of Key.t * state
+	| Pointer_changed of Key.t * Key.value * Key.value * state
+	| Cancelled of Key.t * Key.value * state
 	| Ignore
 
 let empty_state = []
@@ -67,7 +67,8 @@ let up ptrid x y state =
 let cancel ptrid x y state =
 	match get_pointer ptrid state with
 	| exception Not_found	-> Ignore
-	| p						-> Cancelled (p.key, remove_pointer state ptrid)
+	| p						->
+		Cancelled (p.key, p.value, remove_pointer state ptrid)
 
 let move ptrid x y state =
 	match get_pointer ptrid state with
@@ -79,7 +80,7 @@ let move ptrid x y state =
 		then Ignore
 		else
 			let state = { p with value } :: remove_pointer state ptrid in
-			Pointer_changed (p.key, value, state)
+			Pointer_changed (p.key, p.value, value, state)
 
 (** Process touch events *)
 let on_touch view layout state ev =
