@@ -1,0 +1,6 @@
+(executable
+ (name main)
+ (libraries ocamljava ocamljava-javacaml android lwt android_enable_logging)
+ (preprocess
+  (pps lwt_ppx ocamljava-ppx))
+ (modes shared_object))

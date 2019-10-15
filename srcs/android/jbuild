@@ -1,6 +1,0 @@
-(jbuild_version 1)
-(library
- ((name android)
-  (wrapped false)
-  (libraries (ocamljava-javacaml ocamljava))
-  (preprocess (pps (ocamljava-ppx)))))
