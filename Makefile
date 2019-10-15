@@ -1,6 +1,9 @@
-# Required variables:
-# 	ANDROID_PLATFORM
-# Except android build tools in PATH
+export NDK_HOME = $HOME/.opam/4.04.0-armeabi/android-ndk
+export NDK_PLATFORM = $(NDK_HOME)/platforms/android-24/arch-arm/
+
+export ANDROID_HOME = /opt/android-sdk/
+export ANDROID_BUILD_TOOLS = $(ANDROID_HOME)/build-tools/27.0.3
+export ANDROID_PLATFORM = $(ANDROID_HOME)/platforms/android-27
 
 NAME = unexpected-keyboard
 
@@ -11,18 +14,21 @@ export JAVA_HOME = $(NDK_PLATFORM)/usr
 
 BUILD_DIR ?= $(shell pwd)/bin
 
-OCAML_JAVA_JAR := $(shell ocamlfind -toolchain android query ocamljava-jar)/ocaml-java.jar
+OCAML_QUERY = ocamlfind -toolchain android query
+
+EXTRA_JARS := \
+	$(shell $(OCAML_QUERY) ocamljava-jar)/ocaml-java.jar
 
 ARCHS = armeabi-v7a
 
-armeabi-v7a: SWITCH = 4.04.0-armeabi
+armeabi-v7a: SWITCH = 4.04.0-android-arm
 
 all: TARGET = all
 debug: TARGET = debug
 
 all debug: $(ARCHS)
 	make -f android.Makefile \
-		NAME=$(NAME) ARCHS=$(ARCHS) EXTRA_JARS=$(OCAML_JAVA_JAR) \
+		NAME=$(NAME) ARCHS=$(ARCHS) EXTRA_JARS=$(EXTRA_JARS) \
 		BIN_DIR=$(BUILD_DIR) $(TARGET)
 
 $(ARCHS):

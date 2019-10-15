@@ -5,3 +5,4 @@ gen/*
 *.keystore
 srcs/_build/*
 **/.merlin
+_build
