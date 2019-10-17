@@ -1,7 +1,4 @@
-open Android_content
-open Android_graphics
 open Android_inputmethodservice
-open Android_util
 open Android_view
 
 external _hack : unit -> unit = "Java_juloo_javacaml_Caml_startup"
@@ -124,7 +121,7 @@ let handle_down t key = function
 let handle_cancel t key = function
 	| Key.Modifier m	->
 		{ t with modifiers = Modifiers.on_cancel m t.modifiers }, []
-	| Typing tv			-> t, [ stop_repeat key ]
+	| Typing _			-> t, [ stop_repeat key ]
 	| _					-> t, []
 
 let handle_up t key = function

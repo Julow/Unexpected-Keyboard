@@ -63,14 +63,14 @@ let keyboard is_activated dp render_key =
 			| Some v	-> key_value paint x y v canvas
 			| None		-> ()
 		in
-		let Rect.{ l; r; t; b } = corner_padding rect in
+		let { Rect.l; r; t; b } = corner_padding rect in
 		corner p_key_corner_label_l l t key.Key.a;
 		corner p_key_corner_label_r r t key.Key.b;
 		corner p_key_corner_label_r r b key.Key.c;
 		corner p_key_corner_label_l l b key.Key.d
 	in
 
-	let draw_rect canvas Rect.{ l; t; r; b } radius paint =
+	let draw_rect canvas { Rect.l; t; r; b } radius paint =
 		Canvas.draw_round_rect canvas l t r b radius radius paint
 	in
 
@@ -91,7 +91,7 @@ let keyboard is_activated dp render_key =
 		key_value p_key_label mid_x mid_y key.Key.v canvas
 	in
 
-	let rect_of_layout_pos KeyboardLayout.{ x; y; width; height } =
+	let rect_of_layout_pos { KeyboardLayout.x; y; width; height } =
 		Rect.create x (x +. width) y (y +. height)
 	in
 

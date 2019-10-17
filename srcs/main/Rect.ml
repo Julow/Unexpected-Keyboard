@@ -9,8 +9,8 @@ type t = {
 
 let create l r t b = { l; r; t; b }
 
-let width { l; r } = r -. l
-let height { t; b } = b -. t
+let width { l; r; _ } = r -. l
+let height { t; b; _ } = b -. t
 
 (** Move the rectangle *)
 let offset x y { l; r; t; b } =

@@ -39,11 +39,11 @@ let pointed_value dx dy key =
 	if dx *. dx +. dy *. dy < corner_dist *. corner_dist
 	then key.v
 	else match dx > 0., dy > 0., key with
-		| true, true, { a = Some v }
-		| false, true, { b = Some v }
-		| false, false, { c = Some v }
-		| true, false, { d = Some v }
-		| _, _, { v }		-> v
+    | true, true, { a = Some v; _ }
+    | false, true, { b = Some v; _ }
+    | false, false, { c = Some v; _ }
+    | true, false, { d = Some v; _ }
+    | _, _, { v; _ }		-> v
 
 (** Returns the activated value of a key,
 	Raises [Not_found] if the key is not activated at all *)
@@ -64,7 +64,7 @@ let up ptrid x y state =
 		let v = pointed_value dx dy p.key in
 		Key_up (p.key, v, remove_pointer state ptrid)
 
-let cancel ptrid x y state =
+let cancel ptrid _x _y state =
 	match get_pointer ptrid state with
 	| exception Not_found	-> Ignore
 	| p						->

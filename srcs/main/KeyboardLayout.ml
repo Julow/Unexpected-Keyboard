@@ -59,7 +59,7 @@ struct
 		let fold_row (acc, y) row =
 			let margin = row.margin /. size_x
 			and height = row.height /. size_y in
-			let acc, x = List.fold_left (fold_key y height)
+			let acc, _x = List.fold_left (fold_key y height)
 				(acc, margin) row.keys in
 			acc, y +. height
 		in
