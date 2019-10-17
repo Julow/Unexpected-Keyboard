@@ -1,0 +1,14 @@
+The following table shows which Subversion revision of the
+repository corresponds with which released version of
+findlib.
+
+Released versions up to 0.9 are checked in into CVS, and
+not Subversion.
+
+Released version    =   Subversion revision
+----------------------------------------------------------------------
+1.0			54
+1.0.1			57
+1.0.2			63
+1.0.3			69
+1.0.4			72

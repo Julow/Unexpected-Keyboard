@@ -1,0 +1,22 @@
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.cmt
+*.cmti
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+*.merlin
+*.install
+
+# jbuilder working directory
+_build/
+
+# cinaps
+*.corrected
+
+# emacs
+.#*

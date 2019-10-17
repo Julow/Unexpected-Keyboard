@@ -1,0 +1,12 @@
+dnl This file is input of the m4 macro processor.
+`# Specifications for the "spacetime" library:'
+`requires = ""'
+`description = "Support library for the spacetime profiler"'
+`version = "[distributed with Ocaml]"'
+`directory = "^"'
+`browse_interfaces = "'interfaces`"'
+`archive(byte) = "raw_spacetime_lib.cma"'
+`archive(native) = "raw_spacetime_lib.cmxa"'
+`plugin(byte) = "raw_spacetime_lib.cma"'
+`plugin(native) = "raw_spacetime_lib.cmxs"'
+

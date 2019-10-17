@@ -1,0 +1,104 @@
+----------------------------------------------------------------------
+ocamlfind-mini
+----------------------------------------------------------------------
+
+ocamlfind-mini is an O'Caml script that implements a subset of the
+full functionality of ocamlfind. It consists only of one file, so it
+is easy to distribute it with any software.
+
+The subset is normally sufficient to compile a library and to
+install the library; but it is insufficient to link the library
+into an executable. 
+
+----------------------------------------------------------------------
+SUPPORTED OPERATING SYSTEMS:
+----------------------------------------------------------------------
+
+For Unixes, the script runs out of the box. It uses the ocaml system
+found in the command path.
+
+I think the script also runs in Windows, but I have not yet checked that.
+Anyway, you cannot call it directly, but by doing
+ocaml ocamlfind-mini <args>...
+
+Macintosh is not supported; I don't have enough knowledge for a Mac port.
+
+----------------------------------------------------------------------
+FUNCTIONALITY:
+----------------------------------------------------------------------
+
+Overall: The configuration file ocamlfind.conf is ignored. However,
+some environment variables are respected (see below). 
+
+A package directory is recognized by checking whether there is a META
+file in it. However, the contents of that file are ignored.
+
+The following subset has been implemented:
+
+- ocamlfind-mini [ocamlc|ocamlopt|ocamlcp|ocamlmktop] <args>...
+
+  The -package option works, but you must set the environment variable
+  OCAMLPATH (see below).
+
+  The options -linkpkg, -predicates, -dontlink, -syntax, -ppopt are
+  rejected.
+
+  This normally means that you can compile modules as in:
+
+      ocamlfind-mini ocamlc -c -package p1,p2,p3 my_module.ml
+
+  However, you cannot create executables because -linkpkg is not
+  supported.
+
+  Note that ocamlfind-mini is unable to figure out the prerequisite
+  packages, so the -package option must enumerate _all_ needed packages.
+  
+  Note that ocamlfind-mini does not support the alternate directory
+  layout where all META files are collected in one directory.
+
+- ocamlfind-mini install <pkg> <file>...
+
+  Installs the files in the package directory for <pkg>. You must help
+  ocamlfind-mini by specifying the destination directory:
+
+  * Setting the -destdir option:
+
+    ocamlfind-mini install -destdir <dir> <pkg> <file> ...
+
+    This command installs the new package into <dir>/<pkg>.
+
+  * Setting the OCAMLFIND_DESTDIR variable:
+
+    export OCAMLFIND_DESTDIR=<dir>
+    ocamlfind-mini install <pkg> <file> ...
+
+    This command installs the new package into <dir>/<pkg>, too.
+
+- ocamlfind-mini remove <pkg>
+
+  Removes the package <pkg>. Again, you must specify the destination
+  directory by either setting the -destdir option or by setting the
+  OCAMLFIND_DESTDIR variable.
+
+----------------------------------------------------------------------
+ENVIRONMENT:
+----------------------------------------------------------------------
+
+The following variables are supported:
+
+- OCAMLPATH
+
+  A colon (Win: semicolon)-separated list of directories:
+  OCAMLPATH=<dir1>:<dir2>:...
+
+  When ocamlfind-mini searches a package <pkg>, it checks whether
+  <dirK>/<pkg>/META exists for K=1, 2, ...
+
+- OCAMLFIND_DESTDIR
+
+  The destination directory for "install" and "remove".
+
+- OCAMLFIND_METADIR
+
+  The destination directory for META files. It is not recommended to set
+  this variable.

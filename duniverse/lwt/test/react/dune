@@ -1,0 +1,8 @@
+(executable
+ (name main)
+ (libraries lwt_react lwttester))
+
+(alias
+ (name runtest)
+ (package lwt_react)
+ (action (run %{exe:main.exe})))

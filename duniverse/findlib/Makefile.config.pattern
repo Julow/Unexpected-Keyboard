@@ -1,0 +1,61 @@
+# You can manually set up your configuration using this
+# pattern. The final name of the file must be "Makefile.config".
+# Note that there are other files containing parts of the 
+# configuration, especially the site-lib/*/META files.
+# 
+#----------------------------------------------------------------------
+# Where the OCAML core is installed:
+#----------------------------------------------------------------------
+OCAML_CORE_STDLIB=/usr/local/lib/ocaml
+OCAML_CORE_BIN=/usr/local/bin
+OCAML_CORE_MAN=/usr/local/man
+
+#----------------------------------------------------------------------
+# Type of multi-threading support: either vm or posix
+# (Note: Since O'Caml 3.07, "posix" includes "vm", because a build
+# supporting posix also supports vm.)
+#----------------------------------------------------------------------
+OCAML_THREADS=vm
+#OCAML_THREADS=posix
+
+#----------------------------------------------------------------------
+# Where the site-lib directory will be
+#----------------------------------------------------------------------
+OCAML_SITELIB=/usr/local/lib/ocaml/site-lib
+
+#----------------------------------------------------------------------
+# Where binaries and manual pages will be installed
+#----------------------------------------------------------------------
+OCAMLFIND_BIN=/usr/local/bin
+OCAMLFIND_MAN=/usr/local/man
+
+#----------------------------------------------------------------------
+# The absolute location of the configuration file
+#----------------------------------------------------------------------
+OCAMLFIND_CONF=/usr/local/etc/ocamlfind.conf
+
+#----------------------------------------------------------------------
+# Autolinking is usually on
+#----------------------------------------------------------------------
+OCAML_AUTOLINK=true
+
+#----------------------------------------------------------------------
+# Windows only: set this to .exe
+#----------------------------------------------------------------------
+EXEC_SUFFIX=
+
+#----------------------------------------------------------------------
+# Windows MSVC port: set this to .lib
+#----------------------------------------------------------------------
+LIB_SUFFIX=.a
+
+#----------------------------------------------------------------------
+# Which parts are to be built: findlib, findlib-toolbox (space-separated
+# list)
+#----------------------------------------------------------------------
+PARTS=findlib findlib-toolbox
+
+#----------------------------------------------------------------------
+# Whether the "topfind" script is installed in $(OCAML_CORE_STDLIB):
+#----------------------------------------------------------------------
+INSTALL_TOPFIND=1

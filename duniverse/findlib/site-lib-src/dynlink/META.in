@@ -1,0 +1,9 @@
+dnl This file is input of the m4 macro processor.
+`# Specifications for the "dynlink" library:'
+`requires = ""'
+`version = "[distributed with Ocaml]"'
+`description = "Dynamic loading and linking of object files"'
+`directory = "^"'
+`browse_interfaces = "'interfaces`"'
+`archive(byte) = "dynlink.cma"'
+natdynlink

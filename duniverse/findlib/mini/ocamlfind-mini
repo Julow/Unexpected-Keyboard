@@ -1,0 +1,851 @@
+#! /bin/sh
+# (*
+exec ocaml "$0" "$@"
+*) directory ".";;
+
+(* $Id$
+ * ----------------------------------------------------------------------
+ *
+ *)
+
+(**********************************************************************)
+
+(* Module split, rev. 1.2 *)
+
+module Split = struct
+let in_words s =
+  (* splits s in words separated by commas and/or whitespace *)
+  let l = String.length s in
+  let rec split i j =
+    if j < l then
+      match s.[j] with
+	(' '|'\t'|'\n'|'\r'|',') ->
+	  if i<j then (String.sub s i (j-i)) :: (split (j+1) (j+1))
+		 else split (j+1) (j+1)
+      |	_ ->
+	  split i (j+1)
+    else
+      if i<j then [ String.sub s i (j-i) ] else []
+  in
+  split 0 0
+;;
+
+
+let in_words_ws s =
+  (* splits s in words separated by whitespace *)
+  let l = String.length s in
+  let rec split i j =
+    if j < l then
+      match s.[j] with
+	(' '|'\t'|'\n'|'\r') ->
+	  if i<j then (String.sub s i (j-i)) :: (split (j+1) (j+1))
+		 else split (j+1) (j+1)
+      |	_ ->
+	  split i (j+1)
+    else
+      if i<j then [ String.sub s i (j-i) ] else []
+  in
+  split 0 0
+;;
+
+
+let path_separator =
+  match Sys.os_type with
+      "Unix"   -> ':'
+    | "Cygwin" -> ';'   (* You might want to change this *)
+    | "Win32"  -> ';'
+    | "MacOS"  -> failwith "Findlib: I do not know what is the correct path separator for MacOS. If you can help me, write a mail to gerd@gerd-stolpmann.de"
+    | _ -> failwith "Findlib: unknown operating system"
+;;
+
+
+let path str =
+  (* split "str" into parts separated by "path_separator" *)
+  let l = String.length str in
+  let rec split_up j k =
+    if k < l then begin
+      let c = str.[k] in
+      if c = path_separator then begin
+        if k - j > 0 then
+	  String.sub str j (k-j) :: split_up (k+1) (k+1)
+        else
+	  split_up (k+1) (k+1)
+      end
+      else
+	split_up j (k+1)
+    end
+    else
+      if k - j > 0 then
+        [ String.sub str j (k-j) ]
+      else
+	[]
+  in
+  split_up 0 0
+;;
+end;;
+
+(**********************************************************************)
+
+
+
+exception Usage;;
+
+type mode =
+    M_use | M_query | M_install | M_remove | M_compiler of string
+  | M_printconf | M_guess | M_list
+;;
+
+
+let rec remove_dups l =
+  match l with
+    x :: l' ->
+      if List.mem x l' then remove_dups l' else x::remove_dups l'
+  | [] -> []
+;;
+
+
+let arg n =
+  if n < Array.length Sys.argv then Sys.argv.(n) else raise Not_found
+;;
+
+
+(**********************************************************************)
+
+let ocaml_stdlib_default = "/usr/local/lib/ocaml";;
+
+let ocaml_stdlib =
+  begin
+    (* Execute "ocamlc -v" and read the stdlib directory *)
+    let filename = Filename.temp_file "ocamlfind." ".dat" in
+    let command = "ocamlc -v >" ^ filename in                  (* SYS *)
+    let n = Sys.command command in
+    if n <> 0 then begin
+      prerr_endline ("ocamlfind-mini: [WARNING] Cannot determine directory of stdlib; using " ^ ocaml_stdlib_default ^ " by default");
+      ocaml_stdlib_default
+    end
+    else begin
+      (* Search the line "Standard library directory: " *)
+      let tag = "Standard library directory: " in
+      let taglen = String.length tag in
+      let f = open_in filename in
+      let dir = ref ocaml_stdlib_default in
+      try
+	while true do
+	  let s = input_line f in
+	  if String.length s >= taglen && String.sub s 0 taglen = tag then begin
+	    dir := String.sub s taglen (String.length s - taglen);
+	    raise Exit;
+	  end
+	done;
+        assert false
+      with
+	  Exit ->
+	    close_in f;
+	    (try Sys.remove filename with _ -> ());
+	    !dir
+	| End_of_file ->
+	    close_in f;
+	    prerr_endline ("ocamlfind-mini: [WARNING] Cannot determine directory of stdlib; using " ^ ocaml_stdlib_default ^ " by default");
+	    ocaml_stdlib_default
+    end
+  end
+;;
+
+
+let ocamlpath =
+  try
+    Split.path (Sys.getenv "OCAMLPATH")
+  with
+      Not_found ->
+	(* Use stdlib as default: *)
+	[ ocaml_stdlib ]
+;;
+
+
+let env_destdir =
+  try Sys.getenv "OCAMLFIND_DESTDIR" with Not_found -> "";;
+
+
+let env_metadir =
+  try Sys.getenv "OCAMLFIND_METADIR" with Not_found -> "";;
+
+
+let core_packages =
+  [ "bigarray",      ocaml_stdlib;
+    "dbm",           ocaml_stdlib;
+    "dynlink",       ocaml_stdlib;
+    "graphics",      ocaml_stdlib;
+    "labltk",        (Filename.concat ocaml_stdlib "labltk");
+    "num",           ocaml_stdlib;
+    "stdlib",        ocaml_stdlib;
+    "str",           ocaml_stdlib;
+    "threads",       (Filename.concat ocaml_stdlib "threads");
+    "unix",          ocaml_stdlib;
+  ]
+;;
+
+
+(**********************************************************************)
+
+let package_directory pkg =
+  let rec lookup path =
+    match path with
+      | [] -> raise Not_found
+      | dir :: path' ->
+	  let pkgdir = Filename.concat dir pkg in
+	  let meta =   Filename.concat pkgdir "META" in
+	  if Sys.file_exists meta then
+	    pkgdir
+	  else
+	    lookup path'
+  in
+
+  try
+    List.assoc pkg core_packages
+  with
+      Not_found ->
+	lookup ocamlpath
+;;
+
+
+(**********************************************************************)
+
+let use_package prefix pkgnames =
+  let pdirs =
+    List.map
+      (fun pname ->
+        try
+          "-I " ^ package_directory pname
+        with
+	  Not_found -> failwith ("Cannot find package " ^ pname ^ " (check environment variable OCAMLPATH)"))
+      pkgnames
+  in
+
+  print_endline (prefix ^ String.concat " " pdirs)
+;;
+
+
+(**************** OCAMLC/OCAMLMKTOP/OCAMLOPT subcommands ****************)
+
+type pass_file_t =
+    Pass of string
+  | Impl of string
+  | Intf of string
+;;
+
+
+let ocamlc which () =
+  Arg.current := 1;
+
+  let switches = ref [] in
+  let pass_options = ref [] in
+  let pass_files = ref [] in
+  let incpath = ref [] in
+
+  let packages = ref [] in
+
+  let add_switch name =
+    Arg.Unit (fun () ->
+                switches := name :: !switches;
+                pass_options := !pass_options @ [name]) in
+  let add_spec_fn name s =
+    pass_options := !pass_options @ [name; s] in
+  let add_spec name = Arg.String (add_spec_fn name) in
+  let add_pkg =
+    Arg.String (fun s -> packages := !packages @ (Split.in_words s)) in
+
+
+  Arg.parse
+    (List.flatten
+    [ [
+      "-package", add_pkg,
+               " <name>   Refer to package when compiling";
+      "-linkpkg", Arg.Unit(fun _ -> raise (Arg.Bad "Not supported: -linkpkg")),
+               "          Link the packages in (NOT SUPPORTED)";
+      "-predicates", Arg.String(fun _ -> raise (Arg.Bad "Not supported: -predicates")),
+                  " <p>   Add predicate <p> when resolving package properties (NOT SUPPORTED)";
+      "-dontlink", Arg.String(fun _ -> raise (Arg.Bad "Not supported: -dontlink")),
+                " <name>  Do not link in package <name> and its ancestors (NOT SUPPORTED)";
+      "-syntax", Arg.String(fun _ -> raise (Arg.Bad "Not supported: -syntax")),
+              " <p>       Use preprocessor with predicate <p> (NOT SUPPORTED)";
+      "-ppopt", Arg.String(fun _ -> raise (Arg.Bad "Not supported: -ppopt")),
+             " <opt>      Append option <opt> to preprocessor invocation (NOT SUPPORTED)";
+      "-passopt", Arg.String (fun s -> pass_options := !pass_options @ [s]),
+               " <opt>    Pass option <opt> directly to ocamlc/opt/mktop\nSTANDARD OPTIONS:";
+
+      "-a", add_switch "-a",
+         "                Build a library";
+      "-c", add_switch "-c",
+         "                Compile only (do not link)";
+      "-cc", add_spec "-cc",
+          " <comp>        Use <comp> as the C compiler and linker";
+      "-cclib", add_spec "-cclib",
+             " <opt>      Pass option <opt> to the C linker";
+      "-ccopt", add_spec "-ccopt",
+             " <opt>      Pass option <opt> to the C compiler and linker";
+      ];
+      if which = "ocamlopt" then  [
+      "-compact", add_switch "-compact",
+               "          Optimize code size rather than speed"
+      ]
+      else [];
+      if which <> "ocamlopt" then [
+      "-custom", add_switch "-custom",
+              "           Link in custom mode";
+      "-g", add_switch "-g",
+         "                Save debugging information";
+      ] else [];
+      [
+      "-i", add_switch "-i",
+         "                Print the types";
+      "-I", (Arg.String
+	       (fun s ->
+		  incpath := s :: !incpath;
+		  add_spec_fn "-I" s)),
+         " <dir>          Add <dir> to the list of include directories";
+      "-impl", Arg.String (fun s -> pass_files := !pass_files @ [ Impl s ]),
+            " <file>      Compile <file> as a .ml file";
+      ]	;
+      if which = "ocamlopt" then [
+      "-inline", add_spec "-inline",
+              " <n>       Set aggressiveness of inlining to <n>";
+      ]	else [];
+      [
+      "-intf", Arg.String (fun s -> pass_files := !pass_files @ [ Intf s ]),
+            " <file>      Compile <file> as a .mli file";
+      "-intf-suffix", add_spec "-intf-suffix",
+                   " <s>  Suffix for interface file (default: .mli)";
+      "-intf_suffix", add_spec "-intf_suffix",
+                   " <s>  same as -intf-suffix";
+      "-labels", add_switch "-labels",
+              "           Use commuting label mode";
+      "-linkall", add_switch "-linkall",
+               "          Link all modules, even unused ones";
+      ]	;
+      if which <> "ocamlopt" then [
+      "-make-runtime", add_switch "-make-runtime",
+                    "     Build a runtime system";
+      "-make_runtime", add_switch "-make_runtime",
+                    "     same as -make-runtime";
+      ]	else [];
+      [
+      "-noautolink", add_switch "-noautolink",
+                  "       Don't automatically link C libraries specif'd in .cma files";
+      "-noassert", add_switch "-noassert",
+                "         Do not compile assertion checks";
+      "-o", add_spec "-o",
+         " <file>         Set output file name to <file>";
+      "-output-obj", add_switch "-output-obj",
+                  "       Output a C object file instead of an executable";
+      ];
+      if which = "ocamlopt" then [
+      "-p", add_switch "-p",
+         "                Compile/link with profiling support for \"gprof\"
+                       (implies -predicates gprof)";
+      ]	else if which = "ocamlcp" then [
+      "-p", add_spec "-p",
+	 " [afilmt]       Profile constructs specified by argument:
+      a  Everything
+      f  Function calls
+      i  if ... then ... else
+      l  while, for
+      m  match ... with
+      t  try ... with";
+      ]	else [];
+      [
+      "-pp", Arg.String (fun s -> add_spec_fn "-pp" s),
+          " <command>     Pipe sources through preprocessor <command>";
+      "-rectypes", add_switch "-rectypes",
+                "         Allow arbitrary recursive types";
+      ]	;
+      if which = "ocamlopt" then [
+      "-S", add_switch "-S",
+         "                Keep intermediate assembly file";
+      ]	 else [];
+      [
+      "-thread", add_switch "-thread",
+              "           Use thread-safe standard library (implies -predicate mt)";
+      "-unsafe", add_switch "-unsafe",
+              "           No bounds checking on array and string access";
+      ]	;
+      if which <> "ocamlopt" then [
+      "-use-runtime", add_spec "-use-runtime",
+                   " <path>   Generate bytecode for the given runtime system";
+      "-use_runtime", add_spec "-use_runtime",
+                   "          same as -use-runtime";
+      ]	 else [];
+      [
+      "-v", add_switch "-v",
+         "                Print compiler version number";
+      "-verbose", add_switch "-verbose",
+               "          Print calls to external commands";
+      "-w", add_spec "-w",
+         " <flags>        Enable or disable warnings according to <flags>:
+     A/a enable/disable all warnings
+     C/c enable/disable suspicious comment
+     F/f enable/disable partially applied function
+     M/m enable/disable overriden methods
+     P/p enable/disable partial match
+     S/s enable/disable non-unit statement
+     U/u enable/disable unused match case
+     V/v enable/disable hidden instance variables
+     X/x enable/disable all other warnings
+     default setting is A (all warnings enabled)";
+      "-warn-error", add_spec "-warn-error",
+                  "       Turn these warnings into errors";
+      "-where", add_switch "-where",
+             "            Print standard library directory";
+       "-", Arg.String (fun s -> pass_files := !pass_files @  [ Pass s ]),
+	 " <file>          Treat <file> as a file name (even if it starts with `-')";
+       ]
+    ])
+    (fun s -> pass_files := !pass_files @ [ Pass s])
+    ("usage: ocamlfind-mini " ^ which ^ " [options] file ...");
+
+  begin match which with
+    "ocamlc"
+  | "ocamlcp"
+  | "ocamlmktop"
+  | "ocamlopt"   -> ()
+  | _            -> failwith "unsupported backend"
+  end;
+
+  let verbose = List.mem "-verbose" !switches in
+
+  (* check packages: *)
+  List.iter
+    (fun pkg ->
+      try
+	let _ = package_directory pkg in
+	()
+      with
+	Not_found ->
+	  failwith ("package '" ^ pkg ^ "' not found (check environment variable OCAMLPATH)"))
+    !packages;
+
+  let eff_packages = !packages in
+
+  let eff_packages_dl =
+    remove_dups (List.map package_directory eff_packages) in
+
+  let stdlibdir =
+    (* normalized form of the stdlib directory *)
+    let d = ocaml_stdlib in
+    if d <> "" & d.[String.length d - 1] = '/' then
+      String.sub d 0 (String.length d - 1)
+    else
+      d
+  in
+  let stdlibdirslash = stdlibdir ^ "/" in
+
+  let i_options =
+    List.flatten
+      (List.map
+	 (fun pkgdir ->
+	    if pkgdir = stdlibdir  or  pkgdir = stdlibdirslash then
+	      []
+	    else
+	      [ "-I"; pkgdir;
+		"-ccopt"; "-I" ^ pkgdir; ])
+	 eff_packages_dl) in
+
+  let pass_files' =
+    List.flatten
+      (List.map
+	 (function
+	      Pass s ->
+		if s.[0] = '-'
+		then [ "-"; String.sub s 1 (String.length s - 1) ]
+		else [ s ]
+	    | Impl s ->
+		[ "-impl"; s ]
+	    | Intf s ->
+		[ "-intf"; s ]
+	 )
+	 !pass_files)
+  in
+
+  let arguments =
+    !pass_options @
+    i_options @
+    pass_files'
+  in
+
+  let actual_command = which in
+
+  if verbose then
+    print_string ("+ " ^ actual_command ^ " " ^
+		  String.concat " " arguments ^ "\n");
+
+  flush stdout;
+
+  let argstring =
+    String.concat " "
+      (List.map Filename.quote arguments)
+  in
+
+  let status = Sys.command (actual_command ^ " " ^ argstring) in
+
+  begin
+    match status with
+      0 -> ()
+    | n ->
+	if verbose then
+	  print_string (actual_command ^ " returned with exit code " ^ string_of_int n ^ "\n");
+	exit n
+  end;
+;;
+
+
+(************************************************************************)
+
+let make_directory dirname =
+  (* Invoke the mkdir command *)
+  let cmd =
+    match Sys.os_type with
+	"Unix"   -> "mkdir"
+      | "Cygwin" -> "mkdir"     (* don't really know *)
+      | "Win32"  -> "md"
+      | "MacOS"  -> failwith "make_directory not implemented for MacOS"
+      | _        -> failwith "Findlib: unknown operating system"
+  in
+  let c = Sys.command (cmd ^ " " ^ Filename.quote dirname) in
+  if c <> 0 then
+    failwith ("Cannot make directory " ^ dirname)
+;;
+
+
+let remove_directory dirname =
+  (* Invoke the rmdir command *)
+  let cmd =
+    match Sys.os_type with
+	"Unix"   -> "rmdir"
+      | "Cygwin" -> "rmdir"     (* don't really know *)
+      | "Win32"  -> "rd"
+      | "MacOS"  -> failwith "remove_directory not implemented for MacOS"
+      | _        -> failwith "Findlib: unknown operating system"
+  in
+  let c = Sys.command (cmd ^ " " ^ Filename.quote dirname) in
+  if c <> 0 then
+    failwith ("Cannot remove directory " ^ dirname)
+;;
+
+
+let list_dir dirname =
+  let rec rd_dir f =
+    try
+      let s = input_line f in
+      if s = "" then rd_dir f else s::rd_dir f
+    with
+	End_of_file ->
+	  close_in f;
+	  []
+  in
+
+  (* Invoke the ls command *)
+  let cmd =
+    match Sys.os_type with
+	"Unix"   -> "ls -1"
+      | "Cygwin" -> "ls -1"     (* don't really know *)
+      | "Win32"  -> "dir /b"
+      | "MacOS"  -> failwith "list_dir not implemented for MacOS"
+      | _        -> failwith "Findlib: unknown operating system"
+  in
+  let filename = Filename.temp_file "ocamlfind." ".dat" in
+  let fullcmd = cmd ^ " " ^ Filename.quote dirname ^ " >" ^ filename in
+  let n = Sys.command fullcmd in
+  if n <> 0 then
+    failwith ("Cannot execute: " ^ fullcmd);
+  let f = open_in filename in
+  let l = rd_dir f in
+  close_in f;
+  (try Sys.remove filename with _ -> ());
+  l
+;;
+
+
+let copy_file ?(rename = (fun name -> name)) ?(append = "") src dstdir =
+  (* A system-independent function to copy the file src to dstdir *)
+  let outname = rename (Filename.basename src) in
+  let ch_in = open_in_bin src in
+  try
+    let outpath = Filename.concat dstdir outname in
+    if Sys.file_exists outpath then
+      prerr_endline ("ocamlfind-mini: [WARNING] Overwriting file " ^ outpath);
+    let ch_out = open_out_bin outpath in
+    try
+      let buflen = 4096 in
+      let buf = String.create buflen in
+      let pos = ref 0 in
+      let len = ref (input ch_in buf 0 buflen) in
+      while !len > 0 do
+	output ch_out buf !pos !len;
+	len := input ch_in buf !pos buflen;
+      done;
+      output_string ch_out append;
+      close_out ch_out;
+      close_in ch_in;
+      prerr_endline("Installed " ^ outpath);
+    with
+	exc -> close_out ch_out; raise exc
+  with
+      exc -> close_in ch_in; raise exc
+;;
+
+
+let install_create_directory pkgname dstdir =
+  if Sys.file_exists dstdir then
+    failwith ("Package " ^ pkgname ^ " is already installed; please remove it first");
+  make_directory dstdir
+;;
+
+
+exception Skip_file;;
+
+let install_package () =
+  let destdir = ref (env_destdir) in
+  let metadir = ref (env_metadir) in
+  let don't_add_directory_directive = ref false in
+  let pkgname = ref "" in
+  let files = ref [] in
+
+  let keywords =
+    [ "-destdir", (Arg.String (fun s -> destdir := s)),
+               "<path>    Set the destination directory";
+      "-metadir", (Arg.String (fun s -> metadir := s)),
+               "<path>    Install the META file into this directory";
+      "-dont-add-directory-directive", (Arg.Set don't_add_directory_directive),
+               " never append directory='...' to META";
+    ] in
+  let errmsg = "usage: ocamlfind-mini install [options] <package_name> <file> ..." in
+
+  Arg.current := 1;
+  Arg.parse
+        keywords
+	(fun s ->
+	   if !pkgname = ""
+	   then pkgname := s
+	   else files := s :: !files
+	)
+	errmsg;
+  if !pkgname = "" then (Arg.usage keywords errmsg; exit 1);
+
+  (* Check destdir: *)
+  if !destdir = "" then
+    failwith ("No destination directory. Either specify the -destdir option, or set the environment variable OCAMLFIND_DESTDIR");
+  if not (Sys.file_exists !destdir) then
+    failwith ("The destination directory " ^ !destdir ^ " does not exist");
+
+  (* Check whether META exists: *)
+  let meta_dot_pkg = "META." ^ !pkgname in
+  let has_meta =
+    List.exists
+      (fun p ->
+	 let b = Filename.basename p in
+	 b = "META" || b = meta_dot_pkg)
+      !files
+  in
+  if not has_meta then
+    failwith "The META file is missing";
+
+  (* Check that there is no meta_dot_pkg: *)
+  if Sys.file_exists (Filename.concat !metadir meta_dot_pkg) then
+    failwith ("Package " ^ !pkgname ^ " is already installed; please remove it first");
+
+  (* Create the package directory: *)
+  let pkgdir = Filename.concat !destdir !pkgname in
+  install_create_directory !pkgname pkgdir;
+
+  (* Now copy the files into the package directory: *)
+  let has_metadir = !metadir <> "" in
+  List.iter
+    (fun p ->
+       try
+	 copy_file
+	   ~rename: (fun f ->
+		       if has_metadir then begin
+			 if f = "META" || f = meta_dot_pkg
+			 then raise Skip_file
+			 else f
+		       end
+		       else
+			 if f = meta_dot_pkg then "META" else f)
+	   p
+	   pkgdir
+       with
+	   Skip_file -> ()
+    )
+    !files;
+
+  (* Finally copy META into metadir, if this has been requested *)
+  if has_metadir then begin
+    List.iter
+      (fun p ->
+	 let b = Filename.basename p in
+	 if b = "META" || b = meta_dot_pkg then
+	   copy_file
+	     ~rename: (fun f ->
+			 if f = "META" then meta_dot_pkg else f)
+	     ~append: ("\ndirectory=\"" ^ pkgdir ^ "\" # auto-added by ocamlfind-mini\n")
+	     p
+	     !metadir
+      )
+      !files
+  end
+;;
+
+
+let remove_package () =
+  let destdir = ref (env_destdir) in
+  let metadir = ref (env_metadir) in
+  let pkgname = ref "" in
+
+  let keywords =
+    [ "-destdir", (Arg.String (fun s -> destdir := s)),
+               "<path>    Set the destination directory";
+      "-metadir", (Arg.String (fun s -> metadir := s)),
+               "<path>    Remove the META file from this directory";
+    ] in
+  let errmsg = "usage: ocamlfind-mini remove [options] <package_name>" in
+
+  Arg.current := 1;
+  Arg.parse
+        keywords
+	(fun s ->
+	   if !pkgname = ""
+	   then pkgname := s
+	   else raise (Arg.Bad "too many arguments")
+	)
+	errmsg;
+  if !pkgname = "" then (Arg.usage keywords errmsg; exit 1);
+
+  (* Check destdir: *)
+  if !destdir = "" then
+    failwith ("No destination directory. Either specify the -destdir option, or set the environment variable OCAMLFIND_DESTDIR");
+  if not (Sys.file_exists !destdir) then
+    failwith ("The destination directory " ^ !destdir ^ " does not exist");
+
+  let meta_dot_pkg = "META." ^ !pkgname in
+  let has_metadir = !metadir <> "" in
+
+  (* If there is a metadir, remove the META file from it: *)
+  if has_metadir then begin
+    let f = Filename.concat !metadir meta_dot_pkg in
+    if Sys.file_exists f then begin
+      Sys.remove f;
+      prerr_endline ("Removed " ^ f);
+    end
+    else
+      prerr_endline ("ocamlfind-mini: [WARNING] No such file: " ^ f)
+  end;
+
+  (* Remove the files from the package directory: *)
+  let pkgdir = Filename.concat !destdir !pkgname in
+
+  if Sys.file_exists pkgdir then begin
+    let files = list_dir pkgdir in
+    List.iter (fun f -> Sys.remove (Filename.concat pkgdir f)) files;
+    remove_directory pkgdir;
+    prerr_endline ("Removed " ^ pkgdir)
+  end
+  else
+    prerr_endline("ocamlfind-mini: [WARNING] No such directory: " ^ pkgdir);
+;;
+
+
+let select_mode() =
+  let m_string = try arg 1 with Not_found -> raise Usage in
+  let m =
+    match m_string with
+      ("use"|"-use") ->          M_use
+    | ("query"|"-query") ->      M_query
+    | ("install"|"-install") ->  M_install
+    | ("remove"|"-remove") ->    M_remove
+    | ("ocamlc"|"-ocamlc") ->    M_compiler "ocamlc"
+    | ("ocamlcp"|"-ocamlcp") ->  M_compiler "ocamlcp"
+    | ("ocamlmktop"|"-ocamlmktop") -> M_compiler "ocamlmktop"
+    | ("ocamlopt"|"-ocamlopt") -> M_compiler "ocamlopt"
+    | ("printconf"|"-printconf") -> M_printconf
+    | ("guess"|"-guess") ->      M_guess
+    | ("list"|"-list") ->        M_list
+    | _ -> raise Usage
+  in
+
+  m
+;;
+
+
+let sorry() =
+  prerr_endline "ocamlfind-mini: sorry, this function is not implemented in the reduced version of ocamlfind";
+  exit 1
+;;
+
+
+let main() =
+  try
+    let m = select_mode() in
+    let l = Array.length Sys.argv in
+    let rest = Array.sub Sys.argv 2 (l-2) in
+    match m with
+      M_use      -> if rest = [| |] then raise Usage;
+                    if rest.(0) = "-p" then begin
+	              if l<4 then raise Usage;
+	              use_package rest.(1)
+	                          (List.tl(List.tl(Array.to_list rest)))
+	            end
+	            else
+                      use_package "" (Array.to_list rest)
+    | M_query    -> sorry()
+    | M_install  -> install_package()
+    | M_remove   -> remove_package ()
+    | M_printconf      -> sorry()
+    | M_guess ->          sorry()
+    | M_list ->           sorry()
+    | M_compiler which -> ocamlc which ()
+  with
+    Usage ->
+      prerr_endline "usage: ocamlfind-mini ocamlc     [-help | other options] <file> ...";
+      prerr_endline "   or: ocamlfind-mini ocamlcp    [-help | other options] <file> ...";
+      prerr_endline "   or: ocamlfind-mini ocamlmktop [-help | other options] <file> ...";
+      prerr_endline "   or: ocamlfind-mini ocamlopt   [-help | other options] <file> ...";
+      prerr_endline "   or: ocamlfind-mini install    [-help | other options] <package_name> <file> ...";
+      prerr_endline "   or: ocamlfind-mini remove     [-help | other options] <package_name>";
+      exit 2
+  | Failure f ->
+      prerr_endline ("ocamlfind-mini: " ^ f);
+      exit 2
+;;
+
+
+try
+  Sys.catch_break true;
+  main()
+with
+  any ->
+    prerr_endline ("Uncaught exception: " ^ Printexc.to_string any);
+    let raise_again =
+      try ignore(Sys.getenv "OCAMLFIND_DEBUG"); true
+      with Not_found -> false
+    in
+    if raise_again then raise any;
+    exit 3
+;;
+
+
+(* ======================================================================
+ * History:
+ *
+ * $Log: ocamlfind-mini,v $
+ * Revision 1.4  2001/03/10 08:15:24  gerd
+ * 	-warn-error
+ *
+ * Revision 1.3  2001/03/06 20:18:03  gerd
+ * 	Option -where.
+ *
+ * Revision 1.2  2001/03/04 19:03:56  gerd
+ * 	list_dir: deletes the temp file after use
+ *
+ * Revision 1.1  2001/03/04 19:01:21  gerd
+ * 	Initial revision.
+ *
+ *)

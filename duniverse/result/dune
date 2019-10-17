@@ -1,0 +1,12 @@
+(library
+ (name result)
+ (public_name result)
+ (modules result))
+
+(rule
+ (with-stdout-to
+  selected
+  (run %{ocaml} %{dep:which_result.ml} %{ocaml_version})))
+
+(rule
+ (copy# %{read:selected} result.ml))

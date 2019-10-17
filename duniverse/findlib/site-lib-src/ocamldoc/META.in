@@ -1,0 +1,5 @@
+# Specification for the "ocamldoc" library
+requires = "compiler-libs"
+version = "[distributed with Ocaml]"
+description = "ocamldoc plugin interface"
+directory= "^ocamldoc"

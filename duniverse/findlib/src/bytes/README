@@ -1,0 +1,7 @@
+backward-compatibility package for the standard Bytes module of 4.02
+
+Starting from 4.02, the OCaml standard library splits String into two
+modules, String for now-immutable strings and Bytes for mutable byte
+sequences. This package exports a Bytes package mimicking the new
+interface to older OCaml version, letting you write code using Bytes
+that works with OCaml < 4.02.

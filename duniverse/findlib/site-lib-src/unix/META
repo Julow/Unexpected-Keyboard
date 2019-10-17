@@ -1,0 +1,13 @@
+# Specifications for the "unix" library:
+requires = ""
+description = "Unix system calls"
+version = "[distributed with Ocaml]"
+directory = "^"
+browse_interfaces = ""
+archive(byte) = "unix.cma"
+archive(native) = "unix.cmxa"
+archive(byte,mt_vm) = "vmthreads/unix.cma"
+plugin(byte) = "unix.cma"
+plugin(native) = "unix.cmxs"
+plugin(byte,mt_vm) = "vmthreads/unix.cma"
+

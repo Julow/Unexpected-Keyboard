@@ -1,0 +1,11 @@
+(rule
+ (with-stdout-to
+  dune.inc.gen
+  (run ocaml %{dep:gen/update_dune.ml})))
+
+(alias
+ (name runtest)
+ (action
+  (diff dune.inc dune.inc.gen)))
+
+(include dune.inc)

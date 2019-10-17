@@ -1,0 +1,14 @@
+
+environment:
+  matrix:
+    - OCAML_BRANCH: 4.05
+    - OCAML_BRANCH: 4.06
+
+install:
+  - appveyor DownloadFile "https://raw.githubusercontent.com/Chris00/ocaml-appveyor/master/install_ocaml.cmd" -FileName "C:\install_ocaml.cmd"
+  - C:\install_ocaml.cmd
+
+build_script:
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - dune subst
+  - dune build -p cppo

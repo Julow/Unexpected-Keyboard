@@ -1,0 +1,43 @@
+version: "{build}"
+
+shallow_clone: true
+
+environment:
+  global:
+    ARCH: x86_64
+    LWT_FORCE_LIBEV_BY_DEFAULT: yes
+    # Uncomment to debug build with RDP. Alternatively, create the file
+    # appveyor-debug in the repository root. The latter option avoids
+    # invalidating the AppVeyor dependency cache.
+    # LWT_APPVEYOR_DEBUG: yes
+
+install:
+  - 'IF EXIST C:\projects\lwt\appveyor-debug (SET LWT_APPVEYOR_DEBUG=yes)'
+
+  - 'IF "%ARCH%"=="x86" (SET CYGSH=C:\Cygwin\bin\bash -lc) ELSE (SET CYGSH=C:\Cygwin64\bin\bash -lc)'
+  - 'IF "%ARCH%"=="x86" (SET CYGSETUP=C:\Cygwin\setup-x86) ELSE (SET CYGSETUP=C:\Cygwin64\setup-x86_64)'
+
+  - '%CYGSH% "date"'
+
+  - 'IF "%LWT_APPVEYOR_DEBUG%"=="yes" (%CYGSETUP% -q -P nano)'
+  - '%CYGSETUP% -q -P rsync -P patch -P diffutils -P make -P unzip -P m4'
+
+  - 'IF "%LIBEV%"=="yes" (%CYGSETUP% -q -P libev-devel)'
+
+  - '%CYGSH% "date"'
+
+  - '%CYGSH% "wget https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz"'
+  - '%CYGSH% "tar -xf opam64.tar.xz"'
+  - '%CYGSH% "bash opam64/install.sh"'
+
+  - '%CYGSH% "cd /cygdrive/c/projects/lwt ; src/util/appveyor-install.sh"'
+
+build_script:
+  - '%CYGSH% "cd /cygdrive/c/projects/lwt ; src/util/appveyor-build.sh"'
+
+cache:
+  - C:\Cygwin64\home\appveyor\.opam
+  - _cache
+
+on_finish:
+  - ps: 'if ($env:LWT_APPVEYOR_DEBUG -eq "yes") { $blockRdp = $true; iex ((new-object net.webclient).DownloadString("https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1")) }'

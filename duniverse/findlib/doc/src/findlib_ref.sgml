@@ -1,0 +1,61 @@
+<!DOCTYPE book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+  <!ENTITY findlibmeta SYSTEM "findlib_meta.mod">
+  <!ENTITY findlibsitelib SYSTEM "findlib_sitelib.mod">
+  <!ENTITY findlibmli SYSTEM "findlib_mli.mod">
+  <!ENTITY findlibtopfind SYSTEM "findlib_topfind.mod">
+  <!ENTITY findlibocamlfind SYSTEM "findlib_ocamlfind.mod">
+  <!ENTITY findlibconf SYSTEM "findlib_conf.mod">
+  <!ENTITY % gps.common SYSTEM "../common.xml">
+  %gps.common;
+]>
+
+<book>
+
+<title>The findlib Reference Manual</title>
+<bookinfo>
+<!-- <bookbiblio> -->
+<authorgroup>
+  <author>
+    <firstname>Gerd</firstname>
+    <surname>Stolpmann</surname>
+    <authorblurb>
+      <para>
+        <address>
+	  <email>gerd@gerd-stolpmann.de</email>
+        </address>
+      </para>
+    </authorblurb>
+  </author>
+</authorgroup>
+
+<copyright>
+<year>1999-2003</year><holder>Gerd Stolpmann</holder>
+</copyright>
+<!-- </bookbiblio> -->
+</bookinfo>
+
+<part>
+<title>Commands</title>
+&findlibocamlfind;
+</part>
+
+<part>
+<title>Files</title>
+&findlibmeta;
+
+&findlibconf;
+
+&findlibsitelib;
+</part>
+
+<part>
+<title>Library</title>
+    <chapter>
+      <title>The findlib library</title>
+      <para>
+	<ulink url="lib/index.html">The findlib library</ulink>
+      </para>
+    </chapter>
+</part>
+
+</book>

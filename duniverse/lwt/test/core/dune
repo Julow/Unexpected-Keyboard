@@ -1,0 +1,9 @@
+(executable
+ (name main)
+ (libraries lwttester)
+ (flags (:standard -w +A-40-42)))
+
+(alias
+ (name runtest)
+ (package lwt)
+ (action (run %{exe:main.exe})))

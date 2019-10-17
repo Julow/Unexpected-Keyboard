@@ -1,0 +1,2 @@
+#remove_directory ".";;
+

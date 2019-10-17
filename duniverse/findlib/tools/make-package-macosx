@@ -1,0 +1,122 @@
+#!/bin/sh
+
+# Shell script from Pietro Abate <pietro.abate@anu.edu.au> to create
+# Mac OS X packages. Call from Makefile by "make package-macosx".
+
+#########################################################################
+#                                                                       #
+#                            Objective Caml                             #
+#                                                                       #
+#          Damien Doligez, projet Moscova, INRIA Rocquencourt           #
+#                                                                       #
+#   Copyright 2003 Institut National de Recherche en Informatique et    #
+#   en Automatique.  All rights reserved.  This file is distributed     #
+#   under the terms of the Q Public License version 1.0.                #
+#                                                                       #
+#########################################################################
+
+# $Id: make-package-macosx,v 1.10.2.2 2006/01/04 13:05:49 doligez Exp $
+# adapted to findlib by Pietro.Abate <pietro.abate@anu.edu.au>
+
+set -x
+
+cd package-macosx
+rm -rf findlib.pkg findlib-rw.dmg
+mkdir -p resources
+
+cat >Description.plist <<EOF
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+            "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+          <key>IFPkgDescriptionDeleteWarning</key>
+          <string></string>
+          <key>IFPkgDescriptionDescription</key>
+         <string>The findlib library manager</string>
+          <key>IFPkgDescriptionTitle</key>
+         <string>Findlib</string>
+          <key>IFPkgDescriptionVersion</key>
+          <string>${VERSION}</string>
+  </dict>
+  </plist>
+EOF
+
+cat >Info.plist <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+          "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>CFBundleGetInfoString</key>
+       <string>The findlib library manager ${VERSION}</string>
+        <key>CFBundleIdentifier</key>
+        <string>http://www.ocaml-programming.de/packages/</string>
+        <key>CFBundleName</key>
+       <string>Findlib</string>
+        <key>CFBundleShortVersionString</key>
+        <string>${VERSION}</string>
+        <key>IFPkgFlagAllowBackRev</key>
+        <true/>
+        <key>IFPkgFlagAuthorizationAction</key>
+        <string>AdminAuthorization</string>
+        <key>IFPkgFlagDefaultLocation</key>
+        <string>/</string>
+        <key>IFPkgFlagInstallFat</key>
+        <false/>
+        <key>IFPkgFlagIsRequired</key>
+        <false/>
+        <key>IFPkgFlagRelocatable</key>
+        <false/>
+        <key>IFPkgFlagRestartAction</key>
+        <string>NoRestart</string>
+        <key>IFPkgFlagRootVolumeOnly</key>
+        <true/>
+        <key>IFPkgFlagUpdateInstalledLanguages</key>
+        <false/>
+        <key>IFPkgFormatVersion</key>
+        <real>0.10000000149011612</real>
+</dict>
+</plist>
+EOF
+
+#                                         stop here -> |
+cat >resources/ReadMe.txt <<EOF
+This package installs The findlib library manager ${VERSION}.
+You need Mac OS X 10.4.x (Tiger).
+
+Files will be installed in the following directories:
+
+/usr/local/bin - command-line executables
+/usr/local/lib/ocaml - library and support files
+/usr/local/man - manual pages
+EOF
+
+chmod -R g-w root
+sudo chown -R root:admin root
+
+/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker \
+-build -p "`pwd`/findlib.pkg" -f "`pwd`/root" -i "`pwd`/Info.plist" \
+  -d "`pwd`/Description.plist" -r "`pwd`/resources"
+
+size=`du -s findlib.pkg | cut -f 1`
+size=`expr $size + 8192`
+
+hdiutil create -sectors $size findlib-rw.dmg
+name=`hdid -nomount findlib-rw.dmg | grep Apple_HFS | cut -d ' ' -f 1`
+newfs_hfs -v 'Findlib' $name
+hdiutil detach $name
+
+name=`hdid findlib-rw.dmg | grep Apple_HFS | cut -d ' ' -f 1`
+if test -d '/Volumes/Findlib'; then
+  ditto -rsrcFork findlib.pkg "/Volumes/Findlib/findlib.pkg"
+  cp resources/ReadMe.txt "/Volumes/Findlib/"
+else
+  echo 'Unable to mount the disk image as "/Volumes/Findlib"' >&2
+  exit 3
+fi
+open "/Volumes/Findlib"
+hdiutil detach $name
+
+rm -rf "findlib-${VERSION}.dmg"
+hdiutil convert findlib-rw.dmg -format UDZO -o "findlib-${VERSION}.dmg"

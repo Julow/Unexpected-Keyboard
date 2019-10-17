@@ -1,0 +1,175 @@
+# SYNTAX OF findlib.files:
+#
+# d DIRPATH
+#
+# include this subdirectory
+#
+# f FILEPATH
+#
+# include this file (or symlink)
+#
+# x FILEPATH
+#
+# exclude this file
+#
+# p DIRPATH/FILEPATTERN
+#
+# include all files of the directory that match the regular expression
+# FILEPATTERN (Str-type regexp)
+#
+# w DIRPATH/FILEPATTERN
+#
+# output a warning if one of the matching files matches
+#
+# Exclusions must be mentioned before inclusions.
+
+f configure
+f findlib.conf.in
+f INSTALL
+f LICENSE
+f Makefile
+f Makefile.config.pattern
+f itest
+
+d itest-aux
+f itest-aux/Makefile
+p itest-aux/.*\.ml
+
+d mini
+f mini/README
+f mini/ocamlfind-mini
+
+d tools
+f tools/collect_files
+f tools/file_exists
+d tools/extract_args
+f tools/extract_args/Makefile
+f tools/extract_args/extract_args.ml
+f tools/safe_camlp4
+f tools/make-package-macosx
+f tools/patch
+f tools/cmd_from_same_dir
+
+d site-lib-src
+d site-lib-src/bigarray
+f site-lib-src/bigarray/META.in
+f site-lib-src/bigarray/interfaces.in
+f site-lib-src/bigarray/interfaces.out
+d site-lib-src/camlp4.309
+f site-lib-src/camlp4.309/META.in
+d site-lib-src/camlp4.310
+f site-lib-src/camlp4.310/META.in
+d site-lib-src/dbm
+f site-lib-src/dbm/META.in
+f site-lib-src/dbm/interfaces.in
+f site-lib-src/dbm/interfaces.out
+d site-lib-src/dynlink
+f site-lib-src/dynlink/META.in
+f site-lib-src/dynlink/interfaces.in
+f site-lib-src/dynlink/interfaces.out
+d site-lib-src/graphics
+f site-lib-src/graphics/META.in
+f site-lib-src/graphics/interfaces.in
+f site-lib-src/graphics/interfaces.out
+d site-lib-src/labltk
+f site-lib-src/labltk/META.in
+f site-lib-src/labltk/interfaces.in
+f site-lib-src/labltk/interfaces.out
+d site-lib-src/num
+f site-lib-src/num/META.in
+f site-lib-src/num/interfaces.in
+f site-lib-src/num/interfaces.out
+d site-lib-src/num-top
+f site-lib-src/num-top/META.in
+d site-lib-src/stdlib
+f site-lib-src/stdlib/META.in
+f site-lib-src/stdlib/interfaces.in
+f site-lib-src/stdlib/interfaces.out
+d site-lib-src/str
+f site-lib-src/str/META.in
+f site-lib-src/str/interfaces.in
+f site-lib-src/str/interfaces.out
+d site-lib-src/threads
+f site-lib-src/threads/META.in
+f site-lib-src/threads/interfaces.in
+f site-lib-src/threads/interfaces.out
+d site-lib-src/unix
+f site-lib-src/unix/META.in
+f site-lib-src/unix/interfaces.in
+f site-lib-src/unix/interfaces.out
+d site-lib-src/ocamlbuild
+f site-lib-src/ocamlbuild/META.in
+d site-lib-src/ocamldoc
+f site-lib-src/ocamldoc/META.in
+d site-lib-src/compiler-libs
+f site-lib-src/compiler-libs/META.in
+d site-lib-src/bytes
+f site-lib-src/bytes/META.in
+f site-lib-src/bytes/interfaces.in
+f site-lib-src/bytes/interfaces.out
+d site-lib-src/raw_spacetime
+f site-lib-src/raw_spacetime/interfaces.in
+f site-lib-src/raw_spacetime/META.in
+
+
+d src
+
+d src/findlib
+f src/findlib/Makefile
+f src/findlib/META.in
+f src/findlib/findlib_config.mlp
+f src/findlib/topfind.ml.in
+x src/findlib/fl_meta.ml
+x src/findlib/findlib_config.ml
+x src/findlib/ocaml_args.ml
+x src/findlib/topfind.ml
+p src/findlib/.*\.ml
+p src/findlib/.*\.mli
+p src/findlib/.*\.mll
+p src/findlib/.*\.src
+p src/findlib/.*\.p
+
+d src/findlib-toolbox
+f src/findlib-toolbox/Makefile
+f src/findlib-toolbox/make_wizard.ml
+f src/findlib-toolbox/make_wizard.pattern
+
+d src/bytes
+f src/bytes/Makefile
+f src/bytes/README
+f src/bytes/bytes.ml
+f src/bytes/META
+
+d doc
+f doc/DOCINFO
+f doc/QUICKSTART
+f doc/README
+p doc/.*\.xml
+p doc/.*\.dtd
+f doc/Makefile
+
+d doc/guide-html
+p doc/guide-html/.*\.html
+f doc/guide-html/TIMESTAMP
+
+d doc/ref-html
+d doc/ref-html/lib
+p doc/ref-html/.*\.html
+f doc/ref-html/TIMESTAMP
+p doc/ref-html/lib/.*\.html
+p doc/ref-html/lib/.*\.css
+
+d doc/ref-man
+f doc/ref-man/ocamlfind.1
+f doc/ref-man/findlib.conf.5
+f doc/ref-man/META.5
+f doc/ref-man/site-lib.5
+f doc/ref-man/TIMESTAMP
+
+d doc/src
+p doc/src/.*\.dsl
+p doc/src/.*\.mod
+p doc/src/.*\.sgml
+p doc/src/.*\.xml
+
+

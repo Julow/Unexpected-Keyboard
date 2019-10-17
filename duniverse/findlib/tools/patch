@@ -1,0 +1,28 @@
+#! /bin/sh
+
+# Usage: patch @VARIABLE@ value
+# Environment variable USE_CYGPATH is honoured.
+
+varname="$1"
+varvalue="$2"
+
+if [ "${USE_CYGPATH}" = "1" ]; then
+    #varvalue="$(echo "$varvalue" | sed -e 's;/;\\;g')"
+    varvalue="$(cygpath -w -l "$varvalue")"
+    varvalue="$(echo "$varvalue" | sed -e 's;\\;\\\\\\\\;g')"
+    # e.g. c:\file is transformed to c:\\\\file
+else
+    case `uname` in
+	MINGW*)
+	    varvalue="$(echo "$varvalue" | sed -e 's;\\;\\\\\\\\;g')"
+	    # Convert the first letter drive to DOS style (naive).
+	    # This is necessary because OCaml uses DOS paths even if
+	    # run under MSYS.
+	    varvalue="$(echo "$varvalue" | sed -e 's;^/\([a-z]\)/;\1:/;g')"
+	    ;;
+    esac
+fi
+
+sed -e 's;'"$varname"';'"$varvalue"';g'
+# e.g. c:\\\\file is parsed by sed as c:\\file which is correct for the
+# ocaml string

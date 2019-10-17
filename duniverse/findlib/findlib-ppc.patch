@@ -1,0 +1,182 @@
+diff -ur --unidirectional-new-file findlib-1.1.2pl1/Makefile findlib-1.1.2pl1.modify/Makefile
+--- findlib-1.1.2pl1/Makefile	2006-01-17 10:04:50.000000000 +1100
++++ findlib-1.1.2pl1.modify/Makefile	2006-10-23 11:50:38.000000000 +1000
+@@ -17,12 +17,15 @@
+ 	for p in $(PARTS); do ( cd src/$$p; $(MAKE) opt ); done
+ 
+ install:
++	mkdir -p $(prefix)$(OCAMLFIND_BIN)
++	mkdir -p $(prefix)$(OCAMLFIND_LIB)
++	mkdir -p $(prefix)$(OCAMLFIND_MAN)
+ 	for p in $(PARTS); do ( cd src/$$p; $(MAKE) install ); done
+ 	$(MAKE) install-doc
+ 	$(MAKE) install-meta
+ 	cd src/findlib; $(MAKE) install-num-top
+ 	$(MAKE) install-config
+-	cp tools/safe_camlp4 $(OCAMLFIND_BIN)
++	cp tools/safe_camlp4 $(prefix)$(OCAMLFIND_BIN)
+ 
+ uninstall:
+ 	$(MAKE) uninstall-doc
+@@ -30,12 +33,26 @@
+ 	for p in `cd src; echo *`; do ( cd src/$$p; $(MAKE) uninstall ); done
+ 	$(MAKE) uninstall-config
+ 
+-clean:
++clean: clean-macosx
+ 	for p in `cd src; echo *`; do ( cd src/$$p; $(MAKE) clean ); done
+ 	(cd itest-aux; $(MAKE) clean)
+ 	(cd tools/extract_args; $(MAKE) clean)
+ 	rm -f findlib.conf
+ 
++# Make MacOS X package
++
++.PHONY: package-macosx
++
++package-macosx: all opt
++	mkdir -p package-macosx/root
++	export prefix=`pwd`/package-macosx/root && make install 
++	export VERSION=1.1.2 && tools/make-package-macosx
++	#rm -rf package-macosx/root
++
++clean-macosx:
++	sudo rm -rf package-macosx
++	#rm -rf package-macosx/*.pkg package-macosx/*.dmg
++
+ .PHONY: release
+ release: README
+ 	./release
+diff -ur --unidirectional-new-file findlib-1.1.2pl1/configure findlib-1.1.2pl1.modify/configure
+--- findlib-1.1.2pl1/configure	2006-01-17 10:04:49.000000000 +1100
++++ findlib-1.1.2pl1.modify/configure	2006-10-23 11:50:43.000000000 +1000
+@@ -427,6 +427,7 @@
+ echo "EXEC_SUFFIX=${exec_suffix}" >>Makefile.config
+ echo "PARTS=${parts}" >>Makefile.config
+ echo "INSTALL_TOPFIND=${with_topfind}" >>Makefile.config
++echo "VERSION=${version}" >> Makefile.config
+ 
+ # All OK
+ 
+diff -ur --unidirectional-new-file findlib-1.1.2pl1/tools/make-package-macosx findlib-1.1.2pl1.modify/tools/make-package-macosx
+--- findlib-1.1.2pl1/tools/make-package-macosx	1970-01-01 10:00:00.000000000 +1000
++++ findlib-1.1.2pl1.modify/tools/make-package-macosx	2006-10-23 11:50:52.000000000 +1000
+@@ -0,0 +1,119 @@
++#!/bin/sh
++
++#########################################################################
++#                                                                       #
++#                            Objective Caml                             #
++#                                                                       #
++#          Damien Doligez, projet Moscova, INRIA Rocquencourt           #
++#                                                                       #
++#   Copyright 2003 Institut National de Recherche en Informatique et    #
++#   en Automatique.  All rights reserved.  This file is distributed     #
++#   under the terms of the Q Public License version 1.0.                #
++#                                                                       #
++#########################################################################
++
++# $Id: make-package-macosx,v 1.10.2.2 2006/01/04 13:05:49 doligez Exp $
++# adapted to findlib by Pietro.Abate <pietro.abate@anu.edu.au>
++
++set -x
++
++cd package-macosx
++rm -rf findlib.pkg findlib-rw.dmg
++mkdir -p resources
++
++cat >Description.plist <<EOF
++  <?xml version="1.0" encoding="UTF-8"?>
++  <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
++            "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
++  <plist version="1.0">
++  <dict>
++          <key>IFPkgDescriptionDeleteWarning</key>
++          <string></string>
++          <key>IFPkgDescriptionDescription</key>
++	  <string>The findlib library manager</string>
++          <key>IFPkgDescriptionTitle</key>
++	  <string>Findlib</string>
++          <key>IFPkgDescriptionVersion</key>
++          <string>${VERSION}</string>
++  </dict>
++  </plist>
++EOF
++
++cat >Info.plist <<EOF
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
++          "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
++<plist version="1.0">
++<dict>
++        <key>CFBundleGetInfoString</key>
++	<string>The findlib library manager ${VERSION}</string>
++        <key>CFBundleIdentifier</key>
++        <string>http://www.ocaml-programming.de/packages/</string>
++        <key>CFBundleName</key>
++	<string>Findlib</string>
++        <key>CFBundleShortVersionString</key>
++        <string>${VERSION}</string>
++        <key>IFPkgFlagAllowBackRev</key>
++        <true/>
++        <key>IFPkgFlagAuthorizationAction</key>
++        <string>AdminAuthorization</string>
++        <key>IFPkgFlagDefaultLocation</key>
++        <string>/</string>
++        <key>IFPkgFlagInstallFat</key>
++        <false/>
++        <key>IFPkgFlagIsRequired</key>
++        <false/>
++        <key>IFPkgFlagRelocatable</key>
++        <false/>
++        <key>IFPkgFlagRestartAction</key>
++        <string>NoRestart</string>
++        <key>IFPkgFlagRootVolumeOnly</key>
++        <true/>
++        <key>IFPkgFlagUpdateInstalledLanguages</key>
++        <false/>
++        <key>IFPkgFormatVersion</key>
++        <real>0.10000000149011612</real>
++</dict>
++</plist>
++EOF
++
++#                                         stop here -> |
++cat >resources/ReadMe.txt <<EOF
++This package installs The findlib library manager ${VERSION}.
++You need Mac OS X 10.4.x (Tiger).
++
++Files will be installed in the following directories:
++
++/usr/local/bin - command-line executables
++/usr/local/lib/ocaml - library and support files
++/usr/local/man - manual pages
++EOF
++
++chmod -R g-w root
++sudo chown -R root:admin root
++
++/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker \
++-build -p "`pwd`/findlib.pkg" -f "`pwd`/root" -i "`pwd`/Info.plist" \
++  -d "`pwd`/Description.plist" -r "`pwd`/resources"
++
++size=`du -s findlib.pkg | cut -f 1`
++size=`expr $size + 8192`
++
++hdiutil create -sectors $size findlib-rw.dmg
++name=`hdid -nomount findlib-rw.dmg | grep Apple_HFS | cut -d ' ' -f 1`
++newfs_hfs -v 'Findlib' $name
++hdiutil detach $name
++
++name=`hdid findlib-rw.dmg | grep Apple_HFS | cut -d ' ' -f 1`
++if test -d '/Volumes/Findlib'; then
++  ditto -rsrcFork findlib.pkg "/Volumes/Findlib/findlib.pkg"
++  cp resources/ReadMe.txt "/Volumes/Findlib/"
++else
++  echo 'Unable to mount the disk image as "/Volumes/Findlib"' >&2
++  exit 3
++fi
++open "/Volumes/Findlib"
++hdiutil detach $name
++
++rm -rf "findlib-${VERSION}.dmg"
++hdiutil convert findlib-rw.dmg -format UDZO -o "findlib-${VERSION}.dmg"

@@ -1,0 +1,101 @@
+#! /bin/sh
+# $Id$
+# ----------------------------------------------------------------------
+#
+
+case `uname` in
+    CYGWIN*)
+	execsuffix=.exe ;;
+    *)
+	execsuffix= ;;
+esac
+ocamlfind="src/findlib/ocamlfind${execsuffix}"
+
+PATH="./tools:$PATH"
+export PATH
+
+check_linkage () {
+    p=$1
+    shift
+    rm -f itest-aux/simple
+    $ocamlfind ocamlc -linkall -linkpkg -custom "$@" -o itest-aux/simple itest-aux/simple_$p.ml >itest-aux/err.out 2>&1
+    output=`cat itest-aux/err.out | sed -e '/WARNING.*/ d'`
+    error=0
+    if [ -n "$output" ]; then
+	echo "* When trying to compile with"
+	echo "       $ocamlfind ocamlc -linkall -linkpkg -custom "$@" -o itest-aux/simple itest-aux/simple_$p.ml"
+   	echo "  an error has occurred. The error error message has been written"
+	echo "  to itest-aux/err.out."
+	error=1
+    fi
+    if [ "$error" = "0" ]; then
+	result=`itest-aux/simple${execsuffix}`
+        [ "x$result" = "xOK" ]
+    else
+	return $error
+    fi
+}
+
+problems () {
+    echo "* This test failed. Please check the settings in site-lib-src/$1/META,"
+    echo "  especially the 'linkopts' variable, and try again. You can invoke"
+    echo "  this test directly by: ./itest $1"
+}
+
+
+do_test () {
+    case "$1" in
+    dbm|graphics|num|str|unix|bigarray|labltk)
+	echo "* Checking linker options for $1 library"
+	rm -f itest-aux/testdb*
+	if check_linkage $1 -package $1; then
+	    echo "ok"
+	else
+	    problems $1
+	fi
+	;;
+    threads)
+	echo "* Checking linker options for threads library"
+	if check_linkage $1 -package $1 -thread; then
+	    echo "ok"
+	else
+	    problems $1
+	fi
+	;;
+
+    camlp4)
+	echo "* Checking options for camlp4 preprocessor"
+	if check_linkage $1 -package $1 -syntax camlp4r; then
+	    echo "ok"
+	else
+	    problems $1
+	fi
+	;;
+
+    *)
+	echo "unknown test: $1"
+	;;
+    esac
+}
+
+
+OCAMLPATH="./site-lib-src"
+export OCAMLPATH
+
+if [ ! -f "$ocamlfind" ]; then
+    echo "Sorry, you must first compile the library before you can invoke" 1>&2
+    echo "the integration test." 1>&2
+    exit 1
+fi
+
+if [ "$#" = "0" ]; then
+    for t in unix str dbm graphics num threads bigarray labltk camlp4; do
+	if [ -f "site-lib-src/$t/META" ]; then
+	    echo "------------------------------------------------------------------------------"
+	    do_test $t
+	    echo
+	fi
+    done
+else
+    do_test $1
+fi
