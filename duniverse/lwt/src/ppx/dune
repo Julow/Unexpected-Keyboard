@@ -1,0 +1,10 @@
+(library
+ (name ppx_lwt)
+ (public_name lwt_ppx)
+ (synopsis "Lwt PPX syntax extension")
+ (modules ppx_lwt)
+ (libraries compiler-libs.common ocaml-migrate-parsetree ppx_tools_versioned)
+ (ppx_runtime_libraries lwt)
+ (kind ppx_rewriter)
+ (preprocess (pps ppx_tools_versioned.metaquot_409))
+ (flags (:standard -w +A-4)))

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!ENTITY % readme:html:previous '&nbsp;'>
+<!ENTITY % readme:html:up       '&nbsp;'>
+<!ENTITY % readme:html:next     '&nbsp;'>
+
+<!ENTITY % bar
+         '<table bgcolor="lightgrey" width="100&#37;" 
+                 cellspacing="0" border="0" cellpadding="10">
+<tr><td align="left">%readme:html:previous;</td>
+<td align="center">%readme:html:up;</td>
+<td align="right">%readme:html:next;</td>
+</tr></table>'>
+
+<!ENTITY % readme:html:header
+           "%bar;<hr>">
+     
+<!ENTITY % readme:html:trailer
+           "<hr>%bar;">
+
+
+<!ENTITY % readme:html:textcolor "black">

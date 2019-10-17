@@ -1,0 +1,12 @@
+;; Install the following opam switches, copy this file as
+;; jbuild-workspace and run:
+;;
+;; $ jbuilder build @install
+;;
+;; This will build result against all these version of OCaml
+
+(context ((switch 4.02.3)))
+(context ((switch 4.03.0)))
+(context ((switch 4.04.2)))
+(context ((switch 4.05.0)))
+(context ((switch 4.06.0)))

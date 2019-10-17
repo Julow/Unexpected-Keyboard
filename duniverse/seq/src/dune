@@ -1,0 +1,15 @@
+(executable
+ (modules select_version)
+ (name select_version))
+
+(rule
+ (targets seq.ml seq.mli)
+ (deps seq_redef.ml seq_redef.mli seq_alias.ml seq_alias.mli)
+ (action
+  (progn
+   (with-stdout-to seq.mli (run ./select_version.exe intf))
+   (with-stdout-to seq.ml (run ./select_version.exe impl)))))
+   
+(library
+ (modules seq)
+ (public_name seq))

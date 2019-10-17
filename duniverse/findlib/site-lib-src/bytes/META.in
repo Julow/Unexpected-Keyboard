@@ -1,0 +1,5 @@
+dnl This file is input of the m4 macro processor.
+`name="bytes"'
+`version="[distributed with OCaml 4.02 or above]"'
+`description="dummy backward-compatibility package for mutable strings"'
+`requires=""'

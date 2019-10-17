@@ -1,0 +1,17 @@
+<!DOCTYPE reference PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+  <!ENTITY findlibmeta SYSTEM "findlib_meta.mod">
+  <!ENTITY findlibsitelib SYSTEM "findlib_sitelib.mod">
+  <!ENTITY findlibmli SYSTEM "findlib_mli.mod">
+  <!ENTITY findlibtopfind SYSTEM "findlib_topfind.mod">
+  <!ENTITY findlibocamlfind SYSTEM "findlib_ocamlfind.mod">
+  <!ENTITY findlibconf SYSTEM "findlib_conf.mod">
+]>
+
+<reference>
+<title>Reference</title>
+&findlibocamlfind;
+&findlibmeta;
+&findlibconf;
+&findlibsitelib;
+</reference>
+

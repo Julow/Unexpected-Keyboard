@@ -1,0 +1,22 @@
+opam-version: "2.0"
+maintainer: "frederic.bour@lakaban.net"
+authors: [
+  "Frédéric Bour <frederic.bour@lakaban.net>"
+  "Alain Frisch <alain.frisch@lexifi.com>"
+]
+license: "MIT"
+homepage: "https://github.com/ocaml-ppx/ppx_tools_versioned"
+bug-reports: "https://github.com/ocaml-ppx/ppx_tools_versioned/issues"
+dev-repo: "git://github.com/ocaml-ppx/ppx_tools_versioned.git"
+tags: [ "syntax" ]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "ocaml" {>= "4.02.0"}
+  "dune" {build & >= "1.0"}
+  "ocaml-migrate-parsetree" {>= "1.4.0"}
+]
+synopsis: "A variant of ppx_tools based on ocaml-migrate-parsetree"

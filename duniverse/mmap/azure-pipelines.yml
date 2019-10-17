@@ -1,0 +1,68 @@
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: env AGENT_OS=Linux TEST_DISTRIB=yes ./.azure-pipelines.sh
+    displayName: Build
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'docs'
+      targetPath: '_build/default/_doc/_html/'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'binaries'
+      targetPath: '_build/install/default/'
+- job: LinuxDistros
+  pool:
+    vmImage: 'ubuntu-16.04'
+  strategy:
+    matrix:
+      alpine:
+        DISTRO: 'alpine'
+      debian-stable:
+        DISTRO: 'debian-stable'
+      ubuntu-lts:
+        DISTRO: 'ubuntu-lts'
+      opensuse:
+        DISTRO: 'opensuse'
+      fedora:
+        DISTRO: 'fedora'
+  steps:
+  - script: docker run -e AGENT_OS=LinuxDocker -e DISTRO=${DISTRO} -v `pwd`:/home/opam/src ocaml/opam2:${DISTRO} /home/opam/src/.azure-pipelines.sh
+    displayName: Build
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - script: ./.azure-pipelines.sh
+    displayName: Build
+- job: Windows
+  variables:
+    CYGWIN_ROOT: $(System.Workfolder)\cygwin
+    CYGWIN_MIRROR: http://cygwin.mirror.constant.com
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+    - script: |
+        choco install cygwin --params="/InstallDir:%CYGWIN_ROOT%"
+      displayName: Install Cygwin
+    - script: |
+        %CYGWIN_ROOT%\cygwinsetup.exe -qnNdO -R "%CYGWIN_ROOT%" -s "%CYGWIN_MIRROR%" -g -P ^
+        curl,^
+        diff,^
+        diffutils,^
+        git,^
+        m4,^
+        make,^
+        patch,^
+        perl,^
+        rsync,^
+        mingw64-x86_64-gcc-core,^
+        unzip
+      displayName: Install Dependencies
+    - script: |
+        set PATH=%CYGWIN_ROOT%\bin;%SYSTEMROOT%\system32
+        set BUILD_SOURCES_DIR=$(Build.SourcesDirectory)
+        env.exe -- bash.exe -l $(Build.SourcesDirectory)/.azure-pipelines.sh
+      displayName: Build

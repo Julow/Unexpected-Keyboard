@@ -1,0 +1,10 @@
+dnl This file is input of the m4 macro processor.
+`# Specifications for the standard library:'
+`# (Only included because of findlib-browser)'
+`requires = ""'
+`description = "Standard library"'
+`version = "[distributed with Ocaml]"'
+`directory = "^"'
+`browse_interfaces = "'interfaces`"'
+
+

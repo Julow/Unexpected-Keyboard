@@ -1,0 +1,73 @@
+--- ./itest-aux/simple_dbm.ml.orig	2005-11-07 13:38:01.203976400 +0100
++++ ./itest-aux/simple_dbm.ml	2005-11-07 13:38:11.498265600 +0100
+@@ -1,9 +1,9 @@
+-(try 
++(try
+   Sys.remove "itest-aux/testdb.db"
+-with 
++with
+   _ -> ());
+ 
+-let dbm =
++let _dbm =
+   Dbm.opendbm "itest-aux/testdb" [ Dbm.Dbm_rdwr; Dbm.Dbm_create ] 0o777 in
+ 
+ print_string "OK\n";;
+--- ./itest-aux/simple_labltk.ml.orig	2005-11-07 13:39:25.931584300 +0100
++++ ./itest-aux/simple_labltk.ml	2005-11-07 13:39:34.954108200 +0100
+@@ -1,6 +1,6 @@
+ open Tk;;
+ 
+-let top = openTk() in 
++let _top = openTk() in
+ update();
+ closeTk()
+ ;;
+--- ./itest-aux/simple_num.ml.orig	2005-11-07 13:39:00.956917700 +0100
++++ ./itest-aux/simple_num.ml	2005-11-07 13:39:05.973881600 +0100
+@@ -1,4 +1,4 @@
+-let n = Num.num_of_int 5 in
++let _n = Num.num_of_int 5 in
+ 
+ print_string "OK\n";;
+ 
+--- ./itest-aux/simple_str.ml.orig	2005-11-07 13:35:56.037998100 +0100
++++ ./itest-aux/simple_str.ml	2005-11-07 13:35:58.661692300 +0100
+@@ -1,4 +1,4 @@
+-let b = Str.regexp ".*" in
++let _b = Str.regexp ".*" in
+ 
+ print_string "OK\n";;
+ 
+--- ./itest-aux/simple_unix.ml.orig	2005-11-07 13:37:28.257845000 +0100
++++ ./itest-aux/simple_unix.ml	2005-11-07 13:37:34.927235600 +0100
+@@ -1,4 +1,4 @@
+-let p = Unix.getpid() in
++let _p = Unix.getpid() in
+ 
+ print_string "OK\n";;
+ 
+--- ./tools/extract_args/extract_args.ml.orig	2005-11-07 13:27:58.494279900 +0100
++++ ./tools/extract_args/extract_args.ml	2005-11-07 13:32:33.393117500 +0100
+@@ -25,13 +25,17 @@
+ 
+ let get_help cmd =
+   let temp_file = 
+-    Filename.temp_file "findlib" ".txt" in
++    Filename.temp_file "findlib" ".txt"
++  and quote s =
++    match Sys.os_type with
++        "Win32" -> s
++        | _ -> Filename.quote s in
+   let help_out =
+     try
+       let code =
+-	Sys.command (sprintf "%s -help >%s" 
+-		       (Filename.quote cmd)
+-		       (Filename.quote temp_file)) in
++	Sys.command (sprintf "%s -help >%s"
++		       (quote cmd)
++		       (quote temp_file)) in
+       if code <> 0 then 
+ 	raise Not_found;  (* Assume command does not exist! *)
+       let lines = read_lines temp_file in

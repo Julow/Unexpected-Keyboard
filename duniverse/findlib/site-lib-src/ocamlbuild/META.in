@@ -1,0 +1,8 @@
+`# Specification for the "ocamlbuild" library'
+`requires = "unix"'
+`version = "[distributed with Ocaml]"'
+`description = "ocamlbuild support library"'
+`directory= "^ocamlbuild"'
+`archive(byte) = "ocamlbuildlib.cma"'
+`archive(native) = "ocamlbuildlib.cmxa"'
+

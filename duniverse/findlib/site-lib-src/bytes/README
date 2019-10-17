@@ -1,0 +1,8 @@
+dummy forward-compatibility package for the standard Bytes module
+
+Starting from 4.02, the OCaml standard library splits String into two
+modules, String for now-immutable strings and Bytes for mutable byte
+sequences. A 'bytes' package is made available to older OCaml version
+that wish to use a Bytes module. This dummy 'bytes' package, intended
+to be installed on 4.02 and above, makes user-code depending on
+'bytes' forward-compatible.

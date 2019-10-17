@@ -1,0 +1,159 @@
+(rule
+ (targets lwt_unix.ml)
+ (deps (:ml lwt_unix.cppo.ml))
+ (action
+  (chdir %{project_root}
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{ml} -o %{targets}))))
+
+(rule
+ (targets lwt_unix.mli)
+ (deps (:ml lwt_unix.cppo.mli))
+ (action
+  (chdir %{project_root}
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{ml} -o %{targets}))))
+
+(rule
+ (mode fallback)
+ (targets discover_arguments)
+ (action (with-stdout-to %{targets} (echo ""))))
+
+(rule
+ (targets
+  unix_c_flags.sexp unix_c_library_flags.sexp lwt_features.h lwt_features.ml)
+ (deps (:exe config/discover.exe) discover_arguments)
+ (action (run %{exe})))
+
+(copy_files unix_c/*)
+(copy_files windows_c/*.c)
+
+(library
+ (name lwt_unix)
+ (public_name lwt.unix)
+ (synopsis "Unix support for Lwt")
+ (optional)
+ (wrapped false)
+ (libraries bigarray lwt mmap ocplib-endian.bigstring threads unix)
+ (c_names
+  lwt_unix_stubs
+  lwt_libev_stubs
+  lwt_process_stubs
+  unix_readable
+  unix_writable
+  unix_madvise
+  unix_get_page_size
+  windows_get_page_size
+  unix_mincore
+  unix_read
+  windows_read
+  unix_bytes_read
+  windows_bytes_read
+  unix_write
+  windows_write
+  unix_bytes_write
+  windows_bytes_write
+  unix_readv_writev_utils
+  unix_iov_max
+  unix_writev
+  unix_writev_job
+  unix_readv
+  unix_readv_job
+  unix_send
+  unix_bytes_send
+  unix_recv
+  unix_bytes_recv
+  unix_recvfrom
+  unix_bytes_recvfrom
+  unix_sendto
+  unix_sendto_byte
+  unix_bytes_sendto
+  unix_bytes_sendto_byte
+  unix_recv_send_utils
+  unix_recv_msg
+  unix_send_msg
+  unix_get_credentials
+  unix_mcast_utils
+  unix_mcast_set_loop
+  unix_mcast_set_ttl
+  unix_mcast_modify_membership
+  unix_wait4
+  unix_get_cpu
+  unix_get_affinity
+  unix_set_affinity
+  unix_guess_blocking_job
+  unix_wait_mincore_job
+  unix_open_job
+  unix_read_job
+  windows_read_job
+  unix_bytes_read_job
+  windows_bytes_read_job
+  unix_write_job
+  windows_write_job
+  unix_bytes_write_job
+  windows_bytes_write_job
+  unix_stat_job_utils
+  unix_stat_job
+  unix_stat_64_job
+  unix_lstat_job
+  unix_lstat_64_job
+  unix_fstat_job
+  unix_fstat_64_job
+  unix_utimes_job
+  unix_isatty_job
+  unix_opendir_job
+  unix_closedir_job
+  unix_valid_dir
+  unix_invalidate_dir
+  unix_rewinddir_job
+  unix_readdir_job
+  unix_readdir_n_job
+  unix_readlink_job
+  unix_lockf_job
+  unix_getlogin_job
+  unix_get_pw_gr_nam_id_job
+  unix_get_network_information_utils
+  unix_gethostname_job
+  unix_gethostbyname_job
+  unix_gethostbyaddr_job
+  unix_getprotoby_getservby_job
+  unix_getaddrinfo_job
+  unix_getnameinfo_job
+  unix_bind_job
+  unix_getcwd_job
+  unix_termios_conversion
+  unix_tcgetattr_job
+  unix_tcsetattr_job
+  windows_is_socket
+  windows_fsync_job
+  windows_system_job
+  windows_not_available
+  unix_not_available
+  unix_access_job
+  unix_chdir_job
+  unix_chmod_job
+  unix_chown_job
+  unix_chroot_job
+  unix_close_job
+  unix_fchmod_job
+  unix_fchown_job
+  unix_fdatasync_job
+  unix_fsync_job
+  unix_ftruncate_job
+  unix_link_job
+  unix_lseek_job
+  unix_mkdir_job
+  unix_mkfifo_job
+  unix_rename_job
+  unix_rmdir_job
+  unix_symlink_job
+  unix_tcdrain_job
+  unix_tcflow_job
+  unix_tcflush_job
+  unix_tcsendbreak_job
+  unix_truncate_job
+  unix_unlink_job
+  unix_somaxconn
+  windows_somaxconn
+ )
+ (install_c_headers lwt_features lwt_config lwt_unix)
+ (c_flags -I. (:include unix_c_flags.sexp))
+ (c_library_flags (:include unix_c_library_flags.sexp)))

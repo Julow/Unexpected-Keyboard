@@ -1,0 +1,38 @@
+<!-- $Id -->
+
+<!ENTITY % p.like "p|ul">
+<!ENTITY % text   "br|code|em|footnote|a">
+
+<!ELEMENT readme (sect1+)>
+<!ATTLIST readme
+          title CDATA #REQUIRED>
+
+<!ELEMENT sect1 (title,(sect2|%p.like;)+)>
+
+<!ELEMENT sect2 (title,(sect3|%p.like;)+)>
+
+<!ELEMENT sect3 (title,(%p.like;)+)>
+
+<!ELEMENT title (#PCDATA|br)*>
+
+<!ELEMENT p (#PCDATA|%text;)*>
+
+<!ELEMENT br EMPTY>
+
+<!ELEMENT code (#PCDATA)>
+
+<!ELEMENT em (#PCDATA|%text;)*>
+
+<!ELEMENT ul (li+)>
+
+<!ELEMENT li (%p.like;)*>
+
+<!ELEMENT footnote (#PCDATA|%text;)*>
+
+<!ELEMENT a (#PCDATA)*>
+<!ATTLIST a 
+          href      CDATA #IMPLIED
+          readmeref CDATA #IMPLIED
+>
+
+

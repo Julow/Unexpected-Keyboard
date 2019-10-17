@@ -1,0 +1,59 @@
+(executable
+  (name frontend)
+  (package ocamlfind)
+  (public_name ocamlfind)
+  (modules ocaml_args frontend)
+  (flags (:standard -w -3-6-27-32-33-50))
+  (libraries findlib.internal unix))
+
+(library
+  (name findlib_internal)
+  (public_name findlib.internal)
+  (modules)
+  (libraries findlib))
+
+(library
+  (name findlib)
+  (public_name findlib)
+  (modules findlib fl_args fl_lint fl_package_base fl_metascanner
+    fl_metatoken fl_split fl_meta fl_topo findlib_config)
+  (flags (:standard -w -6-27-32-33-50))
+  (wrapped false))
+
+(library
+  (name findlib_top)
+  (public_name findlib.top)
+  (wrapped false)
+  (libraries findlib.internal)
+  (modules topfind)
+  (flags (:standard -I +compiler-libs)))
+
+(library
+  (name findlib_dynload)
+  (public_name findlib.dynload)
+  (wrapped false)
+  (libraries findlib.internal dynlink)
+  (special_builtin_support findlib_dynload)
+  (modules fl_dynload))
+
+(rule
+  (copy topfind.ml.in topfind.ml))
+
+(rule
+  (targets findlib_config.ml topfind findlib.conf)
+  (deps (env_var FINDLIB_PREFIX) topfind_rd1.p)
+  (action (run ../../tools/discover.exe)))
+
+(install
+  (section lib)
+  (package findlib)
+  (files (topfind as ../toplevel/topfind)
+         (findlib.conf as ../findlib.conf)))
+
+(rule
+  (targets ocaml_args.ml)
+  (action (run ../../tools/extract_args/extract_args.exe
+           -o %{targets} ocamlc ocamlcp ocamloptp ocamlmklib
+           ocamlmktop ocamlopt ocamldep ocamldoc)))
+
+(ocamllex fl_meta)

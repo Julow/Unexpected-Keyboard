@@ -1,0 +1,4 @@
+(library
+ (name lwttester)
+ (wrapped false)
+ (libraries lwt unix lwt.unix))

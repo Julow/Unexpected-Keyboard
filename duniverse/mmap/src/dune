@@ -1,0 +1,10 @@
+(library
+ (public_name mmap)
+ (modules mmap)
+ (libraries unix bigarray))
+
+(rule
+ (with-stdout-to selected (run %{ocaml} %{dep:which_mmap.ml} %{ocaml_version})))
+
+(rule
+ (copy# %{read:selected} mmap.ml))

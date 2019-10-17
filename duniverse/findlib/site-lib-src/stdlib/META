@@ -1,0 +1,9 @@
+# Specifications for the standard library:
+# (Only included because of findlib-browser)
+requires = ""
+description = "Standard library"
+version = "[distributed with Ocaml]"
+directory = "^"
+browse_interfaces = ""
+
+

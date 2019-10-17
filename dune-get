@@ -1,0 +1,52 @@
+((config
+  ((root_packages
+    (((name lwt)) ((name lwt_ppx)) ((name ocaml-migrate-parsetree))
+     ((name ppx_tools_versioned))))
+   (excludes ()) (pins ())
+   (remotes (git://github.com/dune-universe/opam-overlays.git))
+   (branch master)))
+ (deps
+  ((opamverse ())
+   (duniverse
+    (((dir cppo) (upstream https://github.com/ocaml-community/cppo.git)
+      (ref ((t v1.6.6) (commit 51c598bf4a4732fdd9be1b16a5b26743ec4023d2)))
+      (provided_packages (((name cppo) (version (1.6.6))))))
+     ((dir findlib) (upstream https://github.com/dune-universe/lib-findlib)
+      (ref
+       ((t duniverse-1.8.1)
+        (commit 409f7a4f284f9316a92cf0926cdf801d21d8705a)))
+      (provided_packages
+       (((name findlib) (version (1.8.1+dune)))
+        ((name ocamlfind) (version (1.8.1+dune))))))
+     ((dir lwt) (upstream https://github.com/ocsigen/lwt.git)
+      (ref ((t 4.4.0) (commit 07a233fdabfb85759c15f90ee1e8a8e097b44608)))
+      (provided_packages
+       (((name lwt) (version (4.4.0))) ((name lwt_ppx) (version (1.2.4))))))
+     ((dir mmap) (upstream https://github.com/mirage/mmap.git)
+      (ref ((t v1.1.0) (commit 46f613db11c00667764523ccbb3d63e53e1c666c)))
+      (provided_packages (((name mmap) (version (1.1.0))))))
+     ((dir ocaml-migrate-parsetree)
+      (upstream https://github.com/ocaml-ppx/ocaml-migrate-parsetree.git)
+      (ref ((t v1.4.0) (commit cf49ec820afe1670a7ca870970ec1764201e1207)))
+      (provided_packages
+       (((name ocaml-migrate-parsetree) (version (1.4.0))))))
+     ((dir ocplib-endian)
+      (upstream git://github.com/dune-universe/ocplib-endian.git)
+      (ref
+       ((t duniverse-1.0) (commit 97797a03603fb59010e69c0aa4981046af3916be)))
+      (provided_packages (((name ocplib-endian) (version (1.0+dune))))))
+     ((dir ppx_derivers)
+      (upstream git://github.com/ocaml-ppx/ppx_derivers.git)
+      (ref ((t 1.2.1) (commit d6655353f647d33de12d215aaa477ba936febef3)))
+      (provided_packages (((name ppx_derivers) (version (1.2.1))))))
+     ((dir ppx_tools_versioned)
+      (upstream git://github.com/ocaml-ppx/ppx_tools_versioned.git)
+      (ref ((t 5.2.3) (commit c326f16b8801a0358db3fa7c8d7b9f1400c29808)))
+      (provided_packages (((name ppx_tools_versioned) (version (5.2.3))))))
+     ((dir result) (upstream https://github.com/janestreet/result.git)
+      (ref ((t 1.4) (commit 5f7f1a4423ca3b9db4b4048d561f31fd6bfd9ab0)))
+      (provided_packages (((name result) (version (1.4))))))
+     ((dir seq) (upstream git://github.com/dune-universe/seq.git)
+      (ref
+       ((t duniverse-0.1) (commit 8feae7e02820f656c6c2ebe5a126b20d3eecb76e)))
+      (provided_packages (((name seq) (version (base+dune)))))))))))

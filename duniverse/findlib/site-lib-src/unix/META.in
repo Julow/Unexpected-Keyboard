@@ -1,0 +1,14 @@
+dnl This file is input of the m4 macro processor.
+`# Specifications for the "unix" library:'
+`requires = ""'
+`description = "Unix system calls"'
+`version = "[distributed with Ocaml]"'
+`directory = "^"'
+`browse_interfaces = "'interfaces`"'
+`archive(byte) = "unix.cma"'
+`archive(native) = "unix.cmxa"'
+`archive(byte,mt_vm) = "vmthreads/unix.cma"'
+`plugin(byte) = "unix.cma"'
+`plugin(native) = "unix.cmxs"'
+`plugin(byte,mt_vm) = "vmthreads/unix.cma"'
+

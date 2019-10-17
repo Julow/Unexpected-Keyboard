@@ -1,0 +1,4 @@
+(executable
+ (name test)
+ (preprocess (pps ppx_let))
+ (libraries lwt lwt.unix))

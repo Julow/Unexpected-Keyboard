@@ -1,0 +1,30 @@
+#! /bin/sh
+
+# Check whether ocamlc and ocamlc.opt are installed in the same
+# directory (or whatever command names are passed as $1).
+
+get_path () {
+    IFS=":"
+    for d in $PATH; do
+	if test -x "$d/$1"; then
+	    IFS="$oldifs"
+	    echo "$d/$1"
+	    return
+	fi
+    done
+    IFS="$oldifs"
+#--- The following is not portable enough:
+#    if test -x `type -p ls`; then
+#	# type -p works!
+#        type -p $1
+#    else
+#        # use 'which' instead
+#        p=`which $1`
+#	test -x "$p" && echo $p
+#    fi
+}
+
+p1="$(get_path "$1").opt"
+p2="$(get_path "$1.opt")"
+
+[ "X$p1" = "X$p2" ]

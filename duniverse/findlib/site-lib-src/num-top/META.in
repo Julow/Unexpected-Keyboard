@@ -1,0 +1,7 @@
+dnl This file is input of the m4 macro processor.
+`# Specification for the "num-top" library add-on:'
+`requires = "num.core"'
+`version = "'findlib_version`"'
+`description = "Add-on for num inside toploops"'
+`archive(byte,toploop) = "num_top.cma"'
+

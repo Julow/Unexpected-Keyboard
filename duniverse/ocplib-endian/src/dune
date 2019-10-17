@@ -1,0 +1,75 @@
+(rule
+ (targets endianString.mli)
+ (deps (:< endianString.cppo.mli))
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets endianString.ml)
+ (deps
+  (:< endianString.cppo.ml)
+  common.ml
+  common_401.ml)
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets endianBytes.mli)
+ (deps
+  (:< endianBytes.cppo.mli))
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets endianBytes.ml)
+ (deps
+  (:< endianBytes.cppo.ml)
+  common.ml
+  common_401.ml)
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets endianBigstring.mli)
+ (deps
+  (:< endianBigstring.cppo.mli))
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets endianBigstring.ml)
+ (deps
+  (:< endianBigstring.cppo.ml)
+  common.ml
+  common_401.ml)
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets common_401.ml)
+ (deps
+  (:< common_401.cppo.ml)
+  be_ocaml_401.ml
+  le_ocaml_401.ml
+  ne_ocaml_401.ml
+  common_float.ml)
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
+
+(library
+ (name ocplib_endian)
+ (public_name ocplib-endian)
+ (synopsis "Optimised functions to read and write int16/32/64 from strings and bytes")
+ (wrapped false)
+ (ocamlopt_flags (:standard -inline 1000))
+ (modules endianString endianBytes)
+ (libraries bytes))
+
+(library
+ (name ocplib_endian_bigstring)
+ (public_name ocplib-endian.bigstring)
+ (synopsis "Optimised functions to read and write int16/32/64 from bigarrays")
+ (wrapped false)
+ (modules endianBigstring)
+ (ocamlopt_flags (:standard -inline 1000))
+ (libraries ocplib_endian bigarray-compat bytes))

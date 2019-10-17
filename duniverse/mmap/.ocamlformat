@@ -1,0 +1,7 @@
+break-sequences=true
+doc-comments=before
+field-space=loose
+let-and=sparse
+sequence-style=terminator
+type-decl=sparse
+wrap-comments=true

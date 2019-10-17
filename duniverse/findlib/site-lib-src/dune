@@ -1,0 +1,15 @@
+(install
+ (package findlib)
+ (section lib)
+ (files
+  (bigarray/META as ../bigarray/META)
+  (bytes/META as ../bytes/META)
+  (compiler-libs/META as ../compiler-libs/META)
+  (dynlink/META as ../dynlink/META)
+  (raw_spacetime/META as ../raw_spacetime/META)
+  (stdlib/META as ../stdlib/META)
+  (str/META as ../str/META)
+  (threads/META as ../threads/META)
+  (unix/META as ../unix/META)
+ ))
+

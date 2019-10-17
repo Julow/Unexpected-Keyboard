@@ -1,0 +1,84 @@
+{1 Lwt - API Reference}
+
+{2 Core library}
+
+The {e core} library ({e lwt} package) contains the {!Lwt} module, which defines
+cooperative threads with all the primitives to manipulate them. It
+also provides several general purpose modules, which do not depend on
+any external package.
+
+{!modules:
+Lwt
+Lwt_result
+Lwt_condition
+Lwt_list
+Lwt_mutex
+Lwt_mvar
+Lwt_pool
+Lwt_stream
+Lwt_switch
+Lwt_sequence
+Lwt_pqueue
+}
+
+{2 Unix bindings}
+
+The {e lwt.unix} package provides:
+- the {!Lwt_unix} module, which wrap system calls into cooperative ones
+- the {!Lwt_io} module, which defines cooperative byte channel, in
+  replacement of ones of the standard library
+- module helpers for spawning processes, ...
+
+{!modules:
+Lwt_gc
+Lwt_io
+Lwt_main
+Lwt_engine
+Lwt_process
+Lwt_throttle
+Lwt_timeout
+Lwt_unix
+Lwt_bytes
+Lwt_fmt
+Lwt_sys
+}
+
+This package depends on the {e core} library and the {e unix} package.
+
+{2 Reactive programming helpers}
+
+The {e lwt.react} package provides helpers for functional reactive
+programming with Lwt. It is based on the {e react} package. The
+{!Lwt_react} module is a replacement for the [React] module. It
+contains:
+
+- all the functions of the [React] module
+- Lwt specific primitives
+- cooperative versions of {e react} functions
+
+{!modules:
+Lwt_react
+}
+
+This package depends on the {e core} library and the {e react} package.
+
+{2 PPX syntax extension}
+
+Syntactic sugar for Lwt, such as [let%lwt x = e in e'] syntax for [bind].
+
+{!modules:
+Ppx_lwt
+}
+
+{2 Miscellaneous}
+
+The following modules are wrapper for integration of non-Lwt
+functions/packages into Lwt.
+
+{!modules:
+Lwt_preemptive
+}
+
+{2 Index}
+
+{!indexlist}

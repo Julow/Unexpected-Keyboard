@@ -1,0 +1,15 @@
+(rule
+ (targets test_lwt_unix.ml)
+ (deps (:ml test_lwt_unix.cppo.ml))
+ (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{ml} -o %{targets})))
+
+(executable
+ (name main)
+ (libraries lwttester))
+
+(alias
+ (name runtest)
+ (package lwt)
+ (action (run %{exe:main.exe}))
+ (deps bytes_io_data)
+)

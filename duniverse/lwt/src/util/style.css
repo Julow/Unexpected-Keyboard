@@ -1,0 +1,171 @@
+/* A style for ocamldoc. Daniel C. Buenzli, Jérémie Dimino */
+
+body {
+    padding: 0em;
+    border: 0em;
+    margin: 2em 10% 2em 10%;
+    font-weight: normal;
+    line-height: 130%;
+    text-align: justify;
+    background: white;
+    color : black;
+    min-width: 40ex;
+}
+
+pre, p, div, span, img, table, td, ol, ul, li {
+    padding: 0em;
+    border: 0em;
+    margin: 0em
+}
+
+h1, h2, h3, h4, h5, h6, div.h7, div.h8, div.h9 {
+    fontsize: 100%;
+    margin-bottom: 1em
+    padding: 1ex 0em 0em 0em;
+    border: 0em;
+    margin: 1em 0em 0em 0em;
+    font-weight : bold;
+    text-align: center;
+}
+
+h1 {
+    font-size : 140%
+}
+
+h2, h3, h4, h5, h6, div.h7, div.h8, div.h9 {
+    font-size : 100%;
+    border-top-style : none;
+    margin: 1ex 0em 0em 0em;
+    border: 1px solid #000000;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    text-align: center;
+    padding: 2px;
+}
+
+h2 {
+    font-size : 120%;
+    background-color: #90BDFF ;
+}
+h3 {
+    background-color: #90DDFF;
+}
+h4 {
+    background-color: #90EDFF;
+}
+h5 {
+    background-color: #90FDFF;
+}
+h6 {
+    background-color: #C0FFFF;
+}
+div.h7 {
+    background-color: #E0FFFF;
+}
+div.h8 {
+    background-color: #F0FFFF;
+}
+div.h9 {
+    background-color: #FFFFFF;
+}
+
+.navbar {
+    padding-bottom : 1em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #000000;
+    border-bottom-style: dotted;
+}
+
+p {
+    padding: 1em 0ex 0em 0em
+}
+
+a, a:link, a:visited, a:active, a:hover {
+    color : #009;
+    text-decoration: none
+}
+a:hover {
+    color : #009;
+    text-decoration : none;
+    background-color: #5FFF88
+}
+
+hr {
+    border-style: none;
+}
+table {
+    font-size : 100% /* Why ? */
+}
+ul li {
+    padding: 1em 0em 0em 0em;
+    margin:0em 0em 0em 2.5ex
+}
+ol li {
+    padding: 1em 0em 0em 0em;
+    margin:0em 0em 0em 2em
+}
+
+pre {
+    margin: 3ex 0em 1ex 0em;
+    background-color: #edf0f9;
+}
+.keyword {
+    font-weight: bold;
+    color: #a020f0;
+}
+.keywordsign {
+    font-weight: bold;
+    color: #a020f0;
+}
+.typefieldcomment {
+    color : #b22222;
+}
+.keywordsign {
+    color: #a020f0;
+
+}
+.code {
+    font-size: 120%;
+    color: #5f5f5f;
+}
+.info {
+    margin: 0em 0em 0em 2em
+}
+.comment {
+    color : #b22222;
+}
+.constructor {
+    color : #072
+}
+.type {
+    color : #228b22;
+}
+.string {
+    color : #bc8f8f;
+}
+.warning {
+    color : Red;
+    font-weight : bold
+}
+
+div.sig_block {
+    margin-left: 2em
+}
+.typetable {
+    color : #b8860b;
+    border-style : hidden
+}
+.indextable {
+    border-style : hidden
+}
+.paramstable {
+    border-style : hidden;
+    padding: 5pt 5pt
+}
+
+.superscript {
+    font-size : 80%
+}
+.subscript {
+    font-size : 80%
+}

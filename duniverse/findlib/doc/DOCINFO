@@ -1,0 +1,15 @@
+To build the html and manual pages from the SGML sources, you need the 
+following tools:
+
+- The DocBook DTD
+  (http://www.davenport.com)
+- James Clark's SGML tools (jade, sx suffice)
+  (http://www.jclark.com)
+- Normal Walsh's DSSSL stylesheets to make the HTML pages
+  (http://nwalsh.com/docbook/dsssl)
+- My db2man tool to make the manual pages
+  (http://www.ocaml-programming.de/packages)
+
+The latter also requires Christian Lindig's XML parser
+(//http://www.cs.tu-bs.de/softech/people/lindig/software/tony.html).
+

@@ -1,0 +1,28 @@
+opam-version: "1.2"
+name: "seq"
+version: "0.1"
+author: "Simon Cruanes"
+maintainer: "simon.cruanes.2007@m4x.org"
+license: "LGPL2.1"
+build: [
+  [make "build"]
+]
+install: [
+  [make "install"]
+]
+remove: [
+  "ocamlfind" "remove" "seq"
+]
+depends: [
+  "ocamlfind" {build}
+  "ocamlbuild" {build}
+]
+tags: [ "iterator" "seq" "pure" "list" "compatibility" "cascade" ]
+homepage: "https://github.com/c-cube/seq/"
+bug-reports: "https://github.com/c-cube/seq/issues"
+dev-repo: "https://github.com/c-cube/seq.git"
+
+# opam-repo contains a version for 4.07 and above that does nothing,
+# because OCaml starts having a `Seq` module in the stdlib
+available: [ocaml-version < "4.07.0"]
+

@@ -1,0 +1,187 @@
+The installation procedure consists of the steps:
+
+1) configure the "findlib" library
+2) compile "findlib" and the "ocamlfind" frontend of "findlib"
+3) install "findlib" and the core library configuration
+
+Optionally, you can run ./itest after step 2 to check the
+configuration. Problems with the configuration are unlikely, however.
+
+At the end of this file you find notes about MacOS and Windows.
+
+
+----------------------------------------------------------------------
+
+STEP 1: DEFAULT CONFIGURATION
+
+The findlib module and its ocamlfind frontend come with a "configure"
+script that should almost always be able to figure out a good
+configuration.
+
+Just type:
+
+	./configure
+
+First the linker options for the various core libraries are figured
+out, then reasonable installation paths are checked.
+
+If the results are not ok, you can modify them using the following
+options:
+
+	-bindir <path>
+
+		set the location where the ocamlfind command should be
+		installed.
+		Default: same location as "ocamlc"
+
+	-mandir <path>
+
+		set the location where the man page should be installed.
+		Default: a heuristics, and "/usr/local/man" as fallback.
+
+	-sitelib <path>
+
+		set the default "site-lib" directory.
+		Default: For installations in the /usr hierarchy,
+		"$stdlib/site-lib", where $stdlib is the location of
+		Ocaml's  standard library.
+
+		For installations in the /opt hierarchy,
+		"$stdlib/../site-lib", i.e. parallel to $stdlib.
+
+	-config <file>
+
+		set the location of the configuration file.
+		Default: <bindir>/../etc/findlib.conf
+
+	-no-topfind
+
+		the "topfind" script is not installed in the standard
+		library directory. (This is not a good idea in general,
+		because #use "topfind" will not work when this option
+		is enabled.)
+
+	-with-toolbox
+		also compile and install the "toolbox". This requires
+		that labltk is available. The toolbox contains the
+		"make_wizard" to easily create findlib-enabled Makefiles.
+
+	-cygpath
+		Cygwin environment only: If "ocamlc -where" does not
+		output a Unix-style path, this option can be used
+		to apply the "cygpath" command to it. Use this option
+		if you see backslashes or drive letters in Makefile.config.
+
+ALTERNATIVES:
+
+If the "configure" script does not work properly (very unlikely), do
+
+	cp Makefile.config.pattern Makefile.config
+
+and edit Makefile.config by hand.
+
+If the generated META files do not work, edit them (this is very very unlikely).
+
+Note: The META files are generated from the META.in files in the same
+directories by m4:
+
+	m4 -Dos=<os> <more parameters...> site-lib/<name>/META.in
+		>site-lib/<name>/META
+
+You may invoke m4 manually to create different META files, but this
+is currently not documented.
+
+
+
+----------------------------------------------------------------------
+
+STEP 2: COMPILATION
+
+After configuration has been done, compile with
+
+	make all
+
+This creates findlib.cma, findlib_mt.cma (the thread-safe version),
+and ocamlfind.
+
+If you have ocamlopt, do also
+
+	make opt
+
+This creates findlib.cmxa, findlib_mt.cmxa, and ocamlfind_opt.
+
+----------------------------------------------------------------------
+
+STEP 3: INSTALLATION
+
+Install the findlib library, the ocamlfind frontend, and the core library
+configurations with:
+
+	make install
+
+(A "make uninstall" removes them.)
+
+With
+	make clean
+
+the build directory is cleaned up.
+
+
+OPTIONAL (BUT RECOMMENDED):
+
+If you want a separate directory for DLLs, create this directory
+now: 
+
+mkdir `ocamlfind printconf destdir`/stublibs
+
+If you do this, you must also tell O'Caml that DLLs can be found in
+this directory: Add the absolute path of this directory to
+the ld.conf file (type "ocamlfind printconf ldconf" to get the
+location of the ld.conf file). Every line of this text file lists
+one possible directory for DLLs.
+
+----------------------------------------------------------------------
+
+MACOS X:
+
+Findlib can be installed as described. There is even a script to
+create a MacOS X package, use "make package-macosx" to invoke it. As I
+do not have access to a Mac box, I cannot test this script, but I
+fully trust the author that it works.
+
+----------------------------------------------------------------------
+
+WINDOWS:
+
+Ocaml for Windows exists in three flavours:
+
+(1) Ocaml as Cygwin program
+(2) Ocaml as Mingw program (i.e. the gcc toolchain is used but
+    Ocaml is a native Windows program)
+(3) Ocaml as VC program
+
+In all three cases you need Cygwin to build and install findlib,
+because "configure" and the Makefile are both Cygwin scripts. The
+golden rule to make everything work is this:
+
+PASS CYGWIN-STYLE PATHS TO CONFIGURE!
+
+Even in cases (2) and (3)! That means use something like
+/cygdrive/c/path and not c:\path when you specify where -bindir,
+-config etc. are. The point is that "configure" itself is a Cygwin
+script, and therefore expects Cygwin input. At the right moment, the
+paths are back-translated to their Windows counterparts.
+
+Until O'Caml 3.08 you must specify whether you have (2) or (3) by
+the configure switches
+
+- "-system mingw" for (2)
+- "-system win32" for (3)
+- nothing for (1)
+
+Since O'Caml 3.09 this is no longer necessary because "ocamlc -config"
+outputs the required information.
+
+In previous versions of Findlib there was a single switch -cygpath 
+for both (2) and (3). It is now interpreted as -system mingw (as
+it was meant as that).

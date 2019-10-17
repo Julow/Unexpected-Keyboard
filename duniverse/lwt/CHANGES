@@ -1,0 +1,825 @@
+===== 4.4.0 (2019-10-09) =====
+
+====== Additions ======
+
+  * ?suffix argument for Lwt_io.with_temp_file and Lwt_io.open_temp_file (#724,
+    requested Volker Diels-Grabsch).
+  * Lwt_io.with_temp_dir and Lwt_io.create_temp_dir (#724, requested Volker
+    Diels-Grabsch).
+
+====== Changes ======
+
+  * Lwt_io.establish_server: increase default backlog from 5 to SOMAXCONN (#731,
+    suggested Konstantin Olkhovskiy).
+  * PPX: use OCaml 4.09 ASTs to support recent features (074f679).
+  * PPX: deprecate let%lwt structure items (#733, prompted Didier Le Botlan).
+
+====== Miscellaneous ======
+
+  * Tests now pass in more environments (#721, #722, #725, #729, reported Olaf
+    Hering).
+
+===== 4.3.1 (2019-09-26) =====
+
+====== Bugs fixed ======
+
+  * Lwt clobbered backtraces (#714, 6e855b8, 4694853, reported Volker
+    Diels-Grabsch).
+  * Lwt_unix.fork was broken on glibc 2.28 (#704, @ygrek).
+  * Fix build with musl-gcc (#718, #719, reported Fabian Hemmer).
+  * Support more Lwt_unix.madvise options (#716, Anton Kochkov).
+
+====== Miscellaneous ======
+
+  * Silence configure script (#717, requested Anil Madhavapeddy).
+  * Greatly sped up CI and tests.
+
+===== 4.3.0 (2019-08-20) =====
+
+====== Planned to break in 5.0.0 ======
+
+  For general discussion of breakage in Lwt 5.0.0, see #584. See #293 about how
+  Lwt announces and does breaking changes.*
+
+  * The signature of Lwt.async will change from (unit -> 'a Lwt.t) -> unit to
+    (unit -> unit Lwt.t) -> unit (#603, prompted @cfcs).
+  * Lwt_unix.send_msg and Lwt_unix.recv_msg will be changed to take
+    Lwt_unix.IO_vectors.t instead of Lwt_unix.io_vectors (#702, prompted
+    Marcello Seri).
+  * Nesting calls to Lwt_main.run will be forbidden, and will raise an
+    Failure. Most programs don't do this (#609, prompted François-René Rideau).
+  * configure.ml will be removed in favor of an improved discover.ml This
+    affects only users who are configuring Lwt as part of a manual installation
+    (i.e., not users of opam or esy). See discover.ml for usage (#700).
+  * Lwt_unix.async_method will have no effect. In practice, it already does
+    nothing, and has almost no users (#572).
+
+====== Additions ======
+
+  * Lwt_process: allow setting working directory for new processes (#694, Thomas
+    Leonard).
+  * PPX: use OCaml 4.08 ASTs to support latest features (#697).
+  * Lwt_io.NumberIO: use compiler intrinsics for better performance (#178,
+    requested Mauricio Fernandez).
+
+====== Bugs fixed ======
+
+  * Race condition in Lwt_react.S.limit (4e592eb).
+  * Use fallback rule during configuration (#693, Hongchang Wu).
+  * Fix typos (#688, #692, @Fourchaux).
+
+===== 4.2.1 (2019-04-02) =====
+
+====== Bug fixed ======
+
+  * Detect libev correctly when building under esy (#679, Antonio Nuno
+    Monteiro).
+
+===== 4.2.0 (2019-03-25) =====
+
+====== Additions ======
+
+  * Lwt.both (#668, Brendan Long, Jeremy Yallop).
+  * ppx_let support with open Lwt.Infix (#667, Brendan Long).
+  * Lwt_stream.of_seq (#646, Hezekiah Carty).
+  * Lwt_io.is_closed (#635, Andreas Garnaes).
+  * Lwt_unix.IO_vectors.byte_count (#645, Raphaël Proust).
+  * Support for higher baud rates in Lwt_unix.tcgetattr and Lwt_unix.tcsetattr
+    (#678, Frédéric Fortier).
+  * Replacement functions in Lwt_main for deprecated functions based on
+    Lwt_sequence (#660).
+
+====== Bugs fixed ======
+
+  * 4.08 compatibility (#658).
+  * Stack overflow in Lwt_stream.iter_p (#432, Varun Kohli).
+  * Incorrect bounds check in Lwt_bytes.mincore (#627, Cédric Le Moigne).
+  * Lwt_bytes.mincore will not be available in future releases of OpenBSD (#663,
+    Kenneth Westerback).
+  * Missing header in the Android build (#652, Justus Matthiesen).
+  * Build broken on MSVC (98303de, 85535f7, Dmitry Bely).
+  * Build broken on OpenBSD (#672, Christopher Zimmermann).
+  * Lwt_io.of_bytes produces a channel with inaccurate positions (#636, Nathan
+    Rebours).
+  * Lwt_io._.read_int behaves incorrectly on 32-bit systems (#671, reported
+    Dmitry Bely).
+  * Inaccurate locations for errors related to ;%lwt (#602, @kandu).
+  * (_ : t) not recognized as a catch-all pattern by the PPX (#640, Florian
+    Angeletti).
+  * Race condition in Lwt_react.E.limit (#606, Avni Fatehpuria).
+  * Premature deallocation in Lwt_react.E.with_finaliser and
+    Lwt_react.S.with_finaliser (#626, El-Hassan Wanas).
+
+====== Miscellaneous ======
+
+  * New tests for Lwt_bytes, portions of Lwt_unix (#619, #621, #628, #630, #673,
+    Cédric Le Moigne, Anurag Soni).
+  * Test suite improvements (#656, Dave Parfitt).
+  * Clarifications for documentation of Lwt.try_bind, Lwt.pick (#648, #650,
+    Bikal Lem).
+  * Fixed documentation of Lwt_io.read_line (#657, Yoni Levy).
+  * Fixed some typos (#611, #613, Rich Neswold).
+
+===== 4.1.0 (2018-06-26) =====
+
+====== Additions ======
+
+  * Change license to MIT (#560).
+  * Lwt_fmt, an Lwt-aware version of Format (#548, Gabriel Radanne).
+  * Lwt_io.establish_server_with_client_socket (#586).
+
+====== Bugs fixed ======
+
+  * Lwt_stream.iter_n: rename ?max_threads argument to ?max_concurrency (#581,
+    Hezekiah Carty).
+  * PPX: reject match expressions that have only exception cases (#597, Raphaël
+    Proust).
+
+====== Miscellaneous ======
+
+  * Improvements to Lwt_pool docs (#575, Bobby Priambodo).
+  * Restore all PPX tests (#590, Jess Smith).
+
+===== 4.0.1 (2018-04-13) =====
+
+====== Bugs fixed ======
+
+  * Race condition in worker thread management in Lwt_unix (#569, diagnosed Gabe
+    Levi).
+  * Hang in Lwt_unix.read on Windows (#574, #569, 86a6baf, diagnosed Gabe Levi).
+  * Docs: note that Lwt_io.open_file for writing truncates the file by default
+    (#570, reported Tóth Róbert).
+
+===== 4.0.0 (2018-03-30) =====
+
+====== Breaking ======
+
+These changes were announced in Lwt 3.1.0 and Lwt 3.2.0. See #453 about smooth
+upgrade paths.
+
+  * Delete package lwt.ppx. The PPX syntax is in package lwt_ppx since Lwt 3.2.0
+    (#338).
+  * Remove >> syntax from the PPX (#495).
+  * Delete modules Lwt_log, Lwt_daemon, Lwt_log_core, and package lwt.log. These
+    are in package lwt_log since Lwt 3.2.0, but it is recommended to use
+    Logs_lwt from the logs library instead (#484, initiated Hannes Mehnert).
+  * Delete package lwt.preemptive. It is an alias for lwt.unix since Lwt 3.2.0
+    (#487).
+  * Delete package lwt.syntax. The Camlp4 syntax is in package lwt_camlp4 since
+    Lwt 3.2.0 (#370).
+  * Delete module Lwt_chan, a predecessor of Lwt_io (#441).
+  * Delete package lwt.simple-top, a predecessor of utop (#371).
+  * Make resolvers (Lwt.u) contravariant (#458).
+
+====== Planned to break in 5.0.0 ======
+
+  * Lwt.pick will raise Invalid_argument on the empty list, instead of returning
+    a forever-pending promise. Also applies to Lwt.choose, Lwt.npick,
+    Lwt.nchoose, and Lwt.nchoose_split (#562, Tim Reinke, prompted Hezekiah
+    Carty).
+  * Remove translation of [%lwt ...] to Lwt.catch from the PPX (#527).
+  * Remove -no-debug option from the PPX (#528).
+  * Remove Lwt_log support from the PPX (#520).
+
+====== Bugs fixed ======
+
+  * Lwt_io.file_length now fails with EISDIR when used on a directory (#563,
+    requested Cedric Cellier).
+  * Lwt_react.E.limit and Lwt_react.S.limit now working more correctly (#566,
+    @Freyr666).
+
+====== Miscellaneous ======
+
+  * Documentation improvements (#561, Jason Evans).
+
+===== 3.3.0 (2018-03-07) =====
+
+====== Bugs fixed ======
+
+  * Restore backtrace support (#554, #556, Gabe Levi).
+  * Serious logic error that could cause Lwt to hang or crash (#549, reported
+    @koen-struyve).
+  * All Lwt_list functions are now tail-recursive (#538, Joseph Thomas).
+
+====== Additions ======
+
+  * Support ;%lwt syntax in the PPX (#307, Hezekiah Carty).
+  * Lwt_stream.iter_n (#312, Hezekiah Carty).
+
+====== Miscellaneous ======
+
+  * Testing improvements (#536, #541, @cedlemo).
+  * Documentation improvements (#544, #546, #547, #553, #559, Daniil Baturin,
+    Jason Evans, Jess Smith, Milo Turner).
+
+===== 3.2.1 (2018-01-11) =====
+
+Lwt 3.2.1 is released because it still packages lwt.ppx, a deprecated copy of
+package lwt_ppx, and the two packages should be kept in sync.
+
+====== Deprecations ======
+
+  * All PPX options are deprecated and should not be used (#534).
+  * The [%lwt ...] PPX syntax should be replaced by Lwt.catch (#534).
+
+====== Fixes ======
+
+  * Clean up PPX -help usage message output (#525, Zan Doye).
+
+====== Miscellaneous ======
+
+  * More thorough testing (#512, #535, Joseph Thomas).
+  * Clarification of the C binding (#521, @cedlemo).
+
+===== 3.2.0 (2017-12-19) =====
+
+====== Additions ======
+
+  * Lwt_mvar.take_available, Lwt_mvar.is_empty (#459, Hezekiah Carty).
+  * Lwt_io.open_temp_file, Lwt_io.with_temp_file (#467, Joe Thomas).
+  * New reference documentation for module Lwt (#469).
+  * Lwt_pool.clear and ?dispose argument for Lwt_pool.create (#483,
+    Hezekiah Carty).
+  * Lwt_pool.wait_queue_length (#493, Jerome Vouillon).
+
+====== Bugs fixed ======
+
+  * Lwt.npick never worked (#447, Zack Coker).
+  * Lwt_pool.use now always calls ?validate on elements (#461, Joe Thomas).
+  * Better locations generated by the PPX (#470, Fabian Hemmer).
+  * Keep worker thread count accurate in Lwt_unix when pthread_create fails
+    (#493, @koen-struyve).
+  * Leaked exceptions in Lwt_list (#499).
+  * Memory leak in Lwt_unix.getnameinfo (#503, Hannes Mehnert).
+
+====== Planned to break in 4.0.0 ======
+
+See #453 for details and instructions about planned breakage in Lwt 4.0.0.
+
+  * The semantics of Lwt will be adjusted for better exception and stack safety
+    (#500).
+  * The PPX will be factored out into its own opam package, lwt_ppx. This
+    package is installable from opam now, as of Lwt 3.2.0 (#338).
+  * Similarly, the deprecated Camlp4 syntax will be factored out into
+    lwt_camlp4, which is installable from opam now (#370).
+  * Modules Lwt_log, Lwt_log_core, Lwt_log_rules, and Lwt_daemon are being
+    deprecated and factored out into opam package lwt_log, also installable from
+    opam now. Use the logs library for logging, in particular module Logs_lwt.
+    Direct daemonization is deprecated on most platforms (#484, Hannes Mehnert).
+  * The >> construct from the PPX will be deleted (#471, Raphaël Proust).
+  * Package lwt.preemptive is being merged into lwt.unix. In 3.2.0,
+    lwt.preemptive becomes an alias for lwt.unix, and the package name
+    lwt.preemptive will be deleted in 4.0.0 (#487).
+
+====== Deprecations ======
+
+  * Lwt.waiter_of_wakener should not be used, as it can lead to soundness bugs
+    in future (but not current) Lwt (#458).
+  * Lwt_sequence was deprecated in Lwt 2.6.0, but it now has a warning attached,
+    as do Lwt.add_task_r and Lwt.add_task_l, which use it (#361).
+  * Use of the following functions is discouraged, but they have not yet
+    received deprecation warnings: Lwt.with_value, Lwt.cancel, Lwt.state,
+    Lwt.ignore_result (#359, #469).
+
+====== Miscellaneous ======
+
+  * Replace references to Camlp4 in the manual with the PPX (#457, Bobby
+    Priambodo).
+  * More tests for Lwt_pool (#464, Joe Thomas).
+  * Expect tests for the PPX (#474, Fabian Hemmer).
+
+===== 3.1.0 (2017-07-19) =====
+
+====== Additions ======
+
+  * Port to Jbuilder (#374, Andrew Ray).
+  * Lwt_io.establish_server_with_client_address (#346, Rudi Grinberg).
+  * Lwt_unix.getcwd (#403, Raphaël Proust).
+
+====== Planned to break in 4.0.0 ======
+
+  * Delete lwt.simple-top (#371).
+  * Delete Lwt_chan (#441).
+
+====== Fixes ======
+
+  * Make Lwt_log functions tail-recursive (#348, Jan Doms).
+  * Make more of Lwt_list tail-recursive (#347, Jan Doms).
+  * Improve string messages in exceptions (#368, #382, Jan Doms, Raphaël
+    Proust).
+  * Don't call Unix.set_nonblock or Unix.clear_nonblock unnecessarily on
+    some fds (#356, David Sheets).
+  * Lwt_unix.sleep and Lwt_unix.timeout returning too early when using
+    libev (#433, Stijn Devriendt).
+  * Lwt_sequence.fold_r iterating the wrong way in some cases (#405,
+    Stijn Devriendt).
+  * Build conflicts in some cases due to duplicate cst_to_constr
+    function (#362, Jérémie Dimino).
+  * Don't use deprecated readdir_r system call (#430, Raphaël Proust).
+
+====== Miscellaneous ======
+
+  * The Lwt core, lwt.ml, has been thoroughly refactored and commented
+    (#354, reviewed Gabriel Radanne, Edwin Török, Raphaël Proust, Jan
+    Doms, Fabian Hemmer, Sebastien Mondet, Simon Cruanes, Anil
+    Madhavapeddy, Pierre Chambart, and many others).
+  * Lots of tests for most of the Lwt core (#339, #389, #392, #440,
+    #448, #450, Joseph Thomas, Ryan Slade).
+  * Documentation fixes (including by Joseph Thomas, Raphaël Proust,
+    Richard Degenne, Stavros Polymenis).
+  * Contributing documentation (#379).
+  * Massively adjust whitespace for legibility (#400, #409, #416,
+    Richard Degenne).
+  * Improvements to CI (Etienne Millon, Raphael Rafatpanah, Zack Coker,
+    Yotam Barnoy).
+  * The additional packages lwt_ssl, lwt_react, lwt_glib get new minor
+    releases, the change being new Jbuilder build systems (#374, Andrew
+    Ray).
+
+===== 3.0.0 (2017-04-10) =====
+
+====== Breaking ======
+
+  * These changes were originally announced in release 2.7.0 (#308).
+  * Lwt_engine.libev now has an optional argument for selecting the libev back
+    end (#269, #294, Jeremy Yallop).
+  * Lwt_io.establish_server has been changed to make it more difficult to leak
+    file descriptors (#258, #260).
+  * Lwt_io.shutdown_server now evaluates to a promise, which completes when the
+    listening socket's close(2) operation completes (#259).
+  * Lwt_unix.bind now evaluates to a promise, because the bind(2) system call
+    can block for Unix domain sockets (#296, requested David Sheets).
+  * ocamlfind packages lwt.react, lwt.ssl, lwt.glib are replaced by lwt_react,
+    lwt_ssl, lwt_glib. These have been separate OPAM packages, under those
+    names, since 2.7.0 (#301).
+
+===== 2.7.1 (2017-04-08) =====
+
+====== Fixes ======
+
+  * OCaml 4.05 compatibility (Mauricio Fernandez, #322).
+  * Give Lwt_unix.file_exists the same semantics as Sys.file_exists, with
+    respect to not raising Unix.Unix_error (Mauricio Fernandez, #316).
+  * Improve diagnostics from build scripts (Tim Cuthbertson, #313, #314).
+
+====== Additions ======
+
+  * Announce Lwt_result, which was originally released as an experimental module
+    in release 2.6.0 (Simon Cruanes, #320, #247).
+
+===== 2.7.0 (2017-01-03) =====
+
+====== General ======
+
+  * Values of types a Lwt.t are now referred to as promises rather than threads
+    (#300). The manual has not yet been updated.
+
+====== Breaking ======
+
+  * After this release, Lwt will switch to semantic versioning. Future breaking
+    changes will first require deprecation, then a major version number increase
+    (#293).
+  * Lwt no longer supports OCaml 4.01 (#272).
+  * Lwt_unix.fdatasync is no longer available on macOS. It was calling an
+    undocumented system call on that system (#285, Jeremy Yallop).
+
+====== Planned to break in 3.0.0 ======
+
+  * APIs in this category have deprecation messages attached. The messages will
+    be displayed if you recompile your code, and can also be seen in #308.
+  * Lwt_engine.libev will have an argument for selecting the libev back end
+    (#269, #294, Jeremy Yallop).
+  * Lwt_io.establish_server will be replaced by a version that makes it
+    difficult to leak file descriptors (#258, #260).
+  * Lwt_io.shutdown_server will evaluate to a promise, which indicates when the
+    close operation completes (#259).
+  * Lwt_unix.bind will evaluate to a promise, since bind can block for Unix
+    domain sockets (#296, requested David Sheets).
+  * ocamlfind packages lwt.react, lwt.ssl, and lwt.glib will be replaced by the
+    new lwt_react, lwt_ssl, and lwt_glib. These are now distributed in new OPAM
+    packages with the same names, separately from OPAM package lwt (#301).
+
+====== Additions ======
+
+  * Lwt_unix.readv and Lwt_unix.writev - zero-copy scatter/gather I/O
+    (#291, #299).
+  * ?fail_on_error argument for Lwt_log.load_rules (#306, Daniil Baturin).
+  * Lwt_log.level_of_string (#306, Daniil Baturin).
+
+====== Changes ======
+
+  * Lwt_stream.of_list, Lwt_stream.of_array, Lwt_stream.of_string now
+    immediately push all elements into the created streams
+    (#239, Spiros Eliopoulos).
+
+====== Deprecations ======
+
+  * Lwt_stream.map_exn in favor of Lwt_stream.wrap_exn, which uses OCaml's
+    standard result type (#295).
+
+====== Bugs fixed ======
+
+  * Ungraceful failure if directory handle used after Lwt_unix.closedir (#292).
+  * Buffer overflow in Lwt_unix.readdir and Lwt_unix.readdir_n (#292).
+  * Unnecessary allocations in Lwt_unix.readdir_n (#292, found Jeremly Yallop).
+
+====== Miscellaneous ======
+
+  * Annotate existing deprecations with [@@ocaml.deprecated ...] (5737f5b).
+  * Improvements to the examples (#288, Rich Neswold).
+  * Documentation fixes, including by Rich Neswold.
+  * New tests and various minor internal improvements.
+  * Run tests in CI with all OCaml warnings enabled (dadb926).
+  * Much cleaner build output.
+  * Add scratch/ directory for local use by developers.
+
+===== 2.6.0 (2016-10-27) =====
+
+====== Additions ======
+
+  * Lwt_stream.closed and Lwt_stream.is_closed (#223, Spiros Eliopoulos).
+  * Lwt_switch.with_switch (#256, Thomas Leonard).
+  * Define 'a Lwt.result as ('a, exn) result (#247, Simon Cruanes).
+  * Lwt_condition.broadcast_exn (#241, Nicolas Ojeda Bar).
+  * Lwt_unix.utimes (#193).
+
+====== Bugfixes ======
+
+  * Memory leak in Lwt_unix.readdir_n (#229, diagnosed Thomas Leonard).
+  * Memory leak in Lwt.protected (#56, #181, reported @ygrek, Mauricio
+    Fernandez).
+  * Lwt_switch.turn_off hook exception handling (995b704).
+  * Handling of ENOTCONN when channels passed to handler of
+    Lwt_io.establish_server are closed (95fb431).
+  * Duplicate exceptions on implicit close in Lwt_io.with_connection (b1afe45).
+  * Deadlock in Lwt_main.at_exit (#48, #114, reported Jérôme Vouillon, Vincent
+    Bernardoff).
+  * Performance of Lwt_preemptive.detach (#218, #219, Mauricio Fernandez).
+  * Bad hash functions for libev loops (#146, reported Mark Christiaens).
+  * Hash of uninitialized data in Lwt_io (#217, reported Jeremy Yallop).
+  * Update log sections after Lwt_log.load_rules (#188, reported @rand00).
+  * Print three digits for milliseconds in Lwt_log (#264, Fabian Hemmer).
+  * Do not truncate Unix job notification ids in C (#277, diagnosed
+    @stijn-devriendt).
+
+====== Deprecations ======
+
+  * Lwt_stream.on_termination: bind on Lwt_stream.closed instead.
+  * Lwt.make_value, Lwt.make_error: use result's Ok and Error constructors.
+  * Lwt_pqueue, Lwt_sequence: use min-heaps and linked lists from another
+    library (#135).
+  * Pa_lwt, Pa_lwt_log: use Ppx_lwt.
+
+====== Miscellaneous ======
+
+  * Update examples to use PPX syntax instead of Camlp4 (#108, Peter Zotov).
+  * Set up Travis, AppVeyor for testing on Linux, OS X, Cygwin, and MinGW. MSVC
+    also planned.
+  * Large amount of local documentation fixes (Hezekiah Carty, Etienne Millon,
+    Leo Wzukw, Sebastien Mondet, reports by others).
+  * A bunch of new tests.
+
+===== 2.5.2 (2016-04-25) =====
+
+  * Fix compatibility for 4.03 (#227)
+  * Various documentation fixes (#199,#200,#210)
+  * Improve wildcard detection in the ppx (#198)
+  * Fix Lwt_stream: bounded_push#close wake the reader (#201)
+  * Fix infinite loop with Lwt_stream.choose (#214)
+  * Fix laziness failure with Lwt_io.common#close (#207)
+
+===== 2.5.1 (2015-12-07) =====
+
+  * Lwt_stream.on_terminate -> Lwt_stream.on_termination
+  * Lwt_unix: handle O_CLOEXEC
+  * Lwt_log: add OSX syslog path
+  * Ppx: Improve lwt%match, improve catchall detection
+  * Add Lwt_unix.file_exists and Lwt_unix.Large_file.file_exists
+  * Build fixes
+
+===== 2.5.0 (2015-07-03) =====
+
+  * API CHANGE: Functions in Lwt_io that were previously using a
+    ~buffer_size argument now takes a ~buffer argument.
+  * Accept ?buffer argument in Lwt_ssl.{in,out}_channel_of_descr.
+  * Use newer Ssl bigarray read/write functionality to avoid
+    allocation in Lwt_ssl.
+  * Fix non-reentrant function calls (#136)
+  * IPv4 multicast support.
+  * Add support for if%lwt in ppx extension.
+  * Add Lwt.return_some.
+  * Disable log syntax extension by default in ppx.
+    Give [-log] as ppx argument to enable it.
+  * Nanosecond precision for Lwt_unix.stat.
+  * Minor fixes + documentation improvements.
+
+===== 2.4.8 (2015-03-11) =====
+
+  * Fix compilation under Windows (#117, #129)
+  * Fix Lwt_engine.on_timer (#121)
+  * Add Lwt_log_core.reset_rules (#123)
+  * Fixed typos in the documentation (#119, #131)
+
+===== 2.4.7 (2015-01-06) =====
+
+  * camlp4 is now optional.
+  * Add safe_string compliance except for Lwt_ssl (need ocaml-ssl fix).
+  * Add Lwt.Infix module to open instead of Lwt to have (>>=), etc.
+  * Add Lwt_list.filter_map_{s,p} functions.
+  * Add Lwt.fail_{with,invalid_arg} functions.
+  * Improved Android support.
+  * Remove deprecated lwt.text and lwt.top libraries.
+  * Remove deprecated Lwt_signal and Lwt_event modules from
+    lwt.react.
+  * Fix #111: try_lwt wrongly warns about unused match case.
+  * Fix #96: Fix Lwt_react.S.limit and Lwt_react.E.limit.
+  * Fix #91: Workaround to fix compilation on OSX.
+
+===== 2.4.6 (2014-10-12) =====
+
+  * Add a ppx syntax extension
+  * Add a ?fd argument to
+    Lwt_io.{open_connection,with_connection,establish_server}.
+  * Fix stub for getaddrinfo and getprotobyname
+  * Windows fix: don't throw an exception in the notification handler
+    if we're shutting down
+  * Fix include file search in ./configure
+  * ./configure fixes for windows
+  * Fix: use sys_exit instead of exit when Unix.execv fails
+
+===== 2.4.5 (2014-04-21) =====
+
+  * Lwt_ssl: expand API to allow setting socket options with Ssl
+    functions
+  * fix for camlp4 trunk
+  * support for React 1.0.0
+  * add Lwt_sequence.find_node_* functions
+  * Lwt_log: get backtrace early to overcome exns in
+    Printexc.to_string
+  * fix potential deadlock in lwt_unix_recv_notifications
+  * lwt.glib fixes:
+    - handle HUP
+    - fix for BSD/OSX
+  * do not raise an exception in Lwt_log if argv[0] is blank
+
+===== 2.4.4 (2013-10-22) =====
+
+  * add Android support
+  * fix issues in stubs for Lwt_unix jobs
+  * fix compatibility issue with OCaml 4.01
+  * fix the stub for ev_timer_init
+  * add Lwt.log containing Lwt_log_core, the Unix-free part of Lwt_log
+  * add Lwt_ssl.get_fd
+  * fix stdout/stderr redirections in Lwt_daemon.daemonize
+  * add Lwt_list.{map,iter}i{_s,_p}
+
+===== 2.4.3 (2012-12-27) =====
+
+  * fix Lwt_ssl.{in,out}_channel_of_descr: shutdown and close the
+    socket when the channel is closed
+
+===== 2.4.2 (2012-09-28) =====
+
+  * fix the stub for Lwt_unix.readdir
+  * change the default method for Lwt_glib.install
+    (use the glib main loop by default: more portable)
+  * ignore invalid file descriptors returned by glib
+    (like the emulation of select in glib does)
+  * use environment variables in discover.ml
+    - use LIBRARY_PATH and C_INCLUDE_PATH for searching headers
+    - allow to pass flags for a library in <LIB>_CLFAGS and <LIB>_LIBS
+  * add Lwt_unix.on_signal_full
+
+===== 2.4.1 (2012-08-22) =====
+
+  * Add Lwt_stream.on_terminate
+  * Fix Lwt_gc
+  * Fix stubs for get_credentials on *BSD
+
+===== 2.4.0 (2012-07-16) =====
+
+  * Reimplement Lwt_stream
+    - much simpler and more efficient
+    - do not use Weak
+    - add bounded push streams
+  * Add Lwt.async
+  * Add Lwt_preemptive.run_in_main
+  * Implement Lwt_unix.get_credentials on MacOS X/OpenBSD
+  * Ensure that on_cancel functions are executed first
+  * Better implementation of Lwt.cancel with more tests
+  * Simplify the API for unix jobs
+  * Better handling of the master lock in libev stubs
+  * Windows fixes/updates:
+    - pass -lws2_32 instead of ws2_32.lib if building with mingw
+    - fix a bug causing Lwt_unix.read/write to block when a socket
+      is not readable/writable
+    - port Lwt_process and Lwt_unix.system to Windows
+  * Compatibility with OCaml 4.00:
+    - add O_SHARE_DELETE to Lwt_unix.open_flag
+    - add -package compiler-libs.toplevel for files using Toploop
+  * Do not use module Sys for signal handling to avoid
+    OCaml code to be called in a C thread
+  * Fix Lwt_unix.wrap_syscall: try instead of Lwt.catch
+  * Fix a dead-lock between lwt_unix_send_notification
+    and lwt_unix_recv_notifications
+  * Fix #277: add a function to return the Ssl.socket of a Lwt_ssl.socket
+  * Fix problems with C libraries detection/linking
+
+===== 2.3.2 (2011-11-04) =====
+
+  * Add location informations in logs:
+    ** allow loggers to get the current location through local storage
+    ** pass current location to logging functions
+    ** pass the current location with the syntax extension
+  * Add Lwt.on_termination
+  * Add Lwt_unix.reinstall_signal_handler
+  * Add Lwt_io.flush_all
+  * Add assert_lwt keyword to the syntax extension
+  * Add Lwt.wrap
+  * Add Lwt_glib.iter and Lwt_glib.wakeup
+  * OCaml 3.13 ready
+  * Allow to compile without libev support
+  * Fix bugs in Lwt_io
+  * Better handling of forks
+  * Fix many problems on Windows
+
+===== 2.3.1 (2011-07-13) =====
+
+  * Fix building of documentation when using the tarball
+  * Add Lwt_unix.fsync and Lwt_unix.fdatasync
+  * Fix the stubs for Lwt_unix.send_msg when fd-passing is not
+    available
+  * Add -lwt-sequence-strict option to the syntax extension
+  * Use a custom PRNG state for Lwt.choose and Lwt.pick
+  * Fix a display glitch when starting the toplevel
+  * Add Lwt_unix.fork which should now be used when one want to use
+    Lwt in the child process
+  * Better implementation of Lwt_unix.readlink and
+    Lwt_unix.gethostbyname, which fixes compilation on Hurd
+  * Add Lwt.wakeup_later and Lwt.wakeup_later_exn to be used when one
+    need to do lot of nested wakeup, which fixes a buffer overflow in
+    Lwt_mutex
+  * Fix Lwt_unix.abort and Lwt_unix.close (threads was never wakeup)
+  * Fix Lwt_throttle for correct timings
+  * Fix subtle use of cancel
+
+===== 2.3.0 (2011-04-12) =====
+
+  * Add an extensible system of engines to:
+    ** allow the user to replace libev by another event system, such
+       as select
+    ** allow easier integration of external libraries supporting
+       asynchronous operations
+  * Lots of improvements for Windows:
+    ** use the OCaml select instead of libev by default on Windows
+    ** make asynchronous operations on non-socket file descriptors
+       such as pipes to work
+    ** make glib integration to work
+  * Better use of engines in Lwt_unix: now events are cached to minimize
+    the amount of calls to epoll_ctl
+  * Use an eventfd when possible for notifications for faster delivery
+  * Add modules:
+    ** Lwt_sys: allow to test availability of extra features
+    ** Lwt_react: replace Lwt_event and Lwt_signal
+  * Allow to configure logging rules at runtime in Lwt_log
+  * Add match_lwt and while_lwt to the syntax extension
+  * Fixes:
+    ** syntax extension: handle "lwt ... = ... in ..." at toplevel
+    ** make the notification system fork-proof
+    ** fix an issue with stubs not raising correctly exceptions
+
+===== 2.2.1 (2011-01-26) =====
+
+  * Better interaction with Js_of_OCaml.
+  * Add functions {{{Lwt.register_pause_notifier}}} and {{{Lwt.paused_count}}}.
+
+===== 2.2.0 (2010-12-13) =====
+
+  * Bugfixes:
+    ** Fix a bug with cancellable threads causing {{{Canceled}}}
+       exceptions to be raised randomly
+    ** Fix a fd-leak in Lwt_io.open_connection
+  * {{{Lwt_unix}}} now use libev instead of select
+  * Add thread local storage support to {{{Lwt}}}
+  * Add backtrace support to {{{Lwt}}}. Now {{{Lwt}}} exceptions can
+    be recorded by using the syntax extension with the {{{-lwt-debug}}}
+    command line switch.
+  * Allow blocking system calls to be executed in parallels
+  * Change the type of many functions of {{{Lwt_unix}}}, which now
+    return a {{{Lwt}}} thread
+  * Add functions {{{Lwt_unix.readable}}} and {{{Lwt_unix.writable}}}
+  * Add function {{{Lwt_io.is_busy}}}
+  * Add functions {{{Lwt_event.delay}}} and {{{Lwt_signal.delay}}}
+  * Add function {{{Lwt_term.render_update}}}
+  * Add function {{{Lwt_ssl.embed_socket}}}
+  * Add module {{{Lwt_bytes}}} defining operations on bigarrays
+    instead of strings
+  * Use bigarrays in Lwt_io instead of strings for the internal buffer.
+    Lwt_io.make now takes a function that uses a bigarray.
+  * Add module {{{Lwt_switch}}}
+
+===== 2.1.1 (2010-06-13) =====
+
+  * Many bugfixes, including:
+    ** buggy behaviour of cancellable threads
+    ** file descriptor leakage in {{{Lwt_unix.accept_n}}}
+  * Add {{{Lwt.nchoose}}} and {{{Lwt.npick}}}
+  * Use {{{set_close_on_exec}}} for fds created by {{{Lwt_log}}}
+  * Better implementation of lwtized react functions
+
+===== 2.1.0 (2010-04-19) =====
+
+  * Rename {{{Lwt.select}}} to {{{Lwt.pick}}}
+  * Removing module {{{Lwt_monitor}}} in favour of {{{Lwt_mutex}}} and
+    new module {{{Lwt_condition}}}
+  * More react helpers:
+    ** {{{Lwt_event.next}}}
+    ** {{{Lwt_event.limit}}} and {{{Lwt_signal.limit}}}
+    ** {{{Lwt_event.from}}}
+  * Adding function {{{Lwt_main.fast_yield}}}
+  * Adding unit tests
+  * Optimisation of {{{Lwt}}}
+  * Adding module {{{Lwt_log}}} for logging
+  * Adding a camlp4 filter for remmoving logging statement or inlining
+    tests
+  * Adding module {{{Lwt_daemon}}}
+  * Adding function {{{Lwt_unix.recv_msg}}} and {{{Lwt_unix.send_msg}}}
+  * Adding function {{{Lwt_unix.wait4}}}
+  * Adding function {{{Lwt_io.establish_server}}}
+  * Adding module {{{Lwt_list}}}
+  * Enhancement in {{{Lwt_process}}}, it now support redirections and
+    timeouts
+  * Allow to use {{{select}}} on arbitrary high file descriptors
+  * More commands and features in {{{Lwt_read_line}}}:
+    ** Handle "undo" command
+    ** New controllable read-lines instances
+    ** More edition commands
+    ** Completion as you type
+    ** Backward search
+  * Enhancement in {{{Lwt_term}}}: more drawing functions and allow to
+    put the terminal into drawing mode
+  * Optimisation of {{{Lwt_stream}}}
+  * Optimisation of {{{Lwt_io.write_char}}} and {{{Lwt_io.read_char}}}
+  * Bugfix of {{{Lwt_stream}}}: two parallel {{{Lwt_stream.get}}}
+    returned the same value
+  * Bugfix in {{{Lwt_unix.connect}}}: it returned immediately on EINPROGRESS
+  * Bugfixes in {{{Lwt_glib}}}: file descriptors were not monitored correctly
+
+===== 2.0.0 (2009-10-15) =====
+
+  * Adding modules:
+    ** {{{Lwt_stream}}}: lwt-aware version of the {{{Stream}}} module
+    ** {{{Lwt_gc}}} for using {{{finalise}}} without
+       {{{Lwt_unix.run}}}
+    ** {{{Lwt_io}}}: a new implementation of buffered channels with
+       more features and better handling of concurrent access
+    ** {{{Lwt_text}}}: implementation of text channels
+    ** {{{Lwt_process}}}: helpers to spawn processes and communicate
+       with them
+    ** {{{Lwt_main}}} for abstracting the main loop and allowing
+       replacement by a custom main loop
+    ** {{{Lwt_glib}}} for integration into the glib main event loop
+    ** {{{Lwt_term}}} for interaction with the terminal
+    ** {{{Lwt_read_line}}} for interactive user input
+    ** {{{Lwt_monitor}}}, {{{Lwt_mvar}}}: combined locks for
+       synchronization with conditional variables for notification
+    ** {{{Lwt_throttle}}} for limiting rate of execution
+       (e.g. for authentication procedure)
+    ** {{{Lwt_sequence}}}: mutable sequence of elements
+    ** {{{Lwt_event}}}, {{{Lwt_signal}}}: helpers for reactive
+       programming with lwt
+  * Adding a syntax extension {{{pa_lwt}}}:
+    ** handles anonymous bind {{{a >> b}}}
+    ** adds syntactic sugar for catching errors (ticket #6)
+    ** adds syntactic sugar for parallel let-binding construction
+    ** adds syntactic sugar for for-like loops
+  * Top-level integration:
+    ** threads can runs while reading user input
+    ** line editing support
+  * New enhanced OCaml toplevel with some basic completion features
+  * Adding C stubs to reimplement {{{Unix.read}}} and {{{Unix.write}}}
+    with assumption of non-blocking behaviour
+  * Adding more functions/helpers in {{{Lwt}}}
+  * Fixing memory leaks in {{{Lwt.choose}}}
+  * Bugfix in {{{Lwt_chan.close_*}}} (ticket #66)
+  * Separate the type of threads (covariant) from the type of thread
+    wakeners (contravariant); the type of many functions related to
+    {{{Lwt.wait}}} has been changed
+  * Add cancelable threads
+  * Unix-dependent part is now put in its own archive and findlib
+    package.
+
+===== 1.1.0 (2008-06-25) =====
+
+  * Adding module {{{Lwt_pool}}} for creating pools (for example pools
+    of connections)
+  * Adding a few functions in {{{Lwt_chan}}}
+  * Fixing bugs in {{{Lwt_util.map_serial}}} and
+    {{{Lwt_util.iter_serial}}}
+  * Putting {{{Lwt_preemptive}}}, {{{Lwt_lib}}} and {{{Lwt_ssl}}} in
+    separate libraries and findlib subpackages so that lwt.cma depends
+    only on unix.cma.
+
+===== 1.0.0 (and before) =====
+
+  * See Ocsigen changelog

@@ -1,0 +1,40 @@
+#! /bin/sh
+
+set -e
+
+version=`./configure -version 2>/dev/null`
+destdir="findlib-$version"
+
+mkdir -p packages
+rm -rf "packages/$destdir"
+makepkg -spec findlib.files -intree . -outtree "packages/$destdir"
+(cd packages; tar czf "$destdir.tar.gz" "$destdir")
+echo "Wrote packages/$destdir.tar.gz"
+
+# Checking git:
+
+master="$(git branch | grep '* master')"
+if [ -z "$master" ]; then
+    echo "Error: not on master branch"
+    exit 1
+fi
+
+status="$(git status -uno -s)"
+
+if [ -n "$status" ]; then
+    echo "Error: git status not clean"
+    exit 1
+else
+    printf "Tag revision (y/n)? "
+    read answer
+    case "$answer" in
+        y|Y|yes|YES)
+            git tag -a -m "findlib-$version" findlib-$version
+            git push --tags origin master
+            echo "New tag: findlib-$version"
+            ;;
+        *)
+            echo "Nothing tagged."
+            ;;
+    esac
+fi

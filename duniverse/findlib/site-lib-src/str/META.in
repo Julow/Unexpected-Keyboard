@@ -1,0 +1,13 @@
+dnl This file is input of the m4 macro processor.
+`# Specifications for the "str" library:'
+`requires = ""'
+`description = "Regular expressions and string processing"'
+`version = "[distributed with Ocaml]"'
+`directory = "^"'
+`browse_interfaces = "'interfaces`"'
+`archive(byte) = "str.cma"'
+`archive(native) = "str.cmxa"'
+`plugin(byte) = "str.cma"'
+`plugin(native) = "str.cmxs"'
+
+

@@ -1,0 +1,5 @@
+_build
+src/seq.ml
+src/seq.mli
+*.merlin
+*.install

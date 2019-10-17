@@ -1,0 +1,11 @@
+dnl This file is input of the m4 macro processor.
+`# Specifications for the "graphics" library:'
+`requires = ""'
+`version = "[distributed with Ocaml]"'
+`description = "Portable drawing primitives"'
+`directory = "^"'
+`browse_interfaces = "'interfaces`"'
+`archive(byte) = "graphics.cma"'
+`archive(native) = "graphics.cmxa"'
+`plugin(byte) = "graphics.cma"'
+`plugin(native) = "graphics.cmxs"'

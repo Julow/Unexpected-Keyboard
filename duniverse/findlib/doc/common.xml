@@ -1,0 +1,353 @@
+<?xml encoding="ISO-8859-1"?>
+
+<!-- ************************************************************ -->
+<!-- EXTERNAL URLs                                                -->
+<!-- ************************************************************ -->
+
+<!ENTITY url.ocaml           
+         "http://caml.inria.fr/">
+
+<!ENTITY url.ocaml.org
+         "http://www.ocaml.org/">
+
+<!ENTITY url.ocaml.list
+         "http://caml.inria.fr/caml-list-eng.html">
+
+<!ENTITY url.ocaml.download
+         "ftp://ftp.inria.fr/lang/caml-light/">
+
+<!ENTITY url.ocaml.camlp4
+         "http://caml.inria.fr/camlp4/">
+
+<!ENTITY url.ocaml.hump
+         "http://caml.inria.fr/humps/">
+
+<!ENTITY url.ocaml.mottl
+         "http://www.ai.univie.ac.at/~markus/home/ocaml_sources.html">
+
+<!ENTITY url.ocaml.mottl.pcre
+         "http://www.ai.univie.ac.at/~markus/home/ocaml_sources.html#toc11">
+
+<!ENTITY url.ocaml.lindig
+         "http://www.gaertner.de/~lindig/software/">
+
+<!--
+<!ENTITY url.ocaml.lindig.ocmarkup
+         "http://www.cs.tu-bs.de/softech/people/lindig/software/ocmarkup.html">
+-->
+
+<!ENTITY url.ocaml.lindig.tony
+         "http://www.gaertner.de/~lindig/software/tony.html">
+
+<!ENTITY url.ocaml.filliatre
+         "http://www.lri.fr/~filliatr/software.en.html">
+
+<!ENTITY url.ocaml.filliatre.cgi
+         "http://www.lri.fr/~filliatr/ftp/ocaml/cgi/">
+
+<!ENTITY url.ocaml.frisch
+         "http://www.eleves.ens.fr:8080/home/frisch/soft">
+
+<!ENTITY url.ocaml.guesdon.ocamlodbc
+         "http://pauillac.inria.fr/~guesdon/Tools/ocamlodbc/ocamlodbc.html">
+
+<!ENTITY url.xml-spec        
+         "http://www.w3.org/TR/1998/REC-xml-19980210.html">
+
+<!ENTITY url.xml.oasis
+         "http://www.oasis-open.org/cover/">
+
+<!ENTITY url.xml.w3c
+         "http://www.w3c.org/XML/">
+
+<!ENTITY url.jclark-xmltdata 
+         "ftp://ftp.jclark.com/pub/xml/xmltest.zip">
+
+<!ENTITY urlprefix.ietf.rfc
+         "http://www.ietf.org/rfc">
+   <!-- Ohne "/" am Ende! -->
+
+<!ENTITY url.apache
+         "http://www.apache.org/">
+
+<!ENTITY url.apache.cgi-howto
+         "http://httpd.apache.org/docs/howto/cgi.html">
+
+<!ENTITY url.apache.suexec
+         "http://httpd.apache.org/docs/suexec.html">
+
+<!ENTITY url.apache.jserv
+         "http://java.apache.org/">
+
+<!ENTITY url.apache.jakarta
+         "http://jakarta.apache.org/">
+
+<!ENTITY url.unixodbc
+         "http://www.unixodbc.org">
+
+<!-- ************************************************************ -->
+<!-- MY URLs                                                      -->
+<!-- ************************************************************ -->
+
+<!ENTITY url.linkdb
+         "http://links.camlcity.org">
+
+<!ENTITY url.svn
+         "https://godirepo.camlcity.org/">
+
+<!ENTITY url.mailman
+         "https://godirepo.camlcity.org/mailman">
+
+<!ENTITY url.pipermail
+         "https://godirepo.camlcity.org/pipermail">
+
+<!ENTITY mail.godi-list
+         "godi-list@ocaml-programming.de">
+
+<!ENTITY url.godi-list-info
+         "&url.mailman;/listinfo/godi-list">
+
+<!ENTITY url.godi-list-archives
+         "&url.pipermail;/godi-list">
+
+<!-- ************************************************************ -->
+<!-- HOMEPAGE URLs                                                -->
+<!-- ************************************************************ -->
+
+<!-- GENERIC -->
+
+<!ENTITY url.gps-ocaml-download 
+         "http://download.camlcity.org/download">
+
+<!ENTITY url.gps-ocaml-download-byte 
+         "/download/bytecode">
+
+<!ENTITY url.gps-old-download
+         "http://www.gerd-stolpmann.de/download">
+
+<!ENTITY url.gps-prog
+         "/archive/programming">
+
+<!-- SPECIFIC -->
+
+<!ENTITY url.portal-img
+         "/files">
+
+
+<!ENTITY release.javacaml
+         "1998">
+
+<!ENTITY url.javacaml-download
+         "/archive/javacaml/download/">
+
+<!ENTITY url.javacaml-project
+         "/archive/javacaml/">
+
+
+
+<!ENTITY release.ocamldb
+         "0.2">
+
+<!ENTITY url.ocamldb-download
+         "&url.gps-ocaml-download;/ocamldb.tgz">
+
+<!ENTITY url.ocamldb-project
+         "&url.gps-ocaml-projects;/ocamldb/">
+
+
+
+<!ENTITY release.findlib
+         "1.5">
+
+<!ENTITY url.findlib-download
+         "&url.gps-ocaml-download;/findlib-&release.findlib;.tar.gz">
+
+<!ENTITY url.findlib-project
+         "/projects/findlib.html">
+
+<!ENTITY url.findlib-readme
+         "/projects/dl/findlib-&release.findlib;/doc/README">
+
+<!ENTITY url.findlib-intro
+         "/projects/findlib.html">
+
+<!ENTITY url.findlib-manual
+	"/projects/dl/findlib-&release.findlib;/doc/guide-html/index.html">
+
+<!ENTITY url.findlib-quickstart
+	"/projects/dl/findlib-&release.findlib;/doc/QUICKSTART">
+
+
+
+<!ENTITY release.findlib-browser
+         "0.2.2">
+
+<!ENTITY url.findlib-browser-download
+         "&url.gps-ocaml-download;/findlib-browser-&release.findlib-browser;.tar.gz">
+
+<!ENTITY url.findlib-browser-project
+         "/projects/findlib-browser.html">
+
+
+
+<!ENTITY release.cryptgps
+         "0.2.1">
+
+<!ENTITY url.cryptgps-download
+         "&url.gps-ocaml-download;/cryptgps-&release.cryptgps;.tar.gz">
+
+<!ENTITY url.cryptgps-project
+         "/projects/cryptgps.html">
+
+
+
+<!ENTITY release.db2man
+         "0.1">
+
+<!ENTITY url.db2man-download
+         "&url.gps-ocaml-download;/db2man-&release.db2man;.tar.gz">
+
+<!ENTITY url.db2man-project
+         "/projects/db2man.html">
+
+
+
+<!ENTITY release.xstr
+         "0.2.1">
+
+<!ENTITY url.xstr-download
+         "&url.gps-ocaml-download;/xstr-&release.xstr;.tar.gz">
+
+<!ENTITY url.xstr-project
+         "/projects/xstr.html">
+
+
+
+<!ENTITY release.xstrp4
+         "1.7">
+
+<!ENTITY url.xstrp4-download
+         "&url.gps-ocaml-download;/xstrp4-&release.xstrp4;.tar.gz">
+
+<!ENTITY url.xstrp4-project
+         "/projects/xstrp4.html">
+
+
+<!ENTITY url.markup-tamara
+         "http://www.ocaml-programming.de/markup/">
+
+
+
+<!ENTITY release.pxp
+         "1.1.6">
+
+<!ENTITY release.pxp-dev
+         "1.2.0test2">
+
+<!ENTITY url.pxp-download    
+         "&url.gps-ocaml-download;/pxp-&release.pxp;.tar.gz">
+
+<!ENTITY url.pxp-download-dev    
+         "&url.gps-ocaml-download;/pxp-&release.pxp-dev;.tar.gz">
+
+<!ENTITY url.pxp-project
+         "/projects/pxp.html">
+
+<!ENTITY url.pxp-project-dev
+         "/projects/pxp.html">
+
+<!ENTITY url.pxp-intro
+         "/projects/pxp.html">
+
+<!ENTITY url.pxp-manual
+	 "/projects/dl/pxp-1.1.6/doc/manual/html/index.html">
+
+<!ENTITY url.pxp-relnotes
+         "/projects/dl/pxp-1.1.6/doc/RELEASE-NOTES">
+
+<!ENTITY url.pxp-list
+         "http://www.orcaware.com/mailman/listinfo/ocaml-pxp-users">
+
+
+
+<!ENTITY release.ocamlnet
+         "2.2.9">
+
+<!ENTITY url.ocamlnet-download
+         "&url.gps-ocaml-download;/ocamlnet-&release.ocamlnet;.tar.gz">
+
+<!ENTITY url.ocamlnet-home
+         "/projects/ocamlnet.html">
+
+<!ENTITY url.ocamlnet-project
+         "/projects/ocamlnet.html">
+
+<!ENTITY url.ocamlnet-intro
+         "/projects/ocamlnet.html">
+
+<!ENTITY url.ocamlnet-manual
+         "/projects/dl/ocamlnet-2.2.9/doc/html-main/index.html">
+
+<!ENTITY url.ocamlnet-refmanual
+         "&url.ocamlnet-manual;">
+
+<!ENTITY url.netstring-project
+         "&url.ocamlnet-project;">
+
+
+
+<!ENTITY release.wtimer
+         "1.0">
+<!ENTITY url.wtimer-download
+         "&url.gps-ocaml-download;/wtimer-&release.wtimer;.tar.gz">
+<!ENTITY url.wtimer-project
+         "/projects/wtimer.html">
+
+
+<!ENTITY url.wdialog-project
+         "/projects/wdialog.html">
+
+<!ENTITY url.wdialog-intro
+         "/projects/wdialog.html">
+
+
+<!ENTITY url.godi-home
+         "/godi">
+<!ENTITY release.godi
+         "20061228">
+<!ENTITY url.godi-download
+         "&url.gps-ocaml-download;/godi-bootstrap-&release.godi;.tar.gz">
+<!ENTITY url.godi-intro
+         "/godi">
+
+<!ENTITY url.godi-build
+         "http://www.ocaml-programming.de/godi-build/">
+
+<!ENTITY url.dev-server
+         "https://gps.dynxs.de/">
+
+
+<!ENTITY release.godi-tools
+         "1.5.3">
+<!ENTITY url.godi-tools-download
+         "&url.gps-ocaml-download;/godi-tools-&release.godi-tools;.tar.gz">
+
+
+<!-- Smaller things (patches etc.) -->
+
+<!ENTITY url.str-patch-download
+         "&url.gps-ocaml-download;/str-2.04.patch">
+
+
+<!ENTITY url.linkdb-download
+         "&url.gps-ocaml-download;/linkdb-2001-07-10.tar.gz">
+
+
+<!-- ************************************************************ -->
+<!-- MAIL URLs                                                    -->
+<!-- ************************************************************ -->
+
+<!ENTITY person.gps '<a href="mailto:&person.gps.mail;">Gerd Stolpmann</a>'>
+
+<!ENTITY person.gps.mail
+         "gerd@gerd-stolpmann.de">

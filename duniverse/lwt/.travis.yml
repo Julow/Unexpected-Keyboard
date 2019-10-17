@@ -1,0 +1,116 @@
+language: generic
+
+matrix:
+  include:
+    - os: osx
+      env: COMPILER=4.09.0 LIBEV=no
+    - os: linux
+      env: COMPILER=4.09.0 LIBEV=no PPX_LET=yes COVERAGE=yes
+    - os: linux
+      env: COMPILER=4.08.1+musl+flambda MUSL=yes
+    - os: linux
+      env: COMPILER=4.07.1 DOCS=yes
+    - os: linux
+      env: COMPILER=4.06.1 LWT_STRESS_TEST=true
+    - os: linux
+      env: COMPILER=4.05.0+bytecode-only
+    - os: linux
+      env: COMPILER=4.04.2
+    - os: linux
+      env: COMPILER=4.03.0
+    - os: linux
+      env: COMPILER=4.02.3 PACKAGING=yes
+
+  allow_failures:
+    - env: COMPILER=4.08.1+musl+flambda MUSL=yes
+    - env: COMPILER=4.07.1 DOCS=yes
+    - env: COMPILER=4.06.1 LWT_STRESS_TEST=true
+    - env: COMPILER=4.05.0+bytecode-only
+    - env: COMPILER=4.04.2
+    - env: COMPILER=4.03.0
+
+  fast_finish: true
+
+env:
+  global:
+    - LWT_FORCE_LIBEV_BY_DEFAULT=yes
+
+before_install:
+  - '[ "$TRAVIS_EVENT_TYPE" != cron ] || rm -rf ~/.opam ./_opam ./_cache'
+
+install:
+  - |
+    if [ "$LIBEV" != no ]
+    then
+      sudo apt-get update -qq
+      if [ "$MUSL" != yes ]
+      then
+        sudo apt-get install -qq libev-dev
+      else
+        sudo apt-get install musl-tools
+        wget http://dist.schmorp.de/libev/Attic/libev-4.27.tar.gz
+        tar xf libev-4.27.tar.gz
+        cd libev-4.27
+        CC=musl-gcc ./configure --prefix `pwd`/install
+        make
+        make install
+        sudo cp install/include/* /usr/include/x86_64-linux-musl
+        sudo cp install/lib/* /usr/lib/x86_64-linux-musl
+        cd ..
+      fi
+    fi
+
+  - OS=linux
+  - '[ "$TRAVIS_OS_NAME" != osx ] || OS=macos'
+  - VERSION=2.0.5
+  - PKG=opam-$VERSION-x86_64-$OS
+  - wget https://github.com/ocaml/opam/releases/download/$VERSION/$PKG
+  - sudo mv $PKG /usr/local/bin/opam
+  - sudo chmod a+x /usr/local/bin/opam
+
+  - opam init -y --bare --disable-sandboxing --disable-shell-hook
+  - CACHED=yes
+  - '[ -d _opam/bin ] || CACHED=no'
+  - '[ "$CACHED" == yes ] || rm -rf _opam'
+  - '[ "$CACHED" == yes ] || opam switch create . $COMPILER $REPOSITORIES --no-install'
+  - eval `opam env`
+  - opam --version
+  - ocaml -version
+
+  - opam pin add --no-action ounit 2.0.8 # 2.1.2 release is broken.
+  - CACHED=yes
+  - '[ -d _cache/_build ] || CACHED=no'
+  - '[ "$CACHED" == yes ] || opam install . --deps-only --yes'
+  - '[ "$CACHED" == yes ] || [ "$LIBEV" == no ] || opam install -y conf-libev'
+  - '[ "$CACHED" == no ] || cp -r _cache/_build .'
+
+  - '[ "$LIBEV" == no ] || LWT_DISCOVER_ARGUMENTS="--use-libev true"'
+  - '[ "$LIBEV" != no ] || LWT_DISCOVER_ARGUMENTS="--use-libev false"'
+  - export LWT_DISCOVER_ARGUMENTS
+
+script:
+  - '[ "$COVERAGE" == yes ] || dune build'
+  - '[ "$COVERAGE" == yes ] || dune runtest --force'
+  - '[ "$COVERAGE" != yes ] || make coverage-only'
+  - '[ "$COVERAGE" != yes ] || bisect-ppx-report send-to Coveralls'
+
+  - '[ "$CACHED" == yes ] || mkdir -p _cache'
+  - '[ "$CACHED" == yes ] || cp -r _build _cache'
+
+  - '[ "$DOCS" != yes ] || bash src/util/travis-docs.sh'
+  - '[ "$PACKAGING" != yes ] || make install-for-packaging-test packaging-test uninstall-after-packaging-test'
+  - '[ "$PPX_LET" != yes ] || make ppx_let-test-deps ppx_let-test'
+
+before_cache:
+  - opam clean
+
+cache:
+  directories:
+    - $HOME/.opam
+    - ./_opam
+    - ./_cache
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always

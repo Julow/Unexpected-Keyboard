@@ -1,0 +1,35 @@
+(rule
+ (targets test_string.ml)
+ (deps (:< test_string.cppo.ml))
+ (action (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets test_bytes.ml)
+ (deps (:< test_bytes.cppo.ml))
+ (action (run %{bin:cppo} %{<} -o %{targets})))
+
+(rule
+ (targets test_bigstring.ml)
+ (deps (:< test_bigstring.cppo.ml))
+ (action (run %{bin:cppo} %{<} -o %{targets})))
+
+(library
+ (name tests)
+ (wrapped false)
+ (modules test_string test_bytes test_bigstring)
+ (libraries ocplib-endian ocplib-endian.bigstring bigarray bytes))
+
+(executables
+ (names test)
+ (modules test)
+ (libraries ocplib-endian tests))
+
+(executables
+ (names bench)
+ (modules bench)
+ (libraries ocplib-endian ocplib-endian.bigstring))
+
+(alias
+ (name runtest)
+ (deps (:< test.exe))
+ (action (run %{<})))

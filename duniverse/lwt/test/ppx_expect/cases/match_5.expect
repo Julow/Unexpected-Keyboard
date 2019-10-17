@@ -1,0 +1,2 @@
+File "match_5.ml", line 3, characters 2-61:
+Error: match%lwt must contain at least one non-exception pattern.

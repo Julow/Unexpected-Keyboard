@@ -1,0 +1,2 @@
+let () =
+  Lwt.return () |> ignore

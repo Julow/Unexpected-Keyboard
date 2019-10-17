@@ -1,0 +1,9 @@
+(executable
+ (name main)
+ (libraries lwttester))
+
+(alias
+ (name runtest)
+ (package lwt_ppx)
+ (deps (source_tree cases))
+ (action (run %{exe:main.exe})))

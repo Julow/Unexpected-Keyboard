@@ -1,0 +1,52 @@
+#! /bin/sh
+
+# Call camlp4 with fallback method if dynamic loading is not supported
+
+dl_string="dynamic loading not supported on this platform"
+fn_string="The external function .* is not available"
+
+tmp_stderr="tmp.safe_camlp4_stderr.$$"
+tmp_camlp4="tmp.safe_camlp4_camlp4.$$"
+
+trap "rm -f $tmp_stderr $tmp_camlp4" 0
+
+print_stderr=1
+code=0
+
+camlp4 "$@" 2>$tmp_stderr || {
+    code=$?
+    grep "$dl_string" $tmp_stderr >/dev/null 2>&1; t1=$?
+    grep "$fn_string" $tmp_stderr >/dev/null 2>&1; t2=$?
+    if [ $t1 -eq 0 -o $t2 -eq 0 ]; then
+	# Fallback:
+	print_stderr=0
+	cp4_mods=""
+	cp4_args=""
+	i=0
+	for arg in "$@"; do
+	    if [ $i -gt 0 ]; then
+		cp4_mods="$cp4_mods -I $arg"
+		cp4_args="$cp4_args -I $arg"
+		i=0
+	    else
+		case "$arg" in
+		    *.cma|*.cmo)
+			cp4_mods="$cp4_mods $arg" ;;
+		    -I)
+			i=1 ;;
+		    *)
+			cp4_args="$cp4_args $arg" ;;
+		esac
+	    fi
+	done
+	mkcamlp4 -o $tmp_camlp4 $cp4_mods || exit
+	./$tmp_camlp4 $cp4_args || exit
+	code=0
+    fi
+}
+
+if [ $print_stderr -gt 0 ]; then
+    cat $tmp_stderr >&2
+fi
+
+exit $code
