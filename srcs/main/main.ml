@@ -49,7 +49,7 @@ type t = {
 	modifiers		: Modifiers.t;
 	ims				: Input_method_service.t;
 	view			: View.t;
-	key_repeat		: (Key.t * bool ref) list;
+  key_repeat : Key_repeat.t;
 	dp				: float -> float;
 }
 
@@ -73,41 +73,31 @@ let create ~ims ~view ~dp () = {
 	touch_state = Touch_event.empty_state;
 	layout = Layouts.qwerty;
 	modifiers = Modifiers.empty;
-	key_repeat = [];
+	key_repeat = Key_repeat.empty;
 	ims; view; dp
 }
 
-let start_repeat ?(timeout=1000L) key action t =
-	let task t = Keyboard_service.Task t in
-	let enabled = ref true in
-	let rec repeat_loop ~timeout () =
-		let do_repeat () t =
-			if !enabled
-			then t, [ task (repeat_loop ~timeout:200L); action ]
-			else t, []
-		in
-		Lwt.map do_repeat (Keyboard_service.timeout timeout)
-	in
-	let key_repeat = (key, enabled) :: t.key_repeat in
-	{ t with key_repeat }, [ task (repeat_loop ~timeout) ]
+let rec handle_key_repeat_timeout t =
+  let key_repeat, repeats, timeout =
+    Key_repeat.on_timeout t.key_repeat
+  in
+  { t with key_repeat }, List.map send repeats @ key_repeat_timeout timeout
 
-let rec stop_repeat key = function
-	| (k', enabled) :: tl when k' == key ->
-		enabled := false;
-		stop_repeat key tl
-	| hd :: tl	-> hd :: stop_repeat key tl
-	| []		-> []
+and key_repeat_timeout = function
+  | Some t ->
+      let task () =
+        Keyboard_service.timeout (Int64.of_int t)
+        |> Lwt.map (fun () -> handle_key_repeat_timeout)
+      in
+      [ Keyboard_service.Task task ]
+  | None -> []
 
-let stop_repeat key =
-	let do_remove t =
-		{ t with key_repeat = stop_repeat key t.key_repeat }, []
-	in
-	Keyboard_service.Task (fun () -> Lwt.return do_remove)
-
-let handle_down t key = function
+let handle_down t = function
 	| Key.Modifier m	->
 		{ t with modifiers = Modifiers.on_down m t.modifiers }, []
-	| Typing tv			-> start_repeat key (send tv) t
+	| Typing tv			->
+      let key_repeat, timeout = Key_repeat.on_down t.key_repeat tv in
+      { t with key_repeat }, key_repeat_timeout timeout
 	| Change_pad pad	->
 		let layout = match pad with
 			| Default	-> Layouts.qwerty
@@ -118,17 +108,20 @@ let handle_down t key = function
 			touch_state = Touch_event.empty_state }, []
 	| _					-> t, []
 
-let handle_cancel t key = function
+let handle_cancel t = function
 	| Key.Modifier m	->
 		{ t with modifiers = Modifiers.on_cancel m t.modifiers }, []
-	| Typing _			-> t, [ stop_repeat key ]
+	| Typing kv			->
+      let key_repeat = Key_repeat.on_up t.key_repeat kv in
+      { t with key_repeat }, []
 	| _					-> t, []
 
-let handle_up t key = function
+let handle_up t = function
 	| Key.Typing tv			->
 		let tv = Modifiers.apply tv t.modifiers
-		and modifiers = Modifiers.on_key_press t.modifiers in
-		{ t with modifiers }, [ stop_repeat key; send tv ]
+		and modifiers = Modifiers.on_key_press t.modifiers
+    and key_repeat = Key_repeat.on_up t.key_repeat tv in
+    { t with modifiers; key_repeat }, [ send tv ]
 	| Modifier m			->
 		{ t with modifiers = Modifiers.on_up m t.modifiers }, []
 	| _						-> t, []
@@ -137,17 +130,17 @@ let update (`Touch_event ev) t =
 	let invalidate = view_invalidate t.view in
 	match Touch_event.on_touch t.view t.layout t.touch_state ev with
 	| Key_down (key, ts)				->
-		let t, tasks = handle_down t key key.v in
+		let t, tasks = handle_down t key.v in
 		{ t with touch_state = ts }, invalidate :: tasks
-	| Key_up (key, v, ts)				->
-		let t, tasks = handle_up t key v in
+	| Key_up (_, v, ts)				->
+		let t, tasks = handle_up t v in
 		{ t with touch_state = ts }, invalidate :: tasks
-	| Pointer_changed (key, v', v, ts)	->
-		let t, tasks = handle_cancel t key v' in
-		let t, tasks' = handle_down t key v in
+	| Pointer_changed (_, v', v, ts)	->
+		let t, tasks = handle_cancel t v' in
+		let t, tasks' = handle_down t v in
 		{ t with touch_state = ts }, invalidate :: (tasks @ tasks')
-	| Cancelled (key, v, ts)			->
-		let t, tasks = handle_cancel t key v in
+	| Cancelled (_, v, ts)			->
+		let t, tasks = handle_cancel t v in
 		{ t with touch_state = ts }, invalidate :: tasks
 	| Ignore							-> t, []
 
