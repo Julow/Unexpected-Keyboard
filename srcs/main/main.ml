@@ -126,9 +126,9 @@ let handle_up t = function
 		{ t with modifiers = Modifiers.on_up m t.modifiers }, []
 	| _						-> t, []
 
-let update (`Touch_event ev) t =
+let handle_touch_event ev t =
 	let invalidate = view_invalidate t.view in
-	match Touch_event.on_touch t.view t.layout t.touch_state ev with
+  match Touch_event.on_touch t.layout t.touch_state ev with
 	| Key_down (key, ts)				->
 		let t, tasks = handle_down t key.v in
 		{ t with touch_state = ts }, invalidate :: tasks
@@ -143,6 +143,35 @@ let update (`Touch_event ev) t =
 		let t, tasks = handle_cancel t v in
 		{ t with touch_state = ts }, invalidate :: tasks
 	| Ignore							-> t, []
+
+let handle_touch_event ev t =
+  let make_event kind ptr_index =
+    let x = Motion_event.get_x ev ptr_index /. float (View.get_width t.view)
+    and y = Motion_event.get_y ev ptr_index /. float (View.get_height t.view)
+    and ptr_id = Motion_event.get_pointer_id ev ptr_index in
+    Touch_event.{ kind; ptr_id; x; y }
+  in
+  let rec move_event t tasks i =
+    let t, tasks' = handle_touch_event (make_event Move i) t in
+    let tasks = tasks' @ tasks in
+    if i < 0 then t, tasks else move_event t tasks (i - 1)
+  in
+  let get_ptr_idx = Motion_event.get_action_index in
+  let action = Motion_event.get_action_masked ev in
+  if action = motion_event_ACTION_MOVE
+  then move_event t [] (Motion_event.get_pointer_count ev - 1)
+  else if action = motion_event_ACTION_UP
+    || action = motion_event_ACTION_POINTER_UP
+  then handle_touch_event (make_event Up (get_ptr_idx ev)) t
+  else if action = motion_event_ACTION_DOWN
+    || action = motion_event_ACTION_POINTER_DOWN
+  then handle_touch_event (make_event Down (get_ptr_idx ev)) t
+  else if action = motion_event_ACTION_CANCEL
+  then handle_touch_event (make_event Cancel (get_ptr_idx ev)) t
+  else t, []
+
+let update (`Touch_event ev) t =
+  handle_touch_event ev t
 
 let draw t canvas =
 	let is_activated key =
