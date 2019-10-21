@@ -53,22 +53,6 @@ type t = {
 	dp				: float -> float;
 }
 
-let task t = Keyboard_service.Task t
-
-let view_invalidate view =
-	task (fun () -> View.invalidate view; Lwt.return (fun t -> t, []))
-
-let send tv =
-	let send t =
-		begin match tv with
-			| Key.Char (c, 0)	-> Keyboard_service.send_char t.ims c
-			| Char (c, meta)	-> Keyboard_service.send_char_meta t.ims c meta
-			| Event (ev, meta)	-> Keyboard_service.send_event t.ims ev meta
-		end;
-		t, []
-	in
-	task (fun () -> Lwt.return send)
-
 let create ~ims ~view ~dp () = {
 	touch_state = Touch_event.empty_state;
 	layout = Layouts.qwerty;
@@ -77,20 +61,18 @@ let create ~ims ~view ~dp () = {
 	ims; view; dp
 }
 
-let rec handle_key_repeat_timeout t =
+let key_repeat_timeout = function
+  | Some t ->
+      let t = Int64.of_int t in
+      [ `Timeout (t, `Key_repeat_timeout) ]
+  | None -> []
+
+let handle_key_repeat_timeout t =
   let key_repeat, repeats, timeout =
     Key_repeat.on_timeout t.key_repeat
   in
-  { t with key_repeat }, List.map send repeats @ key_repeat_timeout timeout
-
-and key_repeat_timeout = function
-  | Some t ->
-      let task () =
-        Keyboard_service.timeout (Int64.of_int t)
-        |> Lwt.map (fun () -> handle_key_repeat_timeout)
-      in
-      [ Keyboard_service.Task task ]
-  | None -> []
+  let sends = List.map (fun tv -> `Send tv) repeats in
+  { t with key_repeat }, sends @ key_repeat_timeout timeout
 
 let handle_down t = function
 	| Key.Modifier m	->
@@ -121,13 +103,13 @@ let handle_up t = function
 		let tv = Modifiers.apply tv t.modifiers
 		and modifiers = Modifiers.on_key_press t.modifiers
     and key_repeat = Key_repeat.on_up t.key_repeat tv in
-    { t with modifiers; key_repeat }, [ send tv ]
+    { t with modifiers; key_repeat }, [ `Send tv ]
 	| Modifier m			->
 		{ t with modifiers = Modifiers.on_up m t.modifiers }, []
 	| _						-> t, []
 
 let handle_touch_event ev t =
-	let invalidate = view_invalidate t.view in
+	let invalidate = `Invalidate t.view in
   match Touch_event.on_touch t.layout t.touch_state ev with
 	| Key_down (key, ts)				->
 		let t, tasks = handle_down t key.v in
@@ -170,8 +152,43 @@ let handle_touch_event ev t =
   then handle_touch_event (make_event Cancel (get_ptr_idx ev)) t
   else t, []
 
-let update (`Touch_event ev) t =
-  handle_touch_event ev t
+let do_update ev t =
+  match ev with
+  | `Touch_event ev -> handle_touch_event ev t
+  | `Key_repeat_timeout -> handle_key_repeat_timeout t
+
+let task t = Keyboard_service.Task t
+
+let view_invalidate view =
+	task (fun () -> View.invalidate view; Lwt.return (fun t -> t, []))
+
+let send tv =
+	let send t =
+		begin match tv with
+			| Key.Char (c, 0)	-> Keyboard_service.send_char t.ims c
+			| Char (c, meta)	-> Keyboard_service.send_char_meta t.ims c meta
+			| Event (ev, meta)	-> Keyboard_service.send_event t.ims ev meta
+		end;
+		t, []
+	in
+	task (fun () -> Lwt.return send)
+
+let rec timeout t ev =
+  task (fun () ->
+    Keyboard_service.timeout t
+    |> Lwt.map (fun () -> update ev)
+  )
+
+and update ev t =
+  let t, tasks = do_update ev t in
+  let tasks =
+    List.map (function
+      | `Send tv -> send tv
+      | `Invalidate view -> view_invalidate view
+      | `Timeout (t, ev) -> timeout t ev)
+      tasks
+  in
+  t, tasks
 
 let draw t canvas =
 	let is_activated key =
