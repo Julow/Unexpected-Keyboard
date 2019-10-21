@@ -4,7 +4,17 @@ open Android_graphics
 	`dp` should convert from the `dp` unit to `px`
 	`render_key` should return the key string symbol
 	See the actual drawing function below (`keyboard`) *)
-let keyboard is_activated dp render_key =
+let keyboard dp render_key state =
+
+  let is_activated key =
+    Keyboard.key_activated state key
+  and render_key k =
+    let k = match k with
+      | Key.Typing tv -> Key.Typing (Modifiers.apply tv state.modifiers)
+      | k -> k
+    in
+    render_key k
+  in
 
 	(* Styles *)
 
@@ -97,7 +107,7 @@ let keyboard is_activated dp render_key =
 
 	(** Draw the keyboard on `canvas`, scaled to the canvs size
 		The layout is expected to have a size of (1, 1) *)
-	let keyboard layout canvas =
+	let keyboard canvas =
 		Canvas.draw_color canvas keyboard_bg;
 		let rect =
 			let w = float (Canvas.get_width canvas)
@@ -107,6 +117,6 @@ let keyboard is_activated dp render_key =
 		KeyboardLayout.iter (fun (pos, k) ->
 			let key_rect = Rect.transform rect (rect_of_layout_pos pos) in
 			key key_rect k canvas
-		) layout
+		) state.layout
 	in
 	keyboard
