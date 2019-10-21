@@ -63,38 +63,16 @@ let send_event ims evt meta =
 	ignore (send (mk_event (Key_event.get'action_down ()))
 		&& send (mk_event (Key_event.get'action_up ())))
 
-type ('a, 'b) task = Task of (unit -> ('a -> ('a, 'b) loop) Lwt.t)
-and ('a, 'b) loop = 'b * ('a, 'b) task list
-
-let loop data =
-	let pull, push =
-		let stream, push = Lwt_stream.create () in
-		let pull () = Lwt_stream.next stream in
-		let push e = push (Some e) in
-		pull, push
-	in
-	let pull_task (Task task) = Lwt.on_success (task ()) push in
-	let rec loop t =
-		let%lwt f = pull () in
-		let t, tasks = f t in
-		List.iter pull_task tasks;
-		loop t
-	in
-	Lwt.async (fun () -> loop data);
-	push
-
 let handler = lazy (Handler.create ())
 
-let timeout msec =
-	let t, u = Lwt.task () in
-	let callback = Jrunnable.create (Lwt.wakeup u) in
-	ignore (Handler.post_delayed (Lazy.force handler) callback msec);
-	t
+let timeout f msec =
+	let callback = Jrunnable.create f in
+	ignore (Handler.post_delayed (Lazy.force handler) callback msec)
 
 (** InputMethodService related stuff
 	defines the main loop of the app
 	The logic is in the [Main] module *)
-let keyboard_service create update draw ims =
+let keyboard_service service ims =
 	let dp =
 		let density = Context.get_resources ims
 			|> Resources.get_display_metrics
@@ -103,11 +81,10 @@ let keyboard_service create update draw ims =
 	in
 
 	let keyboard_view view =
-		let push = loop (create ~ims ~view ~dp ()) in
-
+    let handle, draw = service ~ims ~view ~dp () in
 		object
 			method onTouchEvent ev =
-				push (update (`Touch_event ev));
+        handle (`Touch_event ev);
 				true
 
 			method onMeasure w_spec _ =
@@ -115,7 +92,7 @@ let keyboard_service create update draw ims =
 				and h = int_of_float (dp 200.) in
 				View.set_measured_dimension view w h
 
-			method onDraw canvas = push (fun t -> draw t canvas; t, [])
+			method onDraw = draw
 			method onDetachedFromWindow = ()
 		end
 	in

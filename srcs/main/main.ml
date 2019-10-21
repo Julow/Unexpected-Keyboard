@@ -89,44 +89,37 @@ let do_update ev t =
   in
   { t with state }, tasks
 
-let task t = Keyboard_service.Task t
+let send ims tv =
+  match tv with
+  | Key.Char (c, 0)	-> Keyboard_service.send_char ims c
+  | Char (c, meta)	-> Keyboard_service.send_char_meta ims c meta
+  | Event (ev, meta)	-> Keyboard_service.send_event ims ev meta
 
-let view_invalidate view =
-	task (fun () -> View.invalidate view; Lwt.return (fun t -> t, []))
+let timeout handle tm ev =
+  Keyboard_service.timeout (fun () -> handle ev) tm
 
-let send tv =
-	let send t =
-		begin match tv with
-			| Key.Char (c, 0)	-> Keyboard_service.send_char t.ims c
-			| Char (c, meta)	-> Keyboard_service.send_char_meta t.ims c meta
-			| Event (ev, meta)	-> Keyboard_service.send_event t.ims ev meta
-		end;
-		t, []
-	in
-	task (fun () -> Lwt.return send)
-
-let rec timeout t ev =
-  task (fun () ->
-    Keyboard_service.timeout t
-    |> Lwt.map (fun () -> update ev)
-  )
-
-and update ev t =
-  let t, tasks = do_update ev t in
-  let tasks =
-    List.map (function
-      | `Send tv -> send tv
-      | `Invalidate -> view_invalidate t.view
-      | `Timeout (t, ev) -> timeout t ev)
-      tasks
-  in
-  t, tasks
+let handle_task handle t = function
+  | `Send tv -> send t.ims tv
+  | `Invalidate -> View.invalidate t.view
+  | `Timeout (tm, ev) -> timeout handle tm ev
 
 let draw t canvas =
 	Drawing.keyboard t.dp render_key t.state canvas
 
+let service ~ims ~view ~dp () =
+  let t = ref (create ~ims ~view ~dp ()) in
+  let rec handle ev =
+    let t', tasks = do_update ev !t in
+    List.iter (handle_task handle t') tasks;
+    t := t'
+  in
+  let draw canvas =
+    Drawing.keyboard !t.dp render_key !t.state canvas
+  in
+  handle, draw
+
 let () =
 	Printexc.record_backtrace true;
 	Android_enable_logging.enable "UNEXPECTED KEYBOARD";
-	let service = Keyboard_service.keyboard_service create update draw in
-	UnexpectedKeyboardService.register service
+	UnexpectedKeyboardService.register @@
+  Keyboard_service.keyboard_service service
