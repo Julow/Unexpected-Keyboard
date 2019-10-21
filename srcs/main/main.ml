@@ -65,7 +65,7 @@ let handle_touch_event view ev t =
   let rec move_event t tasks i =
     let t, tasks' = Keyboard.handle_touch_event (make_event Move i) t in
     let tasks = tasks' @ tasks in
-    if i < 0 then t, tasks else move_event t tasks (i - 1)
+    if i <= 0 then t, tasks else move_event t tasks (i - 1)
   in
   let get_ptr_idx = Motion_event.get_action_index in
   let action = Motion_event.get_action_masked ev in
