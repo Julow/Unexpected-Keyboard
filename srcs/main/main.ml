@@ -1,4 +1,7 @@
+open Android_content
 open Android_inputmethodservice
+open Android_os
+open Android_util
 open Android_view
 
 external _hack : unit -> unit = "Java_juloo_javacaml_Caml_startup"
@@ -42,6 +45,12 @@ let render_key =
 	| Nothing					-> ""
 	| Change_pad Default		-> "ABC"
 	| Change_pad Numeric		-> "123"
+
+let handler = lazy (Handler.create ())
+
+let timeout f msec =
+	let callback = Jrunnable.create f in
+	ignore (Handler.post_delayed (Lazy.force handler) callback msec)
 
 type t = {
   state : Keyboard.t;
@@ -95,18 +104,21 @@ let send ims tv =
   | Char (c, meta)	-> Keyboard_service.send_char_meta ims c meta
   | Event (ev, meta)	-> Keyboard_service.send_event ims ev meta
 
-let timeout handle tm ev =
-  Keyboard_service.timeout (fun () -> handle ev) tm
-
 let handle_task handle t = function
   | `Send tv -> send t.ims tv
   | `Invalidate -> View.invalidate t.view
-  | `Timeout (tm, ev) -> timeout handle tm ev
+  | `Timeout (tm, ev) -> timeout (fun () -> handle ev) tm
 
 let draw t canvas =
 	Drawing.keyboard t.dp render_key t.state canvas
 
-let service ~ims ~view ~dp () =
+let keyboard_view ~ims view =
+	let dp =
+		let density = Context.get_resources ims
+			|> Resources.get_display_metrics
+			|> Display_metrics.get'scaled_density in
+		fun x -> x *. density
+	in
   let t = ref (create ~ims ~view ~dp ()) in
   let rec handle ev =
     let t', tasks = do_update ev !t in
@@ -116,10 +128,22 @@ let service ~ims ~view ~dp () =
   let draw canvas =
     Drawing.keyboard !t.dp render_key !t.state canvas
   in
-  handle, draw
+  object
+    method onTouchEvent ev =
+      handle (`Touch_event ev);
+      true
+
+    method onMeasure w_spec _ =
+      let w = Measure_spec.get_size w_spec
+      and h = int_of_float (dp 200.) in
+      View.set_measured_dimension view w h
+
+    method onDraw = draw
+    method onDetachedFromWindow = ()
+  end
 
 let () =
 	Printexc.record_backtrace true;
 	Android_enable_logging.enable "UNEXPECTED KEYBOARD";
 	UnexpectedKeyboardService.register @@
-  Keyboard_service.keyboard_service service
+  Keyboard_service.create ~input_view:keyboard_view

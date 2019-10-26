@@ -1,8 +1,7 @@
-open Android_content
 open Android_inputmethodservice
-open Android_os
-open Android_util
 open Android_view
+
+(** InputMethodService *)
 
 (** Send a character through the current input connection *)
 let send_char ims cp =
@@ -63,42 +62,9 @@ let send_event ims evt meta =
 	ignore (send (mk_event (Key_event.get'action_down ()))
 		&& send (mk_event (Key_event.get'action_up ())))
 
-let handler = lazy (Handler.create ())
-
-let timeout f msec =
-	let callback = Jrunnable.create f in
-	ignore (Handler.post_delayed (Lazy.force handler) callback msec)
-
-(** InputMethodService related stuff
-	defines the main loop of the app
-	The logic is in the [Main] module *)
-let keyboard_service service ims =
-	let dp =
-		let density = Context.get_resources ims
-			|> Resources.get_display_metrics
-			|> Display_metrics.get'scaled_density in
-		fun x -> x *. density
-	in
-
-	let keyboard_view view =
-    let handle, draw = service ~ims ~view ~dp () in
-		object
-			method onTouchEvent ev =
-        handle (`Touch_event ev);
-				true
-
-			method onMeasure w_spec _ =
-				let w = Measure_spec.get_size w_spec
-				and h = int_of_float (dp 200.) in
-				View.set_measured_dimension view w h
-
-			method onDraw = draw
-			method onDetachedFromWindow = ()
-		end
-	in
-
+let create ~input_view ims =
+  let view = lazy (CustomView.create ims (input_view ~ims)) in
 	object
-		val view = lazy (CustomView.create ims keyboard_view)
 		method onInitializeInterface = ()
 		method onBindInput = ()
 		method onCreateInputView = Lazy.force view
