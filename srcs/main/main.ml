@@ -7,7 +7,7 @@ external _hack : unit -> unit = "Java_juloo_javacaml_Caml_startup"
 
 (** Key value to string *)
 let render_key =
-	let open Key in
+	let open Keyboard.Key in
 	let render_event =
 		function
 		| Escape		-> "Esc"
@@ -38,7 +38,7 @@ let render_key =
 	function
 	| Typing (Char (c, _))		->
 		(* TODO: OCaml and Java are useless at unicode *)
-		Java.to_string (Utils.java_string_of_code_point c)
+		Java.to_string (Java_utils.string_of_code_point c)
 	| Typing (Event (ev, _))	-> render_event ev
 	| Modifier m				-> render_modifier m
 	| Nothing					-> ""
@@ -56,10 +56,10 @@ let handle_touch_event view ev t =
     let x = Motion_event.get_x ev ptr_index /. float (View.get_width view)
     and y = Motion_event.get_y ev ptr_index /. float (View.get_height view)
     and ptr_id = Motion_event.get_pointer_id ev ptr_index in
-    Touch_event.{ kind; ptr_id; x; y }
+    Keyboard.Touch_event.{ kind; ptr_id; x; y }
   in
   let rec move_event t tasks i =
-    let t, tasks' = Keyboard.handle_touch_event (make_event Move i) t in
+    let t, tasks' = Keyboard.State.handle_touch_event (make_event Move i) t in
     let tasks = tasks' @ tasks in
     if i <= 0 then t, tasks else move_event t tasks (i - 1)
   in
@@ -69,22 +69,23 @@ let handle_touch_event view ev t =
   then move_event t [] (Motion_event.get_pointer_count ev - 1)
   else if action = motion_event_ACTION_UP
     || action = motion_event_ACTION_POINTER_UP
-  then Keyboard.handle_touch_event (make_event Up (get_ptr_idx ev)) t
+  then Keyboard.State.handle_touch_event (make_event Up (get_ptr_idx ev)) t
   else if action = motion_event_ACTION_DOWN
     || action = motion_event_ACTION_POINTER_DOWN
-  then Keyboard.handle_touch_event (make_event Down (get_ptr_idx ev)) t
+  then Keyboard.State.handle_touch_event (make_event Down (get_ptr_idx ev)) t
   else if action = motion_event_ACTION_CANCEL
-  then Keyboard.handle_touch_event (make_event Cancel (get_ptr_idx ev)) t
+  then Keyboard.State.handle_touch_event (make_event Cancel (get_ptr_idx ev)) t
   else t, []
 
 let do_update ~view ev t =
   match ev with
   | `Touch_event ev -> handle_touch_event view ev t
-  | `Key_repeat_timeout -> Keyboard.handle_key_repeat_timeout t
+  | `Key_repeat_timeout -> Keyboard.State.handle_key_repeat_timeout t
 
 let send ims tv =
+  let open Keyboard.Key in
   match tv with
-  | Key.Char (c, 0)	-> Keyboard_service.send_char ims c
+  | Char (c, 0)	-> Keyboard_service.send_char ims c
   | Char (c, meta)	-> Keyboard_service.send_char_meta ims c meta
   | Event (ev, meta)	-> Keyboard_service.send_event ims ev meta
 
@@ -100,7 +101,7 @@ let keyboard_view ~ims view =
 			|> Display_metrics.get'scaled_density in
 		fun x -> x *. density
 	in
-  let t = ref (Keyboard.create Layouts.qwerty) in
+  let t = ref Keyboard.(State.create Layouts.qwerty) in
   let rec handle ev =
     let t', tasks = do_update ~view ev !t in
     List.iter (handle_task ~ims ~view handle) tasks;

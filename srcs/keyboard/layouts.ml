@@ -1,7 +1,7 @@
 (** Keyboard layouts *)
 
 open Key
-open KeyboardLayout.Desc
+open Layout.Desc
 
 let key ?(width=1.) ?a ?b ?c ?d v = key ~width Key.{ a; b; c; d; v }
 let c c = Typing (Char (Char.code c, 0))

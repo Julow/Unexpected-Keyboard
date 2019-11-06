@@ -1,7 +1,7 @@
 (** Keyboard state *)
 type t = {
 	touch_state		: Touch_event.state;
-	layout			: Key.t KeyboardLayout.t;
+	layout			: Key.t Layout.t;
 	modifiers		: Modifiers.t;
   key_repeat : Key_repeat.t;
 }

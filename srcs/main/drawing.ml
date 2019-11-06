@@ -1,4 +1,5 @@
 open Android_graphics
+open Keyboard.Key
 
 (** Initialize the drawer
 	`dp` should convert from the `dp` unit to `px`
@@ -7,10 +8,10 @@ open Android_graphics
 let keyboard dp render_key state =
 
   let is_activated key =
-    Keyboard.key_activated state key
+    Keyboard.State.key_activated state key
   and render_key k =
     let k = match k with
-      | Key.Typing tv -> Key.Typing (Modifiers.apply tv state.modifiers)
+      | Typing tv -> Typing (Keyboard.Modifiers.apply tv state.modifiers)
       | k -> k
     in
     render_key k
@@ -74,10 +75,10 @@ let keyboard dp render_key state =
 			| None		-> ()
 		in
 		let { Rect.l; r; t; b } = corner_padding rect in
-		corner p_key_corner_label_l l t key.Key.a;
-		corner p_key_corner_label_r r t key.Key.b;
-		corner p_key_corner_label_r r b key.Key.c;
-		corner p_key_corner_label_l l b key.Key.d
+		corner p_key_corner_label_l l t key.a;
+		corner p_key_corner_label_r r t key.b;
+		corner p_key_corner_label_r r b key.c;
+		corner p_key_corner_label_l l b key.d
 	in
 
 	let draw_rect canvas { Rect.l; t; r; b } radius paint =
@@ -98,10 +99,10 @@ let keyboard dp render_key state =
 		key_background rect (is_activated key) canvas;
 		key_corners rect key canvas;
 		let mid_x, mid_y = Rect.middle rect in
-		key_value p_key_label mid_x mid_y key.Key.v canvas
+		key_value p_key_label mid_x mid_y key.v canvas
 	in
 
-	let rect_of_layout_pos { KeyboardLayout.x; y; width; height } =
+	let rect_of_layout_pos { Keyboard.Layout.x; y; width; height } =
 		Rect.create x (x +. width) y (y +. height)
 	in
 
@@ -114,7 +115,7 @@ let keyboard dp render_key state =
 			and h = float (Canvas.get_height canvas) in
 			keyboard_padding (Rect.create 0. w 0. h)
 		in
-		KeyboardLayout.iter (fun (pos, k) ->
+		Keyboard.Layout.iter (fun (pos, k) ->
 			let key_rect = Rect.transform rect (rect_of_layout_pos pos) in
 			key key_rect k canvas
 		) state.layout

@@ -59,7 +59,7 @@ let key_activated state key =
 	p.value
 
 let down ~layout state ev =
-	match KeyboardLayout.pick layout ev.x ev.y with
+	match Layout.pick layout ev.x ev.y with
 	| Some (_, key)	-> Key_down (key, pointer ev key :: state)
 	| None			-> Ignore
 

@@ -6,7 +6,7 @@ open Android_view
 (** Send a character through the current input connection *)
 let send_char ims cp =
 	let ic = Input_method_service.get_current_input_connection ims in
-	let txt = Utils.java_string_of_code_point cp in
+	let txt = Java_utils.string_of_code_point cp in
 	ignore (Input_connection.commit_text ic txt 1)
 
 let key_char_map = lazy Key_character_map.(load (get'virtual_keyboard ()))
@@ -36,8 +36,9 @@ let send_char_meta ims cp meta =
 let send_event ims evt meta =
 	let code =
 		let open Key_event in
+    let open Keyboard.Key in
 		match evt with
-		| Key.Escape	-> get'keycode_escape ()
+		| Escape	-> get'keycode_escape ()
 		| Tab			-> get'keycode_tab ()
 		| Backspace		-> get'keycode_del ()
 		| Delete		-> get'keycode_forward_del ()
