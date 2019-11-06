@@ -1,5 +1,4 @@
 open Android_content
-open Android_inputmethodservice
 open Android_os
 open Android_util
 open Android_view
@@ -52,18 +51,6 @@ let timeout f msec =
 	let callback = Jrunnable.create f in
 	ignore (Handler.post_delayed (Lazy.force handler) callback msec)
 
-type t = {
-  state : Keyboard.t;
-	ims				: Input_method_service.t;
-	view			: View.t;
-	dp				: float -> float;
-}
-
-let create ~ims ~view ~dp () = {
-  state = Keyboard.create Layouts.qwerty;
-	ims; view; dp
-}
-
 let handle_touch_event view ev t =
   let make_event kind ptr_index =
     let x = Motion_event.get_x ev ptr_index /. float (View.get_width view)
@@ -90,13 +77,10 @@ let handle_touch_event view ev t =
   then Keyboard.handle_touch_event (make_event Cancel (get_ptr_idx ev)) t
   else t, []
 
-let do_update ev t =
-  let state, tasks =
-    match ev with
-    | `Touch_event ev -> handle_touch_event t.view ev t.state
-    | `Key_repeat_timeout -> Keyboard.handle_key_repeat_timeout t.state
-  in
-  { t with state }, tasks
+let do_update ~view ev t =
+  match ev with
+  | `Touch_event ev -> handle_touch_event view ev t
+  | `Key_repeat_timeout -> Keyboard.handle_key_repeat_timeout t
 
 let send ims tv =
   match tv with
@@ -104,13 +88,10 @@ let send ims tv =
   | Char (c, meta)	-> Keyboard_service.send_char_meta ims c meta
   | Event (ev, meta)	-> Keyboard_service.send_event ims ev meta
 
-let handle_task handle t = function
-  | `Send tv -> send t.ims tv
-  | `Invalidate -> View.invalidate t.view
+let handle_task ~ims ~view handle = function
+  | `Send tv -> send ims tv
+  | `Invalidate -> View.invalidate view
   | `Timeout (tm, ev) -> timeout (fun () -> handle ev) tm
-
-let draw t canvas =
-	Drawing.keyboard t.dp render_key t.state canvas
 
 let keyboard_view ~ims view =
 	let dp =
@@ -119,14 +100,14 @@ let keyboard_view ~ims view =
 			|> Display_metrics.get'scaled_density in
 		fun x -> x *. density
 	in
-  let t = ref (create ~ims ~view ~dp ()) in
+  let t = ref (Keyboard.create Layouts.qwerty) in
   let rec handle ev =
-    let t', tasks = do_update ev !t in
-    List.iter (handle_task handle t') tasks;
+    let t', tasks = do_update ~view ev !t in
+    List.iter (handle_task ~ims ~view handle) tasks;
     t := t'
   in
   let draw canvas =
-    Drawing.keyboard !t.dp render_key !t.state canvas
+    Drawing.keyboard dp render_key !t canvas
   in
   object
     method onTouchEvent ev =
