@@ -1,4 +1,3 @@
 (library
  (name utils)
- (libraries android_api)
  (wrapped false))

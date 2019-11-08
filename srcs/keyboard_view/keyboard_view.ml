@@ -89,7 +89,9 @@ let send ims tv =
   | Event (ev, meta)	-> Ims_utils.send_event ims ev meta
 
 let handle_task ~ims ~view handle = function
-  | `Send tv -> send ims tv
+  | `Send (tv, mods) ->
+    let tv = Key_utils.apply_modifiers tv mods in
+    send ims tv
   | `Invalidate -> View.invalidate view
   | `Timeout (tm, ev) -> timeout (fun () -> handle ev) tm
 

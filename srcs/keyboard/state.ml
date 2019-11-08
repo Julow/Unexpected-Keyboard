@@ -23,7 +23,8 @@ let handle_key_repeat_timeout t =
   let key_repeat, repeats, timeout =
     Key_repeat.on_timeout t.key_repeat
   in
-  let sends = List.map (fun tv -> `Send tv) repeats in
+  let mods = Modifiers.active_modifiers t.modifiers in
+  let sends = List.map (fun tv -> `Send (tv, mods)) repeats in
   { t with key_repeat }, sends @ key_repeat_timeout timeout
 
 let handle_down t = function
@@ -52,10 +53,10 @@ let handle_cancel t = function
 
 let handle_up t = function
 	| Key.Typing tv			->
-		let tv = Modifiers.apply tv t.modifiers
-		and modifiers = Modifiers.on_key_press t.modifiers
+    let modifiers = Modifiers.on_key_press t.modifiers
     and key_repeat = Key_repeat.on_up t.key_repeat tv in
-    { t with modifiers; key_repeat }, [ `Send tv ]
+    let mods = Modifiers.active_modifiers t.modifiers in
+    { t with modifiers; key_repeat }, [ `Send (tv, mods) ]
 	| Modifier m			->
 		{ t with modifiers = Modifiers.on_up m t.modifiers }, []
 	| _						-> t, []

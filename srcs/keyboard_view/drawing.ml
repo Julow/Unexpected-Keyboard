@@ -12,7 +12,9 @@ let keyboard dp render_key state =
     Keyboard.State.key_activated state key
   and render_key k =
     let k = match k with
-      | Typing tv -> Typing (Keyboard.Modifiers.apply tv state.modifiers)
+      | Typing tv ->
+        let mods = Keyboard.Modifiers.active_modifiers state.modifiers in
+        Typing (Key_utils.apply_modifiers tv mods)
       | k -> k
     in
     render_key k

@@ -7,6 +7,9 @@ type t = modifier list
 
 let empty = []
 
+let active_modifiers t =
+  List.map (fun (m, _) -> m) t
+
 let rec extract_modifier acc m = function
 	| (m'', _ as m') :: tl when m = m'' ->
 		Some (m', List.rev_append acc tl)
@@ -50,8 +53,3 @@ let rec on_key_press =
 	| (m, Hold_waiting) :: tl	-> (m, Hold) :: on_key_press tl
 	| hd :: tl					-> hd :: on_key_press tl
 	| []						-> []
-
-(** Apply all modifiers
-	Last added first *)
-let apply tvalue t =
-	List.fold_left (fun tv (m, _) -> Key.apply_modifier tv m) tvalue t
