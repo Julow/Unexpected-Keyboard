@@ -1,4 +1,4 @@
-open Android_graphics
+open Android_api.Graphics
 open Keyboard.Key
 
 (** Initialize the drawer

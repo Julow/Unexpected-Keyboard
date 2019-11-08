@@ -7,7 +7,7 @@
 			|> text_size 20.)
 			() *)
 
-open Android_graphics
+open Android_api.Graphics
 
 type t = unit -> Paint.t
 

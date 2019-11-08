@@ -1,5 +1,6 @@
-open Android_inputmethodservice
-open Android_view
+open Android_api.Inputmethodservice
+open Android_api.Os
+open Android_api.View
 
 (** InputMethodService *)
 
@@ -52,7 +53,7 @@ let send_event ims evt meta =
 		| Home			-> get'keycode_home ()
 		| End			-> get'keycode_move_end ()
 	in
-	let time = Android_os.System_clock.uptime_millis () in
+	let time = System_clock.uptime_millis () in
 	let mk_event action =
 		let flags = Key_event.(get'flag_keep_touch_mode ()
 				lor get'flag_soft_keyboard ()) in

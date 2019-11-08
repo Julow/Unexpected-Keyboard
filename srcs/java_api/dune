@@ -1,6 +1,5 @@
 (library
- (name android)
- (wrapped false)
+ (name java_api)
  (libraries ocamljava-javacaml ocamljava)
  (preprocess
   (pps ocamljava-ppx)))

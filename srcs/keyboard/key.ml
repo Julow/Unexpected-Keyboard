@@ -1,4 +1,4 @@
-open Android_view
+open Android_api.View
 
 type event =
 	| Escape
@@ -45,7 +45,7 @@ type t = {
 let apply_shift =
 	let meta_shift = Key_event.(get'meta_shift_left_on () lor get'meta_shift_on ()) in
 	function
-	| Char (c, _)		-> Char (Java_lang.Character.to_upper_case c, 0)
+	| Char (c, _)		-> Char (Java_api.Lang.Character.to_upper_case c, 0)
 	| Event (kv, meta)	-> Event (kv, meta lor meta_shift)
 
 (** Adds meta flags *)

@@ -1,0 +1,5 @@
+(library
+ (name android_api)
+ (libraries java_api ocamljava-javacaml ocamljava)
+ (preprocess
+  (pps ocamljava-ppx)))

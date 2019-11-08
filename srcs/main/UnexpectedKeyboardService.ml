@@ -1,6 +1,6 @@
-open Android_inputmethodservice
-open Android_view_inputmethod
-open Android_view
+open Android_api.Inputmethodservice
+open Android_api.View_inputmethod
+open Android_api.View
 
 type t = <
 	onInitializeInterface : unit;
