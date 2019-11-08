@@ -34,13 +34,7 @@ let handle_down t = function
       let key_repeat, timeout = Key_repeat.on_down t.key_repeat tv in
       { t with key_repeat }, key_repeat_timeout timeout
 	| Change_pad pad	->
-		let layout = match pad with
-			| Default	-> Layouts.qwerty
-			| Numeric	-> Layouts.numeric
-		in
-		{ t with layout;
-			modifiers = Modifiers.empty;
-			touch_state = Touch_event.empty_state }, []
+    t, [ `Change_pad pad ]
 	| _					-> t, []
 
 let handle_cancel t = function
@@ -82,3 +76,8 @@ let key_activated t key =
   match Touch_event.key_activated t.touch_state key with
   | exception Not_found	-> false
   | _						-> true
+
+let set_layout t layout =
+  { t with layout;
+    modifiers = Modifiers.empty;
+    touch_state = Touch_event.empty_state }, []

@@ -80,6 +80,7 @@ let do_update ~view ev t =
   match ev with
   | `Touch_event ev -> handle_touch_event view ev t
   | `Key_repeat_timeout -> Keyboard.State.handle_key_repeat_timeout t
+  | `Set_layout layout -> Keyboard.State.set_layout t layout
 
 let send ims tv =
   let open Key in
@@ -94,6 +95,12 @@ let handle_task ~ims ~view handle = function
     send ims tv
   | `Invalidate -> View.invalidate view
   | `Timeout (tm, ev) -> timeout (fun () -> handle ev) tm
+  | `Change_pad pad ->
+    let layout = match pad with
+      | Key.Default	-> Layouts.qwerty
+      | Numeric	-> Layouts.numeric
+    in
+    handle (`Set_layout layout)
 
 let create ~ims view =
 	let dp =
@@ -102,11 +109,11 @@ let create ~ims view =
 			|> Display_metrics.get'scaled_density in
 		fun x -> x *. density
 	in
-  let t = ref Keyboard.(State.create Layouts.qwerty) in
+  let t = ref (Keyboard.State.create Layouts.qwerty) in
   let rec handle ev =
     let t', tasks = do_update ~view ev !t in
-    List.iter (handle_task ~ims ~view handle) tasks;
-    t := t'
+    t := t';
+    List.iter (handle_task ~ims ~view handle) tasks
   in
   let draw canvas =
     Drawing.keyboard dp render_key !t canvas
