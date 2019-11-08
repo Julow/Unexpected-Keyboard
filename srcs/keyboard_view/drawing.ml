@@ -1,5 +1,5 @@
 open Android_api.Graphics
-open Keyboard.Key
+open Key
 open Android_utils
 
 (** Initialize the drawer
@@ -57,18 +57,18 @@ let keyboard dp render_key state =
 	and key_bg_padding = Rect.padding (dp 1.3) (dp 1.3)
 	and corner_padding = Rect.padding (dp 3.5) (dp 7.5) in
 
-	(** Adjust the y coordinate for drawing text centered *)
+	(* Adjust the y coordinate for drawing text centered *)
 	let text_center_y paint y =
 		y -. (Paint.ascent paint +. Paint.descent paint) /. 2.
 	in
 
-	(** Draw the value of a key (label) *)
+	(* Draw the value of a key (label) *)
 	let key_value paint x y value canvas =
 		let y = text_center_y paint y in
 		Canvas.draw_text canvas (render_key value) x y paint
 	in
 
-	(** Draw corners values *)
+	(* Draw corners values *)
 	let key_corners rect key canvas =
 		let corner paint x y =
 			function
@@ -95,7 +95,7 @@ let keyboard dp render_key state =
 		else (shadow p_key_shadow; bg p_key_bg)
 	in
 
-	(** Draw a key inside a rectangle *)
+	(* Draw a key inside a rectangle *)
 	let key rect key canvas =
 		key_background rect (is_activated key) canvas;
 		key_corners rect key canvas;
@@ -107,7 +107,7 @@ let keyboard dp render_key state =
 		Rect.create x (x +. width) y (y +. height)
 	in
 
-	(** Draw the keyboard on `canvas`, scaled to the canvs size
+	(* Draw the keyboard on `canvas`, scaled to the canvs size
 		The layout is expected to have a size of (1, 1) *)
 	let keyboard canvas =
 		Canvas.draw_color canvas keyboard_bg;

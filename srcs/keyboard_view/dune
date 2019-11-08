@@ -1,0 +1,4 @@
+(library
+ (name keyboard_view)
+ (libraries android_utils keyboard utils
+   android_api java_api))

@@ -1,7 +1,6 @@
 open Android_api.Inputmethodservice
 open Android_api.Os
 open Android_api.View
-open Android_utils
 
 (** InputMethodService *)
 
@@ -38,7 +37,7 @@ let send_char_meta ims cp meta =
 let send_event ims evt meta =
 	let code =
 		let open Key_event in
-    let open Keyboard.Key in
+    let open Key in
 		match evt with
 		| Escape	-> get'keycode_escape ()
 		| Tab			-> get'keycode_tab ()
@@ -65,12 +64,3 @@ let send_event ims evt meta =
 	ignore (send (mk_event (Key_event.get'action_down ()))
 		&& send (mk_event (Key_event.get'action_up ())))
 
-let create ~input_view ims =
-  let view = lazy (CustomView.create ims (input_view ~ims)) in
-	object
-		method onInitializeInterface = ()
-		method onBindInput = ()
-		method onCreateInputView = Lazy.force view
-		method onCreateCandidatesView = Java.null
-		method onStartInput _ _ = ()
-	end
