@@ -1,0 +1,3 @@
+(library
+ (name android_utils)
+ (libraries android_api java_api))

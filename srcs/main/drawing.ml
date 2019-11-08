@@ -1,5 +1,6 @@
 open Android_api.Graphics
 open Keyboard.Key
+open Android_utils
 
 (** Initialize the drawer
 	`dp` should convert from the `dp` unit to `px`

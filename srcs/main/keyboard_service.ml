@@ -1,6 +1,7 @@
 open Android_api.Inputmethodservice
 open Android_api.Os
 open Android_api.View
+open Android_utils
 
 (** InputMethodService *)
 

@@ -2,6 +2,7 @@ open Android_api.Content
 open Android_api.Os
 open Android_api.Util
 open Android_api.View
+open Android_utils
 
 external _hack : unit -> unit = "Java_juloo_javacaml_Caml_startup"
 

@@ -1,6 +1,7 @@
 (executable
  (name main)
- (libraries keyboard utils ocamljava ocamljava-javacaml android_api java_api android_enable_logging)
+ (libraries android_utils keyboard utils ocamljava ocamljava-javacaml
+   android_api java_api android_enable_logging)
  (preprocess
   (pps lwt_ppx ocamljava-ppx))
  (modes shared_object))
