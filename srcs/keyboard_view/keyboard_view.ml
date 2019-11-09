@@ -1,5 +1,4 @@
 open Android_api.Content
-open Android_api.Os
 open Android_api.Util
 open Android_api.View
 open Android_utils
@@ -44,12 +43,6 @@ let render_key =
 	| Change_pad Default		-> "ABC"
 	| Change_pad Numeric		-> "123"
 
-let handler = lazy (Handler.create ())
-
-let timeout f msec =
-	let callback = Jrunnable.create f in
-	ignore (Handler.post_delayed (Lazy.force handler) callback msec)
-
 let handle_touch_event view ev t =
   let make_event kind ptr_index =
     let x = Motion_event.get_x ev ptr_index /. float (View.get_width view)
@@ -82,19 +75,12 @@ let do_update ~view ev t =
   | `Key_repeat_timeout -> Keyboard.State.handle_key_repeat_timeout t
   | `Set_layout layout -> Keyboard.State.set_layout t layout
 
-let send ims tv =
-  let open Key in
-  match tv with
-  | Char (c, 0)	-> Ims_utils.send_char ims c
-  | Char (c, meta)	-> Ims_utils.send_char_meta ims c meta
-  | Event (ev, meta)	-> Ims_utils.send_event ims ev meta
-
 let handle_task ~ims ~view handle = function
   | `Send (tv, mods) ->
     let tv = Key_utils.apply_modifiers tv mods in
-    send ims tv
+    Ims_utils.send ims tv
   | `Invalidate -> View.invalidate view
-  | `Timeout (tm, ev) -> timeout (fun () -> handle ev) tm
+  | `Timeout (tm, ev) -> Timeout.timeout (fun () -> handle ev) tm
   | `Change_pad pad ->
     let layout = match pad with
       | Key.Default	-> Layouts.qwerty

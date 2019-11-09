@@ -64,3 +64,8 @@ let send_event ims evt meta =
 	ignore (send (mk_event (Key_event.get'action_down ()))
 		&& send (mk_event (Key_event.get'action_up ())))
 
+(** Send an typing_value to InputMethodService *)
+let send ims = function
+  | Key.Char (c, 0) -> send_char ims c
+  | Char (c, meta) -> send_char_meta ims c meta
+  | Event (ev, meta) -> send_event ims ev meta
