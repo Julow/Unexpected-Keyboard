@@ -30,10 +30,8 @@ all debug: $(ARCHS) $(EXTRA_JARS)
 
 $(ARCHS):
 	mkdir -p $(BUILD_DIR)/lib/$@
-	set -e; \
-	opam switch $(SWITCH); \
 	TARGET=_build/default.android/srcs/main/main.so; \
-	opam exec -- dune build -x android "$$TARGET"; \
+	opam exec --switch="$(SWITCH)" -- dune build -x android "$$TARGET" && \
 	cp "$$TARGET" "$(BUILD_DIR)/lib/$@/lib$(NAME).so"
 
 $(EXTRA_JARS):
