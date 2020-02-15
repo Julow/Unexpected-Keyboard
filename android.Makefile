@@ -90,7 +90,7 @@ $(BIN_DIR)/%.dex: $(R_FILE) | $(BIN_DIR)
 	$(DX) --dex --output="$@" $(OBJ_DIR) $(subst :, ,$(EXTRA_JARS))
 
 # build java classes
-$(OBJ_DIR)/%.class: $(SRC_DIR)/%.java | $(OBJ_DIR)
+$(OBJ_DIR)/%.class: $(SRC_DIR)/%.java $(R_FILE) | $(OBJ_DIR)
 	javac -d $(OBJ_DIR) $(JAVACFLAGS) \
 		-classpath $(ANDROID_FRAMEWORK):$(EXTRA_JARS) \
 		-sourcepath $(SRC_DIR):$(GEN_DIR) \
