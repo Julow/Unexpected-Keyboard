@@ -34,13 +34,6 @@ public class Keyboard2View extends View
 	private Handler				_handler;
 	private static int			_currentWhat = 0;
 
-	private KeyPreviewPopup		_previewPopup;
-
-	/*
-	** TODO: settings: preview_text_size
-	** TODO: settings: preview_timeout
-	** TODO: disable preview in password fields
-	*/
 	private Config				_config;
 
 	private float				_keyWidth;
@@ -64,7 +57,6 @@ public class Keyboard2View extends View
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
 		_config = ((Keyboard2)context).getConfig();
-		_previewPopup = new KeyPreviewPopup(this, _config);
 		_keyBgPaint.setColor(getResources().getColor(R.color.key_bg));
 		_keyDownBgPaint.setColor(getResources().getColor(R.color.key_down_bg));
 		_keyLabelPaint = initLabelPaint(_keyLabelPaint, Paint.Align.CENTER, R.color.key_label, R.dimen.label_text_size, null);
@@ -273,24 +265,12 @@ public class Keyboard2View extends View
 	{
 		if (key.value != null && (key.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
 			((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
-		// previewNextKeyDown
-		if (!_config.previewEnabled)
-			return ;
-		for (KeyDown k : _downKeys)
-			if ((k.value.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
-			{
-				_previewPopup.setPreview(k.value, _flags);
-				return ;
-			}
-		_previewPopup.setPreview(null, 0);
 	}
 
 	private void		handleKeyDown(KeyValue key)
 	{
 		if (key == null)
 			return ;
-		if (_config.previewEnabled && (key.getFlags() & (KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_NOREPEAT | KeyValue.FLAG_NOCHAR)) == 0)
-			_previewPopup.setPreview(key, _flags);
 		vibrate();
 	}
 
@@ -395,7 +375,6 @@ public class Keyboard2View extends View
 	public void			onDetachedFromWindow()
 	{
 		super.onDetachedFromWindow();
-		_previewPopup.forceDismiss();
 	}
 
 	private void		drawLabel(Canvas canvas, KeyValue k, float x, float y, boolean locked)

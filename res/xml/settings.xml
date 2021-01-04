@@ -52,14 +52,6 @@
 			max="50"
 		/>
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_category_preview">
-		<CheckBoxPreference
-			android:key="preview_enabled"
-			android:title="@string/pref_preview_title"
-			android:summary="@string/pref_preview_summary"
-			android:defaultValue="false"
-		/>
-	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_style">
 		<juloo.common.IntSlideBarPreference
 			android:key="margin_bottom"

@@ -34,8 +34,4 @@
 	<string name="pref_key_height_summary">%sdp</string>
 	<string name="pref_horizontal_margin_title">Horizontal margin</string>
 	<string name="pref_horizontal_margin_summary">%sdp</string>
-
-	<string name="pref_category_preview">Preview</string>
-	<string name="pref_preview_title">Preview</string>
-	<string name="pref_preview_summary">Enable/Disable preview on key down</string>
 </resources>

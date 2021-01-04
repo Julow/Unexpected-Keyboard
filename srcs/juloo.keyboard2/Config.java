@@ -10,14 +10,11 @@ class Config
 	private Keyboard2			_context;
 
 
-	public final long			previewDismissTimeout;
-	public final int			previewBottomMargin;
 	public final float			marginTop;
 	public final float			keyPadding;
 	public final float			keyBgPadding;
 	public final float			keyRound;
 
-	public boolean				previewEnabled;
 	public float				subValueDist;
 	public boolean				vibrateEnabled;
 	public long					vibrateDuration;
@@ -33,14 +30,11 @@ class Config
 
 		_context = context;
 		// static values
-		previewDismissTimeout = 150;
-		previewBottomMargin = (int)res.getDimension(R.dimen.preview_margin);
 		marginTop = res.getDimension(R.dimen.margin_top);
 		keyPadding = res.getDimension(R.dimen.key_padding);
 		keyBgPadding = res.getDimension(R.dimen.key_bg_padding);
 		keyRound = res.getDimension(R.dimen.key_round);
 		// default values
-		previewEnabled = false;
 		subValueDist = 10f;
 		vibrateEnabled = true;
 		vibrateDuration = 20;
@@ -60,7 +54,6 @@ class Config
 	{
 		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(_context);
 
-		previewEnabled = prefs.getBoolean("preview_enabled", previewEnabled);
 		subValueDist = prefs.getFloat("sub_value_dist", subValueDist);
 		vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
 		vibrateDuration = prefs.getInt("vibrate_duration", (int)vibrateDuration);
