@@ -14,7 +14,7 @@ in
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
-    ant openjdk8 android.androidsdk
+    ant openjdk android.androidsdk
   ];
   shellHook = ''
     export ANDROID_HOME=${android.androidsdk}/libexec/android-sdk
