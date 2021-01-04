@@ -13,7 +13,7 @@
 			android:icon="@drawable/ic_launcher"
 			android:hardwareAccelerated="false">
 
-		<service android:name="Keyboard2"
+		<service android:name="juloo.keyboard2.Keyboard2"
 				android:label="@string/app_name"
 				android:permission="android.permission.BIND_INPUT_METHOD">
 			<intent-filter>
@@ -23,7 +23,7 @@
 					android:resource="@xml/method" />
 		</service>
 
-		<activity android:name="SettingsActivity"
+		<activity android:name="juloo.keyboard2.SettingsActivity"
 				android:icon="@drawable/ic_launcher"
 				android:label="@string/settings_activity_label">
 			<intent-filter>
