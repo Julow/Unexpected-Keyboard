@@ -21,7 +21,7 @@ import java.util.HashSet;
 public class EmojiGridView extends GridView
 	implements GridView.OnItemClickListener
 {
-	public static final int			TYPE_LAST_USE = -1;
+	public static final int			GROUP_LAST_USE = -1;
 
 	public static final int			COLUMN_WIDTH = 192;
 	public static final float		EMOJI_SIZE = 32.f;
@@ -38,15 +38,16 @@ public class EmojiGridView extends GridView
 	public EmojiGridView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+    Emoji.init(context.getResources());
 		setOnItemClickListener(this);
 		setColumnWidth(COLUMN_WIDTH);
 		loadLastUsed();
-		setEmojiType((_lastUsed.size() == 0) ? Emoji.TYPE_EMOTICONS : TYPE_LAST_USE);
+		setEmojiGroup((_lastUsed.size() == 0) ? 0 : GROUP_LAST_USE);
 	}
 
-	public void			setEmojiType(int type)
+	public void			setEmojiGroup(int group)
 	{
-		_emojiArray = (type == TYPE_LAST_USE) ? getLastEmojis() : Emoji.getEmojisByType(type);
+		_emojiArray = (group == GROUP_LAST_USE) ? getLastEmojis() : Emoji.getEmojisByGroup(group);
 		setAdapter(new EmojiViewAdpater((Keyboard2)getContext(), _emojiArray));
 	}
 
