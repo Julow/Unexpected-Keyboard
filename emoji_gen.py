@@ -891,8 +891,18 @@ def make_name(code):
 with open(sys.argv[1]) as f:
     entries = parse_lines(f)
 
+def keep_emoji(e):
+    code, status, _ = e
+    code = code.split()
+    # Keep only interesting emojis (others are duplicates or won't render well)
+    # Remove skin tone variants, they are accessible through combinations
+    return status in [ "fully-qualified", "component" ] and \
+        not (len(code) > 1 and code[-1] in [ "1F3FB", "1F3FC", "1F3FD", "1F3FE", "1F3FF" ])
+
+
 for group in entries.values():
+    group = list(filter(keep_emoji, group))
     print("%d" % len(group))
-    for code, _, desc in group:
+    for code, status, desc in group:
         name = name_map[code] if code in name_map else make_name(code)
         print("%s %s %s" % (name, decode_points(code), desc))
