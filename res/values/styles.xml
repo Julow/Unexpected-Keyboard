@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="emojiTypeButton">
-		<item name="android:padding">0px</item>
+		<item name="android:padding">1px</item>
+		<item name="android:gravity">center</item>
+		<item name="android:minHeight">@dimen/label_text_size</item>
 		<item name="android:background">@color/emoji_button_bg</item>
 		<item name="android:textColor">@color/emoji_key_text</item>
 		<item name="android:textSize">@dimen/label_text_size</item>
