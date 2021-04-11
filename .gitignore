@@ -1,5 +1,2 @@
-local.properties
-proguard-project.txt
-bin/*
-gen/*
 *.keystore
+_build
