@@ -82,20 +82,30 @@ public class Keyboard2 extends InputMethodService
 		_keyboardView.reset();
 	}
 
+  private int _getKeyboardLayoutRes(SharedPreferences prefs)
+  {
+    // Not looking up using [getIdentifier] as it was intended because the
+    // [packageName] argument can't be passed reliably (eg. debug builds)
+    switch (prefs.getString("keyboard_layout", null))
+    {
+      case "azerty":
+        return R.xml.azerty;
+      default:
+      case "qwerty":
+        return R.xml.qwerty;
+    }
+  }
+
 	/*
 	** TODO: move this to Config object
 	*/
 	private void			updateConfig()
 	{
 		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String				keyboardLayout = prefs.getString("keyboard_layout", null);
-		int					xmlRes = 0;
 
-		if (keyboardLayout != null)
-			xmlRes = getResources().getIdentifier(keyboardLayout, "xml", getPackageName());
-		if (xmlRes == 0)
-			xmlRes = R.xml.azerty;
-		_textKeyboard = new KeyboardData(getResources().getXml(xmlRes));
+		_textKeyboard = new KeyboardData(getResources().getXml(_getKeyboardLayoutRes(prefs)));
+    if (_config.disableAccentKeys)
+      _textKeyboard.removeKeysByFlag(KeyValue.FLAGS_ACCENTS);
 		_numericKeyboard = new KeyboardData(getResources().getXml(R.xml.numeric));
 		_emojiPane = null;
 	}
