@@ -33,6 +33,9 @@ class KeyValue
 	public static final int		FLAG_ACCENT5 = (1 << 20);
 	public static final int		FLAG_ACCENT6 = (1 << 21);
 
+  public static final int   FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
+    FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6;
+
 	private String		_name;
 	private String		_symbol;
 	private char		_char;

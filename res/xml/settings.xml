@@ -9,6 +9,12 @@
 			android:entries="@array/pref_layout_entries"
 			android:entryValues="@array/pref_layout_values"
 		/>
+    <CheckBoxPreference
+      android:key="disable_accent_keys"
+      android:title="@string/pref_disable_accent_keys_title"
+      android:summary="@string/pref_disable_accent_keys_summary"
+      android:defaultValue="false"
+    />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_category_typing">
 		<juloo.common.SlideBarPreference

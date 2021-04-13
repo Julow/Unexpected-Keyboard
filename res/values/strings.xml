@@ -34,4 +34,6 @@
 	<string name="pref_key_height_summary">%sdp</string>
 	<string name="pref_horizontal_margin_title">Horizontal margin</string>
 	<string name="pref_horizontal_margin_summary">%sdp</string>
+	<string name="pref_disable_accent_keys_title">Toggle accent keys</string>
+	<string name="pref_disable_accent_keys_summary">Whether to remove the accent keys from the keyboard.</string>
 </resources>

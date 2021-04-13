@@ -43,6 +43,27 @@ class KeyboardData
 		return (_rows);
 	}
 
+  // Remove every keys that has the given flags.
+  public void removeKeysByFlag(int flags)
+  {
+    for (Row r : _rows)
+    {
+      for (Key k : r)
+      {
+        k.key0 = _removeKeyValueFlag(k.key0, flags);
+        k.key1 = _removeKeyValueFlag(k.key1, flags);
+        k.key2 = _removeKeyValueFlag(k.key2, flags);
+        k.key3 = _removeKeyValueFlag(k.key3, flags);
+        k.key4 = _removeKeyValueFlag(k.key4, flags);
+      }
+    }
+  }
+
+  private KeyValue _removeKeyValueFlag(KeyValue v, int flags)
+  {
+    return (v != null && (v.getFlags() & flags) != 0) ? null : v;
+  }
+
 	public class Row extends ArrayList<Key>
 	{
 		private float		_keysWidth;

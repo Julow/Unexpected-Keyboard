@@ -9,7 +9,6 @@ class Config
 {
 	private Keyboard2			_context;
 
-
 	public final float			marginTop;
 	public final float			keyPadding;
 	public final float			keyBgPadding;
@@ -23,6 +22,7 @@ class Config
 	public float				marginBottom;
 	public float				keyHeight;
 	public float				horizontalMargin;
+  public boolean      disableAccentKeys;
 
 	public Config(Keyboard2 context)
 	{
@@ -43,6 +43,7 @@ class Config
 		marginBottom = res.getDimension(R.dimen.margin_bottom);
 		keyHeight = res.getDimension(R.dimen.key_height);
 		horizontalMargin = res.getDimension(R.dimen.horizontal_margin);
+    disableAccentKeys = false;
 		// from prefs
 		refresh();
 	}
@@ -62,6 +63,7 @@ class Config
 		marginBottom = getDipPref(prefs, "margin_bottom", marginBottom);
 		keyHeight = getDipPref(prefs, "key_height", keyHeight);
 		horizontalMargin = getDipPref(prefs, "horizontal_margin", horizontalMargin);
+    disableAccentKeys = prefs.getBoolean("disable_accent_keys", disableAccentKeys);
 	}
 
 	private float		getDipPref(SharedPreferences prefs, String pref_name, float def)
