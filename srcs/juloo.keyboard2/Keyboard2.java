@@ -34,7 +34,7 @@ public class Keyboard2 extends InputMethodService
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 		_config = new Config(this);
-		updateConfig();
+		_numericKeyboard = KeyboardData.parse(getResources().getXml(R.xml.numeric));
 		_keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
 		_keyboardView.reset();
 	}
@@ -95,20 +95,6 @@ public class Keyboard2 extends InputMethodService
         return R.xml.qwerty;
     }
   }
-
-	/*
-	** TODO: move this to Config object
-	*/
-	private void			updateConfig()
-	{
-		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		_textKeyboard = new KeyboardData(getResources().getXml(_getKeyboardLayoutRes(prefs)));
-    if (_config.disableAccentKeys)
-      _textKeyboard.removeKeysByFlag(KeyValue.FLAGS_ACCENTS);
-		_numericKeyboard = new KeyboardData(getResources().getXml(R.xml.numeric));
-		_emojiPane = null;
-	}
 
 	public void				handleKeyUp(KeyValue key, int flags)
 	{

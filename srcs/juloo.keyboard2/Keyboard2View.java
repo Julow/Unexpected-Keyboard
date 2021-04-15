@@ -87,7 +87,10 @@ public class Keyboard2View extends View
 
 	public void			setKeyboard(KeyboardData keyboard)
 	{
-		_keyboard = keyboard;
+    if (_config.disableAccentKeys)
+      _keyboard = keyboard.removeKeys(new KeyboardData.RemoveKeysByFlags(KeyValue.FLAGS_ACCENTS));
+    else
+      _keyboard = keyboard;
 		reset();
 	}
 
@@ -195,7 +198,7 @@ public class Keyboard2View extends View
 			if (touchY < y || touchY >= (y + _config.keyHeight))
 				continue ;
 			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2 + _config.horizontalMargin;
-			for (KeyboardData.Key key : row)
+			for (KeyboardData.Key key : row.getKeys())
 			{
 				keyW = _keyWidth * key.width;
 				if (touchX >= x && touchX < (x + keyW))
@@ -343,7 +346,7 @@ public class Keyboard2View extends View
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
 			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2f + _config.horizontalMargin;
-			for (KeyboardData.Key k : row)
+			for (KeyboardData.Key k : row.getKeys())
 			{
 				float keyW = _keyWidth * k.width;
 				KeyDown keyDown = getKeyDown(k);
