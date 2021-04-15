@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,21 +11,50 @@ import android.text.InputType;
 import android.preference.PreferenceManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Keyboard2 extends InputMethodService
 	implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 	private Keyboard2View	_keyboardView;
-	private KeyboardData	_textKeyboard = null;
-	private KeyboardData	_numericKeyboard = null;
+  private int _currentTextLayout;
 	private ViewGroup		_emojiPane = null;
 	private Typeface		_specialKeyFont = null;
 
 	private Config			_config;
+
+  private Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
+
+  private static final int DEFAULT_LAYOUT = R.xml.qwerty;
+  private static final Map<String, Integer> LAYOUTS = new HashMap<String, Integer>();
+
+  private static void add_layout(String lang, int resId)
+  {
+    LAYOUTS.put(new Locale(lang).getLanguage(), resId);
+  }
+
+  static
+  {
+    add_layout("fr", R.xml.azerty);
+  }
+
+  private KeyboardData getLayout(int resId)
+  {
+    KeyboardData l = _layoutCache.get(resId);
+    if (l == null)
+    {
+      l = KeyboardData.parse(getResources().getXml(resId));
+      _layoutCache.put(resId, l);
+    }
+    return l;
+  }
 
 	@Override
 	public void				onCreate()
@@ -34,7 +64,6 @@ public class Keyboard2 extends InputMethodService
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 		_config = new Config(this);
-		_numericKeyboard = KeyboardData.parse(getResources().getXml(R.xml.numeric));
 		_keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
 		_keyboardView.reset();
 	}
@@ -49,6 +78,14 @@ public class Keyboard2 extends InputMethodService
 		return (_specialKeyFont);
 	}
 
+  private void refreshSubtype(InputMethodSubtype subtype)
+  {
+    Integer l = LAYOUTS.get(subtype.getLanguageTag());
+    if (l == null)
+      l = DEFAULT_LAYOUT;
+    _currentTextLayout = l;
+  }
+
 	@Override
 	public View				onCreateInputView()
 	{
@@ -62,17 +99,25 @@ public class Keyboard2 extends InputMethodService
 	@Override
 	public void				onStartInputView(EditorInfo info, boolean restarting)
 	{
+    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    refreshSubtype(imm.getCurrentInputMethodSubtype());
 		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
-			_keyboardView.setKeyboard(_numericKeyboard);
-		else
-			_keyboardView.setKeyboard(_textKeyboard);
+      _keyboardView.setKeyboard(getLayout(R.xml.numeric));
+    else
+      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
 	}
+
+  @Override
+  public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
+  {
+    refreshSubtype(subtype);
+    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+  }
 
 	@Override
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
 		_config.refresh();
-		updateConfig();
 		_keyboardView.reset();
 	}
 
@@ -81,20 +126,6 @@ public class Keyboard2 extends InputMethodService
 	{
 		_keyboardView.reset();
 	}
-
-  private int _getKeyboardLayoutRes(SharedPreferences prefs)
-  {
-    // Not looking up using [getIdentifier] as it was intended because the
-    // [packageName] argument can't be passed reliably (eg. debug builds)
-    switch (prefs.getString("keyboard_layout", null))
-    {
-      case "azerty":
-        return R.xml.azerty;
-      default:
-      case "qwerty":
-        return R.xml.qwerty;
-    }
-  }
 
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
@@ -110,9 +141,9 @@ public class Keyboard2 extends InputMethodService
 			startActivity(intent);
 		}
 		else if (eventCode == KeyValue.EVENT_SWITCH_TEXT)
-			_keyboardView.setKeyboard(_textKeyboard);
+			_keyboardView.setKeyboard(getLayout(_currentTextLayout));
 		else if (eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
-			_keyboardView.setKeyboard(_numericKeyboard);
+			_keyboardView.setKeyboard(getLayout(R.xml.numeric));
 		else if (eventCode == KeyValue.EVENT_SWITCH_EMOJI)
 		{
 			if (_emojiPane == null)

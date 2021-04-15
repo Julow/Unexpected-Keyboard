@@ -5,13 +5,10 @@
 
 	<string name="settings_activity_label">Unexpected Keyboard Settings</string>
 
+  <string name="subtype_label_azerty">%s AZERTY</string>
+  <string name="subtype_label_qwerty">%s QWERTY</string>
+
 	<string name="pref_category_layout">Layout</string>
-	<string name="pref_layout_title">Change keyboard layout</string>
-	<string name="pref_layout_summary">%s</string>
-	<string-array name="pref_layout_entries">
-		<item>Azerty</item>
-		<item>Qwerty</item>
-	</string-array>
 
 	<string name="pref_category_typing">Typing</string>
 	<string name="pref_preci_title">Precision</string>

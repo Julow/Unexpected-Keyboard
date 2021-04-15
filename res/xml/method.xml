@@ -2,4 +2,16 @@
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
 		android:settingsActivity="juloo.keyboard2.SettingsActivity"
 		android:supportsSwitchingToNextInputMethod="true">
+  <subtype android:label="@string/subtype_label_azerty"
+      android:languageTag="fr"
+      android:imeSubtypeLocale="fr_FR"
+      android:imeSubtypeMode="keyboard"
+      android:isAsciiCapable="true"
+    />
+  <subtype android:label="@string/subtype_label_qwerty"
+      android:languageTag="en"
+      android:imeSubtypeLocale="en_US"
+      android:imeSubtypeMode="keyboard"
+      android:isAsciiCapable="true"
+    />
 </input-method>
