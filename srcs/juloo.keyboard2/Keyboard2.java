@@ -100,6 +100,7 @@ public class Keyboard2 extends InputMethodService
 	public void				onStartInputView(EditorInfo info, boolean restarting)
 	{
     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getCurrentInputBinding().getConnectionToken());
     refreshSubtype(imm.getCurrentInputMethodSubtype());
 		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
@@ -156,7 +157,7 @@ public class Keyboard2 extends InputMethodService
 		{
 			InputMethodManager	imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
-			imm.switchToNextInputMethod(getWindow().getWindow().getAttributes().token, false);
+			imm.switchToNextInputMethod(getCurrentInputBinding().getConnectionToken(), false);
 		}
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);

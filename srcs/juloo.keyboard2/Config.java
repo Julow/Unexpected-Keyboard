@@ -24,6 +24,8 @@ class Config
 	public float				horizontalMargin;
   public boolean      disableAccentKeys;
 
+  public boolean shouldOfferSwitchingToNextInputMethod;
+
 	public Config(Keyboard2 context)
 	{
 		Resources			res = context.getResources();
@@ -46,6 +48,8 @@ class Config
     disableAccentKeys = false;
 		// from prefs
 		refresh();
+    // initialized later
+    shouldOfferSwitchingToNextInputMethod = false;
 	}
 
 	/*

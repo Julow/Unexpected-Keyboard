@@ -171,4 +171,16 @@ class KeyboardData
       return (k == null || (k.getFlags() & _flags) != 0) ? null : k;
     }
   }
+
+  public static class RemoveKeysByEvent implements MapKeys
+  {
+    private final int _eventCode;
+
+    public RemoveKeysByEvent(int ev) { _eventCode = ev; }
+
+    public KeyValue map(KeyValue k)
+    {
+      return (k == null || k.getEventCode() == _eventCode) ? null : k;
+    }
+  }
 }

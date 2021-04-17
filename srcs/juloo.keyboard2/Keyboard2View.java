@@ -83,12 +83,13 @@ public class Keyboard2View extends View
 		return (paint);
 	}
 
-	public void			setKeyboard(KeyboardData keyboard)
+	public void			setKeyboard(KeyboardData kw)
 	{
+    if (!_config.shouldOfferSwitchingToNextInputMethod)
+      kw = kw.removeKeys(new KeyboardData.RemoveKeysByEvent(KeyValue.EVENT_CHANGE_METHOD));
     if (_config.disableAccentKeys)
-      _keyboard = keyboard.removeKeys(new KeyboardData.RemoveKeysByFlags(KeyValue.FLAGS_ACCENTS));
-    else
-      _keyboard = keyboard;
+      kw = kw.removeKeys(new KeyboardData.RemoveKeysByFlags(KeyValue.FLAGS_ACCENTS));
+    _keyboard = kw;
 		reset();
 	}
 
