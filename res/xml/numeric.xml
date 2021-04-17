@@ -30,6 +30,6 @@
     <key width="1.5" key0="0" />
     <key width="0.75" key0="." key2="," />
     <key width="0.75" key0="space" key1="&quot;" key2="'" key4="_" />
-    <key width="1.5" key0="enter" key1="config" key3="=" />
+    <key width="1.5" key0="enter" key3="=" />
   </row>
 </keyboard>
