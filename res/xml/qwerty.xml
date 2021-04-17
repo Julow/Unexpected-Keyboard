@@ -13,7 +13,7 @@
 		<key key0="p" key1="insert" key2="0" />
 	</row>
 	<row>
-		<key key0="a" key1="tab" key2="`" />
+		<key shift="0.5" key0="a" key1="tab" key2="`" />
 		<key key0="s" key1="accent1" key2="accent2" key4="accent6" />
 		<key key0="d" key1="accent3" key2="accent4" key3="accent5" />
 		<key key0="f" />

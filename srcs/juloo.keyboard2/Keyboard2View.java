@@ -18,8 +18,6 @@ import java.util.ArrayList;
 public class Keyboard2View extends View
 	implements View.OnTouchListener, Handler.Callback
 {
-	private static final float		KEY_PER_ROW = 10;
-
 	private static final long		VIBRATE_MIN_INTERVAL = 100;
 
 	private KeyboardData		_keyboard;
@@ -187,20 +185,17 @@ public class Keyboard2View extends View
 
 	private void		onTouchDown(float touchX, float touchY, int pointerId)
 	{
-		float				x;
-		float				y;
-		float				keyW;
-
-		y = _config.marginTop - _config.keyHeight;
+		float y = _config.marginTop - _config.keyHeight;
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
 			y += _config.keyHeight;
 			if (touchY < y || touchY >= (y + _config.keyHeight))
 				continue ;
-			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2 + _config.horizontalMargin;
+      float x = _config.horizontalMargin;
 			for (KeyboardData.Key key : row.getKeys())
 			{
-				keyW = _keyWidth * key.width;
+        x += key.shift * _keyWidth;
+				float keyW = _keyWidth * key.width;
 				if (touchX >= x && touchX < (x + keyW))
 				{
 					KeyDown down = getKeyDown(key);
@@ -333,21 +328,19 @@ public class Keyboard2View extends View
 			height = (int)(_config.keyHeight * ((float)_keyboard.getRows().size())
 				+ _config.marginTop + _config.marginBottom);
 		setMeasuredDimension(dm.widthPixels, height);
-		_keyWidth = (getWidth() - (_config.horizontalMargin * 2)) / KEY_PER_ROW;
+		_keyWidth = (getWidth() - (_config.horizontalMargin * 2)) / _keyboard.getKeysWidth();
 	}
 
 	@Override
 	protected void		onDraw(Canvas canvas)
 	{
-		float				x;
-		float				y;
-
-		y = _config.marginTop;
+		float y = _config.marginTop;
 		for (KeyboardData.Row row : _keyboard.getRows())
 		{
-			x = (KEY_PER_ROW * _keyWidth - row.getWidth(_keyWidth)) / 2f + _config.horizontalMargin;
+      float x = _config.horizontalMargin;
 			for (KeyboardData.Key k : row.getKeys())
 			{
+        x += k.shift * _keyWidth;
 				float keyW = _keyWidth * k.width;
 				KeyDown keyDown = getKeyDown(k);
 				_tmpRect.set(x + _config.keyBgPadding, y + _config.keyBgPadding,

@@ -7,10 +7,14 @@ import java.util.List;
 class KeyboardData
 {
 	private final List<Row> _rows;
+  private final float _keysWidth;
 
-  public KeyboardData(ArrayList<Row> rows)
+  public KeyboardData(List<Row> rows)
   {
+    float kpr = 0.f;
+    for (Row r : rows) kpr = Math.max(kpr, r.keysWidth());
     _rows = rows;
+    _keysWidth = kpr;
   }
 
 	public static KeyboardData parse(XmlResourceParser parser)
@@ -45,10 +49,9 @@ class KeyboardData
     return new KeyboardData(rows);
 	}
 
-	public List<Row>	getRows()
-	{
-		return (_rows);
-	}
+	public List<Row>	getRows() { return _rows; }
+
+  public float getKeysWidth() { return _keysWidth; }
 
   public KeyboardData removeKeys(MapKeys f)
   {
@@ -61,12 +64,13 @@ class KeyboardData
 	public static class Row
 	{
     private final List<Key> _keys;
+    /* Total width of very keys. Unit is abstract. */
 		private final float _keysWidth;
 
     public Row(List<Key> keys)
     {
       float kw = 0.f;
-      for (Key k : keys) kw += k.width;
+      for (Key k : keys) kw += k.width + k.shift;
       _keys = keys;
       _keysWidth = kw;
     }
@@ -91,10 +95,7 @@ class KeyboardData
 
     public List<Key> getKeys() { return _keys; }
 
-		public float getWidth(float keyWidth)
-		{
-			return (keyWidth * _keysWidth);
-		}
+    public float keysWidth() { return _keysWidth; }
 
     public Row removeKeys(MapKeys f)
     {
@@ -118,9 +119,12 @@ class KeyboardData
     public final KeyValue key3;
     public final KeyValue key4;
 
+    /* Key width in relative unit. */
     public final float width;
+    /* Extra empty space on the left of the key. */
+    public final float shift;
 
-    public Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w)
+    public Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s)
     {
       key0 = k0;
       key1 = k1;
@@ -128,6 +132,7 @@ class KeyboardData
       key3 = k3;
       key4 = k4;
       width = w;
+      shift = s;
     }
 
     public static Key parse(XmlResourceParser parser) throws Exception
@@ -137,23 +142,16 @@ class KeyboardData
       KeyValue k2 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key2"));
       KeyValue k3 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key3"));
       KeyValue k4 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key4"));
-      float width;
-      try
-      {
-        width = parser.getAttributeFloatValue(null, "width", 1f);
-      }
-      catch (Exception e)
-      {
-        width = 1f;
-      }
+      float width = parser.getAttributeFloatValue(null, "width", 1f);
+      float shift = parser.getAttributeFloatValue(null, "shift", 0.f);
       while (parser.next() != XmlResourceParser.END_TAG)
         continue ;
-      return new Key(k0, k1, k2, k3, k4, width);
+      return new Key(k0, k1, k2, k3, k4, width, shift);
     }
 
     public Key removeKeys(MapKeys f)
     {
-      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width);
+      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift);
     }
   }
 
