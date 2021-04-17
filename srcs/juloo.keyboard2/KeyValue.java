@@ -178,7 +178,7 @@ class KeyValue
 		new KeyValue("config",				"Conf",			CHAR_NONE,	EVENT_CONFIG,				FLAG_NOREPEAT);
 		new KeyValue("switch_text",			"ABC",			CHAR_NONE,	EVENT_SWITCH_TEXT,			FLAG_NOREPEAT);
 		new KeyValue("switch_numeric",		"123+",			CHAR_NONE,	EVENT_SWITCH_NUMERIC,		FLAG_NOREPEAT);
-		new KeyValue("switch_emoji",		"\uD83D\uDE03",	CHAR_NONE,	EVENT_SWITCH_EMOJI,			FLAG_NOREPEAT);
+		new KeyValue("switch_emoji",		":)",	CHAR_NONE,	EVENT_SWITCH_EMOJI,			FLAG_NOREPEAT);
 		new KeyValue("switch_back_emoji",	"ABC",			CHAR_NONE,	EVENT_SWITCH_BACK_EMOJI,	FLAG_NOREPEAT);
 
 		new KeyValue("esc",		"Esc",		CHAR_NONE,	KeyEvent.KEYCODE_ESCAPE,		0);
