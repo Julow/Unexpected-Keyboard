@@ -23,6 +23,7 @@ class KeyValue
   public static final int		FLAG_NOREPEAT = (1 << 5);
   public static final int		FLAG_NOCHAR = (1 << 6);
   public static final int		FLAG_LOCKED = (1 << 8);
+  public static final int   FLAG_FN = (1 << 9);
 
   public static final int		FLAG_KEY_FONT = (1 << 12);
 
@@ -49,7 +50,7 @@ class KeyValue
 
   private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
-  protected KeyValue(String n, String s, char c, int e, int f)
+  public KeyValue(String n, String s, char c, int e, int f)
   {
     name = n;
     symbol = s;
@@ -102,6 +103,7 @@ class KeyValue
     addModifierKey("accent4", "\u02DC", FLAG_ACCENT4);
     addModifierKey("accent5", "\u00B8", FLAG_ACCENT5);
     addModifierKey("accent6", "\u00A8", FLAG_ACCENT6);
+    addModifierKey("fn", "Fn", FLAG_FN);
 
     addCharKey('a', KeyEvent.KEYCODE_A);
     addCharKey('b', KeyEvent.KEYCODE_B);
