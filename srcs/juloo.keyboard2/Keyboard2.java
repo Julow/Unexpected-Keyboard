@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.InputType;
 import android.preference.PreferenceManager;
 import android.view.inputmethod.EditorInfo;
@@ -100,7 +101,7 @@ public class Keyboard2 extends InputMethodService
 	public void				onStartInputView(EditorInfo info, boolean restarting)
 	{
     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-    _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getCurrentInputBinding().getConnectionToken());
+    _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getConnectionToken());
     refreshSubtype(imm.getCurrentInputMethodSubtype());
 		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
@@ -154,8 +155,7 @@ public class Keyboard2 extends InputMethodService
 		else if (key.eventCode == KeyValue.EVENT_CHANGE_METHOD)
 		{
 			InputMethodManager	imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-
-			imm.switchToNextInputMethod(getCurrentInputBinding().getConnectionToken(), false);
+			imm.switchToNextInputMethod(getConnectionToken(), false);
 		}
 		else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
 			handleMetaKeyUp(key, flags);
@@ -201,4 +201,9 @@ public class Keyboard2 extends InputMethodService
 		getCurrentInputConnection().sendKeyEvent(event);
 		getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
 	}
+
+  private IBinder getConnectionToken()
+  {
+    return getWindow().getWindow().getAttributes().token;
+  }
 }
