@@ -36,11 +36,11 @@ class KeyValue
   public static final int   FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6;
 
-	private String		_name;
-	private String		_symbol;
-	private char		_char;
-	private int			_eventCode;
-	private int			_flags;
+  private final String _name;
+  private final String _symbol;
+  private final char _char;
+  private final int _eventCode;
+  private final int _flags;
 
 	private int			_cacheFlags;
 	private String		_cacheSymbol;
@@ -109,7 +109,6 @@ class KeyValue
 		_eventCode = eventCode;
 		_flags = flags;
 		_cacheFlags = -1;
-		KeyValue.keys.put(name, this);
 	}
 
 	public static KeyValue	getKeyByName(String name)
@@ -117,86 +116,105 @@ class KeyValue
 		return (KeyValue.keys.get(name));
 	}
 
-	static
-	{
-		String chars = "<>&\"'(-_)=°+"
-			+ "~#{[|`\\^@]}"
-			+ "^$*,;:!£%µ?./§";
-		for (int i = 0; i < chars.length(); i++)
-		{
-			String key = chars.substring(i, i + 1);
-			new KeyValue(key, key, key.charAt(0), EVENT_NONE, 0);
-		}
+  private static void addKey(String name, String symbol, char c, int event, int flags)
+  {
+    keys.put(name, new KeyValue(name, symbol, c, event, flags));
+  }
 
-		new KeyValue("shift",	"⇧",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_LOCK | FLAG_SHIFT);
-		new KeyValue("ctrl",	"Ctrl",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_CTRL);
-		new KeyValue("alt",		"Alt",		CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ALT);
-		new KeyValue("accent1",	"\u02CB",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT1);
-		new KeyValue("accent2",	"\u00B4",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT2);
-		new KeyValue("accent3",	"\u02C6",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT3);
-		new KeyValue("accent4",	"\u02DC",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT4);
-		new KeyValue("accent5",	"\u00B8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT5);
-		new KeyValue("accent6",	"\u00A8",	CHAR_NONE,	EVENT_NONE,	FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | FLAG_ACCENT6);
+  private static void addCharKey(char c, int event)
+  {
+    String name = String.valueOf(c);
+    addKey(name, name, c, event, 0);
+  }
 
-		new KeyValue("a",		null,	'a',		KeyEvent.KEYCODE_A,		0);
-		new KeyValue("b",		null,	'b',		KeyEvent.KEYCODE_B,		0);
-		new KeyValue("c",		null,	'c',		KeyEvent.KEYCODE_C,		0);
-		new KeyValue("d",		null,	'd',		KeyEvent.KEYCODE_D,		0);
-		new KeyValue("e",		null,	'e',		KeyEvent.KEYCODE_E,		0);
-		new KeyValue("f",		null,	'f',		KeyEvent.KEYCODE_F,		0);
-		new KeyValue("g",		null,	'g',		KeyEvent.KEYCODE_G,		0);
-		new KeyValue("h",		null,	'h',		KeyEvent.KEYCODE_H,		0);
-		new KeyValue("i",		null,	'i',		KeyEvent.KEYCODE_I,		0);
-		new KeyValue("j",		null,	'j',		KeyEvent.KEYCODE_J,		0);
-		new KeyValue("k",		null,	'k',		KeyEvent.KEYCODE_K,		0);
-		new KeyValue("l",		null,	'l',		KeyEvent.KEYCODE_L,		0);
-		new KeyValue("m",		null,	'm',		KeyEvent.KEYCODE_M,		0);
-		new KeyValue("n",		null,	'n',		KeyEvent.KEYCODE_N,		0);
-		new KeyValue("o",		null,	'o',		KeyEvent.KEYCODE_O,		0);
-		new KeyValue("p",		null,	'p',		KeyEvent.KEYCODE_P,		0);
-		new KeyValue("q",		null,	'q',		KeyEvent.KEYCODE_Q,		0);
-		new KeyValue("r",		null,	'r',		KeyEvent.KEYCODE_R,		0);
-		new KeyValue("s",		null,	's',		KeyEvent.KEYCODE_S,		0);
-		new KeyValue("t",		null,	't',		KeyEvent.KEYCODE_T,		0);
-		new KeyValue("u",		null,	'u',		KeyEvent.KEYCODE_U,		0);
-		new KeyValue("v",		null,	'v',		KeyEvent.KEYCODE_V,		0);
-		new KeyValue("w",		null,	'w',		KeyEvent.KEYCODE_W,		0);
-		new KeyValue("x",		null,	'x',		KeyEvent.KEYCODE_X,		0);
-		new KeyValue("y",		null,	'y',		KeyEvent.KEYCODE_Y,		0);
-		new KeyValue("z",		null,	'z',		KeyEvent.KEYCODE_Z,		0);
-		new KeyValue("0",		null,	'0',		KeyEvent.KEYCODE_0,		0);
-		new KeyValue("1",		null,	'1',		KeyEvent.KEYCODE_1,		0);
-		new KeyValue("2",		null,	'2',		KeyEvent.KEYCODE_2,		0);
-		new KeyValue("3",		null,	'3',		KeyEvent.KEYCODE_3,		0);
-		new KeyValue("4",		null,	'4',		KeyEvent.KEYCODE_4,		0);
-		new KeyValue("5",		null,	'5',		KeyEvent.KEYCODE_5,		0);
-		new KeyValue("6",		null,	'6',		KeyEvent.KEYCODE_6,		0);
-		new KeyValue("7",		null,	'7',		KeyEvent.KEYCODE_7,		0);
-		new KeyValue("8",		null,	'8',		KeyEvent.KEYCODE_8,		0);
-		new KeyValue("9",		null,	'9',		KeyEvent.KEYCODE_9,		0);
+  private static void addModifierKey(String name, String symbol, int extra_flags)
+  {
+    addKey(name, symbol, CHAR_NONE, EVENT_NONE,
+        FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | extra_flags);
+  }
 
-		new KeyValue("config",				"Conf",			CHAR_NONE,	EVENT_CONFIG,				FLAG_NOREPEAT);
-		new KeyValue("switch_text",			"ABC",			CHAR_NONE,	EVENT_SWITCH_TEXT,			FLAG_NOREPEAT);
-		new KeyValue("switch_numeric",		"123+",			CHAR_NONE,	EVENT_SWITCH_NUMERIC,		FLAG_NOREPEAT);
-		new KeyValue("switch_emoji",		":)",	CHAR_NONE,	EVENT_SWITCH_EMOJI,			FLAG_NOREPEAT);
-		new KeyValue("switch_back_emoji",	"ABC",			CHAR_NONE,	EVENT_SWITCH_BACK_EMOJI,	FLAG_NOREPEAT);
+  private static void addSpecialKey(String name, String symbol, int event)
+  {
+    addKey(name, symbol, CHAR_NONE, event, FLAG_NOREPEAT);
+  }
 
-		new KeyValue("esc",		"Esc",		CHAR_NONE,	KeyEvent.KEYCODE_ESCAPE,		0);
-		new KeyValue("enter",	"\uE800",	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,			FLAG_KEY_FONT);
-		new KeyValue("up",		"\uE80B",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_UP,		FLAG_KEY_FONT);
-		new KeyValue("right",	"\uE80C",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_RIGHT,	FLAG_KEY_FONT);
-		new KeyValue("down",	"\uE809",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_DOWN,		FLAG_KEY_FONT);
-		new KeyValue("left",	"\uE80A",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_LEFT,		FLAG_KEY_FONT);
-		new KeyValue("page_up",	"⇞",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_DOWN,		0);
-		new KeyValue("page_down", "⇟",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_UP,		0);
-		new KeyValue("home",	"↖",		CHAR_NONE,	KeyEvent.KEYCODE_HOME,			0);
-		new KeyValue("end",		"↗",		CHAR_NONE,	KeyEvent.KEYCODE_MOVE_END,		0);
-		new KeyValue("backspace", "⌫",		CHAR_NONE,	KeyEvent.KEYCODE_DEL,			0);
-		new KeyValue("delete",	"⌦",		CHAR_NONE,	KeyEvent.KEYCODE_FORWARD_DEL,	0);
-		new KeyValue("insert",	"Ins",		CHAR_NONE,	KeyEvent.KEYCODE_INSERT,		0);
+  static
+  {
+    String chars = "<>&\"'(-_)=°+"
+      + "~#{[|`\\^@]}"
+      + "^$*,;:!£%µ?./§";
+    for (int i = 0; i < chars.length(); i++)
+      addCharKey(chars.charAt(i), EVENT_NONE);
 
-		new KeyValue("tab",		"↹",		'\t',		KeyEvent.KEYCODE_TAB,			0);
-		new KeyValue("space",	null,		' ',		KeyEvent.KEYCODE_SPACE,			0);
-		new KeyValue("change_method", "⊞",	CHAR_NONE,	EVENT_CHANGE_METHOD,			FLAG_NOREPEAT);
-	}
+    addModifierKey("shift", "⇧", FLAG_LOCK | FLAG_SHIFT);
+    addModifierKey("ctrl", "Ctrl", FLAG_CTRL);
+    addModifierKey("alt", "Alt", FLAG_ALT);
+    addModifierKey("accent1", "\u02CB", FLAG_ACCENT1);
+    addModifierKey("accent2", "\u00B4", FLAG_ACCENT2);
+    addModifierKey("accent3", "\u02C6", FLAG_ACCENT3);
+    addModifierKey("accent4", "\u02DC", FLAG_ACCENT4);
+    addModifierKey("accent5", "\u00B8", FLAG_ACCENT5);
+    addModifierKey("accent6", "\u00A8", FLAG_ACCENT6);
+
+    addCharKey('a', KeyEvent.KEYCODE_A);
+    addCharKey('b', KeyEvent.KEYCODE_B);
+    addCharKey('c', KeyEvent.KEYCODE_C);
+    addCharKey('d', KeyEvent.KEYCODE_D);
+    addCharKey('e', KeyEvent.KEYCODE_E);
+    addCharKey('f', KeyEvent.KEYCODE_F);
+    addCharKey('g', KeyEvent.KEYCODE_G);
+    addCharKey('h', KeyEvent.KEYCODE_H);
+    addCharKey('i', KeyEvent.KEYCODE_I);
+    addCharKey('j', KeyEvent.KEYCODE_J);
+    addCharKey('k', KeyEvent.KEYCODE_K);
+    addCharKey('l', KeyEvent.KEYCODE_L);
+    addCharKey('m', KeyEvent.KEYCODE_M);
+    addCharKey('n', KeyEvent.KEYCODE_N);
+    addCharKey('o', KeyEvent.KEYCODE_O);
+    addCharKey('p', KeyEvent.KEYCODE_P);
+    addCharKey('q', KeyEvent.KEYCODE_Q);
+    addCharKey('r', KeyEvent.KEYCODE_R);
+    addCharKey('s', KeyEvent.KEYCODE_S);
+    addCharKey('t', KeyEvent.KEYCODE_T);
+    addCharKey('u', KeyEvent.KEYCODE_U);
+    addCharKey('v', KeyEvent.KEYCODE_V);
+    addCharKey('w', KeyEvent.KEYCODE_W);
+    addCharKey('x', KeyEvent.KEYCODE_X);
+    addCharKey('y', KeyEvent.KEYCODE_Y);
+    addCharKey('z', KeyEvent.KEYCODE_Z);
+    addCharKey('0', KeyEvent.KEYCODE_0);
+    addCharKey('1', KeyEvent.KEYCODE_1);
+    addCharKey('2', KeyEvent.KEYCODE_2);
+    addCharKey('3', KeyEvent.KEYCODE_3);
+    addCharKey('4', KeyEvent.KEYCODE_4);
+    addCharKey('5', KeyEvent.KEYCODE_5);
+    addCharKey('6', KeyEvent.KEYCODE_6);
+    addCharKey('7', KeyEvent.KEYCODE_7);
+    addCharKey('8', KeyEvent.KEYCODE_8);
+    addCharKey('9', KeyEvent.KEYCODE_9);
+
+    addSpecialKey("config", "Conf", EVENT_CONFIG);
+    addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
+    addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC);
+    addSpecialKey("switch_emoji", ":)", EVENT_SWITCH_EMOJI);
+    addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
+    addSpecialKey("change_method", "⊞", EVENT_CHANGE_METHOD);
+
+    addKey("esc",		"Esc",		CHAR_NONE,	KeyEvent.KEYCODE_ESCAPE,		0);
+    addKey("enter",	"\uE800",	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,			FLAG_KEY_FONT);
+    addKey("up",		"\uE80B",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_UP,		FLAG_KEY_FONT);
+    addKey("right",	"\uE80C",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_RIGHT,	FLAG_KEY_FONT);
+    addKey("down",	"\uE809",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_DOWN,		FLAG_KEY_FONT);
+    addKey("left",	"\uE80A",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_LEFT,		FLAG_KEY_FONT);
+    addKey("page_up",	"⇞",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_DOWN,		0);
+    addKey("page_down", "⇟",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_UP,		0);
+    addKey("home",	"↖",		CHAR_NONE,	KeyEvent.KEYCODE_HOME,			0);
+    addKey("end",		"↗",		CHAR_NONE,	KeyEvent.KEYCODE_MOVE_END,		0);
+    addKey("backspace", "⌫",		CHAR_NONE,	KeyEvent.KEYCODE_DEL,			0);
+    addKey("delete",	"⌦",		CHAR_NONE,	KeyEvent.KEYCODE_FORWARD_DEL,	0);
+    addKey("insert",	"Ins",		CHAR_NONE,	KeyEvent.KEYCODE_INSERT,		0);
+
+    addKey("tab",		"↹",		'\t',		KeyEvent.KEYCODE_TAB,			0);
+    addKey("space",	null,		' ',		KeyEvent.KEYCODE_SPACE,			0);
+  }
 }
