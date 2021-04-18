@@ -168,7 +168,7 @@ class KeyboardData
 
     public KeyValue map(KeyValue k)
     {
-      return (k == null || (k.getFlags() & _flags) != 0) ? null : k;
+      return (k == null || (k.flags & _flags) != 0) ? null : k;
     }
   }
 
@@ -180,7 +180,7 @@ class KeyboardData
 
     public KeyValue map(KeyValue k)
     {
-      return (k == null || k.getEventCode() == _eventCode) ? null : k;
+      return (k == null || k.eventCode == _eventCode) ? null : k;
     }
   }
 }

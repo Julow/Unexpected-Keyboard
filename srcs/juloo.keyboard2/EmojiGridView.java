@@ -90,7 +90,7 @@ public class EmojiGridView extends GridView
 		HashSet<String>				set = new HashSet<String>();
 
 		for (Emoji emoji : _lastUsed.keySet())
-			set.add(String.valueOf(_lastUsed.get(emoji)) + "-" + emoji.getName());
+			set.add(String.valueOf(_lastUsed.get(emoji)) + "-" + emoji.name);
 		edit.putStringSet(LAST_USE_PREF, set);
 		edit.apply();
 	}
@@ -130,7 +130,7 @@ public class EmojiGridView extends GridView
 
 		public void			setEmoji(Emoji emoji)
 		{
-			setText(emoji.getSymbol(0));
+			setText(emoji.symbol);
 		}
 	}
 

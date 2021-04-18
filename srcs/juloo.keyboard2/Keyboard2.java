@@ -130,30 +130,28 @@ public class Keyboard2 extends InputMethodService
 
 	public void				handleKeyUp(KeyValue key, int flags)
 	{
-		int				eventCode = key.getEventCode();
-		char			keyChar = key.getChar(flags);
-
 		if (getCurrentInputConnection() == null)
 			return ;
-		if (eventCode == KeyValue.EVENT_CONFIG)
+    key = KeyModifier.handleFlags(key, flags);
+		if (key.eventCode == KeyValue.EVENT_CONFIG)
 		{
 			Intent intent = new Intent(this, SettingsActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		}
-		else if (eventCode == KeyValue.EVENT_SWITCH_TEXT)
+		else if (key.eventCode == KeyValue.EVENT_SWITCH_TEXT)
 			_keyboardView.setKeyboard(getLayout(_currentTextLayout));
-		else if (eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
+		else if (key.eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
 			_keyboardView.setKeyboard(getLayout(R.xml.numeric));
-		else if (eventCode == KeyValue.EVENT_SWITCH_EMOJI)
+		else if (key.eventCode == KeyValue.EVENT_SWITCH_EMOJI)
 		{
 			if (_emojiPane == null)
 				_emojiPane = (ViewGroup)getLayoutInflater().inflate(R.layout.emoji_pane, null);
 			setInputView(_emojiPane);
 		}
-		else if (eventCode == KeyValue.EVENT_SWITCH_BACK_EMOJI)
+		else if (key.eventCode == KeyValue.EVENT_SWITCH_BACK_EMOJI)
 			setInputView(_keyboardView);
-		else if (eventCode == KeyValue.EVENT_CHANGE_METHOD)
+		else if (key.eventCode == KeyValue.EVENT_CHANGE_METHOD)
 		{
 			InputMethodManager	imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
@@ -165,15 +163,15 @@ public class Keyboard2 extends InputMethodService
 		// 	handleDelKey(1, 0);
 		// else if (eventCode == KeyEvent.KEYCODE_FORWARD_DEL)
 		// 	handleDelKey(0, 1);
-		else if (keyChar == KeyValue.CHAR_NONE)
+		else if (key.char_ == KeyValue.CHAR_NONE)
 		{
-			if (eventCode != KeyValue.EVENT_NONE)
+			if (key.eventCode != KeyValue.EVENT_NONE)
 				handleMetaKeyUp(key, flags);
 			else
-				getCurrentInputConnection().commitText(key.getSymbol(flags), 1);
+				getCurrentInputConnection().commitText(key.symbol, 1);
 		}
 		else
-			sendKeyChar(keyChar);
+			sendKeyChar(key.char_);
 	}
 
 	// private void			handleDelKey(int before, int after)
@@ -191,7 +189,7 @@ public class Keyboard2 extends InputMethodService
 		int			metaState = 0;
 		KeyEvent	event;
 
-		if (key.getEventCode() == KeyValue.EVENT_NONE)
+		if (key.eventCode == KeyValue.EVENT_NONE)
 			return ;
 		if ((flags & KeyValue.FLAG_CTRL) != 0)
 			metaState |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON;
@@ -199,7 +197,7 @@ public class Keyboard2 extends InputMethodService
 			metaState |= KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON;
 		if ((flags & KeyValue.FLAG_SHIFT) != 0)
 			metaState |= KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON;
-		event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.getEventCode(), 1, metaState);
+		event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.eventCode, 1, metaState);
 		getCurrentInputConnection().sendKeyEvent(event);
 		getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
 	}

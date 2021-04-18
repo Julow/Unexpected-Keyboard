@@ -6,115 +6,62 @@ import java.util.HashMap;
 
 class KeyValue
 {
-	public static final int		EVENT_NONE = -1;
-	public static final int		EVENT_CONFIG = -2;
-	public static final int		EVENT_SWITCH_TEXT = -3;
-	public static final int		EVENT_SWITCH_NUMERIC = -4;
-	public static final int		EVENT_SWITCH_EMOJI = -5;
-	public static final int		EVENT_SWITCH_BACK_EMOJI = -6;
-	public static final int		EVENT_CHANGE_METHOD = -7;
-	public static final char	CHAR_NONE = '\0';
+  public static final int		EVENT_NONE = -1;
+  public static final int		EVENT_CONFIG = -2;
+  public static final int		EVENT_SWITCH_TEXT = -3;
+  public static final int		EVENT_SWITCH_NUMERIC = -4;
+  public static final int		EVENT_SWITCH_EMOJI = -5;
+  public static final int		EVENT_SWITCH_BACK_EMOJI = -6;
+  public static final int		EVENT_CHANGE_METHOD = -7;
+  public static final char	CHAR_NONE = '\0';
 
-	public static final int		FLAG_KEEP_ON = 1;
-	public static final int		FLAG_LOCK = (1 << 1);
-	public static final int		FLAG_CTRL = (1 << 2);
-	public static final int		FLAG_SHIFT = (1 << 3);
-	public static final int		FLAG_ALT = (1 << 4);
-	public static final int		FLAG_NOREPEAT = (1 << 5);
-	public static final int		FLAG_NOCHAR = (1 << 6);
-	public static final int		FLAG_LOCKED = (1 << 8);
+  public static final int		FLAG_KEEP_ON = 1;
+  public static final int		FLAG_LOCK = (1 << 1);
+  public static final int		FLAG_CTRL = (1 << 2);
+  public static final int		FLAG_SHIFT = (1 << 3);
+  public static final int		FLAG_ALT = (1 << 4);
+  public static final int		FLAG_NOREPEAT = (1 << 5);
+  public static final int		FLAG_NOCHAR = (1 << 6);
+  public static final int		FLAG_LOCKED = (1 << 8);
 
-	public static final int		FLAG_KEY_FONT = (1 << 12);
+  public static final int		FLAG_KEY_FONT = (1 << 12);
 
-	public static final int		FLAG_ACCENT1 = (1 << 16);
-	public static final int		FLAG_ACCENT2 = (1 << 17);
-	public static final int		FLAG_ACCENT3 = (1 << 18);
-	public static final int		FLAG_ACCENT4 = (1 << 19);
-	public static final int		FLAG_ACCENT5 = (1 << 20);
-	public static final int		FLAG_ACCENT6 = (1 << 21);
+  public static final int		FLAG_ACCENT1 = (1 << 16);
+  public static final int		FLAG_ACCENT2 = (1 << 17);
+  public static final int		FLAG_ACCENT3 = (1 << 18);
+  public static final int		FLAG_ACCENT4 = (1 << 19);
+  public static final int		FLAG_ACCENT5 = (1 << 20);
+  public static final int		FLAG_ACCENT6 = (1 << 21);
 
   public static final int   FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6;
 
-  private final String _name;
-  private final String _symbol;
-  private final char _char;
-  private final int _eventCode;
-  private final int _flags;
+  public final String name;
+  public final String symbol;
+  public final char char_;
+  public final int eventCode;
+  public final int flags;
 
-	private int			_cacheFlags;
-	private String		_cacheSymbol;
+  public KeyValue withCharAndSymbol(String s, char c)
+  {
+    return new KeyValue(name, s, c, eventCode, flags);
+  }
 
-	public String		getName()
-	{
-		return (_name);
-	}
+  private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
-	public String		getSymbol(int flags)
-	{
-		if (_symbol == null)
-		{
-			if (flags != _cacheFlags)
-			{
-				_cacheSymbol = String.valueOf(getChar(flags));
-				_cacheFlags = flags;
-			}
-			return (_cacheSymbol);
-		}
-		return (_symbol);
-	}
+  protected KeyValue(String n, String s, char c, int e, int f)
+  {
+    name = n;
+    symbol = s;
+    char_ = c;
+    eventCode = e;
+    flags = f;
+  }
 
-	public char			getChar(int flags)
-	{
-		if (flags != 0)
-		{
-			char c = _char;
-			if ((flags & FLAG_SHIFT) != 0)
-				c = Character.toUpperCase(_char);
-			if ((flags & FLAG_ACCENT1) != 0)
-				c = (char)KeyCharacterMap.getDeadChar('\u02CB', (int)c);
-			if ((flags & FLAG_ACCENT2) != 0)
-				c = (char)KeyCharacterMap.getDeadChar('\u00B4', (int)c);
-			if ((flags & FLAG_ACCENT3) != 0)
-				c = (char)KeyCharacterMap.getDeadChar('\u02C6', (int)c);
-			if ((flags & FLAG_ACCENT4) != 0)
-				c = (char)KeyCharacterMap.getDeadChar('\u02DC', (int)c);
-			if ((flags & FLAG_ACCENT5) != 0)
-				c = (char)KeyCharacterMap.getDeadChar('\u00B8', (int)c);
-			if ((flags & FLAG_ACCENT6) != 0)
-				c = (char)KeyCharacterMap.getDeadChar('\u00A8', (int)c);
-			if (c != 0)
-				return (c);
-		}
-		return (_char);
-	}
-
-	public int			getEventCode()
-	{
-		return (_eventCode);
-	}
-
-	public int			getFlags()
-	{
-		return (_flags);
-	}
-
-	private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
-
-	protected KeyValue(String name, String symbol, char c, int eventCode, int flags)
-	{
-		_name = name;
-		_symbol = symbol;
-		_char = c;
-		_eventCode = eventCode;
-		_flags = flags;
-		_cacheFlags = -1;
-	}
-
-	public static KeyValue	getKeyByName(String name)
-	{
-		return (KeyValue.keys.get(name));
-	}
+  public static KeyValue	getKeyByName(String name)
+  {
+    return (KeyValue.keys.get(name));
+  }
 
   private static void addKey(String name, String symbol, char c, int event, int flags)
   {
@@ -215,6 +162,6 @@ class KeyValue
     addKey("insert",	"Ins",		CHAR_NONE,	KeyEvent.KEYCODE_INSERT,		0);
 
     addKey("tab",		"↹",		'\t',		KeyEvent.KEYCODE_TAB,			0);
-    addKey("space",	null,		' ',		KeyEvent.KEYCODE_SPACE,			0);
+    addKey("space",	" ",		' ',		KeyEvent.KEYCODE_SPACE,			0);
   }
 }

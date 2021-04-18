@@ -172,11 +172,11 @@ public class Keyboard2View extends View
 				if (key.timeoutWhat != -1)
 				{
 					_handler.removeMessages(key.timeoutWhat);
-					if ((newValue.getFlags() & KeyValue.FLAG_NOREPEAT) == 0)
+					if ((newValue.flags & KeyValue.FLAG_NOREPEAT) == 0)
 						_handler.sendEmptyMessageDelayed(key.timeoutWhat, _config.longPressTimeout);
 				}
 				key.value = newValue;
-				key.flags = newValue.getFlags();
+				key.flags = newValue.flags;
 				updateFlags();
 				invalidate();
 				handleKeyDown(newValue);
@@ -213,7 +213,7 @@ public class Keyboard2View extends View
 					else
 					{
 						int what = _currentWhat++;
-						if (key.key0 != null && (key.key0.getFlags() & KeyValue.FLAG_NOREPEAT) == 0)
+						if (key.key0 != null && (key.key0.flags & KeyValue.FLAG_NOREPEAT) == 0)
 							_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
 						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
 					}
@@ -376,18 +376,20 @@ public class Keyboard2View extends View
 
 	private void		drawLabel(Canvas canvas, KeyValue k, float x, float y, boolean locked)
 	{
-		if ((k.getFlags() & KeyValue.FLAG_KEY_FONT) != 0)
-			canvas.drawText(k.getSymbol(_flags), x, y, locked ? _specialKeyLabelLockedPaint : _specialKeyLabelPaint);
+    k = KeyModifier.handleFlags(k, _flags);
+		if ((k.flags & KeyValue.FLAG_KEY_FONT) != 0)
+			canvas.drawText(k.symbol, x, y, locked ? _specialKeyLabelLockedPaint : _specialKeyLabelPaint);
 		else
-			canvas.drawText(k.getSymbol(_flags), x, y, locked ? _keyLabelLockedPaint : _keyLabelPaint);
+			canvas.drawText(k.symbol, x, y, locked ? _keyLabelLockedPaint : _keyLabelPaint);
 	}
 
 	private void		drawSubLabel(Canvas canvas, KeyValue k, float x, float y, boolean right)
 	{
-		if ((k.getFlags() & KeyValue.FLAG_KEY_FONT) != 0)
-			canvas.drawText(k.getSymbol(_flags), x, y, right ? _specialKeySubLabelRightPaint : _specialKeySubLabelPaint);
+    k = KeyModifier.handleFlags(k, _flags);
+		if ((k.flags & KeyValue.FLAG_KEY_FONT) != 0)
+			canvas.drawText(k.symbol, x, y, right ? _specialKeySubLabelRightPaint : _specialKeySubLabelPaint);
 		else
-			canvas.drawText(k.getSymbol(_flags), x, y, right ? _keySubLabelRightPaint : _keySubLabelPaint);
+			canvas.drawText(k.symbol, x, y, right ? _keySubLabelRightPaint : _keySubLabelPaint);
 	}
 
 	private static class KeyDown
@@ -407,7 +409,7 @@ public class Keyboard2View extends View
 			this.key = key;
 			downX = x;
 			downY = y;
-			flags = (value == null) ? 0 : value.getFlags();
+			flags = (value == null) ? 0 : value.flags;
 			timeoutWhat = what;
 		}
 	}
