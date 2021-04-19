@@ -309,18 +309,14 @@ public class Keyboard2View extends View
 			if (key.timeoutWhat == msg.what)
 			{
         long nextInterval = _config.longPressInterval;
-        boolean doVibrate = true;
         if (_config.preciseRepeat && (key.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
         {
           // Modulate repeat interval depending on the distance of the pointer
           float accel = Math.min(4.f, Math.max(0.3f, key.ptrDist / (_config.subValueDist * 15.f)));
           nextInterval = (long)((float)nextInterval / accel);
-          doVibrate = false;
         }
 				_handler.sendEmptyMessageDelayed(msg.what, nextInterval);
 				((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
-        if (doVibrate)
-          vibrate();
 				return (true);
 			}
 		}
