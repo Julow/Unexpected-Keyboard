@@ -310,7 +310,7 @@ public class Keyboard2View extends View
 			{
         long nextInterval = _config.longPressInterval;
         boolean doVibrate = true;
-        if ((key.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+        if (_config.preciseRepeat && (key.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
         {
           // Modulate repeat interval depending on the distance of the pointer
           float accel = Math.min(4.f, Math.max(0.3f, key.ptrDist / (_config.subValueDist * 15.f)));

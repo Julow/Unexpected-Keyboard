@@ -23,6 +23,7 @@ class Config
 	public float				keyHeight;
 	public float				horizontalMargin;
   public boolean      disableAccentKeys;
+  public boolean preciseRepeat;
 
   public boolean shouldOfferSwitchingToNextInputMethod;
 
@@ -46,6 +47,7 @@ class Config
 		keyHeight = res.getDimension(R.dimen.key_height);
 		horizontalMargin = res.getDimension(R.dimen.horizontal_margin);
     disableAccentKeys = false;
+    preciseRepeat = true;
 		// from prefs
 		refresh();
     // initialized later
@@ -68,6 +70,7 @@ class Config
 		keyHeight = getDipPref(prefs, "key_height", keyHeight);
 		horizontalMargin = getDipPref(prefs, "horizontal_margin", horizontalMargin);
     disableAccentKeys = prefs.getBoolean("disable_accent_keys", disableAccentKeys);
+    preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
 	}
 
 	private float		getDipPref(SharedPreferences prefs, String pref_name, float def)
