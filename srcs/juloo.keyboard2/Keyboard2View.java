@@ -159,7 +159,9 @@ public class Keyboard2View extends View
 		{
 			moveX -= key.downX;
 			moveY -= key.downY;
-			if ((Math.abs(moveX) + Math.abs(moveY)) < _config.subValueDist)
+      float absDist = Math.abs(moveX) + Math.abs(moveY);
+      key.ptrDist = absDist;
+			if (absDist < _config.subValueDist)
 				newValue = key.key.key0;
 			else if (moveX < 0)
 				newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
@@ -302,15 +304,23 @@ public class Keyboard2View extends View
 	@Override
 	public boolean		handleMessage(Message msg)
 	{
-		long				now = System.currentTimeMillis();
-
 		for (KeyDown key : _downKeys)
 		{
 			if (key.timeoutWhat == msg.what)
 			{
-				_handler.sendEmptyMessageDelayed(msg.what, _config.longPressInterval);
+        long nextInterval = _config.longPressInterval;
+        boolean doVibrate = true;
+        if ((key.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+        {
+          // Modulate repeat interval depending on the distance of the pointer
+          float accel = Math.min(4.f, Math.max(0.3f, key.ptrDist / (_config.subValueDist * 15.f)));
+          nextInterval = (long)((float)nextInterval / accel);
+          doVibrate = false;
+        }
+				_handler.sendEmptyMessageDelayed(msg.what, nextInterval);
 				((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
-				vibrate();
+        if (doVibrate)
+          vibrate();
 				return (true);
 			}
 		}
@@ -399,6 +409,8 @@ public class Keyboard2View extends View
 		public KeyboardData.Key	key;
 		public float			downX;
 		public float			downY;
+    /* Manhattan distance of the pointer to the center of the key */
+    public float ptrDist;
 		public int				flags;
 		public int				timeoutWhat;
 
@@ -409,6 +421,7 @@ public class Keyboard2View extends View
 			this.key = key;
 			downX = x;
 			downY = y;
+      ptrDist = 0.f;
 			flags = (value == null) ? 0 : value.flags;
 			timeoutWhat = what;
 		}

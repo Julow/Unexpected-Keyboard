@@ -15,26 +15,32 @@ class KeyValue
   public static final int		EVENT_CHANGE_METHOD = -7;
   public static final char	CHAR_NONE = '\0';
 
-  public static final int		FLAG_KEEP_ON = 1;
-  public static final int		FLAG_LOCK = (1 << 1);
-  public static final int		FLAG_CTRL = (1 << 2);
-  public static final int		FLAG_SHIFT = (1 << 3);
-  public static final int		FLAG_ALT = (1 << 4);
-  public static final int		FLAG_NOREPEAT = (1 << 5);
-  public static final int		FLAG_NOCHAR = (1 << 6);
-  public static final int		FLAG_LOCKED = (1 << 8);
-  public static final int   FLAG_FN = (1 << 9);
+  // Behavior flags
+  public static final int FLAG_KEEP_ON = 1;
+  public static final int FLAG_LOCK = (1 << 1);
+  public static final int FLAG_NOREPEAT = (1 << 2);
+  public static final int FLAG_NOCHAR = (1 << 3);
+  public static final int FLAG_PRECISE_REPEAT = (1 << 4);
+  public static final int FLAG_KEY_FONT = (1 << 5);
 
-  public static final int		FLAG_KEY_FONT = (1 << 12);
+  // Internal flags
+  public static final int FLAG_LOCKED = (1 << 8);
 
-  public static final int		FLAG_ACCENT1 = (1 << 16);
-  public static final int		FLAG_ACCENT2 = (1 << 17); // Accent aigu
-  public static final int		FLAG_ACCENT3 = (1 << 18); // Circonflexe
-  public static final int		FLAG_ACCENT4 = (1 << 19);
-  public static final int		FLAG_ACCENT5 = (1 << 20); // Cédille
-  public static final int		FLAG_ACCENT6 = (1 << 21);
+  // Modifier flags
+  public static final int FLAG_CTRL = (1 << 10);
+  public static final int FLAG_SHIFT = (1 << 11);
+  public static final int FLAG_ALT = (1 << 12);
+  public static final int FLAG_FN = (1 << 13);
 
-  public static final int   FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
+  // Accent flags
+  public static final int FLAG_ACCENT1 = (1 << 16); // Grave
+  public static final int FLAG_ACCENT2 = (1 << 17); // Aigu
+  public static final int FLAG_ACCENT3 = (1 << 18); // Circonflexe
+  public static final int FLAG_ACCENT4 = (1 << 19); // Tilde
+  public static final int FLAG_ACCENT5 = (1 << 20); // Cédille
+  public static final int FLAG_ACCENT6 = (1 << 21); // Tréma
+
+  public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6;
 
   public final String name;
@@ -161,16 +167,16 @@ class KeyValue
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE);
     addEventKey("enter", "\uE800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
-    addEventKey("up", "\uE80B", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT);
-    addEventKey("right", "\uE80C", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT);
-    addEventKey("down", "\uE809", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT);
-    addEventKey("left", "\uE80A", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT);
+    addEventKey("up", "\uE80B", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
+    addEventKey("right", "\uE80C", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
+    addEventKey("down", "\uE809", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
+    addEventKey("left", "\uE80A", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("page_up", "⇞", KeyEvent.KEYCODE_PAGE_DOWN);
     addEventKey("page_down", "⇟", KeyEvent.KEYCODE_PAGE_UP);
     addEventKey("home", "↖", KeyEvent.KEYCODE_HOME);
     addEventKey("end", "↗", KeyEvent.KEYCODE_MOVE_END);
-    addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL);
-    addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL);
+    addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL, FLAG_PRECISE_REPEAT);
+    addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_PRECISE_REPEAT);
     addEventKey("insert", "Ins", KeyEvent.KEYCODE_INSERT);
     addEventKey("f1", "F1", KeyEvent.KEYCODE_F1);
     addEventKey("f2", "F2", KeyEvent.KEYCODE_F2);
