@@ -28,10 +28,10 @@ class KeyValue
   public static final int		FLAG_KEY_FONT = (1 << 12);
 
   public static final int		FLAG_ACCENT1 = (1 << 16);
-  public static final int		FLAG_ACCENT2 = (1 << 17);
-  public static final int		FLAG_ACCENT3 = (1 << 18);
+  public static final int		FLAG_ACCENT2 = (1 << 17); // Accent aigu
+  public static final int		FLAG_ACCENT3 = (1 << 18); // Circonflexe
   public static final int		FLAG_ACCENT4 = (1 << 19);
-  public static final int		FLAG_ACCENT5 = (1 << 20);
+  public static final int		FLAG_ACCENT5 = (1 << 20); // Cédille
   public static final int		FLAG_ACCENT6 = (1 << 21);
 
   public static final int   FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |

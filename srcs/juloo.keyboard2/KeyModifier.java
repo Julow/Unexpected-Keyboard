@@ -37,7 +37,7 @@ class KeyModifier
       c = Character.toUpperCase(c);
     if ((flags & KeyValue.FLAGS_ACCENTS) != 0) // Accents, after shift is applied
       c = handleAccentChar(c, flags);
-    if (c == k.char_)
+    if (c == 0 || c == k.char_)
       return null;
     return k.withCharAndSymbol(String.valueOf(c), c);
   }
@@ -47,16 +47,60 @@ class KeyModifier
     char accent;
     switch ((flags & KeyValue.FLAGS_ACCENTS))
     {
-      case KeyValue.FLAG_ACCENT1: accent = '\u02CB'; break;
-      case KeyValue.FLAG_ACCENT2: accent = '\u00B4'; break;
-      case KeyValue.FLAG_ACCENT3: accent = '\u02C6'; break;
-      case KeyValue.FLAG_ACCENT4: accent = '\u02DC'; break;
-      case KeyValue.FLAG_ACCENT5: accent = '\u00B8'; break;
-      case KeyValue.FLAG_ACCENT6: accent = '\u00A8'; break;
+      case KeyValue.FLAG_ACCENT1:
+        return (char)KeyCharacterMap.getDeadChar('\u02CB', c);
+      case KeyValue.FLAG_ACCENT2:
+        switch (c)
+        {
+          case '`': return '´';
+          case '<': return '‘';
+          case '>': return '‘';
+          default: return (char)KeyCharacterMap.getDeadChar('\u00B4', c);
+        }
+      case KeyValue.FLAG_ACCENT3:
+        switch (c)
+        {
+          case '1': return '¹';
+          case '2': return '²';
+          case '3': return '³';
+          case '4': return '⁴';
+          case '5': return '⁵';
+          case '6': return '⁶';
+          case '7': return '⁷';
+          case '8': return '⁸';
+          case '9': return '⁹';
+          case '0': return '⁰';
+          case '*': return '°';
+          default: return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
+        }
+      case KeyValue.FLAG_ACCENT4:
+        return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
+      case KeyValue.FLAG_ACCENT5:
+        switch (c)
+        {
+          case '1': return '₁';
+          case '2': return '₂';
+          case '3': return '₃';
+          case '4': return '₄';
+          case '5': return '₅';
+          case '6': return '₆';
+          case '7': return '₇';
+          case '8': return '₈';
+          case '9': return '₉';
+          case '0': return '₀';
+          case 'u': return 'µ';
+          case '"': return '„';
+          case '-': return '¬';
+          default: return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
+        }
+      case KeyValue.FLAG_ACCENT6:
+        switch (c)
+        {
+          case '-': return '÷';
+          default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
+        }
       default: return c; // Can't happen
     }
-    char r = (char)KeyCharacterMap.getDeadChar(accent, (int)c);
-    return (r == 0) ? c : r;
   }
 
   private static KeyValue handleFn(KeyValue k, int flags)
