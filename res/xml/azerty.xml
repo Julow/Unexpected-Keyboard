@@ -22,7 +22,7 @@
 		<key key0="j" key2="accent6" key3="^" />
 		<key key0="k" key2="£" key3="$" key4="accent3" />
 		<key key0="l" key1="accent4" key2="%" />
-		<key key0="m" key1="fn" key2="µ" key4="*" />
+		<key key0="m" key2="µ" key4="*" />
 	</row>
 	<row>
 		<key width="2.0" key0="shift" />
@@ -36,7 +36,7 @@
 	</row>
 	<row>
 		<key width="1.8" key0="ctrl" key3="switch_numeric" />
-		<key width="1.2" key0="alt" key1="page_up" key2="end" key3="home" key4="page_down" />
+		<key width="1.2" key0="alt" key1="fn" />
 		<key width="4.0" key0="space" />
 		<key width="1.2" key0="switch_emoji" key1="up" key2="right" key3="left" key4="down" />
 		<key width="1.8" key0="enter" />

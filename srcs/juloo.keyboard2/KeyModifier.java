@@ -63,25 +63,26 @@ class KeyModifier
   {
     if ((flags & KeyValue.FLAG_FN) == 0)
       return null;
-    switch (k.char_)
+    String name;
+    switch (k.name)
     {
-      case '1': return makeFnKey("F1", KeyEvent.KEYCODE_F1);
-      case '2': return makeFnKey("F2", KeyEvent.KEYCODE_F2);
-      case '3': return makeFnKey("F3", KeyEvent.KEYCODE_F3);
-      case '4': return makeFnKey("F4", KeyEvent.KEYCODE_F4);
-      case '5': return makeFnKey("F5", KeyEvent.KEYCODE_F5);
-      case '6': return makeFnKey("F6", KeyEvent.KEYCODE_F6);
-      case '7': return makeFnKey("F7", KeyEvent.KEYCODE_F7);
-      case '8': return makeFnKey("F8", KeyEvent.KEYCODE_F8);
-      case '9': return makeFnKey("F9", KeyEvent.KEYCODE_F9);
-      case '0': return makeFnKey("F10", KeyEvent.KEYCODE_F10);
+      case "1": name = "f1"; break;
+      case "2": name = "f2"; break;
+      case "3": name = "f3"; break;
+      case "4": name = "f4"; break;
+      case "5": name = "f5"; break;
+      case "6": name = "f6"; break;
+      case "7": name = "f7"; break;
+      case "8": name = "f8"; break;
+      case "9": name = "f9"; break;
+      case "0": name = "f10"; break;
+      case "up": name = "page_up"; break;
+      case "down": name = "page_down"; break;
+      case "left": name = "home"; break;
+      case "right": name = "end"; break;
       default: return null;
     }
-  }
-
-  private static KeyValue makeFnKey(String symbol, int eventCode)
-  {
-    return new KeyValue(symbol, symbol, KeyValue.CHAR_NONE, eventCode, 0);
+    return KeyValue.getKeyByName(name);
   }
 
   /* Lookup the cache entry for a key. Create it needed. */

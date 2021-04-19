@@ -86,6 +86,16 @@ class KeyValue
     addKey(name, symbol, CHAR_NONE, event, FLAG_NOREPEAT);
   }
 
+  private static void addEventKey(String name, String symbol, int event)
+  {
+    addEventKey(name, symbol, event, 0);
+  }
+
+  private static void addEventKey(String name, String symbol, int event, int flags)
+  {
+    addKey(name, symbol, CHAR_NONE, event, flags);
+  }
+
   static
   {
     String chars = "<>&\"'(-_)=°+"
@@ -149,19 +159,29 @@ class KeyValue
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "⊞", EVENT_CHANGE_METHOD);
 
-    addKey("esc",		"Esc",		CHAR_NONE,	KeyEvent.KEYCODE_ESCAPE,		0);
-    addKey("enter",	"\uE800",	CHAR_NONE,	KeyEvent.KEYCODE_ENTER,			FLAG_KEY_FONT);
-    addKey("up",		"\uE80B",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_UP,		FLAG_KEY_FONT);
-    addKey("right",	"\uE80C",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_RIGHT,	FLAG_KEY_FONT);
-    addKey("down",	"\uE809",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_DOWN,		FLAG_KEY_FONT);
-    addKey("left",	"\uE80A",	CHAR_NONE,	KeyEvent.KEYCODE_DPAD_LEFT,		FLAG_KEY_FONT);
-    addKey("page_up",	"⇞",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_DOWN,		0);
-    addKey("page_down", "⇟",		CHAR_NONE,	KeyEvent.KEYCODE_PAGE_UP,		0);
-    addKey("home",	"↖",		CHAR_NONE,	KeyEvent.KEYCODE_HOME,			0);
-    addKey("end",		"↗",		CHAR_NONE,	KeyEvent.KEYCODE_MOVE_END,		0);
-    addKey("backspace", "⌫",		CHAR_NONE,	KeyEvent.KEYCODE_DEL,			0);
-    addKey("delete",	"⌦",		CHAR_NONE,	KeyEvent.KEYCODE_FORWARD_DEL,	0);
-    addKey("insert",	"Ins",		CHAR_NONE,	KeyEvent.KEYCODE_INSERT,		0);
+    addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE);
+    addEventKey("enter", "\uE800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
+    addEventKey("up", "\uE80B", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT);
+    addEventKey("right", "\uE80C", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT);
+    addEventKey("down", "\uE809", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT);
+    addEventKey("left", "\uE80A", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT);
+    addEventKey("page_up", "⇞", KeyEvent.KEYCODE_PAGE_DOWN);
+    addEventKey("page_down", "⇟", KeyEvent.KEYCODE_PAGE_UP);
+    addEventKey("home", "↖", KeyEvent.KEYCODE_HOME);
+    addEventKey("end", "↗", KeyEvent.KEYCODE_MOVE_END);
+    addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL);
+    addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL);
+    addEventKey("insert", "Ins", KeyEvent.KEYCODE_INSERT);
+    addEventKey("f1", "F1", KeyEvent.KEYCODE_F1);
+    addEventKey("f2", "F2", KeyEvent.KEYCODE_F2);
+    addEventKey("f3", "F3", KeyEvent.KEYCODE_F3);
+    addEventKey("f4", "F4", KeyEvent.KEYCODE_F4);
+    addEventKey("f5", "F5", KeyEvent.KEYCODE_F5);
+    addEventKey("f6", "F6", KeyEvent.KEYCODE_F6);
+    addEventKey("f7", "F7", KeyEvent.KEYCODE_F7);
+    addEventKey("f8", "F8", KeyEvent.KEYCODE_F8);
+    addEventKey("f9", "F9", KeyEvent.KEYCODE_F9);
+    addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
 
     addKey("tab",		"↹",		'\t',		KeyEvent.KEYCODE_TAB,			0);
     addKey("space",	" ",		' ',		KeyEvent.KEYCODE_SPACE,			0);
