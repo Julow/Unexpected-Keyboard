@@ -75,7 +75,7 @@ _build/$(PACKAGE_NAME).debug.unsigned-apk: AAPT_PACKAGE_FLAGS+=--rename-manifest
 # OPTS can be used to pass -storepass or -keypass options to jarsigner
 _build/%.signed-apk: _build/%.unsigned-apk %-keystore.conf
 	eval `cat $(word 2,$^)` && \
-	jarsigner -keystore "$$KEYSTORE" $$OPTS -signedjar "$@" "$<" "$$KEYNAME"
+	jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore "$$KEYSTORE" $$OPTS -signedjar "$@" "$<" "$$KEYNAME"
 
 # Package
 
