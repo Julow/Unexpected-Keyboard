@@ -104,9 +104,7 @@ class KeyValue
 
   static
   {
-    String chars = "<>&\"'(-_)=°+"
-      + "~#{[|`\\^@]}"
-      + "^$*,;:!£%µ?./§";
+    String chars = "<>&\"_°~{|^}$*:!£%µ?.§";
     for (int i = 0; i < chars.length(); i++)
       addCharKey(chars.charAt(i), EVENT_NONE);
 
@@ -157,6 +155,23 @@ class KeyValue
     addCharKey('7', KeyEvent.KEYCODE_7);
     addCharKey('8', KeyEvent.KEYCODE_8);
     addCharKey('9', KeyEvent.KEYCODE_9);
+    addCharKey('`', KeyEvent.KEYCODE_GRAVE);
+    addCharKey('-', KeyEvent.KEYCODE_MINUS);
+    addCharKey('=', KeyEvent.KEYCODE_EQUALS);
+    addCharKey('[', KeyEvent.KEYCODE_LEFT_BRACKET);
+    addCharKey(']', KeyEvent.KEYCODE_RIGHT_BRACKET);
+    addCharKey('\\', KeyEvent.KEYCODE_BACKSLASH);
+    addCharKey(';', KeyEvent.KEYCODE_SEMICOLON);
+    addCharKey('\'', KeyEvent.KEYCODE_APOSTROPHE);
+    addCharKey('/', KeyEvent.KEYCODE_SLASH);
+    addCharKey('@', KeyEvent.KEYCODE_AT);
+    addCharKey('+', KeyEvent.KEYCODE_PLUS);
+    addCharKey(',', KeyEvent.KEYCODE_COMMA);
+    addCharKey('.', KeyEvent.KEYCODE_PERIOD);
+    addCharKey('*', KeyEvent.KEYCODE_STAR);
+    addCharKey('#', KeyEvent.KEYCODE_POUND);
+    addCharKey('(', KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
+    addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
 
     addSpecialKey("config", "Conf", EVENT_CONFIG);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
