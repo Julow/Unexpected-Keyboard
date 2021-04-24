@@ -336,8 +336,9 @@ public class Keyboard2View extends View
 		if (_keyboard.getRows() == null)
 			height = 0;
 		else
-			height = (int)(_config.keyHeight * ((float)_keyboard.getRows().size())
-				+ _config.marginTop + _config.marginBottom);
+			height = (int)((_config.keyHeight + _config.keyVerticalInterval)
+          * ((float)_keyboard.getRows().size())
+          + _config.marginTop + _config.marginBottom);
 		setMeasuredDimension(dm.widthPixels, height);
 		_keyWidth = (getWidth() - (_config.horizontalMargin * 2)) / _keyboard.getKeysWidth();
 	}
@@ -351,11 +352,10 @@ public class Keyboard2View extends View
       float x = _config.horizontalMargin;
 			for (KeyboardData.Key k : row.getKeys())
 			{
-        x += k.shift * _keyWidth;
-				float keyW = _keyWidth * k.width;
+        x += k.shift * _keyWidth + _config.keyHorizontalInterval;
+				float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
 				KeyDown keyDown = getKeyDown(k);
-				_tmpRect.set(x + _config.keyBgPadding, y + _config.keyBgPadding,
-					x + keyW - _config.keyBgPadding, y + _config.keyHeight - _config.keyBgPadding);
+				_tmpRect.set(x, y, x + keyW, y + _config.keyHeight);
 				if (keyDown != null)
 					canvas.drawRect(_tmpRect, _keyDownBgPaint);
 				else
@@ -363,7 +363,7 @@ public class Keyboard2View extends View
 				if (k.key0 != null)
 					drawLabel(canvas, k.key0, keyW / 2f + x, (_config.keyHeight + _labelTextSize) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0));
-				float subPadding = _config.keyBgPadding + _config.keyPadding;
+				float subPadding = _config.keyPadding;
 				if (k.key1 != null)
 					drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding - _keySubLabelPaint.ascent(), false);
 				if (k.key3 != null)
@@ -374,7 +374,7 @@ public class Keyboard2View extends View
 					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + _config.keyHeight - subPadding - _keySubLabelPaint.descent(), true);
 				x += keyW;
 			}
-			y += _config.keyHeight;
+			y += _config.keyHeight + _config.keyVerticalInterval;
 		}
 	}
 

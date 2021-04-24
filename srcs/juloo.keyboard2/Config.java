@@ -11,7 +11,8 @@ class Config
 
 	public final float			marginTop;
 	public final float			keyPadding;
-	public final float			keyBgPadding;
+	public final float			keyVerticalInterval;
+	public final float			keyHorizontalInterval;
 	public final float			keyRound;
 
 	public float				subValueDist;
@@ -36,7 +37,8 @@ class Config
 		// static values
 		marginTop = res.getDimension(R.dimen.margin_top);
 		keyPadding = res.getDimension(R.dimen.key_padding);
-		keyBgPadding = res.getDimension(R.dimen.key_bg_padding);
+		keyVerticalInterval = res.getDimension(R.dimen.key_vertical_interval);
+		keyHorizontalInterval = res.getDimension(R.dimen.key_horizontal_interval);
 		keyRound = res.getDimension(R.dimen.key_round);
 		// default values
 		subValueDist = 10f;
