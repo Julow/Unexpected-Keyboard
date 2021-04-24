@@ -78,7 +78,7 @@ public class Keyboard2View extends View
 	{
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     paint.setTextAlign(align);
-    paint.setTextSize(getResources().getDimension(size));
+    paint.setTextSize(getResources().getDimension(size) * _config.characterSize);
     if (font != null)
       paint.setTypeface(font);
 		return (paint);

@@ -81,5 +81,13 @@
 			min="0"
 			max="20"
 		/>
+		<juloo.common.SlideBarPreference
+			android:key="character_size"
+			android:title="@string/pref_character_size_title"
+			android:summary="@string/pref_character_size_summary"
+			android:defaultValue="1.0"
+			min="0.8"
+			max="1.2"
+    />
 	</PreferenceCategory>
 </PreferenceScreen>

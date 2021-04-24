@@ -9,6 +9,8 @@
   <string name="subtype_label_qwerty">%s QWERTY</string>
 
 	<string name="pref_category_layout">Layout</string>
+	<string name="pref_disable_accent_keys_title">Toggle accent keys</string>
+	<string name="pref_disable_accent_keys_summary">Whether to remove the accent keys from the keyboard</string>
 
 	<string name="pref_category_typing">Typing</string>
 	<string name="pref_preci_title">Precision</string>
@@ -33,6 +35,6 @@
 	<string name="pref_key_height_summary">%sdp</string>
 	<string name="pref_horizontal_margin_title">Horizontal margin</string>
 	<string name="pref_horizontal_margin_summary">%sdp</string>
-	<string name="pref_disable_accent_keys_title">Toggle accent keys</string>
-	<string name="pref_disable_accent_keys_summary">Whether to remove the accent keys from the keyboard.</string>
+  <string name="pref_character_size_title">Label size</string>
+  <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
 </resources>
