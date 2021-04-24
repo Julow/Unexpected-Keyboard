@@ -120,7 +120,7 @@ public class Keyboard2 extends InputMethodService
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
 		_config.refresh();
-		_keyboardView.reset();
+		_keyboardView.refreshConfig(_config);
 	}
 
 	@Override
