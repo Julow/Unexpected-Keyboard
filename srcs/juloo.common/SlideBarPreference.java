@@ -25,7 +25,7 @@ import android.widget.SeekBar;
 public class SlideBarPreference extends DialogPreference
 	implements SeekBar.OnSeekBarChangeListener
 {
-	private static final int	SEEKBAR_MAX = 100000;
+	private static final int	STEPS = 100;
 
 	private LinearLayout	_layout;
 	private TextView		_textView;
@@ -45,7 +45,7 @@ public class SlideBarPreference extends DialogPreference
 		_textView.setPadding(48, 40, 48, 40);
 		_seekBar = new SeekBar(context);
 		_seekBar.setOnSeekBarChangeListener(this);
-		_seekBar.setMax(SEEKBAR_MAX);
+		_seekBar.setMax(STEPS);
 		_min = float_of_string(attrs.getAttributeValue(null, "min"));
 		_value = _min;
 		_max = Math.max(1f, float_of_string(attrs.getAttributeValue(null, "max")));
@@ -58,7 +58,7 @@ public class SlideBarPreference extends DialogPreference
 	@Override
 	public void				onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
 	{
-		_value = (progress * _max) / SEEKBAR_MAX + _min;
+		_value = Math.round(progress * (_max - _min)) / (float)STEPS + _min;
 		updateText();
 	}
 
@@ -84,7 +84,7 @@ public class SlideBarPreference extends DialogPreference
 			_value = (Float)defaultValue;
 			persistFloat(_value);
 		}
-		_seekBar.setProgress((int)((_value - _min) * SEEKBAR_MAX / _max));
+		_seekBar.setProgress((int)((_value - _min) * STEPS / (_max - _min)));
 		updateText();
 	}
 
