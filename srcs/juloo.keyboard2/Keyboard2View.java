@@ -46,6 +46,8 @@ public class Keyboard2View extends View
   private int _lockedColor;
   private int _labelColor;
   private int _subLabelColor;
+  private float _labelTextSize;
+  private float _sublabelTextSize;
 
 	private static RectF		_tmpRect = new RectF();
 
@@ -65,20 +67,21 @@ public class Keyboard2View extends View
     _lockedColor = res.getColor(R.color.key_label_locked);
     _labelColor = res.getColor(R.color.key_label);
     _subLabelColor = res.getColor(R.color.key_sub_label);
+    _labelTextSize = res.getDimension(R.dimen.label_text_size) * config.characterSize;
+    _sublabelTextSize = res.getDimension(R.dimen.sublabel_text_size) * config.characterSize;
 		_keyBgPaint.setColor(res.getColor(R.color.key_bg));
 		_keyDownBgPaint.setColor(res.getColor(R.color.key_down_bg));
-		_keyLabelPaint = initLabelPaint(Paint.Align.CENTER, R.dimen.label_text_size, null);
-		_keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, R.dimen.sublabel_text_size, null);
+		_keyLabelPaint = initLabelPaint(Paint.Align.CENTER, null);
+		_keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, null);
 		Typeface	specialKeysFont = ((Keyboard2)getContext()).getSpecialKeyFont();
-		_specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, R.dimen.label_text_size, specialKeysFont);
-		_specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, R.dimen.sublabel_text_size, specialKeysFont);
+		_specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeysFont);
+		_specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeysFont);
   }
 
-	private Paint		initLabelPaint(Paint.Align align, int size, Typeface font)
+	private Paint		initLabelPaint(Paint.Align align, Typeface font)
 	{
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     paint.setTextAlign(align);
-    paint.setTextSize(getResources().getDimension(size) * _config.characterSize);
     if (font != null)
       paint.setTypeface(font);
 		return (paint);
@@ -358,7 +361,7 @@ public class Keyboard2View extends View
 				else
 					canvas.drawRoundRect(_tmpRect, _config.keyRound, _config.keyRound, _keyBgPaint);
 				if (k.key0 != null)
-					drawLabel(canvas, k.key0, keyW / 2f + x, (_config.keyHeight + _keyLabelPaint.getTextSize()) / 2f + y,
+					drawLabel(canvas, k.key0, keyW / 2f + x, (_config.keyHeight + _labelTextSize) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0));
 				float subPadding = _config.keyBgPadding + _config.keyPadding;
 				if (k.key1 != null)
@@ -385,6 +388,7 @@ public class Keyboard2View extends View
 	{
     Paint p = ((k.flags & KeyValue.FLAG_KEY_FONT) != 0) ? _specialKeyLabelPaint : _keyLabelPaint;
     p.setColor(locked ? _lockedColor : _labelColor);
+    p.setTextSize(_labelTextSize * scaleTextSize(k));
     k = KeyModifier.handleFlags(k, _flags);
     canvas.drawText(k.symbol, x, y, p);
 	}
@@ -394,9 +398,15 @@ public class Keyboard2View extends View
     Paint p = ((k.flags & KeyValue.FLAG_KEY_FONT) != 0) ? _specialKeySubLabelPaint : _keySubLabelPaint;
     p.setColor(_subLabelColor);
     p.setTextAlign(right ? Paint.Align.RIGHT : Paint.Align.LEFT);
+    p.setTextSize(_sublabelTextSize * scaleTextSize(k));
     k = KeyModifier.handleFlags(k, _flags);
     canvas.drawText(k.symbol, x, y, p);
 	}
+
+  private float scaleTextSize(KeyValue k)
+  {
+    return (k.symbol.length() < 2) ? 1.f : 0.8f;
+  }
 
 	private static class KeyDown
 	{
