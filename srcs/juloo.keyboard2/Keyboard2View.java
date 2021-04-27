@@ -56,11 +56,12 @@ public class Keyboard2View extends View
 		super(context, attrs);
 		_vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 		_handler = new Handler(this);
-    refreshConfig(((Keyboard2)context).getConfig());
+    refreshConfig(((Keyboard2)context).getConfig(), null);
 		setOnTouchListener(this);
 	}
 
-  public void refreshConfig(Config config)
+  /* Internally calls [reset()]. */
+  public void refreshConfig(Config config, KeyboardData kw)
   {
     Resources res = getResources();
 		_config = config;
@@ -76,6 +77,8 @@ public class Keyboard2View extends View
 		Typeface	specialKeysFont = ((Keyboard2)getContext()).getSpecialKeyFont();
 		_specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeysFont);
 		_specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeysFont);
+    if (kw != null)
+      setKeyboard(kw); // handle layout options then calls reset().
   }
 
 	private Paint		initLabelPaint(Paint.Align align, Typeface font)

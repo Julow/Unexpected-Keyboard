@@ -33,19 +33,6 @@ public class Keyboard2 extends InputMethodService
 
   private Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
 
-  private static final int DEFAULT_LAYOUT = R.xml.qwerty;
-  private static final Map<String, Integer> LAYOUTS = new HashMap<String, Integer>();
-
-  private static void add_layout(String lang, int resId)
-  {
-    LAYOUTS.put(new Locale(lang).getLanguage(), resId);
-  }
-
-  static
-  {
-    add_layout("fr", R.xml.azerty);
-  }
-
   private KeyboardData getLayout(int resId)
   {
     KeyboardData l = _layoutCache.get(resId);
@@ -81,10 +68,23 @@ public class Keyboard2 extends InputMethodService
 
   private void refreshSubtype(InputMethodSubtype subtype)
   {
-    Integer l = LAYOUTS.get(subtype.getLanguageTag());
-    if (l == null)
-      l = DEFAULT_LAYOUT;
-    _currentTextLayout = l;
+    int l;
+    if (_config.layout == -1)
+      l = Config.layoutId_of_string(subtype.getExtraValueOf("default_layout"));
+    else
+      l = _config.layout;
+    if (_currentTextLayout != l)
+    {
+      _currentTextLayout = l;
+      _keyboardView.setKeyboard(getLayout(l));
+    }
+  }
+
+  private void refreshSubtypeImm()
+  {
+    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getConnectionToken());
+    refreshSubtype(imm.getCurrentInputMethodSubtype());
   }
 
 	@Override
@@ -100,27 +100,23 @@ public class Keyboard2 extends InputMethodService
 	@Override
 	public void				onStartInputView(EditorInfo info, boolean restarting)
 	{
-    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-    _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getConnectionToken());
-    refreshSubtype(imm.getCurrentInputMethodSubtype());
+    refreshSubtypeImm();
 		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
-    else
-      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
 	}
 
   @Override
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
     refreshSubtype(subtype);
-    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
   }
 
 	@Override
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
 		_config.refresh();
-		_keyboardView.refreshConfig(_config);
+    refreshSubtypeImm();
+		_keyboardView.refreshConfig(_config, getLayout(_currentTextLayout));
 	}
 
 	@Override

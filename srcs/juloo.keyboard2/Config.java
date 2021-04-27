@@ -15,6 +15,7 @@ class Config
 	public final float			keyHorizontalInterval;
 	public final float			keyRound;
 
+  public int layout; // Or '-1' for the system defaults
 	public float				subValueDist;
 	public boolean				vibrateEnabled;
 	public long					vibrateDuration;
@@ -41,6 +42,7 @@ class Config
 		keyHorizontalInterval = res.getDimension(R.dimen.key_horizontal_interval);
 		keyRound = res.getDimension(R.dimen.key_round);
 		// default values
+    layout = -1;
 		subValueDist = 10f;
 		vibrateEnabled = true;
 		vibrateDuration = 20;
@@ -65,6 +67,7 @@ class Config
 	{
 		SharedPreferences	prefs = PreferenceManager.getDefaultSharedPreferences(_context);
 
+    layout = layoutId_of_string(prefs.getString("layout", "system")); 
 		subValueDist = prefs.getFloat("sub_value_dist", subValueDist);
 		vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
 		vibrateDuration = prefs.getInt("vibrate_duration", (int)vibrateDuration);
@@ -87,4 +90,16 @@ class Config
 		return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value,
 			_context.getResources().getDisplayMetrics()));
 	}
+
+  public static int layoutId_of_string(String name)
+  {
+    switch (name)
+    {
+      case "azerty": return R.xml.azerty;
+      case "qwerty": return R.xml.qwerty;
+      case "system": return -1;
+      default: throw new IllegalArgumentException();
+    }
+  }
+
 }

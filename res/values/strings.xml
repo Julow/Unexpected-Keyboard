@@ -5,10 +5,17 @@
 
 	<string name="settings_activity_label">Unexpected Keyboard Settings</string>
 
-  <string name="subtype_label_azerty">%s AZERTY</string>
-  <string name="subtype_label_qwerty">%s QWERTY</string>
+  <string name="subtype_label_azerty">%s</string>
+  <string name="subtype_label_qwerty">%s</string>
 
 	<string name="pref_category_layout">Layout</string>
+  <string name="pref_layout_title">Change keyboard layout</string>
+  <string name="pref_layout_summary">%s</string>
+  <string-array name="pref_layout_entries">
+    <item>System settings</item>
+    <item>Azerty</item>
+    <item>Qwerty</item>
+  </string-array>
 	<string name="pref_disable_accent_keys_title">Toggle accent keys</string>
 	<string name="pref_disable_accent_keys_summary">Whether to remove the accent keys from the keyboard</string>
 

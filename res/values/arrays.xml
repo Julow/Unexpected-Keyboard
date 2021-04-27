@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="pref_layout_values">
-		<item>azerty</item>
-		<item>qwerty</item>
-	</string-array>
+  <string-array name="pref_layout_values">
+    <item>system</item>
+    <item>azerty</item>
+    <item>qwerty</item>
+  </string-array>
 </resources>
