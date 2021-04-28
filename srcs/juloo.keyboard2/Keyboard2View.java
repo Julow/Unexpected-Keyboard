@@ -208,24 +208,10 @@ public class Keyboard2View extends View
 				float keyW = _keyWidth * key.width;
 				if (touchX >= x && touchX < (x + keyW))
 				{
-					KeyDown down = getKeyDown(key);
-					if (down != null)
-					{
-						if ((down.flags & KeyValue.FLAG_LOCK) != 0)
-						{
-							down.flags ^= KeyValue.FLAG_LOCK;
-							down.flags |= KeyValue.FLAG_LOCKED;
-						}
-						else if (down.pointerId == -1)
-							down.pointerId = pointerId;
-					}
-					else
-					{
-						int what = _currentWhat++;
-						if (key.key0 != null && (key.key0.flags & KeyValue.FLAG_NOREPEAT) == 0)
-							_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
-						_downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
-					}
+          int what = _currentWhat++;
+          if (key.key0 != null && (key.key0.flags & KeyValue.FLAG_NOREPEAT) == 0)
+            _handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
+          _downKeys.add(new KeyDown(pointerId, key, touchX, touchY, what));
 					handleKeyDown(key.key0);
 					updateFlags();
 					invalidate();
@@ -236,36 +222,67 @@ public class Keyboard2View extends View
 		}
 	}
 
+  // Whether a key is already activated (key down but pointer up)
+  private KeyDown getActivatedKey(KeyValue kv)
+  {
+		for (KeyDown k : _downKeys)
+		{
+			if (k.value == kv && k.pointerId == -1)
+				return (k);
+		}
+		return (null);
+  }
+
 	private void		onTouchUp(int pointerId)
 	{
 		KeyDown				k = getKeyDown(pointerId);
 
 		if (k != null)
 		{
-			if (k.timeoutWhat != -1)
-			{
-				_handler.removeMessages(k.timeoutWhat);
-				k.timeoutWhat = -1;
-			}
-			if ((k.flags & KeyValue.FLAG_KEEP_ON) != 0)
-			{
-				k.flags ^= KeyValue.FLAG_KEEP_ON;
-				k.pointerId = -1;
-				return ;
-			}
-			for (int i = 0; i < _downKeys.size(); i++)
-			{
-				KeyDown downKey = _downKeys.get(i);
-				if (downKey.pointerId == -1 && (downKey.flags & KeyValue.FLAG_LOCKED) == 0)
-					_downKeys.remove(i--);
-				else if ((downKey.flags & KeyValue.FLAG_KEEP_ON) != 0)
-					downKey.flags ^= KeyValue.FLAG_KEEP_ON;
-			}
-			_downKeys.remove(k);
-			handleKeyUp(k);
-			updateFlags();
-			invalidate();
-			return ;
+      // Stop key repeat
+      if (k.timeoutWhat != -1)
+      {
+        _handler.removeMessages(k.timeoutWhat);
+        k.timeoutWhat = -1;
+      }
+      KeyDown k_on = getActivatedKey(k.value);
+      if (k_on != null)
+      {
+        _downKeys.remove(k); // Remove dupplicate
+        // Same key with FLAG_LOCK is already on, do lock
+        if ((k_on.flags & KeyValue.FLAG_LOCK) != 0)
+        {
+          k_on.flags ^= KeyValue.FLAG_LOCK; // Next time, disable it
+          k_on.flags |= KeyValue.FLAG_LOCKED;
+        }
+        // Otherwise, toggle it
+        else
+        {
+          _downKeys.remove(k_on);
+        }
+      }
+      // Key stay activated
+      else if ((k.flags & KeyValue.FLAG_KEEP_ON) != 0)
+      {
+        k.pointerId = -1; // Set pointer up
+      }
+      else // Regular key up
+      {
+        for (int i = 0; i < _downKeys.size(); i++)
+        {
+          KeyDown downKey = _downKeys.get(i);
+          // Disable other activated keys that aren't locked
+          if (downKey.pointerId == -1 && (downKey.flags & KeyValue.FLAG_LOCKED) == 0)
+            _downKeys.remove(i--);
+          // Other keys currently down won't stay activated
+          else if ((downKey.flags & KeyValue.FLAG_KEEP_ON) != 0)
+            downKey.flags ^= KeyValue.FLAG_KEEP_ON;
+        }
+        _downKeys.remove(k);
+        handleKeyUp(k);
+      }
+      updateFlags();
+      invalidate();
 		}
 	}
 
@@ -413,6 +430,7 @@ public class Keyboard2View extends View
 
 	private static class KeyDown
 	{
+    /* -1 if pointer is up. */
 		public int				pointerId;
 		public KeyValue			value;
 		public KeyboardData.Key	key;
