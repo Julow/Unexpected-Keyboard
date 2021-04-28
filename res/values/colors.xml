@@ -5,6 +5,7 @@
 	<item name="key_down_bg" type="color">#1B1B1B</item>
 	<item name="key_label" type="color">#FFFFFF</item>
 	<item name="key_label_locked" type="color">#229933</item>
+	<item name="key_label_activated" type="color">#226b99</item>
 	<item name="key_sub_label" type="color">#A0A0A0</item>
 	<item name="emoji_button_bg" type="color">#202020</item>
 	<item name="emoji_color" type="color">#FFFFFF</item>
