@@ -104,7 +104,7 @@ class KeyValue
 
   static
   {
-    String chars = "<>&\"_°~{|^}$*:!£%µ?.§";
+    String chars = "<>&\"_°~{|^}$*:!£%µ?.§€";
     for (int i = 0; i < chars.length(); i++)
       addCharKey(chars.charAt(i), EVENT_NONE);
 
