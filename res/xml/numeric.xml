@@ -25,7 +25,7 @@
     <key key0="3" key4="page_down" />
     <key width="1.15" key0="backspace" key2="delete" />
   </row>
-  <row>
+	<row height="0.95">
     <key width="1.5" key0="ctrl" key3="switch_text" />
     <key width="1.5" key0="0" />
     <key width="0.75" key0="." key2="," />

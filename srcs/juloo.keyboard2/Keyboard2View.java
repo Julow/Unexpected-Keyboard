@@ -196,13 +196,13 @@ public class Keyboard2View extends View
 	private void		onTouchDown(float touchX, float touchY, int pointerId)
 	{
 		float y = _config.marginTop - _config.keyHeight;
-		for (KeyboardData.Row row : _keyboard.getRows())
+		for (KeyboardData.Row row : _keyboard.rows)
 		{
 			y += _config.keyHeight;
 			if (touchY < y || touchY >= (y + _config.keyHeight))
 				continue ;
       float x = _config.horizontalMargin;
-			for (KeyboardData.Key key : row.getKeys())
+			for (KeyboardData.Key key : row.keys)
 			{
         x += key.shift * _keyWidth;
 				float keyW = _keyWidth * key.width;
@@ -350,51 +350,49 @@ public class Keyboard2View extends View
 	@Override
 	public void			onMeasure(int wSpec, int hSpec)
 	{
-		DisplayMetrics		dm = getContext().getResources().getDisplayMetrics();
-		int					height;
-
-		if (_keyboard.getRows() == null)
-			height = 0;
-		else
-			height = (int)((_config.keyHeight + _config.keyVerticalInterval)
-          * ((float)_keyboard.getRows().size())
-          + _config.marginTop + _config.marginBottom);
-		setMeasuredDimension(dm.widthPixels, height);
-		_keyWidth = (getWidth() - (_config.horizontalMargin * 2)) / _keyboard.getKeysWidth();
+    DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+    int height;
+    height = (int)(_config.keyHeight * _keyboard.keysHeight
+        + _keyboard.rows.size() * _config.keyVerticalInterval
+        + _config.marginTop + _config.marginBottom);
+    setMeasuredDimension(dm.widthPixels, height);
+    _keyWidth = (getWidth() - (_config.horizontalMargin * 2)) / _keyboard.keysWidth;
 	}
 
 	@Override
 	protected void		onDraw(Canvas canvas)
 	{
 		float y = _config.marginTop;
-		for (KeyboardData.Row row : _keyboard.getRows())
+		for (KeyboardData.Row row : _keyboard.rows)
 		{
+      y += row.shift * _config.keyHeight;
       float x = _config.horizontalMargin;
-			for (KeyboardData.Key k : row.getKeys())
+      float keyH = row.height * _config.keyHeight;
+			for (KeyboardData.Key k : row.keys)
 			{
         x += k.shift * _keyWidth + _config.keyHorizontalInterval;
 				float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
 				KeyDown keyDown = getKeyDown(k);
-				_tmpRect.set(x, y, x + keyW, y + _config.keyHeight);
+				_tmpRect.set(x, y, x + keyW, y + keyH);
 				if (keyDown != null)
 					canvas.drawRect(_tmpRect, _keyDownBgPaint);
 				else
 					canvas.drawRoundRect(_tmpRect, _config.keyRound, _config.keyRound, _keyBgPaint);
 				if (k.key0 != null)
-					drawLabel(canvas, k.key0, keyW / 2f + x, (_config.keyHeight + _labelTextSize) / 2f + y,
+					drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _labelTextSize) / 2f + y,
 						(keyDown != null && (keyDown.flags & KeyValue.FLAG_LOCKED) != 0));
 				float subPadding = _config.keyPadding;
 				if (k.key1 != null)
 					drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding - _keySubLabelPaint.ascent(), false);
 				if (k.key3 != null)
-					drawSubLabel(canvas, k.key3, x + subPadding, y + _config.keyHeight - subPadding - _keySubLabelPaint.descent(), false);
+					drawSubLabel(canvas, k.key3, x + subPadding, y + keyH - subPadding - _keySubLabelPaint.descent(), false);
 				if (k.key2 != null)
 					drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding - _keySubLabelPaint.ascent(), true);
 				if (k.key4 != null)
-					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + _config.keyHeight - subPadding - _keySubLabelPaint.descent(), true);
+					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding - _keySubLabelPaint.descent(), true);
 				x += keyW;
 			}
-			y += _config.keyHeight + _config.keyVerticalInterval;
+			y += keyH + _config.keyVerticalInterval;
 		}
 	}
 

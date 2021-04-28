@@ -6,15 +6,24 @@ import java.util.List;
 
 class KeyboardData
 {
-	private final List<Row> _rows;
-  private final float _keysWidth;
+	public final List<Row> rows;
+  /* Total width of the keyboard. Unit is abstract. */
+  public final float keysWidth;
+  /* Total height of the keyboard. Unit is abstract. */
+  public final float keysHeight;
 
-  public KeyboardData(List<Row> rows)
+  public KeyboardData(List<Row> rows_)
   {
-    float kpr = 0.f;
-    for (Row r : rows) kpr = Math.max(kpr, r.keysWidth());
-    _rows = rows;
-    _keysWidth = kpr;
+    float kw = 0.f;
+    float kh = 0.f;
+    for (Row r : rows_)
+    {
+      kw = Math.max(kw, r.keysWidth);
+      kh += r.height + r.shift;
+    }
+    rows = rows_;
+    keysWidth = kw;
+    keysHeight = kh;
   }
 
 	public static KeyboardData parse(XmlResourceParser parser)
@@ -40,7 +49,6 @@ class KeyboardData
 						throw new Exception("Unknow keyboard tag: " + tag);
 				}
 			}
-      return new KeyboardData(rows);
 		}
 		catch (Exception e)
 		{
@@ -49,36 +57,40 @@ class KeyboardData
     return new KeyboardData(rows);
 	}
 
-	public List<Row>	getRows() { return _rows; }
-
-  public float getKeysWidth() { return _keysWidth; }
-
   public KeyboardData removeKeys(MapKeys f)
   {
-		ArrayList<Row> rows = new ArrayList<Row>();
-    for (Row r : _rows)
-      rows.add(r.removeKeys(f));
-    return new KeyboardData(rows);
+		ArrayList<Row> rows_ = new ArrayList<Row>();
+    for (Row r : rows)
+      rows_.add(r.removeKeys(f));
+    return new KeyboardData(rows_);
   }
 
 	public static class Row
 	{
-    private final List<Key> _keys;
+    public final List<Key> keys;
+    /* Height of the row. Unit is abstract. */
+    public final float height;
+    /* Extra empty space on the top. */
+    public final float shift;
     /* Total width of very keys. Unit is abstract. */
-		private final float _keysWidth;
+		private final float keysWidth;
 
-    public Row(List<Key> keys)
+    public Row(List<Key> keys_, float h, float s)
     {
       float kw = 0.f;
-      for (Key k : keys) kw += k.width + k.shift;
-      _keys = keys;
-      _keysWidth = kw;
+      for (Key k : keys_) kw += k.width + k.shift;
+      keys = keys_;
+      height = h;
+      shift = s;
+      keysWidth = kw;
     }
 
 		public static Row parse(XmlResourceParser parser) throws Exception
 		{
       ArrayList<Key> keys = new ArrayList<Key>();
 			int status;
+      float h = parser.getAttributeFloatValue(null, "height", 1f);
+      float shift = parser.getAttributeFloatValue(null, "shift", 0f);
 			while ((status = parser.next()) != XmlResourceParser.END_TAG)
 			{
 				if (status == XmlResourceParser.START_TAG)
@@ -90,19 +102,15 @@ class KeyboardData
 						throw new Exception("Unknow row tag: " + tag);
 				}
 			}
-      return new Row(keys);
+      return new Row(keys, h, shift);
 		}
-
-    public List<Key> getKeys() { return _keys; }
-
-    public float keysWidth() { return _keysWidth; }
 
     public Row removeKeys(MapKeys f)
     {
-      ArrayList<Key> keys = new ArrayList<Key>();
-      for (Key k : _keys)
-        keys.add(k.removeKeys(f));
-      return new Row(keys);
+      ArrayList<Key> keys_ = new ArrayList<Key>();
+      for (Key k : keys)
+        keys_.add(k.removeKeys(f));
+      return new Row(keys_, height, shift);
     }
 	}
 
