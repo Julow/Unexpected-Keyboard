@@ -10,7 +10,7 @@
 		<key key0="u" key1="accent1" key2="7" key4="`" />
 		<key key0="i" key1="accent6" key2="8" key3="_" key4="\\" />
 		<key key0="o" key1="accent3" key2="9" />
-		<key key0="p" key1="insert" key2="0" key3="config" key4="\@" />
+		<key key0="p" key1="insert" key2="0" key4="\@" />
 	</row>
 	<row>
 		<key key0="q" key1="tab" />
@@ -35,10 +35,10 @@
 		<key width="2.0" key0="backspace" key2="delete" />
 	</row>
 	<row>
-		<key width="1.8" key0="ctrl" key1="change_method" key3="switch_numeric" />
-		<key width="1.2" key0="alt" key1="fn" />
+		<key width="1.8" key0="ctrl" key3="switch_numeric" />
+		<key width="1.2" key0="alt" key1="fn" key2="change_method" key3="switch_emoji" key4="config" />
 		<key width="4.0" key0="space" />
-		<key width="1.2" key0="switch_emoji" key1="up" key2="right" key3="left" key4="down" />
+		<key width="1.2" key1="up" key2="right" key3="left" key4="down" />
 		<key width="1.8" key0="enter" />
 	</row>
 </keyboard>
