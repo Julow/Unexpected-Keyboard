@@ -394,13 +394,13 @@ public class Keyboard2View extends View
 					drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _labelTextSize) / 2f + y, keyDown);
 				float subPadding = _config.keyPadding;
 				if (k.key1 != null)
-					drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding - _keySubLabelPaint.ascent(), false, keyDown);
+					drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding, false, true, keyDown);
 				if (k.key3 != null)
-					drawSubLabel(canvas, k.key3, x + subPadding, y + keyH - subPadding - _keySubLabelPaint.descent(), false, keyDown);
+					drawSubLabel(canvas, k.key3, x + subPadding, y + keyH - subPadding, false, false, keyDown);
 				if (k.key2 != null)
-					drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding - _keySubLabelPaint.ascent(), true, keyDown);
+					drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding, true, true, keyDown);
 				if (k.key4 != null)
-					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding - _keySubLabelPaint.descent(), true, keyDown);
+					drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding, true, false, keyDown);
 				x += keyW;
 			}
 			y += keyH + _config.keyVerticalInterval;
@@ -431,20 +431,21 @@ public class Keyboard2View extends View
 
 	private void		drawLabel(Canvas canvas, KeyValue k, float x, float y, KeyDown keyDown)
 	{
+    k = KeyModifier.handleFlags(k, _flags);
     Paint p = ((k.flags & KeyValue.FLAG_KEY_FONT) != 0) ? _specialKeyLabelPaint : _keyLabelPaint;
     p.setColor(labelColor(k, keyDown, _labelColor));
     p.setTextSize(_labelTextSize * scaleTextSize(k));
-    k = KeyModifier.handleFlags(k, _flags);
     canvas.drawText(k.symbol, x, y, p);
 	}
 
-	private void		drawSubLabel(Canvas canvas, KeyValue k, float x, float y, boolean right, KeyDown keyDown)
+	private void		drawSubLabel(Canvas canvas, KeyValue k, float x, float y, boolean right, boolean up, KeyDown keyDown)
 	{
+    k = KeyModifier.handleFlags(k, _flags);
     Paint p = ((k.flags & KeyValue.FLAG_KEY_FONT) != 0) ? _specialKeySubLabelPaint : _keySubLabelPaint;
     p.setColor(labelColor(k, keyDown, _subLabelColor));
     p.setTextAlign(right ? Paint.Align.RIGHT : Paint.Align.LEFT);
     p.setTextSize(_sublabelTextSize * scaleTextSize(k));
-    k = KeyModifier.handleFlags(k, _flags);
+    y -= up ? p.ascent() : p.descent();
     canvas.drawText(k.symbol, x, y, p);
 	}
 
