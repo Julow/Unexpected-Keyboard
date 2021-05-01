@@ -97,6 +97,8 @@ class KeyModifier
         switch (c)
         {
           case '-': return '÷';
+          case '?': return '¿';
+          case '!': return '¡';
           default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
         }
       default: return c; // Can't happen
