@@ -111,6 +111,13 @@ public class Keyboard2 extends InputMethodService
     refreshSubtype(subtype);
   }
 
+  @Override
+  public void onFinishInputView(boolean finishingInput)
+  {
+    super.onFinishInputView(finishingInput);
+    _keyboardView.reset();
+  }
+
 	@Override
 	public void				onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
