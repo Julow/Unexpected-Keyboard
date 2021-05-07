@@ -111,12 +111,12 @@ class KeyValue
     addModifierKey("shift", "⇧", FLAG_LOCK | FLAG_SHIFT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL);
     addModifierKey("alt", "Alt", FLAG_ALT);
-    addModifierKey("accent_grave", "\u02CB", FLAG_ACCENT1);
-    addModifierKey("accent_aigu", "\u00B4", FLAG_ACCENT2);
-    addModifierKey("accent_circonflexe", "\u02C6", FLAG_ACCENT3);
-    addModifierKey("accent_tilde", "\u02DC", FLAG_ACCENT4);
-    addModifierKey("accent_cedille", "\u00B8", FLAG_ACCENT5);
-    addModifierKey("accent_trema", "\u00A8", FLAG_ACCENT6);
+    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1);
+    addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2);
+    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3);
+    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4);
+    addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5);
+    addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6);
     addModifierKey("fn", "Fn", FLAG_FN);
 
     addCharKey('a', KeyEvent.KEYCODE_A);
