@@ -103,6 +103,7 @@ public class Keyboard2 extends InputMethodService
     refreshSubtypeImm();
 		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
+    _keyboardView.reset(); // Layout might need to change due to rotation
 	}
 
   @Override
