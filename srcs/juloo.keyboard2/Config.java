@@ -9,12 +9,14 @@ class Config
 {
 	private Keyboard2			_context;
 
+  // From resources
 	public final float			marginTop;
 	public final float			keyPadding;
 	public final float			keyVerticalInterval;
 	public final float			keyHorizontalInterval;
 	public final float			keyRound;
 
+  // From preferences
   public int layout; // Or '-1' for the system defaults
 	public float				subValueDist;
 	public boolean				vibrateEnabled;
@@ -24,11 +26,13 @@ class Config
 	public float				marginBottom;
 	public float				keyHeight;
 	public float				horizontalMargin;
-  public boolean      disableAccentKeys;
   public boolean preciseRepeat;
   public float characterSize; // Ratio
+  public int accents; // Values are R.values.pref_accents_v_*
 
+  // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
+  public int accent_flags_to_remove;
 
 	public Config(Keyboard2 context)
 	{
@@ -51,13 +55,14 @@ class Config
 		marginBottom = res.getDimension(R.dimen.margin_bottom);
 		keyHeight = res.getDimension(R.dimen.key_height);
 		horizontalMargin = res.getDimension(R.dimen.horizontal_margin);
-    disableAccentKeys = false;
     preciseRepeat = true;
     characterSize = 1.f;
+    accents = 0;
 		// from prefs
 		refresh();
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
+    accent_flags_to_remove = 0;
 	}
 
 	/*
@@ -76,9 +81,9 @@ class Config
 		marginBottom = getDipPref(prefs, "margin_bottom", marginBottom);
 		keyHeight = getDipPref(prefs, "key_height", keyHeight);
 		horizontalMargin = getDipPref(prefs, "horizontal_margin", horizontalMargin);
-    disableAccentKeys = prefs.getBoolean("disable_accent_keys", disableAccentKeys);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize); 
+    accents = Integer.valueOf(prefs.getString("accents", ""));
 	}
 
 	private float		getDipPref(SharedPreferences prefs, String pref_name, float def)
@@ -102,4 +107,18 @@ class Config
     }
   }
 
+  /* Used for the accents option. */
+  public static int accentFlag_of_name(String name)
+  {
+    switch (name)
+    {
+      case "grave": return KeyValue.FLAG_ACCENT1;
+      case "aigu": return KeyValue.FLAG_ACCENT2;
+      case "circonflexe": return KeyValue.FLAG_ACCENT3;
+      case "tilde": return KeyValue.FLAG_ACCENT4;
+      case "cedille": return KeyValue.FLAG_ACCENT5;
+      case "trema": return KeyValue.FLAG_ACCENT6;
+      default: throw new RuntimeException(name);
+    }
+  }
 }

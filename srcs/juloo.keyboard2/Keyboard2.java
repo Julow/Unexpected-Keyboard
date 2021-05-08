@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.text.InputType;
 import android.preference.PreferenceManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.view.KeyEvent;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -66,25 +68,59 @@ public class Keyboard2 extends InputMethodService
 		return (_specialKeyFont);
 	}
 
-  private void refreshSubtype(InputMethodSubtype subtype)
+  private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
   {
-    int l;
+    String pkg = getPackageName();
+    for (InputMethodInfo imi : imm.getEnabledInputMethodList())
+      if (imi.getPackageName().equals(pkg))
+        return imm.getEnabledInputMethodSubtypeList(imi, true);
+    return null;
+  }
+
+  private void refreshSubtypeLayout(InputMethodSubtype subtype)
+  {
     if (_config.layout == -1)
-      l = Config.layoutId_of_string(subtype.getExtraValueOf("default_layout"));
+      _currentTextLayout = Config.layoutId_of_string(subtype.getExtraValueOf("default_layout"));
     else
-      l = _config.layout;
-    if (_currentTextLayout != l)
+      _currentTextLayout = _config.layout;
+  }
+
+  private int accents_of_subtype(InputMethodSubtype subtype)
+  {
+    String accents_option = subtype.getExtraValueOf("accents");
+    int flags = 0;
+    if (accents_option != null)
+      for (String acc : accents_option.split("\\|"))
+        flags |= Config.accentFlag_of_name(acc);
+    return flags;
+  }
+
+  private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
+  {
+    final int DONT_REMOVE = KeyValue.FLAG_ACCENT_SUPERSCRIPT | KeyValue.FLAG_ACCENT_SUBSCRIPT;
+    int to_keep = DONT_REMOVE;
+    switch (_config.accents)
     {
-      _currentTextLayout = l;
-      _keyboardView.setKeyboard(getLayout(l));
+      case 1:
+        to_keep |= accents_of_subtype(subtype);
+        for (InputMethodSubtype s : getEnabledSubtypes(imm))
+          to_keep |= accents_of_subtype(s);
+        break;
+      case 2: to_keep |= accents_of_subtype(subtype); break;
+      case 3: to_keep = KeyValue.FLAGS_ACCENTS; break;
+      case 4: break;
+      default: throw new IllegalArgumentException();
     }
+    _config.accent_flags_to_remove = ~to_keep & KeyValue.FLAGS_ACCENTS;
   }
 
   private void refreshSubtypeImm()
   {
     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getConnectionToken());
-    refreshSubtype(imm.getCurrentInputMethodSubtype());
+    InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
+    refreshSubtypeLayout(subtype);
+    refreshAccentsOption(imm, subtype);
   }
 
 	@Override
@@ -103,13 +139,16 @@ public class Keyboard2 extends InputMethodService
     refreshSubtypeImm();
 		if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
+    else
+      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     _keyboardView.reset(); // Layout might need to change due to rotation
 	}
 
   @Override
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
-    refreshSubtype(subtype);
+    refreshSubtypeImm();
+    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
   }
 
   @Override

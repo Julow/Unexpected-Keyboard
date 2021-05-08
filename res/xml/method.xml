@@ -14,6 +14,6 @@
       android:imeSubtypeLocale="fr_FR"
       android:imeSubtypeMode="keyboard"
       android:isAsciiCapable="true"
-      android:imeSubtypeExtraValue="default_layout=azerty"
+      android:imeSubtypeExtraValue="default_layout=azerty,accents=grave|aigu|circonflexe|tilde|cedille|trema"
     />
 </input-method>
