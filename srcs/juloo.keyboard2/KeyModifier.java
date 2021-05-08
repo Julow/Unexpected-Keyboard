@@ -20,31 +20,43 @@ class KeyModifier
     KeyValue r = ks.get(flags);
     if (r != null) // Found in cache
       return r;
-    if ((r = handleChar(k, flags)) != null) ;
-    else if ((r = handleFn(k, flags)) != null) ;
-    else r = k;
+    r = k;
+    r = handleFn(r, flags);
+    r = handleShift(r, flags);
+    r = handleAccents(r, flags);
     ks.put(flags, r);
     return r;
   }
 
-  /* Returns [null] if had no effect. */
-  private static KeyValue handleChar(KeyValue k, int flags)
+  private static KeyValue handleAccents(KeyValue k, int flags)
   {
-    char c = k.char_;
-    if (c == KeyValue.CHAR_NONE)
-      return null;
-    if ((flags & KeyValue.FLAG_SHIFT) != 0) // Shift
-      c = Character.toUpperCase(c);
-    if ((flags & KeyValue.FLAGS_ACCENTS) != 0) // Accents, after shift is applied
-      c = handleAccentChar(c, flags);
+    if (k.char_ == KeyValue.CHAR_NONE || (flags & KeyValue.FLAGS_ACCENTS) == 0)
+      return k;
+    char c = handleAccentChar(k.char_, flags);
     if (c == 0 || c == k.char_)
-      return null;
-    return k.withCharAndSymbol(String.valueOf(c), c);
+      return k;
+    return k.withCharAndSymbol(c);
+  }
+
+  private static KeyValue handleShift(KeyValue k, int flags)
+  {
+    if ((flags & KeyValue.FLAG_SHIFT) == 0)
+      return k;
+    char c = k.char_;
+    if (k.char_ != KeyValue.CHAR_NONE)
+      c = Character.toUpperCase(c);
+    if (c == k.char_) // More rules if toUpperCase() did nothing
+      switch (k.symbol)
+      {
+        case "→": c = '⇒'; break;
+        case "←": c = '⇐'; break;
+        default: return k;
+      }
+    return k.withCharAndSymbol(c);
   }
 
   private static char handleAccentChar(char c, int flags)
   {
-    char accent;
     switch ((flags & KeyValue.FLAGS_ACCENTS))
     {
       case KeyValue.FLAG_ACCENT1:
@@ -60,6 +72,32 @@ class KeyModifier
       case KeyValue.FLAG_ACCENT3:
         switch (c)
         {
+          case '*': return '°';
+          default: return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
+        }
+      case KeyValue.FLAG_ACCENT4:
+        return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
+      case KeyValue.FLAG_ACCENT5:
+        switch (c)
+        {
+          case 'u': return 'µ';
+          case '"': return '„';
+          case '-': return '¬';
+          case 'a': return 'æ';
+          case 'o': return 'œ';
+          default: return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
+        }
+      case KeyValue.FLAG_ACCENT6:
+        switch (c)
+        {
+          case '-': return '÷';
+          case '?': return '¿';
+          case '!': return '¡';
+          default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
+        }
+      case KeyValue.FLAG_ACCENT_SUPERSCRIPT:
+        switch (c)
+        {
           case '1': return '¹';
           case '2': return '²';
           case '3': return '³';
@@ -70,12 +108,16 @@ class KeyModifier
           case '8': return '⁸';
           case '9': return '⁹';
           case '0': return '⁰';
-          case '*': return '°';
-          default: return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
+          case 'i': return 'ⁱ';
+          case '+': return '⁺';
+          case '-': return '⁻';
+          case '=': return '⁼';
+          case '(': return '⁽';
+          case ')': return '⁾';
+          case 'n': return 'ⁿ';
+          default: return c;
         }
-      case KeyValue.FLAG_ACCENT4:
-        return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
-      case KeyValue.FLAG_ACCENT5:
+      case KeyValue.FLAG_ACCENT_SUBSCRIPT:
         switch (c)
         {
           case '1': return '₁';
@@ -88,18 +130,16 @@ class KeyModifier
           case '8': return '₈';
           case '9': return '₉';
           case '0': return '₀';
-          case 'u': return 'µ';
-          case '"': return '„';
-          case '-': return '¬';
-          default: return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
-        }
-      case KeyValue.FLAG_ACCENT6:
-        switch (c)
-        {
-          case '-': return '÷';
-          case '?': return '¿';
-          case '!': return '¡';
-          default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
+          case '+': return '₊';
+          case '-': return '₋';
+          case '=': return '₌';
+          case '(': return '₍';
+          case ')': return '₎';
+          case 'e': return 'ₑ';
+          case 'a': return 'ₐ';
+          case 'x': return 'ₓ';
+          case 'o': return 'ₒ';
+          default: return c;
         }
       default: return c; // Can't happen
     }
@@ -108,7 +148,7 @@ class KeyModifier
   private static KeyValue handleFn(KeyValue k, int flags)
   {
     if ((flags & KeyValue.FLAG_FN) == 0)
-      return null;
+      return k;
     String name;
     switch (k.name)
     {
@@ -126,7 +166,9 @@ class KeyModifier
       case "down": name = "page_down"; break;
       case "left": name = "home"; break;
       case "right": name = "end"; break;
-      default: return null;
+      case ">": name = "→"; break;
+      case "<": name = "←"; break;
+      default: return k;
     }
     return KeyValue.getKeyByName(name);
   }

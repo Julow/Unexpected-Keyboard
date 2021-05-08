@@ -39,15 +39,24 @@ class KeyValue
   public static final int FLAG_ACCENT4 = (1 << 19); // Tilde
   public static final int FLAG_ACCENT5 = (1 << 20); // Cédille
   public static final int FLAG_ACCENT6 = (1 << 21); // Tréma
+  public static final int FLAG_ACCENT_SUPERSCRIPT = (1 << 22);
+  public static final int FLAG_ACCENT_SUBSCRIPT = (1 << 23);
 
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
-    FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6;
+    FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
+    FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT;
 
   public final String name;
   public final String symbol;
   public final char char_;
   public final int eventCode;
   public final int flags;
+
+  /* Update the char and the symbol. */
+  public KeyValue withCharAndSymbol(char c)
+  {
+    return withCharAndSymbol(String.valueOf(c), c);
+  }
 
   public KeyValue withCharAndSymbol(String s, char c)
   {
@@ -67,7 +76,12 @@ class KeyValue
 
   public static KeyValue	getKeyByName(String name)
   {
-    return (KeyValue.keys.get(name));
+    if (name == null)
+      return null;
+    KeyValue kv = KeyValue.keys.get(name);
+    if (kv != null)
+      return kv;
+    return new KeyValue(name, name, CHAR_NONE, EVENT_NONE, 0);
   }
 
   private static void addKey(String name, String symbol, char c, int event, int flags)
@@ -117,6 +131,8 @@ class KeyValue
     addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4);
     addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5);
     addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6);
+    addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);
+    addModifierKey("subscript", "◌̺", FLAG_ACCENT_SUBSCRIPT);
     addModifierKey("fn", "Fn", FLAG_FN);
 
     addCharKey('a', KeyEvent.KEYCODE_A);
