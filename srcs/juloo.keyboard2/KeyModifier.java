@@ -76,7 +76,12 @@ class KeyModifier
           default: return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
         }
       case KeyValue.FLAG_ACCENT4:
-        return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
+        switch (c)
+        {
+          case '?': return '¿';
+          case '!': return '¡';
+          default: return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
+        }
       case KeyValue.FLAG_ACCENT5:
         switch (c)
         {
@@ -91,8 +96,6 @@ class KeyModifier
         switch (c)
         {
           case '-': return '÷';
-          case '?': return '¿';
-          case '!': return '¡';
           default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
         }
       case KeyValue.FLAG_ACCENT_SUPERSCRIPT:
