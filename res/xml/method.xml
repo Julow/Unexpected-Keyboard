@@ -2,18 +2,32 @@
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
 		android:settingsActivity="juloo.keyboard2.SettingsActivity"
 		android:supportsSwitchingToNextInputMethod="true">
-  <subtype android:label="@string/subtype_label_qwerty"
+  <subtype android:label="@string/subtype_label"
       android:languageTag="en"
       android:imeSubtypeLocale="en_US"
       android:imeSubtypeMode="keyboard"
       android:isAsciiCapable="true"
       android:imeSubtypeExtraValue="default_layout=qwerty"
     />
-  <subtype android:label="@string/subtype_label_azerty"
+  <subtype android:label="@string/subtype_label"
       android:languageTag="fr"
       android:imeSubtypeLocale="fr_FR"
       android:imeSubtypeMode="keyboard"
       android:isAsciiCapable="true"
-      android:imeSubtypeExtraValue="default_layout=azerty,accents=grave|aigu|circonflexe|tilde|cedille|trema"
+      android:imeSubtypeExtraValue="default_layout=azerty,accents=grave|aigu|circonflexe|cedille|trema"
+    />
+  <subtype android:label="@string/subtype_label"
+      android:languageTag="es"
+      android:imeSubtypeLocale="es_ES"
+      android:imeSubtypeMode="keyboard"
+      android:isAsciiCapable="true"
+      android:imeSubtypeExtraValue="default_layout=qwerty,accents=aigu|tilde|trema"
+    />
+  <subtype android:label="@string/subtype_label"
+      android:languageTag="it"
+      android:imeSubtypeLocale="it_IT"
+      android:imeSubtypeMode="keyboard"
+      android:isAsciiCapable="true"
+      android:imeSubtypeExtraValue="default_layout=qwerty,accents=grave|aigu"
     />
 </input-method>
