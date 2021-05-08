@@ -50,6 +50,9 @@ class KeyModifier
       {
         case "→": c = '⇒'; break;
         case "←": c = '⇐'; break;
+        case "<": c = '«'; break;
+        case ">": c = '»'; break;
+        case "“": c = '”'; break;
         default: return k;
       }
     return k.withCharAndSymbol(c);
@@ -87,6 +90,7 @@ class KeyModifier
         {
           case 'u': return 'µ';
           case '"': return '„';
+          case '\'': return '’';
           case '-': return '¬';
           case 'a': return 'æ';
           case 'o': return 'œ';
@@ -171,6 +175,9 @@ class KeyModifier
       case "right": name = "end"; break;
       case ">": name = "→"; break;
       case "<": name = "←"; break;
+      case "\"": name = "“"; break;
+      case "-": name = "–"; break;
+      case "_": name = "—"; break;
       default: return k;
     }
     return KeyValue.getKeyByName(name);
