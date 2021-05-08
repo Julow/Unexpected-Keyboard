@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.InputType;
@@ -114,13 +115,33 @@ public class Keyboard2 extends InputMethodService
     _config.accent_flags_to_remove = ~to_keep & KeyValue.FLAGS_ACCENTS;
   }
 
+  private void refreshSubtypeLegacyFallback()
+  {
+    // Fallback for the accents option: Only respect the "None" case
+    switch (_config.accents)
+    {
+      case 1: case 2: case 3: _config.accent_flags_to_remove = 0; break;
+      case 4: _config.accent_flags_to_remove = KeyValue.FLAGS_ACCENTS; break;
+    }
+    // Fallback for the layout option: Use qwerty in the "system settings" case
+    _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;
+  }
+
   private void refreshSubtypeImm()
   {
     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getConnectionToken());
-    InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
-    refreshSubtypeLayout(subtype);
-    refreshAccentsOption(imm, subtype);
+    if (VERSION.SDK_INT < 12)
+    {
+      // Subtypes won't work well under API level 12 (getExtraValueOf)
+      refreshSubtypeLegacyFallback();
+    }
+    else
+    {
+      InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
+      refreshSubtypeLayout(subtype);
+      refreshAccentsOption(imm, subtype);
+    }
   }
 
 	@Override
