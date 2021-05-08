@@ -80,10 +80,14 @@ public class Keyboard2 extends InputMethodService
 
   private void refreshSubtypeLayout(InputMethodSubtype subtype)
   {
-    if (_config.layout == -1)
-      _currentTextLayout = Config.layoutId_of_string(subtype.getExtraValueOf("default_layout"));
-    else
-      _currentTextLayout = _config.layout;
+    int l = _config.layout;;
+    if (l == -1)
+    {
+      String s = subtype.getExtraValueOf("default_layout");
+      if (s != null)
+        l = Config.layoutId_of_string(s);
+    }
+    _currentTextLayout = l;
   }
 
   private int accents_of_subtype(InputMethodSubtype subtype)
