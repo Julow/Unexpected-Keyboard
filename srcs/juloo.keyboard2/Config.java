@@ -57,7 +57,7 @@ class Config
 		horizontalMargin = res.getDimension(R.dimen.horizontal_margin);
     preciseRepeat = true;
     characterSize = 1.f;
-    accents = 0;
+    accents = 1;
 		// from prefs
 		refresh();
     // initialized later
@@ -83,7 +83,7 @@ class Config
 		horizontalMargin = getDipPref(prefs, "horizontal_margin", horizontalMargin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize); 
-    accents = Integer.valueOf(prefs.getString("accents", ""));
+    accents = Integer.valueOf(prefs.getString("accents", "1"));
 	}
 
 	private float		getDipPref(SharedPreferences prefs, String pref_name, float def)

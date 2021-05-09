@@ -12,10 +12,13 @@ public class Emoji extends KeyValue
 {
 	private final String	_desc;
 
+  private static HashMap<String, Emoji> emojis_by_name = new HashMap<String, Emoji>();
+
 	protected Emoji(String name, String bytecode, String desc)
 	{
 		super(name, bytecode, CHAR_NONE, EVENT_NONE, 0);
 		_desc = desc;
+    emojis_by_name.put(name, this);
 	}
 
 	public String			getDescription()
@@ -29,7 +32,7 @@ public class Emoji extends KeyValue
 
 	public static Emoji		getEmojiByName(String name)
 	{
-		return ((Emoji)KeyValue.getKeyByName(name));
+    return emojis_by_name.get(name);
 	}
 
 	public static Emoji[]	getEmojisByGroup(int group_id)
