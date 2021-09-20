@@ -6,6 +6,7 @@
 let
 
   android = pkgs.androidenv.composeAndroidPackages {
+    buildToolsVersions = [ "30.0.3" ];
     platformVersions = [ "29" ];
     abiVersions = [ "armeabi-v7a" ];
   };
