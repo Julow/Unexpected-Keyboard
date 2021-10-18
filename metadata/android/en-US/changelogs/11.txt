@@ -1,0 +1,3 @@
+- Add support for Spanish and Italian
+- Improved the placement of some characters (especially accents) and added more (french quotes, dash and em-dash).
+- Fixed some bugs (a crash on old versions of Android and a graphical bug due to rotation)
