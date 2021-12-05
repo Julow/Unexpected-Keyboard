@@ -80,7 +80,7 @@
 			android:summary="@string/pref_key_height_summary"
 			android:defaultValue="50"
 			min="30"
-			max="60"
+			max="90"
 		/>
 		<juloo.common.IntSlideBarPreference
 			android:key="horizontal_margin"
