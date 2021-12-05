@@ -179,6 +179,8 @@ class KeyModifier
       case "-": name = "–"; break;
       case "_": name = "—"; break;
       case "esc": name = "insert"; break;
+      case "$": name = "€"; break;
+      case "#": name = "£"; break;
       default: return k;
     }
     return KeyValue.getKeyByName(name);
