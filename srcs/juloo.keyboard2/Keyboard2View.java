@@ -363,12 +363,13 @@ public class Keyboard2View extends View
 	public void			onMeasure(int wSpec, int hSpec)
 	{
     DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-    int height;
-    height = (int)(_config.keyHeight * _keyboard.keysHeight
-        + _keyboard.rows.size() * _config.keyVerticalInterval
-        + _config.marginTop + _config.marginBottom);
-    setMeasuredDimension(dm.widthPixels, height);
-    _keyWidth = (getWidth() - (_config.horizontalMargin * 2)) / _keyboard.keysWidth;
+    int width = dm.widthPixels;
+    int height =
+      (int)(_config.keyHeight * _keyboard.keysHeight
+          + _keyboard.rows.size() * _config.keyVerticalInterval
+          + _config.marginTop + _config.marginBottom);
+    setMeasuredDimension(width, height);
+    _keyWidth = (width - (_config.horizontalMargin * 2)) / _keyboard.keysWidth;
 	}
 
 	@Override
