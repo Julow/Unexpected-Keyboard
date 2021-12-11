@@ -30,4 +30,11 @@
       android:isAsciiCapable="true"
       android:imeSubtypeExtraValue="default_layout=qwerty,accents=grave|aigu"
     />
+  <subtype android:label="@string/subtype_label"
+      android:languageTag="sv"
+      android:imeSubtypeLocale="sv_SE"
+      android:imeSubtypeMode="keyboard"
+      android:isAsciiCapable="true"
+      android:imeSubtypeExtraValue="default_layout=qwerty,accents=aigu|trema|ring"
+    />
 </input-method>

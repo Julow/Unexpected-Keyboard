@@ -118,6 +118,7 @@ class Config
       case "tilde": return KeyValue.FLAG_ACCENT4;
       case "cedille": return KeyValue.FLAG_ACCENT5;
       case "trema": return KeyValue.FLAG_ACCENT6;
+      case "ring": return KeyValue.FLAG_ACCENT_RING;
       default: throw new RuntimeException(name);
     }
   }

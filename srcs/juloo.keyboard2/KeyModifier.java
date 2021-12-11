@@ -102,6 +102,11 @@ class KeyModifier
           case '-': return '÷';
           default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
         }
+      case KeyValue.FLAG_ACCENT_RING:
+        switch (c)
+        {
+          default: return (char)KeyCharacterMap.getDeadChar('\u02DA', c);
+        }
       case KeyValue.FLAG_ACCENT_SUPERSCRIPT:
         switch (c)
         {
