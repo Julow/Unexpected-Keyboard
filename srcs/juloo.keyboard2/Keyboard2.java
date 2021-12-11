@@ -265,7 +265,7 @@ public class Keyboard2 extends InputMethodService
 			metaState |= KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON;
 		if ((flags & KeyValue.FLAG_SHIFT) != 0)
 			metaState |= KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON;
-		event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.eventCode, 1, metaState);
+		event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.eventCode, 0, metaState);
 		getCurrentInputConnection().sendKeyEvent(event);
 		getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
 	}
