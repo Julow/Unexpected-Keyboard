@@ -1,0 +1,3 @@
+- Nouvelle langue: Suédois
+- Les raccourcis clavier fonctionnent dans toutes les applications
+- Correction d'un bug graphique et quelques ajustements
