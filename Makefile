@@ -44,11 +44,6 @@ JAVA_FILES = $(shell find $(SRC_DIR) -name '*.java')
 RES_FILES = $(shell find $(RES_DIR) -type f)
 ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f 2>/dev/null)
 
-# Align
-
-_build/%.apk: _build/%.signed-apk
-	$(ANDROID_BUILD_TOOLS)/zipalign -fp 4 "$<" "$@"
-
 # Debug signing
 
 DEBUG_KEYSTORE = _build/debug.keystore
@@ -59,7 +54,7 @@ $(DEBUG_KEYSTORE):
 		-alias debug -keypass $(DEBUG_PASSWD) -keystore "$@" \
 		-keyalg rsa -storepass $(DEBUG_PASSWD) -validity 10000
 
-_build/%.debug.signed-apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE)
+_build/%.debug.apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE)
 	jarsigner -keystore $(DEBUG_KEYSTORE) \
 		-storepass $(DEBUG_PASSWD) -keypass $(DEBUG_PASSWD) \
 		-signedjar "$@" "$<" debug
@@ -70,16 +65,19 @@ _build/$(PACKAGE_NAME).debug.unsigned-apk: AAPT_PACKAGE_FLAGS+=--rename-manifest
 
 # Release signing
 
-# %-keystore.conf should declare KEYSTORE, KEYNAME and OPTS
+# %-keystore.conf should declare KEYSTORE, KEYNAME and KEYSTOREPASS
 #  it is interpreted as a shell script
-# OPTS can be used to pass -storepass or -keypass options to jarsigner
-_build/%.signed-apk: _build/%.unsigned-apk %-keystore.conf
+_build/%.apk: _build/%.unsigned-apk %-keystore.conf
 	eval `cat $(word 2,$^)` && \
-	jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore "$$KEYSTORE" $$OPTS -signedjar "$@" "$<" "$$KEYNAME"
+	apksigner sign --in "$<" --out "$@" \
+		--ks "$$KEYSTORE" --ks-key-alias "$$KEYNAME" --ks-pass "pass:$$KEYSTOREPASS"
 
 # Package
 
-_build/%.unsigned-apk: _build/classes.dex $(MANIFEST_FILE) $(ASSETS_FILES)
+_build/%.unsigned-apk: _build/%.unaligned-apk
+	$(ANDROID_BUILD_TOOLS)/zipalign -fp 4 "$<" "$@"
+
+_build/%.unaligned-apk: _build/classes.dex $(MANIFEST_FILE) $(ASSETS_FILES)
 	$(ANDROID_BUILD_TOOLS)/aapt package -f -M $(MANIFEST_FILE) -S $(RES_DIR) \
 		-I $(ANDROID_PLATFORM)/android.jar -F "$@" $(AAPT_PACKAGE_FLAGS)
 	[ -z "$(ASSETS_FILES)" ] || $(ANDROID_BUILD_TOOLS)/aapt add "$@" $(ASSETS_FILES)

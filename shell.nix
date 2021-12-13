@@ -4,6 +4,7 @@
   } }:
 
 let
+  jdk = pkgs.openjdk8;
 
   android = pkgs.androidenv.composeAndroidPackages {
     buildToolsVersions = [ "30.0.3" ];
@@ -11,11 +12,12 @@ let
     abiVersions = [ "armeabi-v7a" ];
   };
 
-in
+  apksigner = pkgs.apksigner.override {
+    inherit (jdk) jre;
+    inherit (android) build-tools;
+  };
 
-pkgs.mkShell {
-  buildInputs = with pkgs; [
-    findutils openjdk8 android.androidsdk
-  ];
+in pkgs.mkShell {
+  buildInputs = [ pkgs.findutils jdk android.androidsdk apksigner ];
   ANDROID_HOME = "${android.androidsdk}/libexec/android-sdk";
 }
