@@ -102,6 +102,7 @@ class Config
     {
       case "azerty": return R.xml.azerty;
       case "qwerty": return R.xml.qwerty;
+      case "dvorak": return R.xml.dvorak;
       case "system": return -1;
       default: throw new IllegalArgumentException();
     }
