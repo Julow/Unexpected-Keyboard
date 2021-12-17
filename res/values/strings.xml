@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
 	<string name="app_name">Unexpected Keyboard</string>
-
 	<string name="settings_activity_label">Unexpected Keyboard Settings</string>
 
-  <string name="subtype_label">%s</string>
+	<string name="subtype_label">%s</string>
 
 	<string name="pref_category_layout">Layout</string>
-  <string name="pref_layout_title">Change keyboard layout</string>
-  <string name="pref_layout_summary">%s</string>
-  <string-array name="pref_layout_entries">
-    <item>System settings</item>
-    <item>Azerty</item>
-    <item>Qwerty</item>
-  </string-array>
+	<string name="pref_layout_title">Change keyboard layout</string>
+	<string name="pref_layout_summary">%s</string>
+	<string-array name="pref_layout_entries">
+		<item>System settings</item>
+		<item>Azerty</item>
+		<item>Qwerty</item>
+		<item>Dvorak</item>
+	</string-array>
 
-  <string name="pref_accents_title">Accents</string>
-  <string name="pref_accents_summary">%s</string>
-  <string name="pref_accents_e_all_installed">Show accents for all the installed languages</string>
-  <string name="pref_accents_e_selected">Show accents for the selected language</string>
-  <string name="pref_accents_e_all">Show every accents</string>
-  <string name="pref_accents_e_none">Hide accents</string>
+	<string name="pref_accents_title">Accents</string>
+	<string name="pref_accents_summary">%s</string>
+	<string name="pref_accents_e_all_installed">Show accents for all the installed languages</string>
+	<string name="pref_accents_e_selected">Show accents for the selected language</string>
+	<string name="pref_accents_e_all">Show every accents</string>
+	<string name="pref_accents_e_none">Hide accents</string>
 
 	<string name="pref_category_typing">Typing</string>
 	<string name="pref_preci_title">Precision</string>
@@ -36,8 +35,8 @@
 	<string name="pref_vibrate_summary">Enable/Disable vibrations on key down</string>
 	<string name="pref_vibrate_duration_title">Duration</string>
 	<string name="pref_vibrate_duration_summary">%sms</string>
-  <string name="pref_precise_repeat_title">Precise cursor movements</string>
-  <string name="pref_precise_repeat_summary">Modulate the speed of movements by swiping more or less</string>
+	<string name="pref_precise_repeat_title">Precise cursor movements</string>
+	<string name="pref_precise_repeat_summary">Modulate the speed of movements by swiping more or less</string>
 
 	<string name="pref_category_style">Style</string>
 	<string name="pref_margin_bottom_title">Margin bottom</string>
@@ -46,6 +45,6 @@
 	<string name="pref_key_height_summary">%sdp</string>
 	<string name="pref_horizontal_margin_title">Horizontal margin</string>
 	<string name="pref_horizontal_margin_summary">%sdp</string>
-  <string name="pref_character_size_title">Label size</string>
-  <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
+	<string name="pref_character_size_title">Label size</string>
+	<string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
 </resources>
