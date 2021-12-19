@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="horizontal_margin">3dp</dimen>
-	<dimen name="margin_top">3dp</dimen>
-	<dimen name="margin_bottom">7dp</dimen>
-	<dimen name="key_padding">2dp</dimen>
-	<dimen name="key_vertical_interval">2dp</dimen>
-	<dimen name="key_horizontal_interval">2dp</dimen>
-	<dimen name="key_height">51dp</dimen>
-	<dimen name="key_round">5dp</dimen>
-	<dimen name="label_text_size">18dp</dimen>
-	<dimen name="sublabel_text_size">12dp</dimen>
-	<dimen name="emoji_type_button_height">56dp</dimen>
-	<dimen name="emoji_grid_height">250dp</dimen>
+  <dimen name="horizontal_margin">3dp</dimen>
+  <dimen name="margin_top">3dp</dimen>
+  <dimen name="margin_bottom">7dp</dimen>
+  <dimen name="key_padding">2dp</dimen>
+  <dimen name="key_vertical_interval">2dp</dimen>
+  <dimen name="key_horizontal_interval">2dp</dimen>
+  <dimen name="key_height">51dp</dimen>
+  <dimen name="key_round">5dp</dimen>
+  <dimen name="label_text_size">18dp</dimen>
+  <dimen name="sublabel_text_size">12dp</dimen>
+  <dimen name="emoji_type_button_height">56dp</dimen>
+  <dimen name="emoji_grid_height">250dp</dimen>
 </resources>

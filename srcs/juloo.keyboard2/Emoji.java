@@ -10,35 +10,35 @@ import java.util.HashMap;
 
 public class Emoji extends KeyValue
 {
-	private final String	_desc;
+  private final String _desc;
 
   private static HashMap<String, Emoji> emojis_by_name = new HashMap<String, Emoji>();
 
-	protected Emoji(String name, String bytecode, String desc)
-	{
-		super(name, bytecode, CHAR_NONE, EVENT_NONE, 0);
-		_desc = desc;
+  protected Emoji(String name, String bytecode, String desc)
+  {
+    super(name, bytecode, CHAR_NONE, EVENT_NONE, 0);
+    _desc = desc;
     emojis_by_name.put(name, this);
-	}
+  }
 
-	public String			getDescription()
-	{
-		return (_desc);
-	}
+  public String getDescription()
+  {
+    return (_desc);
+  }
 
   public static int num_groups = 0;
 
   private static Emoji[][] emojis_by_group = new Emoji[][]{};
 
-	public static Emoji		getEmojiByName(String name)
-	{
+  public static Emoji getEmojiByName(String name)
+  {
     return emojis_by_name.get(name);
-	}
+  }
 
-	public static Emoji[]	getEmojisByGroup(int group_id)
-	{
-		return (emojis_by_group[group_id]);
-	}
+  public static Emoji[] getEmojisByGroup(int group_id)
+  {
+    return (emojis_by_group[group_id]);
+  }
 
   /* Read the list of emojis from a raw file. Will initialize only once. */
   public static void init(Resources res)

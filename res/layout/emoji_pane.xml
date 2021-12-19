@@ -1,38 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:hardwareAccelerated="false">
-	<juloo.keyboard2.EmojiGroupButtonsBar
-		android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" />
-	<juloo.keyboard2.EmojiGridView
-		android:id="@+id/emoji_grid"
-		android:background="@color/bg"
-		android:layout_width="fill_parent"
-		android:layout_height="@dimen/emoji_grid_height"
-	/>
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-	>
-		<juloo.keyboard2.EmojiKeyButton
-			style="@style/emojiKeyButton"
-			key="switch_back_emoji"
-		/>
-		<juloo.keyboard2.EmojiKeyButton
-			style="@style/emojiKeyButton"
-			android:layout_weight="4"
-			key="space"
-		/>
-		<juloo.keyboard2.EmojiKeyButton
-			style="@style/emojiKeyButton"
-			key="backspace"
-		/>
-		<juloo.keyboard2.EmojiKeyButton
-			style="@style/emojiKeyButton"
-			key="enter"
-		/>
-	</LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:hardwareAccelerated="false">
+  <juloo.keyboard2.EmojiGroupButtonsBar android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+  <juloo.keyboard2.EmojiGridView android:id="@+id/emoji_grid" android:background="@color/bg" android:layout_width="fill_parent" android:layout_height="@dimen/emoji_grid_height"/>
+  <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+    <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" key="switch_back_emoji"/>
+    <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" android:layout_weight="4" key="space"/>
+    <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" key="backspace"/>
+    <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" key="enter"/>
+  </LinearLayout>
 </LinearLayout>
