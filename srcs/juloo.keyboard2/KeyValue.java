@@ -221,8 +221,8 @@ class KeyValue
     addEventKey("f8", "F8", KeyEvent.KEYCODE_F8);
     addEventKey("f9", "F9", KeyEvent.KEYCODE_F9);
     addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
+    addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
 
-    addKey("tab", "↹", '\t', KeyEvent.KEYCODE_TAB, 0);
     addKey("space", " ", ' ', KeyEvent.KEYCODE_SPACE, 0);
   }
 }
