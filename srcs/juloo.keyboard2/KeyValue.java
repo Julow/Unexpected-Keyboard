@@ -206,7 +206,7 @@ class KeyValue
     addEventKey("left", "\uE80A", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("page_up", "⇞", KeyEvent.KEYCODE_PAGE_UP);
     addEventKey("page_down", "⇟", KeyEvent.KEYCODE_PAGE_DOWN);
-    addEventKey("home", "↖", KeyEvent.KEYCODE_HOME);
+    addEventKey("home", "↖", KeyEvent.KEYCODE_MOVE_HOME);
     addEventKey("end", "↗", KeyEvent.KEYCODE_MOVE_END);
     addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL, FLAG_PRECISE_REPEAT);
     addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_PRECISE_REPEAT);
