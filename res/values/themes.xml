@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="keyboard">
+    <!-- The background of the keyboard -->
+    <attr name="colorKeyboard" format="color"/>
+    <!-- Background of the keys -->
+    <attr name="colorKey" format="color"/>
+    <!-- Background of the keys when pressed -->
+    <attr name="colorKeyActivated" format="color"/>
+    <!-- Label colors -->
+    <attr name="colorLabel" format="color"/>
+    <attr name="colorLabelActivated" format="color"/>
+    <attr name="colorLabelLocked" format="color"/>
+    <!-- Corner labels -->
+    <attr name="colorSubLabel" format="color"/>
+    <!-- Emoji panel -->
+    <attr name="emoji_button_bg" type="color" format="color"/>
+    <attr name="emoji_color" type="color" format="color"/>
+    <attr name="emoji_key_bg" type="color" format="color"/>
+    <attr name="emoji_key_text" type="color" format="color"/>
+  </declare-styleable>
+  <style name="Dark">
+    <item name="colorKeyboard">#1B1B1B</item>
+    <item name="colorKey">#303030</item>
+    <item name="colorKeyActivated">#1B1B1B</item>
+    <item name="colorLabel">#FFFFFF</item>
+    <item name="colorLabelActivated">#226b99</item>
+    <item name="colorLabelLocked">#229933</item>
+    <item name="colorSubLabel">#A0A0A0</item>
+    <item name="emoji_button_bg" type="color">#202020</item>
+    <item name="emoji_color" type="color">#FFFFFF</item>
+    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
+    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+  </style>
+</resources>

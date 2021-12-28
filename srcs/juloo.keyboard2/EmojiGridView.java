@@ -24,7 +24,6 @@ public class EmojiGridView extends GridView
   public static final int GROUP_LAST_USE = -1;
 
   public static final int COLUMN_WIDTH = 192;
-  public static final float EMOJI_SIZE = 32.f;
 
   private static final String LAST_USE_PREF = "emoji_last_use";
 
@@ -120,10 +119,8 @@ public class EmojiGridView extends GridView
     public EmojiView(Context context)
     {
       super(context);
-      setTextSize(EMOJI_SIZE);
+      setTextAppearance(context, R.style.emojiGridButton);
       setGravity(Gravity.CENTER);
-      setBackgroundColor(0x0);
-      setTextColor(getResources().getColor(R.color.emoji_color));
       setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
     }
 

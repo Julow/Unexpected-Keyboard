@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
@@ -24,15 +25,18 @@ public class Theme
 
   public Theme(Context context, AttributeSet attrs)
   {
+    TypedArray s = context.getTheme().obtainStyledAttributes(attrs, R.styleable.keyboard, 0, R.style.Dark);
+    keyBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKey, 0));
+    keyDownBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKeyActivated, 0));
+    // colorKeyboard = s.getColor(R.styleable.keyboard_colorKeyboard, 0);
+    labelColor = s.getColor(R.styleable.keyboard_colorLabel, 0);
+    activatedColor = s.getColor(R.styleable.keyboard_colorLabelActivated, 0);
+    lockedColor = s.getColor(R.styleable.keyboard_colorLabelLocked, 0);
+    subLabelColor = s.getColor(R.styleable.keyboard_colorSubLabel, 0);
+    s.recycle();
     Resources res = context.getResources();
-    lockedColor = res.getColor(R.color.key_label_locked);
-    activatedColor = res.getColor(R.color.key_label_activated);
-    labelColor = res.getColor(R.color.key_label);
-    subLabelColor = res.getColor(R.color.key_sub_label);
     labelTextSize = res.getDimension(R.dimen.label_text_size);
     sublabelTextSize = res.getDimension(R.dimen.sublabel_text_size);
-    keyBgPaint.setColor(res.getColor(R.color.key_bg));
-    keyDownBgPaint.setColor(res.getColor(R.color.key_down_bg));
     _keyLabelPaint = initLabelPaint(Paint.Align.CENTER, null);
     _keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, null);
     Typeface specialKeyFont = getSpecialKeyFont(context);

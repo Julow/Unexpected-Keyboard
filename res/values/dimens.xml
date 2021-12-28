@@ -12,4 +12,5 @@
   <dimen name="sublabel_text_size">12dp</dimen>
   <dimen name="emoji_type_button_height">56dp</dimen>
   <dimen name="emoji_grid_height">250dp</dimen>
+  <dimen name="emoji_text_size">28dp</dimen>
 </resources>
