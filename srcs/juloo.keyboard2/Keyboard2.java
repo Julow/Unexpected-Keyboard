@@ -54,14 +54,10 @@ public class Keyboard2 extends InputMethodService
     _specialKeyFont = Typeface.createFromAsset(getAssets(), "fonts/keys.ttf");
     PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-    _config = new Config(this);
+    Config.initGlobalConfig(this);
+    _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
     _keyboardView.reset();
-  }
-
-  public Config getConfig()
-  {
-    return (_config);
   }
 
   public Typeface getSpecialKeyFont()
@@ -186,9 +182,9 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
   {
-    _config.refresh();
+    _config.refresh(this);
     refreshSubtypeImm();
-    _keyboardView.refreshConfig(_config, getLayout(_currentTextLayout));
+    _keyboardView.refreshConfig(getLayout(_currentTextLayout));
   }
 
   @Override

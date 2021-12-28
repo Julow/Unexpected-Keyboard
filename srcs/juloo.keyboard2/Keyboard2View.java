@@ -45,14 +45,14 @@ public class Keyboard2View extends View
     _vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
     _handler = new Handler(this);
     _theme = new Theme(getContext(), attrs);
-    refreshConfig(((Keyboard2)context).getConfig(), null);
+    _config = Config.globalConfig();
+    refreshConfig(null);
     setOnTouchListener(this);
   }
 
   /* Internally calls [reset()]. */
-  public void refreshConfig(Config config, KeyboardData kw)
+  public void refreshConfig(KeyboardData kw)
   {
-    _config = config;
     if (kw != null)
       setKeyboard(kw); // handle layout options then calls reset().
   }

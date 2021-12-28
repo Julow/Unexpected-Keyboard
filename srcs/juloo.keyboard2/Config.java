@@ -1,14 +1,14 @@
 package juloo.keyboard2;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
-class Config
+final class Config
 {
-  private Keyboard2 _context;
-
   // From resources
   public final float marginTop;
   public final float keyPadding;
@@ -34,11 +34,9 @@ class Config
   public boolean shouldOfferSwitchingToNextInputMethod;
   public int accent_flags_to_remove;
 
-  public Config(Keyboard2 context)
+  private Config(Context context)
   {
     Resources res = context.getResources();
-
-    _context = context;
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
@@ -59,7 +57,7 @@ class Config
     characterSize = 1.f;
     accents = 1;
     // from prefs
-    refresh();
+    refresh(context);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
     accent_flags_to_remove = 0;
@@ -68,32 +66,30 @@ class Config
   /*
    ** Reload prefs
    */
-  public void refresh()
+  public void refresh(Context context)
   {
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(_context);
-
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    DisplayMetrics dm = context.getResources().getDisplayMetrics();
     layout = layoutId_of_string(prefs.getString("layout", "system")); 
     subValueDist = prefs.getFloat("sub_value_dist", subValueDist);
     vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
     vibrateDuration = prefs.getInt("vibrate_duration", (int)vibrateDuration);
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
-    marginBottom = getDipPref(prefs, "margin_bottom", marginBottom);
-    keyHeight = getDipPref(prefs, "key_height", keyHeight);
-    horizontalMargin = getDipPref(prefs, "horizontal_margin", horizontalMargin);
+    marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
+    keyHeight = getDipPref(dm, prefs, "key_height", keyHeight);
+    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize); 
     accents = Integer.valueOf(prefs.getString("accents", "1"));
   }
 
-  private float getDipPref(SharedPreferences prefs, String pref_name, float def)
+  private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
   {
     int value = prefs.getInt(pref_name, -1);
-
     if (value < 0)
       return (def);
-    return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value,
-          _context.getResources().getDisplayMetrics()));
+    return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
   }
 
   public static int layoutId_of_string(String name)
@@ -120,5 +116,17 @@ class Config
       case "ring": return KeyValue.FLAG_ACCENT_RING;
       default: throw new RuntimeException(name);
     }
+  }
+
+  private static Config _globalConfig = null;
+
+  public static void initGlobalConfig(Context context)
+  {
+    _globalConfig = new Config(context);
+  }
+
+  public static Config globalConfig()
+  {
+    return _globalConfig;
   }
 }
