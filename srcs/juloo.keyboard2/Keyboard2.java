@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.text.InputType;
 import android.preference.PreferenceManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
@@ -54,7 +55,7 @@ public class Keyboard2 extends InputMethodService
     _specialKeyFont = Typeface.createFromAsset(getAssets(), "fonts/keys.ttf");
     PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-    Config.initGlobalConfig(this);
+    Config.initGlobalConfig(this, new KeyEventHandler(this.new Receiver()));
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
     _keyboardView.reset();
@@ -193,77 +194,60 @@ public class Keyboard2 extends InputMethodService
     _keyboardView.reset();
   }
 
-  public void handleKeyUp(KeyValue key, int flags)
+  /** Not static */
+  public class Receiver implements KeyEventHandler.IReceiver
   {
-    if (getCurrentInputConnection() == null)
-      return ;
-    key = KeyModifier.handleFlags(key, flags);
-    if (key.eventCode == KeyValue.EVENT_CONFIG)
+    public void switchToNextInputMethod()
     {
-      Intent intent = new Intent(this, SettingsActivity.class);
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      startActivity(intent);
+      InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+      imm.switchToNextInputMethod(getConnectionToken(), false);
     }
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_TEXT)
-      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
-      _keyboardView.setKeyboard(getLayout(R.xml.numeric));
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_EMOJI)
+
+    public void setPane_emoji()
     {
       if (_emojiPane == null)
         _emojiPane = (ViewGroup)getLayoutInflater().inflate(R.layout.emoji_pane, null);
       setInputView(_emojiPane);
     }
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_BACK_EMOJI)
+
+    public void setPane_normal()
+    {
       setInputView(_keyboardView);
-    else if (key.eventCode == KeyValue.EVENT_CHANGE_METHOD)
-    {
-      InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-      imm.switchToNextInputMethod(getConnectionToken(), false);
     }
-    else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
-      handleMetaKeyUp(key, flags);
-    // else if (eventCode == KeyEvent.KEYCODE_DEL)
-    //  handleDelKey(1, 0);
-    // else if (eventCode == KeyEvent.KEYCODE_FORWARD_DEL)
-    //  handleDelKey(0, 1);
-    else if (key.char_ == KeyValue.CHAR_NONE)
+
+    public void setLayout(int res_id)
     {
-      if (key.eventCode != KeyValue.EVENT_NONE)
-        handleMetaKeyUp(key, flags);
-      else
-        getCurrentInputConnection().commitText(key.symbol, 1);
+      if (res_id == -1)
+        res_id = _currentTextLayout;
+      _keyboardView.setKeyboard(getLayout(res_id));
     }
-    else
-      sendKeyChar(key.char_);
-  }
 
-  // private void handleDelKey(int before, int after)
-  // {
-  //  CharSequence selection = getCurrentInputConnection().getSelectedText(0);
+    public void sendKeyEvent(int eventCode, int meta)
+    {
+      InputConnection conn = getCurrentInputConnection();
+      if (conn == null)
+        return;
+      KeyEvent event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, eventCode, 0, meta);
+      conn.sendKeyEvent(event);
+      conn.sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+    }
 
-  //  if (selection != null && selection.length() > 0)
-  //  getCurrentInputConnection().commitText("", 1);
-  //  else
-  //  getCurrentInputConnection().deleteSurroundingText(before, after);
-  // }
+    public void showKeyboardConfig()
+    {
+      Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
+    }
 
-  private void handleMetaKeyUp(KeyValue key, int flags)
-  {
-    int metaState = 0;
-    KeyEvent event;
+    public void commitText(String text)
+    {
+      getCurrentInputConnection().commitText(text, 1);
+    }
 
-    if (key.eventCode == KeyValue.EVENT_NONE)
-      return ;
-    if ((flags & KeyValue.FLAG_CTRL) != 0)
-      metaState |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON;
-    if ((flags & KeyValue.FLAG_ALT) != 0)
-      metaState |= KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON;
-    if ((flags & KeyValue.FLAG_SHIFT) != 0)
-      metaState |= KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON;
-    event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.eventCode, 0, metaState);
-    getCurrentInputConnection().sendKeyEvent(event);
-    getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+    public void commitChar(char c)
+    {
+      sendKeyChar(c);
+    }
   }
 
   private IBinder getConnectionToken()

@@ -34,7 +34,9 @@ final class Config
   public boolean shouldOfferSwitchingToNextInputMethod;
   public int accent_flags_to_remove;
 
-  private Config(Context context)
+  public final IKeyEventHandler handler;
+
+  private Config(Context context, IKeyEventHandler h)
   {
     Resources res = context.getResources();
     // static values
@@ -61,6 +63,7 @@ final class Config
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
     accent_flags_to_remove = 0;
+    handler = h;
   }
 
   /*
@@ -120,13 +123,18 @@ final class Config
 
   private static Config _globalConfig = null;
 
-  public static void initGlobalConfig(Context context)
+  public static void initGlobalConfig(Context context, IKeyEventHandler handler)
   {
-    _globalConfig = new Config(context);
+    _globalConfig = new Config(context, handler);
   }
 
   public static Config globalConfig()
   {
     return _globalConfig;
+  }
+
+  public static interface IKeyEventHandler
+  {
+    public void handleKeyUp(KeyValue value, int flags);
   }
 }

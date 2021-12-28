@@ -266,7 +266,7 @@ public class Keyboard2View extends View
   private void handleKeyUp(KeyDown key)
   {
     if (key.value != null && (key.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
-      ((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
+      _config.handler.handleKeyUp(key.value, _flags);
   }
 
   private void handleKeyDown(KeyValue key)
@@ -317,7 +317,7 @@ public class Keyboard2View extends View
           nextInterval = (long)((float)nextInterval / accel);
         }
         _handler.sendEmptyMessageDelayed(msg.what, nextInterval);
-        ((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
+        _config.handler.handleKeyUp(key.value, _flags);
         return (true);
       }
     }

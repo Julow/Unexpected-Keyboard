@@ -48,16 +48,15 @@ public class EmojiGridView extends GridView
   public void setEmojiGroup(int group)
   {
     _emojiArray = (group == GROUP_LAST_USE) ? getLastEmojis() : Emoji.getEmojisByGroup(group);
-    setAdapter(new EmojiViewAdpater((Keyboard2)getContext(), _emojiArray));
+    setAdapter(new EmojiViewAdpater(getContext(), _emojiArray));
   }
 
   public void onItemClick(AdapterView<?> parent, View v, int pos, long id)
   {
-    Keyboard2 main = (Keyboard2)getContext();
+    Config config = Config.globalConfig();
     Integer used = _lastUsed.get(_emojiArray[pos]);
-
     _lastUsed.put(_emojiArray[pos], (used == null) ? 1 : used.intValue() + 1);
-    main.handleKeyUp(_emojiArray[pos], 0);
+    config.handler.handleKeyUp(_emojiArray[pos], 0);
     saveLastUsed(); // TODO: opti
   }
 
@@ -118,7 +117,7 @@ public class EmojiGridView extends GridView
 
   private static class EmojiView extends TextView
   {
-    public EmojiView(Keyboard2 context)
+    public EmojiView(Context context)
     {
       super(context);
       setTextSize(EMOJI_SIZE);
@@ -136,13 +135,13 @@ public class EmojiGridView extends GridView
 
   private static class EmojiViewAdpater extends BaseAdapter
   {
-    private Keyboard2 _main;
+    private Context _context;
 
     private Emoji[] _emojiArray;
 
-    public EmojiViewAdpater(Keyboard2 main, Emoji[] emojiArray)
+    public EmojiViewAdpater(Context context, Emoji[] emojiArray)
     {
-      _main = main;
+      _context = context;
       _emojiArray = emojiArray;
     }
 
@@ -168,7 +167,7 @@ public class EmojiGridView extends GridView
       EmojiView view = (EmojiView)convertView;
 
       if (view == null)
-        view = new EmojiView(_main);
+        view = new EmojiView(_context);
       view.setEmoji(_emojiArray[pos]);
       return (view);
     }

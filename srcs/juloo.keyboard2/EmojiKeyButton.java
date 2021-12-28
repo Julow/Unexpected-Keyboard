@@ -22,8 +22,7 @@ public class EmojiKeyButton extends Button
 
   public void onClick(View v)
   {
-    Keyboard2 main = (Keyboard2)getContext();
-
-    main.handleKeyUp(_key, 0);
+    Config config = Config.globalConfig();
+    config.handler.handleKeyUp(_key, 0);
   }
 }
