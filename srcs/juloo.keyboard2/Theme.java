@@ -35,9 +35,9 @@ public class Theme
     keyDownBgPaint.setColor(res.getColor(R.color.key_down_bg));
     _keyLabelPaint = initLabelPaint(Paint.Align.CENTER, null);
     _keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, null);
-    Typeface specialKeysFont = ((Keyboard2)context).getSpecialKeyFont();
-    _specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeysFont);
-    _specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeysFont);
+    Typeface specialKeyFont = getSpecialKeyFont(context);
+    _specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeyFont);
+    _specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeyFont);
   }
 
   public Paint labelPaint(boolean special_font)
@@ -60,5 +60,16 @@ public class Theme
     if (font != null)
       paint.setTypeface(font);
     return (paint);
+  }
+
+  private static Typeface _specialKeyFont = null;
+
+  static public Typeface getSpecialKeyFont(Context context)
+  {
+    if (_specialKeyFont == null)
+    {
+      _specialKeyFont = Typeface.createFromAsset(context.getAssets(), "fonts/keys.ttf");
+    }
+    return _specialKeyFont;
   }
 }

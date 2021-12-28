@@ -31,7 +31,6 @@ public class Keyboard2 extends InputMethodService
   private Keyboard2View _keyboardView;
   private int _currentTextLayout;
   private ViewGroup _emojiPane = null;
-  private Typeface _specialKeyFont = null;
 
   private Config _config;
 
@@ -52,18 +51,12 @@ public class Keyboard2 extends InputMethodService
   public void onCreate()
   {
     super.onCreate();
-    _specialKeyFont = Typeface.createFromAsset(getAssets(), "fonts/keys.ttf");
     PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     Config.initGlobalConfig(this, new KeyEventHandler(this.new Receiver()));
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
     _keyboardView.reset();
-  }
-
-  public Typeface getSpecialKeyFont()
-  {
-    return (_specialKeyFont);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
