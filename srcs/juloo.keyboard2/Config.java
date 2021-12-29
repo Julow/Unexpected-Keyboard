@@ -126,6 +126,7 @@ final class Config
     switch (name)
     {
       case "light": return R.style.Light;
+      case "black": return R.style.Black;
       default: case "dark": return R.style.Dark;
     }
   }

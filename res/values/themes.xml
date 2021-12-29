@@ -49,4 +49,18 @@
     <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
     <item name="emoji_key_text" type="color">?attr/colorLabel</item>
   </style>
+  <style name="Black">
+    <item name="colorKeyboard">#000000</item>
+    <item name="colorKey">#000000</item>
+    <item name="colorKeyActivated">#333333</item>
+    <item name="colorLabel">#eeeeee</item>
+    <item name="colorLabelActivated">#009dff</item>
+    <item name="colorLabelLocked">#00ff26</item>
+    <item name="colorSubLabel">#bbbbbb</item>
+    <item name="keyBorderRadius">1dp</item>
+    <item name="emoji_button_bg" type="color">#000000</item>
+    <item name="emoji_color" type="color">#ffffff</item>
+    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
+    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+  </style>
 </resources>

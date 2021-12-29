@@ -44,4 +44,5 @@
   <string name="pref_theme_summary">%s</string>
   <string name="pref_theme_e_dark">Dark</string>
   <string name="pref_theme_e_light">Light</string>
+  <string name="pref_theme_e_black">Black</string>
 </resources>
