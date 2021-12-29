@@ -14,7 +14,6 @@ final class Config
   public final float keyPadding;
   public final float keyVerticalInterval;
   public final float keyHorizontalInterval;
-  public final float keyRound;
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
@@ -45,7 +44,6 @@ final class Config
     keyPadding = res.getDimension(R.dimen.key_padding);
     keyVerticalInterval = res.getDimension(R.dimen.key_vertical_interval);
     keyHorizontalInterval = res.getDimension(R.dimen.key_horizontal_interval);
-    keyRound = res.getDimension(R.dimen.key_round);
     // default values
     layout = -1;
     subValueDist = 10f;

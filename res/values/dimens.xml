@@ -7,7 +7,6 @@
   <dimen name="key_vertical_interval">2dp</dimen>
   <dimen name="key_horizontal_interval">2dp</dimen>
   <dimen name="key_height">51dp</dimen>
-  <dimen name="key_round">5dp</dimen>
   <dimen name="label_text_size">18dp</dimen>
   <dimen name="sublabel_text_size">12dp</dimen>
   <dimen name="emoji_type_button_height">56dp</dimen>

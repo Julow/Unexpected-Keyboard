@@ -15,8 +15,11 @@ public class Theme
   public final int activatedColor;
   public final int labelColor;
   public final int subLabelColor;
+
   public final float labelTextSize;
   public final float sublabelTextSize;
+
+  public final float keyBorderRadius;
 
   private final Paint _keyLabelPaint;
   private final Paint _specialKeyLabelPaint;
@@ -33,6 +36,7 @@ public class Theme
     activatedColor = s.getColor(R.styleable.keyboard_colorLabelActivated, 0);
     lockedColor = s.getColor(R.styleable.keyboard_colorLabelLocked, 0);
     subLabelColor = s.getColor(R.styleable.keyboard_colorSubLabel, 0);
+    keyBorderRadius = s.getDimension(R.styleable.keyboard_keyBorderRadius, 0);
     s.recycle();
     Resources res = context.getResources();
     labelTextSize = res.getDimension(R.dimen.label_text_size);

@@ -352,10 +352,8 @@ public class Keyboard2View extends View
         float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
         KeyDown keyDown = getKeyDown(k);
         _tmpRect.set(x, y, x + keyW, y + keyH);
-        if (keyDown != null)
-          canvas.drawRect(_tmpRect, _theme.keyDownBgPaint);
-        else
-          canvas.drawRoundRect(_tmpRect, _config.keyRound, _config.keyRound, _theme.keyBgPaint);
+        canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
+            (keyDown != null) ? _theme.keyDownBgPaint : _theme.keyBgPaint);
         if (k.key0 != null)
           drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _theme.labelTextSize) / 2f + y, keyDown);
         float subPadding = _config.keyPadding;

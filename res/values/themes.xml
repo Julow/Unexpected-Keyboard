@@ -13,6 +13,8 @@
     <attr name="colorLabelLocked" format="color"/>
     <!-- Corner labels -->
     <attr name="colorSubLabel" format="color"/>
+    <!-- Dimens -->
+    <attr name="keyBorderRadius" format="dimension"/>
     <!-- Emoji panel -->
     <attr name="emoji_button_bg" type="color" format="color"/>
     <attr name="emoji_color" type="color" format="color"/>
@@ -27,6 +29,7 @@
     <item name="colorLabelActivated">#226b99</item>
     <item name="colorLabelLocked">#229933</item>
     <item name="colorSubLabel">#A0A0A0</item>
+    <item name="keyBorderRadius">5dp</item>
     <item name="emoji_button_bg" type="color">#202020</item>
     <item name="emoji_color" type="color">#FFFFFF</item>
     <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
@@ -40,6 +43,7 @@
     <item name="colorLabelActivated">#64afdd</item>
     <item name="colorLabelLocked">#64dd76</item>
     <item name="colorSubLabel">#5e5e5e</item>
+    <item name="keyBorderRadius">5dp</item>
     <item name="emoji_button_bg" type="color">#dedede</item>
     <item name="emoji_color" type="color">#000000</item>
     <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
