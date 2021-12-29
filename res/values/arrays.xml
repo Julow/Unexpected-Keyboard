@@ -18,4 +18,13 @@
     <item>3</item>
     <item>4</item>
   </string-array>
+  <string-array name="pref_theme_entries">
+    <item>@string/pref_theme_e_dark</item>
+    <item>@string/pref_theme_e_light</item>
+  </string-array>
+  <string name="pref_theme_default">dark</string>
+  <string-array name="pref_theme_values">
+    <item>dark</item>
+    <item>light</item>
+  </string-array>
 </resources>

@@ -32,4 +32,17 @@
     <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
     <item name="emoji_key_text" type="color">?attr/colorLabel</item>
   </style>
+  <style name="Light">
+    <item name="colorKeyboard">#e3e3e3</item>
+    <item name="colorKey">#cfcfcf</item>
+    <item name="colorKeyActivated">#e3e3e3</item>
+    <item name="colorLabel">#000000</item>
+    <item name="colorLabelActivated">#64afdd</item>
+    <item name="colorLabelLocked">#64dd76</item>
+    <item name="colorSubLabel">#5e5e5e</item>
+    <item name="emoji_button_bg" type="color">#dedede</item>
+    <item name="emoji_color" type="color">#000000</item>
+    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
+    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+  </style>
 </resources>

@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="@string/pref_category_layout">
     <ListPreference android:key="layout" android:title="@string/pref_layout_title" android:summary="@string/pref_layout_summary" android:defaultValue="system" android:entries="@array/pref_layout_entries" android:entryValues="@array/pref_layout_values"/>
-    /&gt;
     <ListPreference android:key="accents" android:title="@string/pref_accents_title" android:summary="@string/pref_accents_summary" android:defaultValue="@string/pref_accents_default" android:entries="@array/pref_accents_entries" android:entryValues="@array/pref_accents_values"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
@@ -16,6 +15,7 @@
     <juloo.common.IntSlideBarPreference android:key="vibrate_duration" android:title="@string/pref_vibrate_duration_title" android:summary="@string/pref_vibrate_duration_summary" android:defaultValue="20" min="5" max="50"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_style">
+    <ListPreference android:key="theme" android:title="@string/pref_theme" android:summary="@string/pref_theme_summary" android:defaultValue="@string/pref_theme_default" android:entries="@array/pref_theme_entries" android:entryValues="@array/pref_theme_values"/>
     <juloo.common.IntSlideBarPreference android:key="margin_bottom" android:title="@string/pref_margin_bottom_title" android:summary="@string/pref_margin_bottom_summary" android:defaultValue="5" min="0" max="100"/>
     <juloo.common.IntSlideBarPreference android:key="key_height" android:title="@string/pref_key_height_title" android:summary="@string/pref_key_height_summary" android:defaultValue="50" min="30" max="90"/>
     <juloo.common.IntSlideBarPreference android:key="horizontal_margin" android:title="@string/pref_horizontal_margin_title" android:summary="@string/pref_horizontal_margin_summary" android:defaultValue="3" min="0" max="20"/>

@@ -16,6 +16,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
+import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class Keyboard2 extends InputMethodService
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     Config.initGlobalConfig(this, new KeyEventHandler(this.new Receiver()));
     _config = Config.globalConfig();
-    _keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
+    _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
   }
 
@@ -139,16 +140,6 @@ public class Keyboard2 extends InputMethodService
   }
 
   @Override
-  public View onCreateInputView()
-  {
-    ViewGroup parent = (ViewGroup)_keyboardView.getParent();
-
-    if (parent != null)
-      parent.removeView(_keyboardView);
-    return (_keyboardView);
-  }
-
-  @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
     refreshSubtypeImm();
@@ -157,6 +148,7 @@ public class Keyboard2 extends InputMethodService
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     _keyboardView.reset(); // Layout might need to change due to rotation
+    setInputView(_keyboardView);
   }
 
   @Override
@@ -176,15 +168,16 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
   {
+    int prev_theme = _config.theme;
     _config.refresh(this);
     refreshSubtypeImm();
     _keyboardView.refreshConfig(getLayout(_currentTextLayout));
-  }
-
-  @Override
-  public void onConfigurationChanged(Configuration newConfig)
-  {
-    _keyboardView.reset();
+    // Refreshing the theme config requires re-creating the views
+    if (prev_theme != _config.theme)
+    {
+      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+      _emojiPane = null;
+    }
   }
 
   /** Not static */
@@ -199,7 +192,7 @@ public class Keyboard2 extends InputMethodService
     public void setPane_emoji()
     {
       if (_emojiPane == null)
-        _emojiPane = (ViewGroup)getLayoutInflater().inflate(R.layout.emoji_pane, null);
+        _emojiPane = (ViewGroup)inflate_view(R.layout.emoji_pane);
       setInputView(_emojiPane);
     }
 
@@ -246,5 +239,10 @@ public class Keyboard2 extends InputMethodService
   private IBinder getConnectionToken()
   {
     return getWindow().getWindow().getAttributes().token;
+  }
+
+  private View inflate_view(int layout)
+  {
+    return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
   }
 }

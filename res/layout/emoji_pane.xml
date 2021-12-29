@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:hardwareAccelerated="false" android:theme="@style/Dark">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:hardwareAccelerated="false">
   <juloo.keyboard2.EmojiGroupButtonsBar android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
   <juloo.keyboard2.EmojiGridView android:id="@+id/emoji_grid" android:background="?attr/colorKeyboard" android:layout_width="fill_parent" android:layout_height="@dimen/emoji_grid_height"/>
   <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">

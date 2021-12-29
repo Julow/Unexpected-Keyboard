@@ -25,7 +25,7 @@ public class Theme
 
   public Theme(Context context, AttributeSet attrs)
   {
-    TypedArray s = context.getTheme().obtainStyledAttributes(attrs, R.styleable.keyboard, 0, R.style.Dark);
+    TypedArray s = context.getTheme().obtainStyledAttributes(attrs, R.styleable.keyboard, 0, 0);
     keyBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKey, 0));
     keyDownBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKeyActivated, 0));
     // colorKeyboard = s.getColor(R.styleable.keyboard_colorKeyboard, 0);

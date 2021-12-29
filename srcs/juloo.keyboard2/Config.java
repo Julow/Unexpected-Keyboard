@@ -29,6 +29,7 @@ final class Config
   public boolean preciseRepeat;
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
+  public int theme; // Values are R.style.*
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
@@ -85,6 +86,7 @@ final class Config
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize); 
     accents = Integer.valueOf(prefs.getString("accents", "1"));
+    theme = themeId_of_string(prefs.getString("theme", ""));
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
@@ -118,6 +120,15 @@ final class Config
       case "trema": return KeyValue.FLAG_ACCENT6;
       case "ring": return KeyValue.FLAG_ACCENT_RING;
       default: throw new RuntimeException(name);
+    }
+  }
+
+  public static int themeId_of_string(String name)
+  {
+    switch (name)
+    {
+      case "light": return R.style.Light;
+      default: case "dark": return R.style.Dark;
     }
   }
 
