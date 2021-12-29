@@ -102,6 +102,7 @@ class Config
     {
       case "azerty": return R.xml.azerty;
       case "qwerty": return R.xml.qwerty;
+      case "qwertz": return R.xml.qwertz;
       case "system": default: return -1;
     }
   }
@@ -118,6 +119,7 @@ class Config
       case "cedille": return KeyValue.FLAG_ACCENT5;
       case "trema": return KeyValue.FLAG_ACCENT6;
       case "ring": return KeyValue.FLAG_ACCENT_RING;
+      case "szlig": return KeyValue.FLAG_ACCENT_SZLIG;
       default: throw new RuntimeException(name);
     }
   }

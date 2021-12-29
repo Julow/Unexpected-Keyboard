@@ -153,6 +153,11 @@ class KeyModifier
           case 'o': return 'ₒ';
           default: return c;
         }
+      case KeyValue.FLAG_ACCENT_SZLIG:
+        switch (c)
+        {
+          case 's': return 'ß';
+        }
       default: return c; // Can't happen
     }
   }

@@ -3,6 +3,7 @@
   <subtype android:label="@string/subtype_label" android:languageTag="en" android:imeSubtypeLocale="en_US" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty"/>
   <subtype android:label="@string/subtype_label" android:languageTag="fr" android:imeSubtypeLocale="fr_FR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=azerty,accents=grave|aigu|circonflexe|cedille|trema"/>
   <subtype android:label="@string/subtype_label" android:languageTag="es" android:imeSubtypeLocale="es_ES" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,accents=aigu|tilde|trema"/>
+  <subtype android:label="@string/subtype_label" android:languageTag="de" android:imeSubtypeLocale="de_DE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwertz,accents=grave|aigu|circonflexe"/>
   <subtype android:label="@string/subtype_label" android:languageTag="it" android:imeSubtypeLocale="it_IT" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,accents=grave|aigu"/>
   <subtype android:label="@string/subtype_label" android:languageTag="sv" android:imeSubtypeLocale="sv_SE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,accents=aigu|trema|ring"/>
 </input-method>

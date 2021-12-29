@@ -4,6 +4,7 @@
     <item>system</item>
     <item>azerty</item>
     <item>qwerty</item>
+    <item>qwertz</item>
   </string-array>
   <string name="pref_accents_default">1</string>
   <string-array name="pref_accents_entries">
