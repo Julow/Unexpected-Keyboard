@@ -11,8 +11,8 @@
   <string name="pref_accents_e_all">Show every accents</string>
   <string name="pref_accents_e_none">Hide accents</string>
   <string name="pref_category_typing">Typing</string>
-  <string name="pref_preci_title">Precision</string>
-  <string name="pref_preci_summary">Distance of corner values (%sdp)</string>
+  <string name="pref_swipe_dist_title">Swiping distance</string>
+  <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
   <string name="pref_long_timeout_title">Long press timeout</string>
   <string name="pref_long_interval_title">Long press interval</string>
   <string name="pref_category_vibrate">Vibration</string>
@@ -31,4 +31,9 @@
   <string name="pref_theme_e_dark">Dark</string>
   <string name="pref_theme_e_light">Light</string>
   <string name="pref_theme_e_black">Black</string>
+  <string name="pref_swipe_dist_e_very_short">Very short</string>
+  <string name="pref_swipe_dist_e_short">Short</string>
+  <string name="pref_swipe_dist_e_default">Normal</string>
+  <string name="pref_swipe_dist_e_far">Far</string>
+  <string name="pref_swipe_dist_e_very_far">Very far</string>
 </resources>

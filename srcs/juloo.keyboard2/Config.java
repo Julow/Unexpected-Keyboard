@@ -17,7 +17,8 @@ final class Config
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
-  public float subValueDist;
+  private float swipe_dist_dp;
+  public float swipe_dist_px;
   public boolean vibrateEnabled;
   public long vibrateDuration;
   public long longPressTimeout;
@@ -46,7 +47,6 @@ final class Config
     keyHorizontalInterval = res.getDimension(R.dimen.key_horizontal_interval);
     // default values
     layout = -1;
-    subValueDist = 10f;
     vibrateEnabled = true;
     vibrateDuration = 20;
     longPressTimeout = 600;
@@ -73,32 +73,25 @@ final class Config
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     DisplayMetrics dm = context.getResources().getDisplayMetrics();
     layout = layoutId_of_string(prefs.getString("layout", "system")); 
-    subValueDist = getDipPrefFloat(dm, prefs, "sub_value_dist", subValueDist);
+    swipe_dist_dp = Float.valueOf(prefs.getString("swipe_dist", "15"));
+    swipe_dist_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, swipe_dist_dp, dm);
     vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
     vibrateDuration = prefs.getInt("vibrate_duration", (int)vibrateDuration);
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
-    marginBottom = getDipPrefInt(dm, prefs, "margin_bottom", marginBottom);
-    keyHeight = getDipPrefInt(dm, prefs, "key_height", keyHeight);
-    horizontalMargin = getDipPrefInt(dm, prefs, "horizontal_margin", horizontalMargin);
+    marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
+    keyHeight = getDipPref(dm, prefs, "key_height", keyHeight);
+    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize); 
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = themeId_of_string(prefs.getString("theme", ""));
   }
 
-  private float getDipPrefInt(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
+  private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
   {
     int value = prefs.getInt(pref_name, -1);
     if (value < 0)
-      return (def);
-    return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
-  }
-
-  private float getDipPrefFloat(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
-  {
-    float value = prefs.getFloat(pref_name, -1.f);
-    if (value < 0.f)
       return (def);
     return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
   }

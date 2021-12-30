@@ -145,7 +145,7 @@ public class Keyboard2View extends View
       moveY -= key.downY;
       float absDist = Math.abs(moveX) + Math.abs(moveY);
       key.ptrDist = absDist;
-      if (absDist < _config.subValueDist)
+      if (absDist < _config.swipe_dist_px)
         newValue = key.key.key0;
       else if (moveX < 0)
         newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
@@ -313,7 +313,7 @@ public class Keyboard2View extends View
         if (_config.preciseRepeat && (key.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
         {
           // Modulate repeat interval depending on the distance of the pointer
-          float accel = Math.min(4.f, Math.max(0.3f, key.ptrDist / (_config.subValueDist * 15.f)));
+          float accel = Math.min(4.f, Math.max(0.3f, key.ptrDist / (_config.swipe_dist_px * 15.f)));
           nextInterval = (long)((float)nextInterval / accel);
         }
         _handler.sendEmptyMessageDelayed(msg.what, nextInterval);

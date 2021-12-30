@@ -32,4 +32,18 @@
     <item>light</item>
     <item>black</item>
   </string-array>
+  <string-array name="pref_swipe_dist_entries">
+    <item>@string/pref_swipe_dist_e_very_short</item>
+    <item>@string/pref_swipe_dist_e_short</item>
+    <item>@string/pref_swipe_dist_e_default</item>
+    <item>@string/pref_swipe_dist_e_far</item>
+    <item>@string/pref_swipe_dist_e_very_far</item>
+  </string-array>
+  <string-array name="pref_swipe_dist_values">
+    <item>5</item>
+    <item>7.5</item>
+    <item>15</item>
+    <item>25</item>
+    <item>35</item>
+  </string-array>
 </resources>
