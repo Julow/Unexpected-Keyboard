@@ -5,7 +5,11 @@
     <item>azerty</item>
     <item>qwerty</item>
   </string-array>
-  <string name="pref_accents_default">1</string>
+  <string-array name="pref_layout_entries">
+    <item>@string/pref_layout_e_system</item>
+    <item>AZERTY</item>
+    <item>QWERTY</item>
+  </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>
     <item>@string/pref_accents_e_selected</item>
@@ -23,7 +27,6 @@
     <item>@string/pref_theme_e_light</item>
     <item>@string/pref_theme_e_black</item>
   </string-array>
-  <string name="pref_theme_default">dark</string>
   <string-array name="pref_theme_values">
     <item>dark</item>
     <item>light</item>
