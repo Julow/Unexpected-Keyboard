@@ -12,7 +12,7 @@
   <string name="pref_accents_e_none">Hide accents</string>
   <string name="pref_category_typing">Typing</string>
   <string name="pref_preci_title">Precision</string>
-  <string name="pref_preci_summary">Distance of corner values (%spx)</string>
+  <string name="pref_preci_summary">Distance of corner values (%sdp)</string>
   <string name="pref_long_timeout_title">Long press timeout</string>
   <string name="pref_long_interval_title">Long press interval</string>
   <string name="pref_category_vibrate">Vibration</string>
