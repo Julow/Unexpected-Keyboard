@@ -1,11 +1,9 @@
 package juloo.keyboard2;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
@@ -37,18 +35,7 @@ public class Keyboard2View extends View
 
   private float _keyWidth;
 
-  private Paint _keyBgPaint = new Paint();
-  private Paint _keyDownBgPaint = new Paint();
-  private Paint _keyLabelPaint;
-  private Paint _keySubLabelPaint;
-  private Paint _specialKeyLabelPaint;
-  private Paint _specialKeySubLabelPaint;
-  private int _lockedColor;
-  private int _activatedColor;
-  private int _labelColor;
-  private int _subLabelColor;
-  private float _labelTextSize;
-  private float _sublabelTextSize;
+  private Theme _theme;
 
   private static RectF _tmpRect = new RectF();
 
@@ -57,39 +44,17 @@ public class Keyboard2View extends View
     super(context, attrs);
     _vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
     _handler = new Handler(this);
-    refreshConfig(((Keyboard2)context).getConfig(), null);
+    _theme = new Theme(getContext(), attrs);
+    _config = Config.globalConfig();
+    refreshConfig(null);
     setOnTouchListener(this);
   }
 
   /* Internally calls [reset()]. */
-  public void refreshConfig(Config config, KeyboardData kw)
+  public void refreshConfig(KeyboardData kw)
   {
-    Resources res = getResources();
-    _config = config;
-    _lockedColor = res.getColor(R.color.key_label_locked);
-    _activatedColor = res.getColor(R.color.key_label_activated);
-    _labelColor = res.getColor(R.color.key_label);
-    _subLabelColor = res.getColor(R.color.key_sub_label);
-    _labelTextSize = res.getDimension(R.dimen.label_text_size) * config.characterSize;
-    _sublabelTextSize = res.getDimension(R.dimen.sublabel_text_size) * config.characterSize;
-    _keyBgPaint.setColor(res.getColor(R.color.key_bg));
-    _keyDownBgPaint.setColor(res.getColor(R.color.key_down_bg));
-    _keyLabelPaint = initLabelPaint(Paint.Align.CENTER, null);
-    _keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, null);
-    Typeface specialKeysFont = ((Keyboard2)getContext()).getSpecialKeyFont();
-    _specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeysFont);
-    _specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeysFont);
     if (kw != null)
       setKeyboard(kw); // handle layout options then calls reset().
-  }
-
-  private Paint initLabelPaint(Paint.Align align, Typeface font)
-  {
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    paint.setTextAlign(align);
-    if (font != null)
-      paint.setTypeface(font);
-    return (paint);
   }
 
   public void setKeyboard(KeyboardData kw)
@@ -180,7 +145,7 @@ public class Keyboard2View extends View
       moveY -= key.downY;
       float absDist = Math.abs(moveX) + Math.abs(moveY);
       key.ptrDist = absDist;
-      if (absDist < _config.subValueDist)
+      if (absDist < _config.swipe_dist_px)
         newValue = key.key.key0;
       else if (moveX < 0)
         newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
@@ -301,7 +266,7 @@ public class Keyboard2View extends View
   private void handleKeyUp(KeyDown key)
   {
     if (key.value != null && (key.flags & (KeyValue.FLAG_LOCKED | KeyValue.FLAG_NOCHAR)) == 0)
-      ((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
+      _config.handler.handleKeyUp(key.value, _flags);
   }
 
   private void handleKeyDown(KeyValue key)
@@ -348,11 +313,11 @@ public class Keyboard2View extends View
         if (_config.preciseRepeat && (key.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
         {
           // Modulate repeat interval depending on the distance of the pointer
-          float accel = Math.min(4.f, Math.max(0.3f, key.ptrDist / (_config.subValueDist * 15.f)));
+          float accel = Math.min(4.f, Math.max(0.3f, key.ptrDist / (_config.swipe_dist_px * 15.f)));
           nextInterval = (long)((float)nextInterval / accel);
         }
         _handler.sendEmptyMessageDelayed(msg.what, nextInterval);
-        ((Keyboard2)getContext()).handleKeyUp(key.value, _flags);
+        _config.handler.handleKeyUp(key.value, _flags);
         return (true);
       }
     }
@@ -387,12 +352,10 @@ public class Keyboard2View extends View
         float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
         KeyDown keyDown = getKeyDown(k);
         _tmpRect.set(x, y, x + keyW, y + keyH);
-        if (keyDown != null)
-          canvas.drawRect(_tmpRect, _keyDownBgPaint);
-        else
-          canvas.drawRoundRect(_tmpRect, _config.keyRound, _config.keyRound, _keyBgPaint);
+        canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
+            (keyDown != null) ? _theme.keyDownBgPaint : _theme.keyBgPaint);
         if (k.key0 != null)
-          drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _labelTextSize) / 2f + y, keyDown);
+          drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _theme.labelTextSize) / 2f + y, keyDown);
         float subPadding = _config.keyPadding;
         if (k.key1 != null)
           drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding, false, true, keyDown);
@@ -422,9 +385,9 @@ public class Keyboard2View extends View
       if (kd != null)
       {
         if ((kd.flags & KeyValue.FLAG_LOCKED) != 0)
-          return _lockedColor;
+          return _theme.lockedColor;
         if (kd.pointerId == -1)
-          return _activatedColor;
+          return _theme.activatedColor;
       }
     }
     return defaultColor;
@@ -433,26 +396,25 @@ public class Keyboard2View extends View
   private void drawLabel(Canvas canvas, KeyValue k, float x, float y, KeyDown keyDown)
   {
     k = KeyModifier.handleFlags(k, _flags);
-    Paint p = ((k.flags & KeyValue.FLAG_KEY_FONT) != 0) ? _specialKeyLabelPaint : _keyLabelPaint;
-    p.setColor(labelColor(k, keyDown, _labelColor));
-    p.setTextSize(_labelTextSize * scaleTextSize(k));
+    Paint p = _theme.labelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0));
+    p.setColor(labelColor(k, keyDown, _theme.labelColor));
+    p.setTextSize(_theme.labelTextSize * scaleTextSize(k));
     canvas.drawText(k.symbol, x, y, p);
   }
 
   private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, boolean right, boolean up, KeyDown keyDown)
   {
     k = KeyModifier.handleFlags(k, _flags);
-    Paint p = ((k.flags & KeyValue.FLAG_KEY_FONT) != 0) ? _specialKeySubLabelPaint : _keySubLabelPaint;
-    p.setColor(labelColor(k, keyDown, _subLabelColor));
-    p.setTextAlign(right ? Paint.Align.RIGHT : Paint.Align.LEFT);
-    p.setTextSize(_sublabelTextSize * scaleTextSize(k));
+    Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), right);
+    p.setColor(labelColor(k, keyDown, _theme.subLabelColor));
+    p.setTextSize(_theme.sublabelTextSize * scaleTextSize(k));
     y -= up ? p.ascent() : p.descent();
     canvas.drawText(k.symbol, x, y, p);
   }
 
   private float scaleTextSize(KeyValue k)
   {
-    return (k.symbol.length() < 2) ? 1.f : 0.8f;
+    return ((k.symbol.length() < 2) ? 1.f : 0.8f) * _config.characterSize;
   }
 
   private static class KeyDown

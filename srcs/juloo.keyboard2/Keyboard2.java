@@ -12,9 +12,11 @@ import android.os.IBinder;
 import android.text.InputType;
 import android.preference.PreferenceManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
+import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,6 @@ public class Keyboard2 extends InputMethodService
   private Keyboard2View _keyboardView;
   private int _currentTextLayout;
   private ViewGroup _emojiPane = null;
-  private Typeface _specialKeyFont = null;
 
   private Config _config;
 
@@ -51,22 +52,12 @@ public class Keyboard2 extends InputMethodService
   public void onCreate()
   {
     super.onCreate();
-    _specialKeyFont = Typeface.createFromAsset(getAssets(), "fonts/keys.ttf");
     PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-    _config = new Config(this);
-    _keyboardView = (Keyboard2View)getLayoutInflater().inflate(R.layout.keyboard, null);
+    Config.initGlobalConfig(this, new KeyEventHandler(this.new Receiver()));
+    _config = Config.globalConfig();
+    _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
-  }
-
-  public Config getConfig()
-  {
-    return (_config);
-  }
-
-  public Typeface getSpecialKeyFont()
-  {
-    return (_specialKeyFont);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -149,16 +140,6 @@ public class Keyboard2 extends InputMethodService
   }
 
   @Override
-  public View onCreateInputView()
-  {
-    ViewGroup parent = (ViewGroup)_keyboardView.getParent();
-
-    if (parent != null)
-      parent.removeView(_keyboardView);
-    return (_keyboardView);
-  }
-
-  @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
     refreshSubtypeImm();
@@ -167,6 +148,7 @@ public class Keyboard2 extends InputMethodService
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     _keyboardView.reset(); // Layout might need to change due to rotation
+    setInputView(_keyboardView);
   }
 
   @Override
@@ -186,92 +168,81 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
   {
-    _config.refresh();
+    int prev_theme = _config.theme;
+    _config.refresh(this);
     refreshSubtypeImm();
-    _keyboardView.refreshConfig(_config, getLayout(_currentTextLayout));
+    _keyboardView.refreshConfig(getLayout(_currentTextLayout));
+    // Refreshing the theme config requires re-creating the views
+    if (prev_theme != _config.theme)
+    {
+      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+      _emojiPane = null;
+    }
   }
 
-  @Override
-  public void onConfigurationChanged(Configuration newConfig)
+  /** Not static */
+  public class Receiver implements KeyEventHandler.IReceiver
   {
-    _keyboardView.reset();
-  }
-
-  public void handleKeyUp(KeyValue key, int flags)
-  {
-    if (getCurrentInputConnection() == null)
-      return ;
-    key = KeyModifier.handleFlags(key, flags);
-    if (key.eventCode == KeyValue.EVENT_CONFIG)
-    {
-      Intent intent = new Intent(this, SettingsActivity.class);
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      startActivity(intent);
-    }
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_TEXT)
-      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_NUMERIC)
-      _keyboardView.setKeyboard(getLayout(R.xml.numeric));
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_EMOJI)
-    {
-      if (_emojiPane == null)
-        _emojiPane = (ViewGroup)getLayoutInflater().inflate(R.layout.emoji_pane, null);
-      setInputView(_emojiPane);
-    }
-    else if (key.eventCode == KeyValue.EVENT_SWITCH_BACK_EMOJI)
-      setInputView(_keyboardView);
-    else if (key.eventCode == KeyValue.EVENT_CHANGE_METHOD)
+    public void switchToNextInputMethod()
     {
       InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
       imm.switchToNextInputMethod(getConnectionToken(), false);
     }
-    else if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT)) != 0)
-      handleMetaKeyUp(key, flags);
-    // else if (eventCode == KeyEvent.KEYCODE_DEL)
-    //  handleDelKey(1, 0);
-    // else if (eventCode == KeyEvent.KEYCODE_FORWARD_DEL)
-    //  handleDelKey(0, 1);
-    else if (key.char_ == KeyValue.CHAR_NONE)
+
+    public void setPane_emoji()
     {
-      if (key.eventCode != KeyValue.EVENT_NONE)
-        handleMetaKeyUp(key, flags);
-      else
-        getCurrentInputConnection().commitText(key.symbol, 1);
+      if (_emojiPane == null)
+        _emojiPane = (ViewGroup)inflate_view(R.layout.emoji_pane);
+      setInputView(_emojiPane);
     }
-    else
-      sendKeyChar(key.char_);
-  }
 
-  // private void handleDelKey(int before, int after)
-  // {
-  //  CharSequence selection = getCurrentInputConnection().getSelectedText(0);
+    public void setPane_normal()
+    {
+      setInputView(_keyboardView);
+    }
 
-  //  if (selection != null && selection.length() > 0)
-  //  getCurrentInputConnection().commitText("", 1);
-  //  else
-  //  getCurrentInputConnection().deleteSurroundingText(before, after);
-  // }
+    public void setLayout(int res_id)
+    {
+      if (res_id == -1)
+        res_id = _currentTextLayout;
+      _keyboardView.setKeyboard(getLayout(res_id));
+    }
 
-  private void handleMetaKeyUp(KeyValue key, int flags)
-  {
-    int metaState = 0;
-    KeyEvent event;
+    public void sendKeyEvent(int eventCode, int meta)
+    {
+      InputConnection conn = getCurrentInputConnection();
+      if (conn == null)
+        return;
+      KeyEvent event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, eventCode, 0, meta);
+      conn.sendKeyEvent(event);
+      conn.sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+    }
 
-    if (key.eventCode == KeyValue.EVENT_NONE)
-      return ;
-    if ((flags & KeyValue.FLAG_CTRL) != 0)
-      metaState |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON;
-    if ((flags & KeyValue.FLAG_ALT) != 0)
-      metaState |= KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON;
-    if ((flags & KeyValue.FLAG_SHIFT) != 0)
-      metaState |= KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON;
-    event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, key.eventCode, 0, metaState);
-    getCurrentInputConnection().sendKeyEvent(event);
-    getCurrentInputConnection().sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+    public void showKeyboardConfig()
+    {
+      Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
+    }
+
+    public void commitText(String text)
+    {
+      getCurrentInputConnection().commitText(text, 1);
+    }
+
+    public void commitChar(char c)
+    {
+      sendKeyChar(c);
+    }
   }
 
   private IBinder getConnectionToken()
   {
     return getWindow().getWindow().getAttributes().token;
+  }
+
+  private View inflate_view(int layout)
+  {
+    return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
   }
 }

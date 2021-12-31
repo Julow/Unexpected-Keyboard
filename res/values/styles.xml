@@ -4,8 +4,8 @@
     <item name="android:padding">1px</item>
     <item name="android:gravity">center</item>
     <item name="android:minHeight">@dimen/label_text_size</item>
-    <item name="android:background">@color/emoji_button_bg</item>
-    <item name="android:textColor">@color/emoji_key_text</item>
+    <item name="android:background">?attr/emoji_button_bg</item>
+    <item name="android:textColor">?attr/emoji_key_text</item>
     <item name="android:textSize">@dimen/label_text_size</item>
   </style>
   <style name="emojiKeyButton">
@@ -13,8 +13,13 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
     <item name="android:padding">0px</item>
-    <item name="android:background">@color/emoji_key_bg</item>
-    <item name="android:textColor">@color/emoji_key_text</item>
+    <item name="android:background">?attr/emoji_key_bg</item>
+    <item name="android:textColor">?attr/emoji_key_text</item>
     <item name="android:textSize">@dimen/label_text_size</item>
+  </style>
+  <!-- Passed to TextView.setTextAppearance -->
+  <style name="emojiGridButton">
+    <item name="android:textSize">@dimen/emoji_text_size</item>
+    <item name="android:textColor">?attr/emoji_color</item>
   </style>
 </resources>

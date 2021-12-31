@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<juloo.keyboard2.Keyboard2View xmlns:android="http://schemas.android.com/apk/res/android" android:background="@color/bg" android:hardwareAccelerated="false"/>
+<juloo.keyboard2.Keyboard2View xmlns:android="http://schemas.android.com/apk/res/android" android:hardwareAccelerated="false" android:background="?attr/colorKeyboard"/>
