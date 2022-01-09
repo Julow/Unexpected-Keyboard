@@ -48,7 +48,9 @@ class KeyValue
     FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
 
   // Language specific keys
-  public static final int FLAGS_LANGS = 0;
+  public static final int FLAG_LANG_SZLIG = (1 << 25);
+
+  public static final int FLAGS_LANGS = FLAG_LANG_SZLIG;
 
   public static final int FLAGS_NOT_HIDDEN_ACCENTS = FLAG_ACCENT_SUPERSCRIPT |
     FLAG_ACCENT_SUBSCRIPT;
@@ -99,10 +101,15 @@ class KeyValue
     keys.put(name, new KeyValue(name, symbol, c, event, flags));
   }
 
-  private static void addCharKey(char c, int event)
+  private static void addCharKey(char c, int event, int flags)
   {
     String name = String.valueOf(c);
-    addKey(name, name, c, event, 0);
+    addKey(name, name, c, event, flags);
+  }
+
+  private static void addCharKey(char c, int event)
+  {
+    addCharKey(c, event, 0);
   }
 
   private static void addModifierKey(String name, String symbol, int extra_flags)
@@ -199,6 +206,7 @@ class KeyValue
     addCharKey('#', KeyEvent.KEYCODE_POUND);
     addCharKey('(', KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
     addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
+    addCharKey('ß', EVENT_NONE, FLAG_LANG_SZLIG);
 
     addSpecialKey("config", "Conf", EVENT_CONFIG);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
