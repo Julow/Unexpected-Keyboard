@@ -36,6 +36,7 @@ final class Config
   public int key_flags_to_remove;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
+  public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
 
   public final IKeyEventHandler handler;
 
@@ -66,6 +67,7 @@ final class Config
     key_flags_to_remove = 0;
     actionLabel = null;
     actionId = 0;
+    swapEnterActionKey = false;
     handler = h;
   }
 

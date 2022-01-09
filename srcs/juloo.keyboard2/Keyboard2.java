@@ -162,12 +162,15 @@ public class Keyboard2 extends InputMethodService
     {
       _config.actionLabel = info.actionLabel.toString();
       _config.actionId = info.actionId;
+      _config.swapEnterActionKey = false;
     }
     else
     {
       int action = info.imeOptions & EditorInfo.IME_MASK_ACTION;
       _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
       _config.actionId = action;
+      _config.swapEnterActionKey =
+        (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0;
     }
   }
 

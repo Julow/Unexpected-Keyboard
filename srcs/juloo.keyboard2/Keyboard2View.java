@@ -9,6 +9,7 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -68,10 +69,18 @@ public class Keyboard2View extends View
     // Replace the action key to show the right label.
     KeyValue action_key = null; 
     if (_config.actionLabel != null)
+    {
       action_key = new KeyValue(_config.actionLabel, _config.actionLabel,
           KeyValue.CHAR_NONE, KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
-    kw = kw.replaceKeys(
-        new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_ACTION, action_key));
+    }
+    if (_config.swapEnterActionKey && action_key != null)
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent2(KeyEvent.KEYCODE_ENTER,
+            action_key, KeyValue.EVENT_ACTION,
+            KeyValue.getKeyByName("enter")));
+    else
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_ACTION, action_key));
     _keyboard = kw;
     reset();
   }

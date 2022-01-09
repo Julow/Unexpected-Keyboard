@@ -201,4 +201,30 @@ class KeyboardData
       return (k != null && k.eventCode == _eventCode) ? _replacement : k;
     }
   }
+
+  /* Replace two keys at the same time. Used for swaping keys. */
+  public static class ReplaceKeysByEvent2 implements MapKeys
+  {
+    private final int _e1;
+    private final KeyValue _r1;
+    private final int _e2;
+    private final KeyValue _r2;
+
+    public ReplaceKeysByEvent2(int e1, KeyValue r1, int e2, KeyValue r2)
+    {
+      _e1 = e1;
+      _r1 = r1;
+      _e2 = e2;
+      _r2 = r2;
+    }
+
+    public KeyValue map(KeyValue k)
+    {
+      if (k == null)
+        return null;
+      if (k.eventCode == _e1) return _r1;
+      if (k.eventCode == _e2) return _r2;
+      return k;
+    }
+  }
 }
