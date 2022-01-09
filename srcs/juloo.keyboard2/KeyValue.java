@@ -6,14 +6,14 @@ import java.util.HashMap;
 
 class KeyValue
 {
-  public static final int		EVENT_NONE = -1;
-  public static final int		EVENT_CONFIG = -2;
-  public static final int		EVENT_SWITCH_TEXT = -3;
-  public static final int		EVENT_SWITCH_NUMERIC = -4;
-  public static final int		EVENT_SWITCH_EMOJI = -5;
-  public static final int		EVENT_SWITCH_BACK_EMOJI = -6;
-  public static final int		EVENT_CHANGE_METHOD = -7;
-  public static final char	CHAR_NONE = '\0';
+  public static final int EVENT_NONE = -1;
+  public static final int EVENT_CONFIG = -2;
+  public static final int EVENT_SWITCH_TEXT = -3;
+  public static final int EVENT_SWITCH_NUMERIC = -4;
+  public static final int EVENT_SWITCH_EMOJI = -5;
+  public static final int EVENT_SWITCH_BACK_EMOJI = -6;
+  public static final int EVENT_CHANGE_METHOD = -7;
+  public static final char CHAR_NONE = '\0';
 
   // Behavior flags
   public static final int FLAG_KEEP_ON = 1;
@@ -75,7 +75,7 @@ class KeyValue
     flags = f;
   }
 
-  public static KeyValue	getKeyByName(String name)
+  public static KeyValue getKeyByName(String name)
   {
     if (name == null)
       return null;
@@ -206,7 +206,7 @@ class KeyValue
     addEventKey("left", "\uE80A", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("page_up", "⇞", KeyEvent.KEYCODE_PAGE_UP);
     addEventKey("page_down", "⇟", KeyEvent.KEYCODE_PAGE_DOWN);
-    addEventKey("home", "↖", KeyEvent.KEYCODE_HOME);
+    addEventKey("home", "↖", KeyEvent.KEYCODE_MOVE_HOME);
     addEventKey("end", "↗", KeyEvent.KEYCODE_MOVE_END);
     addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL, FLAG_PRECISE_REPEAT);
     addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_PRECISE_REPEAT);
@@ -221,8 +221,8 @@ class KeyValue
     addEventKey("f8", "F8", KeyEvent.KEYCODE_F8);
     addEventKey("f9", "F9", KeyEvent.KEYCODE_F9);
     addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
+    addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
 
-    addKey("tab",		"↹",		'\t',		KeyEvent.KEYCODE_TAB,			0);
-    addKey("space",	" ",		' ',		KeyEvent.KEYCODE_SPACE,			0);
+    addKey("space", " ", ' ', KeyEvent.KEYCODE_SPACE, 0);
   }
 }

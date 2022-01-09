@@ -6,24 +6,23 @@ import android.view.View;
 import android.widget.Button;
 
 public class EmojiKeyButton extends Button
-	implements View.OnClickListener
+  implements View.OnClickListener
 {
-	KeyValue		_key;
+  KeyValue _key;
 
-	public EmojiKeyButton(Context context, AttributeSet attrs)
-	{
-		super(context, attrs);
-		setOnClickListener(this);
-		_key = KeyValue.getKeyByName(attrs.getAttributeValue(null, "key"));
-		setText(_key.symbol);
-		if ((_key.flags & KeyValue.FLAG_KEY_FONT) != 0)
-			setTypeface(((Keyboard2)context).getSpecialKeyFont());
-	}
+  public EmojiKeyButton(Context context, AttributeSet attrs)
+  {
+    super(context, attrs);
+    setOnClickListener(this);
+    _key = KeyValue.getKeyByName(attrs.getAttributeValue(null, "key"));
+    setText(_key.symbol);
+    if ((_key.flags & KeyValue.FLAG_KEY_FONT) != 0)
+      setTypeface(Theme.getSpecialKeyFont(context));
+  }
 
-	public void			onClick(View v)
-	{
-		Keyboard2			main = (Keyboard2)getContext();
-
-		main.handleKeyUp(_key, 0);
-	}
+  public void onClick(View v)
+  {
+    Config config = Config.globalConfig();
+    config.handler.handleKeyUp(_key, 0);
+  }
 }

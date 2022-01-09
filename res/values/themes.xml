@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="keyboard">
+    <!-- The background of the keyboard -->
+    <attr name="colorKeyboard" format="color"/>
+    <!-- Background of the keys -->
+    <attr name="colorKey" format="color"/>
+    <!-- Background of the keys when pressed -->
+    <attr name="colorKeyActivated" format="color"/>
+    <!-- Label colors -->
+    <attr name="colorLabel" format="color"/>
+    <attr name="colorLabelActivated" format="color"/>
+    <attr name="colorLabelLocked" format="color"/>
+    <!-- Corner labels -->
+    <attr name="colorSubLabel" format="color"/>
+    <!-- Dimens -->
+    <attr name="keyBorderRadius" format="dimension"/>
+    <!-- Emoji panel -->
+    <attr name="emoji_button_bg" type="color" format="color"/>
+    <attr name="emoji_color" type="color" format="color"/>
+    <attr name="emoji_key_bg" type="color" format="color"/>
+    <attr name="emoji_key_text" type="color" format="color"/>
+  </declare-styleable>
+  <style name="Dark">
+    <item name="colorKeyboard">#1B1B1B</item>
+    <item name="colorKey">#303030</item>
+    <item name="colorKeyActivated">#1B1B1B</item>
+    <item name="colorLabel">#FFFFFF</item>
+    <item name="colorLabelActivated">#226b99</item>
+    <item name="colorLabelLocked">#229933</item>
+    <item name="colorSubLabel">#A0A0A0</item>
+    <item name="keyBorderRadius">5dp</item>
+    <item name="emoji_button_bg" type="color">#202020</item>
+    <item name="emoji_color" type="color">#FFFFFF</item>
+    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
+    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+  </style>
+  <style name="Light">
+    <item name="colorKeyboard">#e3e3e3</item>
+    <item name="colorKey">#cfcfcf</item>
+    <item name="colorKeyActivated">#e3e3e3</item>
+    <item name="colorLabel">#000000</item>
+    <item name="colorLabelActivated">#64afdd</item>
+    <item name="colorLabelLocked">#64dd76</item>
+    <item name="colorSubLabel">#5e5e5e</item>
+    <item name="keyBorderRadius">5dp</item>
+    <item name="emoji_button_bg" type="color">#dedede</item>
+    <item name="emoji_color" type="color">#000000</item>
+    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
+    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+  </style>
+  <style name="Black">
+    <item name="colorKeyboard">#000000</item>
+    <item name="colorKey">#000000</item>
+    <item name="colorKeyActivated">#333333</item>
+    <item name="colorLabel">#eeeeee</item>
+    <item name="colorLabelActivated">#009dff</item>
+    <item name="colorLabelLocked">#00ff26</item>
+    <item name="colorSubLabel">#bbbbbb</item>
+    <item name="keyBorderRadius">1dp</item>
+    <item name="emoji_button_bg" type="color">#000000</item>
+    <item name="emoji_color" type="color">#ffffff</item>
+    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
+    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+  </style>
+</resources>

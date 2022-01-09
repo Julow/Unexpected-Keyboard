@@ -1,25 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="pref_layout_values">
-		<item>system</item>
-		<item>azerty</item>
-		<item>qwerty</item>
-		<item>dvorak</item>
-	</string-array>
-
-	<string name="pref_accents_default">1</string>
-
-	<string-array name="pref_accents_entries">
-		<item>@string/pref_accents_e_all_installed</item>
-		<item>@string/pref_accents_e_selected</item>
-		<item>@string/pref_accents_e_all</item>
-		<item>@string/pref_accents_e_none</item>
-	</string-array>
-
-	<string-array name="pref_accents_values">
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-	</string-array>
+  <string-array name="pref_layout_values">
+    <item>system</item>
+    <item>azerty</item>
+    <item>qwerty</item>
+    <item>dvorak</item>
+  </string-array>
+  <string-array name="pref_layout_entries">
+    <item>@string/pref_layout_e_system</item>
+    <item>AZERTY</item>
+    <item>QWERTY</item>
+    <item>Dvorak</item>
+  </string-array>
+  <string-array name="pref_accents_entries">
+    <item>@string/pref_accents_e_all_installed</item>
+    <item>@string/pref_accents_e_selected</item>
+    <item>@string/pref_accents_e_all</item>
+    <item>@string/pref_accents_e_none</item>
+  </string-array>
+  <string-array name="pref_accents_values">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+  </string-array>
+  <string-array name="pref_theme_entries">
+    <item>@string/pref_theme_e_dark</item>
+    <item>@string/pref_theme_e_light</item>
+    <item>@string/pref_theme_e_black</item>
+  </string-array>
+  <string-array name="pref_theme_values">
+    <item>dark</item>
+    <item>light</item>
+    <item>black</item>
+  </string-array>
+  <string-array name="pref_swipe_dist_entries">
+    <item>@string/pref_swipe_dist_e_very_short</item>
+    <item>@string/pref_swipe_dist_e_short</item>
+    <item>@string/pref_swipe_dist_e_default</item>
+    <item>@string/pref_swipe_dist_e_far</item>
+    <item>@string/pref_swipe_dist_e_very_far</item>
+  </string-array>
+  <string-array name="pref_swipe_dist_values">
+    <item>5</item>
+    <item>7.5</item>
+    <item>15</item>
+    <item>25</item>
+    <item>35</item>
+  </string-array>
 </resources>
