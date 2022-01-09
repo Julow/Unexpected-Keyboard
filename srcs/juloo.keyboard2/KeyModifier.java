@@ -73,11 +73,7 @@ class KeyModifier
           default: return (char)KeyCharacterMap.getDeadChar('\u00B4', c);
         }
       case KeyValue.FLAG_ACCENT3:
-        switch (c)
-        {
-          case '*': return '°';
-          default: return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
       case KeyValue.FLAG_ACCENT4:
         switch (c)
         {
@@ -153,11 +149,6 @@ class KeyModifier
           case 'o': return 'ₒ';
           default: return c;
         }
-      case KeyValue.FLAG_ACCENT_SZLIG:
-        switch (c)
-        {
-          case 's': return 'ß';
-        }
       default: return c; // Can't happen
     }
   }
@@ -191,6 +182,7 @@ class KeyModifier
       case "esc": name = "insert"; break;
       case "$": name = "€"; break;
       case "#": name = "£"; break;
+      case "*": name = "°"; break;
       default: return k;
     }
     return KeyValue.getKeyByName(name);

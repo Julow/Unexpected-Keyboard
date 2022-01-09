@@ -42,11 +42,21 @@ class KeyValue
   public static final int FLAG_ACCENT_SUPERSCRIPT = (1 << 22);
   public static final int FLAG_ACCENT_SUBSCRIPT = (1 << 23);
   public static final int FLAG_ACCENT_RING = (1 << 24);
-  public static final int FLAG_ACCENT_SZLIG = (1 << 25);
 
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
-    FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING | FLAG_ACCENT_SZLIG;
+    FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
+
+  // Language specific keys
+  public static final int FLAG_LANG_SZLIG = (1 << 25);
+
+  public static final int FLAGS_LANGS = FLAG_LANG_SZLIG;
+
+  public static final int FLAGS_NOT_HIDDEN_ACCENTS = FLAG_ACCENT_SUPERSCRIPT |
+    FLAG_ACCENT_SUBSCRIPT;
+  // Keys that have to be enabled per language
+  public static final int FLAGS_HIDDEN_KEYS =
+    (FLAGS_ACCENTS & ~FLAGS_NOT_HIDDEN_ACCENTS) | FLAGS_LANGS;
 
   public final String name;
   public final String symbol;
@@ -91,10 +101,15 @@ class KeyValue
     keys.put(name, new KeyValue(name, symbol, c, event, flags));
   }
 
-  private static void addCharKey(char c, int event)
+  private static void addCharKey(char c, int event, int flags)
   {
     String name = String.valueOf(c);
-    addKey(name, name, c, event, 0);
+    addKey(name, name, c, event, flags);
+  }
+
+  private static void addCharKey(char c, int event)
+  {
+    addCharKey(c, event, 0);
   }
 
   private static void addModifierKey(String name, String symbol, int extra_flags)
@@ -120,7 +135,7 @@ class KeyValue
 
   static
   {
-    String chars = "<>&\"_°~{|^}$*:!£%µ?.§€ß";
+    String chars = "<>&\"_°~{|^}$*:!£%µ?.§€";
     for (int i = 0; i < chars.length(); i++)
       addCharKey(chars.charAt(i), EVENT_NONE);
 
@@ -134,7 +149,6 @@ class KeyValue
     addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5);
     addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6);
     addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING);
-    addModifierKey("accent_szlig", "ß", FLAG_ACCENT_SZLIG);
     addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);
     addModifierKey("subscript", "◌̺", FLAG_ACCENT_SUBSCRIPT);
     addModifierKey("fn", "Fn", FLAG_FN);
@@ -192,11 +206,7 @@ class KeyValue
     addCharKey('#', KeyEvent.KEYCODE_POUND);
     addCharKey('(', KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
     addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
-    // Can't combine here, right?
-    // Is there another way to have these reachable directly?
-    // addCharKey('ä', KeyEvent.VK_DEAD_DIAERESIS + KeyEvent.VK_A)
-    // addCharKey('ö', KeyEvent.VK_DEAD_DIAERESIS + KeyEvent.VK_O)
-    // addCharKey('ü', KeyEvent.VK_DEAD_DIAERESIS + KeyEvent.VK_U)
+    addCharKey('ß', EVENT_NONE, FLAG_LANG_SZLIG);
 
     addSpecialKey("config", "Conf", EVENT_CONFIG);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);

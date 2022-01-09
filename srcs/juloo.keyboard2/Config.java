@@ -33,7 +33,7 @@ final class Config
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
-  public int accent_flags_to_remove;
+  public int key_flags_to_remove;
 
   public final IKeyEventHandler handler;
 
@@ -61,7 +61,7 @@ final class Config
     refresh(context);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
-    accent_flags_to_remove = 0;
+    key_flags_to_remove = 0;
     handler = h;
   }
 
@@ -108,7 +108,7 @@ final class Config
   }
 
   /* Used for the accents option. */
-  public static int accentFlag_of_name(String name)
+  public static int extra_key_flag_of_name(String name)
   {
     switch (name)
     {
@@ -119,7 +119,7 @@ final class Config
       case "cedille": return KeyValue.FLAG_ACCENT5;
       case "trema": return KeyValue.FLAG_ACCENT6;
       case "ring": return KeyValue.FLAG_ACCENT_RING;
-      case "szlig": return KeyValue.FLAG_ACCENT_SZLIG;
+      case "szlig": return KeyValue.FLAG_LANG_SZLIG;
       default: throw new RuntimeException(name);
     }
   }

@@ -20,7 +20,7 @@
   <string name="pref_vibrate_summary">Enable/disable vibration on keypress</string>
   <string name="pref_vibrate_duration_title">Duration</string>
   <string name="pref_precise_repeat_title">Precise cursor movements</string>
-  <string name="pref_precise_repeat_summary">Modulate the speed of movements by changing the swipe distance</string>
+  <string name="pref_precise_repeat_summary">Modulate the speed of movements by swiping more or less</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Margin bottom</string>
   <string name="pref_key_height_title">Key height</string>
