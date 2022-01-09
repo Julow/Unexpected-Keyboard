@@ -47,6 +47,15 @@ class KeyValue
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
     FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
 
+  // Language specific keys
+  public static final int FLAGS_LANGS = 0;
+
+  public static final int FLAGS_NOT_HIDDEN_ACCENTS = FLAG_ACCENT_SUPERSCRIPT |
+    FLAG_ACCENT_SUBSCRIPT;
+  // Keys that have to be enabled per language
+  public static final int FLAGS_HIDDEN_KEYS =
+    (FLAGS_ACCENTS & ~FLAGS_NOT_HIDDEN_ACCENTS) | FLAGS_LANGS;
+
   public final String name;
   public final String symbol;
   public final char char_;

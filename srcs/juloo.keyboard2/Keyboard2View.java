@@ -61,8 +61,8 @@ public class Keyboard2View extends View
   {
     if (!_config.shouldOfferSwitchingToNextInputMethod)
       kw = kw.removeKeys(new KeyboardData.RemoveKeysByEvent(KeyValue.EVENT_CHANGE_METHOD));
-    if (_config.accent_flags_to_remove != 0)
-      kw = kw.removeKeys(new KeyboardData.RemoveKeysByFlags(_config.accent_flags_to_remove));
+    if (_config.key_flags_to_remove != 0)
+      kw = kw.removeKeys(new KeyboardData.RemoveKeysByFlags(_config.key_flags_to_remove));
     _keyboard = kw;
     reset();
   }
