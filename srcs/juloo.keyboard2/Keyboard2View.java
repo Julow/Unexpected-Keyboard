@@ -60,9 +60,18 @@ public class Keyboard2View extends View
   public void setKeyboard(KeyboardData kw)
   {
     if (!_config.shouldOfferSwitchingToNextInputMethod)
-      kw = kw.removeKeys(new KeyboardData.RemoveKeysByEvent(KeyValue.EVENT_CHANGE_METHOD));
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_CHANGE_METHOD, null));
     if (_config.key_flags_to_remove != 0)
-      kw = kw.removeKeys(new KeyboardData.RemoveKeysByFlags(_config.key_flags_to_remove));
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByFlags(_config.key_flags_to_remove, null));
+    // Replace the action key to show the right label.
+    KeyValue action_key = null; 
+    if (_config.actionLabel != null)
+      action_key = new KeyValue(_config.actionLabel, _config.actionLabel,
+          KeyValue.CHAR_NONE, KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
+    kw = kw.replaceKeys(
+        new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_ACTION, action_key));
     _keyboard = kw;
     reset();
   }

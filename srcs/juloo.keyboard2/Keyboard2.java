@@ -138,10 +138,45 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  private String actionLabel_of_imeAction(int action)
+  {
+    switch (action)
+    {
+      case EditorInfo.IME_ACTION_UNSPECIFIED:
+      case EditorInfo.IME_ACTION_NEXT: return "Next";
+      case EditorInfo.IME_ACTION_DONE: return "Done";
+      case EditorInfo.IME_ACTION_GO: return "Go";
+      case EditorInfo.IME_ACTION_PREVIOUS: return "Prev";
+      case EditorInfo.IME_ACTION_SEARCH: return "Search";
+      case EditorInfo.IME_ACTION_SEND: return "Send";
+      case EditorInfo.IME_ACTION_NONE:
+      default: return null;
+    }
+  }
+
+  private void refreshEditorInfo(EditorInfo info)
+  {
+    // First try to look at 'info.actionLabel', if it isn't set, look at
+    // 'imeOptions'.
+    if (info.actionLabel != null)
+    {
+      _config.actionLabel = info.actionLabel.toString();
+      _config.actionId = info.actionId;
+    }
+    else
+    {
+      int action = info.imeOptions & EditorInfo.IME_MASK_ACTION;
+      _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
+      _config.actionId = action;
+    }
+  }
+
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
+    // Update '_config' before calling 'KeyboardView.setKeyboard'
     refreshSubtypeImm();
+    refreshEditorInfo(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     else
@@ -198,6 +233,14 @@ public class Keyboard2 extends InputMethodService
     public void setPane_normal()
     {
       setInputView(_keyboardView);
+    }
+
+    public void performAction()
+    {
+      InputConnection conn = getCurrentInputConnection();
+      if (conn == null)
+        return;
+      conn.performEditorAction(_config.actionId);
     }
 
     public void setLayout(int res_id)

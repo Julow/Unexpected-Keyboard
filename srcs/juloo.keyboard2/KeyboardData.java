@@ -57,11 +57,11 @@ class KeyboardData
     return new KeyboardData(rows);
   }
 
-  public KeyboardData removeKeys(MapKeys f)
+  public KeyboardData replaceKeys(MapKeys f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
-      rows_.add(r.removeKeys(f));
+      rows_.add(r.replaceKeys(f));
     return new KeyboardData(rows_);
   }
 
@@ -105,11 +105,11 @@ class KeyboardData
       return new Row(keys, h, shift);
     }
 
-    public Row removeKeys(MapKeys f)
+    public Row replaceKeys(MapKeys f)
     {
       ArrayList<Key> keys_ = new ArrayList<Key>();
       for (Key k : keys)
-        keys_.add(k.removeKeys(f));
+        keys_.add(k.replaceKeys(f));
       return new Row(keys_, height, shift);
     }
   }
@@ -157,7 +157,7 @@ class KeyboardData
       return new Key(k0, k1, k2, k3, k4, width, shift);
     }
 
-    public Key removeKeys(MapKeys f)
+    public Key replaceKeys(MapKeys f)
     {
       return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift);
     }
@@ -168,27 +168,37 @@ class KeyboardData
     public abstract KeyValue map(KeyValue k);
   }
 
-  public static class RemoveKeysByFlags implements MapKeys
+  public static class ReplaceKeysByFlags implements MapKeys
   {
     private final int _flags;
+    private final KeyValue _replacement;
 
-    public RemoveKeysByFlags(int flags) { _flags = flags; }
+    public ReplaceKeysByFlags(int flags, KeyValue r)
+    {
+      _flags = flags;
+      _replacement = r;
+    }
 
     public KeyValue map(KeyValue k)
     {
-      return (k == null || (k.flags & _flags) != 0) ? null : k;
+      return (k != null && (k.flags & _flags) != 0) ? _replacement : k;
     }
   }
 
-  public static class RemoveKeysByEvent implements MapKeys
+  public static class ReplaceKeysByEvent implements MapKeys
   {
     private final int _eventCode;
+    private final KeyValue _replacement;
 
-    public RemoveKeysByEvent(int ev) { _eventCode = ev; }
+    public ReplaceKeysByEvent(int ev, KeyValue r)
+    {
+      _eventCode = ev;
+      _replacement = r;
+    }
 
     public KeyValue map(KeyValue k)
     {
-      return (k == null || k.eventCode == _eventCode) ? null : k;
+      return (k != null && k.eventCode == _eventCode) ? _replacement : k;
     }
   }
 }

@@ -34,6 +34,8 @@ final class Config
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
   public int key_flags_to_remove;
+  public String actionLabel; // Might be 'null'
+  public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
 
   public final IKeyEventHandler handler;
 
@@ -62,6 +64,8 @@ final class Config
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
     key_flags_to_remove = 0;
+    actionLabel = null;
+    actionId = 0;
     handler = h;
   }
 
