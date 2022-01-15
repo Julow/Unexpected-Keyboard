@@ -39,3 +39,25 @@ make installd
 
 The debug version of the application won't be removed, both versions will stay
 installed at the same time.
+
+## Debugging the application: INSTALL_FAILED_UPDATE_INCOMPATIBLE
+
+`make installd` can fail with the following error message:
+
+```
+adb: failed to install _build/juloo.keyboard2.debug.apk: Failure [INSTALL_FAILED_UPDATE_INCOMPATIBLE: Package juloo.keyboard2.debug signatures do not match previously installed version; ignoring!]
+make: *** [Makefile:20: installd] Error 1
+```
+
+The application can't be "updated" because the temporary certificate has been
+lost. The solution is to uninstall and install again:
+
+```sh
+adb uninstall juloo.keyboard2.debug
+```
+
+Then again:
+
+```sh
+make installd
+```
