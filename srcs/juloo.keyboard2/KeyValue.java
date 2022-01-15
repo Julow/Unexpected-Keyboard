@@ -43,10 +43,13 @@ class KeyValue
   public static final int FLAG_ACCENT_SUPERSCRIPT = (1 << 22);
   public static final int FLAG_ACCENT_SUBSCRIPT = (1 << 23);
   public static final int FLAG_ACCENT_RING = (1 << 24);
+  public static final int FLAG_ACCENT_CARON = (1 << 26);
+  public static final int FLAG_ACCENT_MACRON = (1 << 27);
 
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
-    FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
+    FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |
+    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
 
   // Language specific keys
   public static final int FLAG_LANG_SZLIG = (1 << 25);
@@ -143,11 +146,13 @@ class KeyValue
     addModifierKey("shift", "⇧", FLAG_LOCK | FLAG_SHIFT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL);
     addModifierKey("alt", "Alt", FLAG_ALT);
-    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1);
     addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2);
-    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3);
-    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4);
+    addModifierKey("accent_caron", "◌̌", FLAG_ACCENT_CARON);
     addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5);
+    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3);
+    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1);
+    addModifierKey("accent_macron", "◌̄", FLAG_ACCENT_MACRON);
+    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4);
     addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6);
     addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING);
     addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);

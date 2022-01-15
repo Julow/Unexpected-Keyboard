@@ -98,10 +98,20 @@ class KeyModifier
           case '-': return '÷';
           default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
         }
+      case KeyValue.FLAG_ACCENT_CARON:
+        switch (c)
+        {
+          default: return (char)KeyCharacterMap.getDeadChar('\u02C7', c);
+        }
       case KeyValue.FLAG_ACCENT_RING:
         switch (c)
         {
           default: return (char)KeyCharacterMap.getDeadChar('\u02DA', c);
+        }
+      case KeyValue.FLAG_ACCENT_MACRON:
+        switch (c)
+        {
+          default: return (char)KeyCharacterMap.getDeadChar('\u00AF', c);
         }
       case KeyValue.FLAG_ACCENT_SUPERSCRIPT:
         switch (c)

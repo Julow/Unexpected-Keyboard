@@ -78,7 +78,7 @@ final class Config
   {
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     DisplayMetrics dm = context.getResources().getDisplayMetrics();
-    layout = layoutId_of_string(prefs.getString("layout", "system")); 
+    layout = layoutId_of_string(prefs.getString("layout", "system"));
     swipe_dist_dp = Float.valueOf(prefs.getString("swipe_dist", "15"));
     swipe_dist_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, swipe_dist_dp, dm);
     vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
@@ -91,7 +91,7 @@ final class Config
     keyHeight = getDipPref(dm, prefs, "key_height", keyHeight) + keyVerticalInterval;
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
-    characterSize = prefs.getFloat("character_size", characterSize); 
+    characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = themeId_of_string(prefs.getString("theme", ""));
   }
@@ -120,14 +120,16 @@ final class Config
   {
     switch (name)
     {
-      case "grave": return KeyValue.FLAG_ACCENT1;
       case "aigu": return KeyValue.FLAG_ACCENT2;
-      case "circonflexe": return KeyValue.FLAG_ACCENT3;
-      case "tilde": return KeyValue.FLAG_ACCENT4;
+      case "caron": return KeyValue.FLAG_ACCENT_CARON;
       case "cedille": return KeyValue.FLAG_ACCENT5;
-      case "trema": return KeyValue.FLAG_ACCENT6;
+      case "circonflexe": return KeyValue.FLAG_ACCENT3;
+      case "grave": return KeyValue.FLAG_ACCENT1;
+      case "macron": return KeyValue.FLAG_ACCENT_MACRON;
       case "ring": return KeyValue.FLAG_ACCENT_RING;
       case "szlig": return KeyValue.FLAG_LANG_SZLIG;
+      case "tilde": return KeyValue.FLAG_ACCENT4;
+      case "trema": return KeyValue.FLAG_ACCENT6;
       default: throw new RuntimeException(name);
     }
   }
