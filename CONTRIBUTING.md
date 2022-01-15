@@ -40,6 +40,9 @@ make installd
 The debug version of the application won't be removed, both versions will stay
 installed at the same time.
 
+The application must be enabled in the settings:
+System Settings > System > Languages & Input > Virtual keyboard > Manage keyboards.
+
 ## Debugging the application: INSTALL_FAILED_UPDATE_INCOMPATIBLE
 
 `make installd` can fail with the following error message:
@@ -50,14 +53,10 @@ make: *** [Makefile:20: installd] Error 1
 ```
 
 The application can't be "updated" because the temporary certificate has been
-lost. The solution is to uninstall and install again:
+lost. The solution is to uninstall and install again.
+The application must be enabled again in the settings.
 
 ```sh
 adb uninstall juloo.keyboard2.debug
-```
-
-Then again:
-
-```sh
 make installd
 ```
