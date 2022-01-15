@@ -4,11 +4,13 @@
     <item>system</item>
     <item>azerty</item>
     <item>qwerty</item>
+    <item>qwertz</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>@string/pref_layout_e_system</item>
     <item>AZERTY</item>
     <item>QWERTY</item>
+    <item>QWERTZ</item>
   </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>

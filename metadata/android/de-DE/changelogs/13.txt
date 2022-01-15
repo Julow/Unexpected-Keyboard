@@ -1,0 +1,3 @@
+- Unterstützung für Schwedisch hinzugefügt
+- Repariert: Tastaturkürzel funktionierten in einigen Anwendungen nicht
+- Repariert: ein Grafikfehler und ein paar kleine Anpassungen
