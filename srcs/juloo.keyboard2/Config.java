@@ -34,6 +34,9 @@ final class Config
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
   public int key_flags_to_remove;
+  public String actionLabel; // Might be 'null'
+  public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
+  public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
 
   public final IKeyEventHandler handler;
 
@@ -62,6 +65,9 @@ final class Config
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
     key_flags_to_remove = 0;
+    actionLabel = null;
+    actionId = 0;
+    swapEnterActionKey = false;
     handler = h;
   }
 
@@ -80,7 +86,9 @@ final class Config
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
-    keyHeight = getDipPref(dm, prefs, "key_height", keyHeight);
+    // Add keyVerticalInterval to keyHeight because the space between the keys
+    // is removed from the keys during rendering
+    keyHeight = getDipPref(dm, prefs, "key_height", keyHeight) + keyVerticalInterval;
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize); 

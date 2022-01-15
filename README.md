@@ -14,3 +14,8 @@ This can be found in the System Settings > System > Languages & Input > Virtual 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/juloo.keyboard2/)
+
+## Contributing
+
+For instructions on building the application, see
+[Contributing](Contributing.md).
