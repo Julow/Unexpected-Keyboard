@@ -349,7 +349,7 @@ public class Keyboard2View extends View
     int width = dm.widthPixels;
     int height =
       (int)(_config.keyHeight * _keyboard.keysHeight
-          + _keyboard.rows.size() * _config.keyVerticalInterval
+          + _keyboard.rows.size()
           + _config.marginTop + _config.marginBottom);
     setMeasuredDimension(width, height);
     _keyWidth = (width - (_config.horizontalMargin * 2)) / _keyboard.keysWidth;
@@ -358,15 +358,15 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
-    float y = _config.marginTop;
+    float y = _config.marginTop + _config.keyVerticalInterval / 2;
     for (KeyboardData.Row row : _keyboard.rows)
     {
       y += row.shift * _config.keyHeight;
-      float x = _config.horizontalMargin;
-      float keyH = row.height * _config.keyHeight;
+      float x = _config.horizontalMargin + _config.keyHorizontalInterval / 2;
+      float keyH = row.height * _config.keyHeight - _config.keyVerticalInterval;
       for (KeyboardData.Key k : row.keys)
       {
-        x += k.shift * _keyWidth + _config.keyHorizontalInterval;
+        x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
         KeyDown keyDown = getKeyDown(k);
         _tmpRect.set(x, y, x + keyW, y + keyH);
@@ -383,9 +383,9 @@ public class Keyboard2View extends View
           drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding, true, true, keyDown);
         if (k.key4 != null)
           drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding, true, false, keyDown);
-        x += keyW;
+        x += _keyWidth * k.width;
       }
-      y += keyH + _config.keyVerticalInterval;
+      y += row.height * _config.keyHeight;
     }
   }
 
