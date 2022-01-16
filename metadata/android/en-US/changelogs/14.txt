@@ -1,0 +1,8 @@
+New languages: German
+
+New keyboard layouts: QWERTZ
+
+Added themes: White, Dark and OLED Black
+
+Added the Action key near the Enter key, required for some app.
+Improved some options and fixed a few bugs.
