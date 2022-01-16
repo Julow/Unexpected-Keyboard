@@ -1,6 +1,0 @@
-Alle benötigten Buchstaben und Zeichen sind von einer einzigen Ansicht aus erreichbar. Strg, Alt, Escape und viele weitere stehen ebenfalls zur Verfügung.
-
-Auf den Tasten sind jeweils mehrere Zeichen abgebildet. Das Zeichen in der Mitte erhält man durch Antippen, die Zeichen in den Ecken durch Wischen in die entsprechende Richtung.
-
-Wie jede andere Tastatur-App muss auch diese erst in den Systemeinstellungen aktiviert werden, damit sie verwendet werden kann. 
-Diese Einstellungen finden sich unter Einstellungen > System > Sprachen & Eingabe > Bildschirmtastatur > Tastaturen verwalten.

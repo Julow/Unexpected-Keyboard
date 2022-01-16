@@ -2,14 +2,26 @@
 
 A lightweight virtual keyboard for developers.
 
-![Unexpected Keyboard](play_store/capture1.png)
+![Unexpected Keyboard](metadata/android/en-US/images/featureGraphic.png)
 
-All the characters you might need are available on a single screen, as well as control, alt, escape and many others.
+This app is a virtual keyboard for Android. The main features are easy typing of every ASCII character using the swipe gesture, dead keys for accents and modifier keys and the presence of special keys (tab, esc, arrows, etc..).
 
-Several characters are displayed on each key. Get the one in the middle with a press and the ones in the corners by sliding your finger.
+The keyboard shows up to 4 extra characters in the corners of each key. These extra characters are hit by swiping the finger on the key.
 
-Like any other keyboard app, you will need to activate it in the system settings to be able to use it.
-This can be found in the System Settings > System > Languages & Input > Virtual keyboard > Manage keyboards.
+Highlight of some of the features:
+
+- Every character and special keys that are also available on a PC keyboard. This is perfect for using applications like Termux.
+
+- This includes Tab, Esc, the arrows and function keys, but also Ctrl and Alt !
+
+- Accented keys are accessible using dead keys. First activate the accent, then type the accented letter.
+
+- Very light and fast. Use 500x times less space than Google's keyboard and 15x times less than the default keyboard. No ad, no tracking.
+
+- Multiple layouts: QWERTY, QWERTZ, AZERTY. Themes: White, Dark, OLED Black. And many other options.
+
+Like any other virtual keyboards, it must be enabled in the system settings. Open the System Settings and go to:
+System > Languages & Input > Virtual keyboard > Manage keyboards.
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"

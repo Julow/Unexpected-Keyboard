@@ -1,3 +1,0 @@
-- Unterstützung für Spanisch und Italienisch
-- Verbesserte Platzierung einiger Zeichen (insbesondere Akzente) und weitere hinzugefügt (französische Anführungszeichen, Bindestrich und Gedankenstrich).
-- Einige Fehler behoben (Absturz unter alten Android-Versionen und ein Grafikfehler beim Drehen)
