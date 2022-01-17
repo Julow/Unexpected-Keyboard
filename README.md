@@ -30,4 +30,4 @@ System > Languages & Input > Virtual keyboard > Manage keyboards.
 ## Contributing
 
 For instructions on building the application, see
-[Contributing](Contributing.md).
+[Contributing](CONTRIBUTING.md).
