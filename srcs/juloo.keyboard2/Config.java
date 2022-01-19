@@ -110,6 +110,7 @@ final class Config
     {
       case "azerty": return R.xml.azerty;
       case "qwerty": return R.xml.qwerty;
+      case "qwerty_lv": return R.xml.qwerty_lv;
       case "qwertz": return R.xml.qwertz;
       case "system": default: return -1;
     }
