@@ -9,6 +9,7 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -60,9 +61,26 @@ public class Keyboard2View extends View
   public void setKeyboard(KeyboardData kw)
   {
     if (!_config.shouldOfferSwitchingToNextInputMethod)
-      kw = kw.removeKeys(new KeyboardData.RemoveKeysByEvent(KeyValue.EVENT_CHANGE_METHOD));
-    if (_config.accent_flags_to_remove != 0)
-      kw = kw.removeKeys(new KeyboardData.RemoveKeysByFlags(_config.accent_flags_to_remove));
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_CHANGE_METHOD, null));
+    if (_config.key_flags_to_remove != 0)
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByFlags(_config.key_flags_to_remove, null));
+    // Replace the action key to show the right label.
+    KeyValue action_key = null; 
+    if (_config.actionLabel != null)
+    {
+      action_key = new KeyValue(_config.actionLabel, _config.actionLabel,
+          KeyValue.CHAR_NONE, KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
+    }
+    if (_config.swapEnterActionKey && action_key != null)
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent2(KeyEvent.KEYCODE_ENTER,
+            action_key, KeyValue.EVENT_ACTION,
+            KeyValue.getKeyByName("enter")));
+    else
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_ACTION, action_key));
     _keyboard = kw;
     reset();
   }
@@ -331,7 +349,7 @@ public class Keyboard2View extends View
     int width = dm.widthPixels;
     int height =
       (int)(_config.keyHeight * _keyboard.keysHeight
-          + _keyboard.rows.size() * _config.keyVerticalInterval
+          + _keyboard.rows.size()
           + _config.marginTop + _config.marginBottom);
     setMeasuredDimension(width, height);
     _keyWidth = (width - (_config.horizontalMargin * 2)) / _keyboard.keysWidth;
@@ -340,15 +358,15 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
-    float y = _config.marginTop;
+    float y = _config.marginTop + _config.keyVerticalInterval / 2;
     for (KeyboardData.Row row : _keyboard.rows)
     {
       y += row.shift * _config.keyHeight;
-      float x = _config.horizontalMargin;
-      float keyH = row.height * _config.keyHeight;
+      float x = _config.horizontalMargin + _config.keyHorizontalInterval / 2;
+      float keyH = row.height * _config.keyHeight - _config.keyVerticalInterval;
       for (KeyboardData.Key k : row.keys)
       {
-        x += k.shift * _keyWidth + _config.keyHorizontalInterval;
+        x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
         KeyDown keyDown = getKeyDown(k);
         _tmpRect.set(x, y, x + keyW, y + keyH);
@@ -365,9 +383,9 @@ public class Keyboard2View extends View
           drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding, true, true, keyDown);
         if (k.key4 != null)
           drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding, true, false, keyDown);
-        x += keyW;
+        x += _keyWidth * k.width;
       }
-      y += keyH + _config.keyVerticalInterval;
+      y += row.height * _config.keyHeight;
     }
   }
 

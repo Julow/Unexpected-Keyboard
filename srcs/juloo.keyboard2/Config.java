@@ -33,7 +33,10 @@ final class Config
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
-  public int accent_flags_to_remove;
+  public int key_flags_to_remove;
+  public String actionLabel; // Might be 'null'
+  public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
+  public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
 
   public final IKeyEventHandler handler;
 
@@ -61,7 +64,10 @@ final class Config
     refresh(context);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
-    accent_flags_to_remove = 0;
+    key_flags_to_remove = 0;
+    actionLabel = null;
+    actionId = 0;
+    swapEnterActionKey = false;
     handler = h;
   }
 
@@ -80,7 +86,9 @@ final class Config
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
-    keyHeight = getDipPref(dm, prefs, "key_height", keyHeight);
+    // Add keyVerticalInterval to keyHeight because the space between the keys
+    // is removed from the keys during rendering
+    keyHeight = getDipPref(dm, prefs, "key_height", keyHeight) + keyVerticalInterval;
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize); 
@@ -102,13 +110,14 @@ final class Config
     {
       case "azerty": return R.xml.azerty;
       case "qwerty": return R.xml.qwerty;
+      case "qwertz": return R.xml.qwertz;
       case "dvorak": return R.xml.dvorak;
       case "system": default: return -1;
     }
   }
 
   /* Used for the accents option. */
-  public static int accentFlag_of_name(String name)
+  public static int extra_key_flag_of_name(String name)
   {
     switch (name)
     {
@@ -119,6 +128,7 @@ final class Config
       case "cedille": return KeyValue.FLAG_ACCENT5;
       case "trema": return KeyValue.FLAG_ACCENT6;
       case "ring": return KeyValue.FLAG_ACCENT_RING;
+      case "szlig": return KeyValue.FLAG_LANG_SZLIG;
       default: throw new RuntimeException(name);
     }
   }

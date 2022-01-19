@@ -4,12 +4,14 @@
     <item>system</item>
     <item>azerty</item>
     <item>qwerty</item>
+    <item>qwertz</item>
     <item>dvorak</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>@string/pref_layout_e_system</item>
     <item>AZERTY</item>
     <item>QWERTY</item>
+    <item>QWERTZ</item>
     <item>Dvorak</item>
   </string-array>
   <string-array name="pref_accents_entries">

@@ -71,7 +71,7 @@ public class Keyboard2 extends InputMethodService
 
   private void refreshSubtypeLayout(InputMethodSubtype subtype)
   {
-    int l = _config.layout;;
+    int l = _config.layout;
     if (l == -1)
     {
       String s = subtype.getExtraValueOf("default_layout");
@@ -81,33 +81,32 @@ public class Keyboard2 extends InputMethodService
     _currentTextLayout = l;
   }
 
-  private int accents_of_subtype(InputMethodSubtype subtype)
+  private int extra_keys_of_subtype(InputMethodSubtype subtype)
   {
-    String accents_option = subtype.getExtraValueOf("accents");
+    String extra_keys = subtype.getExtraValueOf("extra_keys");
     int flags = 0;
-    if (accents_option != null)
-      for (String acc : accents_option.split("\\|"))
-        flags |= Config.accentFlag_of_name(acc);
+    if (extra_keys != null)
+      for (String acc : extra_keys.split("\\|"))
+        flags |= Config.extra_key_flag_of_name(acc);
     return flags;
   }
 
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
-    final int DONT_REMOVE = KeyValue.FLAG_ACCENT_SUPERSCRIPT | KeyValue.FLAG_ACCENT_SUBSCRIPT;
-    int to_keep = DONT_REMOVE;
+    int to_keep = 0;
     switch (_config.accents)
     {
       case 1:
-        to_keep |= accents_of_subtype(subtype);
+        to_keep |= extra_keys_of_subtype(subtype);
         for (InputMethodSubtype s : getEnabledSubtypes(imm))
-          to_keep |= accents_of_subtype(s);
+          to_keep |= extra_keys_of_subtype(s);
         break;
-      case 2: to_keep |= accents_of_subtype(subtype); break;
-      case 3: to_keep = KeyValue.FLAGS_ACCENTS; break;
+      case 2: to_keep |= extra_keys_of_subtype(subtype); break;
+      case 3: to_keep = KeyValue.FLAGS_HIDDEN_KEYS; break;
       case 4: break;
       default: throw new IllegalArgumentException();
     }
-    _config.accent_flags_to_remove = ~to_keep & KeyValue.FLAGS_ACCENTS;
+    _config.key_flags_to_remove = ~to_keep & KeyValue.FLAGS_HIDDEN_KEYS;
   }
 
   private void refreshSubtypeLegacyFallback()
@@ -115,8 +114,8 @@ public class Keyboard2 extends InputMethodService
     // Fallback for the accents option: Only respect the "None" case
     switch (_config.accents)
     {
-      case 1: case 2: case 3: _config.accent_flags_to_remove = 0; break;
-      case 4: _config.accent_flags_to_remove = KeyValue.FLAGS_ACCENTS; break;
+      case 1: case 2: case 3: _config.key_flags_to_remove = 0; break;
+      case 4: _config.key_flags_to_remove = KeyValue.FLAGS_HIDDEN_KEYS; break;
     }
     // Fallback for the layout option: Use qwerty in the "system settings" case
     _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;
@@ -139,10 +138,48 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  private String actionLabel_of_imeAction(int action)
+  {
+    switch (action)
+    {
+      case EditorInfo.IME_ACTION_UNSPECIFIED:
+      case EditorInfo.IME_ACTION_NEXT: return "Next";
+      case EditorInfo.IME_ACTION_DONE: return "Done";
+      case EditorInfo.IME_ACTION_GO: return "Go";
+      case EditorInfo.IME_ACTION_PREVIOUS: return "Prev";
+      case EditorInfo.IME_ACTION_SEARCH: return "Search";
+      case EditorInfo.IME_ACTION_SEND: return "Send";
+      case EditorInfo.IME_ACTION_NONE:
+      default: return null;
+    }
+  }
+
+  private void refreshEditorInfo(EditorInfo info)
+  {
+    // First try to look at 'info.actionLabel', if it isn't set, look at
+    // 'imeOptions'.
+    if (info.actionLabel != null)
+    {
+      _config.actionLabel = info.actionLabel.toString();
+      _config.actionId = info.actionId;
+      _config.swapEnterActionKey = false;
+    }
+    else
+    {
+      int action = info.imeOptions & EditorInfo.IME_MASK_ACTION;
+      _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
+      _config.actionId = action;
+      _config.swapEnterActionKey =
+        (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0;
+    }
+  }
+
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
+    // Update '_config' before calling 'KeyboardView.setKeyboard'
     refreshSubtypeImm();
+    refreshEditorInfo(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     else
@@ -199,6 +236,14 @@ public class Keyboard2 extends InputMethodService
     public void setPane_normal()
     {
       setInputView(_keyboardView);
+    }
+
+    public void performAction()
+    {
+      InputConnection conn = getCurrentInputConnection();
+      if (conn == null)
+        return;
+      conn.performEditorAction(_config.actionId);
     }
 
     public void setLayout(int res_id)

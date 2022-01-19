@@ -13,6 +13,7 @@ class KeyValue
   public static final int EVENT_SWITCH_EMOJI = -5;
   public static final int EVENT_SWITCH_BACK_EMOJI = -6;
   public static final int EVENT_CHANGE_METHOD = -7;
+  public static final int EVENT_ACTION = -8;
   public static final char CHAR_NONE = '\0';
 
   // Behavior flags
@@ -46,6 +47,17 @@ class KeyValue
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
     FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
+
+  // Language specific keys
+  public static final int FLAG_LANG_SZLIG = (1 << 25);
+
+  public static final int FLAGS_LANGS = FLAG_LANG_SZLIG;
+
+  public static final int FLAGS_NOT_HIDDEN_ACCENTS = FLAG_ACCENT_SUPERSCRIPT |
+    FLAG_ACCENT_SUBSCRIPT;
+  // Keys that have to be enabled per language
+  public static final int FLAGS_HIDDEN_KEYS =
+    (FLAGS_ACCENTS & ~FLAGS_NOT_HIDDEN_ACCENTS) | FLAGS_LANGS;
 
   public final String name;
   public final String symbol;
@@ -90,10 +102,15 @@ class KeyValue
     keys.put(name, new KeyValue(name, symbol, c, event, flags));
   }
 
-  private static void addCharKey(char c, int event)
+  private static void addCharKey(char c, int event, int flags)
   {
     String name = String.valueOf(c);
-    addKey(name, name, c, event, 0);
+    addKey(name, name, c, event, flags);
+  }
+
+  private static void addCharKey(char c, int event)
+  {
+    addCharKey(c, event, 0);
   }
 
   private static void addModifierKey(String name, String symbol, int extra_flags)
@@ -190,6 +207,7 @@ class KeyValue
     addCharKey('#', KeyEvent.KEYCODE_POUND);
     addCharKey('(', KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
     addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
+    addCharKey('ß', EVENT_NONE, FLAG_LANG_SZLIG);
 
     addSpecialKey("config", "Conf", EVENT_CONFIG);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
@@ -197,6 +215,7 @@ class KeyValue
     addSpecialKey("switch_emoji", ":)", EVENT_SWITCH_EMOJI);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "⊞", EVENT_CHANGE_METHOD);
+    addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE);
     addEventKey("enter", "\uE800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
