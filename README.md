@@ -21,7 +21,7 @@ Highlight of some of the features:
 - Multiple layouts: QWERTY, QWERTZ, AZERTY. Themes: White, Dark, OLED Black. And many other options.
 
 Like any other virtual keyboards, it must be enabled in the system settings. Open the System Settings and go to:
-System > Languages & Input > Virtual keyboard > Manage keyboards.
+System > Languages & input > On-screen keyboard > Manage on-screen keyboards.
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"

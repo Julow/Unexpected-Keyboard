@@ -15,4 +15,4 @@ Quelques fonctionnalités:
 - Plusieurs configurations: QWERTY, QWERTZ, AZERTY. Thèmes: Clair, Sombre, Noir OLED. Et beaucoup d'autres options.
 
 Comme tous les claviers virtuels, il doit être activé dans les paramètres systèmes. Ouvrez les paramètres et allez dans:
-Système > Langue & Saisie > Clavier virtuel > Gérer.
+Système > Langue & saisie > Clavier à l'écran > Gérer les claviers à l'écran.

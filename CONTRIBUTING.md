@@ -25,14 +25,11 @@ If the build succeed, the debug apk is located in
 
 ## Debugging on your phone
 
-You need to have *USB debugging* enabled on your phone, see [Android's doc](https://developer.android.com/studio/debug/dev-options#enable).
+First [Enable adb debugging on your device](https://developer.android.com/studio/command-line/adb#Enabling).
+Then connect your phone to your computer using an USB cable or wireless
+debugging.
 
-It is also possible to enable *ADB over network* in the settings and connect
-with `adb connect <ip of the phone>`. Make sure to be connected to a local
-network that you trust.
-
-Install the application with:
-
+And finally, install the application with:
 ```sh
 make installd
 ```
@@ -41,7 +38,7 @@ The debug version of the application won't be removed, both versions will stay
 installed at the same time.
 
 The application must be enabled in the settings:
-System Settings > System > Languages & Input > Virtual keyboard > Manage keyboards.
+System > Languages & input > On-screen keyboard > Manage on-screen keyboards.
 
 ## Debugging the application: INSTALL_FAILED_UPDATE_INCOMPATIBLE
 
