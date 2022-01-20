@@ -20,6 +20,7 @@ import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.util.Log;
 import java.util.HashMap;
 import java.util.List;
@@ -186,6 +187,15 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     _keyboardView.reset(); // Layout might need to change due to rotation
     setInputView(_keyboardView);
+  }
+
+  @Override
+  public void setInputView(View v)
+  {
+    ViewParent parent = v.getParent();
+    if (parent != null && parent instanceof ViewGroup)
+      ((ViewGroup)parent).removeView(v);
+    super.setInputView(v);
   }
 
   @Override
