@@ -55,9 +55,8 @@ $(DEBUG_KEYSTORE):
 		-keyalg rsa -storepass $(DEBUG_PASSWD) -validity 10000
 
 _build/%.debug.apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE)
-	jarsigner -keystore $(DEBUG_KEYSTORE) \
-		-storepass $(DEBUG_PASSWD) -keypass $(DEBUG_PASSWD) \
-		-signedjar "$@" "$<" debug
+	apksigner sign --in "$<" --out "$@" \
+		--ks $(DEBUG_KEYSTORE) --ks-key-alias debug --ks-pass "pass:$(DEBUG_PASSWD)"
 
 # Debug apk
 
