@@ -209,10 +209,10 @@ class KeyValue
     addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
     addCharKey('ß', EVENT_NONE, FLAG_LANG_SZLIG);
 
-    addSpecialKey("config", "Conf", EVENT_CONFIG);
+    addSpecialKey("config", "⛭", EVENT_CONFIG);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
     addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC);
-    addSpecialKey("switch_emoji", ":)", EVENT_SWITCH_EMOJI);
+    addSpecialKey("switch_emoji", "☻", EVENT_SWITCH_EMOJI);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "⊞", EVENT_CHANGE_METHOD);
     addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
