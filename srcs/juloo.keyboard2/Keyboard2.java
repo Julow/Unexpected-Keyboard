@@ -235,7 +235,9 @@ public class Keyboard2 extends InputMethodService
     public void switchToNextInputMethod()
     {
       InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-      imm.switchToNextInputMethod(getConnectionToken(), false);
+      imm.showInputMethodPicker();
+      // deprecated in version 28: imm.switchToNextInputMethod(getConnectionToken(), false);
+      // added in version 28: switchToNextInputMethod(false);
     }
 
     public void setPane_emoji()
