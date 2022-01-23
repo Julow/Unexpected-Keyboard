@@ -141,18 +141,20 @@ public class Keyboard2 extends InputMethodService
 
   private String actionLabel_of_imeAction(int action)
   {
+    int res;
     switch (action)
     {
       case EditorInfo.IME_ACTION_UNSPECIFIED:
-      case EditorInfo.IME_ACTION_NEXT: return "Next";
-      case EditorInfo.IME_ACTION_DONE: return "Done";
-      case EditorInfo.IME_ACTION_GO: return "Go";
-      case EditorInfo.IME_ACTION_PREVIOUS: return "Prev";
-      case EditorInfo.IME_ACTION_SEARCH: return "Search";
-      case EditorInfo.IME_ACTION_SEND: return "Send";
+      case EditorInfo.IME_ACTION_NEXT: res = R.string.key_action_next; break;
+      case EditorInfo.IME_ACTION_DONE: res = R.string.key_action_done; break;
+      case EditorInfo.IME_ACTION_GO: res = R.string.key_action_go; break;
+      case EditorInfo.IME_ACTION_PREVIOUS: res = R.string.key_action_prev; break;
+      case EditorInfo.IME_ACTION_SEARCH: res = R.string.key_action_search; break;
+      case EditorInfo.IME_ACTION_SEND: res = R.string.key_action_send; break;
       case EditorInfo.IME_ACTION_NONE:
       default: return null;
     }
+    return getResources().getString(res);
   }
 
   private void refreshEditorInfo(EditorInfo info)

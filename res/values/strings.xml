@@ -36,4 +36,10 @@
   <string name="pref_swipe_dist_e_default">Normal</string>
   <string name="pref_swipe_dist_e_far">Far</string>
   <string name="pref_swipe_dist_e_very_far">Very far</string>
+  <string name="key_action_next">Next</string>
+  <string name="key_action_done">Done</string>
+  <string name="key_action_go">Go</string>
+  <string name="key_action_prev">Prev</string>
+  <string name="key_action_search">Search</string>
+  <string name="key_action_send">Send</string>
 </resources>
