@@ -7,4 +7,5 @@
   <subtype android:label="%s" android:languageTag="it" android:imeSubtypeLocale="it_IT" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,extra_keys=grave|aigu"/>
   <subtype android:label="%s" android:languageTag="lv" android:imeSubtypeLocale="lv_LV" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_lv,extra_keys=caron|cedille|macron"/>
   <subtype android:label="%s" android:languageTag="sv" android:imeSubtypeLocale="sv_SE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,extra_keys=aigu|trema|ring"/>
+  <subtype android:label="%s" android:languageTag="bg" android:imeSubtypeLocale="bg_BG" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=bgph1"/>
 </input-method>
