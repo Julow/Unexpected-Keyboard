@@ -193,6 +193,7 @@ class KeyModifier
       case "$": name = "€"; break;
       case "#": name = "£"; break;
       case "*": name = "°"; break;
+      case "tab": name = "\\t"; break;
       default: return k;
     }
     return KeyValue.getKeyByName(name);

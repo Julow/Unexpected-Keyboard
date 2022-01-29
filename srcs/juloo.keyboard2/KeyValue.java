@@ -248,6 +248,7 @@ class KeyValue
     addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
     addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
 
+    addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
     addKey("space", " ", ' ', KeyEvent.KEYCODE_SPACE, 0);
   }
 }
