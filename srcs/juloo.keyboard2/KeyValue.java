@@ -97,7 +97,8 @@ class KeyValue
     KeyValue kv = KeyValue.keys.get(name);
     if (kv != null)
       return kv;
-    return new KeyValue(name, name, CHAR_NONE, EVENT_NONE, 0);
+    char c = (name.length() == 1) ? name.charAt(0) : CHAR_NONE;
+    return new KeyValue(name, name, c, EVENT_NONE, 0);
   }
 
   private static void addKey(String name, String symbol, char c, int event, int flags)
