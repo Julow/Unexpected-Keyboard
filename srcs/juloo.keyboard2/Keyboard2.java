@@ -144,13 +144,13 @@ public class Keyboard2 extends InputMethodService
     int res;
     switch (action)
     {
-      case EditorInfo.IME_ACTION_UNSPECIFIED:
       case EditorInfo.IME_ACTION_NEXT: res = R.string.key_action_next; break;
       case EditorInfo.IME_ACTION_DONE: res = R.string.key_action_done; break;
       case EditorInfo.IME_ACTION_GO: res = R.string.key_action_go; break;
       case EditorInfo.IME_ACTION_PREVIOUS: res = R.string.key_action_prev; break;
       case EditorInfo.IME_ACTION_SEARCH: res = R.string.key_action_search; break;
       case EditorInfo.IME_ACTION_SEND: res = R.string.key_action_send; break;
+      case EditorInfo.IME_ACTION_UNSPECIFIED:
       case EditorInfo.IME_ACTION_NONE:
       default: return null;
     }
@@ -173,7 +173,7 @@ public class Keyboard2 extends InputMethodService
       _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
       _config.actionId = action;
       _config.swapEnterActionKey =
-        (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0;
+        (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0;
     }
   }
 
@@ -220,7 +220,7 @@ public class Keyboard2 extends InputMethodService
     int prev_theme = _config.theme;
     _config.refresh(this);
     refreshSubtypeImm();
-    _keyboardView.refreshConfig(getLayout(_currentTextLayout));
+    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {

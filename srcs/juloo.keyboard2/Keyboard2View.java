@@ -47,15 +47,8 @@ public class Keyboard2View extends View
     _handler = new Handler(this);
     _theme = new Theme(getContext(), attrs);
     _config = Config.globalConfig();
-    refreshConfig(null);
     setOnTouchListener(this);
-  }
-
-  /* Internally calls [reset()]. */
-  public void refreshConfig(KeyboardData kw)
-  {
-    if (kw != null)
-      setKeyboard(kw); // handle layout options then calls reset().
+    reset();
   }
 
   public void setKeyboard(KeyboardData kw)
