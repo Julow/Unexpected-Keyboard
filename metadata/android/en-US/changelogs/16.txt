@@ -1,0 +1,13 @@
+New languages: Latvian (thanks @eandersons), Bulgarian (thanks Zdravko Iskrenov)
+New layouts: Bulgarian traditional, Latvian
+
+The application can now be translated.
+Translations: French, Latvian (thanks @eandersons)
+
+Improve the behavior of the Action key.
+The globe key now opens the keyboard switching dialog.
+The literal tab character can be typed with Fn+Tab.
+Add options to control the spacing between the keys.
+Better integration with the system theme.
+
+Thanks to all the contributors: @Moini, @sdrapha, @eandersons, @Poussinou, Zdravko Iskrenov
