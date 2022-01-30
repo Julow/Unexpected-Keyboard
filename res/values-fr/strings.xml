@@ -37,6 +37,8 @@
   <string name="pref_swipe_dist_e_default">Normale</string>
   <string name="pref_swipe_dist_e_far">Longue</string>
   <string name="pref_swipe_dist_e_very_far">Très longue</string>
+  <string name="pref_key_horizontal_space">Espacement horizontal entre les touches</string>
+  <string name="pref_key_vertical_space">Espacement vertical entre les touches</string>
   <string name="key_action_next">Suiv.</string>
   <string name="key_action_done">Fin</string>
   <string name="key_action_go">Aller</string>
