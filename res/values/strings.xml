@@ -28,6 +28,7 @@
   <string name="pref_character_size_title">Label size</string>
   <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
   <string name="pref_theme">Theme</string>
+  <string name="pref_theme_e_system">System settings</string>
   <string name="pref_theme_e_dark">Dark</string>
   <string name="pref_theme_e_light">Light</string>
   <string name="pref_theme_e_black">Black</string>

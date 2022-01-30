@@ -28,6 +28,7 @@
   <string name="pref_character_size_title">Taille des labels</string>
   <string name="pref_character_size_summary">Taille des caractères affichés sur les touches (%.2fx)</string>
   <string name="pref_theme">Thème</string>
+  <string name="pref_theme_e_system">Paramètre système</string>
   <string name="pref_theme_e_dark">Sombre</string>
   <string name="pref_theme_e_light">Clair</string>
   <string name="pref_theme_e_black">Noir</string>

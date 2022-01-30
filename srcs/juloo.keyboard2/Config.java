@@ -2,7 +2,9 @@ package juloo.keyboard2;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.Configuration;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -77,7 +79,8 @@ final class Config
   public void refresh(Context context)
   {
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    DisplayMetrics dm = context.getResources().getDisplayMetrics();
+    Resources res = context.getResources();
+    DisplayMetrics dm = res.getDisplayMetrics();
     layout = layoutId_of_string(prefs.getString("layout", "system"));
     swipe_dist_dp = Float.valueOf(prefs.getString("swipe_dist", "15"));
     swipe_dist_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, swipe_dist_dp, dm);
@@ -93,7 +96,7 @@ final class Config
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
-    theme = themeId_of_string(prefs.getString("theme", ""));
+    theme = getThemeId(res, prefs.getString("theme", ""));
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
@@ -102,6 +105,25 @@ final class Config
     if (value < 0)
       return (def);
     return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
+  }
+
+  private int getThemeId(Resources res, String theme_name)
+  {
+    switch (theme_name)
+    {
+      case "light": return R.style.Light;
+      case "black": return R.style.Black;
+      case "dark": return R.style.Dark;
+      default:
+      case "system":
+        if (Build.VERSION.SDK_INT >= 8)
+        {
+          int night_mode = res.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+          if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
+            return R.style.Light;
+        }
+        return R.style.Dark;
+    }
   }
 
   public static int layoutId_of_string(String name)

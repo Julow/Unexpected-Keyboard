@@ -57,6 +57,7 @@ public class Keyboard2 extends InputMethodService
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     Config.initGlobalConfig(this, new KeyEventHandler(this.new Receiver()));
     _config = Config.globalConfig();
+    _config.refresh(this);
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
   }
@@ -177,17 +178,27 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  private void refreshConfig()
+  {
+    int prev_theme = _config.theme;
+    _config.refresh(this);
+    refreshSubtypeImm();
+    // Refreshing the theme config requires re-creating the views
+    if (prev_theme != _config.theme)
+    {
+      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+      _emojiPane = null;
+    }
+    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+  }
+
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
-    // Update '_config' before calling 'KeyboardView.setKeyboard'
-    refreshSubtypeImm();
+    refreshConfig();
     refreshEditorInfo(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
-    else
-      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
-    _keyboardView.reset(); // Layout might need to change due to rotation
     setInputView(_keyboardView);
   }
 
@@ -217,16 +228,7 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
   {
-    int prev_theme = _config.theme;
-    _config.refresh(this);
-    refreshSubtypeImm();
-    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
-    // Refreshing the theme config requires re-creating the views
-    if (prev_theme != _config.theme)
-    {
-      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
-      _emojiPane = null;
-    }
+    refreshConfig();
   }
 
   /** Not static */
