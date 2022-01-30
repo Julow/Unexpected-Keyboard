@@ -57,3 +57,29 @@ The application must be enabled again in the settings.
 adb uninstall juloo.keyboard2.debug
 make installd
 ```
+
+## Guidelines
+
+### Add a localized layout
+
+Localized layouts (a layout specific to a language) are generally accepted.
+See for example: 4333575 (Bulgarian), 88e2175 (Latvian), 133b6ec (German).
+
+This keyboard is intended for programmers. If your language uses the Latin script, make sure it is possible to type every letters on the QWERTY keyboard.
+This is generally done using dead-keys, for example: 0bf7ff5 (Latvian), 573c13f (Swedish).
+It is also possible to add some characters that are hidden in other languages, for example 93e84ba (ß), though the space is limited.
+
+### Add a programming layout
+
+A programming layout must contains every ASCII characters as well as every dead-keys.
+Currently, the only example is QWERTY.
+
+### Translations
+
+Translations are always welcome ! See for example: 1723288 (Latvian), baf867a (French).
+The app can be translated by writing `res/values-<language code>/strings.xml` (for example `values-fr`, `values-lv`), based on the default: `res/values/strings.xml` (English).
+
+The store description is found in `metadata/android/<locale>/`, `short_description.txt` and `full_description.txt`.
+The full description changes very infrequently (it was changed once in 6 years). But if it changes too much, outdated translation might be removed.
+
+Translating changelogs is not useful because they evolve too fast. Changelogs are generally written entirely just before a release, translating them would delay releases too much. Old changelogs are not shown to anyone currently.
