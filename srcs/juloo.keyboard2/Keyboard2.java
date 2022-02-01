@@ -5,6 +5,8 @@ import android.content.res.Configuration;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.Bundle;
@@ -28,8 +30,21 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Keyboard2 extends InputMethodService
-  implements SharedPreferences.OnSharedPreferenceChangeListener
+  implements SharedPreferences.OnSharedPreferenceChangeListener,
+    ClipboardManager.OnPrimaryClipChangedListener
 {
+  private String _clipboardText = "";
+  private ClipboardManager _clipman;
+  public void onPrimaryClipChanged()
+  {
+    ClipData data = _clipman.getPrimaryClip();
+    if (data != null && data.getItemCount() > 0)
+    {
+      ClipData.Item item = data.getItemAt(0);
+      if (item == null) return;
+      _clipboardText = item.coerceToText(this).toString();
+    }
+  }
   private Keyboard2View _keyboardView;
   private int _currentTextLayout;
   private ViewGroup _emojiPane = null;
@@ -60,6 +75,9 @@ public class Keyboard2 extends InputMethodService
     _config.refresh(this);
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
+
+    _clipman = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+    _clipman.addPrimaryClipChangedListener(this);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -260,6 +278,12 @@ public class Keyboard2 extends InputMethodService
       if (conn == null)
         return;
       conn.performEditorAction(_config.actionId);
+    }
+
+    public void commitClipboardText()
+    {
+      if (_clipboardText != "")
+        commitText(_clipboardText);
     }
 
     public void setLayout(int res_id)
