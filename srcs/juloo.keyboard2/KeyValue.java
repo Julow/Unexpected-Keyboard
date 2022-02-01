@@ -14,6 +14,7 @@ class KeyValue
   public static final int EVENT_SWITCH_BACK_EMOJI = -6;
   public static final int EVENT_CHANGE_METHOD = -7;
   public static final int EVENT_ACTION = -8;
+  public static final int EVENT_PASTE = -54;
   public static final char CHAR_NONE = '\0';
 
   // Behavior flags
@@ -222,6 +223,7 @@ class KeyValue
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "⊞", EVENT_CHANGE_METHOD);
     addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
+    addSpecialKey("paste", "C→", EVENT_PASTE);
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE);
     addEventKey("enter", "\uE800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
