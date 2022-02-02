@@ -226,7 +226,7 @@ class KeyValue
     addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE);
-    addEventKey("enter", "\uE800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
+    addEventKey("enter", "\u23CE", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
     addEventKey("up", "\uE80B", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("right", "\uE80C", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("down", "\uE809", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
