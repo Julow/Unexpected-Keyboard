@@ -55,7 +55,7 @@ $(DEBUG_KEYSTORE):
 		-keyalg rsa -storepass $(DEBUG_PASSWD) -validity 10000
 
 _build/%.debug.apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE)
-	apksigner sign --in "$<" --out "$@" \
+	$(ANDROID_BUILD_TOOLS)/apksigner sign --in "$<" --out "$@" \
 		--ks $(DEBUG_KEYSTORE) --ks-key-alias debug --ks-pass "pass:$(DEBUG_PASSWD)"
 
 # Debug apk
