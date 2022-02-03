@@ -8,8 +8,13 @@ jobs:
   Build-Apk:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v15
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - uses: nelonoel/branch-name@v1.0.1
+    - name: Prints the current branch name
+      run: echo ${BRANCH_NAME}
+    - name: Install nix
+      uses: cachix/install-nix-action@v15
       with:
         nix_path: nixpkgs=channel:nixos-unstable
     - name: Run nix-shell and Make
