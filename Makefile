@@ -68,7 +68,7 @@ _build/$(PACKAGE_NAME).debug.unsigned-apk: AAPT_PACKAGE_FLAGS+=--rename-manifest
 #  it is interpreted as a shell script
 _build/%.apk: _build/%.unsigned-apk %-keystore.conf
 	eval `cat $(word 2,$^)` && \
-	apksigner sign --in "$<" --out "$@" \
+	$(ANDROID_BUILD_TOOLS)/apksigner sign --in "$<" --out "$@" \
 		--ks "$$KEYSTORE" --ks-key-alias "$$KEYNAME" --ks-pass "pass:$$KEYSTOREPASS"
 
 # Package
