@@ -7,6 +7,7 @@
     <item>qwerty_lv</item>
     <item>qwertz</item>
     <item>bgph1</item>
+    <item>dvorak</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>@string/pref_layout_e_system</item>
@@ -15,6 +16,7 @@
     <item>QWERTY (Latvian)</item>
     <item>QWERTZ</item>
     <item>Bulgarian (Phonetic Traditional)</item>
+    <item>Dvorak</item>
   </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>
