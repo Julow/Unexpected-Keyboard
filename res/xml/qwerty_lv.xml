@@ -34,11 +34,4 @@
     <key key0="m" key1="'" key2="&quot;" key3="," key4="\?" />
     <key width="1.5" key0="backspace" key2="delete" />
   </row>
-  <row height="0.95">
-    <key width="1.8" key0="ctrl" key2="meta" key3="switch_numeric"/>
-    <key width="1.2" key0="alt" key1="fn" key2="change_method" key3="switch_emoji" key4="config" />
-    <key width="4.0" key0="space" />
-    <key width="1.2" key0="." key1="up" key2="right" key3="left" key4="down" edgekeys="true"/>
-    <key width="1.8" key0="enter" key2="action" />
-  </row>
 </keyboard>

@@ -1,31 +1,24 @@
 package juloo.keyboard2;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.text.InputType;
 import android.preference.PreferenceManager;
+import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.util.Log;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -36,17 +29,9 @@ public class Keyboard2 extends InputMethodService
 
   private Config _config;
 
-  private Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
-
   private KeyboardData getLayout(int resId)
   {
-    KeyboardData l = _layoutCache.get(resId);
-    if (l == null)
-    {
-      l = KeyboardData.parse(getResources().getXml(resId));
-      _layoutCache.put(resId, l);
-    }
-    return l;
+    return KeyboardData.load(getResources(), resId);
   }
 
   @Override
