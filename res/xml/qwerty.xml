@@ -9,7 +9,7 @@
     <key key0="y" key2="6" key3="^"/>
     <key key0="u" key2="7" key3="&amp;"/>
     <key key0="i" key2="8" key3="*"/>
-    <key key0="o" key2="9" key3="(" key4=")"/>
+    <key key0="o" key1="accent_macron" key2="9" key3="(" key4=")"/>
     <key key0="p" key2="0"/>
   </row>
   <row>
@@ -17,10 +17,10 @@
     <key key0="s" key1="accent_ring" key3="ß"/>
     <key key0="d" key1="accent_grave" key3="accent_aigu"/>
     <key key0="f"/>
-    <key key0="g" key2="-" key3="_"/>
+    <key key0="g" key1="accent_caron" key2="-" key3="_"/>
     <key key0="h" key2="=" key3="+"/>
     <key key0="j" key1="accent_trema" key2="accent_circonflexe" key4="}" key3="{"/>
-    <key key0="k" key4="]" key3="["/>
+    <key key0="k" key3="[" key4="]"/>
     <key key0="l" key2="|" key3="\\"/>
   </row>
   <row>
@@ -35,10 +35,10 @@
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
   <row height="0.95">
-    <key width="1.8" key0="ctrl" key3="switch_numeric"/>
+    <key width="1.8" key0="ctrl" key2="meta" key3="switch_numeric"/>
     <key width="1.2" key0="alt" key1="fn" key2="change_method" key3="switch_emoji" key4="config"/>
     <key width="4.0" key0="space"/>
-    <key width="1.2" key1="up" key2="right" key3="left" key4="down"/>
+    <key width="1.2" key1="up" key2="right" key3="left" key4="down" edgekeys="true"/>
     <key width="1.8" key0="enter" key2="action"/>
   </row>
 </keyboard>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Unexpected Keyboard</string>
+  <string name="settings_activity_label">Unexpected Keyboard iestatījumi</string>
+  <string name="pref_category_layout">Izkārtojums</string>
+  <string name="pref_layout_title">Mainīt tastatūras izkārtojumu</string>
+  <string name="pref_layout_e_system">Ierīces iestatījumi</string>
+  <string name="pref_accents_title">Uzsvara zīmes</string>
+  <string name="pref_accents_e_all_installed">Rādīt uzsvara zīmes visām uzstādītajām valodām</string>
+  <string name="pref_accents_e_selected">Rādīt uzsvara zīmes tikai atlasītajām valodām</string>
+  <string name="pref_accents_e_all">Rādīt visas uzsvara zīmes</string>
+  <string name="pref_accents_e_none">Paslēpt uzsvara zīmes</string>
+  <string name="pref_category_typing">Rakstīšana</string>
+  <string name="pref_swipe_dist_title">Pavilkšanas attālums</string>
+  <string name="pref_swipe_dist_summary">Taustiņu stūros esošo rakstzīmju attālums (%s)</string>
+  <string name="pref_long_timeout_title">Taustiņa atkārtošanās ātrums</string>
+  <string name="pref_long_interval_title">Taustiņa atkārtošanās aizture</string>
+  <string name="pref_category_vibrate">Trīcēšana</string>
+  <string name="pref_vibrate_title">Trīcēšana</string>
+  <string name="pref_vibrate_summary">Iespējot/atspējot taustiņa piespiešanas trīcēšanu</string>
+  <string name="pref_vibrate_duration_title">Ilgums</string>
+  <string name="pref_precise_repeat_title">Pielāgojama kursora kustība</string>
+  <string name="pref_precise_repeat_summary">Mainīt taustiņa atkārtošanās ātrumu ar pavilkšanas attālumu</string>
+  <string name="pref_category_style">Izskata pielāgojumi</string>
+  <string name="pref_margin_bottom_title">Apakšējā apmale</string>
+  <string name="pref_key_height_title">Taustiņa augstums</string>
+  <string name="pref_horizontal_margin_title">Līmeniskā apmale</string>
+  <string name="pref_character_size_title">Iezīmes izmērs</string>
+  <string name="pref_character_size_summary">Tastatūrā attēloto rakstzīmju izmērs (%.2fx)</string>
+  <string name="pref_theme">Izskats</string>
+  <string name="pref_theme_e_system">Ierīces iestatījumi</string>
+  <string name="pref_theme_e_dark">Tumšs</string>
+  <string name="pref_theme_e_light">Gaišs</string>
+  <string name="pref_theme_e_black">Melns</string>
+  <string name="pref_swipe_dist_e_very_short">Ļoti tuvs</string>
+  <string name="pref_swipe_dist_e_short">Tuvs</string>
+  <string name="pref_swipe_dist_e_default">Vidējs</string>
+  <string name="pref_swipe_dist_e_far">Tāls</string>
+  <string name="pref_swipe_dist_e_very_far">Ļoti tāls</string>
+  <string name="key_action_next">Nākamais</string>
+  <string name="key_action_done">Darīts</string>
+  <string name="key_action_go">Aiziet</string>
+  <string name="key_action_prev">Iepriekšējais</string>
+  <string name="key_action_search">Meklēt</string>
+  <string name="key_action_send">Sūtīt</string>
+</resources>

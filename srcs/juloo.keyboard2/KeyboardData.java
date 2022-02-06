@@ -131,8 +131,10 @@ class KeyboardData
     public final float width;
     /* Extra empty space on the left of the key. */
     public final float shift;
+    /* Put keys 1 to 4 on the edges instead of the corners. */
+    public final boolean edgekeys;
 
-    public Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s)
+    public Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s, boolean e)
     {
       key0 = k0;
       key1 = k1;
@@ -141,6 +143,12 @@ class KeyboardData
       key4 = k4;
       width = w;
       shift = s;
+      edgekeys = e;
+    }
+
+    public Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s)
+    {
+      this(k0, k1, k2, k3, k4, w, s, false);
     }
 
     public static Key parse(XmlResourceParser parser) throws Exception
@@ -152,14 +160,15 @@ class KeyboardData
       KeyValue k4 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key4"));
       float width = parser.getAttributeFloatValue(null, "width", 1f);
       float shift = parser.getAttributeFloatValue(null, "shift", 0.f);
+      boolean edgekeys = parser.getAttributeBooleanValue(null, "edgekeys", false);
       while (parser.next() != XmlResourceParser.END_TAG)
         continue ;
-      return new Key(k0, k1, k2, k3, k4, width, shift);
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
     }
 
     public Key replaceKeys(MapKeys f)
     {
-      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift);
+      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift, edgekeys);
     }
   }
 

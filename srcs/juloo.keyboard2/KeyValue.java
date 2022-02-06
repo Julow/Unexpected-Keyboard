@@ -32,6 +32,7 @@ class KeyValue
   public static final int FLAG_SHIFT = (1 << 11);
   public static final int FLAG_ALT = (1 << 12);
   public static final int FLAG_FN = (1 << 13);
+  public static final int FLAG_META = (1 << 14);
 
   // Accent flags
   public static final int FLAG_ACCENT1 = (1 << 16); // Grave
@@ -43,10 +44,13 @@ class KeyValue
   public static final int FLAG_ACCENT_SUPERSCRIPT = (1 << 22);
   public static final int FLAG_ACCENT_SUBSCRIPT = (1 << 23);
   public static final int FLAG_ACCENT_RING = (1 << 24);
+  public static final int FLAG_ACCENT_CARON = (1 << 26);
+  public static final int FLAG_ACCENT_MACRON = (1 << 27);
 
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
-    FLAG_ACCENT_SUPERSCRIPT | FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
+    FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |
+    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
 
   // Language specific keys
   public static final int FLAG_LANG_SZLIG = (1 << 25);
@@ -94,7 +98,8 @@ class KeyValue
     KeyValue kv = KeyValue.keys.get(name);
     if (kv != null)
       return kv;
-    return new KeyValue(name, name, CHAR_NONE, EVENT_NONE, 0);
+    char c = (name.length() == 1) ? name.charAt(0) : CHAR_NONE;
+    return new KeyValue(name, name, c, EVENT_NONE, 0);
   }
 
   private static void addKey(String name, String symbol, char c, int event, int flags)
@@ -143,16 +148,19 @@ class KeyValue
     addModifierKey("shift", "⇧", FLAG_LOCK | FLAG_SHIFT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL);
     addModifierKey("alt", "Alt", FLAG_ALT);
-    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1);
     addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2);
-    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3);
-    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4);
+    addModifierKey("accent_caron", "◌̌", FLAG_ACCENT_CARON);
     addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5);
+    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3);
+    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1);
+    addModifierKey("accent_macron", "◌̄", FLAG_ACCENT_MACRON);
+    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4);
     addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6);
     addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING);
     addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);
     addModifierKey("subscript", "◌̺", FLAG_ACCENT_SUBSCRIPT);
     addModifierKey("fn", "Fn", FLAG_FN);
+    addModifierKey("meta", "◆", FLAG_META);
 
     addCharKey('a', KeyEvent.KEYCODE_A);
     addCharKey('b', KeyEvent.KEYCODE_B);
@@ -209,16 +217,16 @@ class KeyValue
     addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
     addCharKey('ß', EVENT_NONE, FLAG_LANG_SZLIG);
 
-    addSpecialKey("config", "Conf", EVENT_CONFIG);
+    addSpecialKey("config", "⛭", EVENT_CONFIG);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
     addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC);
-    addSpecialKey("switch_emoji", ":)", EVENT_SWITCH_EMOJI);
+    addSpecialKey("switch_emoji", "☻", EVENT_SWITCH_EMOJI);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "⊞", EVENT_CHANGE_METHOD);
     addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE);
-    addEventKey("enter", "\uE800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
+    addEventKey("enter", "\u23CE", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
     addEventKey("up", "\uE80B", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("right", "\uE80C", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("down", "\uE809", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
@@ -242,6 +250,7 @@ class KeyValue
     addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
     addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
 
+    addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
     addKey("space", " ", ' ', KeyEvent.KEYCODE_SPACE, 0);
   }
 }

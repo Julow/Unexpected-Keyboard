@@ -4,14 +4,18 @@
     <item>system</item>
     <item>azerty</item>
     <item>qwerty</item>
+    <item>qwerty_lv</item>
     <item>qwertz</item>
+    <item>bgph1</item>
     <item>dvorak</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>@string/pref_layout_e_system</item>
     <item>AZERTY</item>
     <item>QWERTY</item>
+    <item>QWERTY (Latvian)</item>
     <item>QWERTZ</item>
+    <item>Bulgarian (Phonetic Traditional)</item>
     <item>Dvorak</item>
   </string-array>
   <string-array name="pref_accents_entries">
@@ -27,11 +31,13 @@
     <item>4</item>
   </string-array>
   <string-array name="pref_theme_entries">
+    <item>@string/pref_theme_e_system</item>
     <item>@string/pref_theme_e_dark</item>
     <item>@string/pref_theme_e_light</item>
     <item>@string/pref_theme_e_black</item>
   </string-array>
   <string-array name="pref_theme_values">
+    <item>system</item>
     <item>dark</item>
     <item>light</item>
     <item>black</item>

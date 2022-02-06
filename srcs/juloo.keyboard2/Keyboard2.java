@@ -20,6 +20,7 @@ import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.util.Log;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,7 @@ public class Keyboard2 extends InputMethodService
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     Config.initGlobalConfig(this, new KeyEventHandler(this.new Receiver()));
     _config = Config.globalConfig();
+    _config.refresh(this);
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
   }
@@ -140,18 +142,20 @@ public class Keyboard2 extends InputMethodService
 
   private String actionLabel_of_imeAction(int action)
   {
+    int res;
     switch (action)
     {
+      case EditorInfo.IME_ACTION_NEXT: res = R.string.key_action_next; break;
+      case EditorInfo.IME_ACTION_DONE: res = R.string.key_action_done; break;
+      case EditorInfo.IME_ACTION_GO: res = R.string.key_action_go; break;
+      case EditorInfo.IME_ACTION_PREVIOUS: res = R.string.key_action_prev; break;
+      case EditorInfo.IME_ACTION_SEARCH: res = R.string.key_action_search; break;
+      case EditorInfo.IME_ACTION_SEND: res = R.string.key_action_send; break;
       case EditorInfo.IME_ACTION_UNSPECIFIED:
-      case EditorInfo.IME_ACTION_NEXT: return "Next";
-      case EditorInfo.IME_ACTION_DONE: return "Done";
-      case EditorInfo.IME_ACTION_GO: return "Go";
-      case EditorInfo.IME_ACTION_PREVIOUS: return "Prev";
-      case EditorInfo.IME_ACTION_SEARCH: return "Search";
-      case EditorInfo.IME_ACTION_SEND: return "Send";
       case EditorInfo.IME_ACTION_NONE:
       default: return null;
     }
+    return getResources().getString(res);
   }
 
   private void refreshEditorInfo(EditorInfo info)
@@ -170,22 +174,41 @@ public class Keyboard2 extends InputMethodService
       _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
       _config.actionId = action;
       _config.swapEnterActionKey =
-        (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0;
+        (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0;
     }
+  }
+
+  private void refreshConfig()
+  {
+    int prev_theme = _config.theme;
+    _config.refresh(this);
+    refreshSubtypeImm();
+    // Refreshing the theme config requires re-creating the views
+    if (prev_theme != _config.theme)
+    {
+      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+      _emojiPane = null;
+    }
+    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
   }
 
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
-    // Update '_config' before calling 'KeyboardView.setKeyboard'
-    refreshSubtypeImm();
+    refreshConfig();
     refreshEditorInfo(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
-    else
-      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
-    _keyboardView.reset(); // Layout might need to change due to rotation
     setInputView(_keyboardView);
+  }
+
+  @Override
+  public void setInputView(View v)
+  {
+    ViewParent parent = v.getParent();
+    if (parent != null && parent instanceof ViewGroup)
+      ((ViewGroup)parent).removeView(v);
+    super.setInputView(v);
   }
 
   @Override
@@ -205,16 +228,7 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
   {
-    int prev_theme = _config.theme;
-    _config.refresh(this);
-    refreshSubtypeImm();
-    _keyboardView.refreshConfig(getLayout(_currentTextLayout));
-    // Refreshing the theme config requires re-creating the views
-    if (prev_theme != _config.theme)
-    {
-      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
-      _emojiPane = null;
-    }
+    refreshConfig();
   }
 
   /** Not static */
@@ -223,7 +237,9 @@ public class Keyboard2 extends InputMethodService
     public void switchToNextInputMethod()
     {
       InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-      imm.switchToNextInputMethod(getConnectionToken(), false);
+      imm.showInputMethodPicker();
+      // deprecated in version 28: imm.switchToNextInputMethod(getConnectionToken(), false);
+      // added in version 28: switchToNextInputMethod(false);
     }
 
     public void setPane_emoji()

@@ -6,21 +6,21 @@
   <string name="pref_layout_title">Change keyboard layout</string>
   <string name="pref_layout_e_system">System settings</string>
   <string name="pref_accents_title">Accents</string>
-  <string name="pref_accents_e_all_installed">Show accents for all the installed languages</string>
+  <string name="pref_accents_e_all_installed">Show accents for all installed languages</string>
   <string name="pref_accents_e_selected">Only show accents for the selected language</string>
   <string name="pref_accents_e_all">Show all accents</string>
   <string name="pref_accents_e_none">Hide accents</string>
   <string name="pref_category_typing">Typing</string>
   <string name="pref_swipe_dist_title">Swiping distance</string>
   <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
-  <string name="pref_long_timeout_title">Long press timeout</string>
-  <string name="pref_long_interval_title">Long press interval</string>
+  <string name="pref_long_timeout_title">Key repeat timeout</string>
+  <string name="pref_long_interval_title">Key repeat interval</string>
   <string name="pref_category_vibrate">Vibration</string>
   <string name="pref_vibrate_title">Vibration</string>
   <string name="pref_vibrate_summary">Enable/disable vibration on keypress</string>
   <string name="pref_vibrate_duration_title">Duration</string>
   <string name="pref_precise_repeat_title">Precise cursor movements</string>
-  <string name="pref_precise_repeat_summary">Modulate the speed of movements by swiping more or less</string>
+  <string name="pref_precise_repeat_summary">Modulate key repeat speed by swiping more or less</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Margin bottom</string>
   <string name="pref_key_height_title">Key height</string>
@@ -28,6 +28,7 @@
   <string name="pref_character_size_title">Label size</string>
   <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
   <string name="pref_theme">Theme</string>
+  <string name="pref_theme_e_system">System settings</string>
   <string name="pref_theme_e_dark">Dark</string>
   <string name="pref_theme_e_light">Light</string>
   <string name="pref_theme_e_black">Black</string>
@@ -36,4 +37,12 @@
   <string name="pref_swipe_dist_e_default">Normal</string>
   <string name="pref_swipe_dist_e_far">Far</string>
   <string name="pref_swipe_dist_e_very_far">Very far</string>
+  <string name="pref_key_horizontal_space">Horizontal spacing between the keys</string>
+  <string name="pref_key_vertical_space">Vertical spacing between the keys</string>
+  <string name="key_action_next">Next</string>
+  <string name="key_action_done">Done</string>
+  <string name="key_action_go">Go</string>
+  <string name="key_action_prev">Prev</string>
+  <string name="key_action_search">Search</string>
+  <string name="key_action_send">Send</string>
 </resources>

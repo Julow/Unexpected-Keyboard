@@ -25,14 +25,11 @@ If the build succeed, the debug apk is located in
 
 ## Debugging on your phone
 
-You need to have *USB debugging* enabled on your phone, see [Android's doc](https://developer.android.com/studio/debug/dev-options#enable).
+First [Enable adb debugging on your device](https://developer.android.com/studio/command-line/adb#Enabling).
+Then connect your phone to your computer using an USB cable or wireless
+debugging.
 
-It is also possible to enable *ADB over network* in the settings and connect
-with `adb connect <ip of the phone>`. Make sure to be connected to a local
-network that you trust.
-
-Install the application with:
-
+And finally, install the application with:
 ```sh
 make installd
 ```
@@ -41,7 +38,7 @@ The debug version of the application won't be removed, both versions will stay
 installed at the same time.
 
 The application must be enabled in the settings:
-System Settings > System > Languages & Input > Virtual keyboard > Manage keyboards.
+System > Languages & input > On-screen keyboard > Manage on-screen keyboards.
 
 ## Debugging the application: INSTALL_FAILED_UPDATE_INCOMPATIBLE
 
@@ -60,3 +57,29 @@ The application must be enabled again in the settings.
 adb uninstall juloo.keyboard2.debug
 make installd
 ```
+
+## Guidelines
+
+### Add a localized layout
+
+Localized layouts (a layout specific to a language) are generally accepted.
+See for example: 4333575 (Bulgarian), 88e2175 (Latvian), 133b6ec (German).
+
+This keyboard is intended for programmers. If your language uses the Latin script, make sure it is possible to type every letters on the QWERTY keyboard.
+This is generally done using dead-keys, for example: 0bf7ff5 (Latvian), 573c13f (Swedish).
+It is also possible to add some characters that are hidden in other languages, for example 93e84ba (ß), though the space is limited.
+
+### Add a programming layout
+
+A programming layout must contains every ASCII characters as well as every dead-keys.
+Currently, the only example is QWERTY.
+
+### Translations
+
+Translations are always welcome ! See for example: 1723288 (Latvian), baf867a (French).
+The app can be translated by writing `res/values-<language code>/strings.xml` (for example `values-fr`, `values-lv`), based on the default: `res/values/strings.xml` (English).
+
+The store description is found in `metadata/android/<locale>/`, `short_description.txt` and `full_description.txt`.
+The full description changes very infrequently (it was changed once in 6 years). But if it changes too much, outdated translation might be removed.
+
+Translating changelogs is not useful because they evolve too fast. Changelogs are generally written entirely just before a release, translating them would delay releases too much. Old changelogs are not shown to anyone currently.

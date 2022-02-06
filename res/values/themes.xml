@@ -22,6 +22,7 @@
     <attr name="emoji_key_text" type="color" format="color"/>
   </declare-styleable>
   <style name="Dark">
+    <item name="android:isLightTheme">false</item>
     <item name="colorKeyboard">#1B1B1B</item>
     <item name="colorKey">#303030</item>
     <item name="colorKeyActivated">#1B1B1B</item>
@@ -36,6 +37,8 @@
     <item name="emoji_key_text" type="color">?attr/colorLabel</item>
   </style>
   <style name="Light">
+    <item name="android:isLightTheme">true</item>
+    <item name="android:forceDarkAllowed">false</item>
     <item name="colorKeyboard">#e3e3e3</item>
     <item name="colorKey">#cfcfcf</item>
     <item name="colorKeyActivated">#e3e3e3</item>
@@ -50,6 +53,7 @@
     <item name="emoji_key_text" type="color">?attr/colorLabel</item>
   </style>
   <style name="Black">
+    <item name="android:isLightTheme">false</item>
     <item name="colorKeyboard">#000000</item>
     <item name="colorKey">#000000</item>
     <item name="colorKeyActivated">#333333</item>

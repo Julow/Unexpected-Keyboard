@@ -40,6 +40,13 @@ public class Keyboard2View extends View
 
   private static RectF _tmpRect = new RectF();
 
+  enum Vertical
+  {
+    TOP,
+    CENTER,
+    BOTTOM
+  }
+
   public Keyboard2View(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -47,15 +54,8 @@ public class Keyboard2View extends View
     _handler = new Handler(this);
     _theme = new Theme(getContext(), attrs);
     _config = Config.globalConfig();
-    refreshConfig(null);
     setOnTouchListener(this);
-  }
-
-  /* Internally calls [reset()]. */
-  public void refreshConfig(KeyboardData kw)
-  {
-    if (kw != null)
-      setKeyboard(kw); // handle layout options then calls reset().
+    reset();
   }
 
   public void setKeyboard(KeyboardData kw)
@@ -164,13 +164,27 @@ public class Keyboard2View extends View
       float absDist = Math.abs(moveX) + Math.abs(moveY);
       key.ptrDist = absDist;
       if (absDist < _config.swipe_dist_px)
+      {
         newValue = key.key.key0;
-      else if (moveX < 0)
-        newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
-      else if (moveY < 0)
-        newValue = key.key.key2;
+      }
+      else if (key.key.edgekeys)
+      {
+        if (Math.abs(moveY) > Math.abs(moveX)) // vertical swipe
+          newValue = (moveY < 0) ? key.key.key1 : key.key.key4;
+        else if (moveX < 0) // left swipe
+          newValue = key.key.key3;
+        else // right swipe
+          newValue = key.key.key2;
+      }
       else
-        newValue = key.key.key4;
+      {
+        if (moveX < 0)
+          newValue = (moveY < 0) ? key.key.key1 : key.key.key3;
+        else if (moveY < 0)
+          newValue = key.key.key2;
+        else
+          newValue = key.key.key4;
+      }
       if (newValue != null && newValue != key.value)
       {
         if (key.timeoutWhat != -1)
@@ -375,14 +389,28 @@ public class Keyboard2View extends View
         if (k.key0 != null)
           drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _theme.labelTextSize) / 2f + y, keyDown);
         float subPadding = _config.keyPadding;
-        if (k.key1 != null)
-          drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding, false, true, keyDown);
-        if (k.key3 != null)
-          drawSubLabel(canvas, k.key3, x + subPadding, y + keyH - subPadding, false, false, keyDown);
-        if (k.key2 != null)
-          drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding, true, true, keyDown);
-        if (k.key4 != null)
-          drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding, true, false, keyDown);
+        if (k.edgekeys)
+        {
+          if (k.key1 != null) // top key
+            drawSubLabel(canvas, k.key1, x + keyW / 2f, y + subPadding, Paint.Align.CENTER, Vertical.TOP, keyDown);
+          if (k.key3 != null) // left key
+            drawSubLabel(canvas, k.key3, x + subPadding, y + keyH / 2f, Paint.Align.LEFT, Vertical.CENTER, keyDown);
+          if (k.key2 != null) // right key
+            drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + keyH / 2f, Paint.Align.RIGHT, Vertical.CENTER, keyDown);
+          if (k.key4 != null) // bottom key
+            drawSubLabel(canvas, k.key4, x + keyW / 2f, y + keyH - subPadding, Paint.Align.CENTER, Vertical.BOTTOM, keyDown);
+        }
+        else
+        {
+          if (k.key1 != null) // top left key
+            drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding, Paint.Align.LEFT, Vertical.TOP, keyDown);
+          if (k.key3 != null) // bottom left key
+            drawSubLabel(canvas, k.key3, x + subPadding, y + keyH - subPadding, Paint.Align.LEFT, Vertical.BOTTOM, keyDown);
+          if (k.key2 != null) // top right key
+            drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding, Paint.Align.RIGHT, Vertical.TOP, keyDown);
+          if (k.key4 != null) // bottom right key
+            drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding, Paint.Align.RIGHT, Vertical.BOTTOM, keyDown);
+        }
         x += _keyWidth * k.width;
       }
       y += row.height * _config.keyHeight;
@@ -420,13 +448,16 @@ public class Keyboard2View extends View
     canvas.drawText(k.symbol, x, y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, boolean right, boolean up, KeyDown keyDown)
+  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, Paint.Align a, Vertical v, KeyDown keyDown)
   {
     k = KeyModifier.handleFlags(k, _flags);
-    Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), right);
+    Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), a);
     p.setColor(labelColor(k, keyDown, _theme.subLabelColor));
     p.setTextSize(_theme.sublabelTextSize * scaleTextSize(k));
-    y -= up ? p.ascent() : p.descent();
+    if (v == Vertical.CENTER)
+      y -= (p.ascent() + p.descent()) / 2f;
+    else
+      y -= (v == Vertical.TOP) ? p.ascent() : p.descent();
     canvas.drawText(k.symbol, x, y, p);
   }
 
