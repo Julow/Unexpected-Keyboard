@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
-	<row>
-		<key key0="shift" width="1.5" key1="esc" key2="tab" />
-		<key key0="p" key1="accent_ring" key2="." key3="&lt;" />
-		<key key0="y" key1="accent_grave" key2="," key3="&gt;" />
-		<key key0="f" />
-		<key key0="g" key2="\\" key3="|" />
-		<key key0="c" key1="accent_trema" key2="accent_circonflexe" key3="{" key4="}" />
-		<key key0="r" key3="[" key4="]" />
-		<key key0="l" key2="=" key3="+" />
-		<key key0="backspace" key2="delete" width="1.5" />
-	</row>
-	<row>
-		<key key0="a" key2="1" key3="!" />
-		<key key0="o" key1="accent_macron" key2="2" key3="\@" />
-		<key key0="e" key1="accent_caron" key2="3" key3="\#" />
-		<key key0="u" key2="4" key3="$" />
-		<key key0="i" key2="5" key3="%" />
-		<key key0="d" key2="6" key3="^" />
-		<key key0="h" key2="7" key3="&amp;" />
-		<key key0="t" key2="8" key3="*" />
-		<key key0="n" key2="9" key3="(" key4=")" />
-		<key key0="s" key2="0" key3="ß" />
-	</row>
-	<row>
-		<key key0="q" shift="0.5" key1="accent_tilde" key2="`" key3="~" />
-		<key key0="j" key1="accent_aigu" key2="'" key3="&quot;" />
-		<key key0="k" key2=";" key3=":" />
-		<key key0="x" key1="accent_cedille"  />
-		<key key0="b" />
-		<key key0="m" key2="/" key3="\?" />
-		<key key0="w" />
-		<key key0="v" />
-		<key key0="z" key2="-" key3="_" />
-	</row>
-	<row height="0.95">
-		<key width="1.8" key0="ctrl" key2="meta" key3="switch_numeric"/>
-		<key width="1.2" key0="alt" key1="fn" key2="change_method" key3="switch_emoji" key4="config"/>
-		<key width="4.0" key0="space"/>
-		<key width="1.2" key1="up" key2="right" key3="left" key4="down" edgekeys="true"/>
-		<key width="1.8" key0="enter" key2="action"/>
-	</row>
+  <row>
+    <key key0="shift" width="1.5" key1="esc" key2="tab"/>
+    <key key0="p" key1="accent_ring" key2="." key3="&lt;"/>
+    <key key0="y" key1="accent_grave" key2="," key3="&gt;"/>
+    <key key0="f"/>
+    <key key0="g" key2="\\" key3="|"/>
+    <key key0="c" key1="accent_trema" key2="accent_circonflexe" key3="{" key4="}"/>
+    <key key0="r" key3="[" key4="]"/>
+    <key key0="l" key2="=" key3="+"/>
+    <key key0="backspace" key2="delete" width="1.5"/>
+  </row>
+  <row>
+    <key key0="a" key2="1" key3="!"/>
+    <key key0="o" key1="accent_macron" key2="2" key3="\@"/>
+    <key key0="e" key1="accent_caron" key2="3" key3="\#"/>
+    <key key0="u" key2="4" key3="$"/>
+    <key key0="i" key2="5" key3="%"/>
+    <key key0="d" key2="6" key3="^"/>
+    <key key0="h" key2="7" key3="&amp;"/>
+    <key key0="t" key2="8" key3="*"/>
+    <key key0="n" key2="9" key3="(" key4=")"/>
+    <key key0="s" key2="0" key3="ß"/>
+  </row>
+  <row>
+    <key key0="q" shift="0.5" key1="accent_tilde" key2="`" key3="~"/>
+    <key key0="j" key1="accent_aigu" key2="'" key3="&quot;"/>
+    <key key0="k" key2=";" key3=":"/>
+    <key key0="x" key1="accent_cedille"/>
+    <key key0="b"/>
+    <key key0="m" key2="/" key3="\?"/>
+    <key key0="w"/>
+    <key key0="v"/>
+    <key key0="z" key2="-" key3="_"/>
+  </row>
+  <row height="0.95">
+    <key width="1.8" key0="ctrl" key2="meta" key3="switch_numeric"/>
+    <key width="1.2" key0="alt" key1="fn" key2="change_method" key3="switch_emoji" key4="config"/>
+    <key width="4.0" key0="space"/>
+    <key width="1.2" key1="up" key2="right" key3="left" key4="down" edgekeys="true"/>
+    <key width="1.8" key0="enter" key2="action"/>
+  </row>
 </keyboard>
