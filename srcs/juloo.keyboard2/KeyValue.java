@@ -32,6 +32,7 @@ class KeyValue
   public static final int FLAG_SHIFT = (1 << 11);
   public static final int FLAG_ALT = (1 << 12);
   public static final int FLAG_FN = (1 << 13);
+  public static final int FLAG_META = (1 << 14);
 
   // Accent flags
   public static final int FLAG_ACCENT1 = (1 << 16); // Grave
@@ -159,6 +160,7 @@ class KeyValue
     addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);
     addModifierKey("subscript", "◌̺", FLAG_ACCENT_SUBSCRIPT);
     addModifierKey("fn", "Fn", FLAG_FN);
+    addModifierKey("meta", "◆", FLAG_META);
 
     addCharKey('a', KeyEvent.KEYCODE_A);
     addCharKey('b', KeyEvent.KEYCODE_B);
