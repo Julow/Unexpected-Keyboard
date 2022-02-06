@@ -5,6 +5,7 @@
     <item>azerty</item>
     <item>qwerty</item>
     <item>qwerty_lv</item>
+    <item>qwerty_ru</item>
     <item>qwertz</item>
     <item>bgph1</item>
   </string-array>
@@ -13,6 +14,7 @@
     <item>AZERTY</item>
     <item>QWERTY</item>
     <item>QWERTY (Latvian)</item>
+    <item>QWERTY (Русский)</item>
     <item>QWERTZ</item>
     <item>Bulgarian (Phonetic Traditional)</item>
   </string-array>
