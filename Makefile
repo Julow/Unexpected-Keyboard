@@ -105,4 +105,4 @@ _build/classes.dex: $(JAVA_FILES) $(R_FILE)
 		-classpath $(ANDROID_PLATFORM)/android.jar:$(EXTRA_JARS) \
 		-sourcepath $(SRC_DIR):$(GEN_DIR) \
 		$^
-	$(ANDROID_BUILD_TOOLS)/dx --dex --output="$@" $(OBJ_DIR) $(subst :, ,$(EXTRA_JARS))
+	$(ANDROID_BUILD_TOOLS)/d8 --output $(@D) $(OBJ_DIR)/*/*/* $(subst :, ,$(EXTRA_JARS))
