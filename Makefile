@@ -55,7 +55,7 @@ $(DEBUG_KEYSTORE):
 		-keyalg rsa -storepass $(DEBUG_PASSWD) -validity 10000
 
 _build/%.debug.apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE)
-	apksigner sign --in "$<" --out "$@" \
+	$(ANDROID_BUILD_TOOLS)/apksigner sign --in "$<" --out "$@" \
 		--ks $(DEBUG_KEYSTORE) --ks-key-alias debug --ks-pass "pass:$(DEBUG_PASSWD)"
 
 # Debug apk
@@ -68,7 +68,7 @@ _build/$(PACKAGE_NAME).debug.unsigned-apk: AAPT_PACKAGE_FLAGS+=--rename-manifest
 #  it is interpreted as a shell script
 _build/%.apk: _build/%.unsigned-apk %-keystore.conf
 	eval `cat $(word 2,$^)` && \
-	apksigner sign --in "$<" --out "$@" \
+	$(ANDROID_BUILD_TOOLS)/apksigner sign --in "$<" --out "$@" \
 		--ks "$$KEYSTORE" --ks-key-alias "$$KEYNAME" --ks-pass "pass:$$KEYSTOREPASS"
 
 # Package
@@ -105,4 +105,4 @@ _build/classes.dex: $(JAVA_FILES) $(R_FILE)
 		-classpath $(ANDROID_PLATFORM)/android.jar:$(EXTRA_JARS) \
 		-sourcepath $(SRC_DIR):$(GEN_DIR) \
 		$^
-	$(ANDROID_BUILD_TOOLS)/dx --dex --output="$@" $(OBJ_DIR) $(subst :, ,$(EXTRA_JARS))
+	$(ANDROID_BUILD_TOOLS)/d8 --output $(@D) $(OBJ_DIR)/*/*/* $(subst :, ,$(EXTRA_JARS))

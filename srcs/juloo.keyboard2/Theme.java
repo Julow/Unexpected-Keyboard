@@ -54,10 +54,10 @@ public class Theme
     return p;
   }
 
-  public Paint subLabelPaint(boolean special_font, boolean align_right)
+  public Paint subLabelPaint(boolean special_font, Paint.Align align)
   {
     Paint p = special_font ? _specialKeySubLabelPaint : _keySubLabelPaint;
-    p.setTextAlign(align_right ? Paint.Align.RIGHT : Paint.Align.LEFT);
+    p.setTextAlign(align);
     return p;
   }
 
