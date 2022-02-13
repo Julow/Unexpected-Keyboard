@@ -20,7 +20,7 @@ class KeyboardData
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.replaceKeys(f));
-    return new KeyboardData(rows_);
+    return new KeyboardData(rows_, keysWidth);
   }
 
   private static Row _bottomRow = null;
@@ -54,9 +54,18 @@ class KeyboardData
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
         rows.add(Row.parse(parser));
+    float kw = compute_max_width(rows);
     if (bottom_row)
-      rows.add(_bottomRow);
-    return new KeyboardData(rows);
+      rows.add(_bottomRow.updateWidth(kw));
+    return new KeyboardData(rows, kw);
+  }
+
+  private static float compute_max_width(List<Row> rows)
+  {
+    float w = 0.f;
+    for (Row r : rows)
+      w = Math.max(w, r.keysWidth);
+    return w;
   }
 
   private static Row parse_bottom_row(XmlResourceParser parser) throws Exception
@@ -66,15 +75,11 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_)
+  protected KeyboardData(List<Row> rows_, float kw)
   {
-    float kw = 0.f;
     float kh = 0.f;
     for (Row r : rows_)
-    {
-      kw = Math.max(kw, r.keysWidth);
       kh += r.height + r.shift;
-    }
     rows = rows_;
     keysWidth = kw;
     keysHeight = kh;
@@ -83,11 +88,11 @@ class KeyboardData
   public static class Row
   {
     public final List<Key> keys;
-    /* Height of the row. Unit is abstract. */
+    /* Height of the row, without 'shift'. Unit is abstract. */
     public final float height;
     /* Extra empty space on the top. */
     public final float shift;
-    /* Total width of very keys. Unit is abstract. */
+    /* Total width of the row. Unit is abstract. */
     private final float keysWidth;
 
     protected Row(List<Key> keys_, float h, float s)
@@ -116,6 +121,16 @@ class KeyboardData
       ArrayList<Key> keys_ = new ArrayList<Key>();
       for (Key k : keys)
         keys_.add(k.replaceKeys(f));
+      return new Row(keys_, height, shift);
+    }
+
+    /** Change the width of every keys so that the row is 's' units wide. */
+    public Row updateWidth(float newWidth)
+    {
+      float s = newWidth / keysWidth;
+      ArrayList<Key> keys_ = new ArrayList<Key>();
+      for (Key k : keys)
+        keys_.add(k.scaleWidth(s));
       return new Row(keys_, height, shift);
     }
   }
@@ -170,6 +185,12 @@ class KeyboardData
     public Key replaceKeys(MapKeys f)
     {
       return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift, edgekeys);
+    }
+
+    /** New key with the width multiplied by 's'. */
+    public Key scaleWidth(float s)
+    {
+      return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
     }
   }
 
