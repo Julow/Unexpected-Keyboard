@@ -23,7 +23,7 @@
   <string name="pref_precise_repeat_summary">Mainīt taustiņa atkārtošanās ātrumu ar pavilkšanas attālumu</string>
   <string name="pref_category_style">Izskata pielāgojumi</string>
   <string name="pref_margin_bottom_title">Apakšējā apmale</string>
-  <string name="pref_key_height_title">Taustiņa augstums</string>
+  <string name="pref_keyboard_height_title">Tastatūras augstums</string>
   <string name="pref_horizontal_margin_title">Līmeniskā apmale</string>
   <string name="pref_character_size_title">Iezīmes izmērs</string>
   <string name="pref_character_size_summary">Tastatūrā attēloto rakstzīmju izmērs (%.2fx)</string>

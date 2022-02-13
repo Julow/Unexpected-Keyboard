@@ -81,6 +81,21 @@ final class Config
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Resources res = context.getResources();
     DisplayMetrics dm = res.getDisplayMetrics();
+    // The height of the keyboard is relative to the height of the screen. This
+    // is not the actual size of the keyboard, which will be bigger if the
+    // layout has a fifth row. 
+    int keyboardHeightPercent;
+    float extra_horizontal_margin;
+    if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
+    {
+      keyboardHeightPercent = 55;
+      extra_horizontal_margin = res.getDimension(R.dimen.landscape_extra_horizontal_margin);
+    }
+    else
+    {
+      keyboardHeightPercent = prefs.getInt("keyboard_height", 35);
+      extra_horizontal_margin = 0.f;
+    }
     layout = layoutId_of_string(prefs.getString("layout", "system"));
     swipe_dist_dp = Float.valueOf(prefs.getString("swipe_dist", "15"));
     swipe_dist_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, swipe_dist_dp, dm);
@@ -91,10 +106,10 @@ final class Config
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
     keyVerticalInterval = getDipPref(dm, prefs, "key_vertical_space", keyVerticalInterval);
     keyHorizontalInterval = getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval);
-    // Add keyVerticalInterval to keyHeight because the space between the keys
-    // is removed from the keys during rendering
-    keyHeight = getDipPref(dm, prefs, "key_height", keyHeight) + keyVerticalInterval;
-    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin);
+    // Do not substract keyVerticalInterval from keyHeight because this is done
+    // during rendered.
+    keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
+    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + extra_horizontal_margin;
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));

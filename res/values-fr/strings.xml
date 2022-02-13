@@ -23,7 +23,7 @@
   <string name="pref_precise_repeat_summary">Modifier la vitesse de répétition en bougeant le doigt</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Marge du bas</string>
-  <string name="pref_key_height_title">Hauteur des touches</string>
+  <string name="pref_keyboard_height_title">Hauteur du clavier</string>
   <string name="pref_horizontal_margin_title">Marge des côtés</string>
   <string name="pref_character_size_title">Taille des labels</string>
   <string name="pref_character_size_summary">Taille des caractères affichés sur les touches (%.2fx)</string>
