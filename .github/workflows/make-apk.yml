@@ -16,7 +16,7 @@ jobs:
     - uses: cachix/cachix-action@v10
       with:
         name: julow
-        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - name: Checkout Repo
       uses: actions/checkout@v2
     - name: Cache debug certificate
