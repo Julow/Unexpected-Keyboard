@@ -12,12 +12,8 @@ let
     abiVersions = [ "armeabi-v7a" ];
   };
 
-  apksigner = pkgs.apksigner.override {
-    inherit (jdk) jre;
-    inherit (android) build-tools;
-  };
-
-in pkgs.mkShell {
-  buildInputs = [ pkgs.findutils jdk android.androidsdk apksigner ];
+in
+pkgs.mkShell {
+  buildInputs = [ pkgs.findutils jdk android.androidsdk ];
   ANDROID_HOME = "${android.androidsdk}/libexec/android-sdk";
 }

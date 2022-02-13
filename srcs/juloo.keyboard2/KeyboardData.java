@@ -1,8 +1,11 @@
 package juloo.keyboard2;
 
+import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class KeyboardData
 {
@@ -12,70 +15,87 @@ class KeyboardData
   /* Total height of the keyboard. Unit is abstract. */
   public final float keysHeight;
 
-  public KeyboardData(List<Row> rows_)
-  {
-    float kw = 0.f;
-    float kh = 0.f;
-    for (Row r : rows_)
-    {
-      kw = Math.max(kw, r.keysWidth);
-      kh += r.height + r.shift;
-    }
-    rows = rows_;
-    keysWidth = kw;
-    keysHeight = kh;
-  }
-
-  public static KeyboardData parse(XmlResourceParser parser)
-  {
-    ArrayList<Row> rows = new ArrayList<Row>();
-
-    try
-    {
-      int status;
-
-      while (parser.next() != XmlResourceParser.START_TAG)
-        continue ;
-      if (!parser.getName().equals("keyboard"))
-        throw new Exception("Unknow tag: " + parser.getName());
-      while ((status = parser.next()) != XmlResourceParser.END_DOCUMENT)
-      {
-        if (status == XmlResourceParser.START_TAG)
-        {
-          String tag = parser.getName();
-          if (tag.equals("row"))
-            rows.add(Row.parse(parser));
-          else
-            throw new Exception("Unknow keyboard tag: " + tag);
-        }
-      }
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-    return new KeyboardData(rows);
-  }
-
   public KeyboardData replaceKeys(MapKeys f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.replaceKeys(f));
-    return new KeyboardData(rows_);
+    return new KeyboardData(rows_, keysWidth);
+  }
+
+  private static Row _bottomRow = null;
+  private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
+
+  public static KeyboardData load(Resources res, int id)
+  {
+    KeyboardData l = _layoutCache.get(id);
+    if (l == null)
+    {
+      try
+      {
+        if (_bottomRow == null)
+          _bottomRow = parse_bottom_row(res.getXml(R.xml.bottom_row));
+        l = parse_keyboard(res.getXml(id));
+        _layoutCache.put(id, l);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    return l;
+  }
+
+  private static KeyboardData parse_keyboard(XmlResourceParser parser) throws Exception
+  {
+    if (!expect_tag(parser, "keyboard"))
+      throw new Exception("Empty layout file");
+    boolean bottom_row = parser.getAttributeBooleanValue(null, "bottom_row", true);
+    ArrayList<Row> rows = new ArrayList<Row>();
+    while (expect_tag(parser, "row"))
+        rows.add(Row.parse(parser));
+    float kw = compute_max_width(rows);
+    if (bottom_row)
+      rows.add(_bottomRow.updateWidth(kw));
+    return new KeyboardData(rows, kw);
+  }
+
+  private static float compute_max_width(List<Row> rows)
+  {
+    float w = 0.f;
+    for (Row r : rows)
+      w = Math.max(w, r.keysWidth);
+    return w;
+  }
+
+  private static Row parse_bottom_row(XmlResourceParser parser) throws Exception
+  {
+    if (!expect_tag(parser, "row"))
+      throw new Exception("Failed to parse bottom row");
+    return Row.parse(parser);
+  }
+
+  protected KeyboardData(List<Row> rows_, float kw)
+  {
+    float kh = 0.f;
+    for (Row r : rows_)
+      kh += r.height + r.shift;
+    rows = rows_;
+    keysWidth = kw;
+    keysHeight = kh;
   }
 
   public static class Row
   {
     public final List<Key> keys;
-    /* Height of the row. Unit is abstract. */
+    /* Height of the row, without 'shift'. Unit is abstract. */
     public final float height;
     /* Extra empty space on the top. */
     public final float shift;
-    /* Total width of very keys. Unit is abstract. */
+    /* Total width of the row. Unit is abstract. */
     private final float keysWidth;
 
-    public Row(List<Key> keys_, float h, float s)
+    protected Row(List<Key> keys_, float h, float s)
     {
       float kw = 0.f;
       for (Key k : keys_) kw += k.width + k.shift;
@@ -91,17 +111,8 @@ class KeyboardData
       int status;
       float h = parser.getAttributeFloatValue(null, "height", 1f);
       float shift = parser.getAttributeFloatValue(null, "shift", 0f);
-      while ((status = parser.next()) != XmlResourceParser.END_TAG)
-      {
-        if (status == XmlResourceParser.START_TAG)
-        {
-          String tag = parser.getName();
-          if (tag.equals("key"))
-            keys.add(Key.parse(parser));
-          else
-            throw new Exception("Unknow row tag: " + tag);
-        }
-      }
+      while (expect_tag(parser, "key"))
+        keys.add(Key.parse(parser));
       return new Row(keys, h, shift);
     }
 
@@ -110,6 +121,16 @@ class KeyboardData
       ArrayList<Key> keys_ = new ArrayList<Key>();
       for (Key k : keys)
         keys_.add(k.replaceKeys(f));
+      return new Row(keys_, height, shift);
+    }
+
+    /** Change the width of every keys so that the row is 's' units wide. */
+    public Row updateWidth(float newWidth)
+    {
+      float s = newWidth / keysWidth;
+      ArrayList<Key> keys_ = new ArrayList<Key>();
+      for (Key k : keys)
+        keys_.add(k.scaleWidth(s));
       return new Row(keys_, height, shift);
     }
   }
@@ -131,8 +152,10 @@ class KeyboardData
     public final float width;
     /* Extra empty space on the left of the key. */
     public final float shift;
+    /* Put keys 1 to 4 on the edges instead of the corners. */
+    public final boolean edgekeys;
 
-    public Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s)
+    protected Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s, boolean e)
     {
       key0 = k0;
       key1 = k1;
@@ -141,6 +164,7 @@ class KeyboardData
       key4 = k4;
       width = w;
       shift = s;
+      edgekeys = e;
     }
 
     public static Key parse(XmlResourceParser parser) throws Exception
@@ -152,14 +176,21 @@ class KeyboardData
       KeyValue k4 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key4"));
       float width = parser.getAttributeFloatValue(null, "width", 1f);
       float shift = parser.getAttributeFloatValue(null, "shift", 0.f);
+      boolean edgekeys = parser.getAttributeBooleanValue(null, "edgekeys", false);
       while (parser.next() != XmlResourceParser.END_TAG)
         continue ;
-      return new Key(k0, k1, k2, k3, k4, width, shift);
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
     }
 
     public Key replaceKeys(MapKeys f)
     {
-      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift);
+      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift, edgekeys);
+    }
+
+    /** New key with the width multiplied by 's'. */
+    public Key scaleWidth(float s)
+    {
+      return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
     }
   }
 
@@ -226,5 +257,23 @@ class KeyboardData
       if (k.eventCode == _e2) return _r2;
       return k;
     }
+  }
+
+  /** Parsing utils */
+
+  /** Returns [false] on [END_DOCUMENT] or [END_TAG], [true] otherwise. */
+  private static boolean expect_tag(XmlResourceParser parser, String name) throws Exception
+  {
+    int status;
+    do
+    {
+      status = parser.next();
+      if (status == XmlResourceParser.END_DOCUMENT || status == XmlResourceParser.END_TAG)
+        return false;
+    }
+    while (status != XmlResourceParser.START_TAG);
+    if (!parser.getName().equals(name))
+      throw new Exception("Unknow tag: " + parser.getName());
+    return true;
   }
 }
