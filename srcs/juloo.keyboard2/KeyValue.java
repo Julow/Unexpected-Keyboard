@@ -46,11 +46,13 @@ class KeyValue
   public static final int FLAG_ACCENT_RING = (1 << 24);
   public static final int FLAG_ACCENT_CARON = (1 << 26);
   public static final int FLAG_ACCENT_MACRON = (1 << 27);
+  public static final int FLAG_ACCENT_ORDINAL = (1 << 28);
+
 
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
     FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |
-    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_RING;
+    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL | FLAG_ACCENT_RING;
 
   // Language specific keys
   public static final int FLAG_LANG_SZLIG = (1 << 25);
@@ -58,7 +60,7 @@ class KeyValue
   public static final int FLAGS_LANGS = FLAG_LANG_SZLIG;
 
   public static final int FLAGS_NOT_HIDDEN_ACCENTS = FLAG_ACCENT_SUPERSCRIPT |
-    FLAG_ACCENT_SUBSCRIPT;
+    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL;
   // Keys that have to be enabled per language
   public static final int FLAGS_HIDDEN_KEYS =
     (FLAGS_ACCENTS & ~FLAGS_NOT_HIDDEN_ACCENTS) | FLAGS_LANGS;
@@ -164,6 +166,7 @@ class KeyValue
     addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING);
     addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);
     addModifierKey("subscript", "◌̺", FLAG_ACCENT_SUBSCRIPT);
+    addModifierKey("ordinal", "ºʳᵈ", FLAG_ACCENT_ORDINAL);
     addModifierKey("fn", "Fn", FLAG_FN);
     addModifierKey("meta", "◆", FLAG_META);
 
