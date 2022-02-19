@@ -15,7 +15,7 @@
   <row>
     <key shift="0.5" key0="a" key1="tab" key2="`" key3="ä"/>
     <key key0="s" key3="ß"/>
-    <key key0="d"/>
+    <key key0="d" key2="£"/>
     <key key0="f" key1="~"/>
     <key key0="g" key3="-"/>
     <key key0="h" key3="+"/>

@@ -173,6 +173,8 @@ final class Config
       case "macron": return KeyValue.FLAG_ACCENT_MACRON;
       case "ring": return KeyValue.FLAG_ACCENT_RING;
       case "szlig": return KeyValue.FLAG_LANG_SZLIG;
+      case "euro": return KeyValue.FLAG_LANG_EURO;
+      case "pound": return KeyValue.FLAG_LANG_POUND;
       case "tilde": return KeyValue.FLAG_ACCENT4;
       case "trema": return KeyValue.FLAG_ACCENT6;
       default: throw new RuntimeException(name);

@@ -56,8 +56,11 @@ class KeyValue
 
   // Language specific keys
   public static final int FLAG_LANG_SZLIG = (1 << 25);
+  public static final int FLAG_LANG_EURO = (1 << 29);
+  public static final int FLAG_LANG_POUND = (1 << 30);
 
-  public static final int FLAGS_LANGS = FLAG_LANG_SZLIG;
+  public static final int FLAGS_LANGS = FLAG_LANG_SZLIG | FLAG_LANG_EURO |
+    FLAG_LANG_POUND;
 
   public static final int FLAGS_NOT_HIDDEN_ACCENTS = FLAG_ACCENT_SUPERSCRIPT |
     FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL;
@@ -148,10 +151,6 @@ class KeyValue
 
   static
   {
-    String chars = "<>&\"_°~{|^}$*:!£%µ?.§€";
-    for (int i = 0; i < chars.length(); i++)
-      addCharKey(chars.charAt(i), EVENT_NONE);
-
     addModifierKey("shift", "\uE808", FLAG_LOCK | FLAG_SHIFT | FLAG_KEY_FONT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL);
     addModifierKey("alt", "Alt", FLAG_ALT);
@@ -224,6 +223,8 @@ class KeyValue
     addCharKey('(', KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
     addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
     addCharKey('ß', EVENT_NONE, FLAG_LANG_SZLIG);
+    addCharKey('€', EVENT_NONE, FLAG_LANG_EURO);
+    addCharKey('£', EVENT_NONE, FLAG_LANG_POUND);
 
     addSpecialKey("config", "⛭", EVENT_CONFIG);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);

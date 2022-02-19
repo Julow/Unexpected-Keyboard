@@ -64,6 +64,8 @@ public class Keyboard2 extends InputMethodService
       String s = subtype.getExtraValueOf("default_layout");
       if (s != null)
         l = Config.layoutId_of_string(s);
+      else
+        l = R.xml.qwerty;
     }
     _currentTextLayout = l;
   }

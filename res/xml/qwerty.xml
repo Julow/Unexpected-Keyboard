@@ -3,7 +3,7 @@
   <row>
     <key key0="q" key1="esc" key2="1" key3="~" key4="!"/>
     <key key0="w" key2="2" key3="\@"/>
-    <key key0="e" key2="3" key3="\#"/>
+    <key key0="e" key2="3" key3="\#" key4="€"/>
     <key key0="r" key2="4" key3="$"/>
     <key key0="t" key2="5" key3="%"/>
     <key key0="y" key2="6" key3="^"/>
@@ -15,7 +15,7 @@
   <row>
     <key shift="0.5" key0="a" key1="tab" key2="`"/>
     <key key0="s" key1="accent_ring" key3="ß"/>
-    <key key0="d" key1="accent_grave" key3="accent_aigu"/>
+    <key key0="d" key1="accent_grave" key2="£" key3="accent_aigu"/>
     <key key0="f"/>
     <key key0="g" key1="accent_caron" key2="-" key3="_"/>
     <key key0="h" key2="=" key3="+"/>
