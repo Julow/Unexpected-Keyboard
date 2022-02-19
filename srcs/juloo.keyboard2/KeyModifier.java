@@ -127,6 +127,7 @@ class KeyModifier
           case '7': return 'ˢ';
           case '8': return 'ᵗ';
           case '9': return 'ʰ';
+          case '*': return '°';
           default: return c;
         }
       case KeyValue.FLAG_ACCENT_SUPERSCRIPT:
