@@ -135,12 +135,20 @@ public final class Pointers implements Handler.Callback
     }
     if (newValue != null && newValue != ptr.value)
     {
-      stopKeyRepeat(ptr);
+      int old_flags = (ptr.value != null) ? ptr.value.flags : 0;
       ptr.value = newValue;
       ptr.flags = newValue.flags;
-      if ((newValue.flags & KeyValue.FLAG_NOREPEAT) == 0)
-        startKeyRepeat(ptr);
-      _handler.onPointerSwipe(newValue);
+      if ((old_flags & newValue.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+      {
+        // Keep the keyrepeat going between modulated keys.
+      }
+      else
+      {
+        stopKeyRepeat(ptr);
+        if ((newValue.flags & KeyValue.FLAG_NOREPEAT) == 0)
+          startKeyRepeat(ptr);
+        _handler.onPointerSwipe(newValue);
+      }
     }
   }
 
@@ -192,12 +200,9 @@ public final class Pointers implements Handler.Callback
       if (ptr.timeoutWhat == msg.what)
       {
         long nextInterval = _config.longPressInterval;
+        // Modulate repeat interval depending on the distance of the pointer
         if (_config.preciseRepeat && (ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
-        {
-          // Modulate repeat interval depending on the distance of the pointer
-          float accel = Math.min(4.f, Math.max(0.3f, ptr.ptrDist / (_config.swipe_dist_px * 15.f)));
-          nextInterval = (long)((float)nextInterval / accel);
-        }
+          nextInterval = (long)((float)nextInterval / modulatePreciseRepeat(ptr));
         _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextInterval);
         _handler.onPointerHold(ptr.value);
         return (true);
@@ -221,7 +226,19 @@ public final class Pointers implements Handler.Callback
     {
       _keyrepeat_handler.removeMessages(ptr.timeoutWhat);
       ptr.timeoutWhat = -1;
+      ptr.repeatingPtrDist = -1.f;
     }
+  }
+
+  private float modulatePreciseRepeat(Pointer ptr)
+  {
+    if (ptr.repeatingPtrDist < 0.f)
+      ptr.repeatingPtrDist = ptr.ptrDist; // First repeat
+    if (ptr.ptrDist > ptr.repeatingPtrDist * 2.f)
+      ptr.repeatingPtrDist = ptr.ptrDist / 2.f; // Large swipe, move the middle point
+    float left = ptr.repeatingPtrDist / 2.f;
+    float accel = (ptr.ptrDist - left) / (ptr.repeatingPtrDist - left);
+    return Math.min(4.f, Math.max(0.1f, accel));
   }
 
   private final class Pointer
@@ -237,6 +254,8 @@ public final class Pointers implements Handler.Callback
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
+    /** ptrDist at the first repeat, -1 otherwise. */
+    public float repeatingPtrDist;
 
     public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y)
     {
@@ -248,6 +267,7 @@ public final class Pointers implements Handler.Callback
       ptrDist = 0.f;
       flags = (v == null) ? 0 : v.flags;
       timeoutWhat = -1;
+      repeatingPtrDist = -1.f;
     }
   }
 

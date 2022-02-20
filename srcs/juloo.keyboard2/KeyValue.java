@@ -245,8 +245,8 @@ class KeyValue
     addEventKey("page_down", "⇟", KeyEvent.KEYCODE_PAGE_DOWN);
     addEventKey("home", "↖", KeyEvent.KEYCODE_MOVE_HOME);
     addEventKey("end", "↗", KeyEvent.KEYCODE_MOVE_END);
-    addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL, FLAG_PRECISE_REPEAT);
-    addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_PRECISE_REPEAT);
+    addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL);
+    addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL);
     addEventKey("insert", "Ins", KeyEvent.KEYCODE_INSERT);
     addEventKey("f1", "F1", KeyEvent.KEYCODE_F1);
     addEventKey("f2", "F2", KeyEvent.KEYCODE_F2);
