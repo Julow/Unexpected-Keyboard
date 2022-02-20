@@ -17,7 +17,7 @@ class KeyValue
   public static final char CHAR_NONE = '\0';
 
   // Behavior flags
-  public static final int FLAG_KEEP_ON = 1;
+  public static final int FLAG_LATCH = 1;
   public static final int FLAG_LOCK = (1 << 1);
   public static final int FLAG_NOREPEAT = (1 << 2);
   public static final int FLAG_NOCHAR = (1 << 3);
@@ -126,7 +126,7 @@ class KeyValue
   private static void addModifierKey(String name, String symbol, int extra_flags)
   {
     addKey(name, symbol, CHAR_NONE, EVENT_NONE,
-        FLAG_KEEP_ON | FLAG_NOCHAR | FLAG_NOREPEAT | extra_flags);
+        FLAG_LATCH | FLAG_NOCHAR | FLAG_NOREPEAT | extra_flags);
   }
 
   private static void addSpecialKey(String name, String symbol, int event)
