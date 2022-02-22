@@ -152,6 +152,7 @@ final class Config
       case "azerty": return R.xml.azerty;
       case "qwerty": return R.xml.qwerty;
       case "qwerty_lv": return R.xml.qwerty_lv;
+      case "qwerty_es": return R.xml.qwerty_es;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
       case "qwertz": return R.xml.qwertz;
       case "bgph1": return R.xml.local_bgph1;
