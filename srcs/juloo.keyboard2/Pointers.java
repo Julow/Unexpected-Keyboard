@@ -200,9 +200,13 @@ public final class Pointers implements Handler.Callback
       if (ptr.timeoutWhat == msg.what)
       {
         long nextInterval = _config.longPressInterval;
-        // Modulate repeat interval depending on the distance of the pointer
         if (_config.preciseRepeat && (ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+        {
+          // Slower repeat for modulated keys
+          nextInterval *= 2;
+          // Modulate repeat interval depending on the distance of the pointer
           nextInterval = (long)((float)nextInterval / modulatePreciseRepeat(ptr));
+        }
         _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextInterval);
         _handler.onPointerHold(ptr.value);
         return (true);
@@ -217,7 +221,11 @@ public final class Pointers implements Handler.Callback
   {
     int what = (uniqueTimeoutWhat++);
     ptr.timeoutWhat = what;
-    _keyrepeat_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
+    long timeout = _config.longPressTimeout;
+    // Faster repeat timeout for modulated keys
+    if ((ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+      timeout /= 2;
+    _keyrepeat_handler.sendEmptyMessageDelayed(what, timeout);
   }
 
   private void stopKeyRepeat(Pointer ptr)
@@ -238,7 +246,7 @@ public final class Pointers implements Handler.Callback
       ptr.repeatingPtrDist = ptr.ptrDist / 2.f; // Large swipe, move the middle point
     float left = ptr.repeatingPtrDist / 2.f;
     float accel = (ptr.ptrDist - left) / (ptr.repeatingPtrDist - left);
-    return Math.min(4.f, Math.max(0.1f, accel));
+    return Math.min(8.f, Math.max(0.1f, accel));
   }
 
   private final class Pointer
