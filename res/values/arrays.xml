@@ -4,6 +4,7 @@
     <item>system</item>
     <item>azerty</item>
     <item>qwerty</item>
+    <item>qwerty_es</item>
     <item>qwerty_lv</item>
     <item>ru_jcuken</item>
     <item>qwertz</item>
@@ -14,6 +15,7 @@
     <item>@string/pref_layout_e_system</item>
     <item>AZERTY</item>
     <item>QWERTY</item>
+    <item>QWERTY (Español)</item>
     <item>QWERTY (Latvian)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>QWERTZ</item>
