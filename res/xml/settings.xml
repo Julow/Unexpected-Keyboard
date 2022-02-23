@@ -9,6 +9,9 @@
     <juloo.common.IntSlideBarPreference android:key="longpress_timeout" android:title="@string/pref_long_timeout_title" android:summary="%sms" android:defaultValue="600" min="50" max="2000"/>
     <juloo.common.IntSlideBarPreference android:key="longpress_interval" android:title="@string/pref_long_interval_title" android:summary="%sms" android:defaultValue="25" min="5" max="100"/>
     <CheckBoxPreference android:key="precise_repeat" android:title="@string/pref_precise_repeat_title" android:summary="@string/pref_precise_repeat_summary" android:defaultValue="true"/>
+    <CheckBoxPreference android:key="lockable_shift" android:title="@string/pref_lockable_shift_title" android:summary="@string/pref_lockable_shift_summary" android:defaultValue="true"/>
+    <CheckBoxPreference android:key="lockable_ctrl" android:title="@string/pref_lockable_ctrl_title" android:summary="@string/pref_lockable_ctrl_summary" android:defaultValue="true"/>
+    <CheckBoxPreference android:key="lockable_alt" android:title="@string/pref_lockable_alt_title" android:summary="@string/pref_lockable_alt_summary" android:defaultValue="true"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_vibrate">
     <CheckBoxPreference android:key="vibrate_enabled" android:title="@string/pref_vibrate_title" android:summary="@string/pref_vibrate_summary" android:defaultValue="true"/>

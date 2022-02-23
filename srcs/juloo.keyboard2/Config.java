@@ -29,6 +29,9 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
+  public boolean lockShift;
+  public boolean lockCtrl;
+  public boolean lockAlt;
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
@@ -60,6 +63,9 @@ final class Config
     keyVerticalInterval = res.getDimension(R.dimen.key_vertical_interval);
     keyHorizontalInterval = res.getDimension(R.dimen.key_horizontal_interval);
     preciseRepeat = true;
+    lockShift = true;
+    lockCtrl = true;
+    lockAlt = true;
     characterSize = 1.f;
     accents = 1;
     // from prefs
@@ -111,6 +117,9 @@ final class Config
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + extra_horizontal_margin;
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
+    lockShift = prefs.getBoolean("lockable_shift", lockShift);
+    lockCtrl = prefs.getBoolean("lockable_ctrl", lockCtrl);
+    lockAlt = prefs.getBoolean("lockable_alt", lockAlt);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));

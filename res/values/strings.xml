@@ -21,6 +21,12 @@
   <string name="pref_vibrate_duration_title">Duration</string>
   <string name="pref_precise_repeat_title">Precise cursor movements</string>
   <string name="pref_precise_repeat_summary">Modulate key repeat speed by swiping more or less</string>
+  <string name="pref_lockable_shift_title">Lock Shift state</string>
+  <string name="pref_lockable_shift_summary">Second click on Shift Lock it on pressed state</string>
+  <string name="pref_lockable_ctrl_title">Lock Ctrl state</string>
+  <string name="pref_lockable_ctrl_summary">Second click on Ctrl Lock it on pressed state</string>
+  <string name="pref_lockable_alt_title">Lock Alt state</string>
+  <string name="pref_lockable_alt_summary">Second click on Alt Lock it on pressed state</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Margin bottom</string>
   <string name="pref_keyboard_height_title">Keyboard height</string>

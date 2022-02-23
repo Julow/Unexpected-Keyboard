@@ -258,17 +258,56 @@ public class Keyboard2View extends View
       if (k_on != null)
       {
         _downKeys.remove(k); // Remove dupplicate
-        // Same key with FLAG_LOCK is already on, do lock
-        if ((k_on.flags & KeyValue.FLAG_LOCK) != 0)
-        {
-          k_on.flags ^= KeyValue.FLAG_LOCK; // Next time, disable it
-          k_on.flags |= KeyValue.FLAG_LOCKED;
-        }
-        // Otherwise, toggle it
-        else
-        {
-          _downKeys.remove(k_on);
-        }
+        
+        // Shift, Ctrl and Alt have dedicated LOCK preference settings, check them first
+        switch (k.value.name)
+          {
+            case "shift":
+              if (_config.lockShift && ((k_on.flags & KeyValue.FLAG_LOCK) != 0))
+              {
+                k_on.flags ^= KeyValue.FLAG_LOCK; // Next time, disable it
+                k_on.flags |= KeyValue.FLAG_LOCKED;
+              }
+              else
+                {
+                  _downKeys.remove(k_on);
+                }
+              break ;
+            case "ctrl":
+              if (_config.lockCtrl && ((k_on.flags & KeyValue.FLAG_LOCK) != 0))
+              {
+                k_on.flags ^= KeyValue.FLAG_LOCK; // Next time, disable it
+                k_on.flags |= KeyValue.FLAG_LOCKED;
+              }
+              else
+                {
+                  _downKeys.remove(k_on);
+                }
+              break ;
+            case "alt":
+              if (_config.lockAlt && ((k_on.flags & KeyValue.FLAG_LOCK) != 0))
+              {
+                k_on.flags ^= KeyValue.FLAG_LOCK; // Next time, disable it
+                k_on.flags |= KeyValue.FLAG_LOCKED;
+              }
+              else
+                {
+                  _downKeys.remove(k_on);
+                }
+              break ;
+            default:
+              // Same key with FLAG_LOCK is already on, do lock
+              if ((k_on.flags & KeyValue.FLAG_LOCK) != 0)
+                {
+                  k_on.flags ^= KeyValue.FLAG_LOCK; // Next time, disable it
+                  k_on.flags |= KeyValue.FLAG_LOCKED;
+                }
+              // Otherwise, toggle it
+              else
+                {
+                  _downKeys.remove(k_on);
+                }
+          }
       }
       // Key stay activated
       else if ((k.flags & KeyValue.FLAG_KEEP_ON) != 0)
