@@ -1,3 +1,0 @@
-- Ajout de l'Espagnol et l'Italien
-- Nouvel emplacement pour les accents (encore) et ajout de nouveaux caratères
-- Correction de bugs (un crash sur d'anciennes versions d'Android et un rare glitch graphique après une rotation)

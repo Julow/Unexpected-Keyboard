@@ -113,6 +113,23 @@ class KeyModifier
         {
           default: return (char)KeyCharacterMap.getDeadChar('\u00AF', c);
         }
+      case KeyValue.FLAG_ACCENT_ORDINAL:
+        switch (c)
+        {
+          case 'a': return 'ª';
+          case 'o': return 'º';
+          case '1': return 'ª';
+          case '2': return 'º';
+          case '3': return 'ⁿ';
+          case '4': return 'ᵈ';
+          case '5': return 'ᵉ';
+          case '6': return 'ʳ';
+          case '7': return 'ˢ';
+          case '8': return 'ᵗ';
+          case '9': return 'ʰ';
+          case '*': return '°';
+          default: return c;
+        }
       case KeyValue.FLAG_ACCENT_SUPERSCRIPT:
         switch (c)
         {

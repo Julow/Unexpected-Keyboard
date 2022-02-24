@@ -64,6 +64,8 @@ public class Keyboard2 extends InputMethodService
       String s = subtype.getExtraValueOf("default_layout");
       if (s != null)
         l = Config.layoutId_of_string(s);
+      else
+        l = R.xml.qwerty;
     }
     _currentTextLayout = l;
   }
@@ -254,14 +256,12 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(getLayout(res_id));
     }
 
-    public void sendKeyEvent(int eventCode, int meta)
+    public void sendKeyEvent(int eventAction, int eventCode, int meta)
     {
       InputConnection conn = getCurrentInputConnection();
       if (conn == null)
         return;
-      KeyEvent event = new KeyEvent(1, 1, KeyEvent.ACTION_DOWN, eventCode, 0, meta);
-      conn.sendKeyEvent(event);
-      conn.sendKeyEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+      conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
     }
 
     public void showKeyboardConfig()

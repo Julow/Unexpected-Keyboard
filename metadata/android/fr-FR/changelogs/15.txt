@@ -1,8 +1,0 @@
-Nouvelle langue : Allemand
-
-Nouvelle configuration du clavier : QWERTZ
-
-Thèmes : Clair, Sombre et Noir OLED
-
-Ajout de la touche Action, à côté de la touche Entrer, nécessaire pour certaines applications.
-Amélioration des options et résolution de bugs.
