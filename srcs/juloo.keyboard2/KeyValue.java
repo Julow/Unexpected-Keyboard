@@ -226,25 +226,24 @@ class KeyValue
     addCharKey('€', EVENT_NONE, FLAG_LANG_EURO);
     addCharKey('£', EVENT_NONE, FLAG_LANG_POUND);
 
-    addSpecialKey("config", "⛭", EVENT_CONFIG);
+    addSpecialKey("config", "\uE806", EVENT_CONFIG, FLAG_KEY_FONT);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
     addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC);
-    addSpecialKey("switch_emoji", "☻", EVENT_SWITCH_EMOJI);
+    addSpecialKey("switch_emoji", "\uE812" , EVENT_SWITCH_EMOJI, FLAG_KEY_FONT);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "\ue807", EVENT_CHANGE_METHOD, FLAG_KEY_FONT);
     addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE);
-    // Enter should be '\u23CE' but using what is in the font file at the moment
     addEventKey("enter", "\ue800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
     addEventKey("up", "\uE80B", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("right", "\uE80C", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("down", "\uE809", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
     addEventKey("left", "\uE80A", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addEventKey("page_up", "⇞", KeyEvent.KEYCODE_PAGE_UP);
-    addEventKey("page_down", "⇟", KeyEvent.KEYCODE_PAGE_DOWN);
-    addEventKey("home", "↖", KeyEvent.KEYCODE_MOVE_HOME);
-    addEventKey("end", "↗", KeyEvent.KEYCODE_MOVE_END);
+    addEventKey("page_up", "\uE810", KeyEvent.KEYCODE_PAGE_UP, FLAG_KEY_FONT);
+    addEventKey("page_down", "\uE811", KeyEvent.KEYCODE_PAGE_DOWN, FLAG_KEY_FONT);
+    addEventKey("home", "\uE80E", KeyEvent.KEYCODE_MOVE_HOME, FLAG_KEY_FONT);
+    addEventKey("end", "\uE80F", KeyEvent.KEYCODE_MOVE_END, FLAG_KEY_FONT);
     addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL);
     addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL);
     addEventKey("insert", "Ins", KeyEvent.KEYCODE_INSERT);
