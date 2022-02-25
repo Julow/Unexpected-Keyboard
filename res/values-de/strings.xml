@@ -21,10 +21,10 @@
   <string name="pref_vibrate_duration_title">Dauer</string>
   <string name="pref_precise_repeat_title">Präzise Cursorsteuerung</string>
   <string name="pref_precise_repeat_summary">Geschwindigkeit der Tastenwiederholung durch weniger oder mehr Wischen anpassen</string>
-  <string name="pref_category_style">Style</string>
-  <string name="pref_margin_bottom_title">Margin bottom</string>
-  <string name="pref_keyboard_height_title">Keyboard height</string>
-  <string name="pref_horizontal_margin_title">Horizontal margin</string>
+  <string name="pref_category_style">Design</string>
+  <string name="pref_margin_bottom_title">Unterer Abstand</string>
+  <string name="pref_keyboard_height_title">Höhe der Tastatur</string>
+  <string name="pref_horizontal_margin_title">Horizontaler Abstand</string>
   <string name="pref_character_size_title">Größe der Beschriftung</string> 
   <string name="pref_character_size_summary">Größe der Buchstaben auf den Tasten (%.2fx)</string>
   <string name="pref_theme">Theme</string>
