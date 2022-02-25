@@ -26,7 +26,7 @@
   <string name="pref_keyboard_height_title">Keyboard height</string>
   <string name="pref_horizontal_margin_title">Horizontal margin</string>
   <string name="pref_character_size_title">Label size</string>
-  <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
+  <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx) \r\nA value greater than 1.2 is intended for big screens,ex tablets</string>
   <string name="pref_theme">Theme</string>
   <string name="pref_theme_e_system">System settings</string>
   <string name="pref_theme_e_dark">Dark</string>
