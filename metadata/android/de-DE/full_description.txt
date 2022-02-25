@@ -1,0 +1,17 @@
+Diese App ist eine virtuelle Tastatur für Android. Die Hauptfunktionen sind das einfache Tippen eines jeden ASCII-Zeichens durch Wischgesten, Tottasten für Akzente und Hilfstasten sowie das Vorhandensein spezieller Tasten (Tabulator, Esc, Pfeiltasten etc.). 
+
+Die Tastatur hat bis zu vier Extrazeichen in den Ecken jeder Taste. Diese Extrazeichen werden durch das Wischen mit dem Finger auf der Taste gedrückt.
+
+Highlights mancher Funktionen:
+
+- Jedes Zeichen und jede spezielle Taste gibt es auch auf einer PC-Tastatur. Das ist perfekt für die Nutzung von Anwendungen wie Termux.
+
+- Das schließt auch Tab, Esc und die Pfeil- und Funktionstasten sowie Strg und Alt mit ein!
+
+- Akzenttasten sind über Tottasten verfügbar. Nach Aktivieren des Akzents kan der akzentuierte Buchstabe gedrückt werden. 
+
+- Sehr schlank und schnell. Braucht 500x weniger Speicherplatz als Googles Tastatur und 15x weniger als die Standardtastatur. Keine Werbung, kein Tracking.
+
+- Verschiedene Layouts: QWERTY, QWERTZ, AZERTY. Themes: Weiß, Dunkel, OLED Schwarz. Sowie viele weitere Optionen.
+
+Wie jede andere virtuelle Tastatur muss diese Tastatur in den Systemeinstellungen aktiviert werden. Dazu Systemeinstellungen öffnen und zu System > Sprachen und Eingabe > Bildschirmtastatur > Bildschirmtastaturen verwalten navigieren. 
