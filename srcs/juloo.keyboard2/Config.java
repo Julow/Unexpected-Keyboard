@@ -64,8 +64,8 @@ final class Config
     keyHorizontalInterval = res.getDimension(R.dimen.key_horizontal_interval);
     preciseRepeat = true;
     lockShift = true;
-    lockCtrl = true;
-    lockAlt = true;
+    lockCtrl = false;
+    lockAlt = false;
     characterSize = 1.f;
     accents = 1;
     // from prefs
