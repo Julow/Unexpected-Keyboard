@@ -237,29 +237,28 @@ public class Keyboard2View extends View
         canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
             isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
         if (k.key0 != null)
-          drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + scaleTextSize(k.key0, _config.labelTextSize)) / 2f + y, isKeyDown);
-        float subPadding = _config.keyPadding;
+          drawLabel(canvas, k.key0, keyW / 2f + x, y, keyH, isKeyDown);
         if (k.edgekeys)
         {
           if (k.key1 != null) // top key
-            drawSubLabel(canvas, k.key1, x + keyW / 2f, y + subPadding, Paint.Align.CENTER, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.TOP, isKeyDown);
           if (k.key3 != null) // left key
-            drawSubLabel(canvas, k.key3, x + subPadding, y + keyH / 2f, Paint.Align.LEFT, Vertical.CENTER, isKeyDown);
+            drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.CENTER, isKeyDown);
           if (k.key2 != null) // right key
-            drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + keyH / 2f, Paint.Align.RIGHT, Vertical.CENTER, isKeyDown);
+            drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.CENTER, isKeyDown);
           if (k.key4 != null) // bottom key
-            drawSubLabel(canvas, k.key4, x + keyW / 2f, y + keyH - subPadding, Paint.Align.CENTER, Vertical.BOTTOM, isKeyDown);
+            drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.BOTTOM, isKeyDown);
         }
         else
         {
           if (k.key1 != null) // top left key
-            drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding, Paint.Align.LEFT, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.TOP, isKeyDown);
           if (k.key3 != null) // bottom left key
-            drawSubLabel(canvas, k.key3, x + subPadding, y + keyH - subPadding, Paint.Align.LEFT, Vertical.BOTTOM, isKeyDown);
+            drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.BOTTOM, isKeyDown);
           if (k.key2 != null) // top right key
-            drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
           if (k.key4 != null) // bottom right key
-            drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
+            drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
         }
         x += _keyWidth * k.width;
       }
@@ -289,31 +288,38 @@ public class Keyboard2View extends View
     return defaultColor;
   }
 
-  private void drawLabel(Canvas canvas, KeyValue k, float x, float y, boolean isKeyDown)
+  private void drawLabel(Canvas canvas, KeyValue k, float x, float y, float keyH, boolean isKeyDown)
   {
+    float textSize = scaleTextSize(k, _config.labelTextSize, keyH);
     k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.labelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0));
     p.setColor(labelColor(k, isKeyDown, _theme.labelColor));
-    p.setTextSize(scaleTextSize(k, _config.labelTextSize));
-    canvas.drawText(k.symbol, x, y, p);
+    p.setTextSize(textSize);
+    canvas.drawText(k.symbol, x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, Paint.Align a, Vertical v, boolean isKeyDown)
+  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
   {
+    float textSize = scaleTextSize(k, _config.sublabelTextSize, keyH);
     k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), a);
     p.setColor(labelColor(k, isKeyDown, _theme.subLabelColor));
-    p.setTextSize(scaleTextSize(k, _config.sublabelTextSize));
+    p.setTextSize(textSize);
+    float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
-      y -= (p.ascent() + p.descent()) / 2f;
+      y += (keyH - p.ascent() - p.descent()) / 2f;
     else
-      y -= (v == Vertical.TOP) ? p.ascent() : p.descent();
+      y += (v == Vertical.TOP) ? subPadding - p.ascent() : keyH - subPadding - p.descent();
+    if (a == Paint.Align.CENTER)
+      x += keyW / 2f;
+    else
+      x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
     canvas.drawText(k.symbol, x, y, p);
   }
 
-  private float scaleTextSize(KeyValue k, float rel_size)
+  private float scaleTextSize(KeyValue k, float rel_size, float keyH)
   {
     float smaller_if_long = (k.symbol.length() < 2) ? 1.f : 0.75f;
-    return _config.keyHeight * rel_size * smaller_if_long * _config.characterSize;
+    return keyH * rel_size * smaller_if_long * _config.characterSize;
   }
 }
