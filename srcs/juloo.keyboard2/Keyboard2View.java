@@ -237,7 +237,7 @@ public class Keyboard2View extends View
         canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
             isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
         if (k.key0 != null)
-          drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _theme.labelTextSize) / 2f + y, isKeyDown);
+          drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + scaleTextSize(k.key0, _config.labelTextSize)) / 2f + y, isKeyDown);
         float subPadding = _config.keyPadding;
         if (k.edgekeys)
         {
@@ -294,7 +294,7 @@ public class Keyboard2View extends View
     k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.labelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0));
     p.setColor(labelColor(k, isKeyDown, _theme.labelColor));
-    p.setTextSize(_theme.labelTextSize * scaleTextSize(k));
+    p.setTextSize(scaleTextSize(k, _config.labelTextSize));
     canvas.drawText(k.symbol, x, y, p);
   }
 
@@ -303,7 +303,7 @@ public class Keyboard2View extends View
     k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), a);
     p.setColor(labelColor(k, isKeyDown, _theme.subLabelColor));
-    p.setTextSize(_theme.sublabelTextSize * scaleTextSize(k));
+    p.setTextSize(scaleTextSize(k, _config.sublabelTextSize));
     if (v == Vertical.CENTER)
       y -= (p.ascent() + p.descent()) / 2f;
     else
@@ -311,8 +311,9 @@ public class Keyboard2View extends View
     canvas.drawText(k.symbol, x, y, p);
   }
 
-  private float scaleTextSize(KeyValue k)
+  private float scaleTextSize(KeyValue k, float rel_size)
   {
-    return ((k.symbol.length() < 2) ? 1.f : 0.8f) * _config.characterSize;
+    float smaller_if_long = (k.symbol.length() < 2) ? 1.f : 0.75f;
+    return _config.keyHeight * rel_size * smaller_if_long * _config.characterSize;
   }
 }
