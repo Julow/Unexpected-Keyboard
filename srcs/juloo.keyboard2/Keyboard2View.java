@@ -319,7 +319,7 @@ public class Keyboard2View extends View
 
   private float scaleTextSize(KeyValue k, float rel_size, float keyH)
   {
-    float smaller_if_long = (k.symbol.length() < 2) ? 1.f : 0.75f;
-    return keyH * rel_size * smaller_if_long * _config.characterSize;
+    float smaller_font = ((k.flags & KeyValue.FLAG_SMALLER_FONT) == 0) ? 1.f : 0.75f;
+    return keyH * rel_size * smaller_font * _config.characterSize;
   }
 }
