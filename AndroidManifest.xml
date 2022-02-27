@@ -8,7 +8,7 @@
       </intent-filter>
       <meta-data android:name="android.view.im" android:resource="@xml/method"/>
     </service>
-    <activity android:name="juloo.keyboard2.SettingsActivity" android:icon="@drawable/ic_launcher" android:label="@string/settings_activity_label">
+    <activity android:name="juloo.keyboard2.SettingsActivity" android:icon="@drawable/ic_launcher" android:label="@string/settings_activity_label" android:theme="@style/android:Theme.Material">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
       </intent-filter>
