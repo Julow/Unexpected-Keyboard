@@ -2,7 +2,7 @@ Um teclado virtual para aparelhos Android. Os recursos principais são facilidad
 
 O teclado mostra até 4 caracteres extras nos cantos de cada tecla. Esses caracteres são digitáveis com o deslizar do dedo na tecla.
 
-Alguns dos recuros interessantes:
+Alguns dos recursos interessantes:
 
 - Todos caracteres e teclas especiais que também estão disponíveis num teclado de PC. Perfeito para usar com aplicativos como Termux.
 
