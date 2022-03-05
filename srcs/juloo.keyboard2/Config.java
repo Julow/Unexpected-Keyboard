@@ -8,6 +8,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 
 final class Config
 {
@@ -116,6 +117,36 @@ final class Config
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
+  }
+
+  /** Update the layout according to the configuration.
+   *  - Remove the switching key if it isn't needed
+   *  - Remove keys from other locales
+   *  - Replace the action key to show the right label
+   *  - Swap the enter and action keys
+   */
+  public KeyboardData modify_layout(KeyboardData kw)
+  {
+    KeyValue action_key = (actionLabel == null) ? null :
+      new KeyValue(actionLabel, actionLabel, KeyValue.CHAR_NONE,
+          KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
+    return kw.replaceKeys(key -> {
+      if (key == null)
+        return null;
+      switch (key.eventCode)
+      {
+        case KeyValue.EVENT_CHANGE_METHOD:
+          return shouldOfferSwitchingToNextInputMethod ? key : null;
+        case KeyEvent.KEYCODE_ENTER:
+          return (swapEnterActionKey && action_key != null) ? action_key : key;
+        case KeyValue.EVENT_ACTION:
+          return (swapEnterActionKey && action_key != null) ?
+            KeyValue.getKeyByName("enter") : action_key;
+        default:
+          if ((key.flags & key_flags_to_remove) != 0)
+            return null;
+          return key;
+      }});
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)

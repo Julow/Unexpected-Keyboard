@@ -51,7 +51,6 @@ class KeyValue
   public static final int FLAG_ACCENT_MACRON = (1 << 27);
   public static final int FLAG_ACCENT_ORDINAL = (1 << 28);
 
-
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
     FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |

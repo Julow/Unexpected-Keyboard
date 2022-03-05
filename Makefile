@@ -3,7 +3,7 @@
 PACKAGE_NAME = juloo.keyboard2
 
 ANDROID_PLATFORM_VERSION = android-30
-JAVA_VERSION = 1.7
+JAVA_VERSION = 1.8
 
 SRC_DIR = srcs
 ASSETS_DIR = assets
