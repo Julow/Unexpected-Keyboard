@@ -176,7 +176,6 @@ public class Keyboard2 extends InputMethodService
       _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
       _emojiPane = null;
     }
-    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
   }
 
   @Override
@@ -186,6 +185,8 @@ public class Keyboard2 extends InputMethodService
     refreshEditorInfo(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
+    else
+      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     setInputView(_keyboardView);
   }
 
