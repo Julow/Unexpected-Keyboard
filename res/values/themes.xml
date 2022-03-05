@@ -24,16 +24,16 @@
   <style name="Dark">
     <item name="android:isLightTheme">false</item>
     <item name="android:forceDarkAllowed">false</item>
-    <item name="colorKeyboard">#1B1B1B</item>
-    <item name="colorKey">#303030</item>
-    <item name="colorKeyActivated">#1B1B1B</item>
-    <item name="colorLabel">#FFFFFF</item>
-    <item name="colorLabelActivated">#226b99</item>
-    <item name="colorLabelLocked">#229933</item>
-    <item name="colorSubLabel">#A0A0A0</item>
+    <item name="colorKeyboard">#1b1b1b</item>
+    <item name="colorKey">#333333</item>
+    <item name="colorKeyActivated">#1b1b1b</item>
+    <item name="colorLabel">#ffffff</item>
+    <item name="colorLabelActivated">#3399ff</item>
+    <item name="colorLabelLocked">#33cc33</item>
+    <item name="colorSubLabel">#cccccc</item>
     <item name="keyBorderRadius">5dp</item>
     <item name="emoji_button_bg" type="color">#202020</item>
-    <item name="emoji_color" type="color">#FFFFFF</item>
+    <item name="emoji_color" type="color">#ffffff</item>
     <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
     <item name="emoji_key_text" type="color">?attr/colorLabel</item>
   </style>
@@ -41,12 +41,12 @@
     <item name="android:isLightTheme">true</item>
     <item name="android:forceDarkAllowed">false</item>
     <item name="colorKeyboard">#e3e3e3</item>
-    <item name="colorKey">#cfcfcf</item>
+    <item name="colorKey">#cccccc</item>
     <item name="colorKeyActivated">#e3e3e3</item>
     <item name="colorLabel">#000000</item>
-    <item name="colorLabelActivated">#64afdd</item>
-    <item name="colorLabelLocked">#64dd76</item>
-    <item name="colorSubLabel">#5e5e5e</item>
+    <item name="colorLabelActivated">#0066cc</item>
+    <item name="colorLabelLocked">#33cc33</item>
+    <item name="colorSubLabel">#333333</item>
     <item name="keyBorderRadius">5dp</item>
     <item name="emoji_button_bg" type="color">#dedede</item>
     <item name="emoji_color" type="color">#000000</item>

@@ -1,0 +1,5 @@
+Improved text size, especially on large screens
+Increased contrasts
+Improved symbols (thanks @sdrapha)
+German translation (thanks @polyctena)
+Fix to some layouts.

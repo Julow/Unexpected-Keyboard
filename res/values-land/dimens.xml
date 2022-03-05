@@ -4,7 +4,8 @@
   <dimen name="margin_bottom">3dp</dimen>
   <dimen name="key_padding">3dp</dimen>
   <dimen name="key_height">36dp</dimen>
-  <dimen name="label_text_size">18dp</dimen>
-  <dimen name="sublabel_text_size">11dp</dimen>
+  <item name="label_text_size" type="integer" format="float">0.4</item>
+  <item name="sublabel_text_size" type="integer" format="float">0.3</item>
   <dimen name="emoji_type_button_height">48dp</dimen>
+  <dimen name="extra_horizontal_margin">20dp</dimen>
 </resources>

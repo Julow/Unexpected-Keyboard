@@ -55,28 +55,7 @@ public class Keyboard2View extends View
 
   public void setKeyboard(KeyboardData kw)
   {
-    if (!_config.shouldOfferSwitchingToNextInputMethod)
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_CHANGE_METHOD, null));
-    if (_config.key_flags_to_remove != 0)
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByFlags(_config.key_flags_to_remove, null));
-    // Replace the action key to show the right label.
-    KeyValue action_key = null; 
-    if (_config.actionLabel != null)
-    {
-      action_key = new KeyValue(_config.actionLabel, _config.actionLabel,
-          KeyValue.CHAR_NONE, KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
-    }
-    if (_config.swapEnterActionKey && action_key != null)
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByEvent2(KeyEvent.KEYCODE_ENTER,
-            action_key, KeyValue.EVENT_ACTION,
-            KeyValue.getKeyByName("enter")));
-    else
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_ACTION, action_key));
-    _keyboard = kw;
+    _keyboard = _config.modify_layout(kw);
     reset();
   }
 
@@ -237,29 +216,28 @@ public class Keyboard2View extends View
         canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
             isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
         if (k.key0 != null)
-          drawLabel(canvas, k.key0, keyW / 2f + x, (keyH + _theme.labelTextSize) / 2f + y, isKeyDown);
-        float subPadding = _config.keyPadding;
+          drawLabel(canvas, k.key0, keyW / 2f + x, y, keyH, isKeyDown);
         if (k.edgekeys)
         {
           if (k.key1 != null) // top key
-            drawSubLabel(canvas, k.key1, x + keyW / 2f, y + subPadding, Paint.Align.CENTER, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.TOP, isKeyDown);
           if (k.key3 != null) // left key
-            drawSubLabel(canvas, k.key3, x + subPadding, y + keyH / 2f, Paint.Align.LEFT, Vertical.CENTER, isKeyDown);
+            drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.CENTER, isKeyDown);
           if (k.key2 != null) // right key
-            drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + keyH / 2f, Paint.Align.RIGHT, Vertical.CENTER, isKeyDown);
+            drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.CENTER, isKeyDown);
           if (k.key4 != null) // bottom key
-            drawSubLabel(canvas, k.key4, x + keyW / 2f, y + keyH - subPadding, Paint.Align.CENTER, Vertical.BOTTOM, isKeyDown);
+            drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.BOTTOM, isKeyDown);
         }
         else
         {
           if (k.key1 != null) // top left key
-            drawSubLabel(canvas, k.key1, x + subPadding, y + subPadding, Paint.Align.LEFT, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.TOP, isKeyDown);
           if (k.key3 != null) // bottom left key
-            drawSubLabel(canvas, k.key3, x + subPadding, y + keyH - subPadding, Paint.Align.LEFT, Vertical.BOTTOM, isKeyDown);
+            drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.BOTTOM, isKeyDown);
           if (k.key2 != null) // top right key
-            drawSubLabel(canvas, k.key2, x + keyW - subPadding, y + subPadding, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
           if (k.key4 != null) // bottom right key
-            drawSubLabel(canvas, k.key4, x + keyW - subPadding, y + keyH - subPadding, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
+            drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
         }
         x += _keyWidth * k.width;
       }
@@ -289,30 +267,38 @@ public class Keyboard2View extends View
     return defaultColor;
   }
 
-  private void drawLabel(Canvas canvas, KeyValue k, float x, float y, boolean isKeyDown)
+  private void drawLabel(Canvas canvas, KeyValue k, float x, float y, float keyH, boolean isKeyDown)
   {
+    float textSize = scaleTextSize(k, _config.labelTextSize, keyH);
     k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.labelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0));
     p.setColor(labelColor(k, isKeyDown, _theme.labelColor));
-    p.setTextSize(_theme.labelTextSize * scaleTextSize(k));
-    canvas.drawText(k.symbol, x, y, p);
+    p.setTextSize(textSize);
+    canvas.drawText(k.symbol, x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, Paint.Align a, Vertical v, boolean isKeyDown)
+  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
   {
+    float textSize = scaleTextSize(k, _config.sublabelTextSize, keyH);
     k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), a);
     p.setColor(labelColor(k, isKeyDown, _theme.subLabelColor));
-    p.setTextSize(_theme.sublabelTextSize * scaleTextSize(k));
+    p.setTextSize(textSize);
+    float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
-      y -= (p.ascent() + p.descent()) / 2f;
+      y += (keyH - p.ascent() - p.descent()) / 2f;
     else
-      y -= (v == Vertical.TOP) ? p.ascent() : p.descent();
+      y += (v == Vertical.TOP) ? subPadding - p.ascent() : keyH - subPadding - p.descent();
+    if (a == Paint.Align.CENTER)
+      x += keyW / 2f;
+    else
+      x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
     canvas.drawText(k.symbol, x, y, p);
   }
 
-  private float scaleTextSize(KeyValue k)
+  private float scaleTextSize(KeyValue k, float rel_size, float keyH)
   {
-    return ((k.symbol.length() < 2) ? 1.f : 0.8f) * _config.characterSize;
+    float smaller_font = ((k.flags & KeyValue.FLAG_SMALLER_FONT) == 0) ? 1.f : 0.75f;
+    return keyH * rel_size * smaller_font * _config.characterSize;
   }
 }

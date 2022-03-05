@@ -8,12 +8,16 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 
 final class Config
 {
   // From resources
   public final float marginTop;
   public final float keyPadding;
+
+  public final float labelTextSize;
+  public final float sublabelTextSize;
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
@@ -51,6 +55,8 @@ final class Config
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
+    labelTextSize = res.getFloat(R.integer.label_text_size);
+    sublabelTextSize = res.getFloat(R.integer.sublabel_text_size);
     // default values
     layout = -1;
     vibrateEnabled = true;
@@ -91,16 +97,13 @@ final class Config
     // is not the actual size of the keyboard, which will be bigger if the
     // layout has a fifth row. 
     int keyboardHeightPercent;
-    float extra_horizontal_margin;
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
       keyboardHeightPercent = 55;
-      extra_horizontal_margin = res.getDimension(R.dimen.landscape_extra_horizontal_margin);
     }
     else
     {
       keyboardHeightPercent = prefs.getInt("keyboard_height", 35);
-      extra_horizontal_margin = 0.f;
     }
     layout = layoutId_of_string(prefs.getString("layout", "system"));
     swipe_dist_dp = Float.valueOf(prefs.getString("swipe_dist", "15"));
@@ -115,7 +118,7 @@ final class Config
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
-    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + extra_horizontal_margin;
+    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     lockShift = prefs.getBoolean("lockable_shift", lockShift);
     lockCtrl = prefs.getBoolean("lockable_ctrl", lockCtrl);
@@ -123,6 +126,36 @@ final class Config
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
+  }
+
+  /** Update the layout according to the configuration.
+   *  - Remove the switching key if it isn't needed
+   *  - Remove keys from other locales
+   *  - Replace the action key to show the right label
+   *  - Swap the enter and action keys
+   */
+  public KeyboardData modify_layout(KeyboardData kw)
+  {
+    KeyValue action_key = (actionLabel == null) ? null :
+      new KeyValue(actionLabel, actionLabel, KeyValue.CHAR_NONE,
+          KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
+    return kw.replaceKeys(key -> {
+      if (key == null)
+        return null;
+      switch (key.eventCode)
+      {
+        case KeyValue.EVENT_CHANGE_METHOD:
+          return shouldOfferSwitchingToNextInputMethod ? key : null;
+        case KeyEvent.KEYCODE_ENTER:
+          return (swapEnterActionKey && action_key != null) ? action_key : key;
+        case KeyValue.EVENT_ACTION:
+          return (swapEnterActionKey && action_key != null) ?
+            KeyValue.getKeyByName("enter") : action_key;
+        default:
+          if ((key.flags & key_flags_to_remove) != 0)
+            return null;
+          return key;
+      }});
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)

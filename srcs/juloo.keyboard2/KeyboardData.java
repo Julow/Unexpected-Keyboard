@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 class KeyboardData
 {
@@ -184,7 +185,8 @@ class KeyboardData
 
     public Key replaceKeys(MapKeys f)
     {
-      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift, edgekeys);
+      return new Key(f.apply(key0), f.apply(key1), f.apply(key2),
+          f.apply(key3), f.apply(key4), width, shift, edgekeys);
     }
 
     /** New key with the width multiplied by 's'. */
@@ -194,70 +196,7 @@ class KeyboardData
     }
   }
 
-  public static abstract interface MapKeys
-  {
-    public abstract KeyValue map(KeyValue k);
-  }
-
-  public static class ReplaceKeysByFlags implements MapKeys
-  {
-    private final int _flags;
-    private final KeyValue _replacement;
-
-    public ReplaceKeysByFlags(int flags, KeyValue r)
-    {
-      _flags = flags;
-      _replacement = r;
-    }
-
-    public KeyValue map(KeyValue k)
-    {
-      return (k != null && (k.flags & _flags) != 0) ? _replacement : k;
-    }
-  }
-
-  public static class ReplaceKeysByEvent implements MapKeys
-  {
-    private final int _eventCode;
-    private final KeyValue _replacement;
-
-    public ReplaceKeysByEvent(int ev, KeyValue r)
-    {
-      _eventCode = ev;
-      _replacement = r;
-    }
-
-    public KeyValue map(KeyValue k)
-    {
-      return (k != null && k.eventCode == _eventCode) ? _replacement : k;
-    }
-  }
-
-  /* Replace two keys at the same time. Used for swaping keys. */
-  public static class ReplaceKeysByEvent2 implements MapKeys
-  {
-    private final int _e1;
-    private final KeyValue _r1;
-    private final int _e2;
-    private final KeyValue _r2;
-
-    public ReplaceKeysByEvent2(int e1, KeyValue r1, int e2, KeyValue r2)
-    {
-      _e1 = e1;
-      _r1 = r1;
-      _e2 = e2;
-      _r2 = r2;
-    }
-
-    public KeyValue map(KeyValue k)
-    {
-      if (k == null)
-        return null;
-      if (k.eventCode == _e1) return _r1;
-      if (k.eventCode == _e2) return _r2;
-      return k;
-    }
-  }
+  public static abstract interface MapKeys extends Function<KeyValue, KeyValue> { }
 
   /** Parsing utils */
 
