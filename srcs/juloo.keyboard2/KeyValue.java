@@ -87,6 +87,11 @@ class KeyValue
     return new KeyValue(name, s, c, eventCode, flags);
   }
 
+  public KeyValue withFlags(int f)
+  {
+    return new KeyValue(name, symbol, char_, eventCode, f);
+  }
+
   private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
   public KeyValue(String n, String s, char c, int e, int f)
@@ -154,7 +159,7 @@ class KeyValue
   static
   {
     addModifierKey("shift", "\uE808",
-        FLAG_LOCK | FLAG_SHIFT | FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+        FLAG_SHIFT | FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL | FLAG_SMALLER_FONT);
     addModifierKey("alt", "Alt", FLAG_ALT | FLAG_SMALLER_FONT);
     addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2);

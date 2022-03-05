@@ -33,6 +33,7 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
+  public int lockable_modifiers;
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
@@ -114,6 +115,12 @@ final class Config
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
+    lockable_modifiers =
+      (prefs.getBoolean("lockable_shift", true) ? KeyValue.FLAG_SHIFT : 0)
+      | (prefs.getBoolean("lockable_ctrl", false) ? KeyValue.FLAG_CTRL : 0)
+      | (prefs.getBoolean("lockable_alt", false) ? KeyValue.FLAG_ALT : 0)
+      | (prefs.getBoolean("lockable_fn", false) ? KeyValue.FLAG_FN : 0)
+      | (prefs.getBoolean("lockable_meta", false) ? KeyValue.FLAG_META : 0);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
@@ -143,8 +150,13 @@ final class Config
           return (swapEnterActionKey && action_key != null) ?
             KeyValue.getKeyByName("enter") : action_key;
         default:
-          if ((key.flags & key_flags_to_remove) != 0)
-            return null;
+          if (key.flags != 0)
+          {
+            if ((key.flags & key_flags_to_remove) != 0)
+              return null;
+            if ((key.flags & lockable_modifiers) != 0)
+              return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
+          }
           return key;
       }});
   }
