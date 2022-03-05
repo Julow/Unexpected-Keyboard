@@ -70,57 +70,16 @@ public final class Pointers implements Handler.Callback
     if (latched != null) // Already latched
     {
       removePtr(ptr); // Remove dupplicate
-      // Shift, Ctrl and Alt have dedicated LOCK preference settings, check them first
-      switch (ptr.value.name)
-          {
-            case "shift":
-              if (_config.lockShift && ((latched.flags & KeyValue.FLAG_LOCK) != 0))  // Locking key, toggle lock
-              {
-                latched.flags = (latched.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
-                _handler.onPointerFlagsChanged();
-              }
-              else  // Otherwise, unlatch
-                {
-                  removePtr(latched);
-                  _handler.onPointerUp(ptr.value);
-                }
-              break ;
-            case "ctrl":
-              if (_config.lockCtrl && ((latched.flags & KeyValue.FLAG_LOCK) != 0))  // Locking key, toggle lock
-              {
-                latched.flags = (latched.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
-                _handler.onPointerFlagsChanged();
-              }
-              else  // Otherwise, unlatch
-                {
-                  removePtr(latched);
-                  _handler.onPointerUp(ptr.value);
-                }
-              break ;
-            case "alt":
-              if (_config.lockAlt && ((latched.flags & KeyValue.FLAG_LOCK) != 0))  // Locking key, toggle lock
-              {
-                latched.flags = (latched.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
-                _handler.onPointerFlagsChanged();
-              }
-              else  // Otherwise, unlatch
-                {
-                  removePtr(latched);
-                  _handler.onPointerUp(ptr.value);
-                }
-              break ;
-            default:
-              if ((latched.flags & KeyValue.FLAG_LOCK) != 0)  // Locking key, toggle lock
-                {
-                  latched.flags = (latched.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
-                  _handler.onPointerFlagsChanged();
-                }
-              else  // Otherwise, unlatch
-                {
-                  removePtr(latched);
-                  _handler.onPointerUp(ptr.value);
-                }
-          }
+      if ((latched.flags & KeyValue.FLAG_LOCK) != 0) // Locking key, toggle lock
+      {
+        latched.flags = (latched.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
+        _handler.onPointerFlagsChanged();
+      }
+      else // Otherwise, unlatch
+      {
+        removePtr(latched);
+        _handler.onPointerUp(ptr.value);
+      }
     }
     else if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
     {
