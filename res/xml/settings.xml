@@ -13,6 +13,8 @@
       <CheckBoxPreference android:key="lockable_shift" android:title="Shift" android:defaultValue="true"/>
       <CheckBoxPreference android:key="lockable_ctrl" android:title="Ctrl" android:defaultValue="false"/>
       <CheckBoxPreference android:key="lockable_alt" android:title="Alt" android:defaultValue="false"/>
+      <CheckBoxPreference android:key="lockable_fn" android:title="Fn" android:defaultValue="false"/>
+      <CheckBoxPreference android:key="lockable_meta" android:title="Meta" android:defaultValue="false"/>
     </PreferenceScreen>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_vibrate">
