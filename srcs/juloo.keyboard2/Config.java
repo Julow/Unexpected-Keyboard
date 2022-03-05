@@ -139,6 +139,10 @@ final class Config
     KeyValue action_key = (actionLabel == null) ? null :
       new KeyValue(actionLabel, actionLabel, KeyValue.CHAR_NONE,
           KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
+    int lockable_keys_flags =
+      (lockShift ? KeyValue.FLAG_SHIFT : 0)
+      | (lockCtrl ? KeyValue.FLAG_CTRL : 0)
+      | (lockAlt ? KeyValue.FLAG_ALT : 0);
     return kw.replaceKeys(key -> {
       if (key == null)
         return null;
@@ -152,8 +156,13 @@ final class Config
           return (swapEnterActionKey && action_key != null) ?
             KeyValue.getKeyByName("enter") : action_key;
         default:
-          if ((key.flags & key_flags_to_remove) != 0)
-            return null;
+          if (key.flags != 0)
+          {
+            if ((key.flags & key_flags_to_remove) != 0)
+              return null;
+            if ((key.flags & lockable_keys_flags) != 0)
+              return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
+          }
           return key;
       }});
   }
