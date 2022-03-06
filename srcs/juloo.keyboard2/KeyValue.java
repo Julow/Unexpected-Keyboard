@@ -87,6 +87,11 @@ class KeyValue
     return new KeyValue(name, s, c, eventCode, flags);
   }
 
+  public KeyValue withNameAndSymbol(String n, String s)
+  {
+    return new KeyValue(n, s, char_, eventCode, flags);
+  }
+
   public KeyValue withFlags(int f)
   {
     return new KeyValue(name, symbol, char_, eventCode, f);
@@ -240,7 +245,7 @@ class KeyValue
     addSpecialKey("switch_emoji", "\uE812" , EVENT_SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "\ue807", EVENT_CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
-    addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
+    addSpecialKey("action", "Action", EVENT_ACTION, FLAG_SMALLER_FONT); // Will always be replaced
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
     addEventKey("enter", "\ue800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);

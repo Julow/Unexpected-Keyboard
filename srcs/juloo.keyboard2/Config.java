@@ -134,9 +134,9 @@ final class Config
    */
   public KeyboardData modify_layout(KeyboardData kw)
   {
+    // Update the name to avoid caching in KeyModifier
     KeyValue action_key = (actionLabel == null) ? null :
-      new KeyValue(actionLabel, actionLabel, KeyValue.CHAR_NONE,
-          KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
+      KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
     return kw.replaceKeys(key -> {
       if (key == null)
         return null;
