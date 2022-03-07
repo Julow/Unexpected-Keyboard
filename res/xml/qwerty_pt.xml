@@ -3,24 +3,24 @@
   <row>
     <key key0="q" key1="esc" key2="1" key3="~" key4="!"/>
     <key key0="w" key2="2" key3="\@"/>
-    <key key0="e" key1="£" key2="3" key3="\#" key4="€"/>
-    <key key0="r" key2="4" key3="$"/>
+    <key key0="e" key1="ê" key2="3" key3="\#" key4="é"/>
+    <key key0="r" key1="£" key2="4" key3="$" key4="€"/>
     <key key0="t" key2="5" key3="%"/>
-    <key key0="y" key1="accent_caron" key2="6" key3="^" key4="accent_trema"/>
-    <key key0="u" key2="7" key3="&amp;"/>
-    <key key0="i" key2="8" key3="*"/>
-    <key key0="o" key2="9" key3="(" key4=")"/>
+    <key key0="y" key2="6" key3="^"/>
+    <key key0="u" key2="7" key3="&amp;" key4="ú"/>
+    <key key0="i" key2="8" key3="*" key4="í"/>
+    <key key0="o" key1="ô" key2="9" key3="õ" key4="ó"/>
     <key key0="p" key2="0" key3="\\" key4="|"/>
   </row>
   <row>
-    <key key0="a" key1="tab" key2="'" key3="`" key4="&quot;"/>
-    <key key0="s" key1="accent_ring" key2="accent_caron" key3="ß" key4="accent_cedille"/>
+    <key key0="a" key1="â" key2="à" key3="ã" key4="á"/>
+    <key key0="s" key1="tab" key2="'" key3="`" key4="&quot;"/>
     <key key0="d"/>
     <key key0="f"/>
     <key key0="g"/>
     <key key0="h"/>
     <key key0="j" key1="-" key2="=" key4="+" key3="_"/>
-    <key key0="k" key1="accent_grave" key2="accent_aigu" key3="accent_tilde" key4="accent_circonflexe"/>
+    <key key0="k" key3="(" key4=")"/>
     <key key0="l" key1="[" key2="]" key3="{" key4="}"/>
     <key key0="ç"/>
   </row>
