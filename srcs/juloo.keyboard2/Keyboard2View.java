@@ -55,28 +55,7 @@ public class Keyboard2View extends View
 
   public void setKeyboard(KeyboardData kw)
   {
-    if (!_config.shouldOfferSwitchingToNextInputMethod)
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_CHANGE_METHOD, null));
-    if (_config.key_flags_to_remove != 0)
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByFlags(_config.key_flags_to_remove, null));
-    // Replace the action key to show the right label.
-    KeyValue action_key = null; 
-    if (_config.actionLabel != null)
-    {
-      action_key = new KeyValue(_config.actionLabel, _config.actionLabel,
-          KeyValue.CHAR_NONE, KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
-    }
-    if (_config.swapEnterActionKey && action_key != null)
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByEvent2(KeyEvent.KEYCODE_ENTER,
-            action_key, KeyValue.EVENT_ACTION,
-            KeyValue.getKeyByName("enter")));
-    else
-      kw = kw.replaceKeys(
-          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_ACTION, action_key));
-    _keyboard = kw;
+    _keyboard = _config.modify_layout(kw);
     reset();
   }
 

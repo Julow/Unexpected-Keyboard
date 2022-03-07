@@ -51,7 +51,6 @@ class KeyValue
   public static final int FLAG_ACCENT_MACRON = (1 << 27);
   public static final int FLAG_ACCENT_ORDINAL = (1 << 28);
 
-
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
     FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |
@@ -86,6 +85,16 @@ class KeyValue
   public KeyValue withCharAndSymbol(String s, char c)
   {
     return new KeyValue(name, s, c, eventCode, flags);
+  }
+
+  public KeyValue withNameAndSymbol(String n, String s)
+  {
+    return new KeyValue(n, s, char_, eventCode, flags);
+  }
+
+  public KeyValue withFlags(int f)
+  {
+    return new KeyValue(name, symbol, char_, eventCode, f);
   }
 
   private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
@@ -155,7 +164,7 @@ class KeyValue
   static
   {
     addModifierKey("shift", "\uE808",
-        FLAG_LOCK | FLAG_SHIFT | FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+        FLAG_SHIFT | FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL | FLAG_SMALLER_FONT);
     addModifierKey("alt", "Alt", FLAG_ALT | FLAG_SMALLER_FONT);
     addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2);
@@ -236,7 +245,7 @@ class KeyValue
     addSpecialKey("switch_emoji", "\uE812" , EVENT_SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "\ue807", EVENT_CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
-    addSpecialKey("action", "Action", EVENT_ACTION); // Will always be replaced
+    addSpecialKey("action", "Action", EVENT_ACTION, FLAG_SMALLER_FONT); // Will always be replaced
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
     addEventKey("enter", "\ue800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
