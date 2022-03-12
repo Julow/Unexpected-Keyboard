@@ -53,7 +53,7 @@ public final class Pointers implements Handler.Callback
   public int getKeyFlags(KeyValue kv)
   {
     for (Pointer p : _ptrs)
-      if (p.value == kv)
+      if (p.value.name == kv.name) // Physical equality
         return p.flags;
     return -1;
   }
