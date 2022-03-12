@@ -56,19 +56,8 @@ class KeyValue
     FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |
     FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL | FLAG_ACCENT_RING;
 
-  // Language specific keys
-  public static final int FLAG_LANG_SZLIG = (1 << 25);
-  public static final int FLAG_LANG_EURO = (1 << 29);
-  public static final int FLAG_LANG_POUND = (1 << 30);
-
-  public static final int FLAGS_LANGS = FLAG_LANG_SZLIG | FLAG_LANG_EURO |
-    FLAG_LANG_POUND;
-
-  public static final int FLAGS_NOT_HIDDEN_ACCENTS = FLAG_ACCENT_SUPERSCRIPT |
-    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL;
-  // Keys that have to be enabled per language
-  public static final int FLAGS_HIDDEN_KEYS =
-    (FLAGS_ACCENTS & ~FLAGS_NOT_HIDDEN_ACCENTS) | FLAGS_LANGS;
+  // Language specific keys that are removed from the keyboard by default
+  public static final int FLAG_LOCALIZED = (1 << 25);
 
   public final String name;
   public final String symbol;
@@ -167,15 +156,15 @@ class KeyValue
         FLAG_SHIFT | FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL | FLAG_SMALLER_FONT);
     addModifierKey("alt", "Alt", FLAG_ALT | FLAG_SMALLER_FONT);
-    addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2);
-    addModifierKey("accent_caron", "◌̌", FLAG_ACCENT_CARON);
-    addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5);
-    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3);
-    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1);
-    addModifierKey("accent_macron", "◌̄", FLAG_ACCENT_MACRON);
-    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4);
-    addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6);
-    addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING);
+    addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2 | FLAG_LOCALIZED);
+    addModifierKey("accent_caron", "◌̌", FLAG_ACCENT_CARON | FLAG_LOCALIZED);
+    addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5 | FLAG_LOCALIZED);
+    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3 | FLAG_LOCALIZED);
+    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1 | FLAG_LOCALIZED);
+    addModifierKey("accent_macron", "◌̄", FLAG_ACCENT_MACRON | FLAG_LOCALIZED);
+    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4 | FLAG_LOCALIZED);
+    addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6 | FLAG_LOCALIZED);
+    addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING | FLAG_LOCALIZED);
     addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);
     addModifierKey("subscript", "◌̺", FLAG_ACCENT_SUBSCRIPT);
     addModifierKey("ordinal", "ºʳᵈ", FLAG_ACCENT_ORDINAL | FLAG_SMALLER_FONT);
@@ -235,9 +224,9 @@ class KeyValue
     addCharKey('#', KeyEvent.KEYCODE_POUND);
     addCharKey('(', KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
     addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
-    addCharKey('ß', EVENT_NONE, FLAG_LANG_SZLIG);
-    addCharKey('€', EVENT_NONE, FLAG_LANG_EURO);
-    addCharKey('£', EVENT_NONE, FLAG_LANG_POUND);
+    addCharKey('ß', EVENT_NONE, FLAG_LOCALIZED);
+    addCharKey('€', EVENT_NONE, FLAG_LOCALIZED);
+    addCharKey('£', EVENT_NONE, FLAG_LOCALIZED);
 
     addSpecialKey("config", "\uE806", EVENT_CONFIG, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);

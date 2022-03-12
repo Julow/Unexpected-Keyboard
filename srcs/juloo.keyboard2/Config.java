@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.Set;
+import java.util.HashSet;
 
 final class Config
 {
@@ -40,10 +42,10 @@ final class Config
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
-  public int key_flags_to_remove;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
+  public Set<String> extra_keys; // 'null' means all the keys
 
   public final IKeyEventHandler handler;
 
@@ -73,10 +75,10 @@ final class Config
     refresh(context);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
-    key_flags_to_remove = 0;
     actionLabel = null;
     actionId = 0;
     swapEnterActionKey = false;
+    extra_keys = null;
     handler = h;
   }
 
@@ -128,7 +130,7 @@ final class Config
 
   /** Update the layout according to the configuration.
    *  - Remove the switching key if it isn't needed
-   *  - Remove keys from other locales
+   *  - Remove keys from other locales (not in 'extra_keys')
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
    */
@@ -152,7 +154,9 @@ final class Config
         default:
           if (key.flags != 0)
           {
-            if ((key.flags & key_flags_to_remove) != 0)
+            if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 &&
+                extra_keys != null &&
+                !extra_keys.contains(key.name))
               return null;
             if ((key.flags & lockable_modifiers) != 0)
               return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
@@ -203,27 +207,6 @@ final class Config
       case "bgph1": return R.xml.local_bgph1;
       case "dvorak": return R.xml.dvorak;
       case "system": default: return -1;
-    }
-  }
-
-  /* Used for the accents option. */
-  public static int extra_key_flag_of_name(String name)
-  {
-    switch (name)
-    {
-      case "aigu": return KeyValue.FLAG_ACCENT2;
-      case "caron": return KeyValue.FLAG_ACCENT_CARON;
-      case "cedille": return KeyValue.FLAG_ACCENT5;
-      case "circonflexe": return KeyValue.FLAG_ACCENT3;
-      case "grave": return KeyValue.FLAG_ACCENT1;
-      case "macron": return KeyValue.FLAG_ACCENT_MACRON;
-      case "ring": return KeyValue.FLAG_ACCENT_RING;
-      case "szlig": return KeyValue.FLAG_LANG_SZLIG;
-      case "euro": return KeyValue.FLAG_LANG_EURO;
-      case "pound": return KeyValue.FLAG_LANG_POUND;
-      case "tilde": return KeyValue.FLAG_ACCENT4;
-      case "trema": return KeyValue.FLAG_ACCENT6;
-      default: throw new RuntimeException(name);
     }
   }
 
