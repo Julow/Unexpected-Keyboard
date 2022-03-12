@@ -122,7 +122,9 @@ final class Config
       | (prefs.getBoolean("lockable_ctrl", false) ? KeyValue.FLAG_CTRL : 0)
       | (prefs.getBoolean("lockable_alt", false) ? KeyValue.FLAG_ALT : 0)
       | (prefs.getBoolean("lockable_fn", false) ? KeyValue.FLAG_FN : 0)
-      | (prefs.getBoolean("lockable_meta", false) ? KeyValue.FLAG_META : 0);
+      | (prefs.getBoolean("lockable_meta", false) ? KeyValue.FLAG_META : 0)
+      | (prefs.getBoolean("lockable_sup", false) ? KeyValue.FLAG_ACCENT_SUPERSCRIPT : 0)
+      | (prefs.getBoolean("lockable_sub", false) ? KeyValue.FLAG_ACCENT_SUBSCRIPT : 0);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
