@@ -165,9 +165,9 @@ class KeyValue
     addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4 | FLAG_LOCALIZED);
     addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6 | FLAG_LOCALIZED);
     addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING | FLAG_LOCALIZED);
-    addModifierKey("superscript", "◌͆", FLAG_ACCENT_SUPERSCRIPT);
-    addModifierKey("subscript", "◌̺", FLAG_ACCENT_SUBSCRIPT);
-    addModifierKey("ordinal", "ºʳᵈ", FLAG_ACCENT_ORDINAL | FLAG_SMALLER_FONT);
+    addModifierKey("superscript", "Sup", FLAG_ACCENT_SUPERSCRIPT | FLAG_SMALLER_FONT);
+    addModifierKey("subscript", "Sub", FLAG_ACCENT_SUBSCRIPT | FLAG_SMALLER_FONT);
+    addModifierKey("ordinal", "Ord", FLAG_ACCENT_ORDINAL | FLAG_SMALLER_FONT);
     addModifierKey("fn", "Fn", FLAG_FN | FLAG_SMALLER_FONT);
     addModifierKey("meta", "◆", FLAG_META);
 
