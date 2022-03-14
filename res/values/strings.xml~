@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
-  <string name="app_name" product="default">Unexpected Keyboard</string>
+  <string name="app_name">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard Settings</string>
   <string name="pref_category_layout">Layout</string>
   <string name="pref_layout_title">Change keyboard layout</string>
@@ -23,8 +22,6 @@
   <string name="pref_vibrate_duration_title">Duration</string>
   <string name="pref_precise_repeat_title">Precise cursor movements</string>
   <string name="pref_precise_repeat_summary">Modulate key repeat speed by swiping more or less</string>
-  <string name="pref_lockable_keys_title">Lockable modifiers</string>
-  <string name="pref_lockable_keys_summary">Modifier that can be locked by typing them twice</string>
   <string name="pref_swipekeys_accel_x_title">Horizontal swipe acceleration</string>
   <string name="pref_swipekeys_accel_x_summary">Horizontal acceleration factor (%.2f)</string>
   <string name="pref_swipekeys_accel_y_title">Vertical swipe acceleration</string>
@@ -52,7 +49,6 @@
   <string name="pref_key_horizontal_space">Horizontal spacing between the keys</string>
   <string name="pref_key_vertical_space">Vertical spacing between the keys</string>
   <string name="pref_category_customize_theme">Custom theme</string>
-  <string name="pref_customize_theme_base_title">Base theme</string>
   <string name="pref_customize_keyboard_bg_title">Keyboard background color</string>
   <string name="pref_customize_key_bg_title">Key background color</string>
   <string name="pref_customize_active_key_bg_title">Active key background color</string>

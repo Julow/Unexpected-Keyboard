@@ -9,15 +9,6 @@
     <juloo.common.IntSlideBarPreference android:key="longpress_timeout" android:title="@string/pref_long_timeout_title" android:summary="%sms" android:defaultValue="600" min="50" max="2000"/>
     <juloo.common.IntSlideBarPreference android:key="longpress_interval" android:title="@string/pref_long_interval_title" android:summary="%sms" android:defaultValue="25" min="5" max="100"/>
     <CheckBoxPreference android:key="precise_repeat" android:title="@string/pref_precise_repeat_title" android:summary="@string/pref_precise_repeat_summary" android:defaultValue="true"/>
-    <PreferenceScreen android:title="@string/pref_lockable_keys_title" android:summary="@string/pref_lockable_keys_summary">
-      <CheckBoxPreference android:key="lockable_shift" android:title="Shift" android:defaultValue="true"/>
-      <CheckBoxPreference android:key="lockable_ctrl" android:title="Ctrl" android:defaultValue="false"/>
-      <CheckBoxPreference android:key="lockable_alt" android:title="Alt" android:defaultValue="false"/>
-      <CheckBoxPreference android:key="lockable_fn" android:title="Fn" android:defaultValue="false"/>
-      <CheckBoxPreference android:key="lockable_meta" android:title="Meta" android:defaultValue="false"/>
-      <CheckBoxPreference android:key="lockable_sup" android:title="Sup" android:defaultValue="false"/>
-      <CheckBoxPreference android:key="lockable_sub" android:title="Sub" android:defaultValue="false"/>
-    </PreferenceScreen>
     <juloo.common.SlideBarPreference android:key="swipekeys_accel_x" android:title="@string/pref_swipekeys_accel_x_title" android:summary="@string/pref_swipekeys_accel_x_summary" android:defaultValue="1.0" min="0.0" max="2.0"/>
     <juloo.common.SlideBarPreference android:key="swipekeys_accel_y" android:title="@string/pref_swipekeys_accel_y_title" android:summary="@string/pref_swipekeys_accel_y_summary" android:defaultValue="0.3" min="0.0" max="2.0"/>
     <juloo.common.SlideBarPreference android:key="swipekeys_decay" android:title="@string/pref_swipekeys_decay_title" android:summary="@string/pref_swipekeys_decay_summary" android:defaultValue="0.9" min="0.01" max="0.98"/>
@@ -44,7 +35,7 @@
     <juloo.common.ColorPreference android:key="active_label" android:title="@string/pref_customize_active_label_title" android:summary="%s" android:defaultValue="#009dff" />
     <juloo.common.ColorPreference android:key="locked_label" android:title="@string/pref_customize_locked_label_title" android:summary="%s" android:defaultValue="#00ff26" />
     <juloo.common.ColorPreference android:key="sublabel" android:title="@string/pref_customize_sublabel_title" android:summary="%s" android:defaultValue="#bbbbbb" />
-    <juloo.common.IntSlideBarPreference android:key="key_border_radius" android:title="@string/pref_customize_key_border_radius_title" android:summary="%sdp" android:defaultValue="1" min="0" max="100"/>
+    <juloo.common.IntSlideBarPreference android:key="key_border_radius" android:title="@string/pref_customize_key_border_radius_title" android:summary="%sdp" android:defaultValue="5" min="0" max="100"/>
 
     <juloo.common.SlideBarPreference android:key="key_border_top_width" android:title="@string/pref_customize_key_border_top_width_title" android:summary="%.2fdp" android:defaultValue="0.0" min="-2.0" max="2.0"/>
     <juloo.common.SlideBarPreference android:key="key_border_top_offset" android:title="@string/pref_customize_key_border_top_offset_title" android:summary="%.1fdp" android:defaultValue="0.0" min="-100.0" max="100.0"/>

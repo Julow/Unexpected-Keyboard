@@ -8,9 +8,6 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.KeyEvent;
-import java.util.Set;
-import java.util.HashSet;
 import android.content.res.TypedArray;
 
 final class Config
@@ -36,7 +33,6 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
-  public int lockable_modifiers;
 
   public float swipekeysAccelX;
   public float swipekeysAccelY;
@@ -51,10 +47,10 @@ final class Config
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
+  public int key_flags_to_remove;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  public Set<String> extra_keys; // 'null' means all the keys
 
   public final IKeyEventHandler handler;
 
@@ -91,10 +87,10 @@ final class Config
     refresh(context);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
+    key_flags_to_remove = 0;
     actionLabel = null;
     actionId = 0;
     swapEnterActionKey = false;
-    extra_keys = null;
     handler = h;
   }
 
@@ -133,14 +129,6 @@ final class Config
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
-    lockable_modifiers =
-      (prefs.getBoolean("lockable_shift", true) ? KeyValue.FLAG_SHIFT : 0)
-      | (prefs.getBoolean("lockable_ctrl", false) ? KeyValue.FLAG_CTRL : 0)
-      | (prefs.getBoolean("lockable_alt", false) ? KeyValue.FLAG_ALT : 0)
-      | (prefs.getBoolean("lockable_fn", false) ? KeyValue.FLAG_FN : 0)
-      | (prefs.getBoolean("lockable_meta", false) ? KeyValue.FLAG_META : 0)
-      | (prefs.getBoolean("lockable_sup", false) ? KeyValue.FLAG_ACCENT_SUPERSCRIPT : 0)
-      | (prefs.getBoolean("lockable_sub", false) ? KeyValue.FLAG_ACCENT_SUBSCRIPT : 0);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
@@ -150,105 +138,21 @@ final class Config
     swipekeysDecay = prefs.getFloat("swipekeys_decay", swipekeysDecay);
     swipekeysUnitPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, dm);
     
-    if (!"custom".equals(prefs.getString("customize_theme", "")))
+    if (!"custom".equals(prefs.getString("customize_theme", "custom")))
       reloadCustomTheme(context);
   }
   
   private void reloadCustomTheme(Context context)
   {
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    TypedArray s = context.getTheme().obtainStyledAttributes(
-      getThemeId(context.getResources(), prefs.getString("customize_theme", "")),
-      R.styleable.keyboard
-    );
+    TypedArray s = context.getTheme().obtainStyledAttributes(R.styleable.keyboard);
     
     SharedPreferences.Editor e = prefs.edit();
-    
-    e.putString("theme", "custom");
     e.putString("customize_theme", "custom");
-    e.putString("keyboard_bg", getColor(s.getString(R.styleable.keyboard_colorKeyboard)));
-    e.putString("key_bg", getColor(s.getString(R.styleable.keyboard_colorKey)));
-    e.putString("active_key_bg", getColor(s.getString(R.styleable.keyboard_colorKeyActivated)));
-    e.putString("label", getColor(s.getString(R.styleable.keyboard_colorLabel)));
-    e.putString("active_label", getColor(s.getString(R.styleable.keyboard_colorLabelActivated)));
-    e.putString("locked_label", getColor(s.getString(R.styleable.keyboard_colorLabelLocked)));
-    e.putString("sublabel", getColor(s.getString(R.styleable.keyboard_colorSubLabel)));
-    
-    e.putInt("key_border_radius", (int)getFloat(s.getString(R.styleable.keyboard_keyBorderRadius)));
-    
-    e.putFloat("key_border_top_width", getFloat(s.getString(R.styleable.keyboard_keyBorderTopWidth)));
-    e.putFloat("key_border_top_offset", getFloat(s.getString(R.styleable.keyboard_keyBorderTopOffset)));
-    e.putString("key_border_top_color", getColor(s.getString(R.styleable.keyboard_keyBorderTopColor)));
-    
-    e.putFloat("key_border_bottom_width", getFloat(s.getString(R.styleable.keyboard_keyBorderBottomWidth)));
-    e.putFloat("key_border_bottom_offset", getFloat(s.getString(R.styleable.keyboard_keyBorderBottomOffset)));
-    e.putString("key_border_bottom_color", getColor(s.getString(R.styleable.keyboard_keyBorderBottomColor)));
-    
-    e.putFloat("key_border_left_width", getFloat(s.getString(R.styleable.keyboard_keyBorderLeftWidth)));
-    e.putFloat("key_border_left_offset", getFloat(s.getString(R.styleable.keyboard_keyBorderLeftOffset)));
-    e.putString("key_border_left_color", getColor(s.getString(R.styleable.keyboard_keyBorderLeftColor)));
     
     
-    e.putFloat("key_border_right_width", getFloat(s.getString(R.styleable.keyboard_keyBorderRightWidth)));
-    e.putFloat("key_border_right_offset", getFloat(s.getString(R.styleable.keyboard_keyBorderRightOffset)));
-    e.putString("key_border_right_color", getColor(s.getString(R.styleable.keyboard_keyBorderRightColor)));
-
-    s.recycle();
-    e.apply();
-    SettingsActivity.reloadPrefs();
-  }
-  
-  private float getFloat(String s)
-  {
-    if (s == null)
-      return 0f;
-    return Float.parseFloat(s.replaceAll("[^0-9.-]", ""));
-  }
-  
-  private String getColor(String s)
-  {
-    if (s == null)
-      return "#000000";
-    if (s.length() == 9 && (s.charAt(1) == 'f' || s.charAt(1) == 'F') && (s.charAt(2) == 'f' || s.charAt(2) == 'F'))
-      return "#" + s.substring(3);
-    return s;
-  }
-
-  /** Update the layout according to the configuration.
-   *  - Remove the switching key if it isn't needed
-   *  - Remove keys from other locales (not in 'extra_keys')
-   *  - Replace the action key to show the right label
-   *  - Swap the enter and action keys
-   */
-  public KeyboardData modify_layout(KeyboardData kw)
-  {
-    // Update the name to avoid caching in KeyModifier
-    KeyValue action_key = (actionLabel == null) ? null :
-      KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
-    return kw.replaceKeys(key -> {
-      if (key == null)
-        return null;
-      switch (key.eventCode)
-      {
-        case KeyValue.EVENT_CHANGE_METHOD:
-          return shouldOfferSwitchingToNextInputMethod ? key : null;
-        case KeyEvent.KEYCODE_ENTER:
-          return (swapEnterActionKey && action_key != null) ? action_key : key;
-        case KeyValue.EVENT_ACTION:
-          return (swapEnterActionKey && action_key != null) ?
-            KeyValue.getKeyByName("enter") : action_key;
-        default:
-          if (key.flags != 0)
-          {
-            if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 &&
-                extra_keys != null &&
-                !extra_keys.contains(key.name))
-              return null;
-            if ((key.flags & lockable_modifiers) != 0)
-              return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
-          }
-          return key;
-      }});
+    e.commit();
+    
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
@@ -296,6 +200,27 @@ final class Config
       case "bgph1": return R.xml.local_bgph1;
       case "dvorak": return R.xml.dvorak;
       case "system": default: return -1;
+    }
+  }
+
+  /* Used for the accents option. */
+  public static int extra_key_flag_of_name(String name)
+  {
+    switch (name)
+    {
+      case "aigu": return KeyValue.FLAG_ACCENT2;
+      case "caron": return KeyValue.FLAG_ACCENT_CARON;
+      case "cedille": return KeyValue.FLAG_ACCENT5;
+      case "circonflexe": return KeyValue.FLAG_ACCENT3;
+      case "grave": return KeyValue.FLAG_ACCENT1;
+      case "macron": return KeyValue.FLAG_ACCENT_MACRON;
+      case "ring": return KeyValue.FLAG_ACCENT_RING;
+      case "szlig": return KeyValue.FLAG_LANG_SZLIG;
+      case "euro": return KeyValue.FLAG_LANG_EURO;
+      case "pound": return KeyValue.FLAG_LANG_POUND;
+      case "tilde": return KeyValue.FLAG_ACCENT4;
+      case "trema": return KeyValue.FLAG_ACCENT6;
+      default: throw new RuntimeException(name);
     }
   }
 

@@ -56,7 +56,28 @@ public class Keyboard2View extends View
 
   public void setKeyboard(KeyboardData kw)
   {
-    _keyboard = _config.modify_layout(kw);
+    if (!_config.shouldOfferSwitchingToNextInputMethod)
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_CHANGE_METHOD, null));
+    if (_config.key_flags_to_remove != 0)
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByFlags(_config.key_flags_to_remove, null));
+    // Replace the action key to show the right label.
+    KeyValue action_key = null; 
+    if (_config.actionLabel != null)
+    {
+      action_key = new KeyValue(_config.actionLabel, _config.actionLabel,
+          KeyValue.CHAR_NONE, KeyValue.EVENT_ACTION, KeyValue.FLAG_NOREPEAT);
+    }
+    if (_config.swapEnterActionKey && action_key != null)
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent2(KeyEvent.KEYCODE_ENTER,
+            action_key, KeyValue.EVENT_ACTION,
+            KeyValue.getKeyByName("enter")));
+    else
+      kw = kw.replaceKeys(
+          new KeyboardData.ReplaceKeysByEvent(KeyValue.EVENT_ACTION, action_key));
+    _keyboard = kw;
     reset();
   }
 
@@ -86,14 +107,16 @@ public class Keyboard2View extends View
 
   public void onPointerUp(KeyValue k)
   {
-    _config.handler.handleKeyUp(k, _flags);
+    if (k != null && (k.flags & KeyValue.FLAG_NOCHAR) == 0)
+      _config.handler.handleKeyUp(k, _flags);
     updateFlags();
     invalidate();
   }
 
   public void onPointerHold(KeyValue k)
   {
-    _config.handler.handleKeyUp(k, _flags);
+    if (k != null)
+      _config.handler.handleKeyUp(k, _flags);
   }
 
   public void onPointerFlagsChanged()
@@ -224,82 +247,82 @@ public class Keyboard2View extends View
           Path p = new Path();
           
 
-          if (_theme.keyBorderTop.draw)
+          if (_theme.drawKeyBorderTop)
           {
             canvas.save();
             p.moveTo(cx, cy);
-            p.lineTo(x, y+_theme.keyBorderTop.offset);
-            p.lineTo(x-vi, y-hi+_theme.keyBorderTop.offset);
+            p.lineTo(x, y+_theme.keyBorderTopOffset);
+            p.lineTo(x-vi, y-hi+_theme.keyBorderTopOffset);
             p.lineTo(x-vi, y-hi-keyH);
             p.lineTo(x+vi+keyW, y-hi-keyH);
-            p.lineTo(x+vi+keyW, y-hi+_theme.keyBorderTop.offset);
-            p.lineTo(x+keyW, y+_theme.keyBorderTop.offset);
+            p.lineTo(x+vi+keyW, y-hi+_theme.keyBorderTopOffset);
+            p.lineTo(x+keyW, y+_theme.keyBorderTopOffset);
             p.close();
             canvas.clipPath(p);
             
-            final float w = _theme.keyBorderTop.outside ? 0:_theme.keyBorderTop.paint.getStrokeWidth();
+            final float w = _theme.keyBorderTopOutside ? 0:_theme.keyBorderTopPaint.getStrokeWidth();
             _tmpRect.set(x+w, y+w, x-w + keyW, y-w + keyH);
-            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderTop.paint);
+            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderTopPaint);
             canvas.restore();
             p.rewind();
           }
           
-          if (_theme.keyBorderBottom.draw)
+          if (_theme.drawKeyBorderBottom)
           {
             canvas.save();
             p.moveTo(cx, cy);
-            p.lineTo(x, y+keyH+_theme.keyBorderBottom.offset);
-            p.lineTo(x-vi, y+hi+keyH+_theme.keyBorderBottom.offset);
+            p.lineTo(x, y+keyH+_theme.keyBorderBottomOffset);
+            p.lineTo(x-vi, y+hi+keyH+_theme.keyBorderBottomOffset);
             p.lineTo(x-vi, y+hi+2.f*keyH);
             p.lineTo(x+vi+keyW, y+hi+2.f*keyH);
-            p.lineTo(x+vi+keyW, y+hi+keyH+_theme.keyBorderBottom.offset);
-            p.lineTo(x+keyW, y+keyH+_theme.keyBorderBottom.offset);
+            p.lineTo(x+vi+keyW, y+hi+keyH+_theme.keyBorderBottomOffset);
+            p.lineTo(x+keyW, y+keyH+_theme.keyBorderBottomOffset);
             p.close();
             canvas.clipPath(p);
             
-            final float w = _theme.keyBorderBottom.outside ? 0:_theme.keyBorderBottom.paint.getStrokeWidth();
+            final float w = _theme.keyBorderBottomOutside ? 0:_theme.keyBorderBottomPaint.getStrokeWidth();
             _tmpRect.set(x+w, y+w, x-w + keyW, y-w + keyH);
-            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderBottom.paint);
+            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderBottomPaint);
             canvas.restore();
             p.rewind();
           }
           
-          if (_theme.keyBorderLeft.draw)
+          if (_theme.drawKeyBorderLeft)
           {
             canvas.save();
             p.moveTo(cx, cy);
-            p.lineTo(x+_theme.keyBorderLeft.offset, y);
-            p.lineTo(x-vi+_theme.keyBorderLeft.offset, y-hi);
+            p.lineTo(x+_theme.keyBorderLeftOffset, y);
+            p.lineTo(x-vi+_theme.keyBorderLeftOffset, y-hi);
             p.lineTo(x-vi-keyW, y-hi);
             p.lineTo(x-vi-keyW, y+hi+keyH);
-            p.lineTo(x-vi+_theme.keyBorderLeft.offset, y+hi+keyH);
-            p.lineTo(x+_theme.keyBorderLeft.offset, y+keyH);
+            p.lineTo(x-vi+_theme.keyBorderLeftOffset, y+hi+keyH);
+            p.lineTo(x+_theme.keyBorderLeftOffset, y+keyH);
             p.close();
             canvas.clipPath(p);
             
-            final float w = _theme.keyBorderLeft.outside ? 0:_theme.keyBorderLeft.paint.getStrokeWidth();
+            final float w = _theme.keyBorderLeftOutside ? 0:_theme.keyBorderLeftPaint.getStrokeWidth();
             _tmpRect.set(x+w, y+w, x-w + keyW, y-w + keyH);
-            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderLeft.paint);
+            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderLeftPaint);
             canvas.restore();
             p.rewind();
           }
           
-          if (_theme.keyBorderRight.draw)
+          if (_theme.drawKeyBorderRight)
           {
             canvas.save();
             p.moveTo(cx, cy);
-            p.lineTo(x+keyW+_theme.keyBorderRight.offset, y);
-            p.lineTo(x+vi+keyW+_theme.keyBorderRight.offset, y-hi);
+            p.lineTo(x+keyW+_theme.keyBorderRightOffset, y);
+            p.lineTo(x+vi+keyW+_theme.keyBorderRightOffset, y-hi);
             p.lineTo(x+vi+2.f*keyW, y-hi);
             p.lineTo(x+vi+2.f*keyW, y+hi+keyH);
-            p.lineTo(x+vi+keyW+_theme.keyBorderRight.offset, y+hi+keyH);
-            p.lineTo(x+keyW+_theme.keyBorderRight.offset, y+keyH);
+            p.lineTo(x+vi+keyW+_theme.keyBorderRightOffset, y+hi+keyH);
+            p.lineTo(x+keyW+_theme.keyBorderRightOffset, y+keyH);
             p.close();
             canvas.clipPath(p);
             
-            final float w = _theme.keyBorderRight.outside ? 0:_theme.keyBorderRight.paint.getStrokeWidth();
+            final float w = _theme.keyBorderRightOutside ? 0:_theme.keyBorderRightPaint.getStrokeWidth();
             _tmpRect.set(x+w, y+w, x-w + keyW, y-w + keyH);
-            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderTop.paint);
+            canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius, _theme.keyBorderTopPaint);
             canvas.restore();
           }
         }
@@ -362,10 +385,8 @@ public class Keyboard2View extends View
 
   private void drawLabel(Canvas canvas, KeyValue k, float x, float y, float keyH, boolean isSubKeyDown, boolean isKeyDown)
   {
-    k = KeyModifier.handleFlags(k, _flags);
-    if (k == null)
-      return;
     float textSize = scaleTextSize(k, _config.labelTextSize, keyH);
+    k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.labelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0));
     p.setColor(labelColor(k, isSubKeyDown, isKeyDown, _theme.labelColor));
     p.setTextSize(textSize);
@@ -374,10 +395,17 @@ public class Keyboard2View extends View
 
   private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isSubKeyDown, boolean isKeyDown)
   {
-    k = KeyModifier.handleFlags(k, _flags);
-    if (k == null)
-      return;
+    if (_config.accent_fn && (_flags & KeyValue.FLAG_FN) == 0)
+    {
+      //int flags = _pointers.getKeyFlags(k);
+      //if (flags != -1 && (flags & KeyValue.FLAGS_HIDDEN_KEYS) == 0)
+      if (k.flags != -1 && (k.flags & KeyValue.FLAGS_HIDDEN_KEYS) != 0)
+      {
+        return;
+      }
+    }
     float textSize = scaleTextSize(k, _config.sublabelTextSize, keyH);
+    k = KeyModifier.handleFlags(k, _flags);
     Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), a);
     p.setColor(labelColor(k, isSubKeyDown, isKeyDown, _theme.subLabelColor));
     p.setTextSize(textSize);

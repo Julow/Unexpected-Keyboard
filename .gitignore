@@ -1,3 +1,4 @@
 *.keystore
 _build
 /*-keystore.conf
+*~

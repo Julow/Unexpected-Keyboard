@@ -103,14 +103,14 @@ public class SlideBarPreference extends DialogPreference
       _value = (Float)defaultValue;
       persistFloat(_value);
     }
-    _seekBar.setProgress((int)(_value*_pow)-_min);
+    _seekBar.setProgress((int)(_value*_pow));
     updateText();
   }
 
   @Override
   protected Object onGetDefaultValue(TypedArray a, int index)
   {
-    return (a.getFloat(index, (float)_min/_pow));
+    return (a.getFloat(index, _min/_pow));
   }
 
   @Override
