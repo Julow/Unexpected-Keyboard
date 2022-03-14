@@ -96,8 +96,9 @@ public class Keyboard2 extends InputMethodService
       case 2:
         extra_keys_of_subtype(extra_keys, subtype);
         break;
-      case 3: extra_keys = null; break;
-      case 4: break;
+      case 3: extra_keys = null; _config.accent_fn = true; break;
+      case 4: extra_keys = null; break;
+      case 5: break;
       default: throw new IllegalArgumentException();
     }
     _config.extra_keys = extra_keys;

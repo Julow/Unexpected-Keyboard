@@ -374,6 +374,10 @@ public class Keyboard2View extends View
 
   private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isSubKeyDown, boolean isKeyDown)
   {
+    if (((k.flags & KeyValue.FLAGS_ACCENTS) != 0 || (k.flags & KeyValue.FLAG_LOCALIZED) != 0) && _config.accent_fn && (_flags & KeyValue.FLAG_FN) == 0)
+      return;
+      
+    
     k = KeyModifier.handleFlags(k, _flags);
     if (k == null)
       return;
