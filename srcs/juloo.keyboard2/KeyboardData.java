@@ -190,12 +190,8 @@ class KeyboardData
 
     public Key replaceKeys(MapKeys f)
     {
-<<<<<<< HEAD
       return new Key(f.apply(key0), f.apply(key1), f.apply(key2),
-          f.apply(key3), f.apply(key4), width, shift, edgekeys);
-=======
-      return new Key(f.map(key0), f.map(key1), f.map(key2), f.map(key3), f.map(key4), width, shift, edgekeys, swipekeys);
->>>>>>> dc5e3f4 (Implemented key border as a class)
+          f.apply(key3), f.apply(key4), width, shift, edgekeys, swipekeys);
     }
 
     /** New key with the width multiplied by 's'. */
