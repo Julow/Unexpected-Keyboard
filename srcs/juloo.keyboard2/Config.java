@@ -201,13 +201,14 @@ final class Config
     switch (name)
     {
       case "azerty": return R.xml.azerty;
-      case "qwerty": return R.xml.qwerty;
-      case "qwerty_lv": return R.xml.qwerty_lv;
-      case "qwerty_es": return R.xml.qwerty_es;
-      case "ru_jcuken": return R.xml.local_ru_jcuken;
-      case "qwertz": return R.xml.qwertz;
       case "bgph1": return R.xml.local_bgph1;
       case "dvorak": return R.xml.dvorak;
+      case "qwerty_es": return R.xml.qwerty_es;
+      case "qwerty_lv": return R.xml.qwerty_lv;
+      case "qwerty": return R.xml.qwerty;
+      case "qwerty_sv_se": return R.xml.qwerty_sv_se;
+      case "qwertz": return R.xml.qwertz;
+      case "ru_jcuken": return R.xml.local_ru_jcuken;
       case "system": default: return -1;
     }
   }
