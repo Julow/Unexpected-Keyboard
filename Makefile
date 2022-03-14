@@ -19,7 +19,11 @@ release: _build/$(PACKAGE_NAME).apk
 installd: _build/$(PACKAGE_NAME).debug.apk
 	adb install "$<"
 
-.PHONY: release debug installd
+clean:
+	rm -rf _build/*.dex _build/class _build/gen _build/*.apk _build/*.unsigned-apk \
+		_build/*.idsig
+
+.PHONY: release debug installd clean
 
 $(shell mkdir -p _build)
 
@@ -60,7 +64,7 @@ _build/%.debug.apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE)
 
 # Debug apk
 
-_build/$(PACKAGE_NAME).debug.unsigned-apk: AAPT_PACKAGE_FLAGS+=--rename-manifest-package $(PACKAGE_NAME).debug
+_build/$(PACKAGE_NAME).debug.unsigned-apk: AAPT_PACKAGE_FLAGS+=--rename-manifest-package $(PACKAGE_NAME).debug --product debug
 
 # Release signing
 
