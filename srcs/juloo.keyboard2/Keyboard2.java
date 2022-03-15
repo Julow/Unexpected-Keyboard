@@ -18,6 +18,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.util.Log;
+import android.util.LogPrinter;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,11 +27,15 @@ import java.util.Set;
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+  static private final String TAG = "Keyboard2";
+
   private Keyboard2View _keyboardView;
   private int _currentTextLayout;
   private ViewGroup _emojiPane = null;
 
   private Config _config;
+
+  private boolean _debug_logs = false;
 
   private KeyboardData getLayout(int resId)
   {
@@ -47,6 +53,7 @@ public class Keyboard2 extends InputMethodService
     _config.refresh(this);
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
+    _debug_logs = getResources().getBoolean(R.bool.debug_logs);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -182,6 +189,16 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  private void log_editor_info(EditorInfo info)
+  {
+    LogPrinter p = new LogPrinter(Log.DEBUG, TAG);
+    info.dump(p, "");
+    if (info.extras != null)
+      Log.d(TAG, "extras: "+info.extras.toString());
+    Log.d(TAG, "swapEnterActionKey: "+_config.swapEnterActionKey);
+    Log.d(TAG, "actionLabel: "+_config.actionLabel);
+  }
+
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
@@ -192,6 +209,8 @@ public class Keyboard2 extends InputMethodService
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     setInputView(_keyboardView);
+    if (_debug_logs)
+      log_editor_info(info);
   }
 
   @Override
