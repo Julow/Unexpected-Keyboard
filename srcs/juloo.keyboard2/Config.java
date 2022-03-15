@@ -205,6 +205,7 @@ final class Config
       case "dvorak": return R.xml.dvorak;
       case "qwerty_es": return R.xml.qwerty_es;
       case "qwerty_lv": return R.xml.qwerty_lv;
+      case "qwerty_pt": return R.xml.qwerty_pt;
       case "qwerty": return R.xml.qwerty;
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
       case "qwertz": return R.xml.qwertz;
