@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Unexpected Keyboard</string>
   <string name="settings_activity_label">Configurações Unexpected Keyboard</string>
   <string name="pref_category_layout">Layout</string>
   <string name="pref_layout_title">Mudar layout do teclado</string>
@@ -21,6 +20,8 @@
   <string name="pref_vibrate_duration_title">Duração</string>
   <string name="pref_precise_repeat_title">Precisão nos movimentos do cursor</string>
   <string name="pref_precise_repeat_summary">Varia a velocidade de repetição ao depender de quanto deslizar</string>
+  <string name="pref_lockable_keys_title">Segurar teclas</string>
+  <string name="pref_lockable_keys_summary">Teclas que podem ficar seguradas ao teclar duas vezes</string>
   <string name="pref_category_style">Estilo</string>
   <string name="pref_margin_bottom_title">Margem de baixo</string>
   <string name="pref_keyboard_height_title">Altura do teclado</string>

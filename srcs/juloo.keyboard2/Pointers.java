@@ -53,7 +53,7 @@ public final class Pointers implements Handler.Callback
   public int getKeyFlags(KeyValue kv)
   {
     for (Pointer p : _ptrs)
-      if (p.value == kv)
+      if (p.value != null && p.value.name == kv.name) // Physical equality
         return p.flags;
     return -1;
   }
@@ -93,6 +93,16 @@ public final class Pointers implements Handler.Callback
       removePtr(ptr);
       _handler.onPointerUp(ptr.value);
     }
+  }
+
+  public void onTouchCancel(int pointerId)
+  {
+    Pointer ptr = getPtr(pointerId);
+    if (ptr == null)
+      return;
+    stopKeyRepeat(ptr);
+    removePtr(ptr);
+    _handler.onPointerFlagsChanged();
   }
 
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)

@@ -13,4 +13,6 @@
   <dimen name="emoji_grid_height">250dp</dimen>
   <dimen name="emoji_text_size">28dp</dimen>
   <dimen name="extra_horizontal_margin">0dp</dimen>
+  <bool name="debug_logs" product="debug">true</bool>
+  <bool name="debug_logs" product="default">false</bool>
 </resources>

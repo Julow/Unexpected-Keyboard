@@ -14,7 +14,7 @@ class KeyModifier
   /* Modify a key according to modifiers. */
   public static KeyValue handleFlags(KeyValue k, int flags)
   {
-    if (flags == 0) // No modifier
+    if (k == null || flags == 0) // No modifier
       return k;
     SparseArray<KeyValue> ks = cacheEntry(k);
     KeyValue r = ks.get(flags);
@@ -22,8 +22,10 @@ class KeyModifier
       return r;
     r = k;
     r = handleFn(r, flags);
-    r = handleShift(r, flags);
-    r = handleAccents(r, flags);
+    if (r != null)
+      r = handleShift(r, flags);
+    if (r != null)
+      r = handleAccents(r, flags);
     ks.put(flags, r);
     return r;
   }
@@ -211,6 +213,7 @@ class KeyModifier
       case "#": name = "£"; break;
       case "*": name = "°"; break;
       case "tab": name = "\\t"; break;
+      case "€": case "£": return null; // Avoid showing these twice
       default: return k;
     }
     return KeyValue.getKeyByName(name);

@@ -18,16 +18,24 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.util.Log;
+import android.util.LogPrinter;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+  static private final String TAG = "Keyboard2";
+
   private Keyboard2View _keyboardView;
   private int _currentTextLayout;
   private ViewGroup _emojiPane = null;
 
   private Config _config;
+
+  private boolean _debug_logs = false;
 
   private KeyboardData getLayout(int resId)
   {
@@ -45,6 +53,7 @@ public class Keyboard2 extends InputMethodService
     _config.refresh(this);
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
+    _debug_logs = getResources().getBoolean(R.bool.debug_logs);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -70,32 +79,34 @@ public class Keyboard2 extends InputMethodService
     _currentTextLayout = l;
   }
 
-  private int extra_keys_of_subtype(InputMethodSubtype subtype)
+  private void extra_keys_of_subtype(Set<String> dst, InputMethodSubtype subtype)
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
-    int flags = 0;
-    if (extra_keys != null)
-      for (String acc : extra_keys.split("\\|"))
-        flags |= Config.extra_key_flag_of_name(acc);
-    return flags;
+    if (extra_keys == null)
+      return;
+    String[] ks = extra_keys.split("\\|");
+    for (int i = 0; i < ks.length; i++)
+      dst.add(ks[i]);
   }
 
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
-    int to_keep = 0;
+    HashSet<String> extra_keys = new HashSet<String>();
     switch (_config.accents)
     {
       case 1:
-        to_keep |= extra_keys_of_subtype(subtype);
+        extra_keys_of_subtype(extra_keys, subtype);
         for (InputMethodSubtype s : getEnabledSubtypes(imm))
-          to_keep |= extra_keys_of_subtype(s);
+          extra_keys_of_subtype(extra_keys, s);
         break;
-      case 2: to_keep |= extra_keys_of_subtype(subtype); break;
-      case 3: to_keep = KeyValue.FLAGS_HIDDEN_KEYS; break;
+      case 2:
+        extra_keys_of_subtype(extra_keys, subtype);
+        break;
+      case 3: extra_keys = null; break;
       case 4: break;
       default: throw new IllegalArgumentException();
     }
-    _config.key_flags_to_remove = ~to_keep & KeyValue.FLAGS_HIDDEN_KEYS;
+    _config.extra_keys = extra_keys;
   }
 
   private void refreshSubtypeLegacyFallback()
@@ -103,8 +114,8 @@ public class Keyboard2 extends InputMethodService
     // Fallback for the accents option: Only respect the "None" case
     switch (_config.accents)
     {
-      case 1: case 2: case 3: _config.key_flags_to_remove = 0; break;
-      case 4: _config.key_flags_to_remove = KeyValue.FLAGS_HIDDEN_KEYS; break;
+      case 1: case 2: case 3: _config.extra_keys = null; break;
+      case 4: _config.extra_keys = new HashSet<String>(); break;
     }
     // Fallback for the layout option: Use qwerty in the "system settings" case
     _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;
@@ -178,6 +189,16 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  private void log_editor_info(EditorInfo info)
+  {
+    LogPrinter p = new LogPrinter(Log.DEBUG, TAG);
+    info.dump(p, "");
+    if (info.extras != null)
+      Log.d(TAG, "extras: "+info.extras.toString());
+    Log.d(TAG, "swapEnterActionKey: "+_config.swapEnterActionKey);
+    Log.d(TAG, "actionLabel: "+_config.actionLabel);
+  }
+
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
@@ -188,6 +209,8 @@ public class Keyboard2 extends InputMethodService
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     setInputView(_keyboardView);
+    if (_debug_logs)
+      log_editor_info(info);
   }
 
   @Override
