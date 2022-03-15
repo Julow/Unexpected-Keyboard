@@ -115,7 +115,7 @@ public class Keyboard2View extends View
       case MotionEvent.ACTION_UP:
       case MotionEvent.ACTION_POINTER_UP:
         _pointers.onTouchUp(event.getPointerId(event.getActionIndex()));
-        break ;
+        break;
       case MotionEvent.ACTION_DOWN:
       case MotionEvent.ACTION_POINTER_DOWN:
         p = event.getActionIndex();
@@ -124,11 +124,14 @@ public class Keyboard2View extends View
         KeyboardData.Key key = getKeyAtPosition(tx, ty);
         if (key != null)
           _pointers.onTouchDown(tx, ty, event.getPointerId(p), key);
-        break ;
+        break;
       case MotionEvent.ACTION_MOVE:
         for (p = 0; p < event.getPointerCount(); p++)
           _pointers.onTouchMove(event.getX(p), event.getY(p), event.getPointerId(p));
-        break ;
+        break;
+      case MotionEvent.ACTION_CANCEL:
+        _pointers.onTouchCancel(event.getPointerId(event.getActionIndex()));
+        break;
       default:
         return (false);
     }

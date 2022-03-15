@@ -95,6 +95,16 @@ public final class Pointers implements Handler.Callback
     }
   }
 
+  public void onTouchCancel(int pointerId)
+  {
+    Pointer ptr = getPtr(pointerId);
+    if (ptr == null)
+      return;
+    stopKeyRepeat(ptr);
+    removePtr(ptr);
+    _handler.onPointerFlagsChanged();
+  }
+
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)
   {
     KeyValue value = key.key0;
