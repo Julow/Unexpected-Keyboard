@@ -17,9 +17,10 @@ final class Config
   // From resources
   public final float marginTop;
   public final float keyPadding;
-
   public final float labelTextSize;
   public final float sublabelTextSize;
+  /** Presses within this radius of an other pointer are ignored */
+  public final float pointerTooClose;
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
@@ -57,6 +58,7 @@ final class Config
     keyPadding = res.getDimension(R.dimen.key_padding);
     labelTextSize = res.getFloat(R.integer.label_text_size);
     sublabelTextSize = res.getFloat(R.integer.sublabel_text_size);
+    pointerTooClose = res.getDimension(R.dimen.pointer_too_close);
     // default values
     layout = -1;
     vibrateEnabled = true;

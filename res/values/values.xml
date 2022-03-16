@@ -15,4 +15,5 @@
   <dimen name="extra_horizontal_margin">0dp</dimen>
   <bool name="debug_logs" product="debug">true</bool>
   <bool name="debug_logs" product="default">false</bool>
+  <dimen name="pointer_too_close">10dp</dimen>
 </resources>

@@ -107,6 +107,10 @@ public final class Pointers implements Handler.Callback
 
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)
   {
+    // Ignore new pointers that are too close to an existing pointer. This
+    // might be glitches.
+    if (isPointerNearby(x, y))
+      return;
     KeyValue value = key.key0;
     Pointer ptr = new Pointer(pointerId, key, value, x, y);
     _ptrs.add(ptr);
@@ -123,7 +127,8 @@ public final class Pointers implements Handler.Callback
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
     float dist = Math.abs(dx) + Math.abs(dy);
-    ptr.ptrDist = dist;
+    ptr.ptrDistX = dx;
+    ptr.ptrDistY = dy;
     KeyValue newValue;
     if (dist < _config.swipe_dist_px)
     {
@@ -199,6 +204,20 @@ public final class Pointers implements Handler.Callback
     }
   }
 
+  /** Check if a pointer is within a radius of 'pointerTooClose' */
+  private boolean isPointerNearby(float x, float y)
+  {
+    for (Pointer p : _ptrs)
+    {
+      float dx = p.downX + p.ptrDistX - x;
+      float dy = p.downY + p.ptrDistY - y;
+      float d = Math.abs(dx) + Math.abs(dy);
+      if (d < _config.pointerTooClose)
+        return true;
+    }
+    return false;
+  }
+
   // Key repeat
 
   /** Message from [_keyrepeat_handler]. */
@@ -250,12 +269,13 @@ public final class Pointers implements Handler.Callback
 
   private float modulatePreciseRepeat(Pointer ptr)
   {
+    float ptrDist = Math.abs(ptr.ptrDistX) + Math.abs(ptr.ptrDistY);
     if (ptr.repeatingPtrDist < 0.f)
-      ptr.repeatingPtrDist = ptr.ptrDist; // First repeat
-    if (ptr.ptrDist > ptr.repeatingPtrDist * 2.f)
-      ptr.repeatingPtrDist = ptr.ptrDist / 2.f; // Large swipe, move the middle point
+      ptr.repeatingPtrDist = ptrDist; // First repeat
+    if (ptrDist > ptr.repeatingPtrDist * 2.f)
+      ptr.repeatingPtrDist = ptrDist / 2.f; // Large swipe, move the middle point
     float left = ptr.repeatingPtrDist / 2.f;
-    float accel = (ptr.ptrDist - left) / (ptr.repeatingPtrDist - left);
+    float accel = (ptrDist - left) / (ptr.repeatingPtrDist - left);
     return Math.min(8.f, Math.max(0.1f, accel));
   }
 
@@ -268,7 +288,8 @@ public final class Pointers implements Handler.Callback
     public float downX;
     public float downY;
     /** Distance of the pointer to the initial press. */
-    public float ptrDist;
+    public float ptrDistX;
+    public float ptrDistY;
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
@@ -282,7 +303,8 @@ public final class Pointers implements Handler.Callback
       value = v;
       downX = x;
       downY = y;
-      ptrDist = 0.f;
+      ptrDistX = 0.f;
+      ptrDistY = 0.f;
       flags = (v == null) ? 0 : v.flags;
       timeoutWhat = -1;
       repeatingPtrDist = -1.f;
