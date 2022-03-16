@@ -92,11 +92,12 @@ public class Keyboard2 extends InputMethodService
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
     HashSet<String> extra_keys = new HashSet<String>();
+    List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
     switch (_config.accents)
     {
       case 1:
         extra_keys_of_subtype(extra_keys, subtype);
-        for (InputMethodSubtype s : getEnabledSubtypes(imm))
+        for (InputMethodSubtype s : enabled_subtypes)
           extra_keys_of_subtype(extra_keys, s);
         break;
       case 2:
@@ -107,6 +108,8 @@ public class Keyboard2 extends InputMethodService
       default: throw new IllegalArgumentException();
     }
     _config.extra_keys = extra_keys;
+    if (enabled_subtypes.size() > 1)
+      _config.shouldOfferSwitchingToNextInputMethod = true;
   }
 
   private void refreshSubtypeLegacyFallback()
