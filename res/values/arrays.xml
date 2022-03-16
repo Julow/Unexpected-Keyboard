@@ -4,6 +4,7 @@
     <item>system</item>
     <item>azerty</item>
     <item>qwerty</item>
+    <item>qwerty2</item>
     <item>qwerty_pt</item>
     <item>qwerty_es</item>
     <item>qwerty_lv</item>
@@ -17,6 +18,7 @@
     <item>@string/pref_layout_e_system</item>
     <item>AZERTY</item>
     <item>QWERTY</item>
+    <item>QWERTY2 (Alternative)</item>
     <item>QWERTY (Brasileiro)</item>
     <item>QWERTY (Español)</item>
     <item>QWERTY (Latvian)</item>
