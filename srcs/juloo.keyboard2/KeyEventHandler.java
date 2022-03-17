@@ -20,7 +20,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     {
     case KeyValue.EVENT_CONFIG: _recv.showKeyboardConfig(); return;
     case KeyValue.EVENT_SWITCH_TEXT: _recv.setLayout(-1); return;
-    case KeyValue.EVENT_SWITCH_NUMERIC: _recv.setLayout(R.xml.numeric); return;
+    case KeyValue.EVENT_SWITCH_NUMERIC: _recv.setNumLayout(-1); return;
     case KeyValue.EVENT_SWITCH_EMOJI: _recv.setPane_emoji(); return;
     case KeyValue.EVENT_SWITCH_BACK_EMOJI: _recv.setPane_normal(); return;
     case KeyValue.EVENT_CHANGE_METHOD: _recv.switchToNextInputMethod(); return;
@@ -94,6 +94,9 @@ class KeyEventHandler implements Config.IKeyEventHandler
 
     /** 'res_id' is '-1' for the currently selected layout. */
     public void setLayout(int res_id);
+
+    /** 'res_id' is '-1' for the currently selected layout. */
+    public void setNumLayout(int res_id);
 
     public void sendKeyEvent(int eventAction, int eventCode, int meta);
 

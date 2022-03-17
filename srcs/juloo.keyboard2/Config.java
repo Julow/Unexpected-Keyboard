@@ -23,6 +23,7 @@ final class Config
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
+  public int layoutNum; // Or '-1' for the system defaults
   private float swipe_dist_dp;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
@@ -59,6 +60,7 @@ final class Config
     sublabelTextSize = res.getFloat(R.integer.sublabel_text_size);
     // default values
     layout = -1;
+    layoutNum = -1;
     vibrateEnabled = true;
     vibrateDuration = 20;
     longPressTimeout = 600;
@@ -103,6 +105,7 @@ final class Config
       keyboardHeightPercent = prefs.getInt("keyboard_height", 35);
     }
     layout = layoutId_of_string(prefs.getString("layout", "system"));
+    layoutNum = layoutNumId_of_string(prefs.getString("layout", "system"));
     swipe_dist_dp = Float.valueOf(prefs.getString("swipe_dist", "15"));
     swipe_dist_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, swipe_dist_dp, dm);
     vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
@@ -211,6 +214,25 @@ final class Config
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
       case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
+      case "system": default: return -1;
+    }
+  }
+
+  public static int layoutNumId_of_string(String name)
+  {
+    switch (name)
+    {
+      case "azerty": return R.xml.numeric;
+      case "bgph1": return R.xml.numeric;
+      case "dvorak": return R.xml.numeric;
+      case "qwerty_es": return R.xml.numeric;
+      case "qwerty_lv": return R.xml.numeric;
+      case "qwerty_pt": return R.xml.numeric;
+      case "qwerty": return R.xml.numeric;
+      case "qwerty2": return R.xml.numeric2;
+      case "qwerty_sv_se": return R.xml.numeric;
+      case "qwertz": return R.xml.numeric;
+      case "ru_jcuken": return R.xml.numeric;
       case "system": default: return -1;
     }
   }

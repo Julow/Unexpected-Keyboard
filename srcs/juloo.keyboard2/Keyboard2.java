@@ -31,6 +31,7 @@ public class Keyboard2 extends InputMethodService
 
   private Keyboard2View _keyboardView;
   private int _currentTextLayout;
+  private int _currentNumLayout;
   private ViewGroup _emojiPane = null;
 
   private Config _config;
@@ -68,15 +69,23 @@ public class Keyboard2 extends InputMethodService
   private void refreshSubtypeLayout(InputMethodSubtype subtype)
   {
     int l = _config.layout;
+    int nl = _config.layoutNum;
     if (l == -1)
     {
       String s = subtype.getExtraValueOf("default_layout");
       if (s != null)
-        l = Config.layoutId_of_string(s);
+        {
+          l = Config.layoutId_of_string(s);
+          nl = Config.layoutNumId_of_string(s);
+        }
       else
-        l = R.xml.qwerty;
+        {
+          l = R.xml.qwerty;
+          nl = R.xml.numeric;
+        }
     }
     _currentTextLayout = l;
+    _currentNumLayout = nl;
   }
 
   private void extra_keys_of_subtype(Set<String> dst, InputMethodSubtype subtype)
@@ -122,6 +131,7 @@ public class Keyboard2 extends InputMethodService
     }
     // Fallback for the layout option: Use qwerty in the "system settings" case
     _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;
+    _currentNumLayout = (_config.layoutNum == -1) ? R.xml.numeric : _config.layoutNum;
   }
 
   private void refreshSubtypeImm()
@@ -208,7 +218,7 @@ public class Keyboard2 extends InputMethodService
     refreshConfig();
     refreshEditorInfo(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
-      _keyboardView.setKeyboard(getLayout(R.xml.numeric));
+      _keyboardView.setKeyboard(getLayout(_currentNumLayout));
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     setInputView(_keyboardView);
@@ -280,6 +290,13 @@ public class Keyboard2 extends InputMethodService
     {
       if (res_id == -1)
         res_id = _currentTextLayout;
+      _keyboardView.setKeyboard(getLayout(res_id));
+    }
+
+    public void setNumLayout(int res_id)
+    {
+      if (res_id == -1)
+        res_id = _currentNumLayout;
       _keyboardView.setKeyboard(getLayout(res_id));
     }
 
