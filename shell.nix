@@ -14,6 +14,6 @@ let
 
 in
 pkgs.mkShell {
-  buildInputs = [ pkgs.findutils jdk android.androidsdk ];
+  buildInputs = [ pkgs.findutils jdk android.androidsdk pkgs.fontforge ];
   ANDROID_HOME = "${android.androidsdk}/libexec/android-sdk";
 }
