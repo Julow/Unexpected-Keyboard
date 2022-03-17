@@ -107,6 +107,11 @@ public final class Pointers implements Handler.Callback
 
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)
   {
+    // Ignore new presses while a modulated key is active. On some devices,
+    // ghost touch events can happen while the pointer travels on top of other
+    // keys.
+    if (isModulatedKeyPressed())
+      return;
     KeyValue value = key.key0;
     Pointer ptr = new Pointer(pointerId, key, value, x, y);
     _ptrs.add(ptr);
@@ -197,6 +202,16 @@ public final class Pointers implements Handler.Callback
       else if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
         ptr.flags &= ~KeyValue.FLAG_LATCH;
     }
+  }
+
+  private boolean isModulatedKeyPressed()
+  {
+    for (Pointer ptr : _ptrs)
+    {
+      if ((ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+        return true;
+    }
+    return false;
   }
 
   // Key repeat
