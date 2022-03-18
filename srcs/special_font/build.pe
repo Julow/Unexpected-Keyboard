@@ -1,13 +1,11 @@
 # The special font is used for the symbols of some keys. It is built from SVG
 # files, one for each glyph.
-
-# Starts from an existing font file for glyphs that don't have SVG sources yet.
-Open($2)
+New()
 
 # Imports glyphs, file name is position in the font.
-i = 3
+i = 2
 while (i < $argc)
-  Select(Strtol($argv[i]:t:r))
+  Select(Strtol($argv[i]:t:r, 16))
   Import($argv[i])
   i++
 endloop
