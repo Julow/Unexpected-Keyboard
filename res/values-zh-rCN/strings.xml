@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
+  <string name="app_name" product="default">Unexpected Keyboard</string>
+  <string name="settings_activity_label">Unexpected Keyboard 设置</string>
+  <string name="pref_category_layout">布局</string>
+  <string name="pref_layout_title">改变键盘布局</string>
+  <string name="pref_layout_e_system">系统设置</string>
+  <string name="pref_accents_title">声调</string>
+  <string name="pref_accents_e_all_installed">显示所有安装的语言的声调符号</string>
+  <string name="pref_accents_e_selected">只显示选择的语言的声调符号</string>
+  <string name="pref_accents_e_all">显示所有声调符号</string>
+  <string name="pref_accents_e_none">隐藏声调符号</string>
+  <string name="pref_category_typing">输入</string>
+  <string name="pref_swipe_dist_title">滑动触发距离</string>
+  <string name="pref_swipe_dist_summary">输入按键四角的符号需要滑动的距离 (%s)</string>
+  <string name="pref_long_timeout_title">长按到开始重复输入的时间</string>
+  <string name="pref_long_interval_title">长按后每次重复输入的时间间隔</string>
+  <string name="pref_category_vibrate">振动</string>
+  <string name="pref_vibrate_title">振动</string>
+  <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>
+	<string name="pref_vibrate_duration_title">每次振动持续的时间</string>
+  <string name="pref_precise_repeat_title">精确控制光标移速</string>
+  <string name="pref_precise_repeat_summary">按键重复按下速度由手指滑动的距离决定</string>
+  <string name="pref_lockable_keys_title">组合键锁定</string>
+  <string name="pref_lockable_keys_summary">可以通过输入两次锁定任何组合键(Ctrl, Alt, Fn, 声调符号等)</string>
+  <string name="pref_category_style">样式</string>
+  <string name="pref_margin_bottom_title">键盘下边距</string>
+  <string name="pref_keyboard_height_title">键盘高度</string>
+  <string name="pref_horizontal_margin_title">键盘左右边距</string>
+  <string name="pref_character_size_title">字符大小</string>
+  <string name="pref_character_size_summary">按键上显示的字符的大小 (%.2fx)</string>
+  <string name="pref_theme">主题</string>
+  <string name="pref_theme_e_system">跟随系统设置</string>
+  <string name="pref_theme_e_dark">暗色</string>
+  <string name="pref_theme_e_light">亮色</string>
+  <string name="pref_theme_e_black">黑色</string>
+  <string name="pref_swipe_dist_e_very_short">非常短</string>
+  <string name="pref_swipe_dist_e_short">短</string>
+	<string name="pref_swipe_dist_e_default">中（默认）</string>
+	<string name="pref_swipe_dist_e_far">长</string>
+  <string name="pref_swipe_dist_e_very_far">非常长</string>
+  <string name="pref_key_horizontal_space">按键的左右边距</string>
+  <string name="pref_key_vertical_space">按键的上下边距</string>
+  <string name="key_action_next">下一项</string>
+  <string name="key_action_done">完成</string>
+  <string name="key_action_go">前往</string>
+  <string name="key_action_prev">前一项</string>
+  <string name="key_action_search">搜索</string>
+  <string name="key_action_send">发送</string>
+</resources>
