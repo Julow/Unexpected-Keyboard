@@ -52,8 +52,10 @@ public final class Pointers implements Handler.Callback
    */
   public int getKeyFlags(KeyValue kv)
   {
+    // Use physical equality because the key might have been modified.
+    String name = kv.name;
     for (Pointer p : _ptrs)
-      if (p.value != null && p.value.name == kv.name) // Physical equality
+      if (p.value != null && p.value.name == name)
         return p.flags;
     return -1;
   }
@@ -66,7 +68,7 @@ public final class Pointers implements Handler.Callback
     if (ptr == null)
       return;
     stopKeyRepeat(ptr);
-    Pointer latched = getLatched(ptr.value);
+    Pointer latched = getLatched(ptr);
     if (latched != null) // Already latched
     {
       removePtr(ptr); // Remove dupplicate
@@ -112,12 +114,11 @@ public final class Pointers implements Handler.Callback
     // keys.
     if (isModulatedKeyPressed())
       return;
-    KeyValue value = key.key0;
-    Pointer ptr = new Pointer(pointerId, key, value, x, y);
+    KeyValue value = _handler.onPointerDown(key.key0);
+    Pointer ptr = new Pointer(pointerId, key, 0, value, x, y);
     _ptrs.add(ptr);
     if (value != null && (value.flags & KeyValue.FLAG_NOREPEAT) == 0)
       startKeyRepeat(ptr);
-    _handler.onPointerDown(value);
   }
 
   public void onTouchMove(float x, float y, int pointerId)
@@ -129,40 +130,41 @@ public final class Pointers implements Handler.Callback
     float dy = y - ptr.downY;
     float dist = Math.abs(dx) + Math.abs(dy);
     ptr.ptrDist = dist;
-    KeyValue newValue;
+    int newIndex;
     if (dist < _config.swipe_dist_px)
     {
-      newValue = ptr.key.key0;
+      newIndex = 0;
     }
     else if (ptr.key.edgekeys)
     {
       if (Math.abs(dy) > Math.abs(dx)) // vertical swipe
-        newValue = (dy < 0) ? ptr.key.key1 : ptr.key.key4;
+        newIndex = (dy < 0) ? 1 : 4;
       else // horizontal swipe
-        newValue = (dx < 0) ? ptr.key.key3 : ptr.key.key2;
+        newIndex = (dx < 0) ? 3 : 2;
     }
     else
     {
       if (dx < 0) // left side
-        newValue = (dy < 0) ? ptr.key.key1 : ptr.key.key3;
+        newIndex = (dy < 0) ? 1 : 3;
       else // right side
-        newValue = (dy < 0) ? ptr.key.key2 : ptr.key.key4;
+        newIndex = (dy < 0) ? 2 : 4;
     }
-    if (newValue != null && newValue != ptr.value)
+    if (newIndex != ptr.value_index)
     {
-      int old_flags = (ptr.value != null) ? ptr.value.flags : 0;
-      ptr.value = newValue;
-      ptr.flags = newValue.flags;
-      if ((old_flags & newValue.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+      ptr.value_index = newIndex;
+      KeyValue newValue = _handler.onPointerSwipe(ptr.key.getValue(newIndex));
+      if (newValue != null)
       {
+        int old_flags = ptr.flags;
+        ptr.value = newValue;
+        ptr.flags = newValue.flags;
         // Keep the keyrepeat going between modulated keys.
-      }
-      else
-      {
-        stopKeyRepeat(ptr);
-        if ((newValue.flags & KeyValue.FLAG_NOREPEAT) == 0)
-          startKeyRepeat(ptr);
-        _handler.onPointerSwipe(newValue);
+        if ((old_flags & newValue.flags & KeyValue.FLAG_PRECISE_REPEAT) == 0)
+        {
+          stopKeyRepeat(ptr);
+          if ((newValue.flags & KeyValue.FLAG_NOREPEAT) == 0)
+            startKeyRepeat(ptr);
+        }
       }
     }
   }
@@ -182,10 +184,12 @@ public final class Pointers implements Handler.Callback
     _ptrs.remove(ptr);
   }
 
-  private Pointer getLatched(KeyValue kv)
+  private Pointer getLatched(Pointer target)
   {
+    KeyboardData.Key k = target.key;
+    int vi = target.value_index;
     for (Pointer p : _ptrs)
-      if (p.value == kv && p.pointerId == -1)
+      if (p.key == k && p.value_index == vi && p.pointerId == -1)
         return p;
     return null;
   }
@@ -278,7 +282,9 @@ public final class Pointers implements Handler.Callback
   {
     /** -1 when latched. */
     public int pointerId;
-    public KeyboardData.Key key;
+    public final KeyboardData.Key key;
+    public int value_index;
+    /** Modified value. Not equal to [key.getValue(value_index)]. */
     public KeyValue value;
     public float downX;
     public float downY;
@@ -290,10 +296,11 @@ public final class Pointers implements Handler.Callback
     /** ptrDist at the first repeat, -1 otherwise. */
     public float repeatingPtrDist;
 
-    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y)
+    public Pointer(int p, KeyboardData.Key k, int vi, KeyValue v, float x, float y)
     {
       pointerId = p;
       key = k;
+      value_index = vi;
       value = v;
       downX = x;
       downY = y;
@@ -306,10 +313,21 @@ public final class Pointers implements Handler.Callback
 
   public interface IPointerEventHandler
   {
-    public void onPointerDown(KeyValue k);
-    public void onPointerSwipe(KeyValue k);
+    /** A key is pressed. Key can be modified or removed by returning [null].
+        [getFlags()] is not uptodate. */
+    public KeyValue onPointerDown(KeyValue k);
+
+    /** Pointer swipes into a corner. Key can be modified or removed. */
+    public KeyValue onPointerSwipe(KeyValue k);
+
+    /** Key is released. [k] is the key that was returned by [onPointerDown] or
+        [onPointerSwipe]. */
     public void onPointerUp(KeyValue k);
+
+    /** Flags changed because latched or locked keys or cancelled pointers. */
     public void onPointerFlagsChanged();
+
+    /** Key is repeating. */
     public void onPointerHold(KeyValue k);
   }
 }
