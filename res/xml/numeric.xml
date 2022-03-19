@@ -28,8 +28,8 @@
   <row height="0.95">
     <key width="1.5" key0="ctrl" key3="switch_text"/>
     <key width="1.5" key0="0"/>
-    <key width="0.75" key0="." key1=":" key2=","/>
-    <key width="0.75" key0="space" key1="&quot;" key2="'" key4="_"/>
+    <key width="0.75" key0="." key1=":" key2="," key3="f11_placeholder"/>
+    <key width="0.75" key0="space" key1="&quot;" key2="'" key3="f12_placeholder" key4="_"/>
     <key width="1.5" key0="enter" key1="±" key2="action" key3="="/>
   </row>
 </keyboard>

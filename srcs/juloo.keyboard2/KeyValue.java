@@ -259,6 +259,8 @@ class KeyValue
     addEventKey("f8", "F8", KeyEvent.KEYCODE_F8);
     addEventKey("f9", "F9", KeyEvent.KEYCODE_F9);
     addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
+    addEventKey("f11", "F11", KeyEvent.KEYCODE_F11, FLAG_SMALLER_FONT);
+    addEventKey("f12", "F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
     addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
 
     addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
