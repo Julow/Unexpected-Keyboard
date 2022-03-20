@@ -95,6 +95,10 @@ public class IntSlideBarPreference extends DialogPreference
   {
     if (positiveResult)
       persistInt(_seekBar.getProgress() + _min);
+    else
+      _seekBar.setProgress(getPersistedInt(_min) - _min);
+
+    updateText();
   }
 
   protected View onCreateDialogView()
