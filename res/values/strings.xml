@@ -23,7 +23,7 @@
   <string name="pref_precise_repeat_title">Precise cursor movements</string>
   <string name="pref_precise_repeat_summary">Modulate key repeat speed by swiping more or less</string>
   <string name="pref_lockable_keys_title">Lockable modifiers</string>
-  <string name="pref_lockable_keys_summary">Modifier that can be locked by typing them twice</string>
+  <string name="pref_lockable_keys_summary">Modifiers that can be locked by typing them twice</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Margin bottom</string>
   <string name="pref_keyboard_height_title">Keyboard height</string>

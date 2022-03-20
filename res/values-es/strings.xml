@@ -11,7 +11,7 @@
   <string name="pref_accents_e_none">Ocultar acentos</string>
   <string name="pref_category_typing">Escribiendo</string>
   <string name="pref_swipe_dist_title">Distancia para deslizar</string>
-  <string name="pref_swipe_dist_summary">Distancia de caractéres en las esquinas de las letras (%s)</string>
+  <string name="pref_swipe_dist_summary">Distancia de caracteres en las esquinas de las letras (%s)</string>
   <string name="pref_long_timeout_title">Tiempo de espera de repetición de tecla</string>
   <string name="pref_long_interval_title">Intervalo de repetición de tecla</string>
   <string name="pref_category_vibrate">Vibración</string>
@@ -20,12 +20,14 @@
   <string name="pref_vibrate_duration_title">Duración</string>
   <string name="pref_precise_repeat_title">Movimientos de cursor preciso</string>
   <string name="pref_precise_repeat_summary">Modular la velocidad de repetición de teclas según si se desliza más o menos</string>
+  <string name="pref_lockable_keys_title">Bloqueo de teclas modificadoras</string>
+  <string name="pref_lockable_keys_summary">Teclas modificadoras que se pueden bloquear pulsándolas dos veces</string>
   <string name="pref_category_style">Estilo</string>
   <string name="pref_margin_bottom_title">Margen del pie</string>
   <string name="pref_keyboard_height_title">Altura del teclado</string>
   <string name="pref_horizontal_margin_title">Margen horizontal</string>
   <string name="pref_character_size_title">Tamaño de etiqueta</string>
-  <string name="pref_character_size_summary">Tamaño de caractéres mostrados en el teclado (%.2fx)</string>
+  <string name="pref_character_size_summary">Tamaño de caracteres mostrados en el teclado (%.2fx)</string>
   <string name="pref_theme">Tema</string>
   <string name="pref_theme_e_system">Ajustes de sistema</string>
   <string name="pref_theme_e_dark">Oscuro</string>
