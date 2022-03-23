@@ -1,4 +1,4 @@
-name: Make Apk CI
+name: Build-debug-apk
 
 on:
   workflow_dispatch:
@@ -6,29 +6,36 @@ on:
   pull_request:
 
 jobs:
-  Build-Apk:
+  Make-apk:
     runs-on: ubuntu-latest
     steps:
     - name: Install nix
       uses: cachix/install-nix-action@v15
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - uses: cachix/cachix-action@v10
+    - name: Setup nixbuild.net
+      uses: nixbuild/nixbuild-action@v8
       with:
-        name: julow
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-    - name: Checkout Repo
+        nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
+    - name: Checkout repo
       uses: actions/checkout@v2
     - name: Cache debug certificate
       uses: actions/cache@v2
       with:
         path: _build/debug.keystore
         key: debug-keystore
-    - name: Run nix-shell and Make
-      uses: ZenithalHourlyRate/nix-shell-action@v4
-      with:
-        file: shell.nix
-        script: make
+    # Hopefully cached.
+    - name: Debug certificate
+      run: |
+        [[ -f _build/debug.keystore ]] ||
+        nix-shell ./shell.nix --run 'make debug.keystore'
+    - name: Build
+      run: |
+        nix build --eval-store auto --store ssh-ng://eu.nixbuild.net \
+          -f ./shell.nix debug-apk
+        nix build -f ./shell.nix debug-apk
+        mkdir -p _build
+        cp result/*.apk _build
     - name: Save debug apk
       uses: actions/upload-artifact@v2
       with:
