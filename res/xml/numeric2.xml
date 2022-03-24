@@ -27,7 +27,7 @@
   </row>
   <row height="0.95">
     <key width="1.5" key0="ctrl" key2="switch_text" key4="meta"/>
-    <key width="1.5" key0="0"/>
+    <key width="1.5" key0="0" key1="f11_placeholder" key2="f12_placeholder"/>
     <key width="0.75" key0="." key1=":" key2="," key3=";"/>
     <key width="0.75" key0="space" key1="&quot;" key2="'" key4="_"/>
     <key width="1.5" key0="enter" key1="action" key3="="/>
