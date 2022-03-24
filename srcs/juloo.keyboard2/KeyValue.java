@@ -269,7 +269,7 @@ class KeyValue
     addEventKey("tab", "\u000F", KeyEvent.KEYCODE_TAB, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
 
     addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
-    addKey("space", "\r", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addKey("space", "\r", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT);
     addKey("nbsp", "\u237d", '\u00a0', EVENT_NONE, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
   }
 }
