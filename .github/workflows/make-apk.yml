@@ -9,26 +9,21 @@ jobs:
   Build-Apk:
     runs-on: ubuntu-latest
     steps:
-    - name: Install nix
-      uses: cachix/install-nix-action@v15
-      with:
-        nix_path: nixpkgs=channel:nixos-unstable
-    - uses: cachix/cachix-action@v10
-      with:
-        name: julow
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-    - name: Checkout Repo
+    - name: Checkout repo
       uses: actions/checkout@v2
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu' # See 'Supported distributions' for available options
+        java-version: '11'
+    - name: Install fontforge
+      run: sudo apt-get install -y fontforge
     - name: Cache debug certificate
       uses: actions/cache@v2
       with:
         path: _build/debug.keystore
         key: debug-keystore
-    - name: Run nix-shell and Make
-      uses: ZenithalHourlyRate/nix-shell-action@v4
-      with:
-        file: shell.nix
-        script: make
+    - name: Build
+      run: make
     - name: Save debug apk
       uses: actions/upload-artifact@v2
       with:
