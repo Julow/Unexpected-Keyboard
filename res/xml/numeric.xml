@@ -12,7 +12,7 @@
   <row>
     <key width="0.75" key0="tab" key1=";" key2="|" key4="\\"/>
     <key width="0.75" key0=")" key2="]" key4="}"/>
-    <key key0="4"/>
+    <key key0="4" key4="a"/>
     <key key0="5" key1="up" key2="right" key3="left" key4="down" edgekeys="true"/>
     <key key0="6"/>
     <key width="0.75" key0="+" key1="Σ" key2="$"/>
@@ -20,9 +20,9 @@
   </row>
   <row>
     <key shift="0.35" width="1.15" key0="shift" key2="fn" key4="alt"/>
-    <key key0="1" key1="superscript" key2="ordinal" key3="subscript"/>
-    <key key0="2"/>
-    <key key0="3"/>
+    <key key0="1" key1="superscript" key2="ordinal" key3="subscript" key4="x"/>
+    <key key0="2" key4="c"/>
+    <key key0="3" key4="v"/>
     <key width="1.15" key0="backspace" key2="delete"/>
   </row>
   <row height="0.95">
