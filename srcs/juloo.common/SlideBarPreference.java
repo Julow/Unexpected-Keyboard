@@ -99,6 +99,10 @@ public class SlideBarPreference extends DialogPreference
   {
     if (positiveResult)
       persistFloat(_value);
+    else
+      _seekBar.setProgress((int)((getPersistedFloat(_min) - _min) * STEPS / (_max - _min)));
+
+    updateText();
   }
 
   protected View onCreateDialogView()

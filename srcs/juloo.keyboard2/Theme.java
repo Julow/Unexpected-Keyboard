@@ -70,7 +70,7 @@ public class Theme
   {
     if (_specialKeyFont == null)
     {
-      _specialKeyFont = Typeface.createFromAsset(context.getAssets(), "fonts/keys.ttf");
+      _specialKeyFont = Typeface.createFromAsset(context.getAssets(), "special_font.ttf");
     }
     return _specialKeyFont;
   }

@@ -194,6 +194,18 @@ class KeyboardData
     {
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
     }
+
+    public KeyValue getValue(int index)
+    {
+      switch (index)
+      {
+        case 1: return key1;
+        case 2: return key2;
+        case 3: return key3;
+        case 4: return key4;
+        default: case 0: return key0;
+      }
+    }
   }
 
   public static abstract interface MapKeys extends Function<KeyValue, KeyValue> { }

@@ -1,0 +1,14 @@
+# The special font is used for the symbols of some keys. It is built from SVG
+# files, one for each glyph.
+New()
+
+# Imports glyphs, file name is position in the font.
+i = 2
+while (i < $argc)
+  Select(Strtol($argv[i]:t:r, 16))
+  Import($argv[i])
+  AutoWidth(150)
+  i++
+endloop
+
+Generate($1)

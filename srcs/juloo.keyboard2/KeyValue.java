@@ -152,19 +152,19 @@ class KeyValue
 
   static
   {
-    addModifierKey("shift", "\uE808",
+    addModifierKey("shift", "\n", // Can't write u000A because Java is stupid
         FLAG_SHIFT | FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addModifierKey("ctrl", "Ctrl", FLAG_CTRL | FLAG_SMALLER_FONT);
     addModifierKey("alt", "Alt", FLAG_ALT | FLAG_SMALLER_FONT);
-    addModifierKey("accent_aigu", "◌́", FLAG_ACCENT2 | FLAG_LOCALIZED);
-    addModifierKey("accent_caron", "◌̌", FLAG_ACCENT_CARON | FLAG_LOCALIZED);
-    addModifierKey("accent_cedille", "◌̧", FLAG_ACCENT5 | FLAG_LOCALIZED);
-    addModifierKey("accent_circonflexe", "◌̂", FLAG_ACCENT3 | FLAG_LOCALIZED);
-    addModifierKey("accent_grave", "◌̀", FLAG_ACCENT1 | FLAG_LOCALIZED);
-    addModifierKey("accent_macron", "◌̄", FLAG_ACCENT_MACRON | FLAG_LOCALIZED);
-    addModifierKey("accent_tilde", "◌̃", FLAG_ACCENT4 | FLAG_LOCALIZED);
-    addModifierKey("accent_trema", "◌̈", FLAG_ACCENT6 | FLAG_LOCALIZED);
-    addModifierKey("accent_ring", "◌̊", FLAG_ACCENT_RING | FLAG_LOCALIZED);
+    addModifierKey("accent_aigu", "\u0050", FLAG_ACCENT2 | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_caron", "\u0051", FLAG_ACCENT_CARON | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_cedille", "\u0052", FLAG_ACCENT5 | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_circonflexe", "\u0053", FLAG_ACCENT3 | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_grave", "\u0054", FLAG_ACCENT1 | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_macron", "\u0055", FLAG_ACCENT_MACRON | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_ring", "\u0056", FLAG_ACCENT_RING | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_tilde", "\u0057", FLAG_ACCENT4 | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_trema", "\u0058", FLAG_ACCENT6 | FLAG_KEY_FONT | FLAG_LOCALIZED);
     addModifierKey("superscript", "Sup", FLAG_ACCENT_SUPERSCRIPT | FLAG_SMALLER_FONT);
     addModifierKey("subscript", "Sub", FLAG_ACCENT_SUBSCRIPT | FLAG_SMALLER_FONT);
     addModifierKey("ordinal", "Ord", FLAG_ACCENT_ORDINAL | FLAG_SMALLER_FONT);
@@ -228,24 +228,24 @@ class KeyValue
     addCharKey('€', EVENT_NONE, FLAG_LOCALIZED);
     addCharKey('£', EVENT_NONE, FLAG_LOCALIZED);
 
-    addSpecialKey("config", "\uE806", EVENT_CONFIG, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addSpecialKey("config", "\u0004", EVENT_CONFIG, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
     addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC);
-    addSpecialKey("switch_emoji", "\uE812" , EVENT_SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addSpecialKey("switch_emoji", "\u0001" , EVENT_SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
-    addSpecialKey("change_method", "\ue807", EVENT_CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addSpecialKey("change_method", "\u0009", EVENT_CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("action", "Action", EVENT_ACTION, FLAG_SMALLER_FONT); // Will always be replaced
 
     addEventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
-    addEventKey("enter", "\ue800", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
-    addEventKey("up", "\uE80B", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addEventKey("right", "\uE80C", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addEventKey("down", "\uE809", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addEventKey("left", "\uE80A", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addEventKey("page_up", "\uE810", KeyEvent.KEYCODE_PAGE_UP, FLAG_KEY_FONT);
-    addEventKey("page_down", "\uE811", KeyEvent.KEYCODE_PAGE_DOWN, FLAG_KEY_FONT);
-    addEventKey("home", "\uE80E", KeyEvent.KEYCODE_MOVE_HOME, FLAG_KEY_FONT);
-    addEventKey("end", "\uE80F", KeyEvent.KEYCODE_MOVE_END, FLAG_KEY_FONT);
+    addEventKey("enter", "\u000E", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
+    addEventKey("up", "\u0005", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
+    addEventKey("right", "\u0006", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
+    addEventKey("down", "\u0007", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
+    addEventKey("left", "\u0008", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
+    addEventKey("page_up", "\u0002", KeyEvent.KEYCODE_PAGE_UP, FLAG_KEY_FONT);
+    addEventKey("page_down", "\u0003", KeyEvent.KEYCODE_PAGE_DOWN, FLAG_KEY_FONT);
+    addEventKey("home", "\u000B", KeyEvent.KEYCODE_MOVE_HOME, FLAG_KEY_FONT);
+    addEventKey("end", "\u000C", KeyEvent.KEYCODE_MOVE_END, FLAG_KEY_FONT);
     addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL, FLAG_SMALLER_FONT);
     addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_SMALLER_FONT);
     addEventKey("insert", "Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
@@ -259,9 +259,11 @@ class KeyValue
     addEventKey("f8", "F8", KeyEvent.KEYCODE_F8);
     addEventKey("f9", "F9", KeyEvent.KEYCODE_F9);
     addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
+    addEventKey("f11", "F11", KeyEvent.KEYCODE_F11, FLAG_SMALLER_FONT);
+    addEventKey("f12", "F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
     addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
 
     addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
-    addKey("space", "\ue80d", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addKey("space", "\r", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
   }
 }

@@ -67,26 +67,27 @@ public class Keyboard2View extends View
     invalidate();
   }
 
-  public void onPointerDown(KeyValue k)
+  public KeyValue onPointerDown(KeyValue k)
   {
-    updateFlags();
+    k = KeyModifier.handleFlags(k, _flags);
     invalidate();
     if (k != null)
       vibrate();
+    return k;
   }
 
-  public void onPointerSwipe(KeyValue k)
+  public KeyValue onPointerSwipe(KeyValue k)
   {
-    updateFlags();
+    k = KeyModifier.handleFlags(k, _flags);
     invalidate();
     if (k != null)
       vibrate();
+    return k;
   }
 
   public void onPointerUp(KeyValue k)
   {
     _config.handler.handleKeyUp(k, _flags);
-    updateFlags();
     invalidate();
   }
 
@@ -97,7 +98,6 @@ public class Keyboard2View extends View
 
   public void onPointerFlagsChanged()
   {
-    updateFlags();
     invalidate();
   }
 
@@ -202,6 +202,7 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
+    updateFlags();
     float y = _config.marginTop + _config.keyVerticalInterval / 2;
     for (KeyboardData.Row row : _keyboard.rows)
     {

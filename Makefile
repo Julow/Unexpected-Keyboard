@@ -6,7 +6,6 @@ ANDROID_PLATFORM_VERSION = android-30
 JAVA_VERSION = 1.8
 
 SRC_DIR = srcs
-ASSETS_DIR = assets
 RES_DIR = res
 
 EXTRA_JARS =
@@ -21,7 +20,7 @@ installd: _build/$(PACKAGE_NAME).debug.apk
 
 clean:
 	rm -rf _build/*.dex _build/class _build/gen _build/*.apk _build/*.unsigned-apk \
-		_build/*.idsig
+		_build/*.idsig _build/assets
 
 .PHONY: release debug installd clean
 
@@ -46,7 +45,6 @@ JAVAC_FLAGS = -source $(JAVA_VERSION) -target $(JAVA_VERSION) -encoding utf8
 MANIFEST_FILE = AndroidManifest.xml
 JAVA_FILES = $(shell find $(SRC_DIR) -name '*.java')
 RES_FILES = $(shell find $(RES_DIR) -type f)
-ASSETS_FILES = $(shell find $(ASSETS_DIR) -type f 2>/dev/null)
 
 # Debug signing
 
@@ -80,11 +78,12 @@ _build/%.apk: _build/%.unsigned-apk %-keystore.conf
 _build/%.unsigned-apk: _build/%.unaligned-apk
 	$(ANDROID_BUILD_TOOLS)/zipalign -fp 4 "$<" "$@"
 
-_build/%.unaligned-apk: _build/classes.dex $(MANIFEST_FILE) $(ASSETS_FILES)
+APK_EXTRA_FILES = classes.dex assets/special_font.ttf
+
+_build/%.unaligned-apk: $(addprefix _build/,$(APK_EXTRA_FILES)) $(MANIFEST_FILE)
 	$(ANDROID_BUILD_TOOLS)/aapt package -f -M $(MANIFEST_FILE) -S $(RES_DIR) \
 		-I $(ANDROID_PLATFORM)/android.jar -F "$@" $(AAPT_PACKAGE_FLAGS)
-	[ -z "$(ASSETS_FILES)" ] || $(ANDROID_BUILD_TOOLS)/aapt add "$@" $(ASSETS_FILES)
-	cd $(@D) && $(ANDROID_BUILD_TOOLS)/aapt add $(@F) classes.dex
+	cd $(@D) && $(ANDROID_BUILD_TOOLS)/aapt add $(@F) $(APK_EXTRA_FILES)
 
 # R.java
 
@@ -95,6 +94,15 @@ $(R_FILE): $(RES_FILES) $(MANIFEST_FILE)
 	mkdir -p "$(@D)"
 	$(ANDROID_BUILD_TOOLS)/aapt package -f -m -S $(RES_DIR) -J $(GEN_DIR) \
 		-M $(MANIFEST_FILE) -I $(ANDROID_PLATFORM)/android.jar
+
+# Special font
+
+SPECIAL_FONT_GLYPHS = $(wildcard srcs/special_font/*.svg)
+SPECIAL_FONT_SCRIPT = srcs/special_font/build.pe
+
+_build/assets/special_font.ttf: $(SPECIAL_FONT_SCRIPT) $(SPECIAL_FONT_GLYPHS)
+	mkdir -p $(@D)
+	fontforge -lang=ff -script $(SPECIAL_FONT_SCRIPT) $@ $(SPECIAL_FONT_GLYPHS)
 
 # Compile java classes and build classes.dex
 

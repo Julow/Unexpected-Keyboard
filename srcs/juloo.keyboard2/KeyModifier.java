@@ -7,27 +7,29 @@ import java.util.HashMap;
 
 class KeyModifier
 {
-  /* Cache key is KeyValue's name */
+  /** Cache key is KeyValue's name */
   private static HashMap<String, SparseArray<KeyValue>> _cache =
     new HashMap<String, SparseArray<KeyValue>>();
 
-  /* Modify a key according to modifiers. */
+  /** Represents a removed key, because a cache entry can't be [null]. */
+  private static final KeyValue removed_key = KeyValue.getKeyByName("removed");
+
+  /** Modify a key according to modifiers. */
   public static KeyValue handleFlags(KeyValue k, int flags)
   {
-    if (k == null || flags == 0) // No modifier
-      return k;
+    if (k == null)
+      return null;
     SparseArray<KeyValue> ks = cacheEntry(k);
     KeyValue r = ks.get(flags);
-    if (r != null) // Found in cache
-      return r;
-    r = k;
-    r = handleFn(r, flags);
-    if (r != null)
+    if (r == null) // Cold cache
+    {
+      r = k;
+      r = handleFn(r, flags);
       r = handleShift(r, flags);
-    if (r != null)
       r = handleAccents(r, flags);
-    ks.put(flags, r);
-    return r;
+      ks.put(flags, r);
+    }
+    return (r == removed_key) ? null : r;
   }
 
   private static KeyValue handleAccents(KeyValue k, int flags)
@@ -185,7 +187,15 @@ class KeyModifier
   private static KeyValue handleFn(KeyValue k, int flags)
   {
     if ((flags & KeyValue.FLAG_FN) == 0)
-      return k;
+    {
+      switch (k.name)
+      {
+        // Remove some keys when Fn is *not* activated
+        case "f11_placeholder":
+        case "f12_placeholder": return removed_key;
+        default: return k;
+      }
+    }
     String name;
     switch (k.name)
     {
@@ -199,6 +209,8 @@ class KeyModifier
       case "8": name = "f8"; break;
       case "9": name = "f9"; break;
       case "0": name = "f10"; break;
+      case "f11_placeholder": name = "f11"; break;
+      case "f12_placeholder": name = "f12"; break;
       case "up": name = "page_up"; break;
       case "down": name = "page_down"; break;
       case "left": name = "home"; break;
@@ -213,7 +225,7 @@ class KeyModifier
       case "#": name = "£"; break;
       case "*": name = "°"; break;
       case "tab": name = "\\t"; break;
-      case "€": case "£": return null; // Avoid showing these twice
+      case "€": case "£": return removed_key; // Avoid showing these twice
       default: return k;
     }
     return KeyValue.getKeyByName(name);

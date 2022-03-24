@@ -21,7 +21,7 @@
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_vibrate">
     <CheckBoxPreference android:key="vibrate_enabled" android:title="@string/pref_vibrate_title" android:summary="@string/pref_vibrate_summary" android:defaultValue="true"/>
-    <juloo.common.IntSlideBarPreference android:key="vibrate_duration" android:title="@string/pref_vibrate_duration_title" android:summary="%sms" android:defaultValue="20" min="5" max="50"/>
+    <juloo.common.IntSlideBarPreference android:key="vibrate_duration" android:title="@string/pref_vibrate_duration_title" android:summary="%sms" android:defaultValue="20" min="5" max="100"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_style">
     <ListPreference android:key="theme" android:title="@string/pref_theme" android:summary="%s" android:defaultValue="system" android:entries="@array/pref_theme_entries" android:entryValues="@array/pref_theme_values"/>

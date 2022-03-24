@@ -13,7 +13,6 @@ class KeyEventHandler implements Config.IKeyEventHandler
 
   public void handleKeyUp(KeyValue key, int flags)
   {
-    key = KeyModifier.handleFlags(key, flags);
     if (key == null || (key.flags & KeyValue.FLAG_NOCHAR) != 0)
       return;
     switch (key.eventCode)
