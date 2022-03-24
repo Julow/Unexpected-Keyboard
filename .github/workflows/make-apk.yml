@@ -7,16 +7,20 @@ on:
 
 jobs:
   Build-Apk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
+    - name: Install external dependencies
+      run: |
+        # Dirty: Get a more recent version of fontforge
+        sudo sed -i 's/focal/impish/g' /etc/apt/sources.list
+        sudo apt-get update -y
+        sudo apt-get install -y fontforge
     - uses: actions/setup-java@v2
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
         java-version: '11'
-    - name: Install fontforge
-      run: sudo apt-get install -y fontforge
+    - name: Checkout repo
+      uses: actions/checkout@v2
     - name: Cache debug certificate
       uses: actions/cache@v2
       with:
