@@ -246,8 +246,8 @@ class KeyValue
     addEventKey("page_down", "\u0003", KeyEvent.KEYCODE_PAGE_DOWN, FLAG_KEY_FONT);
     addEventKey("home", "\u000B", KeyEvent.KEYCODE_MOVE_HOME, FLAG_KEY_FONT);
     addEventKey("end", "\u000C", KeyEvent.KEYCODE_MOVE_END, FLAG_KEY_FONT);
-    addEventKey("backspace", "⌫", KeyEvent.KEYCODE_DEL, FLAG_SMALLER_FONT);
-    addEventKey("delete", "⌦", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_SMALLER_FONT);
+    addEventKey("backspace", "\u0011", KeyEvent.KEYCODE_DEL, FLAG_KEY_FONT);
+    addEventKey("delete", "\u0010", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_KEY_FONT);
     addEventKey("insert", "Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
     addEventKey("f1", "F1", KeyEvent.KEYCODE_F1);
     addEventKey("f2", "F2", KeyEvent.KEYCODE_F2);
@@ -261,7 +261,7 @@ class KeyValue
     addEventKey("f10", "F10", KeyEvent.KEYCODE_F10);
     addEventKey("f11", "F11", KeyEvent.KEYCODE_F11, FLAG_SMALLER_FONT);
     addEventKey("f12", "F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
-    addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
+    addEventKey("tab", "\u000F", KeyEvent.KEYCODE_TAB, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
 
     addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
     addKey("space", "\r", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
