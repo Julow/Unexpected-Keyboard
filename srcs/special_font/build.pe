@@ -6,7 +6,7 @@ New()
 i = 2
 while (i < $argc)
   Select(Strtol($argv[i]:t:r, 16))
-  Import($argv[i])
+  Import($argv[i], 0, 0, 4.0, 0.1)
   AutoWidth(150)
   i++
 endloop
