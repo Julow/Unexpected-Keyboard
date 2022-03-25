@@ -7,17 +7,23 @@ on:
 
 jobs:
   Build-Apk:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-20.04 # That is the latest OS version available today
     steps:
-    - name: Tweaks to get more recent version of fontforge
-      run: |
-        # Dirty: Get a more recent version of fontforge
-        sudo sed -i 's/focal/impish/g' /etc/apt/sources.list
-        sudo apt-get update -y
+    # Dirty OS upgrade to get newer version of FontForge
+    # - name: Tweaks to get more recent version of fontforge
+    #   run: |
+    #     # Dirty: Get a more recent version of fontforge
+    #     sudo sed -i 's/focal/impish/g' /etc/apt/sources.list
+    #     sudo apt-get update -y
+    # - name: Install external dependencies and cache them
+    #   uses: awalsh128/cache-apt-pkgs-action@v1
+    #   with:
+    #     packages: fontforge fontforge-common libfontforge4 libpython3.9 libgtk-3-0
+    #     version: 1.0
     - name: Install external dependencies and cache them
       uses: awalsh128/cache-apt-pkgs-action@v1
       with:
-        packages: fontforge fontforge-common libfontforge4 libpython3.9 libgtk-3-0
+        packages: fontforge fontforge-common libfontforge3 libgdraw6 libc6 libpython3.8 libuninameslist1 libgtk-3-0
         version: 1.0
     - name: Try to install fontforge again to get any missing non cached dependency
       run: sudo apt-get install -y fontforge
