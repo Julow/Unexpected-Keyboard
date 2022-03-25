@@ -17,8 +17,10 @@ jobs:
     - name: Install external dependencies and cache them
       uses: awalsh128/cache-apt-pkgs-action@v1
       with:
-        packages: fontforge
+        packages: fontforge fontforge-common libfontforge4 libpython3.9 libgtk-3-0
         version: 1.0
+    - name: Try to install fontforge again to get any missing non cached dependency
+      run: sudo apt-get install -y fontforge
     - uses: actions/setup-java@v2
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
