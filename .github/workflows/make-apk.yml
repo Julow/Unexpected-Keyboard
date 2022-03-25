@@ -36,6 +36,18 @@ jobs:
       with:
         path: _build/debug.keystore
         key: debug-keystore
+    - name: Restore debug keystore from github Secrets 
+      run: |
+        echo `pwd`
+        echo "$GITHUB_WORKSPACE"
+        mkdir -p _build
+        cd "$GITHUB_WORKSPACE/_build"
+        if [[ ! "${{ secrets.DEBUG_KEYSTORE }}" == "" ]]; then
+            echo "${{ secrets.DEBUG_KEYSTORE }}" > "debug.keystore.asc"
+            if [[ -s "debug.keystore.asc" ]]; then
+                gpg -d --passphrase "debug0" --batch "debug.keystore.asc" > "debug.keystore"
+            fi
+        fi
     - name: Build
       run: make
     - name: Save debug apk
