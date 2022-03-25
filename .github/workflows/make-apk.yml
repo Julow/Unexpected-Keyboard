@@ -9,12 +9,16 @@ jobs:
   Build-Apk:
     runs-on: ubuntu-20.04
     steps:
-    - name: Install external dependencies
+    - name: Tweaks to get more recent version of fontforge
       run: |
         # Dirty: Get a more recent version of fontforge
         sudo sed -i 's/focal/impish/g' /etc/apt/sources.list
         sudo apt-get update -y
-        sudo apt-get install -y fontforge
+    - name: Install external dependencies and cache them
+      uses: awalsh128/cache-apt-pkgs-action@v1
+      with:
+        packages: fontforge
+        version: 1.0
     - uses: actions/setup-java@v2
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
