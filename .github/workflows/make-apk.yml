@@ -38,10 +38,11 @@ jobs:
         key: debug-keystore
     - name: Restore debug keystore from github Secrets 
       run: |
-        echo `pwd`
-        echo "$GITHUB_WORKSPACE"
         mkdir -p _build
         cd "$GITHUB_WORKSPACE/_build"
+        # Check if exist and use the secret named DEBUG_KEYSTORE
+        # The contents of the secret can be obtained -
+        #    from the debug.keystore.asc from you local _build folder
         if [[ ! "${{ secrets.DEBUG_KEYSTORE }}" == "" ]]; then
             echo "${{ secrets.DEBUG_KEYSTORE }}" > "debug.keystore.asc"
             if [[ -s "debug.keystore.asc" ]]; then
