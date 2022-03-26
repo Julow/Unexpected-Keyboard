@@ -204,6 +204,7 @@ class KeyModifier
       case "!": name = "¡"; break;
       case "?": name = "¿"; break;
       case "tab": name = "\\t"; break;
+      case "space": name = "nbsp"; break;
       case "€": case "£": return removed_key; // Avoid showing these twice
       default: return k;
     }
