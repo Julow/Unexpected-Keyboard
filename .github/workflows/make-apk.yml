@@ -7,7 +7,7 @@ on:
 
 jobs:
   Build-Apk:
-    runs-on: ubuntu-20.04 # That is the latest OS version available today
+    runs-on: ubuntu-latest
     steps:
     - name: Cache fontforge and extra dependencies
       id: cache_localbin
