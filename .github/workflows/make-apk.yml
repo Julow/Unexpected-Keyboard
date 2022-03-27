@@ -10,17 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Cache fontforge and extra dependencies
-      id: cache_localbin
       uses: actions/cache@v2
       with:
         path: /usr/local/bin
         key: usr-local-bin
     - name: Install latest FontForge version (using AppImage)
-      if: steps.cache_localbin.outputs.cache-hit != 'true'
       run: |
         # Get most recent version of FontForge
         # Using AppImage there is no dependecy problem, it is the latest version and it's easier to cache
-        # -------
         cd /usr/local/bin
         sudo wget -c -N https://github.com/fontforge/fontforge/releases/download/20220308/FontForge-2022-03-08-582bd41-x86_64.AppImage
         sudo chmod +x ./FontForge-2022-03-08-582bd41-x86_64.AppImage

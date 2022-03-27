@@ -49,18 +49,14 @@ RES_FILES = $(shell find $(RES_DIR) -type f)
 # Debug signing
 
 DEBUG_KEYSTORE = _build/debug.keystore
-DEBUG_KEYSTORE_ASC = _build/debug.keystore.asc
 DEBUG_PASSWD = debug0
-
-$(DEBUG_KEYSTORE_ASC):
-	gpg -c --armor --output "$@" --pinentry-mode loopback --passphrase debug0 --yes $(DEBUG_KEYSTORE)
 
 $(DEBUG_KEYSTORE):
 	echo y | keytool -genkeypair -dname "cn=d, ou=e, o=b, c=ug" \
 		-alias debug -keypass $(DEBUG_PASSWD) -keystore "$@" \
 		-keyalg rsa -storepass $(DEBUG_PASSWD) -validity 10000
 
-_build/%.debug.apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE) $(DEBUG_KEYSTORE_ASC)
+_build/%.debug.apk: _build/%.debug.unsigned-apk $(DEBUG_KEYSTORE)
 	$(ANDROID_BUILD_TOOLS)/apksigner sign --in "$<" --out "$@" \
 		--ks $(DEBUG_KEYSTORE) --ks-key-alias debug --ks-pass "pass:$(DEBUG_PASSWD)"
 
