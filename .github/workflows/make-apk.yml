@@ -7,14 +7,19 @@ on:
 
 jobs:
   Build-Apk:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
+    - name: Install nix
+      uses: cachix/install-nix-action@v15
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+    - name: Cache Nix store
+      uses: actions/cache@v2
+      with:
+        path: /nix
+        key: nix-store
     - name: Install external dependencies
-      run: |
-        # Dirty: Get a more recent version of fontforge
-        sudo sed -i 's/focal/impish/g' /etc/apt/sources.list
-        sudo apt-get update -y
-        sudo apt-get install -y fontforge
+      run: nix-env -f '<nixpkgs>' -i fontforge
     - uses: actions/setup-java@v2
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
