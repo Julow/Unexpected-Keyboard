@@ -264,6 +264,6 @@ class KeyValue
     addEventKey("tab", "↹", KeyEvent.KEYCODE_TAB);
 
     addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
-    addKey("space", "\r", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addKey("space", "\r", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT);
   }
 }
