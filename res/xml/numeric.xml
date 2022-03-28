@@ -12,7 +12,7 @@
   <row>
     <key width="0.75" key0="tab" key1=";" key2="|" key4="\\"/>
     <key width="0.75" key0=")" key2="]" key4="}"/>
-    <key key0="4"/>
+    <key key0="4" key1="box" key3="arrows"/>
     <key key0="5" key1="up" key2="right" key3="left" key4="down" edgekeys="true"/>
     <key key0="6"/>
     <key width="0.75" key0="+" key1="Σ" key2="$"/>

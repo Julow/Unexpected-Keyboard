@@ -50,11 +50,14 @@ class KeyValue
   public static final int FLAG_ACCENT_CARON = (1 << 26);
   public static final int FLAG_ACCENT_MACRON = (1 << 27);
   public static final int FLAG_ACCENT_ORDINAL = (1 << 28);
+  public static final int FLAG_ACCENT_ARROWS = (1 << 29);
+  public static final int FLAG_ACCENT_BOX = (1 << 30);
 
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
     FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |
-    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL | FLAG_ACCENT_RING;
+    FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL | FLAG_ACCENT_ARROWS | 
+    FLAG_ACCENT_BOX | FLAG_ACCENT_RING;
 
   // Language specific keys that are removed from the keyboard by default
   public static final int FLAG_LOCALIZED = (1 << 25);
@@ -168,6 +171,8 @@ class KeyValue
     addModifierKey("superscript", "Sup", FLAG_ACCENT_SUPERSCRIPT | FLAG_SMALLER_FONT);
     addModifierKey("subscript", "Sub", FLAG_ACCENT_SUBSCRIPT | FLAG_SMALLER_FONT);
     addModifierKey("ordinal", "Ord", FLAG_ACCENT_ORDINAL | FLAG_SMALLER_FONT);
+    addModifierKey("arrows", "Arr", FLAG_ACCENT_ARROWS | FLAG_SMALLER_FONT);
+    addModifierKey("box", "Box", FLAG_ACCENT_BOX | FLAG_SMALLER_FONT);
     addModifierKey("fn", "Fn", FLAG_FN | FLAG_SMALLER_FONT);
     addModifierKey("meta", "◆", FLAG_META);
 
