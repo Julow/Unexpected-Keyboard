@@ -67,13 +67,7 @@ class KeyModifier
       case KeyValue.FLAG_ACCENT4:
         return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
       case KeyValue.FLAG_ACCENT5:
-        switch (c)
-        {
-          case 'u': return 'µ';
-          case 'a': return 'æ';
-          case 'o': return 'œ';
-          default: return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
       case KeyValue.FLAG_ACCENT6:
         return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
       case KeyValue.FLAG_ACCENT_CARON:
@@ -195,6 +189,9 @@ class KeyModifier
       case "^": name = "¬"; break;
       case "%": name = "‰"; break;
       case "=": name = "≈"; break;
+      case "u": name = "µ"; break;
+      case "a": name = "æ"; break;
+      case "o": name = "œ"; break;
       case "esc": name = "insert"; break;
       case "$": name = "€"; break;
       case "#": name = "£"; break;
