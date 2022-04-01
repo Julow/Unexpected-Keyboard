@@ -97,13 +97,12 @@ $(R_FILE): $(RES_FILES) $(MANIFEST_FILE)
 
 # Special font
 
-CURRENT_DIRECTORY := $(shell pwd)
-SPECIAL_FONT_GLYPHS = $(wildcard $(CURRENT_DIRECTORY)/srcs/special_font/*.svg)
-SPECIAL_FONT_SCRIPT = $(CURRENT_DIRECTORY)/srcs/special_font/build.pe
+SPECIAL_FONT_GLYPHS = $(wildcard $(CURDIR)/srcs/special_font/*.svg)
+SPECIAL_FONT_SCRIPT = $(CURDIR)/srcs/special_font/build.pe
 
 _build/assets/special_font.ttf: $(SPECIAL_FONT_SCRIPT) $(SPECIAL_FONT_GLYPHS)
 	mkdir -p $(@D)
-	fontforge -lang=ff -script $(SPECIAL_FONT_SCRIPT) $(CURRENT_DIRECTORY)/$@ $(SPECIAL_FONT_GLYPHS)
+	fontforge -lang=ff -script $(SPECIAL_FONT_SCRIPT) $(CURDIR)/$@ $(SPECIAL_FONT_GLYPHS)
 
 # Compile java classes and build classes.dex
 
