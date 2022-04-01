@@ -49,16 +49,8 @@ class KeyModifier
     char c = k.char_;
     if (k.char_ != KeyValue.CHAR_NONE)
       c = Character.toUpperCase(c);
-    if (c == k.char_) // More rules if toUpperCase() did nothing
-      switch (k.symbol)
-      {
-        case "→": c = '⇒'; break;
-        case "←": c = '⇐'; break;
-        case "<": c = '«'; break;
-        case ">": c = '»'; break;
-        case "“": c = '”'; break;
-        default: return k;
-      }
+    if (c == k.char_) // Used to have more rules if toUpperCase() did nothing
+      return k;
     return k.withCharAndSymbol(c);
   }
 
@@ -69,54 +61,21 @@ class KeyModifier
       case KeyValue.FLAG_ACCENT1:
         return (char)KeyCharacterMap.getDeadChar('\u02CB', c);
       case KeyValue.FLAG_ACCENT2:
-        switch (c)
-        {
-          case '`': return '´';
-          case '<': return '‘';
-          case '>': return '‘';
-          default: return (char)KeyCharacterMap.getDeadChar('\u00B4', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u00B4', c);
       case KeyValue.FLAG_ACCENT3:
         return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
       case KeyValue.FLAG_ACCENT4:
-        switch (c)
-        {
-          case '?': return '¿';
-          case '!': return '¡';
-          default: return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
       case KeyValue.FLAG_ACCENT5:
-        switch (c)
-        {
-          case 'u': return 'µ';
-          case '"': return '„';
-          case '\'': return '’';
-          case '-': return '¬';
-          case 'a': return 'æ';
-          case 'o': return 'œ';
-          default: return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
       case KeyValue.FLAG_ACCENT6:
-        switch (c)
-        {
-          case '-': return '÷';
-          default: return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
       case KeyValue.FLAG_ACCENT_CARON:
-        switch (c)
-        {
-          default: return (char)KeyCharacterMap.getDeadChar('\u02C7', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u02C7', c);
       case KeyValue.FLAG_ACCENT_RING:
-        switch (c)
-        {
-          default: return (char)KeyCharacterMap.getDeadChar('\u02DA', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u02DA', c);
       case KeyValue.FLAG_ACCENT_MACRON:
-        switch (c)
-        {
-          default: return (char)KeyCharacterMap.getDeadChar('\u00AF', c);
-        }
+        return (char)KeyCharacterMap.getDeadChar('\u00AF', c);
       case KeyValue.FLAG_ACCENT_ORDINAL:
         switch (c)
         {
@@ -215,16 +174,42 @@ class KeyModifier
       case "down": name = "page_down"; break;
       case "left": name = "home"; break;
       case "right": name = "end"; break;
-      case ">": name = "→"; break;
-      case "<": name = "←"; break;
-      case "\"": name = "“"; break;
+      case "<": name = "«"; break;
+      case ">": name = "»"; break;
+      case "{": name = "‹"; break;
+      case "}": name = "›"; break;
+      case "[": name = "‘"; break;
+      case "]": name = "’"; break;
+      case "(": name = "“"; break;
+      case ")": name = "”"; break;
+      case "'": name = "‚"; break;
+      case "\"": name = "„"; break;
       case "-": name = "–"; break;
       case "_": name = "—"; break;
+      case "^": name = "¬"; break;
+      case "%": name = "‰"; break;
+      case "=": name = "≈"; break;
+      case "u": name = "µ"; break;
+      case "a": name = "æ"; break;
+      case "o": name = "œ"; break;
       case "esc": name = "insert"; break;
       case "$": name = "€"; break;
       case "#": name = "£"; break;
       case "*": name = "°"; break;
+      case ".": name = "…"; break;
+      case ",": name = "·"; break;
+      case "!": name = "¡"; break;
+      case "?": name = "¿"; break;
       case "tab": name = "\\t"; break;
+      case "space": name = "nbsp"; break;
+      case "↖": name = "⇖"; break;
+      case "↑": name = "⇑"; break;
+      case "↗": name = "⇗"; break;
+      case "←": name = "⇐"; break;
+      case "→": name = "⇒"; break;
+      case "↙": name = "⇙"; break;
+      case "↓": name = "⇓"; break;
+      case "↘": name = "⇘"; break;
       case "€": case "£": return removed_key; // Avoid showing these twice
       default: return k;
     }
