@@ -261,8 +261,6 @@ class KeyModifier
       case "a": name = "æ"; break;
       case "o": name = "œ"; break;
       case "esc": name = "insert"; break;
-      case "$": name = "€"; break;
-      case "#": name = "£"; break;
       case "*": name = "°"; break;
       case ".": name = "…"; break;
       case ",": name = "·"; break;
@@ -278,6 +276,13 @@ class KeyModifier
       case "↙": name = "⇙"; break;
       case "↓": name = "⇓"; break;
       case "↘": name = "⇘"; break;
+      // Currency symbols
+      case "e": name = "€"; break;
+      case "l": name = "£"; break;
+      case "r": name = "₹"; break;
+      case "y": name = "¥"; break;
+      case "c": name = "¢"; break;
+      case "p": name = "₱"; break;
       case "€": case "£": return removed_key; // Avoid showing these twice
       default: return k;
     }
