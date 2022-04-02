@@ -206,6 +206,7 @@ final class Config
       case "bgph1": return R.xml.local_bgph1;
       case "dvorak": return R.xml.dvorak;
       case "qwerty_es": return R.xml.qwerty_es;
+      case "qwerty_ko": return R.xml.qwerty_ko;
       case "qwerty_lv": return R.xml.qwerty_lv;
       case "qwerty_pt": return R.xml.qwerty_pt;
       case "qwerty": return R.xml.qwerty;
