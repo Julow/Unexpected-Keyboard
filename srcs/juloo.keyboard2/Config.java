@@ -23,7 +23,6 @@ final class Config
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
-  private float swipe_dist_dp;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
   public long vibrateDuration;
@@ -103,8 +102,11 @@ final class Config
       keyboardHeightPercent = prefs.getInt("keyboard_height", 35);
     }
     layout = layoutId_of_string(prefs.getString("layout", "system"));
-    swipe_dist_dp = Float.valueOf(prefs.getString("swipe_dist", "15"));
-    swipe_dist_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, swipe_dist_dp, dm);
+    // The swipe distance is defined relatively to the "exact physical pixels
+    // per inch of the screen", which isn't affected by the scaling settings.
+    // Take the mean of both dimensions as an approximation of the diagonal.
+    float physical_scaling = (dm.widthPixels + dm.heightPixels) / (dm.xdpi + dm.ydpi);
+    swipe_dist_px = Float.valueOf(prefs.getString("swipe_dist", "15")) * physical_scaling;;
     vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
     vibrateDuration = prefs.getInt("vibrate_duration", (int)vibrateDuration);
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
