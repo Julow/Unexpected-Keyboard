@@ -17,6 +17,7 @@
       <CheckBoxPreference android:key="lockable_meta" android:title="Meta" android:defaultValue="false"/>
       <CheckBoxPreference android:key="lockable_sup" android:title="Sup" android:defaultValue="false"/>
       <CheckBoxPreference android:key="lockable_sub" android:title="Sub" android:defaultValue="false"/>
+      <CheckBoxPreference android:key="lockable_box" android:title="Box" android:defaultValue="false"/>
     </PreferenceScreen>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_vibrate">
