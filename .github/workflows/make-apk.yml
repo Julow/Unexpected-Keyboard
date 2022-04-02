@@ -9,17 +9,19 @@ jobs:
   Build-Apk:
     runs-on: ubuntu-latest
     steps:
-    - name: Install nix
-      uses: cachix/install-nix-action@v15
-      with:
-        nix_path: nixpkgs=channel:nixos-unstable
-    - name: Cache Nix store
+    - name: Cache fontforge and extra dependencies
       uses: actions/cache@v2
       with:
-        path: /nix
-        key: nix-store
-    - name: Install external dependencies
-      run: nix-env -f '<nixpkgs>' -i fontforge
+        path: /usr/local/bin
+        key: usr-local-bin
+    - name: Install latest FontForge version (using AppImage)
+      run: |
+        # Get most recent version of FontForge
+        # Using AppImage there is no dependecy problem, it is the latest version and it's easier to cache
+        cd /usr/local/bin
+        sudo wget -c -N https://github.com/fontforge/fontforge/releases/download/20220308/FontForge-2022-03-08-582bd41-x86_64.AppImage
+        sudo chmod +x ./FontForge-2022-03-08-582bd41-x86_64.AppImage
+        sudo ln --symbolic --force /usr/local/bin/FontForge-2022-03-08-582bd41-x86_64.AppImage /usr/local/bin/fontforge
     - uses: actions/setup-java@v2
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
@@ -31,6 +33,19 @@ jobs:
       with:
         path: _build/debug.keystore
         key: debug-keystore
+    - name: Restore debug keystore from github Secrets 
+      run: |
+        mkdir -p _build
+        cd "$GITHUB_WORKSPACE/_build"
+        # Check if exist and use the secret named DEBUG_KEYSTORE
+        # The contents of the secret can be obtained -
+        #    from the debug.keystore.asc from you local _build folder
+        if [[ ! "${{ secrets.DEBUG_KEYSTORE }}" == "" ]]; then
+            echo "${{ secrets.DEBUG_KEYSTORE }}" > "debug.keystore.asc"
+            if [[ -s "debug.keystore.asc" ]]; then
+                gpg -d --passphrase "debug0" --batch "debug.keystore.asc" > "debug.keystore"
+            fi
+        fi
     - name: Build
       run: make
     - name: Save debug apk

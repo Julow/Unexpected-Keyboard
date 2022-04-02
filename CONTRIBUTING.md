@@ -23,6 +23,24 @@ make
 If the build succeed, the debug apk is located in
 `_build/juloo.keyboard2.debug.apk`.
 
+## Using the local debug.keystore on the Github CI actions
+
+It's possible to save the local debug.keystore into a github secret, so the same keystore is utilized to build the debug apk in the CI github actions.
+Doing this, they wil have the same signature, thus the debug apk can be updated without having to uninstall it first.
+
+After you sucessfully run `make`, (thus a debug.keystore exists) you can use this second command to generate a base64 stringified version of it
+
+```sh
+cd _build
+gpg -c --armor --pinentry-mode loopback --passphrase debug0 --yes "debug.keystore"
+```
+
+A file will be generated inside the local `_build/` folder, called `debug.keystore.asc`
+
+You can copy the content of this file, and with that, paste it into a new github secret in your repo settings. 
+
+The secret must be named `DEBUG_KEYSTORE`
+
 ## Debugging on your phone
 
 First [Enable adb debugging on your device](https://developer.android.com/studio/command-line/adb#Enabling).
