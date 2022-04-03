@@ -14,6 +14,7 @@ class KeyValue
   public static final int EVENT_SWITCH_BACK_EMOJI = -6;
   public static final int EVENT_CHANGE_METHOD = -7;
   public static final int EVENT_ACTION = -8;
+  public static final int EVENT_SWITCH_PROGRAMMING = -9;
   public static final char CHAR_NONE = '\0';
 
   // Behavior flags
@@ -234,10 +235,11 @@ class KeyValue
     addCharKey('£', EVENT_NONE, FLAG_LOCALIZED);
 
     addSpecialKey("config", "\u0004", EVENT_CONFIG, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
-    addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT | FLAG_SMALLER_FONT);
-    addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC | FLAG_SMALLER_FONT);
+    addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT, FLAG_SMALLER_FONT);
+    addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC, FLAG_SMALLER_FONT);
     addSpecialKey("switch_emoji", "\u0001" , EVENT_SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
+    addSpecialKey("switch_programming", "Prog", EVENT_SWITCH_PROGRAMMING, FLAG_SMALLER_FONT);
     addSpecialKey("change_method", "\u0009", EVENT_CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("action", "Action", EVENT_ACTION, FLAG_SMALLER_FONT); // Will always be replaced
 

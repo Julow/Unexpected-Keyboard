@@ -18,12 +18,13 @@ class KeyEventHandler implements Config.IKeyEventHandler
     switch (key.eventCode)
     {
     case KeyValue.EVENT_CONFIG: _recv.showKeyboardConfig(); return;
-    case KeyValue.EVENT_SWITCH_TEXT: _recv.setLayout(-1); return;
-    case KeyValue.EVENT_SWITCH_NUMERIC: _recv.setLayout(R.xml.numeric); return;
+    case KeyValue.EVENT_SWITCH_TEXT: _recv.switchMain(); return;
+    case KeyValue.EVENT_SWITCH_NUMERIC: _recv.switchNumeric(); return;
     case KeyValue.EVENT_SWITCH_EMOJI: _recv.setPane_emoji(); return;
     case KeyValue.EVENT_SWITCH_BACK_EMOJI: _recv.setPane_normal(); return;
     case KeyValue.EVENT_CHANGE_METHOD: _recv.switchToNextInputMethod(); return;
     case KeyValue.EVENT_ACTION: _recv.performAction(); return;
+    case KeyValue.EVENT_SWITCH_PROGRAMMING: _recv.switchProgramming(); return;
     default:
       if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT | KeyValue.FLAG_META)) != 0)
         handleKeyUpWithModifier(key, flags);
@@ -91,8 +92,9 @@ class KeyEventHandler implements Config.IKeyEventHandler
     public void showKeyboardConfig();
     public void performAction();
 
-    /** 'res_id' is '-1' for the currently selected layout. */
-    public void setLayout(int res_id);
+    public void switchMain();
+    public void switchNumeric();
+    public void switchProgramming();
 
     public void sendKeyEvent(int eventAction, int eventCode, int meta);
 

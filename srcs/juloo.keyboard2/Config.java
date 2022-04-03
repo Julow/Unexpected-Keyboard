@@ -23,6 +23,7 @@ final class Config
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
+  public int programming_layout; // Or '-1' for none
   public float swipe_dist_px;
   public boolean vibrateEnabled;
   public long vibrateDuration;
@@ -41,6 +42,7 @@ final class Config
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
+  public boolean shouldOfferSwitchingToProgramming;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
@@ -58,6 +60,7 @@ final class Config
     sublabelTextSize = res.getFloat(R.integer.sublabel_text_size);
     // default values
     layout = -1;
+    programming_layout = -1;
     vibrateEnabled = true;
     vibrateDuration = 20;
     longPressTimeout = 600;
@@ -74,6 +77,7 @@ final class Config
     refresh(context);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
+    shouldOfferSwitchingToProgramming = false;
     actionLabel = null;
     actionId = 0;
     swapEnterActionKey = false;
@@ -101,7 +105,10 @@ final class Config
     {
       keyboardHeightPercent = prefs.getInt("keyboard_height", 35);
     }
-    layout = layoutId_of_string(prefs.getString("layout", "system"));
+    String layout_s = prefs.getString("layout", "system");
+    layout = layout_s.equals("system") ? -1 : layoutId_of_string(layout_s);
+    String prog_layout_s = prefs.getString("programming_layout", "none");
+    programming_layout = prog_layout_s.equals("none") ? -1 : layoutId_of_string(prog_layout_s);
     // The swipe distance is defined relatively to the "exact physical pixels
     // per inch of the screen", which isn't affected by the scaling settings.
     // Take the mean of both dimensions as an approximation of the diagonal.
@@ -156,6 +163,8 @@ final class Config
         case KeyValue.EVENT_ACTION:
           return (swapEnterActionKey && action_key != null) ?
             KeyValue.getKeyByName("enter") : action_key;
+        case KeyValue.EVENT_SWITCH_PROGRAMMING:
+          return shouldOfferSwitchingToProgramming ? key : null;
         default:
           if (key.flags != 0)
           {
@@ -214,7 +223,7 @@ final class Config
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
       case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
-      case "system": default: return -1;
+      default: throw new IllegalArgumentException("layoutId_of_string: Unknown layout: " + name);
     }
   }
 

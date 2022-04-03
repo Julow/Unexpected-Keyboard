@@ -3,6 +3,7 @@
   <PreferenceCategory android:title="@string/pref_category_layout">
     <ListPreference android:key="layout" android:title="@string/pref_layout_title" android:summary="%s" android:defaultValue="system" android:entries="@array/pref_layout_entries" android:entryValues="@array/pref_layout_values"/>
     <ListPreference android:key="accents" android:title="@string/pref_accents_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_accents_entries" android:entryValues="@array/pref_accents_values"/>
+    <ListPreference android:key="programming_layout" android:title="@string/pref_programming_layout_title" android:summary="%s" android:defaultValue="none" android:entries="@array/pref_programming_layout_entries" android:entryValues="@array/pref_programming_layout_values"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
     <ListPreference android:key="swipe_dist" android:title="@string/pref_swipe_dist_title" android:summary="@string/pref_swipe_dist_summary" android:defaultValue="15" android:entries="@array/pref_swipe_dist_entries" android:entryValues="@array/pref_swipe_dist_values"/>
