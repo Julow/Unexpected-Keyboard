@@ -234,8 +234,8 @@ class KeyValue
     addCharKey('£', EVENT_NONE, FLAG_LOCALIZED);
 
     addSpecialKey("config", "\u0004", EVENT_CONFIG, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
-    addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT);
-    addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC);
+    addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT | FLAG_SMALLER_FONT);
+    addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC | FLAG_SMALLER_FONT);
     addSpecialKey("switch_emoji", "\u0001" , EVENT_SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_back_emoji", "ABC", EVENT_SWITCH_BACK_EMOJI);
     addSpecialKey("change_method", "\u0009", EVENT_CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
