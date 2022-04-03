@@ -174,7 +174,7 @@ class KeyValue
     addModifierKey("arrows", "Arr", FLAG_ACCENT_ARROWS | FLAG_SMALLER_FONT);
     addModifierKey("box", "Box", FLAG_ACCENT_BOX | FLAG_SMALLER_FONT);
     addModifierKey("fn", "Fn", FLAG_FN | FLAG_SMALLER_FONT);
-    addModifierKey("meta", "◆", FLAG_META);
+    addModifierKey("meta", "Meta", FLAG_META | FLAG_SMALLER_FONT);
 
     addCharKey('a', KeyEvent.KEYCODE_A);
     addCharKey('b', KeyEvent.KEYCODE_B);
