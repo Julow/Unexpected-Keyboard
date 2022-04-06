@@ -223,7 +223,7 @@ final class Config
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
       case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
-      default: throw new IllegalArgumentException("layoutId_of_string: Unknown layout: " + name);
+      default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
     }
   }
 
