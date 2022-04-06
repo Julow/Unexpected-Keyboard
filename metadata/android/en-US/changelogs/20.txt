@@ -1,0 +1,25 @@
+Quick fix release.
+
+Previously:
+
+Translations: Brazilian portuguese (@igorSilCar), Chinese-Simplified (@9-2-1), Korean (@notnickid)
+New layouts: Swedish (@thabubble), Korean (@notnickid)
+
+Improved computation of the swipe gesture and fix unstoppable key-repeat on
+some devices.
+
+Moved keys away from the edges of the screen and other improvements to the layouts.
+
+Improved rendering of some symbols.
+
+Added more characters to the keyboard:
+- New combinations to Fn (@ArenaL5)
+- Currency symbols
+- Added arrow and box symbols (@sdrapha)
+- F11 and F12.
+
+Option for making modifiers lockable. (@sdrapha)
+Fixes to the Spanish layout and other fixes. (@ArenaL5)
+Many other fixes.
+
+Huge thanks to the contributors: @igorSilCar, @sdrapha, @ArenaL5, @notnickid, @9-2-1, @thabubble
