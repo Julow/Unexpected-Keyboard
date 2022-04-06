@@ -56,8 +56,8 @@ final class Config
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
-    labelTextSize = res.getFloat(R.integer.label_text_size);
-    sublabelTextSize = res.getFloat(R.integer.sublabel_text_size);
+    labelTextSize = Float.valueOf(res.getString(R.integer.label_text_size));
+    sublabelTextSize = Float.valueOf(res.getString(R.integer.sublabel_text_size));
     // default values
     layout = -1;
     programming_layout = -1;
