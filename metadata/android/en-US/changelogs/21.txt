@@ -1,0 +1,4 @@
+Fix compatibility with Android 6.
+Translation improvements.
+
+Huge thanks to the contributors: @marciozomb13
