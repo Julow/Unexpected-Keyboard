@@ -16,7 +16,7 @@ debug: _build/$(PACKAGE_NAME).debug.apk
 release: _build/$(PACKAGE_NAME).apk
 
 installd: _build/$(PACKAGE_NAME).debug.apk
-	adb install "$<"
+	adb install -r "$<"
 
 clean:
 	rm -rf _build/*.dex _build/class _build/gen _build/*.apk _build/*.unsigned-apk \
