@@ -294,10 +294,13 @@ public class Keyboard2 extends InputMethodService
       if (_config.programming_layout == -1)
         return;
       KeyboardData layout =
-        getLayout(_config.programming_layout).replaceKeys(key -> {
-          if (key != null && key.eventCode == KeyValue.EVENT_SWITCH_PROGRAMMING)
-            return KeyValue.getKeyByName("switch_text");
-          return key;
+        getLayout(_config.programming_layout).replaceKeys(new KeyboardData.MapKeys() {
+          public KeyValue apply(KeyValue key)
+          {
+            if (key != null && key.eventCode == KeyValue.EVENT_SWITCH_PROGRAMMING)
+              return KeyValue.getKeyByName("switch_text");
+            return key;
+          }
         });
       _keyboardView.setKeyboard(layout);
     }

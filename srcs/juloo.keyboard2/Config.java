@@ -149,34 +149,38 @@ final class Config
   public KeyboardData modify_layout(KeyboardData kw)
   {
     // Update the name to avoid caching in KeyModifier
-    KeyValue action_key = (actionLabel == null) ? null :
+    final KeyValue action_key = (actionLabel == null) ? null :
       KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
-    return kw.replaceKeys(key -> {
-      if (key == null)
-        return null;
-      switch (key.eventCode)
+    return kw.replaceKeys(new KeyboardData.MapKeys() {
+      public KeyValue apply(KeyValue key)
       {
-        case KeyValue.EVENT_CHANGE_METHOD:
-          return shouldOfferSwitchingToNextInputMethod ? key : null;
-        case KeyEvent.KEYCODE_ENTER:
-          return (swapEnterActionKey && action_key != null) ? action_key : key;
-        case KeyValue.EVENT_ACTION:
-          return (swapEnterActionKey && action_key != null) ?
-            KeyValue.getKeyByName("enter") : action_key;
-        case KeyValue.EVENT_SWITCH_PROGRAMMING:
-          return shouldOfferSwitchingToProgramming ? key : null;
-        default:
-          if (key.flags != 0)
-          {
-            if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 &&
-                extra_keys != null &&
-                !extra_keys.contains(key.name))
-              return null;
-            if ((key.flags & lockable_modifiers) != 0)
-              return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
-          }
-          return key;
-      }});
+        if (key == null)
+          return null;
+        switch (key.eventCode)
+        {
+          case KeyValue.EVENT_CHANGE_METHOD:
+            return shouldOfferSwitchingToNextInputMethod ? key : null;
+          case KeyEvent.KEYCODE_ENTER:
+            return (swapEnterActionKey && action_key != null) ? action_key : key;
+          case KeyValue.EVENT_ACTION:
+            return (swapEnterActionKey && action_key != null) ?
+              KeyValue.getKeyByName("enter") : action_key;
+          case KeyValue.EVENT_SWITCH_PROGRAMMING:
+            return shouldOfferSwitchingToProgramming ? key : null;
+          default:
+            if (key.flags != 0)
+            {
+              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 &&
+                  extra_keys != null &&
+                  !extra_keys.contains(key.name))
+                return null;
+              if ((key.flags & lockable_modifiers) != 0)
+                return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
+            }
+            return key;
+        }
+      }
+    });
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)

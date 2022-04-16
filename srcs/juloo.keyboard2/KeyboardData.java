@@ -208,7 +208,10 @@ class KeyboardData
     }
   }
 
-  public static abstract interface MapKeys extends Function<KeyValue, KeyValue> { }
+  // Not using Function<KeyValue, KeyValue> to keep compatibility with Android 6.
+  public static abstract interface MapKeys {
+    public KeyValue apply(KeyValue kv);
+  }
 
   /** Parsing utils */
 
