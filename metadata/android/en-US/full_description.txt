@@ -17,5 +17,4 @@ Highlight of some of the features:
 Like any other virtual keyboards, it must be enabled in the system settings. Open the System Settings and go to:
 System > Languages & input > On-screen keyboard > Manage on-screen keyboards.
 
-There are no ads, no tracking, no unnecessary permissions!
-Also, it is open source! Visit the repository at https://github.com/Julow/Unexpected-Keyboard
+The project is open source. Visit the repository at https://github.com/Julow/Unexpected-Keyboard
