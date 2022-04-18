@@ -16,3 +16,6 @@ Alguns dos recursos interessantes:
 
 Como qualquer outro teclado virtual, tem de ser ativado nas configurações de sistema. Abra as configurações e vá para:
 Sistema > Idioma e entrada > Teclado virtual > Gerenciar teclados virtuais.
+
+Livre de propagandas, rastreadores ou permissões desnecessárias!
+Além disso, o projeto é opensource! Visite o repositório https://github.com/Julow/Unexpected-Keyboard
