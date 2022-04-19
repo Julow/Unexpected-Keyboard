@@ -9,6 +9,8 @@
   <string name="pref_accents_e_selected">Akzente nur für die gewählte Sprache anzeigen</string>
   <string name="pref_accents_e_all">Alle Akzente anzeigen</string>
   <string name="pref_accents_e_none">Akzente verbergen</string>
+  <string name="pref_programming_layout_title">Tastaturlayout zum Programmieren</string>
+  <string name="pref_programming_layout_none">Keines</string>
   <string name="pref_category_typing">Tippen</string>
   <string name="pref_swipe_dist_title">Länge der Wischgeste</string>
   <string name="pref_swipe_dist_summary">Abstand der Zeichen in den Ecken der Tasten (%s)</string>
@@ -20,6 +22,8 @@
   <string name="pref_vibrate_duration_title">Dauer</string>
   <string name="pref_precise_repeat_title">Präzise Cursorsteuerung</string>
   <string name="pref_precise_repeat_summary">Geschwindigkeit der Tastenwiederholung durch weniger oder mehr Wischen anpassen</string>
+  <string name="pref_lockable_keys_title">Sperrbare Hilfstasten</string>
+  <string name="pref_lockable_keys_summary">Hilfstasten, die durch zweimaliges Tippen gesperrt (eingerastet) werden können</string>
   <string name="pref_category_style">Design</string>
   <string name="pref_margin_bottom_title">Unterer Abstand</string>
   <string name="pref_keyboard_height_title">Höhe der Tastatur</string>
