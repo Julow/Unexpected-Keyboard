@@ -90,7 +90,7 @@ It is also possible to add some characters that are hidden in other languages, f
 ### Add a programming layout
 
 A programming layout must contains every ASCII characters as well as every dead-keys.
-Currently, the only example is QWERTY.
+Current examples are QWERTY, Dvorak and Neo2.
 
 ### Translations
 
