@@ -13,8 +13,8 @@
   </row>
   <row>
     <key key0="a" key2="1" key4="!"/>
-    <key key0="o" key1="accent_macron" key2="2" key3="\@"/>
-    <key key0="e" key1="accent_caron" key2="3" key3="\#"/>
+    <key key0="o" key1="accent_macron" key2="2" key3="\@" key4="accent_ogonek"/>
+    <key key0="e" key1="accent_caron" key2="3" key3="\#" key4="accent_dot_above"/>
     <key key0="u" key2="4" key3="$"/>
     <key key0="i" key2="5" key3="%"/>
     <key key0="d" key2="6" key3="^"/>

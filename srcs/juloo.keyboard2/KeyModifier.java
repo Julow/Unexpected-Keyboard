@@ -76,6 +76,10 @@ class KeyModifier
         return (char)KeyCharacterMap.getDeadChar('\u02DA', c);
       case KeyValue.FLAG_ACCENT_MACRON:
         return (char)KeyCharacterMap.getDeadChar('\u00AF', c);
+      case KeyValue.FLAG_ACCENT_OGONEK:
+        return (char)KeyCharacterMap.getDeadChar('\u02DB', c);
+      case KeyValue.FLAG_ACCENT_DOT_ABOVE:
+        return (char)KeyCharacterMap.getDeadChar('\u02D9', c);
       case KeyValue.FLAG_ACCENT_ORDINAL:
         switch (c)
         {
