@@ -78,26 +78,55 @@ make installd
 
 ## Guidelines
 
-### Add a localized layout
+### Adding a programming layout
 
-Localized layouts (a layout specific to a language) are generally accepted.
+A programming layout must contains every ASCII characters.
+The current programming layouts are: QWERTY, Dvorak.
+
+Ideally, programming layouts should allow to type every Latin-script languages
+by containing every dead-keys. See for example: 0bf7ff5 (Latvian), 573c13f (Swedish).
+It is also possible to add some characters that are hidden in other languages,
+for example 93e84ba (ß), though the space is limited.
+
+Layouts are defined in XML, see `res/xml/qwerty.xml`. An entry must be added to
+the layout option in `res/values/arrays.xml`, to both `pref_layout_values`
+(correspond to the file name) and `pref_layout_entries` (display name).
+The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
+`layoutId_of_string`.
+
+Some users cannot easily type the characters close the the edges of the screen
+due to a bulky phone case. It is best to avoid placing important characters
+there (such as the digits or punctuation).
+
+### Adding a localized layout
+
+Localized layouts (a layout specific to a language) are gladly accepted.
 See for example: 4333575 (Bulgarian), 88e2175 (Latvian), 133b6ec (German).
 
-This keyboard is intended for programmers. If your language uses the Latin script, make sure it is possible to type every letters on the QWERTY keyboard.
-This is generally done using dead-keys, for example: 0bf7ff5 (Latvian), 573c13f (Swedish).
-It is also possible to add some characters that are hidden in other languages, for example 93e84ba (ß), though the space is limited.
+They don't need to contain every ASCII characters (although it's useful in
+passwords) and dead-keys.
 
-### Add a programming layout
+### Adding support for a language
 
-A programming layout must contains every ASCII characters as well as every dead-keys.
-Currently, the only example is QWERTY.
+Supported locales are defined in `res/xml/method.xml`.
+
+The attributes `languageTag` and `imeSubtypeLocale` define a locale, the
+attribute `imeSubtypeExtraValue` defines the default layout and the dead-keys
+and other extra keys to show. 
 
 ### Translations
 
-Translations are always welcome ! See for example: 1723288 (Latvian), baf867a (French).
-The app can be translated by writing `res/values-<language code>/strings.xml` (for example `values-fr`, `values-lv`), based on the default: `res/values/strings.xml` (English).
+Translations are always welcome !
 
-The store description is found in `metadata/android/<locale>/`, `short_description.txt` and `full_description.txt`.
-The full description changes very infrequently (it was changed once in 6 years). But if it changes too much, outdated translation might be removed.
+See for example: 1723288 (Latvian), baf867a (French).
+The app can be translated by writing `res/values-<language code>/strings.xml`
+(for example `values-fr`, `values-lv`), based on the default:
+`res/values/strings.xml` (English).
 
-Translating changelogs is not useful because they evolve too fast. Changelogs are generally written entirely just before a release, translating them would delay releases too much. Old changelogs are not shown to anyone currently.
+The store description is found in `metadata/android/<locale>/`,
+`short_description.txt` and `full_description.txt`.
+Translating changelogs is not useful. Changelogs are written quickly just
+before a release and older ones are never shown to anyone currently.
+
+The app name might be partially translated, the "unexpected" word should remain
+untranslated.
