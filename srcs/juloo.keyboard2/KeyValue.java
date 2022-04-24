@@ -39,6 +39,8 @@ class KeyValue
   public static final int FLAG_META = (1 << 14);
 
   // Accent flags
+  public static final int FLAG_ACCENT_DOUBLE_AIGU = (1 << 9);
+  public static final int FLAG_ACCENT_DOT_ABOVE = (1 << 15);
   public static final int FLAG_ACCENT1 = (1 << 16); // Grave
   public static final int FLAG_ACCENT2 = (1 << 17); // Aigu
   public static final int FLAG_ACCENT3 = (1 << 18); // Circonflexe
@@ -53,12 +55,14 @@ class KeyValue
   public static final int FLAG_ACCENT_ORDINAL = (1 << 28);
   public static final int FLAG_ACCENT_ARROWS = (1 << 29);
   public static final int FLAG_ACCENT_BOX = (1 << 30);
+  public static final int FLAG_ACCENT_OGONEK = (1 << 31);
 
   public static final int FLAGS_ACCENTS = FLAG_ACCENT1 | FLAG_ACCENT2 |
     FLAG_ACCENT3 | FLAG_ACCENT4 | FLAG_ACCENT5 | FLAG_ACCENT6 |
     FLAG_ACCENT_CARON | FLAG_ACCENT_MACRON | FLAG_ACCENT_SUPERSCRIPT |
     FLAG_ACCENT_SUBSCRIPT | FLAG_ACCENT_ORDINAL | FLAG_ACCENT_ARROWS | 
-    FLAG_ACCENT_BOX | FLAG_ACCENT_RING;
+    FLAG_ACCENT_BOX | FLAG_ACCENT_RING | FLAG_ACCENT_OGONEK |
+    FLAG_ACCENT_DOT_ABOVE | FLAG_ACCENT_DOUBLE_AIGU;
 
   // Language specific keys that are removed from the keyboard by default
   public static final int FLAG_LOCALIZED = (1 << 25);
@@ -169,6 +173,9 @@ class KeyValue
     addModifierKey("accent_ring", "\u0056", FLAG_ACCENT_RING | FLAG_KEY_FONT | FLAG_LOCALIZED);
     addModifierKey("accent_tilde", "\u0057", FLAG_ACCENT4 | FLAG_KEY_FONT | FLAG_LOCALIZED);
     addModifierKey("accent_trema", "\u0058", FLAG_ACCENT6 | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_ogonek", "\u0059", FLAG_ACCENT_OGONEK | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_dot_above", "\u005a", FLAG_ACCENT_DOT_ABOVE | FLAG_KEY_FONT | FLAG_LOCALIZED);
+    addModifierKey("accent_double_aigu", "\u005b", FLAG_ACCENT_DOUBLE_AIGU | FLAG_KEY_FONT | FLAG_LOCALIZED);
     addModifierKey("superscript", "Sup", FLAG_ACCENT_SUPERSCRIPT | FLAG_SMALLER_FONT);
     addModifierKey("subscript", "Sub", FLAG_ACCENT_SUBSCRIPT | FLAG_SMALLER_FONT);
     addModifierKey("ordinal", "Ord", FLAG_ACCENT_ORDINAL | FLAG_SMALLER_FONT);
