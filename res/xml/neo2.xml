@@ -16,7 +16,7 @@
   <row>
     <key key0="u" key1="tab" key2="accent_circonflexe" key4="\\"/>
     <key key0="i" key2="accent_caron" key4="/"/>
-    <key key0="a" key4="{"/>
+    <key key0="a" key2="accent_dot_above" key4="{"/>
     <key key0="e" key2="accent_macron" key4="}"/>
     <key key0="o" key2="accent_trema" key4="*"/>
     <key key0="s" key2="accent_tilde" key4="\?"/>
@@ -24,7 +24,7 @@
     <key key0="r" key2="accent_grave" key4=")"/>
     <key key0="t" key2="accent_aigu" key4="-"/>
     <key key0="d" key2="accent_ring" key4=":"/>
-    <key key0="y" key3="\@"/>
+    <key key0="y" key2="accent_double_aigu" key3="\@"/>
   </row>
   <row>
     <key width="1.5" key0="shift" key1="esc"/>
