@@ -11,9 +11,9 @@ Fortunately, there's not many dependencies:
 - OpenJDK 8
 - Android SDK: build tools (minimum `28.0.1`), platform `30`
 - Make sure to have the `$ANDROID_HOME` environment variable set.
-- FontForge version >= 20201107
 
-For Nix users, there's a `shell.nix` for setting-up the right environment.
+For Nix users, the right environment can be obtained with `nix-shell ./shell.nix`.
+Instructions to install Nix are [here](https://nixos.wiki/wiki/Nix_Installation_Guide).
 
 Building the debug apk:
 
@@ -21,11 +21,7 @@ Building the debug apk:
 make
 ```
 
-If the build succeed, the debug apk is located in
-`_build/juloo.keyboard2.debug.apk`.
-
-If the build doesn't succeeded check the FontForge version, the version needed is 20201107. 
-Try to use the nix-shell, instructions to install [here](https://nixos.wiki/wiki/Nix_Installation_Guide)
+If the build succeed, the debug apk is located in `_build/juloo.keyboard2.debug.apk`.
 
 ## Using the local debug.keystore on the Github CI actions
 
