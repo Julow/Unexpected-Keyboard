@@ -34,13 +34,11 @@
     <item>none</item>
     <item>qwerty</item>
     <item>dvorak</item>
-    <item>neo2</item>
   </string-array>
   <string-array name="pref_programming_layout_entries">
     <item>@string/pref_programming_layout_none</item>
     <item>QWERTY</item>
     <item>Dvorak</item>
-    <item>Neo 2</item>
   </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>
