@@ -80,7 +80,7 @@ public final class Pointers implements Handler.Callback
       else // Otherwise, unlatch
       {
         removePtr(latched);
-        _handler.onPointerUp(ptr.value);
+        _handler.onPointerUp(ptr.value, ptr.modifier_flags);
       }
     }
     else if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
@@ -93,7 +93,7 @@ public final class Pointers implements Handler.Callback
     {
       clearLatched();
       removePtr(ptr);
-      _handler.onPointerUp(ptr.value);
+      _handler.onPointerUp(ptr.value, ptr.modifier_flags);
     }
   }
 
@@ -114,8 +114,9 @@ public final class Pointers implements Handler.Callback
     // keys.
     if (isModulatedKeyPressed())
       return;
-    KeyValue value = _handler.onPointerDown(key.key0);
-    Pointer ptr = new Pointer(pointerId, key, 0, value, x, y);
+    int mflags = getFlags();
+    KeyValue value = _handler.onPointerDown(key.key0, mflags);
+    Pointer ptr = new Pointer(pointerId, key, 0, value, x, y, mflags);
     _ptrs.add(ptr);
     if (value != null && (value.flags & KeyValue.FLAG_NOREPEAT) == 0)
       startKeyRepeat(ptr);
@@ -152,7 +153,8 @@ public final class Pointers implements Handler.Callback
     if (newIndex != ptr.value_index)
     {
       ptr.value_index = newIndex;
-      KeyValue newValue = _handler.onPointerSwipe(ptr.key.getValue(newIndex));
+      KeyValue newValue =
+        _handler.onPointerSwipe(ptr.key.getValue(newIndex), ptr.modifier_flags);
       if (newValue != null)
       {
         int old_flags = ptr.flags;
@@ -237,7 +239,7 @@ public final class Pointers implements Handler.Callback
           nextInterval = (long)((float)nextInterval / modulatePreciseRepeat(ptr));
         }
         _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextInterval);
-        _handler.onPointerHold(ptr.value);
+        _handler.onPointerHold(ptr.value, ptr.modifier_flags);
         return (true);
       }
     }
@@ -290,13 +292,16 @@ public final class Pointers implements Handler.Callback
     public float downY;
     /** Distance of the pointer to the initial press. */
     public float ptrDist;
+    /** Modifier flags at the time the key was pressed. */
+    public int modifier_flags;
+    /** Flags of the value. Latch, lock and locked flags are updated. */
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
     /** ptrDist at the first repeat, -1 otherwise. */
     public float repeatingPtrDist;
 
-    public Pointer(int p, KeyboardData.Key k, int vi, KeyValue v, float x, float y)
+    public Pointer(int p, KeyboardData.Key k, int vi, KeyValue v, float x, float y, int mflags)
     {
       pointerId = p;
       key = k;
@@ -305,6 +310,7 @@ public final class Pointers implements Handler.Callback
       downX = x;
       downY = y;
       ptrDist = 0.f;
+      modifier_flags = mflags;
       flags = (v == null) ? 0 : v.flags;
       timeoutWhat = -1;
       repeatingPtrDist = -1.f;
@@ -315,19 +321,19 @@ public final class Pointers implements Handler.Callback
   {
     /** A key is pressed. Key can be modified or removed by returning [null].
         [getFlags()] is not uptodate. */
-    public KeyValue onPointerDown(KeyValue k);
+    public KeyValue onPointerDown(KeyValue k, int flags);
 
     /** Pointer swipes into a corner. Key can be modified or removed. */
-    public KeyValue onPointerSwipe(KeyValue k);
+    public KeyValue onPointerSwipe(KeyValue k, int flags);
 
     /** Key is released. [k] is the key that was returned by [onPointerDown] or
         [onPointerSwipe]. */
-    public void onPointerUp(KeyValue k);
+    public void onPointerUp(KeyValue k, int flags);
 
     /** Flags changed because latched or locked keys or cancelled pointers. */
     public void onPointerFlagsChanged();
 
     /** Key is repeating. */
-    public void onPointerHold(KeyValue k);
+    public void onPointerHold(KeyValue k, int flags);
   }
 }
