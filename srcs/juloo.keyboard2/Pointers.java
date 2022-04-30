@@ -61,7 +61,8 @@ public final class Pointers implements Handler.Callback
    */
   public int getKeyFlags(KeyValue kv)
   {
-    // Use physical equality because the key might have been modified.
+    // Comparing names because the keys might have been modified.
+    // Physical equality works because names are never computed or shared.
     String name = kv.name;
     for (Pointer p : _ptrs)
       if (p.value != null && p.value.name == name)
@@ -207,9 +208,11 @@ public final class Pointers implements Handler.Callback
   private Pointer getLatched(Pointer target)
   {
     KeyboardData.Key k = target.key;
-    int vi = target.value_index;
+    KeyValue v = target.value;
+    if (v == null)
+      return null;
     for (Pointer p : _ptrs)
-      if (p.key == k && p.value_index == vi && p.pointerId == -1)
+      if (p.key == k && p.pointerId == -1 && p.value != null && p.value.name == v.name)
         return p;
     return null;
   }
