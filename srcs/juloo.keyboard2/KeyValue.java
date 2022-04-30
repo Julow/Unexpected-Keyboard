@@ -20,7 +20,8 @@ class KeyValue
   // Behavior flags
   public static final int FLAG_LATCH = 1;
   public static final int FLAG_LOCK = (1 << 1);
-  public static final int FLAG_NOREPEAT = (1 << 2);
+  // Special keys are not repeated and don't clear latched modifiers
+  public static final int FLAG_SPECIAL = (1 << 2);
   public static final int FLAG_NOCHAR = (1 << 3);
   public static final int FLAG_PRECISE_REPEAT = (1 << 4);
 
@@ -135,7 +136,7 @@ class KeyValue
   private static void addModifierKey(String name, String symbol, int extra_flags)
   {
     addKey(name, symbol, CHAR_NONE, EVENT_NONE,
-        FLAG_LATCH | FLAG_NOCHAR | FLAG_NOREPEAT | extra_flags);
+        FLAG_LATCH | FLAG_NOCHAR | FLAG_SPECIAL | extra_flags);
   }
 
   private static void addSpecialKey(String name, String symbol, int event)
@@ -145,7 +146,7 @@ class KeyValue
 
   private static void addSpecialKey(String name, String symbol, int event, int flags)
   {
-    addKey(name, symbol, CHAR_NONE, event, flags | FLAG_NOREPEAT);
+    addKey(name, symbol, CHAR_NONE, event, flags | FLAG_SPECIAL);
   }
 
   private static void addEventKey(String name, String symbol, int event)

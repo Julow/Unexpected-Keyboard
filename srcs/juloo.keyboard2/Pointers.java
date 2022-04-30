@@ -24,9 +24,18 @@ public final class Pointers implements Handler.Callback
 
   public int getFlags()
   {
+    return getFlags(false);
+  }
+
+  /* When [skip_latched] is true, don't take flags of latched keys into account. */
+  private int getFlags(boolean skip_latched)
+  {
     int flags = 0;
     for (Pointer p : _ptrs)
-      flags |= p.flags;
+    {
+      if (!(skip_latched && p.pointerId == -1 && (p.flags & KeyValue.FLAG_LOCKED) == 0))
+        flags |= p.flags;
+    }
     return flags;
   }
 
@@ -107,6 +116,15 @@ public final class Pointers implements Handler.Callback
     _handler.onPointerFlagsChanged();
   }
 
+  /* Whether an other pointer is down on a non-special key. */
+  private boolean isOtherPointerDown()
+  {
+    for (Pointer p : _ptrs)
+      if (p.pointerId != -1 && (p.flags & KeyValue.FLAG_SPECIAL) == 0)
+        return true;
+    return false;
+  }
+
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)
   {
     // Ignore new presses while a modulated key is active. On some devices,
@@ -114,11 +132,11 @@ public final class Pointers implements Handler.Callback
     // keys.
     if (isModulatedKeyPressed())
       return;
-    int mflags = getFlags();
+    int mflags = getFlags(isOtherPointerDown());
     KeyValue value = _handler.onPointerDown(key.key0, mflags);
     Pointer ptr = new Pointer(pointerId, key, 0, value, x, y, mflags);
     _ptrs.add(ptr);
-    if (value != null && (value.flags & KeyValue.FLAG_NOREPEAT) == 0)
+    if (value != null && (value.flags & KeyValue.FLAG_SPECIAL) == 0)
       startKeyRepeat(ptr);
   }
 
@@ -164,7 +182,7 @@ public final class Pointers implements Handler.Callback
         if ((old_flags & newValue.flags & KeyValue.FLAG_PRECISE_REPEAT) == 0)
         {
           stopKeyRepeat(ptr);
-          if ((newValue.flags & KeyValue.FLAG_NOREPEAT) == 0)
+          if ((newValue.flags & KeyValue.FLAG_SPECIAL) == 0)
             startKeyRepeat(ptr);
         }
       }
