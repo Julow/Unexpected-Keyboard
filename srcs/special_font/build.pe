@@ -3,7 +3,7 @@
 New()
 
 # Imports glyphs, file name is position in the font.
-i = 2
+i = 1
 while (i < $argc)
   Select(Strtol($argv[i]:t:r, 16))
   Import($argv[i], 0, 0, 4.0, 0.1)
@@ -11,4 +11,4 @@ while (i < $argc)
   i++
 endloop
 
-Generate($1)
+Generate("result.ttf")

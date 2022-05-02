@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.util.Log;
 import android.util.LogPrinter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
@@ -62,7 +63,7 @@ public class Keyboard2 extends InputMethodService
     for (InputMethodInfo imi : imm.getEnabledInputMethodList())
       if (imi.getPackageName().equals(pkg))
         return imm.getEnabledInputMethodSubtypeList(imi, true);
-    return null;
+    return Arrays.asList();
   }
 
   private void refreshSubtypeLayout(InputMethodSubtype subtype)
