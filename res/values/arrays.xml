@@ -13,6 +13,7 @@
     <item>qwertz</item>
     <item>bgph1</item>
     <item>dvorak</item>
+    <item>colemak</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>@string/pref_layout_e_system</item>
@@ -27,16 +28,19 @@
     <item>QWERTZ</item>
     <item>Bulgarian (Phonetic Traditional)</item>
     <item>Dvorak</item>
+    <item>Colemak</item>
   </string-array>
   <string-array name="pref_programming_layout_values">
     <item>none</item>
     <item>qwerty</item>
     <item>dvorak</item>
+    <item>colemaak</item>
   </string-array>
   <string-array name="pref_programming_layout_entries">
     <item>@string/pref_programming_layout_none</item>
     <item>QWERTY</item>
     <item>Dvorak</item>
+    <item>Colemak</item>
   </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>
