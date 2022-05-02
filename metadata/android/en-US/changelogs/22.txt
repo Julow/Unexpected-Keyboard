@@ -1,0 +1,7 @@
+Support languages: Lithuanian, Hungarian (@tbilles)
+New layouts: Neo2 (@matthiakl)
+
+Translation improvements (@polyctena, @marciozomb13)
+Fix modifiers applied twice when typing quickly. Some other fixes.
+
+Many thanks to the contributors: @matthiakl, @polyctena, @marciozomb13, @dircsem

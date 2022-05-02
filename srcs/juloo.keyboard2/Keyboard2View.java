@@ -67,33 +67,33 @@ public class Keyboard2View extends View
     invalidate();
   }
 
-  public KeyValue onPointerDown(KeyValue k)
+  public KeyValue onPointerDown(KeyValue k, int flags)
   {
-    k = KeyModifier.handleFlags(k, _flags);
+    k = KeyModifier.handleFlags(k, flags);
     invalidate();
     if (k != null)
       vibrate();
     return k;
   }
 
-  public KeyValue onPointerSwipe(KeyValue k)
+  public KeyValue onPointerSwipe(KeyValue k, int flags)
   {
-    k = KeyModifier.handleFlags(k, _flags);
+    k = KeyModifier.handleFlags(k, flags);
     invalidate();
     if (k != null)
       vibrate();
     return k;
   }
 
-  public void onPointerUp(KeyValue k)
+  public void onPointerUp(KeyValue k, int flags)
   {
-    _config.handler.handleKeyUp(k, _flags);
+    _config.handler.handleKeyUp(k, flags);
     invalidate();
   }
 
-  public void onPointerHold(KeyValue k)
+  public void onPointerHold(KeyValue k, int flags)
   {
-    _config.handler.handleKeyUp(k, _flags);
+    _config.handler.handleKeyUp(k, flags);
   }
 
   public void onPointerFlagsChanged()
