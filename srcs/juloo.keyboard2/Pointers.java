@@ -135,7 +135,7 @@ public final class Pointers implements Handler.Callback
       return;
     int mflags = getFlags(isOtherPointerDown());
     KeyValue value = _handler.onPointerDown(key.key0, mflags);
-    Pointer ptr = new Pointer(pointerId, key, 0, value, x, y, mflags);
+    Pointer ptr = new Pointer(pointerId, key, key.key0, value, x, y, mflags);
     _ptrs.add(ptr);
     if (value != null && (value.flags & KeyValue.FLAG_SPECIAL) == 0)
       startKeyRepeat(ptr);
@@ -155,28 +155,33 @@ public final class Pointers implements Handler.Callback
     float dy = y - ptr.downY;
     float dist = Math.abs(dx) + Math.abs(dy);
     ptr.ptrDist = dist;
-    int newIndex;
+
+    int direction;
     if (dist < _config.swipe_dist_px)
     {
-      newIndex = 0;
+      direction = 0;
     }
-    else {
-        // One of the 8 directions:
-        // |\2|3/|
-        // |1\|/4|
-        // |-----|
-        // |5/|\8|
-        // |/6|7\|
-        newIndex = 1;
-        if (dy > 0) newIndex += 4;
-        if (dx > 0) newIndex += 2;
-        if (dx > Math.abs(dy) || (dx < 0 && dx > -Math.abs(dy))) newIndex += 1;
-    }
-    if (newIndex != ptr.value_index)
+    else
     {
-      ptr.value_index = newIndex;
+      // One of the 8 directions:
+      // |\2|3/|
+      // |1\|/4|
+      // |-----|
+      // |5/|\8|
+      // |/6|7\|
+      direction = 1;
+      if (dy > 0) direction += 4;
+      if (dx > 0) direction += 2;
+      if (dx > Math.abs(dy) || (dx < 0 && dx > -Math.abs(dy))) direction += 1;
+    }
+
+    KeyValue newSelectedValue = ptr.key.getAtDirection(direction);
+    if (newSelectedValue != ptr.selected_value)
+    {
+      ptr.selected_value = newSelectedValue;
+      // apply modifier flags and trigger vibration.
       KeyValue newValue =
-        _handler.onPointerSwipe(ptr.key.getValue(newIndex), ptr.modifier_flags);
+        _handler.onPointerSwipe(ptr.selected_value, ptr.modifier_flags);
       if (newValue != null)
       {
         int old_flags = ptr.flags;
@@ -308,9 +313,11 @@ public final class Pointers implements Handler.Callback
   {
     /** -1 when latched. */
     public int pointerId;
+    /** The Key pressed by this Pointer */
     public final KeyboardData.Key key;
-    public int value_index;
-    /** Modified value. Not equal to [key.getValue(value_index)]. */
+    /** The current seletected KeyValue in key (any one of key0 to key4). */
+    public KeyValue selected_value;
+    /** selected_value with modifier_flags applied. */
     public KeyValue value;
     public float downX;
     public float downY;
@@ -325,11 +332,11 @@ public final class Pointers implements Handler.Callback
     /** ptrDist at the first repeat, -1 otherwise. */
     public float repeatingPtrDist;
 
-    public Pointer(int p, KeyboardData.Key k, int vi, KeyValue v, float x, float y, int mflags)
+    public Pointer(int p, KeyboardData.Key k, KeyValue sv, KeyValue v, float x, float y, int mflags)
     {
       pointerId = p;
       key = k;
-      value_index = vi;
+      selected_value = sv;
       value = v;
       downX = x;
       downY = y;

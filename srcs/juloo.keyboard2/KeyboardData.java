@@ -195,9 +195,11 @@ class KeyboardData
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
     }
 
-    public KeyValue getValue(int index)
+    
+    /* Get the KeyValue at the given direction. See Pointers.onTouchMove() for the represented direction */
+    public KeyValue getAtDirection(int direction)
     {
-      if (index == 0 || index > 8) return key0;
+      if (direction == 0 || direction > 8) return key0;
       KeyValue key = null;
       if (edgekeys) {
         // \ 1 /
@@ -207,7 +209,7 @@ class KeyboardData
         // / 4 \
         
         // first closer
-        switch (index)
+        switch (direction)
         {
           case 2: case 3: key = key1; break;
           case 4: case 8: key = key2; break;
@@ -216,7 +218,7 @@ class KeyboardData
         }
         if (key != null) return key;
         // second closer
-        switch (index)
+        switch (direction)
         {
           case 1: case 4: key = key1; break;
           case 3: case 7: key = key2; break;
@@ -225,7 +227,7 @@ class KeyboardData
         }
         if (key != null) return key;
         // third closer
-        switch (index)
+        switch (direction)
         {
           case 5: case 8: key = key1; break;
           case 2: case 6: key = key2; break;
@@ -234,7 +236,7 @@ class KeyboardData
         }
         if (key != null) return key;
         // fourth closer
-        switch (index)
+        switch (direction)
         {
           case 6: case 7: key = key1; break;
           case 1: case 5: key = key2; break;
@@ -251,7 +253,7 @@ class KeyboardData
         //   |  
         // 3 | 4
         // first closer
-        switch (index)
+        switch (direction)
         {
           case 1: case 2: key = key1; break;
           case 3: case 4: key = key2; break;
@@ -260,7 +262,7 @@ class KeyboardData
         }
         if (key != null) return key;
         // second closer
-        switch (index)
+        switch (direction)
         {
           case 3: case 5: key = key1; break;
           case 2: case 8: key = key2; break;
@@ -269,7 +271,7 @@ class KeyboardData
         }
         if (key != null) return key;
         // third closer
-        switch (index)
+        switch (direction)
         {
           case 4: case 6: key = key1; break;
           case 1: case 7: key = key2; break;
@@ -278,7 +280,7 @@ class KeyboardData
         }
         if (key != null) return key;
         // fourth closer
-        switch (index)
+        switch (direction)
         {
           case 7: case 8: key = key1; break;
           case 3: case 4: key = key2; break;
