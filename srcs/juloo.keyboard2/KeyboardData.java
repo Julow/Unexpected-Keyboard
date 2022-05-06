@@ -197,14 +197,98 @@ class KeyboardData
 
     public KeyValue getValue(int index)
     {
-      switch (index)
-      {
-        case 1: return key1;
-        case 2: return key2;
-        case 3: return key3;
-        case 4: return key4;
-        default: case 0: return key0;
+      if (index == 0 || index > 8) return key0;
+      KeyValue key = null;
+      if (edgekeys) {
+        // \ 1 /
+        //  \ /
+        // 3 0 2
+        //  / \
+        // / 4 \
+        
+        // first closer
+        switch (index)
+        {
+          case 2: case 3: key = key1; break;
+          case 4: case 8: key = key2; break;
+          case 1: case 5: key = key3; break;
+          case 6: case 7: key = key4; break;
+        }
+        if (key != null) return key;
+        // second closer
+        switch (index)
+        {
+          case 1: case 4: key = key1; break;
+          case 3: case 7: key = key2; break;
+          case 2: case 6: key = key3; break;
+          case 5: case 8: key = key4; break;
+        }
+        if (key != null) return key;
+        // third closer
+        switch (index)
+        {
+          case 5: case 8: key = key1; break;
+          case 2: case 6: key = key2; break;
+          case 3: case 7: key = key3; break;
+          case 1: case 4: key = key4; break;
+        }
+        if (key != null) return key;
+        // fourth closer
+        switch (index)
+        {
+          case 6: case 7: key = key1; break;
+          case 1: case 5: key = key2; break;
+          case 4: case 8: key = key3; break;
+          case 2: case 3: key = key4; break;
+        }
+        if (key != null) return key;
       }
+      else
+      {
+        // 1 | 2
+        //   |
+        // --0--
+        //   |  
+        // 3 | 4
+        // first closer
+        switch (index)
+        {
+          case 1: case 2: key = key1; break;
+          case 3: case 4: key = key2; break;
+          case 5: case 6: key = key3; break;
+          case 7: case 8: key = key4; break;
+        }
+        if (key != null) return key;
+        // second closer
+        switch (index)
+        {
+          case 3: case 5: key = key1; break;
+          case 2: case 8: key = key2; break;
+          case 1: case 7: key = key3; break;
+          case 4: case 6: key = key4; break;
+        }
+        if (key != null) return key;
+        // third closer
+        switch (index)
+        {
+          case 4: case 6: key = key1; break;
+          case 1: case 7: key = key2; break;
+          case 2: case 8: key = key3; break;
+          case 3: case 5: key = key4; break;
+        }
+        if (key != null) return key;
+        // fourth closer
+        switch (index)
+        {
+          case 7: case 8: key = key1; break;
+          case 3: case 4: key = key2; break;
+          case 5: case 6: key = key3; break;
+          case 1: case 2: key = key4; break;
+        }
+        if (key != null) return key;
+      }
+      
+      return key0;
     }
   }
 

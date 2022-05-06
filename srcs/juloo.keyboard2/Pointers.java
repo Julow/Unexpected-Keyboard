@@ -146,6 +146,11 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = getPtr(pointerId);
     if (ptr == null)
       return;
+
+    // The position in a IME windows is clampled to view.
+    // For a better up swipe behaviour, set the y position to a negative value when clamped.
+    if (y == 0.0) y = -400;
+
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
     float dist = Math.abs(dx) + Math.abs(dy);
@@ -155,19 +160,17 @@ public final class Pointers implements Handler.Callback
     {
       newIndex = 0;
     }
-    else if (ptr.key.edgekeys)
-    {
-      if (Math.abs(dy) > Math.abs(dx)) // vertical swipe
-        newIndex = (dy < 0) ? 1 : 4;
-      else // horizontal swipe
-        newIndex = (dx < 0) ? 3 : 2;
-    }
-    else
-    {
-      if (dx < 0) // left side
-        newIndex = (dy < 0) ? 1 : 3;
-      else // right side
-        newIndex = (dy < 0) ? 2 : 4;
+    else {
+        // One of the 8 directions:
+        // |\2|3/|
+        // |1\|/4|
+        // |-----|
+        // |5/|\8|
+        // |/6|7\|
+        newIndex = 1;
+        if (dy > 0) newIndex += 4;
+        if (dx > 0) newIndex += 2;
+        if (dx > Math.abs(dy) || (dx < 0 && dx > -Math.abs(dy))) newIndex += 1;
     }
     if (newIndex != ptr.value_index)
     {
