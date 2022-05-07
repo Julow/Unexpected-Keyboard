@@ -20,7 +20,7 @@
     <key key0="t" key1="accent_double_aigu" key2="accent_ring"/>
     <key key0="d" key1="&quot;" key2="'" />
     <key key0="h"  />
-    <key key0="n" key1="accent_ogonek"/>
+    <key key0="n" key1="accent_ogonek" key2="accent_dot_above"/>
     <key key0="e" key1="accent_circonflexe" key2="accent_aigu" />
     <key key0="i" key1="\\" key2="/"/>
     <key key0="o" key1="accent_macron" />
