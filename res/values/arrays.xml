@@ -38,7 +38,7 @@
     <item>none</item>
     <item>qwerty</item>
     <item>dvorak</item>
-    <item>colemaak</item>
+    <item>colemak</item>
   </string-array>
   <string-array name="pref_programming_layout_entries">
     <item>@string/pref_programming_layout_none</item>
