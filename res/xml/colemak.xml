@@ -16,7 +16,7 @@
   <row>
     <key key0="a" key2="tab"/>
     <key key0="r" key1="accent_grave" key2="accent_tilde"/>
-    <key key0="s" key1="`" key2="~" />
+    <key key0="s" key1="`" key2="~" key3="ß" />
     <key key0="t" key1="accent_double_aigu" key2="accent_ring"/>
     <key key0="d" key1="&quot;" key2="'" />
     <key key0="h"  />
