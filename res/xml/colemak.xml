@@ -23,7 +23,7 @@
     <key key0="n" key1="accent_ogonek"/>
     <key key0="e" key1="accent_circonflexe" key2="accent_aigu" />
     <key key0="i" key1="\\" key2="/"/>
-    <key key0="o" />
+    <key key0="o" key1="accent_macron" />
 
   </row>
   <row>
