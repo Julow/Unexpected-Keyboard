@@ -167,12 +167,12 @@ public final class Pointers implements Handler.Callback
       // |\2|3/|
       // |1\|/4|
       // |-----|
-      // |5/|\8|
-      // |/6|7\|
+      // |8/|\5|
+      // |/7|6\|
       direction = 1;
-      if (dy > 0) direction += 4;
       if (dx > 0) direction += 2;
       if (dx > Math.abs(dy) || (dx < 0 && dx > -Math.abs(dy))) direction += 1;
+      if (dy > 0) direction = 9 - direction;
     }
 
     KeyValue newSelectedValue = ptr.key.getAtDirection(direction);

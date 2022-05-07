@@ -195,102 +195,58 @@ class KeyboardData
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
     }
 
-    
-    /* Get the KeyValue at the given direction. See Pointers.onTouchMove() for the represented direction */
-    public KeyValue getAtDirection(int direction)
+    private KeyValue getAtDirectionExact(int direction)
     {
-      if (direction == 0 || direction > 8) return key0;
-      KeyValue key = null;
-      if (edgekeys) {
+      if (edgekeys)
+      {
         // \ 1 /
         //  \ /
         // 3 0 2
         //  / \
         // / 4 \
-        
-        // first closer
         switch (direction)
         {
-          case 2: case 3: key = key1; break;
-          case 4: case 8: key = key2; break;
-          case 1: case 5: key = key3; break;
-          case 6: case 7: key = key4; break;
+          case 2: case 3: return key1;
+          case 4: case 5: return key2;
+          case 6: case 7: return key4;
+          case 8: case 1: return key3;
         }
-        if (key != null) return key;
-        // second closer
-        switch (direction)
-        {
-          case 1: case 4: key = key1; break;
-          case 3: case 7: key = key2; break;
-          case 2: case 6: key = key3; break;
-          case 5: case 8: key = key4; break;
-        }
-        if (key != null) return key;
-        // third closer
-        switch (direction)
-        {
-          case 5: case 8: key = key1; break;
-          case 2: case 6: key = key2; break;
-          case 3: case 7: key = key3; break;
-          case 1: case 4: key = key4; break;
-        }
-        if (key != null) return key;
-        // fourth closer
-        switch (direction)
-        {
-          case 6: case 7: key = key1; break;
-          case 1: case 5: key = key2; break;
-          case 4: case 8: key = key3; break;
-          case 2: case 3: key = key4; break;
-        }
-        if (key != null) return key;
       }
       else
       {
         // 1 | 2
         //   |
         // --0--
-        //   |  
+        //   |
         // 3 | 4
-        // first closer
         switch (direction)
         {
-          case 1: case 2: key = key1; break;
-          case 3: case 4: key = key2; break;
-          case 5: case 6: key = key3; break;
-          case 7: case 8: key = key4; break;
+          case 1: case 2: return key1;
+          case 3: case 4: return key2;
+          case 5: case 6: return key4;
+          case 7: case 8: return key3;
         }
-        if (key != null) return key;
-        // second closer
-        switch (direction)
-        {
-          case 3: case 5: key = key1; break;
-          case 2: case 8: key = key2; break;
-          case 1: case 7: key = key3; break;
-          case 4: case 6: key = key4; break;
-        }
-        if (key != null) return key;
-        // third closer
-        switch (direction)
-        {
-          case 4: case 6: key = key1; break;
-          case 1: case 7: key = key2; break;
-          case 2: case 8: key = key3; break;
-          case 3: case 5: key = key4; break;
-        }
-        if (key != null) return key;
-        // fourth closer
-        switch (direction)
-        {
-          case 7: case 8: key = key1; break;
-          case 3: case 4: key = key2; break;
-          case 5: case 6: key = key3; break;
-          case 1: case 2: key = key4; break;
-        }
-        if (key != null) return key;
       }
-      
-      return key0;
+      return null;
+    }
+
+    /*
+     * Get the KeyValue at the given direction. In case of swipe (!= 0), get the
+     * nearest KeyValue that is not key0. See Pointers.onTouchMove() for the
+     * represented direction.
+     */
+    public KeyValue getAtDirection(int direction)
+    {
+      if (direction == 0)
+        return key0;
+      KeyValue k;
+      for (int i = 0; i > -2; i = (~i>>31) - i)
+      {
+        k = getAtDirectionExact(Math.floorMod(direction + i - 1, 8) + 1);
+        if (k != null)
+          return k;
+      }
+      return null;
     }
   }
 
