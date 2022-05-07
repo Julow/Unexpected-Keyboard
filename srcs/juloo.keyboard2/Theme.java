@@ -18,6 +18,9 @@ public class Theme
 
   public final float keyBorderRadius;
 
+  public final int colorNavBar;
+  public final boolean isLightNavBar;
+
   private final Paint _keyLabelPaint;
   private final Paint _specialKeyLabelPaint;
   private final Paint _keySubLabelPaint;
@@ -29,6 +32,8 @@ public class Theme
     keyBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKey, 0));
     keyDownBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKeyActivated, 0));
     // colorKeyboard = s.getColor(R.styleable.keyboard_colorKeyboard, 0);
+    colorNavBar = s.getColor(R.styleable.keyboard_navigationBarColor, 0);
+    isLightNavBar = s.getBoolean(R.styleable.keyboard_windowLightNavigationBar, false);
     labelColor = s.getColor(R.styleable.keyboard_colorLabel, 0);
     activatedColor = s.getColor(R.styleable.keyboard_colorLabelActivated, 0);
     lockedColor = s.getColor(R.styleable.keyboard_colorLabelLocked, 0);
