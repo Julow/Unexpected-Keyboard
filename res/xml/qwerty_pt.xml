@@ -3,10 +3,10 @@
   <row>
     <key key0="q" key2="1" key4="esc"/>
     <key key0="w" key1="~" key2="2" key3="\@" key4="!"/>
-    <key key0="e" key1="£" key2="3" key3="\#" key4="€"/>
+    <key key0="e" key2="3" key3="\#" key4="€"/>
     <key key0="r" key2="4" key3="$" key4="f11_placeholder"/>
     <key key0="t" key2="5" key3="%" key4="f12_placeholder"/>
-    <key key0="y" key1="accent_caron" key2="6" key3="^" key4="accent_trema"/>
+    <key key0="y" key1="loc accent_caron" key2="6" key3="^" key4="loc accent_trema"/>
     <key key0="u" key2="7" key3="&amp;"/>
     <key key0="i" key2="8" key3="*"/>
     <key key0="o" key2="9" key3="(" key4=")"/>
@@ -14,9 +14,9 @@
   </row>
   <row>
     <key key0="a" key2="tab" key4="`"/>
-    <key key0="s" key1="'" key3="ß" key4="accent_cedille"/>
-    <key key0="d" key1="&quot;" key2="accent_ring"/>
-    <key key0="f" key2="accent_caron"/>
+    <key key0="s" key1="'" key3="loc ß" key4="accent_cedille"/>
+    <key key0="d" key1="&quot;" key2="loc accent_ring"/>
+    <key key0="f" key2="loc accent_caron"/>
     <key key0="g"/>
     <key key0="h"/>
     <key key0="j" key1="-" key2="=" key4="+" key3="_"/>

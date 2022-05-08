@@ -15,9 +15,9 @@
   </row>
   <row>
     <key key0="a" key2="tab"/>
-    <key key0="s" key1="accent_ring" key2="accent_cedille" key3="ß" key4="accent_tilde"/>
-    <key key0="d" key1="accent_grave" key2="accent_caron" key3="accent_aigu"/>
-    <key key0="f" key1="accent_trema" key2="accent_circonflexe"/>
+    <key key0="s" key1="accent_ring" key2="loc accent_cedille" key3="loc ß" key4="loc accent_tilde"/>
+    <key key0="d" key1="loc accent_grave" key2="loc accent_caron" key3="accent_aigu"/>
+    <key key0="f" key1="accent_trema" key2="loc accent_circonflexe"/>
     <key key0="g"/>
     <key key0="h"/>
     <key key0="j" key1="{" key4="}"/>
