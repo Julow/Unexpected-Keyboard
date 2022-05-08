@@ -134,11 +134,12 @@ public final class Pointers implements Handler.Callback
     if (isModulatedKeyPressed())
       return;
     int mflags = getFlags(isOtherPointerDown());
-    KeyValue value = _handler.onPointerDown(key.key0, mflags);
+    KeyValue value = _handler.modifyKey(key.key0, mflags);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mflags);
     _ptrs.add(ptr);
     if (value != null && (value.flags & KeyValue.FLAG_SPECIAL) == 0)
       startKeyRepeat(ptr);
+    _handler.onPointerDown(false);
   }
 
   /*
@@ -152,14 +153,14 @@ public final class Pointers implements Handler.Callback
   private KeyValue getKeyAtDirection(Pointer ptr, int direction)
   {
     if (direction == 0)
-      return _handler.onPointerSwipe(ptr.key.key0, ptr.modifier_flags);
+      return _handler.modifyKey(ptr.key.key0, ptr.modifier_flags);
     KeyValue k;
     for (int i = 0; i > -2; i = (~i>>31) - i)
     {
       int d = Math.floorMod(direction + i - 1, 8) + 1;
       // Don't make the difference between a key that doesn't exist and a key
       // that is removed by [_handler]. Triggers side effects.
-      k = _handler.onPointerSwipe(ptr.key.getAtDirection(d), ptr.modifier_flags);
+      k = _handler.modifyKey(ptr.key.getAtDirection(d), ptr.modifier_flags);
       if (k != null)
         return k;
     }
@@ -216,6 +217,7 @@ public final class Pointers implements Handler.Callback
           if ((newValue.flags & KeyValue.FLAG_SPECIAL) == 0)
             startKeyRepeat(ptr);
         }
+        _handler.onPointerDown(true);
       }
     }
   }
@@ -372,15 +374,15 @@ public final class Pointers implements Handler.Callback
 
   public interface IPointerEventHandler
   {
-    /** A key is pressed. Key can be modified or removed by returning [null].
-        [getFlags()] is not uptodate. */
-    public KeyValue onPointerDown(KeyValue k, int flags);
+    /** Key can be modified or removed by returning [null]. */
+    public KeyValue modifyKey(KeyValue k, int flags);
 
-    /** Pointer swipes into a corner. Key can be modified or removed. */
-    public KeyValue onPointerSwipe(KeyValue k, int flags);
+    /** A key is pressed. [getFlags()] is uptodate. Might be called after a
+        press or a swipe to a different value. */
+    public void onPointerDown(boolean isSwipe);
 
-    /** Key is released. [k] is the key that was returned by [onPointerDown] or
-        [onPointerSwipe]. */
+    /** Key is released. [k] is the key that was returned by
+        [modifySelectedKey] or [modifySelectedKey]. */
     public void onPointerUp(KeyValue k, int flags);
 
     /** Flags changed because latched or locked keys or cancelled pointers. */
