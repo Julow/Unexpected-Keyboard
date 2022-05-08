@@ -108,9 +108,11 @@ public class Keyboard2View extends View
   public KeyValue onPointerSwipe(KeyValue k, int flags)
   {
     k = KeyModifier.handleFlags(k, flags);
-    invalidate();
     if (k != null)
+    {
+      invalidate();
       vibrate();
+    }
     return k;
   }
 

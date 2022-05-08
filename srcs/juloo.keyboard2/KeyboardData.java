@@ -195,7 +195,10 @@ class KeyboardData
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
     }
 
-    private KeyValue getAtDirectionExact(int direction)
+    /*
+     * See Pointers.onTouchMove() for the represented direction.
+     */
+    public KeyValue getAtDirection(int direction)
     {
       if (edgekeys)
       {
@@ -226,25 +229,6 @@ class KeyboardData
           case 5: case 6: return key4;
           case 7: case 8: return key3;
         }
-      }
-      return null;
-    }
-
-    /*
-     * Get the KeyValue at the given direction. In case of swipe (!= 0), get the
-     * nearest KeyValue that is not key0. See Pointers.onTouchMove() for the
-     * represented direction.
-     */
-    public KeyValue getAtDirection(int direction)
-    {
-      if (direction == 0)
-        return key0;
-      KeyValue k;
-      for (int i = 0; i > -2; i = (~i>>31) - i)
-      {
-        k = getAtDirectionExact(Math.floorMod(direction + i - 1, 8) + 1);
-        if (k != null)
-          return k;
       }
       return null;
     }

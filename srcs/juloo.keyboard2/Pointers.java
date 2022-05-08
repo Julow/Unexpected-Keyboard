@@ -135,10 +135,35 @@ public final class Pointers implements Handler.Callback
       return;
     int mflags = getFlags(isOtherPointerDown());
     KeyValue value = _handler.onPointerDown(key.key0, mflags);
-    Pointer ptr = new Pointer(pointerId, key, key.key0, value, x, y, mflags);
+    Pointer ptr = new Pointer(pointerId, key, value, x, y, mflags);
     _ptrs.add(ptr);
     if (value != null && (value.flags & KeyValue.FLAG_SPECIAL) == 0)
       startKeyRepeat(ptr);
+  }
+
+  /*
+   * Get the KeyValue at the given direction. In case of swipe (!= 0), get the
+   * nearest KeyValue that is not key0.
+   * Take care of applying [_handler.onPointerSwipe] to the selected key, this
+   * must be done at the same time to be sure to treat removed keys correctly.
+   * Return [null] if no key could be found in the given direction or if the
+   * selected key didn't change.
+   */
+  private KeyValue getKeyAtDirection(Pointer ptr, int direction)
+  {
+    if (direction == 0)
+      return _handler.onPointerSwipe(ptr.key.key0, ptr.modifier_flags);
+    KeyValue k;
+    for (int i = 0; i > -2; i = (~i>>31) - i)
+    {
+      int d = Math.floorMod(direction + i - 1, 8) + 1;
+      // Don't make the difference between a key that doesn't exist and a key
+      // that is removed by [_handler]. Triggers side effects.
+      k = _handler.onPointerSwipe(ptr.key.getAtDirection(d), ptr.modifier_flags);
+      if (k != null)
+        return k;
+    }
+    return null;
   }
 
   public void onTouchMove(float x, float y, int pointerId)
@@ -175,14 +200,11 @@ public final class Pointers implements Handler.Callback
       if (dy > 0) direction = 9 - direction;
     }
 
-    KeyValue newSelectedValue = ptr.key.getAtDirection(direction);
-    if (newSelectedValue != ptr.selected_value)
+    if (direction != ptr.selected_direction)
     {
-      ptr.selected_value = newSelectedValue;
-      // apply modifier flags and trigger vibration.
-      KeyValue newValue =
-        _handler.onPointerSwipe(ptr.selected_value, ptr.modifier_flags);
-      if (newValue != null)
+      ptr.selected_direction = direction;
+      KeyValue newValue = getKeyAtDirection(ptr, direction);
+      if (newValue != null && (ptr.value == null || newValue.name != ptr.value.name))
       {
         int old_flags = ptr.flags;
         ptr.value = newValue;
@@ -315,9 +337,9 @@ public final class Pointers implements Handler.Callback
     public int pointerId;
     /** The Key pressed by this Pointer */
     public final KeyboardData.Key key;
-    /** The current seletected KeyValue in key (any one of key0 to key4). */
-    public KeyValue selected_value;
-    /** selected_value with modifier_flags applied. */
+    /** Current direction. */
+    public int selected_direction;
+    /** Selected value with [modifier_flags] applied. */
     public KeyValue value;
     public float downX;
     public float downY;
@@ -332,11 +354,11 @@ public final class Pointers implements Handler.Callback
     /** ptrDist at the first repeat, -1 otherwise. */
     public float repeatingPtrDist;
 
-    public Pointer(int p, KeyboardData.Key k, KeyValue sv, KeyValue v, float x, float y, int mflags)
+    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, int mflags)
     {
       pointerId = p;
       key = k;
-      selected_value = sv;
+      selected_direction = 0;
       value = v;
       downX = x;
       downY = y;
