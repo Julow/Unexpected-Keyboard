@@ -155,7 +155,7 @@ public final class Pointers implements Handler.Callback
     if (direction == 0)
       return _handler.modifyKey(ptr.key.key0, ptr.modifier_flags);
     KeyValue k;
-    for (int i = 0; i > -2; i = (~i>>31) - i)
+    for (int i = 0; i > -3; i = (~i>>31) - i)
     {
       int d = Math.floorMod(direction + i - 1, 8) + 1;
       // Don't make the difference between a key that doesn't exist and a key
