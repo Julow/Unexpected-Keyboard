@@ -3,10 +3,11 @@ package juloo.keyboard2;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import java.util.ArrayList;
+import java.util.function.Function;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 class KeyboardData
 {
@@ -16,12 +17,40 @@ class KeyboardData
   /* Total height of the keyboard. Unit is abstract. */
   public final float keysHeight;
 
-  public KeyboardData replaceKeys(MapKeys f)
+  public KeyboardData mapKeys(MapKey f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
-      rows_.add(r.replaceKeys(f));
+      rows_.add(r.mapKeys(f));
     return new KeyboardData(rows_, keysWidth);
+  }
+
+  /** Add keys from the given iterator into the keyboard. Extra keys are added
+   * on the empty key4 corner of the second row, from right to left. If there's
+   * not enough room, key3 of the second row is tried then key2 and key1 of the
+   * third row. */
+  public KeyboardData addExtraKeys(Iterator<KeyValue> k)
+  {
+    ArrayList<Row> rows = new ArrayList<Row>(this.rows);
+    addExtraKeys_to_row(rows, k, 1, 4);
+    addExtraKeys_to_row(rows, k, 1, 3);
+    addExtraKeys_to_row(rows, k, 2, 2);
+    addExtraKeys_to_row(rows, k, 2, 1);
+    return new KeyboardData(rows, keysWidth);
+  }
+
+  private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
+  {
+    if (!extra_keys.hasNext())
+      return;
+    rows.set(row_i, rows.get(row_i).mapKeys(new MapKey(){
+      public Key apply(Key k) {
+        if (k.getKeyValue(d) == null && extra_keys.hasNext())
+          return k.withKeyValue(d, extra_keys.next());
+        else
+          return k;
+      }
+    }));
   }
 
   private static Row _bottomRow = null;
@@ -117,22 +146,21 @@ class KeyboardData
       return new Row(keys, h, shift);
     }
 
-    public Row replaceKeys(MapKeys f)
+    public Row mapKeys(MapKey f)
     {
       ArrayList<Key> keys_ = new ArrayList<Key>();
       for (Key k : keys)
-        keys_.add(k.replaceKeys(f));
+        keys_.add(f.apply(k));
       return new Row(keys_, height, shift);
     }
 
     /** Change the width of every keys so that the row is 's' units wide. */
     public Row updateWidth(float newWidth)
     {
-      float s = newWidth / keysWidth;
-      ArrayList<Key> keys_ = new ArrayList<Key>();
-      for (Key k : keys)
-        keys_.add(k.scaleWidth(s));
-      return new Row(keys_, height, shift);
+      final float s = newWidth / keysWidth;
+      return mapKeys(new MapKey(){
+        public Key apply(Key k) { return k.scaleWidth(s); }
+      });
     }
   }
 
@@ -183,16 +211,37 @@ class KeyboardData
       return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
     }
 
-    public Key replaceKeys(MapKeys f)
-    {
-      return new Key(f.apply(key0), f.apply(key1), f.apply(key2),
-          f.apply(key3), f.apply(key4), width, shift, edgekeys);
-    }
-
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
+    }
+
+    public KeyValue getKeyValue(int i)
+    {
+      switch (i)
+      {
+        case 0: return key0;
+        case 1: return key1;
+        case 2: return key2;
+        case 3: return key3;
+        case 4: return key4;
+        default: return null;
+      }
+    }
+
+    public Key withKeyValue(int i, KeyValue kv)
+    {
+      KeyValue k0 = key0, k1 = key1, k2 = key2, k3 = key3, k4 = key4;
+      switch (i)
+      {
+        case 0: k0 = kv; break;
+        case 1: k1 = kv; break;
+        case 2: k2 = kv; break;
+        case 3: k3 = kv; break;
+        case 4: k4 = kv; break;
+      }
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
     }
 
     /*
@@ -235,8 +284,18 @@ class KeyboardData
   }
 
   // Not using Function<KeyValue, KeyValue> to keep compatibility with Android 6.
-  public static abstract interface MapKeys {
-    public KeyValue apply(KeyValue kv);
+  public static abstract interface MapKey {
+    public Key apply(Key k);
+  }
+
+  public static abstract class MapKeyValues implements MapKey {
+    abstract public KeyValue apply(KeyValue kv);
+
+    public Key apply(Key k)
+    {
+      return new Key(apply(k.key0), apply(k.key1), apply(k.key2),
+          apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys);
+    }
   }
 
   /** Parsing utils */

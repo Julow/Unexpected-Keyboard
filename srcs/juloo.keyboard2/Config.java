@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -142,20 +143,26 @@ final class Config
 
   /** Update the layout according to the configuration.
    *  - Remove the switching key if it isn't needed
-   *  - Remove keys from other locales (not in 'extra_keys')
+   *  - Remove "localized" keys from other locales (not in 'extra_keys')
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
    */
-  public KeyboardData modify_layout(KeyboardData kw)
+  public KeyboardData modify_layout(KeyboardData original_kw)
   {
     // Update the name to avoid caching in KeyModifier
     final KeyValue action_key = (actionLabel == null) ? null :
       KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
-    return kw.replaceKeys(new KeyboardData.MapKeys() {
+    // Extra keys are removed from the set as they are encountered during the
+    // first iteration then automatically added.
+    final Set<String> extra_keys = new HashSet<String>(this.extra_keys);
+    KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key)
       {
         if (key == null)
           return null;
+        boolean is_extra_key = extra_keys.contains(key.name);
+        if (is_extra_key)
+          extra_keys.remove(key.name);
         switch (key.eventCode)
         {
           case KeyValue.EVENT_CHANGE_METHOD:
@@ -170,9 +177,7 @@ final class Config
           default:
             if (key.flags != 0)
             {
-              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 &&
-                  extra_keys != null &&
-                  !extra_keys.contains(key.name))
+              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
                 return null;
               if ((key.flags & lockable_modifiers) != 0)
                 return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
@@ -181,6 +186,17 @@ final class Config
         }
       }
     });
+    if (extra_keys.size() > 0)
+    {
+      final Iterator<String> extra_keys_it = extra_keys.iterator();
+      kw = kw.addExtraKeys(
+          new Iterator<KeyValue>()
+          {
+            public boolean hasNext() { return extra_keys_it.hasNext(); }
+            public KeyValue next() { return KeyValue.getKeyByName(extra_keys_it.next()); }
+          });
+    }
+    return kw;
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
