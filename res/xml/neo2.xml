@@ -14,17 +14,17 @@
     <key key0="ß" key1="-"/>
   </row>
   <row>
-    <key key0="u" key1="tab" key2="loc accent_circonflexe" key4="\\"/>
-    <key key0="i" key2="loc accent_caron" key4="/"/>
-    <key key0="a" key2="loc accent_dot_above" key4="{"/>
-    <key key0="e" key2="loc accent_macron" key4="}"/>
-    <key key0="o" key2="loc accent_trema" key4="*"/>
-    <key key0="s" key2="loc accent_tilde" key4="\?"/>
-    <key key0="n" key2="loc accent_cedille" key4="("/>
-    <key key0="r" key2="loc accent_grave" key4=")"/>
-    <key key0="t" key2="loc accent_aigu" key4="-"/>
-    <key key0="d" key2="loc accent_ring" key4=":"/>
-    <key key0="y" key2="loc accent_double_aigu" key3="\@"/>
+    <key key0="u" key1="tab" key4="\\"/>
+    <key key0="i" key4="/"/>
+    <key key0="a" key4="{"/>
+    <key key0="e" key4="}"/>
+    <key key0="o" key4="*"/>
+    <key key0="s" key4="\?"/>
+    <key key0="n" key4="("/>
+    <key key0="r" key4=")"/>
+    <key key0="t" key4="-"/>
+    <key key0="d" key4=":"/>
+    <key key0="y" key3="\@"/>
   </row>
   <row>
     <key width="1.5" key0="shift" key1="esc"/>
