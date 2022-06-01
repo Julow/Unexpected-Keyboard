@@ -281,6 +281,7 @@ class KeyModifier
       case "?": name = "¿"; break;
       case "tab": name = "\\t"; break;
       case "space": name = "nbsp"; break;
+      // arrows
       case "↖": name = "⇖"; break;
       case "↑": name = "⇑"; break;
       case "↗": name = "⇗"; break;
@@ -289,6 +290,8 @@ class KeyModifier
       case "↙": name = "⇙"; break;
       case "↓": name = "⇓"; break;
       case "↘": name = "⇘"; break;
+      case "↔": name = "⇔"; break;
+      case "↕": name = "⇕"; break;
       // Currency symbols
       case "e": name = "€"; break;
       case "l": name = "£"; break;
@@ -297,6 +300,32 @@ class KeyModifier
       case "c": name = "¢"; break;
       case "p": name = "₱"; break;
       case "€": case "£": return removed_key; // Avoid showing these twice
+      // alternating greek letters
+      case "π": name = "ϖ"; break;
+      case "θ": name = "ϑ"; break;
+      case "Θ": name = "ϴ"; break;
+      case "ε": name = "ϵ"; break;
+      case "β": name = "ϐ"; break;
+      case "ρ": name = "ϱ"; break;
+      case "σ": name = "ς"; break;
+      case "γ": name = "ɣ"; break;
+      case "φ": name = "ϕ"; break;
+      case "υ": name = "ϒ"; break;
+      case "κ": name = "ϰ"; break;
+      // alternating math characters
+      case "∪": name = "⋃"; break;
+      case "∩": name = "⋂"; break;
+      case "∃": name = "∄"; break;
+      case "∈": name = "∉"; break;
+      case "∫": name = "∮"; break;
+      case "Π": name = "∏"; break;
+      case "Σ": name = "∑"; break;
+      case "∨": name = "⋁"; break;
+      case "∧": name = "⋀"; break;
+      case "⊷": name = "⊶"; break;
+      case "⊂": name = "⊆"; break;
+      case "⊃": name = "⊇"; break;
+      case "±": name = "∓"; break;
       default: return k;
     }
     return KeyValue.getKeyByName(name);
