@@ -1,0 +1,45 @@
+<?xml	version="1.0"	encoding="utf-8"?>
+<keyboard>
+	<row>
+		<key   width="1"   key0="θ"							key2="¬"						key4="esc"/>
+		<key   width="1"   key0="δ"			key1="⌊"		key2="∨"		key3="↔"		key4="⊂"/>
+		<key   width="1"   key0=""			key1="⌋"		key2="∧"		key3="↑"		key4="⊃"/> bla
+		<key   width="1"   key0="α"			key1="⌈"		key2="⊥"		key3="↕"		key4="∀"/>
+		<key   width="1"   key0="ξ"			key1="⌉"		key2="∡"						key4="⊷"/>
+		<key   width="1"   key0="π"			key1="∥"						key3="≪"		key4="7"/>
+		<key   width="1"   key0="ψ"			key1="⌀"						key3="≡"		key4="8"/>
+		<key   width="1"   key0="λ"			key1="∞"						key3="≫"		key4="9"/>
+		<key   width="1"   key0="μ"			key1="∝"						key3="□"		key4="f11_placeholder"/>
+		<key   width="1"   key0="ω"			key1="∅"						key3="∘"		key4="f12_placeholder"/>
+	</row>
+	<row>
+		<key   width="1"   key0="χ"							key2="tab"						key4="ℂ"/>
+		<key   width="1"   key0="τ"	key1="accent_circonflexe" key2="accent_caron" key3="←"	key4="∂"/>
+		<key   width="1"   key0="ι"	key1="accent_aigu"		key2="accent_grave"	  key3="↓"	key4="∫"/>
+		<key   width="1"   key0="ε"	key1="accent_cedille"	key2="accent_ogonek"  key3="→"	key4="∃"/>
+		<key   width="1"   key0="ο"	key1="accent_ring"		key2="accent_dot_above"			key4="∈"/>
+		<key   width="1"   key0="β"			key1="⊕"		key2="accent_macron"			key4="4"/>
+		<key   width="1"   key0="ν"			key1="⊖"		key2="accent_tilde"	key3="ℕ"	key4="5"/>
+		<key   width="1"   key0="ρ"			key1="⊙"		key2="accent_trema"	key3="ℝ"	key4="6"/>
+		<key   width="1"   key0="σ"			key1="⊗"		key2="accent_slash"						/>
+		<key   width="1"   key0="γ"			key1="⌀"												/>
+	</row>
+	<row>
+		<key   width="1.5" key0="shift"						key2="abc"								/>
+		<key   width="1"   key0="φ"											key3="⇌"		key4="√"/>
+		<key   width="1"   key0="η"											key3="⃗"			key4="∪"/>
+		<key   width="1"   key0=""															key4="∩"/> bla
+		<key   width="1"   key0="υ"											key3="∇"		key4="ℵ"/>
+		<key   width="1"   key0="ζ"			key1="≤"						key3="ℤ"		key4="1"/>
+		<key   width="1"   key0=""			key1="≠"						key3="ℚ"		key4="2"/> bla
+		<key   width="1"   key0="κ"			key1="≥"						key3="×"		key4="3"/>
+		<key   width="1.5" key0="backspace"					key2="delete"							/>
+	</row>
+	<row height="0.95">
+		<key width="1.8"   key0="ctrl"						key2="meta" 					key4="switch_numeric"/>
+		<key width="1.2"   key0="fn"	key1="alt"			key2="change_method" key3="switch_emoji" key4="config"/>
+		<key width="4.0"   key0="space"	key1="superscript"	key2="0"		key3="subscript"		/>
+		<key width="1.2"   key1="up"						key2="right" 	key3="left" 	key4="down" edgekeys="true"/>
+		<key width="1.8"   key0="enter"										key3="action"/>
+	</row>
+</keybo6ard>
