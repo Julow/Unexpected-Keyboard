@@ -234,6 +234,7 @@ final class Config
     {
       case "azerty": return R.xml.azerty;
       case "bgph1": return R.xml.local_bgph1;
+      case "colemak": return R.xml.colemak;
       case "dvorak": return R.xml.dvorak;
       case "neo2": return R.xml.neo2;
       case "qwerty_es": return R.xml.qwerty_es;
