@@ -9,12 +9,14 @@
     <item>qwerty_ko</item>
     <item>qwerty_lv</item>
     <item>qwerty_sv_se</item>
+    <item>qwerty_hu</item>
     <item>qwerty_tr</item>
     <item>ru_jcuken</item>
     <item>qwertz</item>
     <item>qwertz_hu</item>
     <item>bgph1</item>
     <item>dvorak</item>
+    <item>colemak</item>
     <item>neo2</item>
   </string-array>
   <string-array name="pref_layout_entries">
@@ -26,23 +28,27 @@
     <item>QWERTY (Korean)</item>
     <item>QWERTY (Latvian)</item>
     <item>QWERTY (Swedish)</item>
+    <item>QWERTY (Hungarian)</item>
     <item>QWERTY (Türkçe)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>QWERTZ</item>
     <item>QWERTZ (Hungarian)</item>
     <item>Bulgarian (Phonetic Traditional)</item>
     <item>Dvorak</item>
+    <item>Colemak</item>
     <item>Neo 2</item>
   </string-array>
   <string-array name="pref_programming_layout_values">
     <item>none</item>
     <item>qwerty</item>
     <item>dvorak</item>
+    <item>colemak</item>
   </string-array>
   <string-array name="pref_programming_layout_entries">
     <item>@string/pref_programming_layout_none</item>
     <item>QWERTY</item>
     <item>Dvorak</item>
+    <item>Colemak</item>
   </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>

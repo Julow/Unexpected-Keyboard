@@ -295,7 +295,7 @@ public class Keyboard2 extends InputMethodService
       if (_config.programming_layout == -1)
         return;
       KeyboardData layout =
-        getLayout(_config.programming_layout).replaceKeys(new KeyboardData.MapKeys() {
+        getLayout(_config.programming_layout).mapKeys(new KeyboardData.MapKeyValues() {
           public KeyValue apply(KeyValue key)
           {
             if (key != null && key.eventCode == KeyValue.EVENT_SWITCH_PROGRAMMING)

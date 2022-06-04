@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -142,20 +143,26 @@ final class Config
 
   /** Update the layout according to the configuration.
    *  - Remove the switching key if it isn't needed
-   *  - Remove keys from other locales (not in 'extra_keys')
+   *  - Remove "localized" keys from other locales (not in 'extra_keys')
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
    */
-  public KeyboardData modify_layout(KeyboardData kw)
+  public KeyboardData modify_layout(KeyboardData original_kw)
   {
     // Update the name to avoid caching in KeyModifier
     final KeyValue action_key = (actionLabel == null) ? null :
       KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
-    return kw.replaceKeys(new KeyboardData.MapKeys() {
+    // Extra keys are removed from the set as they are encountered during the
+    // first iteration then automatically added.
+    final Set<String> extra_keys = new HashSet<String>(this.extra_keys);
+    KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key)
       {
         if (key == null)
           return null;
+        boolean is_extra_key = extra_keys.contains(key.name);
+        if (is_extra_key)
+          extra_keys.remove(key.name);
         switch (key.eventCode)
         {
           case KeyValue.EVENT_CHANGE_METHOD:
@@ -170,9 +177,7 @@ final class Config
           default:
             if (key.flags != 0)
             {
-              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 &&
-                  extra_keys != null &&
-                  !extra_keys.contains(key.name))
+              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
                 return null;
               if ((key.flags & lockable_modifiers) != 0)
                 return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
@@ -181,6 +186,17 @@ final class Config
         }
       }
     });
+    if (extra_keys.size() > 0)
+    {
+      final Iterator<String> extra_keys_it = extra_keys.iterator();
+      kw = kw.addExtraKeys(
+          new Iterator<KeyValue>()
+          {
+            public boolean hasNext() { return extra_keys_it.hasNext(); }
+            public KeyValue next() { return KeyValue.getKeyByName(extra_keys_it.next()); }
+          });
+    }
+    return kw;
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
@@ -218,18 +234,20 @@ final class Config
     {
       case "azerty": return R.xml.azerty;
       case "bgph1": return R.xml.local_bgph1;
+      case "colemak": return R.xml.colemak;
       case "dvorak": return R.xml.dvorak;
+      case "neo2": return R.xml.neo2;
       case "qwerty_es": return R.xml.qwerty_es;
+      case "qwerty_hu": return R.xml.qwerty_hu;
       case "qwerty_ko": return R.xml.qwerty_ko;
       case "qwerty_lv": return R.xml.qwerty_lv;
       case "qwerty_pt": return R.xml.qwerty_pt;
+      case "qwerty_tr": return R.xml.qwerty_tr;
       case "qwerty": return R.xml.qwerty;
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
-      case "qwertz": return R.xml.qwertz;
       case "qwertz_hu": return R.xml.qwertz_hu;
+      case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
-      case "neo2": return R.xml.neo2;
-      case "qwerty_tr": return R.xml.qwerty_tr;
       default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
     }
   }

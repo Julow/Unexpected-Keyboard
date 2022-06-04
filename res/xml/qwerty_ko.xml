@@ -10,11 +10,11 @@
     <key key0="ㅕ" key2="7" key3="&amp;"/>
     <key key0="ㅑ" key2="8" key3="*"/>
     <key key0="ㅐ" key2="9" key3="(" key4=")"/>
-    <key key0="ㅔ" key1="0" key3="f11_placeholder" key4="f12_placeholder"/>
+    <key key0="ㅔ" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
   <row>
     <key shift="0.5" key0="ㅁ" key1="tab" key2="`"/>
-    <key key0="ㄴ" key3="loc ß"/>
+    <key key0="ㄴ"/>
     <key key0="ㅇ"/>
     <key key0="ㄹ"/>
     <key key0="ㅎ" key2="-" key3="_"/>
