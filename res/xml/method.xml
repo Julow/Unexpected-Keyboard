@@ -14,5 +14,5 @@
   <subtype android:label="%s" android:languageTag="pt" android:imeSubtypeLocale="pt_BR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_pt,extra_keys=accent_aigu|accent_cedille|accent_circonflexe|accent_grave|accent_tilde|€"/>
   <subtype android:label="%s" android:languageTag="ru" android:imeSubtypeLocale="ru_RU" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=ru_jcuken"/>
   <subtype android:label="%s" android:languageTag="sv" android:imeSubtypeLocale="sv_SE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_sv_se,extra_keys=accent_aigu|accent_trema|accent_ring|€"/>
-  <subtype android:label="%s" android:languageTag="tr" android:imeSubtypeLocale="tr_TR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_tr,extra_keys=ç|ğ|ı|ö|ş|ü|€"/>
+  <subtype android:label="%s" android:languageTag="tr" android:imeSubtypeLocale="tr_TR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_tr,extra_keys=accent_cedille|accent_caron|accent_trema"/>
 </input-method>
