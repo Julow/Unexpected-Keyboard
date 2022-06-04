@@ -1,6 +1,5 @@
 package juloo.keyboard2;
 
-import android.util.SparseArray;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import java.util.HashMap;
@@ -8,234 +7,86 @@ import java.util.HashMap;
 class KeyModifier
 {
   /** Cache key is KeyValue's name */
-  private static HashMap<String, SparseArray<KeyValue>> _cache =
-    new HashMap<String, SparseArray<KeyValue>>();
+  private static HashMap<String, HashMap<Pointers.Modifiers, KeyValue>> _cache =
+    new HashMap<String, HashMap<Pointers.Modifiers, KeyValue>>();
 
   /** Represents a removed key, because a cache entry can't be [null]. */
   private static final KeyValue removed_key = KeyValue.getKeyByName("removed");
 
   /** Modify a key according to modifiers. */
-  public static KeyValue handleFlags(KeyValue k, int flags)
+  public static KeyValue modify(KeyValue k, Pointers.Modifiers mods)
   {
     if (k == null)
       return null;
-    SparseArray<KeyValue> ks = cacheEntry(k);
-    KeyValue r = ks.get(flags);
-    if (r == null) // Cold cache
+    int n_mods = mods.size();
+    HashMap<Pointers.Modifiers, KeyValue> ks = cacheEntry(k);
+    KeyValue r = ks.get(mods);
+    if (r == null)
     {
       r = k;
-      r = handleFn(r, flags);
-      r = handleShift(r, flags);
-      r = handleAccents(r, flags);
-      ks.put(flags, r);
+      /* Order: Fn, Shift, accents */
+      for (int i = 0; i < n_mods; i++)
+        r = modify(r, mods.get(i));
+      r = remove_placeholders(r);
+      ks.put(mods, r);
     }
     return (r == removed_key) ? null : r;
   }
 
-  private static KeyValue handleAccents(KeyValue k, int flags)
+  public static KeyValue modify(KeyValue k, int mod)
   {
-    if (k.char_ == KeyValue.CHAR_NONE || (flags & KeyValue.FLAGS_ACCENTS) == 0)
-      return k;
-    char c = handleAccentChar(k.char_, flags);
-    if (c == 0 || c == k.char_)
-      return k;
-    return k.withCharAndSymbol(c);
+    switch (mod)
+    {
+      case KeyValue.MOD_FN: return apply_fn(k);
+      case KeyValue.MOD_SHIFT: return apply_shift(k);
+      case KeyValue.MOD_GRAVE: return apply_dead_char(k, '\u02CB');
+      case KeyValue.MOD_AIGU: return apply_dead_char(k, '\u00B4');
+      case KeyValue.MOD_CIRCONFLEXE: return apply_dead_char(k, '\u02C6');
+      case KeyValue.MOD_TILDE: return apply_dead_char(k, '\u02DC');
+      case KeyValue.MOD_CEDILLE: return apply_dead_char(k, '\u00B8');
+      case KeyValue.MOD_TREMA: return apply_dead_char(k, '\u00A8');
+      case KeyValue.MOD_CARON: return apply_dead_char(k, '\u02C7');
+      case KeyValue.MOD_RING: return apply_dead_char(k, '\u02DA');
+      case KeyValue.MOD_MACRON: return apply_dead_char(k, '\u00AF');
+      case KeyValue.MOD_OGONEK: return apply_dead_char(k, '\u02DB');
+      case KeyValue.MOD_DOT_ABOVE: return apply_dead_char(k, '\u02D9');
+      case KeyValue.MOD_DOUBLE_AIGU:
+        return maybe_modify_char(k, map_char_double_aigu(k.char_));
+      case KeyValue.MOD_ORDINAL:
+        return maybe_modify_char(k, map_char_ordinal(k.char_));
+      case KeyValue.MOD_SUPERSCRIPT:
+        return maybe_modify_char(k, map_char_superscript(k.char_));
+      case KeyValue.MOD_SUBSCRIPT:
+        return maybe_modify_char(k, map_char_subscript(k.char_));
+      case KeyValue.MOD_ARROWS:
+        return maybe_modify_char(k, map_char_arrows(k.char_));
+      case KeyValue.MOD_BOX:
+        return maybe_modify_char(k, map_char_box(k.char_));
+      default: return k;
+    }
   }
 
-  private static KeyValue handleShift(KeyValue k, int flags)
+  private static KeyValue apply_dead_char(KeyValue k, char dead_char)
   {
-    if ((flags & KeyValue.FLAG_SHIFT) == 0)
-      return k;
     char c = k.char_;
-    if (k.char_ != KeyValue.CHAR_NONE)
-      c = Character.toUpperCase(c);
-    if (c == k.char_) // Used to have more rules if toUpperCase() did nothing
+    if (c != KeyValue.CHAR_NONE)
+      c = (char)KeyCharacterMap.getDeadChar(dead_char, c);
+    return maybe_modify_char(k, c);
+  }
+
+  private static KeyValue apply_shift(KeyValue k)
+  {
+    char c = k.char_;
+    if (c == KeyValue.CHAR_NONE)
       return k;
-    return k.withCharAndSymbol(c);
+    c = map_char_shift(c);
+    if (c == k.char_)
+      c = Character.toUpperCase(c);
+    return maybe_modify_char(k, c);
   }
 
-  private static char handleAccentChar(char c, int flags)
+  private static KeyValue apply_fn(KeyValue k)
   {
-    switch ((flags & KeyValue.FLAGS_ACCENTS))
-    {
-      case KeyValue.FLAG_ACCENT1:
-        return (char)KeyCharacterMap.getDeadChar('\u02CB', c);
-      case KeyValue.FLAG_ACCENT2:
-        return (char)KeyCharacterMap.getDeadChar('\u00B4', c);
-      case KeyValue.FLAG_ACCENT3:
-        return (char)KeyCharacterMap.getDeadChar('\u02C6', c);
-      case KeyValue.FLAG_ACCENT4:
-        return (char)KeyCharacterMap.getDeadChar('\u02DC', c);
-      case KeyValue.FLAG_ACCENT5:
-        return (char)KeyCharacterMap.getDeadChar('\u00B8', c);
-      case KeyValue.FLAG_ACCENT6:
-        return (char)KeyCharacterMap.getDeadChar('\u00A8', c);
-      case KeyValue.FLAG_ACCENT_CARON:
-        return (char)KeyCharacterMap.getDeadChar('\u02C7', c);
-      case KeyValue.FLAG_ACCENT_RING:
-        return (char)KeyCharacterMap.getDeadChar('\u02DA', c);
-      case KeyValue.FLAG_ACCENT_MACRON:
-        return (char)KeyCharacterMap.getDeadChar('\u00AF', c);
-      case KeyValue.FLAG_ACCENT_OGONEK:
-        return (char)KeyCharacterMap.getDeadChar('\u02DB', c);
-      case KeyValue.FLAG_ACCENT_DOT_ABOVE:
-        return (char)KeyCharacterMap.getDeadChar('\u02D9', c);
-      case KeyValue.FLAG_ACCENT_DOUBLE_AIGU:
-        switch (c)
-        {
-          // Composite characters: a̋ e̋ i̋ m̋ ӳ
-          case 'o': return 'ő';
-          case 'u': return 'ű';
-          case ' ': return '˝';
-          default: return c;
-        }
-      case KeyValue.FLAG_ACCENT_ORDINAL:
-        switch (c)
-        {
-          case 'a': return 'ª';
-          case 'o': return 'º';
-          case '1': return 'ª';
-          case '2': return 'º';
-          case '3': return 'ⁿ';
-          case '4': return 'ᵈ';
-          case '5': return 'ᵉ';
-          case '6': return 'ʳ';
-          case '7': return 'ˢ';
-          case '8': return 'ᵗ';
-          case '9': return 'ʰ';
-          case '*': return '°';
-          default: return c;
-        }
-      case KeyValue.FLAG_ACCENT_SUPERSCRIPT:
-        switch (c)
-        {
-          case '1': return '¹';
-          case '2': return '²';
-          case '3': return '³';
-          case '4': return '⁴';
-          case '5': return '⁵';
-          case '6': return '⁶';
-          case '7': return '⁷';
-          case '8': return '⁸';
-          case '9': return '⁹';
-          case '0': return '⁰';
-          case 'i': return 'ⁱ';
-          case '+': return '⁺';
-          case '-': return '⁻';
-          case '=': return '⁼';
-          case '(': return '⁽';
-          case ')': return '⁾';
-          case 'n': return 'ⁿ';
-          default: return c;
-        }
-      case KeyValue.FLAG_ACCENT_SUBSCRIPT:
-        switch (c)
-        {
-          case '1': return '₁';
-          case '2': return '₂';
-          case '3': return '₃';
-          case '4': return '₄';
-          case '5': return '₅';
-          case '6': return '₆';
-          case '7': return '₇';
-          case '8': return '₈';
-          case '9': return '₉';
-          case '0': return '₀';
-          case '+': return '₊';
-          case '-': return '₋';
-          case '=': return '₌';
-          case '(': return '₍';
-          case ')': return '₎';
-          case 'e': return 'ₑ';
-          case 'a': return 'ₐ';
-          case 'x': return 'ₓ';
-          case 'o': return 'ₒ';
-          default: return c;
-        }
-      case KeyValue.FLAG_ACCENT_ARROWS:
-        if ((flags & KeyValue.FLAG_SHIFT) == 0)
-        {
-          switch (c)
-          {
-            case '1': return '↙';
-            case '2': return '↓';
-            case '3': return '↘';
-            case '4': return '←';
-            case '6': return '→';
-            case '7': return '↖';
-            case '8': return '↑';
-            case '9': return '↗';
-            default: return c;
-          }
-        }
-        else
-        {
-          switch (c)
-          {
-            case '1': return '⇙';
-            case '2': return '⇓';
-            case '3': return '⇘';
-            case '4': return '⇐';
-            case '6': return '⇒';
-            case '7': return '⇖';
-            case '8': return '⇑';
-            case '9': return '⇗';
-            default: return c;
-          }
-        }
-      case KeyValue.FLAG_ACCENT_BOX:
-        if ((flags & KeyValue.FLAG_SHIFT) == 0)
-        {
-          switch (c)
-          {
-            case '1': return '└';
-            case '2': return '┴';
-            case '3': return '┘';
-            case '4': return '├';
-            case '5': return '┼';
-            case '6': return '┤';
-            case '7': return '┌';
-            case '8': return '┬';
-            case '9': return '┐';
-            case '0': return '─';
-            case '.': return '│';
-            default: return c;
-          }
-        }
-        else
-        {
-          switch (c)
-          {
-            case '1': return '╚';
-            case '2': return '╩';
-            case '3': return '╝';
-            case '4': return '╠';
-            case '5': return '╬';
-            case '6': return '╣';
-            case '7': return '╔';
-            case '8': return '╦';
-            case '9': return '╗';
-            case '0': return '═';
-            case '.': return '║';
-            default: return c;
-          }
-        }
-      default: return c; // Can't happen
-    }
-  }
-
-  private static KeyValue handleFn(KeyValue k, int flags)
-  {
-    if ((flags & KeyValue.FLAG_FN) == 0)
-    {
-      switch (k.name)
-      {
-        // Remove some keys when Fn is *not* activated
-        case "f11_placeholder":
-        case "f12_placeholder": return removed_key;
-        default: return k;
-      }
-    }
     String name;
     switch (k.name)
     {
@@ -302,15 +153,180 @@ class KeyModifier
     return KeyValue.getKeyByName(name);
   }
 
-  /* Lookup the cache entry for a key. Create it needed. */
-  private static SparseArray<KeyValue> cacheEntry(KeyValue k)
+  /** Remove placeholder keys that haven't been modified into something. */
+  private static KeyValue remove_placeholders(KeyValue k)
   {
-    SparseArray<KeyValue> ks = _cache.get(k.name);
+    switch (k.name)
+    {
+      case "f11_placeholder":
+      case "f12_placeholder": return removed_key;
+      default: return k;
+    }
+  }
+
+  /** Helper, update [k] with the char [c] if it's not [0]. */
+  private static KeyValue maybe_modify_char(KeyValue k, char c)
+  {
+    if (c == 0 || c == KeyValue.CHAR_NONE || c == k.char_)
+      return k;
+    return k.withCharAndSymbol(c);
+  }
+
+  /* Lookup the cache entry for a key. Create it needed. */
+  private static HashMap<Pointers.Modifiers, KeyValue> cacheEntry(KeyValue k)
+  {
+    HashMap<Pointers.Modifiers, KeyValue> ks = _cache.get(k.name);
     if (ks == null)
     {
-      ks = new SparseArray<KeyValue>();
+      ks = new HashMap<Pointers.Modifiers, KeyValue>();
       _cache.put(k.name, ks);
     }
     return ks;
+  }
+
+  private static char map_char_shift(char c)
+  {
+    switch (c)
+    {
+      case '↙': return '⇙';
+      case '↓': return '⇓';
+      case '↘': return '⇘';
+      case '←': return '⇐';
+      case '→': return '⇒';
+      case '↖': return '⇖';
+      case '↑': return '⇑';
+      case '↗': return '⇗';
+      case '└': return '╚';
+      case '┴': return '╩';
+      case '┘': return '╝';
+      case '├': return '╠';
+      case '┼': return '╬';
+      case '┤': return '╣';
+      case '┌': return '╔';
+      case '┬': return '╦';
+      case '┐': return '╗';
+      case '─': return '═';
+      case '│': return '║';
+      default: return c;
+    }
+  }
+
+  private static char map_char_double_aigu(char c)
+  {
+    switch (c)
+    {
+      // Composite characters: a̋ e̋ i̋ m̋ ӳ
+      case 'o': return 'ő';
+      case 'u': return 'ű';
+      case ' ': return '˝';
+      default: return c;
+    }
+  }
+
+  private static char map_char_ordinal(char c)
+  {
+    switch (c)
+    {
+      case 'a': return 'ª';
+      case 'o': return 'º';
+      case '1': return 'ª';
+      case '2': return 'º';
+      case '3': return 'ⁿ';
+      case '4': return 'ᵈ';
+      case '5': return 'ᵉ';
+      case '6': return 'ʳ';
+      case '7': return 'ˢ';
+      case '8': return 'ᵗ';
+      case '9': return 'ʰ';
+      case '*': return '°';
+      default: return c;
+    }
+  }
+
+  private static char map_char_superscript(char c)
+  {
+    switch (c)
+    {
+      case '1': return '¹';
+      case '2': return '²';
+      case '3': return '³';
+      case '4': return '⁴';
+      case '5': return '⁵';
+      case '6': return '⁶';
+      case '7': return '⁷';
+      case '8': return '⁸';
+      case '9': return '⁹';
+      case '0': return '⁰';
+      case 'i': return 'ⁱ';
+      case '+': return '⁺';
+      case '-': return '⁻';
+      case '=': return '⁼';
+      case '(': return '⁽';
+      case ')': return '⁾';
+      case 'n': return 'ⁿ';
+      default: return c;
+    }
+  }
+
+  private static char map_char_subscript(char c)
+  {
+    switch (c)
+    {
+      case '1': return '₁';
+      case '2': return '₂';
+      case '3': return '₃';
+      case '4': return '₄';
+      case '5': return '₅';
+      case '6': return '₆';
+      case '7': return '₇';
+      case '8': return '₈';
+      case '9': return '₉';
+      case '0': return '₀';
+      case '+': return '₊';
+      case '-': return '₋';
+      case '=': return '₌';
+      case '(': return '₍';
+      case ')': return '₎';
+      case 'e': return 'ₑ';
+      case 'a': return 'ₐ';
+      case 'x': return 'ₓ';
+      case 'o': return 'ₒ';
+      default: return c;
+    }
+  }
+
+  private static char map_char_arrows(char c)
+  {
+    switch (c)
+    {
+      case '1': return '↙';
+      case '2': return '↓';
+      case '3': return '↘';
+      case '4': return '←';
+      case '6': return '→';
+      case '7': return '↖';
+      case '8': return '↑';
+      case '9': return '↗';
+      default: return c;
+    }
+  }
+
+  private static char map_char_box(char c)
+  {
+    switch (c)
+    {
+      case '1': return '└';
+      case '2': return '┴';
+      case '3': return '┘';
+      case '4': return '├';
+      case '5': return '┼';
+      case '6': return '┤';
+      case '7': return '┌';
+      case '8': return '┬';
+      case '9': return '┐';
+      case '0': return '─';
+      case '.': return '│';
+      default: return c;
+    }
   }
 }
