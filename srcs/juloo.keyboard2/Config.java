@@ -47,7 +47,7 @@ final class Config
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  public Set<String> extra_keys; // 'null' means all the keys
+  public Set<KeyValue> extra_keys; // 'null' means all the keys
 
   public final IKeyEventHandler handler;
 
@@ -151,18 +151,18 @@ final class Config
   {
     // Update the name to avoid caching in KeyModifier
     final KeyValue action_key = (actionLabel == null) ? null :
-      KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
+      KeyValue.getKeyByName("action").withSymbol(actionLabel);
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
-    final Set<String> extra_keys = new HashSet<String>(this.extra_keys);
+    final Set<KeyValue> extra_keys = new HashSet<KeyValue>(this.extra_keys);
     KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key)
       {
         if (key == null)
           return null;
-        boolean is_extra_key = extra_keys.contains(key.name);
+        boolean is_extra_key = extra_keys.contains(key);
         if (is_extra_key)
-          extra_keys.remove(key.name);
+          extra_keys.remove(key);
         int flags = key.getFlags();
         if ((flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
           return null;
@@ -196,15 +196,7 @@ final class Config
       }
     });
     if (extra_keys.size() > 0)
-    {
-      final Iterator<String> extra_keys_it = extra_keys.iterator();
-      kw = kw.addExtraKeys(
-          new Iterator<KeyValue>()
-          {
-            public boolean hasNext() { return extra_keys_it.hasNext(); }
-            public KeyValue next() { return KeyValue.getKeyByName(extra_keys_it.next()); }
-          });
-    }
+      kw = kw.addExtraKeys(extra_keys.iterator());
     return kw;
   }
 

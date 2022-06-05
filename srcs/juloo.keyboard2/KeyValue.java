@@ -78,7 +78,6 @@ final class KeyValue
     check((FLAGS_BITS | KIND_BITS | VALUE_BITS) == ~0); // No holes
   }
 
-  public final String name;
   private final String _symbol;
 
   /** This field encodes three things:
@@ -150,37 +149,49 @@ final class KeyValue
   /* Update the char and the symbol. */
   public KeyValue withChar(char c)
   {
-    return new KeyValue(name, String.valueOf(c), KIND_CHAR, c, getFlags());
+    return new KeyValue(String.valueOf(c), KIND_CHAR, c, getFlags());
   }
 
   public KeyValue withString(String s)
   {
-    return new KeyValue(name, s, KIND_STRING, 0, getFlags());
+    return new KeyValue(s, KIND_STRING, 0, getFlags());
   }
 
-  public KeyValue withNameAndSymbol(String n, String s)
+  public KeyValue withSymbol(String s)
   {
-    return new KeyValue(n, s, (_code & KIND_BITS), (_code & VALUE_BITS), getFlags());
+    return new KeyValue(s, (_code & KIND_BITS), (_code & VALUE_BITS), getFlags());
   }
 
   public KeyValue withKeyevent(int code)
   {
-    return new KeyValue(name, _symbol, KIND_KEYEVENT, code, getFlags());
+    return new KeyValue(_symbol, KIND_KEYEVENT, code, getFlags());
   }
 
   public KeyValue withFlags(int f)
   {
-    return new KeyValue(name, _symbol, (_code & KIND_BITS), (_code & VALUE_BITS), f);
+    return new KeyValue(_symbol, (_code & KIND_BITS), (_code & VALUE_BITS), f);
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    KeyValue snd = (KeyValue)obj;
+    return _symbol.equals(snd._symbol) && _code == snd._code;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return _symbol.hashCode() + _code;
   }
 
   private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
-  public KeyValue(String n, String s, int kind, int value, int flags)
+  public KeyValue(String s, int kind, int value, int flags)
   {
     check((kind & ~KIND_BITS) == 0);
     check((flags & ~FLAGS_BITS) == 0);
     check((value & ~VALUE_BITS) == 0);
-    name = n;
     _symbol = s;
     _code = kind | flags | value;
   }
@@ -207,14 +218,14 @@ final class KeyValue
       return kv.withFlags(kv.getFlags() | FLAG_LOCALIZED);
     }
     if (name.length() == 1)
-      return new KeyValue(name, name, KIND_CHAR, name.charAt(0), 0);
+      return new KeyValue(name, KIND_CHAR, name.charAt(0), 0);
     else
-      return new KeyValue(name, name, KIND_STRING, 0, 0);
+      return new KeyValue(name, KIND_STRING, 0, 0);
   }
 
   private static void addKey(String name, String symbol, int kind, int code, int flags)
   {
-    keys.put(name, new KeyValue(name, symbol, kind, code, flags));
+    keys.put(name, new KeyValue(symbol, kind, code, flags));
   }
 
   private static void addCharKey(String name, String symbol, char c, int flags)
@@ -236,6 +247,11 @@ final class KeyValue
   private static void addKeyeventKey(String name, String symbol, int code, int flags)
   {
     addKey(name, symbol, KIND_KEYEVENT, code, flags);
+  }
+
+  private static void addPlaceholderKey(String name)
+  {
+    addKey(name, "", KIND_STRING, 0, 0);
   }
 
   static
@@ -307,7 +323,9 @@ final class KeyValue
     addCharKey("space", "\r", ' ', FLAG_KEY_FONT);
     addCharKey("nbsp", "\u237d", '\u00a0', FLAG_KEY_FONT | FLAG_SMALLER_FONT);
 
-    addKey("removed", "", KIND_STRING, 0, 0); // Dummy key used in [KeyModifier]
+    addPlaceholderKey("removed");
+    addPlaceholderKey("f11_placeholder");
+    addPlaceholderKey("f12_placeholder");
   }
 
   // Substitute for [assert], which has no effect on Android.

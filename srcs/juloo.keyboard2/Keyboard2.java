@@ -80,19 +80,19 @@ public class Keyboard2 extends InputMethodService
     _currentTextLayout = l;
   }
 
-  private void extra_keys_of_subtype(Set<String> dst, InputMethodSubtype subtype)
+  private void extra_keys_of_subtype(Set<KeyValue> dst, InputMethodSubtype subtype)
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
     if (extra_keys == null)
       return;
     String[] ks = extra_keys.split("\\|");
     for (int i = 0; i < ks.length; i++)
-      dst.add(ks[i]);
+      dst.add(KeyValue.getKeyByName(ks[i]));
   }
 
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
-    HashSet<String> extra_keys = new HashSet<String>();
+    HashSet<KeyValue> extra_keys = new HashSet<KeyValue>();
     List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
     switch (_config.accents)
     {
@@ -119,7 +119,7 @@ public class Keyboard2 extends InputMethodService
     switch (_config.accents)
     {
       case 1: case 2: case 3: _config.extra_keys = null; break;
-      case 4: _config.extra_keys = new HashSet<String>(); break;
+      case 4: _config.extra_keys = new HashSet<KeyValue>(); break;
     }
     // Fallback for the layout option: Use qwerty in the "system settings" case
     _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;

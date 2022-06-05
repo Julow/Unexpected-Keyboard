@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class Emoji
 {
+  private final String _name;
   private final KeyValue _kv;
   private final String _desc;
 
@@ -17,14 +18,15 @@ public class Emoji
 
   protected Emoji(String name, String bytecode, String desc)
   {
-    _kv = new KeyValue(name, bytecode, KeyValue.KIND_STRING, 0, 0);
+    _name = name;
+    _kv = new KeyValue(bytecode, KeyValue.KIND_STRING, 0, 0);
     _desc = desc;
     emojis_by_name.put(name, this);
   }
 
   public String name()
   {
-    return _kv.name;
+    return _name;
   }
 
   public KeyValue kv()

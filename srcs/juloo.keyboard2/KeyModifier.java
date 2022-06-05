@@ -7,11 +7,8 @@ import java.util.HashMap;
 class KeyModifier
 {
   /** Cache key is KeyValue's name */
-  private static HashMap<String, HashMap<Pointers.Modifiers, KeyValue>> _cache =
-    new HashMap<String, HashMap<Pointers.Modifiers, KeyValue>>();
-
-  /** Represents a removed key, because a cache entry can't be [null]. */
-  private static final KeyValue removed_key = KeyValue.getKeyByName("removed");
+  private static HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>> _cache =
+    new HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>>();
 
   /** Modify a key according to modifiers. */
   public static KeyValue modify(KeyValue k, Pointers.Modifiers mods)
@@ -27,10 +24,10 @@ class KeyModifier
       /* Order: Fn, Shift, accents */
       for (int i = 0; i < n_mods; i++)
         r = modify(r, mods.get(i));
-      r = remove_placeholders(r);
       ks.put(mods, r);
     }
-    return (r == removed_key) ? null : r;
+    /* Keys with an empty string are placeholder keys. */
+    return (r.getString().length() == 0) ? null : r;
   }
 
   public static KeyValue modify(KeyValue k, KeyValue.Modifier mod)
@@ -117,70 +114,97 @@ class KeyModifier
 
   private static KeyValue apply_fn(KeyValue k)
   {
-    String name;
-    switch (k.name)
+    String name = null;
+    switch (k.getKind())
     {
-      case "1": name = "f1"; break;
-      case "2": name = "f2"; break;
-      case "3": name = "f3"; break;
-      case "4": name = "f4"; break;
-      case "5": name = "f5"; break;
-      case "6": name = "f6"; break;
-      case "7": name = "f7"; break;
-      case "8": name = "f8"; break;
-      case "9": name = "f9"; break;
-      case "0": name = "f10"; break;
-      case "f11_placeholder": name = "f11"; break;
-      case "f12_placeholder": name = "f12"; break;
-      case "up": name = "page_up"; break;
-      case "down": name = "page_down"; break;
-      case "left": name = "home"; break;
-      case "right": name = "end"; break;
-      case "<": name = "«"; break;
-      case ">": name = "»"; break;
-      case "{": name = "‹"; break;
-      case "}": name = "›"; break;
-      case "[": name = "‘"; break;
-      case "]": name = "’"; break;
-      case "(": name = "“"; break;
-      case ")": name = "”"; break;
-      case "'": name = "‚"; break;
-      case "\"": name = "„"; break;
-      case "-": name = "–"; break;
-      case "_": name = "—"; break;
-      case "^": name = "¬"; break;
-      case "%": name = "‰"; break;
-      case "=": name = "≈"; break;
-      case "u": name = "µ"; break;
-      case "a": name = "æ"; break;
-      case "o": name = "œ"; break;
-      case "esc": name = "insert"; break;
-      case "*": name = "°"; break;
-      case ".": name = "…"; break;
-      case ",": name = "·"; break;
-      case "!": name = "¡"; break;
-      case "?": name = "¿"; break;
-      case "tab": name = "\\t"; break;
-      case "space": name = "nbsp"; break;
-      case "↖": name = "⇖"; break;
-      case "↑": name = "⇑"; break;
-      case "↗": name = "⇗"; break;
-      case "←": name = "⇐"; break;
-      case "→": name = "⇒"; break;
-      case "↙": name = "⇙"; break;
-      case "↓": name = "⇓"; break;
-      case "↘": name = "⇘"; break;
-      // Currency symbols
-      case "e": name = "€"; break;
-      case "l": name = "£"; break;
-      case "r": name = "₹"; break;
-      case "y": name = "¥"; break;
-      case "c": name = "¢"; break;
-      case "p": name = "₱"; break;
-      case "€": case "£": return removed_key; // Avoid showing these twice
-      default: return k;
+      case Char: name = apply_fn_char(k.getChar()); break;
+      case Keyevent: name = apply_fn_keyevent(k.getKeyevent()); break;
+      case String:
+        switch (k.getString())
+        {
+          case "":
+            if (k == KeyValue.getKeyByName("f11_placeholder"))
+              name = "f11";
+            else if (k == KeyValue.getKeyByName("f12_placeholder"))
+              name = "f12";
+            break;
+        }
+        break;
     }
-    return KeyValue.getKeyByName(name);
+    return (name == null) ? k : KeyValue.getKeyByName(name);
+  }
+
+  private static String apply_fn_keyevent(int code)
+  {
+    switch (code)
+    {
+      case KeyEvent.KEYCODE_DPAD_UP: return "page_up";
+      case KeyEvent.KEYCODE_DPAD_DOWN: return "page_down";
+      case KeyEvent.KEYCODE_DPAD_LEFT: return "home";
+      case KeyEvent.KEYCODE_DPAD_RIGHT: return "end";
+      case KeyEvent.KEYCODE_ESCAPE: return "insert";
+      default: return null;
+    }
+  }
+
+  /** Return the name of modified key, or [null]. */
+  private static String apply_fn_char(char c)
+  {
+    switch (c)
+    {
+      case '1': return "f1";
+      case '2': return "f2";
+      case '3': return "f3";
+      case '4': return "f4";
+      case '5': return "f5";
+      case '6': return "f6";
+      case '7': return "f7";
+      case '8': return "f8";
+      case '9': return "f9";
+      case '0': return "f10";
+      case '<': return "«";
+      case '>': return "»";
+      case '{': return "‹";
+      case '}': return "›";
+      case '[': return "‘";
+      case ']': return "’";
+      case '(': return "“";
+      case ')': return "”";
+      case '\'': return "‚";
+      case '"': return "„";
+      case '-': return "–";
+      case '_': return "—";
+      case '^': return "¬";
+      case '%': return "‰";
+      case '=': return "≈";
+      case 'u': return "µ";
+      case 'a': return "æ";
+      case 'o': return "œ";
+      case '*': return "°";
+      case '.': return "…";
+      case ',': return "·";
+      case '!': return "¡";
+      case '?': return "¿";
+      case '↖': return "⇖";
+      case '↑': return "⇑";
+      case '↗': return "⇗";
+      case '←': return "⇐";
+      case '→': return "⇒";
+      case '↙': return "⇙";
+      case '↓': return "⇓";
+      case '↘': return "⇘";
+      // Currency symbols
+      case 'e': return "€";
+      case 'l': return "£";
+      case 'r': return "₹";
+      case 'y': return "¥";
+      case 'c': return "¢";
+      case 'p': return "₱";
+      case '€': case '£': return "removed"; // Avoid showing these twice
+      case '\t': return "\\t";
+      case ' ': return "nbsp";
+      default: return null;
+    }
   }
 
   private static KeyValue turn_into_keyevent(KeyValue k)
@@ -249,25 +273,14 @@ class KeyModifier
     return k.withKeyevent(e);
   }
 
-  /** Remove placeholder keys that haven't been modified into something. */
-  private static KeyValue remove_placeholders(KeyValue k)
-  {
-    switch (k.name)
-    {
-      case "f11_placeholder":
-      case "f12_placeholder": return removed_key;
-      default: return k;
-    }
-  }
-
   /* Lookup the cache entry for a key. Create it needed. */
   private static HashMap<Pointers.Modifiers, KeyValue> cacheEntry(KeyValue k)
   {
-    HashMap<Pointers.Modifiers, KeyValue> ks = _cache.get(k.name);
+    HashMap<Pointers.Modifiers, KeyValue> ks = _cache.get(k);
     if (ks == null)
     {
       ks = new HashMap<Pointers.Modifiers, KeyValue>();
-      _cache.put(k.name, ks);
+      _cache.put(k, ks);
     }
     return ks;
   }

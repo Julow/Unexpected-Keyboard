@@ -68,11 +68,8 @@ public final class Pointers implements Handler.Callback
    */
   public int getKeyFlags(KeyValue kv)
   {
-    // Comparing names because the keys might have been modified.
-    // Physical equality works because names are never computed or shared.
-    String name = kv.name;
     for (Pointer p : _ptrs)
-      if (p.value != null && p.value.name == name)
+      if (p.value != null && p.value.equals(kv))
         return p.flags;
     return -1;
   }
@@ -214,7 +211,7 @@ public final class Pointers implements Handler.Callback
     {
       ptr.selected_direction = direction;
       KeyValue newValue = getKeyAtDirection(ptr, direction);
-      if (newValue != null && (ptr.value == null || newValue.name != ptr.value.name))
+      if (newValue != null && (ptr.value == null || !newValue.equals(ptr.value)))
       {
         int old_flags = ptr.flags;
         ptr.value = newValue;
@@ -253,7 +250,7 @@ public final class Pointers implements Handler.Callback
     if (v == null)
       return null;
     for (Pointer p : _ptrs)
-      if (p.key == k && p.pointerId == -1 && p.value != null && p.value.name == v.name)
+      if (p.key == k && p.pointerId == -1 && p.value != null && p.value.equals(v))
         return p;
     return null;
   }
