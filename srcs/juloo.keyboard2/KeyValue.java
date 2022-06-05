@@ -306,6 +306,8 @@ final class KeyValue
     addCharKey("\\t", "\\t", '\t', 0); // Send the tab character
     addCharKey("space", "\r", ' ', FLAG_KEY_FONT);
     addCharKey("nbsp", "\u237d", '\u00a0', FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+
+    addKey("removed", "", KIND_STRING, 0, 0); // Dummy key used in [KeyModifier]
   }
 
   // Substitute for [assert], which has no effect on Android.
