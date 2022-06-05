@@ -64,6 +64,7 @@ class KeyModifier
         return maybe_modify_char(k, map_char_box(k.char_));
       case KeyValue.MOD_SLASH:
         return maybe_modify_char(k, map_char_slash(k.char_));
+      case KeyValue.MOD_ARROW_RIGHT: return apply_combining(k, "\u20D7");
       default: return k;
     }
   }
@@ -76,11 +77,24 @@ class KeyModifier
     return maybe_modify_char(k, c);
   }
 
+  private static KeyValue apply_combining(KeyValue k, String combining)
+  {
+    if (k.char_ == KeyValue.CHAR_NONE)
+      return k;
+    return KeyValue.getKeyByName(String.valueOf(k.char_) + combining);
+  }
+
   private static KeyValue apply_shift(KeyValue k)
   {
     char c = k.char_;
     if (c == KeyValue.CHAR_NONE)
-      return k;
+    {
+      // The key is a string
+      if (k.code == KeyValue.EVENT_NONE)
+        return k.withCharAndSymbol(k.symbol.toUpperCase(), KeyValue.CHAR_NONE);
+      else
+        return k;
+    }
     c = map_char_shift(c);
     if (c == k.char_)
       c = Character.toUpperCase(c);
