@@ -36,7 +36,7 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
-  public Set<Integer> lockable_modifiers = new HashSet<Integer>();
+  public Set<KeyValue.Modifier> lockable_modifiers = new HashSet<KeyValue.Modifier>();
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
@@ -128,14 +128,14 @@ final class Config
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     lockable_modifiers.clear();
-    if (prefs.getBoolean("lockable_shift", true)) lockable_modifiers.add(KeyValue.MOD_SHIFT);
-    if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.MOD_CTRL);
-    if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.MOD_ALT);
-    if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.MOD_FN);
-    if (prefs.getBoolean("lockable_meta", false)) lockable_modifiers.add(KeyValue.MOD_META);
-    if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.MOD_SUPERSCRIPT);
-    if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.MOD_SUBSCRIPT);
-    if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.MOD_BOX);
+    if (prefs.getBoolean("lockable_shift", true)) lockable_modifiers.add(KeyValue.Modifier.SHIFT);
+    if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.Modifier.CTRL);
+    if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.Modifier.ALT);
+    if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.Modifier.FN);
+    if (prefs.getBoolean("lockable_meta", false)) lockable_modifiers.add(KeyValue.Modifier.META);
+    if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.Modifier.SUPERSCRIPT);
+    if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.Modifier.SUBSCRIPT);
+    if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.Modifier.BOX);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
@@ -171,15 +171,20 @@ final class Config
           case Event:
             switch (key.getEvent())
             {
-              case KeyValue.EVENT_CHANGE_METHOD:
+              case CHANGE_METHOD:
                 return shouldOfferSwitchingToNextInputMethod ? key : null;
-              case KeyEvent.KEYCODE_ENTER:
-                return (swapEnterActionKey && action_key != null) ? action_key : key;
-              case KeyValue.EVENT_ACTION:
+              case ACTION:
                 return (swapEnterActionKey && action_key != null) ?
                   KeyValue.getKeyByName("enter") : action_key;
-              case KeyValue.EVENT_SWITCH_PROGRAMMING:
+              case SWITCH_PROGRAMMING:
                 return shouldOfferSwitchingToProgramming ? key : null;
+            }
+            break;
+          case Keyevent:
+            switch (key.getKeyevent())
+            {
+              case KeyEvent.KEYCODE_ENTER:
+                return (swapEnterActionKey && action_key != null) ? action_key : key;
             }
             break;
           case Modifier:

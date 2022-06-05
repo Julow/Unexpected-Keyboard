@@ -300,7 +300,7 @@ public class Keyboard2 extends InputMethodService
           {
             if (key != null
                 && key.getKind() == KeyValue.Kind.Event
-                && key.getEvent() == KeyValue.EVENT_SWITCH_PROGRAMMING)
+                && key.getEvent() == KeyValue.Event.SWITCH_PROGRAMMING)
               return KeyValue.getKeyByName("switch_text");
             return key;
           }

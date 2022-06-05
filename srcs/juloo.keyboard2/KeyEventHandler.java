@@ -15,7 +15,6 @@ class KeyEventHandler implements Config.IKeyEventHandler
   {
     if (key == null)
       return;
-    int event;
     switch (key.getKind())
     {
       case Char:
@@ -25,21 +24,20 @@ class KeyEventHandler implements Config.IKeyEventHandler
         _recv.commitText(key.getString());
         break;
       case Event:
-        event = key.getEvent();
-        switch (event)
+        switch (key.getEvent())
         {
-          case KeyValue.EVENT_CONFIG: _recv.showKeyboardConfig(); break;
-          case KeyValue.EVENT_SWITCH_TEXT: _recv.switchMain(); break;
-          case KeyValue.EVENT_SWITCH_NUMERIC: _recv.switchNumeric(); break;
-          case KeyValue.EVENT_SWITCH_EMOJI: _recv.setPane_emoji(); break;
-          case KeyValue.EVENT_SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
-          case KeyValue.EVENT_CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
-          case KeyValue.EVENT_ACTION: _recv.performAction(); break;
-          case KeyValue.EVENT_SWITCH_PROGRAMMING: _recv.switchProgramming(); break;
-          default:
-            handleKeyUpWithModifier(event, mods);
-            break;
+          case CONFIG: _recv.showKeyboardConfig(); break;
+          case SWITCH_TEXT: _recv.switchMain(); break;
+          case SWITCH_NUMERIC: _recv.switchNumeric(); break;
+          case SWITCH_EMOJI: _recv.setPane_emoji(); break;
+          case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
+          case CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
+          case ACTION: _recv.performAction(); break;
+          case SWITCH_PROGRAMMING: _recv.switchProgramming(); break;
         }
+        break;
+      case Keyevent:
+        handleKeyUpWithModifier(key.getKeyevent(), mods);
         break;
       case Modifier:
         break;
@@ -66,17 +64,17 @@ class KeyEventHandler implements Config.IKeyEventHandler
     return updatedMetaState;
   }
 
-  private int sendMetaKeyForModifier(int mod, int metaState, boolean down)
+  private int sendMetaKeyForModifier(KeyValue.Modifier mod, int metaState, boolean down)
   {
     switch (mod)
     {
-      case KeyValue.MOD_CTRL:
+      case CTRL:
         return sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, metaState, down);
-      case KeyValue.MOD_ALT:
+      case ALT:
         return sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, metaState, down);
-      case KeyValue.MOD_SHIFT:
+      case SHIFT:
         return sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, metaState, down);
-      case KeyValue.MOD_META:
+      case META:
         return sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, metaState, down);
       default: return metaState;
     }

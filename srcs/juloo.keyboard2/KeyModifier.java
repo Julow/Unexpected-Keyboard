@@ -33,34 +33,34 @@ class KeyModifier
     return (r == removed_key) ? null : r;
   }
 
-  public static KeyValue modify(KeyValue k, int mod)
+  public static KeyValue modify(KeyValue k, KeyValue.Modifier mod)
   {
     switch (mod)
     {
-      case KeyValue.MOD_CTRL:
-      case KeyValue.MOD_ALT:
-      case KeyValue.MOD_META: return turn_into_keyevent(k);
-      case KeyValue.MOD_FN: return apply_fn(k);
-      case KeyValue.MOD_SHIFT: return apply_shift(k);
-      case KeyValue.MOD_GRAVE: return apply_dead_char(k, '\u02CB');
-      case KeyValue.MOD_AIGU: return apply_dead_char(k, '\u00B4');
-      case KeyValue.MOD_CIRCONFLEXE: return apply_dead_char(k, '\u02C6');
-      case KeyValue.MOD_TILDE: return apply_dead_char(k, '\u02DC');
-      case KeyValue.MOD_CEDILLE: return apply_dead_char(k, '\u00B8');
-      case KeyValue.MOD_TREMA: return apply_dead_char(k, '\u00A8');
-      case KeyValue.MOD_CARON: return apply_dead_char(k, '\u02C7');
-      case KeyValue.MOD_RING: return apply_dead_char(k, '\u02DA');
-      case KeyValue.MOD_MACRON: return apply_dead_char(k, '\u00AF');
-      case KeyValue.MOD_OGONEK: return apply_dead_char(k, '\u02DB');
-      case KeyValue.MOD_DOT_ABOVE: return apply_dead_char(k, '\u02D9');
-      case KeyValue.MOD_DOUBLE_AIGU: return apply_map_char(k, map_char_double_aigu);
-      case KeyValue.MOD_ORDINAL: return apply_map_char(k, map_char_ordinal);
-      case KeyValue.MOD_SUPERSCRIPT: return apply_map_char(k, map_char_superscript);
-      case KeyValue.MOD_SUBSCRIPT: return apply_map_char(k, map_char_subscript);
-      case KeyValue.MOD_ARROWS: return apply_map_char(k, map_char_arrows);
-      case KeyValue.MOD_BOX: return apply_map_char(k, map_char_box);
-      case KeyValue.MOD_SLASH: return apply_map_char(k, map_char_slash);
-      case KeyValue.MOD_ARROW_RIGHT: return apply_combining(k, "\u20D7");
+      case CTRL:
+      case ALT:
+      case META: return turn_into_keyevent(k);
+      case FN: return apply_fn(k);
+      case SHIFT: return apply_shift(k);
+      case GRAVE: return apply_dead_char(k, '\u02CB');
+      case AIGU: return apply_dead_char(k, '\u00B4');
+      case CIRCONFLEXE: return apply_dead_char(k, '\u02C6');
+      case TILDE: return apply_dead_char(k, '\u02DC');
+      case CEDILLE: return apply_dead_char(k, '\u00B8');
+      case TREMA: return apply_dead_char(k, '\u00A8');
+      case CARON: return apply_dead_char(k, '\u02C7');
+      case RING: return apply_dead_char(k, '\u02DA');
+      case MACRON: return apply_dead_char(k, '\u00AF');
+      case OGONEK: return apply_dead_char(k, '\u02DB');
+      case DOT_ABOVE: return apply_dead_char(k, '\u02D9');
+      case DOUBLE_AIGU: return apply_map_char(k, map_char_double_aigu);
+      case ORDINAL: return apply_map_char(k, map_char_ordinal);
+      case SUPERSCRIPT: return apply_map_char(k, map_char_superscript);
+      case SUBSCRIPT: return apply_map_char(k, map_char_subscript);
+      case ARROWS: return apply_map_char(k, map_char_arrows);
+      case BOX: return apply_map_char(k, map_char_box);
+      case SLASH: return apply_map_char(k, map_char_slash);
+      case ARROW_RIGHT: return apply_combining(k, "\u20D7");
       default: return k;
     }
   }
@@ -246,7 +246,7 @@ class KeyModifier
       case ' ': e = KeyEvent.KEYCODE_SPACE; break;
       default: return k;
     }
-    return k.withEvent(e);
+    return k.withKeyevent(e);
   }
 
   /** Remove placeholder keys that haven't been modified into something. */

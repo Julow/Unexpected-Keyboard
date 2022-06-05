@@ -32,19 +32,18 @@ public final class Pointers implements Handler.Callback
   /** When [skip_latched] is true, don't take flags of latched keys into account. */
   private Modifiers getModifiers(boolean skip_latched)
   {
-    int size = _ptrs.size();
-    int[] mods = new int[size];
-    for (int i = 0; i < size; i++)
+    int n_ptrs = _ptrs.size();
+    KeyValue.Modifier[] mods = new KeyValue.Modifier[n_ptrs];
+    int n_mods = 0;
+    for (int i = 0; i < n_ptrs; i++)
     {
       Pointer p = _ptrs.get(i);
-      mods[i] =
-        ((skip_latched && p.pointerId == -1
-          && (p.flags & KeyValue.FLAG_LOCKED) == 0)
-         || p.value == null
-         || p.value.getKind() != KeyValue.Kind.Modifier)
-        ? 0 : p.value.getModifier();
+      if (p.value != null && p.value.getKind() == KeyValue.Kind.Modifier
+          && !(skip_latched && p.pointerId == -1
+            && (p.flags & KeyValue.FLAG_LOCKED) == 0))
+        mods[n_mods++] = p.value.getModifier();
     }
-    return Modifiers.ofArray(mods);
+    return Modifiers.ofArray(mods, n_mods);
   }
 
   public void clear()
@@ -386,12 +385,15 @@ public final class Pointers implements Handler.Callback
       Sorted in the order they should be evaluated. */
   public static final class Modifiers
   {
-    private final int[] _mods;
+    private final KeyValue.Modifier[] _mods;
     private final int _size;
 
-    private Modifiers(int[] m, int s) { _mods = m; _size = s; }
+    private Modifiers(KeyValue.Modifier[] m, int s)
+    {
+      _mods = m; _size = s;
+    }
 
-    public int get(int i) { return _mods[i]; }
+    public KeyValue.Modifier get(int i) { return _mods[_size - 1 - i]; }
     public int size() { return _size; }
 
     @Override
@@ -402,20 +404,20 @@ public final class Pointers implements Handler.Callback
       return Arrays.equals(_mods, ((Modifiers)obj)._mods);
     }
 
-    public static final Modifiers EMPTY = new Modifiers(new int[0], 0);
+    public static final Modifiers EMPTY =
+      new Modifiers(new KeyValue.Modifier[0], 0);
 
-    protected static Modifiers ofArray(int[] mods)
+    protected static Modifiers ofArray(KeyValue.Modifier[] mods, int size)
     {
-      int size = mods.length;
-      // Sort and remove duplicates and [0]s.
+      // Sort and remove duplicates and nulls.
       if (size > 1)
       {
-        Arrays.sort(mods);
+        Arrays.sort(mods, 0, size);
         int j = 0;
         for (int i = 0; i < size; i++)
         {
-          int m = mods[i];
-          if (m != 0 && (i + 1 >= size || m != mods[i + 1]))
+          KeyValue.Modifier m = mods[i];
+          if (m != null && (i + 1 >= size || m != mods[i + 1]))
           {
             mods[j] = m;
             j++;
