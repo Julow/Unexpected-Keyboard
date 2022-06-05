@@ -16,7 +16,7 @@ public class Emoji extends KeyValue
 
   protected Emoji(String name, String bytecode, String desc)
   {
-    super(name, bytecode, CHAR_NONE, EVENT_NONE, 0);
+    super(name, bytecode, KIND_STRING, 0, 0);
     _desc = desc;
     emojis_by_name.put(name, this);
   }

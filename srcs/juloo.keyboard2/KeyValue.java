@@ -8,7 +8,6 @@ class KeyValue
 {
   /** Values for the [code] field. */
 
-  public static final int EVENT_NONE = -1;
   public static final int EVENT_CONFIG = -2;
   public static final int EVENT_SWITCH_TEXT = -3;
   public static final int EVENT_SWITCH_NUMERIC = -4;
@@ -47,15 +46,11 @@ class KeyValue
   public static final int MOD_SLASH = -217;
   public static final int MOD_ARROW_RIGHT = -218;
 
-  /** Special value for the [_char] field. */
-  public static final char CHAR_NONE = '\0';
-
   // Behavior flags
   public static final int FLAG_LATCH = 1;
   public static final int FLAG_LOCK = (1 << 1);
   // Special keys are not repeated and don't clear latched modifiers
   public static final int FLAG_SPECIAL = (1 << 2);
-  public static final int FLAG_MODIFIER = (1 << 3);
   public static final int FLAG_PRECISE_REPEAT = (1 << 4);
 
   // Rendering flags
@@ -68,19 +63,20 @@ class KeyValue
   // Language specific keys that are removed from the keyboard by default
   public static final int FLAG_LOCALIZED = (1 << 8);
 
+  // Kind flags
+  public static final int KIND_CHAR = (0 << 30);
+  public static final int KIND_STRING = (1 << 30);
+  public static final int KIND_EVENT = (2 << 30);
+  public static final int KIND_MODIFIER = (3 << 30);
+
+  public static final int KIND_FLAGS = (0b11 << 30);
+
   public final String name;
   private final String _symbol;
-  private final char _char;
 
   /** Describe what the key does when it isn't a simple character.
-      Can be one of:
-      - When [FLAG_MODIFIER] is set, a modifier. See [KeyModifier].
-      - [EVENT_NONE], no event is associated with the key.
-      - A positive integer, an Android [KeyEvent].
-      - One of the [EVENT_*] constants, an action performed in [KeyEventHandler].
-      A key can have both a character and a key event associated, the key event
-      is used when certain modifiers are active, the character is used
-      otherwise. See [KeyEventHandler]. */
+      The meaning of this value depends on [_flags & KIND_FLAGS], which
+      corresponds to the [Kind] enum. */
   private final int _code;
   private final int _flags;
 
@@ -91,13 +87,14 @@ class KeyValue
 
   public Kind getKind()
   {
-    if ((_flags & FLAG_MODIFIER) != 0)
-      return Kind.Modifier;
-    if (_code != EVENT_NONE)
-      return Kind.Event;
-    if (_char != CHAR_NONE)
-      return Kind.Char;
-    return Kind.String;
+    switch (_flags & KIND_FLAGS)
+    {
+      case KIND_CHAR: return Kind.Char;
+      case KIND_STRING: return Kind.String;
+      case KIND_EVENT: return Kind.Event;
+      case KIND_MODIFIER: return Kind.Modifier;
+      default: throw new RuntimeException("Corrupted kind flags");
+    }
   }
 
   public int getFlags()
@@ -121,18 +118,10 @@ class KeyValue
       Defined only when [getKind() == Kind.Char]. */
   public char getChar()
   {
-    return _char;
+    return (char)_code;
   }
 
-  /** An Android event or one of the [EVENT_*] constants, including
-      [EVENT_NONE].
-      Defined only when [getKind() == Kind.Char]. */
-  public int getCharEvent()
-  {
-    return _code;
-  }
-
-  /** An Android event or one of the [EVENT_*] constants, except [EVENT_NONE].
+  /** An Android event or one of the [EVENT_*] constants.
       Defined only when [getKind() == Kind.Event]. */
   public int getEvent()
   {
@@ -147,40 +136,40 @@ class KeyValue
   }
 
   /* Update the char and the symbol. */
-  public KeyValue withCharAndSymbol(char c)
+  public KeyValue withChar(char c)
   {
-    return withCharAndSymbol(String.valueOf(c), c);
+    return new KeyValue(name, String.valueOf(c), KIND_CHAR, c, _flags);
   }
 
-  public KeyValue withCharAndSymbol(String s, char c)
+  public KeyValue withString(String s)
   {
-    return new KeyValue(name, s, c, _code, _flags);
+    return new KeyValue(name, s, KIND_STRING, 0, _flags);
   }
 
   public KeyValue withNameAndSymbol(String n, String s)
   {
-    return new KeyValue(n, s, _char, _code, _flags);
+    return new KeyValue(n, s, (_flags & KIND_FLAGS), _code, _flags);
   }
 
-  public KeyValue withEvent(int event)
+  public KeyValue withEvent(int e)
   {
-    return new KeyValue(name, _symbol, _char, event, (_flags & ~FLAG_MODIFIER));
+    return new KeyValue(name, _symbol, KIND_EVENT, e, _flags);
   }
 
   public KeyValue withFlags(int f)
   {
-    return new KeyValue(name, _symbol, _char, _code, f);
+    return new KeyValue(name, _symbol, (_flags & KIND_FLAGS), _code, f);
   }
 
   private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
-  public KeyValue(String n, String s, char c, int e, int f)
+  public KeyValue(String n, String s, int kind, int c, int f)
   {
+    assert((kind & ~KIND_FLAGS) == 0);
     name = n;
     _symbol = s;
-    _char = c;
-    _code = e;
-    _flags = f;
+    _code = c;
+    _flags = (f & ~KIND_FLAGS) | kind;
   }
 
   private static String stripPrefix(String s, String prefix)
@@ -204,35 +193,37 @@ class KeyValue
       kv = getKeyByName(localized);
       return kv.withFlags(kv._flags | FLAG_LOCALIZED);
     }
-    char c = (name.length() == 1) ? name.charAt(0) : CHAR_NONE;
-    return new KeyValue(name, name, c, EVENT_NONE, 0);
+    if (name.length() == 1)
+      return new KeyValue(name, name, KIND_CHAR, name.charAt(0), 0);
+    else
+      return new KeyValue(name, name, KIND_STRING, 0, 0);
   }
 
-  private static void addKey(String name, String symbol, char c, int event, int flags)
+  private static void addKey(String name, String symbol, int kind, int code, int flags)
   {
-    keys.put(name, new KeyValue(name, symbol, c, event, flags));
+    keys.put(name, new KeyValue(name, symbol, kind, code, flags));
   }
 
   private static void addCharKey(String name, String symbol, char c, int flags)
   {
-    addKey(name, symbol, c, EVENT_NONE, flags);
+    addKey(name, symbol, KIND_CHAR, c, flags);
   }
 
   private static void addModifierKey(String name, String symbol, int code, int extra_flags)
   {
     assert(code >= 100 && code < 300);
-    addKey(name, symbol, CHAR_NONE, code,
-        FLAG_LATCH | FLAG_MODIFIER | FLAG_SPECIAL | extra_flags);
+    addKey(name, symbol, KIND_MODIFIER, code,
+        FLAG_LATCH | FLAG_SPECIAL | extra_flags);
   }
 
   private static void addSpecialKey(String name, String symbol, int event, int flags)
   {
-    addKey(name, symbol, CHAR_NONE, event, flags | FLAG_SPECIAL);
+    addKey(name, symbol, KIND_EVENT, event, flags | FLAG_SPECIAL);
   }
 
   private static void addEventKey(String name, String symbol, int event, int flags)
   {
-    addKey(name, symbol, CHAR_NONE, event, flags);
+    addKey(name, symbol, KIND_EVENT, event, flags);
   }
 
   static

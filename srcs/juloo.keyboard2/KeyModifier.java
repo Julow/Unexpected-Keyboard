@@ -72,7 +72,7 @@ class KeyModifier
       case Char:
         char kc = k.getChar();
         char c = map.apply(kc);
-        return (kc == c) ? k : k.withCharAndSymbol(c);
+        return (kc == c) ? k : k.withChar(c);
       default: return k;
     }
   }
@@ -84,9 +84,7 @@ class KeyModifier
       case Char:
         char kc = k.getChar();
         char c = (char)KeyCharacterMap.getDeadChar(dead_char, kc);
-        if (c == 0 || kc == c)
-          return k;
-        return k.withCharAndSymbol(c);
+        return (c == 0 || kc == c) ? k : k.withChar(c);
       default: return k;
     }
   }
@@ -96,8 +94,7 @@ class KeyModifier
     switch (k.getKind())
     {
       case Char:
-        String s = String.valueOf(k.getChar()) + combining;
-        return k.withCharAndSymbol(s, KeyValue.CHAR_NONE);
+        return k.withString(String.valueOf(k.getChar()) + combining);
       default: return k;
     }
   }
@@ -111,12 +108,9 @@ class KeyModifier
         char c = map_char_shift(kc);
         if (kc == c)
           c = Character.toUpperCase(kc);
-        if (kc == c)
-          return k;
-        return k.withCharAndSymbol(c);
+        return (kc == c) ? k : k.withChar(c);
       case String:
-        String s = k.getString().toUpperCase();
-        return k.withCharAndSymbol(s, KeyValue.CHAR_NONE);
+        return k.withString(k.getString().toUpperCase());
       default: return k;
     }
   }

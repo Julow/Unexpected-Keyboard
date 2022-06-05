@@ -407,7 +407,7 @@ public final class Pointers implements Handler.Callback
     protected static Modifiers ofArray(int[] mods)
     {
       int size = mods.length;
-      // Sort and remove duplicates and [EVENT_NONE]s.
+      // Sort and remove duplicates and [0]s.
       if (size > 1)
       {
         Arrays.sort(mods);

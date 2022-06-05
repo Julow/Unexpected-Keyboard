@@ -87,8 +87,6 @@ class KeyEventHandler implements Config.IKeyEventHandler
    */
 	private void handleKeyUpWithModifier(int keyCode, Pointers.Modifiers mods)
 	{
-		if (keyCode == KeyValue.EVENT_NONE)
-			return ;
     int metaState = 0;
     for (int i = 0; i < mods.size(); i++)
       metaState = sendMetaKeyForModifier(mods.get(i), metaState, true);
