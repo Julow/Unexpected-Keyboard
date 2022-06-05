@@ -9,7 +9,6 @@
   <string name="pref_accents_title">Aksanlar</string>
   <string name="pref_accents_e_all_installed">Yüklü tüm dillerin aksanlarını göster</string>
   <string name="pref_accents_e_selected">Sadece seçili dilin aksanlarını göster</string>
-  <string name="pref_accents_e_all">Tüm aksanları göster</string>
   <string name="pref_accents_e_none">Aksanları gizle</string>
   <string name="pref_programming_layout_title">Programlama için klavye düzeni</string>
   <string name="pref_programming_layout_none">Hiçbiri</string>

@@ -9,7 +9,6 @@
   <string name="pref_accents_title">Accents</string>
   <string name="pref_accents_e_all_installed">Show accents for all installed languages</string>
   <string name="pref_accents_e_selected">Only show accents for the selected language</string>
-  <string name="pref_accents_e_all">Show all accents</string>
   <string name="pref_accents_e_none">Hide accents</string>
   <string name="pref_programming_layout_title">Keyboard layout for programming</string>
   <string name="pref_programming_layout_none">None</string>

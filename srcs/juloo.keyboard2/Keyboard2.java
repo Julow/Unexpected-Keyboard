@@ -96,7 +96,8 @@ public class Keyboard2 extends InputMethodService
     List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
     switch (_config.accents)
     {
-      case 1:
+      // '3' was "all accents", now unused
+      case 1: case 3:
         extra_keys_of_subtype(extra_keys, subtype);
         for (InputMethodSubtype s : enabled_subtypes)
           extra_keys_of_subtype(extra_keys, s);
@@ -104,7 +105,6 @@ public class Keyboard2 extends InputMethodService
       case 2:
         extra_keys_of_subtype(extra_keys, subtype);
         break;
-      case 3: extra_keys = null; break;
       case 4: break;
       default: throw new IllegalArgumentException();
     }

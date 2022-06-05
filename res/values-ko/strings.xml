@@ -7,7 +7,6 @@
   <string name="pref_accents_title">악센트</string>
   <string name="pref_accents_e_all_installed">설치된 모든 언어의 악센트 표시</string>
   <string name="pref_accents_e_selected">선택한 언어의 악센트만 표시</string>
-  <string name="pref_accents_e_all">모든 언어의 악센트 표시</string>
   <string name="pref_accents_e_none">모든 언어의 악센트 숨기기</string>
   <string name="pref_category_typing">타자</string>
   <string name="pref_swipe_dist_title">스와이프 범위</string>

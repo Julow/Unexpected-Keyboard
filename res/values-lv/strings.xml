@@ -9,7 +9,6 @@
   <string name="pref_accents_title">Uzsvara zīmes</string>
   <string name="pref_accents_e_all_installed">Rādīt uzsvara zīmes visām uzstādītajām valodām</string>
   <string name="pref_accents_e_selected">Rādīt uzsvara zīmes tikai atlasītajām valodām</string>
-  <string name="pref_accents_e_all">Rādīt visas uzsvara zīmes</string>
   <string name="pref_accents_e_none">Paslēpt uzsvara zīmes</string>
   <string name="pref_programming_layout_title">Tastatūras izkārtojums programmēšanai</string>
   <string name="pref_programming_layout_none">Neviens</string>

@@ -9,7 +9,6 @@
   <string name="pref_accents_title">声调</string>
   <string name="pref_accents_e_all_installed">显示所有安装的语言的声调符号</string>
   <string name="pref_accents_e_selected">只显示选择的语言的声调符号</string>
-  <string name="pref_accents_e_all">显示所有声调符号</string>
   <string name="pref_accents_e_none">隐藏声调符号</string>
   <string name="pref_category_typing">输入</string>
   <string name="pref_swipe_dist_title">滑动触发距离</string>
