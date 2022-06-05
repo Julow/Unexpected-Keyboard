@@ -12,17 +12,19 @@ import java.util.Map;
 class KeyboardData
 {
   public final List<Row> rows;
-  /* Total width of the keyboard. Unit is abstract. */
+  /** Total width of the keyboard. */
   public final float keysWidth;
-  /* Total height of the keyboard. Unit is abstract. */
+  /** Total height of the keyboard. */
   public final float keysHeight;
+  /** Whether to add extra keys. */
+  public final boolean extra_keys;
 
   public KeyboardData mapKeys(MapKey f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(rows_, keysWidth);
+    return new KeyboardData(rows_, keysWidth, extra_keys);
   }
 
   /** Add keys from the given iterator into the keyboard. Extra keys are added
@@ -31,12 +33,14 @@ class KeyboardData
    * third row. */
   public KeyboardData addExtraKeys(Iterator<KeyValue> k)
   {
+    if (!extra_keys)
+      return this;
     ArrayList<Row> rows = new ArrayList<Row>(this.rows);
     addExtraKeys_to_row(rows, k, 1, 4);
     addExtraKeys_to_row(rows, k, 1, 3);
     addExtraKeys_to_row(rows, k, 2, 2);
     addExtraKeys_to_row(rows, k, 2, 1);
-    return new KeyboardData(rows, keysWidth);
+    return new KeyboardData(rows, keysWidth, extra_keys);
   }
 
   private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
@@ -81,13 +85,14 @@ class KeyboardData
     if (!expect_tag(parser, "keyboard"))
       throw new Exception("Empty layout file");
     boolean bottom_row = parser.getAttributeBooleanValue(null, "bottom_row", true);
+    boolean extra_keys = parser.getAttributeBooleanValue(null, "extra_keys", true);
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
         rows.add(Row.parse(parser));
     float kw = compute_max_width(rows);
     if (bottom_row)
       rows.add(_bottomRow.updateWidth(kw));
-    return new KeyboardData(rows, kw);
+    return new KeyboardData(rows, kw, extra_keys);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -105,7 +110,7 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw)
+  protected KeyboardData(List<Row> rows_, float kw, boolean xk)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -113,16 +118,17 @@ class KeyboardData
     rows = rows_;
     keysWidth = kw;
     keysHeight = kh;
+    extra_keys = xk;
   }
 
   public static class Row
   {
     public final List<Key> keys;
-    /* Height of the row, without 'shift'. Unit is abstract. */
+    /** Height of the row, without 'shift'. */
     public final float height;
-    /* Extra empty space on the top. */
+    /** Extra empty space on the top. */
     public final float shift;
-    /* Total width of the row. Unit is abstract. */
+    /** Total width of the row. */
     private final float keysWidth;
 
     protected Row(List<Key> keys_, float h, float s)
@@ -177,11 +183,11 @@ class KeyboardData
     public final KeyValue key3;
     public final KeyValue key4;
 
-    /* Key width in relative unit. */
+    /** Key width in relative unit. */
     public final float width;
-    /* Extra empty space on the left of the key. */
+    /** Extra empty space on the left of the key. */
     public final float shift;
-    /* Put keys 1 to 4 on the edges instead of the corners. */
+    /** Put keys 1 to 4 on the edges instead of the corners. */
     public final boolean edgekeys;
 
     protected Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s, boolean e)
@@ -244,7 +250,7 @@ class KeyboardData
       return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
     }
 
-    /*
+    /**
      * See Pointers.onTouchMove() for the represented direction.
      */
     public KeyValue getAtDirection(int direction)
