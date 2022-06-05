@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.os.Handler;
 import android.os.Message;
+import java.util.Arrays;
 import java.util.ArrayList;
 
 /**
@@ -22,21 +23,27 @@ public final class Pointers implements Handler.Callback
     _config = c;
   }
 
-  public int getFlags()
+  /** Return the list of modifiers currently activated. */
+  public Modifiers getModifiers()
   {
-    return getFlags(false);
+    return getModifiers(false);
   }
 
-  /* When [skip_latched] is true, don't take flags of latched keys into account. */
-  private int getFlags(boolean skip_latched)
+  /** When [skip_latched] is true, don't take flags of latched keys into account. */
+  private Modifiers getModifiers(boolean skip_latched)
   {
-    int flags = 0;
-    for (Pointer p : _ptrs)
+    int size = _ptrs.size();
+    int[] mods = new int[size];
+    for (int i = 0; i < size; i++)
     {
-      if (!(skip_latched && p.pointerId == -1 && (p.flags & KeyValue.FLAG_LOCKED) == 0))
-        flags |= p.flags;
+      Pointer p = _ptrs.get(i);
+      mods[i] =
+        ((skip_latched && p.pointerId == -1
+          && (p.flags & KeyValue.FLAG_LOCKED) == 0)
+         || p.value == null)
+        ? 0 : p.value.code;
     }
-    return flags;
+    return Modifiers.ofArray(mods);
   }
 
   public void clear()
@@ -90,7 +97,7 @@ public final class Pointers implements Handler.Callback
       else // Otherwise, unlatch
       {
         removePtr(latched);
-        _handler.onPointerUp(ptr.value, ptr.modifier_flags);
+        _handler.onPointerUp(ptr.value, ptr.modifiers);
       }
     }
     else if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
@@ -103,7 +110,7 @@ public final class Pointers implements Handler.Callback
     {
       clearLatched();
       removePtr(ptr);
-      _handler.onPointerUp(ptr.value, ptr.modifier_flags);
+      _handler.onPointerUp(ptr.value, ptr.modifiers);
     }
   }
 
@@ -133,9 +140,11 @@ public final class Pointers implements Handler.Callback
     // keys.
     if (isModulatedKeyPressed())
       return;
-    int mflags = getFlags(isOtherPointerDown());
-    KeyValue value = _handler.modifyKey(key.key0, mflags);
-    Pointer ptr = new Pointer(pointerId, key, value, x, y, mflags);
+    // Don't take latched modifiers into account if an other key is pressed.
+    // The other key already "own" the latched modifiers and will clear them.
+    Modifiers mods = getModifiers(isOtherPointerDown());
+    KeyValue value = _handler.modifyKey(key.key0, mods);
+    Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     if (value != null && (value.flags & KeyValue.FLAG_SPECIAL) == 0)
       startKeyRepeat(ptr);
@@ -153,14 +162,14 @@ public final class Pointers implements Handler.Callback
   private KeyValue getKeyAtDirection(Pointer ptr, int direction)
   {
     if (direction == 0)
-      return _handler.modifyKey(ptr.key.key0, ptr.modifier_flags);
+      return _handler.modifyKey(ptr.key.key0, ptr.modifiers);
     KeyValue k;
     for (int i = 0; i > -3; i = (~i>>31) - i)
     {
       int d = Math.floorMod(direction + i - 1, 8) + 1;
       // Don't make the difference between a key that doesn't exist and a key
       // that is removed by [_handler]. Triggers side effects.
-      k = _handler.modifyKey(ptr.key.getAtDirection(d), ptr.modifier_flags);
+      k = _handler.modifyKey(ptr.key.getAtDirection(d), ptr.modifiers);
       if (k != null)
         return k;
     }
@@ -292,7 +301,7 @@ public final class Pointers implements Handler.Callback
           nextInterval = (long)((float)nextInterval / modulatePreciseRepeat(ptr));
         }
         _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextInterval);
-        _handler.onPointerHold(ptr.value, ptr.modifier_flags);
+        _handler.onPointerHold(ptr.value, ptr.modifiers);
         return (true);
       }
     }
@@ -333,7 +342,7 @@ public final class Pointers implements Handler.Callback
     return Math.min(8.f, Math.max(0.1f, accel));
   }
 
-  private final class Pointer
+  private static final class Pointer
   {
     /** -1 when latched. */
     public int pointerId;
@@ -341,14 +350,14 @@ public final class Pointers implements Handler.Callback
     public final KeyboardData.Key key;
     /** Current direction. */
     public int selected_direction;
-    /** Selected value with [modifier_flags] applied. */
+    /** Selected value with [modifiers] applied. */
     public KeyValue value;
     public float downX;
     public float downY;
     /** Distance of the pointer to the initial press. */
     public float ptrDist;
     /** Modifier flags at the time the key was pressed. */
-    public int modifier_flags;
+    public Modifiers modifiers;
     /** Flags of the value. Latch, lock and locked flags are updated. */
     public int flags;
     /** Identify timeout messages. */
@@ -356,7 +365,7 @@ public final class Pointers implements Handler.Callback
     /** ptrDist at the first repeat, -1 otherwise. */
     public float repeatingPtrDist;
 
-    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, int mflags)
+    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m)
     {
       pointerId = p;
       key = k;
@@ -365,30 +374,75 @@ public final class Pointers implements Handler.Callback
       downX = x;
       downY = y;
       ptrDist = 0.f;
-      modifier_flags = mflags;
+      modifiers = m;
       flags = (v == null) ? 0 : v.flags;
       timeoutWhat = -1;
       repeatingPtrDist = -1.f;
     }
   }
 
+  /** Represent modifiers currently activated.
+      Sorted in the order they should be evaluated. */
+  public static final class Modifiers
+  {
+    private final int[] _mods;
+    private final int _size;
+
+    private Modifiers(int[] m, int s) { _mods = m; _size = s; }
+
+    public int get(int i) { return _mods[i]; }
+    public int size() { return _size; }
+
+    @Override
+    public int hashCode() { return Arrays.hashCode(_mods); }
+    @Override
+    public boolean equals(Object obj)
+    {
+      return Arrays.equals(_mods, ((Modifiers)obj)._mods);
+    }
+
+    public static final Modifiers EMPTY = new Modifiers(new int[0], 0);
+
+    protected static Modifiers ofArray(int[] mods)
+    {
+      int size = mods.length;
+      // Sort and remove duplicates and [EVENT_NONE]s.
+      if (size > 1)
+      {
+        Arrays.sort(mods);
+        int j = 0;
+        for (int i = 0; i < size; i++)
+        {
+          int m = mods[i];
+          if (m != 0 && (i + 1 >= size || m != mods[i + 1]))
+          {
+            mods[j] = m;
+            j++;
+          }
+        }
+        size = j;
+      }
+      return new Modifiers(mods, size);
+    }
+  }
+
   public interface IPointerEventHandler
   {
     /** Key can be modified or removed by returning [null]. */
-    public KeyValue modifyKey(KeyValue k, int flags);
+    public KeyValue modifyKey(KeyValue k, Modifiers flags);
 
-    /** A key is pressed. [getFlags()] is uptodate. Might be called after a
+    /** A key is pressed. [getModifiers()] is uptodate. Might be called after a
         press or a swipe to a different value. */
     public void onPointerDown(boolean isSwipe);
 
     /** Key is released. [k] is the key that was returned by
         [modifySelectedKey] or [modifySelectedKey]. */
-    public void onPointerUp(KeyValue k, int flags);
+    public void onPointerUp(KeyValue k, Modifiers flags);
 
     /** Flags changed because latched or locked keys or cancelled pointers. */
     public void onPointerFlagsChanged();
 
     /** Key is repeating. */
-    public void onPointerHold(KeyValue k, int flags);
+    public void onPointerHold(KeyValue k, Modifiers flags);
   }
 }

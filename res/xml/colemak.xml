@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard>
+  <row>
+    <key key0="q" key1="esc"                key2="loc accent_aigu"    key3="loc accent_tilde"   shift="0.5"/>
+    <key key0="w" key1="loc accent_grave"       key2=" ́"              key3="~"            />
+    <key key0="f" key1="`"                  key2="-"              key3="+" />
+    <key key0="p"                           key2="="              key3="%"/>
+    <key key0="g" key1="!"                  key2="/"              key3="\\"/>
+    <key key0="j" key1="loc accent_caron"       key2="loc accent_trema"            />
+    <key key0="l" key1="f11_placeholder"    key2="f12_placeholder"/>
+    <key key0="u" key1="loc accent_double_aigu" key2="loc accent_ring"    />
+    <key key0="y" key1="&quot;"             key2="'"/>
+
+  </row>
+  <row>
+    <key key0="a"                           key2="1" key4="tab"/>
+    <key key0="r" key1="\@"                 key2="2" />
+    <key key0="s" key1="\#"                 key2="3" key4="loc ß"/>
+    <key key0="t" key1="$"                  key2="4" key4="loc accent_ogonek" />
+    <key key0="d" key1="€"                  key2="5" key4="loc accent_dot_above"/>
+    <key key0="h" key1="&amp;"              key2="6" />
+    <key key0="n" key1="*"                  key2="7" />
+    <key key0="e" key1="loc accent_circonflexe" key2="8" key4="^"/>
+    <key key0="i" key1="_"                  key2="9" />
+    <key key0="o" key1="0" key3="loc accent_macron"/>
+
+  </row>
+  <row>
+    <key key0="shift" width="1.5" />
+    <key key0="z"         key1=","    key2="."/>
+    <key key0="x"         key1="&gt;" key2="&lt;"/>
+    <key key0="c"         key1="{"    key2="}" key3="loc accent_cedille"/>
+    <key key0="v"         key1="["    key2="]"/>
+    <key key0="b"         key1="("    key2=")"/>
+    <key key0="k"         key1=";"    key2=":"/>
+    <key key0="m"         key1="|"    key2="\?" />
+    <key key0="backspace" key1="delete" shift="0.25" width="1.25"/>
+
+  </row>
+</keyboard>

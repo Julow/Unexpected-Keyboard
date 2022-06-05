@@ -55,7 +55,7 @@ public class EmojiGridView extends GridView
     Config config = Config.globalConfig();
     Integer used = _lastUsed.get(_emojiArray[pos]);
     _lastUsed.put(_emojiArray[pos], (used == null) ? 1 : used.intValue() + 1);
-    config.handler.handleKeyUp(_emojiArray[pos], 0);
+    config.handler.handleKeyUp(_emojiArray[pos], Pointers.Modifiers.EMPTY);
     saveLastUsed(); // TODO: opti
   }
 

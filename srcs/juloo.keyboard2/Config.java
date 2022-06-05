@@ -36,7 +36,7 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
-  public int lockable_modifiers;
+  public Set<Integer> lockable_modifiers = new HashSet<Integer>();
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
@@ -127,15 +127,15 @@ final class Config
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
-    lockable_modifiers =
-      (prefs.getBoolean("lockable_shift", true) ? KeyValue.FLAG_SHIFT : 0)
-      | (prefs.getBoolean("lockable_ctrl", false) ? KeyValue.FLAG_CTRL : 0)
-      | (prefs.getBoolean("lockable_alt", false) ? KeyValue.FLAG_ALT : 0)
-      | (prefs.getBoolean("lockable_fn", false) ? KeyValue.FLAG_FN : 0)
-      | (prefs.getBoolean("lockable_meta", false) ? KeyValue.FLAG_META : 0)
-      | (prefs.getBoolean("lockable_sup", false) ? KeyValue.FLAG_ACCENT_SUPERSCRIPT : 0)
-      | (prefs.getBoolean("lockable_sub", false) ? KeyValue.FLAG_ACCENT_SUBSCRIPT : 0)
-      | (prefs.getBoolean("lockable_box", false) ? KeyValue.FLAG_ACCENT_BOX : 0);
+    lockable_modifiers.clear();
+    if (prefs.getBoolean("lockable_shift", true)) lockable_modifiers.add(KeyValue.MOD_SHIFT);
+    if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.MOD_CTRL);
+    if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.MOD_ALT);
+    if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.MOD_FN);
+    if (prefs.getBoolean("lockable_meta", false)) lockable_modifiers.add(KeyValue.MOD_META);
+    if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.MOD_SUPERSCRIPT);
+    if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.MOD_SUBSCRIPT);
+    if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.MOD_BOX);
     characterSize = prefs.getFloat("character_size", characterSize);
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
@@ -163,7 +163,7 @@ final class Config
         boolean is_extra_key = extra_keys.contains(key.name);
         if (is_extra_key)
           extra_keys.remove(key.name);
-        switch (key.eventCode)
+        switch (key.code)
         {
           case KeyValue.EVENT_CHANGE_METHOD:
             return shouldOfferSwitchingToNextInputMethod ? key : null;
@@ -179,7 +179,8 @@ final class Config
             {
               if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
                 return null;
-              if ((key.flags & lockable_modifiers) != 0)
+              if ((key.flags & KeyValue.FLAG_MODIFIER) != 0
+                  && lockable_modifiers.contains(key.code))
                 return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
             }
             return key;
@@ -234,6 +235,7 @@ final class Config
     {
       case "azerty": return R.xml.azerty;
       case "bgph1": return R.xml.local_bgph1;
+      case "colemak": return R.xml.colemak;
       case "dvorak": return R.xml.dvorak;
       case "neo2": return R.xml.neo2;
       case "qwerty_es": return R.xml.qwerty_es;
@@ -274,6 +276,6 @@ final class Config
 
   public static interface IKeyEventHandler
   {
-    public void handleKeyUp(KeyValue value, int flags);
+    public void handleKeyUp(KeyValue value, Pointers.Modifiers flags);
   }
 }

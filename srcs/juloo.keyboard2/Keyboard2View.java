@@ -24,7 +24,7 @@ public class Keyboard2View extends View
 
   private Pointers _pointers;
 
-  private int _flags = 0;
+  private Pointers.Modifiers _mods;
 
   private Vibrator _vibratorService;
   private long _lastVibration = 0;
@@ -90,15 +90,15 @@ public class Keyboard2View extends View
 
   public void reset()
   {
-    _flags = 0;
+    _mods = Pointers.Modifiers.EMPTY;
     _pointers.clear();
     requestLayout();
     invalidate();
   }
 
-  public KeyValue modifyKey(KeyValue k, int flags)
+  public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
   {
-    return KeyModifier.handleFlags(k, flags);
+    return KeyModifier.modify(k, mods);
   }
 
   public void onPointerDown(boolean isSwipe)
@@ -107,15 +107,15 @@ public class Keyboard2View extends View
     vibrate();
   }
 
-  public void onPointerUp(KeyValue k, int flags)
+  public void onPointerUp(KeyValue k, Pointers.Modifiers mods)
   {
-    _config.handler.handleKeyUp(k, flags);
+    _config.handler.handleKeyUp(k, mods);
     invalidate();
   }
 
-  public void onPointerHold(KeyValue k, int flags)
+  public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
   {
-    _config.handler.handleKeyUp(k, flags);
+    _config.handler.handleKeyUp(k, mods);
   }
 
   public void onPointerFlagsChanged()
@@ -125,7 +125,7 @@ public class Keyboard2View extends View
 
   private void updateFlags()
   {
-    _flags = _pointers.getFlags();
+    _mods = _pointers.getModifiers();
   }
 
   @Override
@@ -284,7 +284,7 @@ public class Keyboard2View extends View
 
   private void drawLabel(Canvas canvas, KeyValue k, float x, float y, float keyH, boolean isKeyDown)
   {
-    k = KeyModifier.handleFlags(k, _flags);
+    k = KeyModifier.modify(k, _mods);
     if (k == null)
       return;
     float textSize = scaleTextSize(k, _config.labelTextSize, keyH);
@@ -296,7 +296,7 @@ public class Keyboard2View extends View
 
   private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
   {
-    k = KeyModifier.handleFlags(k, _flags);
+    k = KeyModifier.modify(k, _mods);
     if (k == null)
       return;
     float textSize = scaleTextSize(k, _config.sublabelTextSize, keyH);

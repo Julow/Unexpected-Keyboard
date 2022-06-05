@@ -11,11 +11,11 @@ class KeyEventHandler implements Config.IKeyEventHandler
     _recv = recv;
   }
 
-  public void handleKeyUp(KeyValue key, int flags)
+  public void handleKeyUp(KeyValue key, Pointers.Modifiers mods)
   {
-    if (key == null || (key.flags & KeyValue.FLAG_NOCHAR) != 0)
+    if (key == null || (key.flags & KeyValue.FLAG_MODIFIER) != 0)
       return;
-    switch (key.eventCode)
+    switch (key.code)
     {
     case KeyValue.EVENT_CONFIG: _recv.showKeyboardConfig(); return;
     case KeyValue.EVENT_SWITCH_TEXT: _recv.switchMain(); return;
@@ -26,12 +26,10 @@ class KeyEventHandler implements Config.IKeyEventHandler
     case KeyValue.EVENT_ACTION: _recv.performAction(); return;
     case KeyValue.EVENT_SWITCH_PROGRAMMING: _recv.switchProgramming(); return;
     default:
-      if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT | KeyValue.FLAG_META)) != 0)
-        handleKeyUpWithModifier(key, flags);
+      if (shouldSendEvents(key, mods))
+        handleKeyUpWithModifier(key, mods);
       else if (key.char_ != KeyValue.CHAR_NONE)
         _recv.commitChar(key.char_);
-      else if (key.eventCode != KeyValue.EVENT_NONE)
-        handleKeyUpWithModifier(key, flags);
       else
         _recv.commitText(key.symbol);
     }
@@ -57,32 +55,57 @@ class KeyEventHandler implements Config.IKeyEventHandler
     return updatedMetaState;
   }
 
-  /* Send key events corresponding to pressed modifier keys. */
-  private int sendMetaKeys(int flags, int metaState, boolean down)
+  private int sendMetaKeyForModifier(int mod, int metaState, boolean down)
   {
-		if ((flags & KeyValue.FLAG_CTRL) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, metaState, down);
-		if ((flags & KeyValue.FLAG_ALT) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, metaState, down);
-		if ((flags & KeyValue.FLAG_SHIFT) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, metaState, down);
-    if ((flags & KeyValue.FLAG_META) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, metaState, down);
-    return metaState;
+    switch (mod)
+    {
+      case KeyValue.MOD_CTRL:
+        return sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, metaState, down);
+      case KeyValue.MOD_ALT:
+        return sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, metaState, down);
+      case KeyValue.MOD_SHIFT:
+        return sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, metaState, down);
+      case KeyValue.MOD_META:
+        return sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, metaState, down);
+      default: return metaState;
+    }
   }
 
   /*
    * Don't set KeyEvent.FLAG_SOFT_KEYBOARD.
    */
-	private void handleKeyUpWithModifier(KeyValue key, int flags)
+	private void handleKeyUpWithModifier(KeyValue key, Pointers.Modifiers mods)
 	{
-		if (key.eventCode == KeyValue.EVENT_NONE)
+		if (key.code == KeyValue.EVENT_NONE)
 			return ;
-    int metaState = sendMetaKeys(flags, 0, true);
-		_recv.sendKeyEvent(KeyEvent.ACTION_DOWN, key.eventCode, metaState);
-    _recv.sendKeyEvent(KeyEvent.ACTION_UP, key.eventCode, metaState);
-    sendMetaKeys(flags, metaState, false);
+    int metaState = 0;
+    for (int i = 0; i < mods.size(); i++)
+      metaState = sendMetaKeyForModifier(mods.get(i), metaState, true);
+		_recv.sendKeyEvent(KeyEvent.ACTION_DOWN, key.code, metaState);
+    _recv.sendKeyEvent(KeyEvent.ACTION_UP, key.code, metaState);
+    for (int i = mods.size() - 1; i >= 0; i--)
+      metaState = sendMetaKeyForModifier(mods.get(i), metaState, false);
 	}
+
+  /** Whether to send up and down events (true) or commit the text (false). */
+  private boolean shouldSendEvents(KeyValue key, Pointers.Modifiers mods)
+  {
+    // Check for modifiers
+    for (int i = 0; i < mods.size(); i++)
+    {
+      switch (mods.get(i))
+      {
+        case KeyValue.MOD_CTRL:
+        case KeyValue.MOD_ALT:
+        case KeyValue.MOD_META: return true;
+        default: break;
+      }
+    }
+    // Key has no char but has a key event
+    if (key.char_ == KeyValue.CHAR_NONE && key.code >= 0)
+      return true;
+    return false;
+  }
 
   public static interface IReceiver
   {
