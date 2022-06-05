@@ -19,10 +19,6 @@ class KeyEventHandler implements Config.IKeyEventHandler
     switch (key.getKind())
     {
       case Char:
-        // Send an event if some modifiers are active.
-        event = key.getCharEvent();
-        if (shouldSendEvents(mods) && event != KeyValue.EVENT_NONE)
-          handleKeyUpWithModifier(event, mods);
         _recv.commitChar(key.getChar());
         break;
       case String:
@@ -101,23 +97,6 @@ class KeyEventHandler implements Config.IKeyEventHandler
     for (int i = mods.size() - 1; i >= 0; i--)
       metaState = sendMetaKeyForModifier(mods.get(i), metaState, false);
 	}
-
-  /** Whether to send up and down events (true) or commit the text (false). */
-  private boolean shouldSendEvents(Pointers.Modifiers mods)
-  {
-    // Check for modifiers
-    for (int i = 0; i < mods.size(); i++)
-    {
-      switch (mods.get(i))
-      {
-        case KeyValue.MOD_CTRL:
-        case KeyValue.MOD_ALT:
-        case KeyValue.MOD_META: return true;
-        default: break;
-      }
-    }
-    return false;
-  }
 
   public static interface IReceiver
   {

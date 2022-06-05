@@ -93,10 +93,10 @@ class KeyValue
   {
     if ((_flags & FLAG_MODIFIER) != 0)
       return Kind.Modifier;
-    if (_char != CHAR_NONE)
-      return Kind.Char;
     if (_code != EVENT_NONE)
       return Kind.Event;
+    if (_char != CHAR_NONE)
+      return Kind.Char;
     return Kind.String;
   }
 
@@ -162,6 +162,11 @@ class KeyValue
     return new KeyValue(n, s, _char, _code, _flags);
   }
 
+  public KeyValue withEvent(int event)
+  {
+    return new KeyValue(name, _symbol, _char, event, (_flags & ~FLAG_MODIFIER));
+  }
+
   public KeyValue withFlags(int f)
   {
     return new KeyValue(name, _symbol, _char, _code, f);
@@ -208,10 +213,9 @@ class KeyValue
     keys.put(name, new KeyValue(name, symbol, c, event, flags));
   }
 
-  private static void addCharKey(char c, int event)
+  private static void addCharKey(String name, String symbol, char c, int flags)
   {
-    String name = String.valueOf(c);
-    addKey(name, name, c, event, 0);
+    addKey(name, symbol, c, EVENT_NONE, flags);
   }
 
   private static void addModifierKey(String name, String symbol, int code, int extra_flags)
@@ -260,60 +264,6 @@ class KeyValue
     addModifierKey("fn", "Fn", MOD_FN, FLAG_SMALLER_FONT);
     addModifierKey("meta", "Meta", MOD_META, FLAG_SMALLER_FONT);
 
-    addCharKey('a', KeyEvent.KEYCODE_A);
-    addCharKey('b', KeyEvent.KEYCODE_B);
-    addCharKey('c', KeyEvent.KEYCODE_C);
-    addCharKey('d', KeyEvent.KEYCODE_D);
-    addCharKey('e', KeyEvent.KEYCODE_E);
-    addCharKey('f', KeyEvent.KEYCODE_F);
-    addCharKey('g', KeyEvent.KEYCODE_G);
-    addCharKey('h', KeyEvent.KEYCODE_H);
-    addCharKey('i', KeyEvent.KEYCODE_I);
-    addCharKey('j', KeyEvent.KEYCODE_J);
-    addCharKey('k', KeyEvent.KEYCODE_K);
-    addCharKey('l', KeyEvent.KEYCODE_L);
-    addCharKey('m', KeyEvent.KEYCODE_M);
-    addCharKey('n', KeyEvent.KEYCODE_N);
-    addCharKey('o', KeyEvent.KEYCODE_O);
-    addCharKey('p', KeyEvent.KEYCODE_P);
-    addCharKey('q', KeyEvent.KEYCODE_Q);
-    addCharKey('r', KeyEvent.KEYCODE_R);
-    addCharKey('s', KeyEvent.KEYCODE_S);
-    addCharKey('t', KeyEvent.KEYCODE_T);
-    addCharKey('u', KeyEvent.KEYCODE_U);
-    addCharKey('v', KeyEvent.KEYCODE_V);
-    addCharKey('w', KeyEvent.KEYCODE_W);
-    addCharKey('x', KeyEvent.KEYCODE_X);
-    addCharKey('y', KeyEvent.KEYCODE_Y);
-    addCharKey('z', KeyEvent.KEYCODE_Z);
-    addCharKey('0', KeyEvent.KEYCODE_0);
-    addCharKey('1', KeyEvent.KEYCODE_1);
-    addCharKey('2', KeyEvent.KEYCODE_2);
-    addCharKey('3', KeyEvent.KEYCODE_3);
-    addCharKey('4', KeyEvent.KEYCODE_4);
-    addCharKey('5', KeyEvent.KEYCODE_5);
-    addCharKey('6', KeyEvent.KEYCODE_6);
-    addCharKey('7', KeyEvent.KEYCODE_7);
-    addCharKey('8', KeyEvent.KEYCODE_8);
-    addCharKey('9', KeyEvent.KEYCODE_9);
-    addCharKey('`', KeyEvent.KEYCODE_GRAVE);
-    addCharKey('-', KeyEvent.KEYCODE_MINUS);
-    addCharKey('=', KeyEvent.KEYCODE_EQUALS);
-    addCharKey('[', KeyEvent.KEYCODE_LEFT_BRACKET);
-    addCharKey(']', KeyEvent.KEYCODE_RIGHT_BRACKET);
-    addCharKey('\\', KeyEvent.KEYCODE_BACKSLASH);
-    addCharKey(';', KeyEvent.KEYCODE_SEMICOLON);
-    addCharKey('\'', KeyEvent.KEYCODE_APOSTROPHE);
-    addCharKey('/', KeyEvent.KEYCODE_SLASH);
-    addCharKey('@', KeyEvent.KEYCODE_AT);
-    addCharKey('+', KeyEvent.KEYCODE_PLUS);
-    addCharKey(',', KeyEvent.KEYCODE_COMMA);
-    addCharKey('.', KeyEvent.KEYCODE_PERIOD);
-    addCharKey('*', KeyEvent.KEYCODE_STAR);
-    addCharKey('#', KeyEvent.KEYCODE_POUND);
-    addCharKey('(', KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
-    addCharKey(')', KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
-
     addSpecialKey("config", "\u0004", EVENT_CONFIG, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addSpecialKey("switch_text", "ABC", EVENT_SWITCH_TEXT, FLAG_SMALLER_FONT);
     addSpecialKey("switch_numeric", "123+", EVENT_SWITCH_NUMERIC, FLAG_SMALLER_FONT);
@@ -350,8 +300,8 @@ class KeyValue
     addEventKey("f12", "F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
     addEventKey("tab", "\u000F", KeyEvent.KEYCODE_TAB, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
 
-    addKey("\\t", "\\t", '\t', EVENT_NONE, 0); // Send the tab character
-    addKey("space", "\r", ' ', KeyEvent.KEYCODE_SPACE, FLAG_KEY_FONT);
-    addKey("nbsp", "\u237d", '\u00a0', EVENT_NONE, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addCharKey("\\t", "\\t", '\t', 0); // Send the tab character
+    addCharKey("space", "\r", ' ', FLAG_KEY_FONT);
+    addCharKey("nbsp", "\u237d", '\u00a0', FLAG_KEY_FONT | FLAG_SMALLER_FONT);
   }
 }
