@@ -4,7 +4,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
-class KeyValue
+final class KeyValue
 {
   public static enum Event
   {

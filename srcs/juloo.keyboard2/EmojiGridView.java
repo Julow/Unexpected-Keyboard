@@ -55,7 +55,7 @@ public class EmojiGridView extends GridView
     Config config = Config.globalConfig();
     Integer used = _lastUsed.get(_emojiArray[pos]);
     _lastUsed.put(_emojiArray[pos], (used == null) ? 1 : used.intValue() + 1);
-    config.handler.handleKeyUp(_emojiArray[pos], Pointers.Modifiers.EMPTY);
+    config.handler.handleKeyUp(_emojiArray[pos].kv(), Pointers.Modifiers.EMPTY);
     saveLastUsed(); // TODO: opti
   }
 
@@ -88,7 +88,7 @@ public class EmojiGridView extends GridView
     HashSet<String> set = new HashSet<String>();
 
     for (Emoji emoji : _lastUsed.keySet())
-      set.add(String.valueOf(_lastUsed.get(emoji)) + "-" + emoji.name);
+      set.add(String.valueOf(_lastUsed.get(emoji)) + "-" + emoji.name());
     edit.putStringSet(LAST_USE_PREF, set);
     edit.apply();
   }
@@ -126,7 +126,7 @@ public class EmojiGridView extends GridView
 
     public void setEmoji(Emoji emoji)
     {
-      setText(emoji.getString());
+      setText(emoji.kv().getString());
     }
   }
 

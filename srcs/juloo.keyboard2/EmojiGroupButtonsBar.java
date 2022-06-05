@@ -15,7 +15,7 @@ public class EmojiGroupButtonsBar extends LinearLayout
     for (int i = 0; i < Emoji.num_groups; i++)
     {
       Emoji first = Emoji.getEmojisByGroup(i)[0];
-      add_group(i, first.getString());
+      add_group(i, first.kv().getString());
     }
   }
 
