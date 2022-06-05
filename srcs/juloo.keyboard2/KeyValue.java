@@ -47,7 +47,7 @@ class KeyValue
   public static final int MOD_SLASH = -217;
   public static final int MOD_ARROW_RIGHT = -218;
 
-  /** Special value for the [char_] field. */
+  /** Special value for the [_char] field. */
   public static final char CHAR_NONE = '\0';
 
   // Behavior flags
@@ -69,8 +69,8 @@ class KeyValue
   public static final int FLAG_LOCALIZED = (1 << 8);
 
   public final String name;
-  public final String symbol;
-  public final char char_;
+  private final String _symbol;
+  private final char _char;
 
   /** Describe what the key does when it isn't a simple character.
       Can be one of:
@@ -81,8 +81,70 @@ class KeyValue
       A key can have both a character and a key event associated, the key event
       is used when certain modifiers are active, the character is used
       otherwise. See [KeyEventHandler]. */
-  public final int code;
-  public final int flags;
+  private final int _code;
+  private final int _flags;
+
+  public static enum Kind
+  {
+    Char, String, Event, Modifier
+  }
+
+  public Kind getKind()
+  {
+    if ((_flags & FLAG_MODIFIER) != 0)
+      return Kind.Modifier;
+    if (_char != CHAR_NONE)
+      return Kind.Char;
+    if (_code != EVENT_NONE)
+      return Kind.Event;
+    return Kind.String;
+  }
+
+  public int getFlags()
+  {
+    return _flags;
+  }
+
+  public boolean hasFlags(int has)
+  {
+    return ((_flags & has) != 0);
+  }
+
+  /** The string to render on the keyboard.
+      When [getKind() == Kind.String], also the string to send. */
+  public String getString()
+  {
+    return _symbol;
+  }
+
+  /** The char to be sent when the key is pressed.
+      Defined only when [getKind() == Kind.Char]. */
+  public char getChar()
+  {
+    return _char;
+  }
+
+  /** An Android event or one of the [EVENT_*] constants, including
+      [EVENT_NONE].
+      Defined only when [getKind() == Kind.Char]. */
+  public int getCharEvent()
+  {
+    return _code;
+  }
+
+  /** An Android event or one of the [EVENT_*] constants, except [EVENT_NONE].
+      Defined only when [getKind() == Kind.Event]. */
+  public int getEvent()
+  {
+    return _code;
+  }
+
+  /** Modifier activated by this key.
+      Defined only when [getKind() == Kind.Modifier]. */
+  public int getModifier()
+  {
+    return _code;
+  }
 
   /* Update the char and the symbol. */
   public KeyValue withCharAndSymbol(char c)
@@ -92,17 +154,17 @@ class KeyValue
 
   public KeyValue withCharAndSymbol(String s, char c)
   {
-    return new KeyValue(name, s, c, code, flags);
+    return new KeyValue(name, s, c, _code, _flags);
   }
 
   public KeyValue withNameAndSymbol(String n, String s)
   {
-    return new KeyValue(n, s, char_, code, flags);
+    return new KeyValue(n, s, _char, _code, _flags);
   }
 
   public KeyValue withFlags(int f)
   {
-    return new KeyValue(name, symbol, char_, code, f);
+    return new KeyValue(name, _symbol, _char, _code, f);
   }
 
   private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
@@ -110,10 +172,10 @@ class KeyValue
   public KeyValue(String n, String s, char c, int e, int f)
   {
     name = n;
-    symbol = s;
-    char_ = c;
-    code = e;
-    flags = f;
+    _symbol = s;
+    _char = c;
+    _code = e;
+    _flags = f;
   }
 
   private static String stripPrefix(String s, String prefix)
@@ -135,7 +197,7 @@ class KeyValue
     if (localized != null)
     {
       kv = getKeyByName(localized);
-      return kv.withFlags(kv.flags | FLAG_LOCALIZED);
+      return kv.withFlags(kv._flags | FLAG_LOCALIZED);
     }
     char c = (name.length() == 1) ? name.charAt(0) : CHAR_NONE;
     return new KeyValue(name, name, c, EVENT_NONE, 0);

@@ -126,7 +126,7 @@ public class EmojiGridView extends GridView
 
     public void setEmoji(Emoji emoji)
     {
-      setText(emoji.symbol);
+      setText(emoji.getString());
     }
   }
 

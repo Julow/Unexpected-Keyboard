@@ -163,28 +163,31 @@ final class Config
         boolean is_extra_key = extra_keys.contains(key.name);
         if (is_extra_key)
           extra_keys.remove(key.name);
-        switch (key.code)
+        int flags = key.getFlags();
+        if ((flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
+          return null;
+        switch (key.getKind())
         {
-          case KeyValue.EVENT_CHANGE_METHOD:
-            return shouldOfferSwitchingToNextInputMethod ? key : null;
-          case KeyEvent.KEYCODE_ENTER:
-            return (swapEnterActionKey && action_key != null) ? action_key : key;
-          case KeyValue.EVENT_ACTION:
-            return (swapEnterActionKey && action_key != null) ?
-              KeyValue.getKeyByName("enter") : action_key;
-          case KeyValue.EVENT_SWITCH_PROGRAMMING:
-            return shouldOfferSwitchingToProgramming ? key : null;
-          default:
-            if (key.flags != 0)
+          case Event:
+            switch (key.getEvent())
             {
-              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
-                return null;
-              if ((key.flags & KeyValue.FLAG_MODIFIER) != 0
-                  && lockable_modifiers.contains(key.code))
-                return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
+              case KeyValue.EVENT_CHANGE_METHOD:
+                return shouldOfferSwitchingToNextInputMethod ? key : null;
+              case KeyEvent.KEYCODE_ENTER:
+                return (swapEnterActionKey && action_key != null) ? action_key : key;
+              case KeyValue.EVENT_ACTION:
+                return (swapEnterActionKey && action_key != null) ?
+                  KeyValue.getKeyByName("enter") : action_key;
+              case KeyValue.EVENT_SWITCH_PROGRAMMING:
+                return shouldOfferSwitchingToProgramming ? key : null;
             }
-            return key;
+            break;
+          case Modifier:
+            if (lockable_modifiers.contains(key.getModifier()))
+              return key.withFlags(flags | KeyValue.FLAG_LOCK);
+            break;
         }
+        return key;
       }
     });
     if (extra_keys.size() > 0)

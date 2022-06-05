@@ -298,7 +298,9 @@ public class Keyboard2 extends InputMethodService
         getLayout(_config.programming_layout).mapKeys(new KeyboardData.MapKeyValues() {
           public KeyValue apply(KeyValue key)
           {
-            if (key != null && key.code == KeyValue.EVENT_SWITCH_PROGRAMMING)
+            if (key != null
+                && key.getKind() == KeyValue.Kind.Event
+                && key.getEvent() == KeyValue.EVENT_SWITCH_PROGRAMMING)
               return KeyValue.getKeyByName("switch_text");
             return key;
           }

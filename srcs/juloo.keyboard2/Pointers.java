@@ -40,8 +40,9 @@ public final class Pointers implements Handler.Callback
       mods[i] =
         ((skip_latched && p.pointerId == -1
           && (p.flags & KeyValue.FLAG_LOCKED) == 0)
-         || p.value == null)
-        ? 0 : p.value.code;
+         || p.value == null
+         || p.value.getKind() != KeyValue.Kind.Modifier)
+        ? 0 : p.value.getModifier();
     }
     return Modifiers.ofArray(mods);
   }
@@ -146,7 +147,7 @@ public final class Pointers implements Handler.Callback
     KeyValue value = _handler.modifyKey(key.key0, mods);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
-    if (value != null && (value.flags & KeyValue.FLAG_SPECIAL) == 0)
+    if (value != null && !value.hasFlags(KeyValue.FLAG_SPECIAL))
       startKeyRepeat(ptr);
     _handler.onPointerDown(false);
   }
@@ -218,12 +219,12 @@ public final class Pointers implements Handler.Callback
       {
         int old_flags = ptr.flags;
         ptr.value = newValue;
-        ptr.flags = newValue.flags;
+        ptr.flags = newValue.getFlags();
         // Keep the keyrepeat going between modulated keys.
-        if ((old_flags & newValue.flags & KeyValue.FLAG_PRECISE_REPEAT) == 0)
+        if ((old_flags & ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) == 0)
         {
           stopKeyRepeat(ptr);
-          if ((newValue.flags & KeyValue.FLAG_SPECIAL) == 0)
+          if ((ptr.flags & KeyValue.FLAG_SPECIAL) == 0)
             startKeyRepeat(ptr);
         }
         _handler.onPointerDown(true);
@@ -375,7 +376,7 @@ public final class Pointers implements Handler.Callback
       downY = y;
       ptrDist = 0.f;
       modifiers = m;
-      flags = (v == null) ? 0 : v.flags;
+      flags = (v == null) ? 0 : v.getFlags();
       timeoutWhat = -1;
       repeatingPtrDist = -1.f;
     }

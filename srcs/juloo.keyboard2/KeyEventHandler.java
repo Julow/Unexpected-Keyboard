@@ -13,25 +13,40 @@ class KeyEventHandler implements Config.IKeyEventHandler
 
   public void handleKeyUp(KeyValue key, Pointers.Modifiers mods)
   {
-    if (key == null || (key.flags & KeyValue.FLAG_MODIFIER) != 0)
+    if (key == null)
       return;
-    switch (key.code)
+    int event;
+    switch (key.getKind())
     {
-    case KeyValue.EVENT_CONFIG: _recv.showKeyboardConfig(); return;
-    case KeyValue.EVENT_SWITCH_TEXT: _recv.switchMain(); return;
-    case KeyValue.EVENT_SWITCH_NUMERIC: _recv.switchNumeric(); return;
-    case KeyValue.EVENT_SWITCH_EMOJI: _recv.setPane_emoji(); return;
-    case KeyValue.EVENT_SWITCH_BACK_EMOJI: _recv.setPane_normal(); return;
-    case KeyValue.EVENT_CHANGE_METHOD: _recv.switchToNextInputMethod(); return;
-    case KeyValue.EVENT_ACTION: _recv.performAction(); return;
-    case KeyValue.EVENT_SWITCH_PROGRAMMING: _recv.switchProgramming(); return;
-    default:
-      if (shouldSendEvents(key, mods))
-        handleKeyUpWithModifier(key, mods);
-      else if (key.char_ != KeyValue.CHAR_NONE)
-        _recv.commitChar(key.char_);
-      else
-        _recv.commitText(key.symbol);
+      case Char:
+        // Send an event if some modifiers are active.
+        event = key.getCharEvent();
+        if (shouldSendEvents(mods) && event != KeyValue.EVENT_NONE)
+          handleKeyUpWithModifier(event, mods);
+        _recv.commitChar(key.getChar());
+        break;
+      case String:
+        _recv.commitText(key.getString());
+        break;
+      case Event:
+        event = key.getEvent();
+        switch (event)
+        {
+          case KeyValue.EVENT_CONFIG: _recv.showKeyboardConfig(); break;
+          case KeyValue.EVENT_SWITCH_TEXT: _recv.switchMain(); break;
+          case KeyValue.EVENT_SWITCH_NUMERIC: _recv.switchNumeric(); break;
+          case KeyValue.EVENT_SWITCH_EMOJI: _recv.setPane_emoji(); break;
+          case KeyValue.EVENT_SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
+          case KeyValue.EVENT_CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
+          case KeyValue.EVENT_ACTION: _recv.performAction(); break;
+          case KeyValue.EVENT_SWITCH_PROGRAMMING: _recv.switchProgramming(); break;
+          default:
+            handleKeyUpWithModifier(event, mods);
+            break;
+        }
+        break;
+      case Modifier:
+        break;
     }
   }
 
@@ -74,21 +89,21 @@ class KeyEventHandler implements Config.IKeyEventHandler
   /*
    * Don't set KeyEvent.FLAG_SOFT_KEYBOARD.
    */
-	private void handleKeyUpWithModifier(KeyValue key, Pointers.Modifiers mods)
+	private void handleKeyUpWithModifier(int keyCode, Pointers.Modifiers mods)
 	{
-		if (key.code == KeyValue.EVENT_NONE)
+		if (keyCode == KeyValue.EVENT_NONE)
 			return ;
     int metaState = 0;
     for (int i = 0; i < mods.size(); i++)
       metaState = sendMetaKeyForModifier(mods.get(i), metaState, true);
-		_recv.sendKeyEvent(KeyEvent.ACTION_DOWN, key.code, metaState);
-    _recv.sendKeyEvent(KeyEvent.ACTION_UP, key.code, metaState);
+		_recv.sendKeyEvent(KeyEvent.ACTION_DOWN, keyCode, metaState);
+    _recv.sendKeyEvent(KeyEvent.ACTION_UP, keyCode, metaState);
     for (int i = mods.size() - 1; i >= 0; i--)
       metaState = sendMetaKeyForModifier(mods.get(i), metaState, false);
 	}
 
   /** Whether to send up and down events (true) or commit the text (false). */
-  private boolean shouldSendEvents(KeyValue key, Pointers.Modifiers mods)
+  private boolean shouldSendEvents(Pointers.Modifiers mods)
   {
     // Check for modifiers
     for (int i = 0; i < mods.size(); i++)
@@ -101,9 +116,6 @@ class KeyEventHandler implements Config.IKeyEventHandler
         default: break;
       }
     }
-    // Key has no char but has a key event
-    if (key.char_ == KeyValue.CHAR_NONE && key.code >= 0)
-      return true;
     return false;
   }
 

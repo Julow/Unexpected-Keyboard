@@ -268,7 +268,7 @@ public class Keyboard2View extends View
 
   private int labelColor(KeyValue k, boolean isKeyDown, int defaultColor)
   {
-    if (isKeyDown && (k.flags & KeyValue.FLAG_LATCH) != 0)
+    if (isKeyDown && k.hasFlags(KeyValue.FLAG_LATCH))
     {
       int flags = _pointers.getKeyFlags(k);
       if (flags != -1)
@@ -288,10 +288,10 @@ public class Keyboard2View extends View
     if (k == null)
       return;
     float textSize = scaleTextSize(k, _config.labelTextSize, keyH);
-    Paint p = _theme.labelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0));
+    Paint p = _theme.labelPaint(k.hasFlags(KeyValue.FLAG_KEY_FONT));
     p.setColor(labelColor(k, isKeyDown, _theme.labelColor));
     p.setTextSize(textSize);
-    canvas.drawText(k.symbol, x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
+    canvas.drawText(k.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
   private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
@@ -300,7 +300,7 @@ public class Keyboard2View extends View
     if (k == null)
       return;
     float textSize = scaleTextSize(k, _config.sublabelTextSize, keyH);
-    Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), a);
+    Paint p = _theme.subLabelPaint(k.hasFlags(KeyValue.FLAG_KEY_FONT), a);
     p.setColor(labelColor(k, isKeyDown, _theme.subLabelColor));
     p.setTextSize(textSize);
     float subPadding = _config.keyPadding;
@@ -312,12 +312,12 @@ public class Keyboard2View extends View
       x += keyW / 2f;
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
-    canvas.drawText(k.symbol, x, y, p);
+    canvas.drawText(k.getString(), x, y, p);
   }
 
   private float scaleTextSize(KeyValue k, float rel_size, float keyH)
   {
-    float smaller_font = ((k.flags & KeyValue.FLAG_SMALLER_FONT) == 0) ? 1.f : 0.75f;
+    float smaller_font = k.hasFlags(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
     return keyH * rel_size * smaller_font * _config.characterSize;
   }
 }
