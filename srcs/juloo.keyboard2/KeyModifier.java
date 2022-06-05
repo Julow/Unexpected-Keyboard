@@ -62,6 +62,8 @@ class KeyModifier
         return maybe_modify_char(k, map_char_arrows(k.char_));
       case KeyValue.MOD_BOX:
         return maybe_modify_char(k, map_char_box(k.char_));
+      case KeyValue.MOD_SLASH:
+        return maybe_modify_char(k, map_char_slash(k.char_));
       default: return k;
     }
   }
@@ -326,6 +328,22 @@ class KeyModifier
       case '9': return '┐';
       case '0': return '─';
       case '.': return '│';
+      default: return c;
+    }
+  }
+
+  private static char map_char_slash(char c)
+  {
+    switch (c)
+    {
+      case 'a': return 'ⱥ';
+      case 'c': return 'ȼ';
+      case 'e': return 'ɇ';
+      case 'g': return 'ꞡ';
+      case 'l': return 'ł';
+      case 'n': return 'ꞥ';
+      case 'o': return 'ø';
+      case ' ': return '/';
       default: return c;
     }
   }

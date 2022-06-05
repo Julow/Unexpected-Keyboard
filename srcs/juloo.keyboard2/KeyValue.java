@@ -44,6 +44,7 @@ class KeyValue
   public static final int MOD_ARROWS = -214;
   public static final int MOD_BOX = -215;
   public static final int MOD_OGONEK = -216;
+  public static final int MOD_SLASH = -217;
 
   /** Special value for the [char_] field. */
   public static final char CHAR_NONE = '\0';
@@ -185,6 +186,8 @@ class KeyValue
     addModifierKey("accent_ogonek", "\u0059", MOD_OGONEK, FLAG_KEY_FONT);
     addModifierKey("accent_dot_above", "\u005a", MOD_DOT_ABOVE, FLAG_KEY_FONT);
     addModifierKey("accent_double_aigu", "\u005b", MOD_DOUBLE_AIGU, FLAG_KEY_FONT);
+    addModifierKey("accent_slash", "\134", // Can't write u005c
+        MOD_SLASH, FLAG_KEY_FONT);
     addModifierKey("superscript", "Sup", MOD_SUPERSCRIPT, FLAG_SMALLER_FONT);
     addModifierKey("subscript", "Sub", MOD_SUBSCRIPT, FLAG_SMALLER_FONT);
     addModifierKey("ordinal", "Ord", MOD_ORDINAL, FLAG_SMALLER_FONT);
