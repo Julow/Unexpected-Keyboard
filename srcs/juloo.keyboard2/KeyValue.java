@@ -47,40 +47,46 @@ class KeyValue
     ARROW_RIGHT
   }
 
-  // Behavior flags
-  public static final int FLAG_LATCH = 1;
-  public static final int FLAG_LOCK = (1 << 1);
-  // Special keys are not repeated and don't clear latched modifiers
-  public static final int FLAG_SPECIAL = (1 << 2);
-  public static final int FLAG_PRECISE_REPEAT = (1 << 4);
+  // Behavior flags.
+  public static final int FLAG_LATCH = (1 << 20);
+  public static final int FLAG_LOCK = (1 << 21);
+  // Special keys are not repeated and don't clear latched modifiers.
+  public static final int FLAG_SPECIAL = (1 << 22);
+  public static final int FLAG_PRECISE_REPEAT = (1 << 23);
+  // Rendering flags.
+  public static final int FLAG_KEY_FONT = (1 << 24);
+  public static final int FLAG_SMALLER_FONT = (1 << 25);
+  // Used by [Pointers].
+  public static final int FLAG_LOCKED = (1 << 26);
+  // Language specific keys that are removed from the keyboard by default.
+  public static final int FLAG_LOCALIZED = (1 << 27);
 
-  // Rendering flags
-  public static final int FLAG_KEY_FONT = (1 << 5);
-  public static final int FLAG_SMALLER_FONT = (1 << 6);
-
-  // Internal flags
-  public static final int FLAG_LOCKED = (1 << 7);
-
-  // Language specific keys that are removed from the keyboard by default
-  public static final int FLAG_LOCALIZED = (1 << 8);
-
-  // Kind flags
+  // Kinds
   public static final int KIND_CHAR = (0 << 29);
   public static final int KIND_STRING = (1 << 29);
   public static final int KIND_KEYEVENT = (2 << 29);
   public static final int KIND_EVENT = (3 << 29);
   public static final int KIND_MODIFIER = (4 << 29);
 
-  public static final int KIND_FLAGS = (0b111 << 29);
+  // Ranges for the different components
+  private static final int FLAGS_BITS = (0b111111111 << 20); // 9 bits wide
+  private static final int KIND_BITS = (0b111 << 29); // 3 bits wide
+  private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
+  static
+  {
+    check((FLAGS_BITS & KIND_BITS) == 0); // No overlap
+    check((FLAGS_BITS | KIND_BITS | VALUE_BITS) == ~0); // No holes
+  }
 
   public final String name;
   private final String _symbol;
 
-  /** Describe what the key does when it isn't a simple character.
-      The meaning of this value depends on [_flags & KIND_FLAGS], which
-      corresponds to the [Kind] enum. */
+  /** This field encodes three things:
+      - The kind
+      - The flags
+      - The value for Char, Event and Modifier keys.
+      */
   private final int _code;
-  private final int _flags;
 
   public static enum Kind
   {
@@ -89,7 +95,7 @@ class KeyValue
 
   public Kind getKind()
   {
-    switch (_flags & KIND_FLAGS)
+    switch (_code & KIND_BITS)
     {
       case KIND_CHAR: return Kind.Char;
       case KIND_STRING: return Kind.String;
@@ -102,12 +108,12 @@ class KeyValue
 
   public int getFlags()
   {
-    return _flags;
+    return (_code & FLAGS_BITS);
   }
 
   public boolean hasFlags(int has)
   {
-    return ((_flags & has) != 0);
+    return ((_code & has) == has);
   }
 
   /** The string to render on the keyboard.
@@ -120,62 +126,63 @@ class KeyValue
   /** Defined only when [getKind() == Kind.Char]. */
   public char getChar()
   {
-    return (char)_code;
+    return (char)(_code & VALUE_BITS);
   }
 
   /** Defined only when [getKind() == Kind.Keyevent]. */
   public int getKeyevent()
   {
-    return _code;
+    return (_code & VALUE_BITS);
   }
 
   /** Defined only when [getKind() == Kind.Event]. */
   public Event getEvent()
   {
-    return Event.values()[_code];
+    return Event.values()[(_code & VALUE_BITS)];
   }
 
   /** Defined only when [getKind() == Kind.Modifier]. */
   public Modifier getModifier()
   {
-    return Modifier.values()[_code];
+    return Modifier.values()[(_code & VALUE_BITS)];
   }
 
   /* Update the char and the symbol. */
   public KeyValue withChar(char c)
   {
-    return new KeyValue(name, String.valueOf(c), KIND_CHAR, c, _flags);
+    return new KeyValue(name, String.valueOf(c), KIND_CHAR, c, getFlags());
   }
 
   public KeyValue withString(String s)
   {
-    return new KeyValue(name, s, KIND_STRING, 0, _flags);
+    return new KeyValue(name, s, KIND_STRING, 0, getFlags());
   }
 
   public KeyValue withNameAndSymbol(String n, String s)
   {
-    return new KeyValue(n, s, (_flags & KIND_FLAGS), _code, _flags);
+    return new KeyValue(n, s, (_code & KIND_BITS), (_code & VALUE_BITS), getFlags());
   }
 
   public KeyValue withKeyevent(int code)
   {
-    return new KeyValue(name, _symbol, KIND_KEYEVENT, code, _flags);
+    return new KeyValue(name, _symbol, KIND_KEYEVENT, code, getFlags());
   }
 
   public KeyValue withFlags(int f)
   {
-    return new KeyValue(name, _symbol, (_flags & KIND_FLAGS), _code, f);
+    return new KeyValue(name, _symbol, (_code & KIND_BITS), (_code & VALUE_BITS), f);
   }
 
   private static HashMap<String, KeyValue> keys = new HashMap<String, KeyValue>();
 
-  public KeyValue(String n, String s, int kind, int c, int f)
+  public KeyValue(String n, String s, int kind, int value, int flags)
   {
-    assert((kind & ~KIND_FLAGS) == 0);
+    check((kind & ~KIND_BITS) == 0);
+    check((flags & ~FLAGS_BITS) == 0);
+    check((value & ~VALUE_BITS) == 0);
     name = n;
     _symbol = s;
-    _code = c;
-    _flags = (f & ~KIND_FLAGS) | kind;
+    _code = kind | flags | value;
   }
 
   private static String stripPrefix(String s, String prefix)
@@ -197,7 +204,7 @@ class KeyValue
     if (localized != null)
     {
       kv = getKeyByName(localized);
-      return kv.withFlags(kv._flags | FLAG_LOCALIZED);
+      return kv.withFlags(kv.getFlags() | FLAG_LOCALIZED);
     }
     if (name.length() == 1)
       return new KeyValue(name, name, KIND_CHAR, name.charAt(0), 0);
@@ -299,5 +306,12 @@ class KeyValue
     addCharKey("\\t", "\\t", '\t', 0); // Send the tab character
     addCharKey("space", "\r", ' ', FLAG_KEY_FONT);
     addCharKey("nbsp", "\u237d", '\u00a0', FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+  }
+
+  // Substitute for [assert], which has no effect on Android.
+  private static void check(boolean b)
+  {
+    if (!b)
+      throw new RuntimeException("Assertion failure");
   }
 }
