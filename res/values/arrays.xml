@@ -17,6 +17,7 @@
     <item>dvorak</item>
     <item>colemak</item>
     <item>neo2</item>
+    <item>bone</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>@string/pref_layout_e_system</item>
@@ -35,6 +36,7 @@
     <item>Dvorak</item>
     <item>Colemak</item>
     <item>Neo 2</item>
+    <item>Bone</item>
   </string-array>
   <string-array name="pref_programming_layout_values">
     <item>none</item>
