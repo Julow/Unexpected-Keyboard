@@ -97,9 +97,12 @@ final class Config
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
+    // Increase the horizontal space between the keys
+    float horizontalIntervalScale = 1.f;
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
       keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
+      horizontalIntervalScale = 2.f;
     }
     else
     {
@@ -120,11 +123,15 @@ final class Config
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
     keyVerticalInterval = getDipPref(dm, prefs, "key_vertical_space", keyVerticalInterval);
-    keyHorizontalInterval = getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval);
+    keyHorizontalInterval =
+      getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval)
+      * horizontalIntervalScale;
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
-    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
+    horizontalMargin =
+      getDipPref(dm, prefs, "horizontal_margin", horizontalMargin)
+      + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     lockable_modifiers.clear();
     if (prefs.getBoolean("lockable_shift", true)) lockable_modifiers.add(KeyValue.Modifier.SHIFT);
