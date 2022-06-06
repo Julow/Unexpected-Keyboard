@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
-import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,7 +26,6 @@ public class Keyboard2View extends View
 
   private Pointers.Modifiers _mods;
 
-  private Vibrator _vibratorService;
   private long _lastVibration = 0;
 
   private static int _currentWhat = 0;
@@ -49,7 +48,6 @@ public class Keyboard2View extends View
   public Keyboard2View(Context context, AttributeSet attrs)
   {
     super(context, attrs);
-    _vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
     _theme = new Theme(getContext(), attrs);
     _config = Config.globalConfig();
     _pointers = new Pointers(this, _config);
@@ -191,19 +189,14 @@ public class Keyboard2View extends View
 
   private void vibrate()
   {
-    if (!_config.vibrateEnabled)
-      return ;
     long now = System.currentTimeMillis();
     if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
     {
       _lastVibration = now;
-      try
+      if (VERSION.SDK_INT >= 5)
       {
-        _vibratorService.vibrate(_config.vibrateDuration);
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
+        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+            HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
       }
     }
   }
