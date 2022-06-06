@@ -57,8 +57,8 @@ final class Config
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
-    labelTextSize = Float.valueOf(res.getString(R.integer.label_text_size));
-    sublabelTextSize = Float.valueOf(res.getString(R.integer.sublabel_text_size));
+    labelTextSize = 0.33f;
+    sublabelTextSize = 0.22f;
     // default values
     layout = -1;
     programming_layout = -1;
@@ -97,12 +97,14 @@ final class Config
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
-    // Increase the horizontal space between the keys
+    // Scale some dimensions depending on orientation
     float horizontalIntervalScale = 1.f;
+    float characterSizeScale = 1.f;
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
       keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
       horizontalIntervalScale = 2.f;
+      characterSizeScale = 1.25f;
     }
     else
     {
@@ -142,7 +144,9 @@ final class Config
     if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.Modifier.SUPERSCRIPT);
     if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.Modifier.SUBSCRIPT);
     if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.Modifier.BOX);
-    characterSize = prefs.getFloat("character_size", characterSize);
+    characterSize =
+      prefs.getFloat("character_size", characterSize)
+      * characterSizeScale;
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
   }
