@@ -8,17 +8,30 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Emoji extends KeyValue
+public class Emoji
 {
+  private final String _name;
+  private final KeyValue _kv;
   private final String _desc;
 
   private static HashMap<String, Emoji> emojis_by_name = new HashMap<String, Emoji>();
 
   protected Emoji(String name, String bytecode, String desc)
   {
-    super(name, bytecode, CHAR_NONE, EVENT_NONE, 0);
+    _name = name;
+    _kv = new KeyValue(bytecode, KeyValue.KIND_STRING, 0, 0);
     _desc = desc;
     emojis_by_name.put(name, this);
+  }
+
+  public String name()
+  {
+    return _name;
+  }
+
+  public KeyValue kv()
+  {
+    return _kv;
   }
 
   public String getDescription()

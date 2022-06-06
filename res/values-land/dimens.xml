@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="horizontal_margin">12dp</dimen>
-  <dimen name="margin_bottom">3dp</dimen>
-  <dimen name="key_padding">3dp</dimen>
-  <dimen name="key_height">36dp</dimen>
-  <item name="label_text_size" type="integer" format="float">0.4</item>
-  <item name="sublabel_text_size" type="integer" format="float">0.3</item>
   <dimen name="emoji_type_button_height">48dp</dimen>
-  <dimen name="extra_horizontal_margin">20dp</dimen>
+  <dimen name="extra_horizontal_margin">25dp</dimen>
 </resources>

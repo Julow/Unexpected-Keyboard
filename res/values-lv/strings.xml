@@ -9,7 +9,6 @@
   <string name="pref_accents_title">Uzsvara zīmes</string>
   <string name="pref_accents_e_all_installed">Rādīt uzsvara zīmes visām uzstādītajām valodām</string>
   <string name="pref_accents_e_selected">Rādīt uzsvara zīmes tikai atlasītajām valodām</string>
-  <string name="pref_accents_e_all">Rādīt visas uzsvara zīmes</string>
   <string name="pref_accents_e_none">Paslēpt uzsvara zīmes</string>
   <string name="pref_programming_layout_title">Tastatūras izkārtojums programmēšanai</string>
   <string name="pref_programming_layout_none">Neviens</string>
@@ -18,10 +17,6 @@
   <string name="pref_swipe_dist_summary">Taustiņu stūros esošo rakstzīmju attālums (%s)</string>
   <string name="pref_long_timeout_title">Taustiņa atkārtošanās ātrums</string>
   <string name="pref_long_interval_title">Taustiņa atkārtošanās aizture</string>
-  <string name="pref_category_vibrate">Trīcēšana</string>
-  <string name="pref_vibrate_title">Trīcēšana</string>
-  <string name="pref_vibrate_summary">Iespējot/atspējot taustiņa piespiešanas trīcēšanu</string>
-  <string name="pref_vibrate_duration_title">Ilgums</string>
   <string name="pref_precise_repeat_title">Pielāgojama kursora kustība</string>
   <string name="pref_precise_repeat_summary">Mainīt taustiņa atkārtošanās ātrumu ar pavilkšanas attālumu</string>
   <string name="pref_lockable_keys_title">Slēdzami pārveidotājtaustiņi</string>

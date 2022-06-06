@@ -7,17 +7,12 @@
   <string name="pref_accents_title">악센트</string>
   <string name="pref_accents_e_all_installed">설치된 모든 언어의 악센트 표시</string>
   <string name="pref_accents_e_selected">선택한 언어의 악센트만 표시</string>
-  <string name="pref_accents_e_all">모든 언어의 악센트 표시</string>
   <string name="pref_accents_e_none">모든 언어의 악센트 숨기기</string>
   <string name="pref_category_typing">타자</string>
   <string name="pref_swipe_dist_title">스와이프 범위</string>
   <string name="pref_swipe_dist_summary">키 모서리 문자의 입력 범위 (%s)</string>
   <string name="pref_long_timeout_title">키 길게 누르기 지연</string>
   <string name="pref_long_interval_title">키 반복 간격</string>
-  <string name="pref_category_vibrate">진동</string>
-  <string name="pref_vibrate_title">진동</string>
-  <string name="pref_vibrate_summary">키 누를 때 진동 키거/끄기</string>
-  <string name="pref_vibrate_duration_title">지속 시간</string>
   <string name="pref_precise_repeat_title">정확한 커서 움직임</string>
   <string name="pref_precise_repeat_summary">더 많거나 적은 스와이프로 키 반복 조절</string>
   <string name="pref_category_style">스타일</string>

@@ -26,8 +26,6 @@ final class Config
   public int layout; // Or '-1' for the system defaults
   public int programming_layout; // Or '-1' for none
   public float swipe_dist_px;
-  public boolean vibrateEnabled;
-  public long vibrateDuration;
   public long longPressTimeout;
   public long longPressInterval;
   public float marginBottom;
@@ -36,7 +34,7 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
-  public Set<Integer> lockable_modifiers = new HashSet<Integer>();
+  public Set<KeyValue.Modifier> lockable_modifiers = new HashSet<KeyValue.Modifier>();
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
@@ -47,7 +45,7 @@ final class Config
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  public Set<String> extra_keys; // 'null' means all the keys
+  public Set<KeyValue> extra_keys; // 'null' means all the keys
 
   public final IKeyEventHandler handler;
 
@@ -57,13 +55,11 @@ final class Config
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
-    labelTextSize = Float.valueOf(res.getString(R.integer.label_text_size));
-    sublabelTextSize = Float.valueOf(res.getString(R.integer.sublabel_text_size));
+    labelTextSize = 0.33f;
+    sublabelTextSize = 0.22f;
     // default values
     layout = -1;
     programming_layout = -1;
-    vibrateEnabled = true;
-    vibrateDuration = 20;
     longPressTimeout = 600;
     longPressInterval = 65;
     marginBottom = res.getDimension(R.dimen.margin_bottom);
@@ -94,13 +90,17 @@ final class Config
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Resources res = context.getResources();
     DisplayMetrics dm = res.getDisplayMetrics();
-    // The height of the keyboard is relative to the height of the screen. This
-    // is not the actual size of the keyboard, which will be bigger if the
-    // layout has a fifth row. 
+    // The height of the keyboard is relative to the height of the screen.
+    // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
+    // Scale some dimensions depending on orientation
+    float horizontalIntervalScale = 1.f;
+    float characterSizeScale = 1.f;
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
-      keyboardHeightPercent = 55;
+      keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
+      horizontalIntervalScale = 2.f;
+      characterSizeScale = 1.25f;
     }
     else
     {
@@ -115,28 +115,32 @@ final class Config
     // Take the mean of both dimensions as an approximation of the diagonal.
     float physical_scaling = (dm.widthPixels + dm.heightPixels) / (dm.xdpi + dm.ydpi);
     swipe_dist_px = Float.valueOf(prefs.getString("swipe_dist", "15")) * physical_scaling;;
-    vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
-    vibrateDuration = prefs.getInt("vibrate_duration", (int)vibrateDuration);
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
     keyVerticalInterval = getDipPref(dm, prefs, "key_vertical_space", keyVerticalInterval);
-    keyHorizontalInterval = getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval);
+    keyHorizontalInterval =
+      getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval)
+      * horizontalIntervalScale;
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
-    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
+    horizontalMargin =
+      getDipPref(dm, prefs, "horizontal_margin", horizontalMargin)
+      + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     lockable_modifiers.clear();
-    if (prefs.getBoolean("lockable_shift", true)) lockable_modifiers.add(KeyValue.MOD_SHIFT);
-    if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.MOD_CTRL);
-    if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.MOD_ALT);
-    if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.MOD_FN);
-    if (prefs.getBoolean("lockable_meta", false)) lockable_modifiers.add(KeyValue.MOD_META);
-    if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.MOD_SUPERSCRIPT);
-    if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.MOD_SUBSCRIPT);
-    if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.MOD_BOX);
-    characterSize = prefs.getFloat("character_size", characterSize);
+    if (prefs.getBoolean("lockable_shift", true)) lockable_modifiers.add(KeyValue.Modifier.SHIFT);
+    if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.Modifier.CTRL);
+    if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.Modifier.ALT);
+    if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.Modifier.FN);
+    if (prefs.getBoolean("lockable_meta", false)) lockable_modifiers.add(KeyValue.Modifier.META);
+    if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.Modifier.SUPERSCRIPT);
+    if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.Modifier.SUBSCRIPT);
+    if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.Modifier.BOX);
+    characterSize =
+      prefs.getFloat("character_size", characterSize)
+      * characterSizeScale;
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
   }
@@ -151,52 +155,52 @@ final class Config
   {
     // Update the name to avoid caching in KeyModifier
     final KeyValue action_key = (actionLabel == null) ? null :
-      KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
+      KeyValue.getKeyByName("action").withSymbol(actionLabel);
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
-    final Set<String> extra_keys = new HashSet<String>(this.extra_keys);
+    final Set<KeyValue> extra_keys = new HashSet<KeyValue>(this.extra_keys);
     KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key)
       {
         if (key == null)
           return null;
-        boolean is_extra_key = extra_keys.contains(key.name);
+        boolean is_extra_key = extra_keys.contains(key);
         if (is_extra_key)
-          extra_keys.remove(key.name);
-        switch (key.code)
+          extra_keys.remove(key);
+        int flags = key.getFlags();
+        if ((flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
+          return null;
+        switch (key.getKind())
         {
-          case KeyValue.EVENT_CHANGE_METHOD:
-            return shouldOfferSwitchingToNextInputMethod ? key : null;
-          case KeyEvent.KEYCODE_ENTER:
-            return (swapEnterActionKey && action_key != null) ? action_key : key;
-          case KeyValue.EVENT_ACTION:
-            return (swapEnterActionKey && action_key != null) ?
-              KeyValue.getKeyByName("enter") : action_key;
-          case KeyValue.EVENT_SWITCH_PROGRAMMING:
-            return shouldOfferSwitchingToProgramming ? key : null;
-          default:
-            if (key.flags != 0)
+          case Event:
+            switch (key.getEvent())
             {
-              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
-                return null;
-              if ((key.flags & KeyValue.FLAG_MODIFIER) != 0
-                  && lockable_modifiers.contains(key.code))
-                return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
+              case CHANGE_METHOD:
+                return shouldOfferSwitchingToNextInputMethod ? key : null;
+              case ACTION:
+                return (swapEnterActionKey && action_key != null) ?
+                  KeyValue.getKeyByName("enter") : action_key;
+              case SWITCH_PROGRAMMING:
+                return shouldOfferSwitchingToProgramming ? key : null;
             }
-            return key;
+            break;
+          case Keyevent:
+            switch (key.getKeyevent())
+            {
+              case KeyEvent.KEYCODE_ENTER:
+                return (swapEnterActionKey && action_key != null) ? action_key : key;
+            }
+            break;
+          case Modifier:
+            if (lockable_modifiers.contains(key.getModifier()))
+              return key.withFlags(flags | KeyValue.FLAG_LOCK);
+            break;
         }
+        return key;
       }
     });
     if (extra_keys.size() > 0)
-    {
-      final Iterator<String> extra_keys_it = extra_keys.iterator();
-      kw = kw.addExtraKeys(
-          new Iterator<KeyValue>()
-          {
-            public boolean hasNext() { return extra_keys_it.hasNext(); }
-            public KeyValue next() { return KeyValue.getKeyByName(extra_keys_it.next()); }
-          });
-    }
+      kw = kw.addExtraKeys(extra_keys.iterator());
     return kw;
   }
 
@@ -244,6 +248,7 @@ final class Config
       case "qwerty_ko": return R.xml.qwerty_ko;
       case "qwerty_lv": return R.xml.qwerty_lv;
       case "qwerty_pt": return R.xml.qwerty_pt;
+      case "qwerty_tr": return R.xml.qwerty_tr;
       case "qwerty": return R.xml.qwerty;
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
       case "qwertz_hu": return R.xml.qwertz_hu;
