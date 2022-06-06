@@ -10,6 +10,7 @@
     <item>qwerty_lv</item>
     <item>qwerty_sv_se</item>
     <item>qwerty_hu</item>
+    <item>qwerty_tr</item>
     <item>ru_jcuken</item>
     <item>qwertz</item>
     <item>qwertz_hu</item>
@@ -29,6 +30,7 @@
     <item>QWERTY (Latvian)</item>
     <item>QWERTY (Swedish)</item>
     <item>QWERTY (Hungarian)</item>
+    <item>QWERTY (Türkçe)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>QWERTZ</item>
     <item>QWERTZ (Hungarian)</item>
@@ -53,13 +55,11 @@
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>
     <item>@string/pref_accents_e_selected</item>
-    <item>@string/pref_accents_e_all</item>
     <item>@string/pref_accents_e_none</item>
   </string-array>
   <string-array name="pref_accents_values">
     <item>1</item>
     <item>2</item>
-    <item>3</item>
     <item>4</item>
   </string-array>
   <string-array name="pref_theme_entries">
