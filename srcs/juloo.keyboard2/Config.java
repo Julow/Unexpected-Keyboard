@@ -94,13 +94,12 @@ final class Config
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Resources res = context.getResources();
     DisplayMetrics dm = res.getDisplayMetrics();
-    // The height of the keyboard is relative to the height of the screen. This
-    // is not the actual size of the keyboard, which will be bigger if the
-    // layout has a fifth row. 
+    // The height of the keyboard is relative to the height of the screen.
+    // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
-      keyboardHeightPercent = 55;
+      keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
     }
     else
     {
