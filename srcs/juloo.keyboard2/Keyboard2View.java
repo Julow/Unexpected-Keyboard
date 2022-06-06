@@ -18,15 +18,11 @@ import android.view.Window;
 public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
 {
-  private static final long VIBRATE_MIN_INTERVAL = 100;
-
   private KeyboardData _keyboard;
 
   private Pointers _pointers;
 
   private Pointers.Modifiers _mods;
-
-  private long _lastVibration = 0;
 
   private static int _currentWhat = 0;
 
@@ -189,15 +185,10 @@ public class Keyboard2View extends View
 
   private void vibrate()
   {
-    long now = System.currentTimeMillis();
-    if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
+    if (VERSION.SDK_INT >= 5)
     {
-      _lastVibration = now;
-      if (VERSION.SDK_INT >= 5)
-      {
-        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
-            HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
-      }
+      performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+          HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
     }
   }
 
