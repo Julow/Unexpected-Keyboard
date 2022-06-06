@@ -3,7 +3,7 @@
 	<row>
 		<key key0="θ"				key2="¬"				key4="esc"/>
 		<key key0="δ"	key1="⌊"	key2="∨"	key3="↔"	key4="⊂"/>
-		<key key0=""	key1="⌋"	key2="∧"	key3="↑"	key4="⊃"/> bla
+		<key key0="ϛ"	key1="⌋"	key2="∧"	key3="↑"	key4="⊃"/>
 		<key key0="α"	key1="⌈"	key2="⊥"	key3="↕"	key4="∀"/>
 		<key key0="ξ"	key1="⌉"	key2="∡"				key4="⊷"/>
 		<key key0="π"	key1="∥"				key3="≪"	key4="7"/>
@@ -28,10 +28,10 @@
 		<key width="1.5" key0="shift"		key2="abc"/>
 		<key key0="φ"							key3="⇌"		key4="√"/>
 		<key key0="η"							key3="accent_arrow_right"	key4="∪"/>
-		<key key0=""											key4="∩"/> bla
+		<key key0="ϡ"											key4="∩"/>
 		<key key0="υ"							key3="∇"		key4="ℵ"/>
 		<key key0="ζ"	key1="≤"				key3="ℤ"		key4="1"/>
-		<key key0=""	key1="≠"				key3="ℚ"		key4="2"/> bla
+		<key key0="Ϟ"	key1="≠"				key3="ℚ"		key4="2"/>
 		<key key0="κ"	key1="≥"				key3="×"		key4="3"/>
 		<key width="1.5" key0="backspace"	key3="delete"/>
 	</row>
