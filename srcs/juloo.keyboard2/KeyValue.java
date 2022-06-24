@@ -231,9 +231,14 @@ final class KeyValue
     addKey(name, symbol, KIND_KEYEVENT, code, flags);
   }
 
+  // Within VALUE_BITS
+  private static int placeholder_unique_id = 0;
+
+  /** Use a unique id as the value because the symbol is shared between every
+      placeholders (it is the empty string). */
   private static void addPlaceholderKey(String name)
   {
-    addKey(name, "", KIND_STRING, 0, 0);
+    addKey(name, "", KIND_STRING, placeholder_unique_id++, 0);
   }
 
   static
