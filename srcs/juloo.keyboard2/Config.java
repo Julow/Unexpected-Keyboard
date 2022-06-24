@@ -26,6 +26,7 @@ final class Config
   public int layout; // Or '-1' for the system defaults
   public int programming_layout; // Or '-1' for none
   public float swipe_dist_px;
+  public boolean vibrateEnabled;
   public long longPressTimeout;
   public long longPressInterval;
   public float marginBottom;
@@ -60,6 +61,7 @@ final class Config
     // default values
     layout = -1;
     programming_layout = -1;
+    vibrateEnabled = true;
     longPressTimeout = 600;
     longPressInterval = 65;
     marginBottom = res.getDimension(R.dimen.margin_bottom);
@@ -115,6 +117,7 @@ final class Config
     // Take the mean of both dimensions as an approximation of the diagonal.
     float physical_scaling = (dm.widthPixels + dm.heightPixels) / (dm.xdpi + dm.ydpi);
     swipe_dist_px = Float.valueOf(prefs.getString("swipe_dist", "15")) * physical_scaling;;
+    vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);

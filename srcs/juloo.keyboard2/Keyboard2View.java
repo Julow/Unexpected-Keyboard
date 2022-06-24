@@ -185,6 +185,8 @@ public class Keyboard2View extends View
 
   private void vibrate()
   {
+    if (!_config.vibrateEnabled)
+      return ;
     if (VERSION.SDK_INT >= 5)
     {
       performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,

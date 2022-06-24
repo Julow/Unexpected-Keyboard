@@ -20,6 +20,7 @@
       <CheckBoxPreference android:key="lockable_sub" android:title="Sub" android:defaultValue="false"/>
       <CheckBoxPreference android:key="lockable_box" android:title="Box" android:defaultValue="false"/>
     </PreferenceScreen>
+    <CheckBoxPreference android:key="vibrate_enabled" android:title="@string/pref_vibrate_title" android:summary="@string/pref_vibrate_summary" android:defaultValue="true"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_style">
     <ListPreference android:key="theme" android:title="@string/pref_theme" android:summary="%s" android:defaultValue="system" android:entries="@array/pref_theme_entries" android:entryValues="@array/pref_theme_values"/>
