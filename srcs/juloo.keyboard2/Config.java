@@ -160,15 +160,12 @@ final class Config
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>(this.extra_keys);
     KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
-      public KeyValue apply(KeyValue key)
+      public KeyValue apply(KeyValue key, boolean localized)
       {
-        if (key == null)
-          return null;
         boolean is_extra_key = extra_keys.contains(key);
         if (is_extra_key)
           extra_keys.remove(key);
-        int flags = key.getFlags();
-        if ((flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
+        if (localized && !is_extra_key)
           return null;
         switch (key.getKind())
         {
@@ -193,7 +190,7 @@ final class Config
             break;
           case Modifier:
             if (lockable_modifiers.contains(key.getModifier()))
-              return key.withFlags(flags | KeyValue.FLAG_LOCK);
+              return key.withFlags(key.getFlags() | KeyValue.FLAG_LOCK);
             break;
         }
         return key;

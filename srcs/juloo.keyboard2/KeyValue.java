@@ -58,8 +58,6 @@ final class KeyValue
   public static final int FLAG_SMALLER_FONT = (1 << 25);
   // Used by [Pointers].
   public static final int FLAG_LOCKED = (1 << 26);
-  // Language specific keys that are removed from the keyboard by default.
-  public static final int FLAG_LOCALIZED = (1 << 27);
 
   // Kinds
   public static final int KIND_CHAR = (0 << 29);
@@ -196,27 +194,11 @@ final class KeyValue
     _code = kind | flags | value;
   }
 
-  private static String stripPrefix(String s, String prefix)
-  {
-    if (s.startsWith(prefix))
-      return s.substring(prefix.length());
-    else
-      return null;
-  }
-
   public static KeyValue getKeyByName(String name)
   {
-    if (name == null)
-      return null;
-    KeyValue kv = KeyValue.keys.get(name);
+    KeyValue kv = keys.get(name);
     if (kv != null)
       return kv;
-    String localized = stripPrefix(name, "loc ");
-    if (localized != null)
-    {
-      kv = getKeyByName(localized);
-      return kv.withFlags(kv.getFlags() | FLAG_LOCALIZED);
-    }
     if (name.length() == 1)
       return new KeyValue(name, KIND_CHAR, name.charAt(0), 0);
     else

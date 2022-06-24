@@ -140,7 +140,7 @@ public final class Pointers implements Handler.Callback
     // Don't take latched modifiers into account if an other key is pressed.
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
-    KeyValue value = _handler.modifyKey(key.key0, mods);
+    KeyValue value = handleKV(key.key0, mods);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     if (value != null && !value.hasFlags(KeyValue.FLAG_SPECIAL))
@@ -159,7 +159,7 @@ public final class Pointers implements Handler.Callback
   private KeyValue getKeyAtDirection(Pointer ptr, int direction)
   {
     if (direction == 0)
-      return _handler.modifyKey(ptr.key.key0, ptr.modifiers);
+      return handleKV(ptr.key.key0, ptr.modifiers);
     KeyValue k;
     for (int i = 0; i > -3; i = (~i>>31) - i)
     {
@@ -171,6 +171,13 @@ public final class Pointers implements Handler.Callback
         return k;
     }
     return null;
+  }
+
+  private KeyValue handleKV(KeyboardData.Corner c, Modifiers modifiers)
+  {
+    if (c == null)
+      return null;
+    return _handler.modifyKey(c.kv, modifiers);
   }
 
   public void onTouchMove(float x, float y, int pointerId)
