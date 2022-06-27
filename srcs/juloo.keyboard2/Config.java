@@ -253,6 +253,7 @@ final class Config
       case "qwertz_hu": return R.xml.qwertz_hu;
       case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
+      case "jcuken_ua": return R.xml.jcuken_ua;
       default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
     }
   }
