@@ -163,7 +163,7 @@ public final class Pointers implements Handler.Callback
     KeyValue k;
     for (int i = 0; i > -3; i = (~i>>31) - i)
     {
-      int d = Math.floorMod(direction + i - 1, 8) + 1;
+      int d = (direction + i + 8 - 1) % 8 + 1;
       // Don't make the difference between a key that doesn't exist and a key
       // that is removed by [_handler]. Triggers side effects.
       k = _handler.modifyKey(ptr.key.getAtDirection(d), ptr.modifiers);
