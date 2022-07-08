@@ -18,15 +18,11 @@ import android.view.Window;
 public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
 {
-  private static final long VIBRATE_MIN_INTERVAL = 100;
-
   private KeyboardData _keyboard;
 
   private Pointers _pointers;
 
   private Pointers.Modifiers _mods;
-
-  private long _lastVibration = 0;
 
   private static int _currentWhat = 0;
 
@@ -189,15 +185,12 @@ public class Keyboard2View extends View
 
   private void vibrate()
   {
-    long now = System.currentTimeMillis();
-    if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
+    if (!_config.vibrateEnabled)
+      return ;
+    if (VERSION.SDK_INT >= 5)
     {
-      _lastVibration = now;
-      if (VERSION.SDK_INT >= 5)
-      {
-        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
-            HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
-      }
+      performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+          HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
     }
   }
 
@@ -275,26 +268,30 @@ public class Keyboard2View extends View
     return defaultColor;
   }
 
-  private void drawLabel(Canvas canvas, KeyValue k, float x, float y, float keyH, boolean isKeyDown)
+  private void drawLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyH, boolean isKeyDown)
   {
-    k = KeyModifier.modify(k, _mods);
     if (k == null)
       return;
-    float textSize = scaleTextSize(k, _config.labelTextSize, keyH);
-    Paint p = _theme.labelPaint(k.hasFlags(KeyValue.FLAG_KEY_FONT));
-    p.setColor(labelColor(k, isKeyDown, _theme.labelColor));
+    KeyValue kv = KeyModifier.modify(k.kv, _mods);
+    if (kv == null)
+      return;
+    float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
+    Paint p = _theme.labelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT));
+    p.setColor(labelColor(kv, isKeyDown, _theme.labelColor));
     p.setTextSize(textSize);
-    canvas.drawText(k.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
+    canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
+  private void drawSubLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
   {
-    k = KeyModifier.modify(k, _mods);
     if (k == null)
       return;
-    float textSize = scaleTextSize(k, _config.sublabelTextSize, keyH);
-    Paint p = _theme.subLabelPaint(k.hasFlags(KeyValue.FLAG_KEY_FONT), a);
-    p.setColor(labelColor(k, isKeyDown, _theme.subLabelColor));
+    KeyValue kv = KeyModifier.modify(k.kv, _mods);
+    if (kv == null)
+      return;
+    float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
+    Paint p = _theme.subLabelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT), a);
+    p.setColor(labelColor(kv, isKeyDown, _theme.subLabelColor));
     p.setTextSize(textSize);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
@@ -305,7 +302,7 @@ public class Keyboard2View extends View
       x += keyW / 2f;
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
-    canvas.drawText(k.getString(), x, y, p);
+    canvas.drawText(kv.getString(), x, y, p);
   }
 
   private float scaleTextSize(KeyValue k, float rel_size, float keyH)

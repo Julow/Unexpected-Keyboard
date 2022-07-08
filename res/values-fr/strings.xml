@@ -13,6 +13,8 @@
   <string name="pref_swipe_dist_summary">La distance des caractères dans les coins (%s)</string>
   <string name="pref_long_timeout_title">Délai avant répétition</string>
   <string name="pref_long_interval_title">Écart entre répétitions</string>
+  <string name="pref_vibrate_title">Vibreur</string>
+  <string name="pref_vibrate_summary">Vibration a chaque touche</string>
   <string name="pref_precise_repeat_title">Mouvement précis du curseur</string>
   <string name="pref_precise_repeat_summary">Modifier la vitesse de répétition en bougeant le doigt</string>
   <string name="pref_category_style">Style</string>

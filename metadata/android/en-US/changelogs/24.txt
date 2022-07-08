@@ -1,0 +1,5 @@
+Add back the vibration option.
+Fix localized keys not in predefined positions.
+Improvements to layouts.
+
+Thanks to the contributors: @Thunder-Squirrel
