@@ -343,6 +343,7 @@ class KeyModifier
       case '┐': return '╗';
       case '─': return '═';
       case '│': return '║';
+      case 'ß': return 'ẞ';
       default: return c;
     }
   }
