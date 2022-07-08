@@ -177,11 +177,11 @@ class KeyboardData
      **   0
      ** 3   4
      */
-    public final KeyValue key0;
-    public final KeyValue key1;
-    public final KeyValue key2;
-    public final KeyValue key3;
-    public final KeyValue key4;
+    public final Corner key0;
+    public final Corner key1;
+    public final Corner key2;
+    public final Corner key3;
+    public final Corner key4;
 
     /** Key width in relative unit. */
     public final float width;
@@ -190,7 +190,7 @@ class KeyboardData
     /** Put keys 1 to 4 on the edges instead of the corners. */
     public final boolean edgekeys;
 
-    protected Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s, boolean e)
+    protected Key(Corner k0, Corner k1, Corner k2, Corner k3, Corner k4, float w, float s, boolean e)
     {
       key0 = k0;
       key1 = k1;
@@ -204,11 +204,11 @@ class KeyboardData
 
     public static Key parse(XmlResourceParser parser) throws Exception
     {
-      KeyValue k0 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key0"));
-      KeyValue k1 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key1"));
-      KeyValue k2 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key2"));
-      KeyValue k3 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key3"));
-      KeyValue k4 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key4"));
+      Corner k0 = Corner.parse_of_attr(parser, "key0");
+      Corner k1 = Corner.parse_of_attr(parser, "key1");
+      Corner k2 = Corner.parse_of_attr(parser, "key2");
+      Corner k3 = Corner.parse_of_attr(parser, "key3");
+      Corner k4 = Corner.parse_of_attr(parser, "key4");
       float width = parser.getAttributeFloatValue(null, "width", 1f);
       float shift = parser.getAttributeFloatValue(null, "shift", 0.f);
       boolean edgekeys = parser.getAttributeBooleanValue(null, "edgekeys", false);
@@ -225,27 +225,30 @@ class KeyboardData
 
     public KeyValue getKeyValue(int i)
     {
+      Corner c;
       switch (i)
       {
-        case 0: return key0;
-        case 1: return key1;
-        case 2: return key2;
-        case 3: return key3;
-        case 4: return key4;
-        default: return null;
+        case 0: c = key0; break;
+        case 1: c = key1; break;
+        case 2: c = key2; break;
+        case 3: c = key3; break;
+        case 4: c = key4; break;
+        default: c = null; break;
       }
+      return (c == null) ? null : c.kv;
     }
 
     public Key withKeyValue(int i, KeyValue kv)
     {
-      KeyValue k0 = key0, k1 = key1, k2 = key2, k3 = key3, k4 = key4;
+      Corner k0 = key0, k1 = key1, k2 = key2, k3 = key3, k4 = key4;
+      Corner k = Corner.of_kv(kv);
       switch (i)
       {
-        case 0: k0 = kv; break;
-        case 1: k1 = kv; break;
-        case 2: k2 = kv; break;
-        case 3: k3 = kv; break;
-        case 4: k4 = kv; break;
+        case 0: k0 = k; break;
+        case 1: k1 = k; break;
+        case 2: k2 = k; break;
+        case 3: k3 = k; break;
+        case 4: k4 = k; break;
       }
       return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
     }
@@ -255,6 +258,7 @@ class KeyboardData
      */
     public KeyValue getAtDirection(int direction)
     {
+      Corner c = null;
       if (edgekeys)
       {
         // \ 1 /
@@ -264,10 +268,10 @@ class KeyboardData
         // / 4 \
         switch (direction)
         {
-          case 2: case 3: return key1;
-          case 4: case 5: return key2;
-          case 6: case 7: return key4;
-          case 8: case 1: return key3;
+          case 2: case 3: c = key1; break;
+          case 4: case 5: c = key2; break;
+          case 6: case 7: c = key4; break;
+          case 8: case 1: c = key3; break;
         }
       }
       else
@@ -279,13 +283,56 @@ class KeyboardData
         // 3 | 4
         switch (direction)
         {
-          case 1: case 2: return key1;
-          case 3: case 4: return key2;
-          case 5: case 6: return key4;
-          case 7: case 8: return key3;
+          case 1: case 2: c = key1; break;
+          case 3: case 4: c = key2; break;
+          case 5: case 6: c = key4; break;
+          case 7: case 8: c = key3; break;
         }
       }
-      return null;
+      return (c == null) ? null : c.kv;
+    }
+  }
+
+  public static final class Corner
+  {
+    public final KeyValue kv;
+    /** Whether the kv is marked with the "loc " prefix. To be removed if not
+        specified in the [extra_keys]. */
+    public final boolean localized;
+
+    protected Corner(KeyValue k, boolean l)
+    {
+      kv = k;
+      localized = l;
+    }
+
+    public static Corner parse_of_attr(XmlResourceParser parser, String attr) throws Exception
+    {
+      String name = parser.getAttributeValue(null, attr);
+      boolean localized = false;
+
+      if (name == null)
+        return null;
+      String name_loc = stripPrefix(name, "loc ");
+      if (name_loc != null)
+      {
+        localized = true;
+        name = name_loc;
+      }
+      return new Corner(KeyValue.getKeyByName(name), localized);
+    }
+
+    public static Corner of_kv(KeyValue kv)
+    {
+      return new Corner(kv, false);
+    }
+
+    private static String stripPrefix(String s, String prefix)
+    {
+      if (s.startsWith(prefix))
+        return s.substring(prefix.length());
+      else
+        return null;
     }
   }
 
@@ -295,12 +342,22 @@ class KeyboardData
   }
 
   public static abstract class MapKeyValues implements MapKey {
-    abstract public KeyValue apply(KeyValue kv);
+    abstract public KeyValue apply(KeyValue c, boolean localized);
 
     public Key apply(Key k)
     {
       return new Key(apply(k.key0), apply(k.key1), apply(k.key2),
           apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys);
+    }
+
+    private Corner apply(Corner c)
+    {
+      if (c == null)
+        return null;
+      KeyValue kv = apply(c.kv, c.localized);
+      if (kv == null)
+        return null;
+      return Corner.of_kv(kv);
     }
   }
 

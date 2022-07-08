@@ -296,10 +296,9 @@ public class Keyboard2 extends InputMethodService
         return;
       KeyboardData layout =
         getLayout(_config.programming_layout).mapKeys(new KeyboardData.MapKeyValues() {
-          public KeyValue apply(KeyValue key)
+          public KeyValue apply(KeyValue key, boolean localized)
           {
-            if (key != null
-                && key.getKind() == KeyValue.Kind.Event
+            if (key.getKind() == KeyValue.Kind.Event
                 && key.getEvent() == KeyValue.Event.SWITCH_PROGRAMMING)
               return KeyValue.getKeyByName("switch_text");
             return key;

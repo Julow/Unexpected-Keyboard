@@ -26,6 +26,7 @@ final class Config
   public int layout; // Or '-1' for the system defaults
   public int programming_layout; // Or '-1' for none
   public float swipe_dist_px;
+  public boolean vibrateEnabled;
   public long longPressTimeout;
   public long longPressInterval;
   public float marginBottom;
@@ -60,6 +61,7 @@ final class Config
     // default values
     layout = -1;
     programming_layout = -1;
+    vibrateEnabled = true;
     longPressTimeout = 600;
     longPressInterval = 65;
     marginBottom = res.getDimension(R.dimen.margin_bottom);
@@ -115,6 +117,7 @@ final class Config
     // Take the mean of both dimensions as an approximation of the diagonal.
     float physical_scaling = (dm.widthPixels + dm.heightPixels) / (dm.xdpi + dm.ydpi);
     swipe_dist_px = Float.valueOf(prefs.getString("swipe_dist", "15")) * physical_scaling;;
+    vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
@@ -160,15 +163,12 @@ final class Config
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>(this.extra_keys);
     KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
-      public KeyValue apply(KeyValue key)
+      public KeyValue apply(KeyValue key, boolean localized)
       {
-        if (key == null)
-          return null;
         boolean is_extra_key = extra_keys.contains(key);
         if (is_extra_key)
           extra_keys.remove(key);
-        int flags = key.getFlags();
-        if ((flags & KeyValue.FLAG_LOCALIZED) != 0 && !is_extra_key)
+        if (localized && !is_extra_key)
           return null;
         switch (key.getKind())
         {
@@ -193,7 +193,7 @@ final class Config
             break;
           case Modifier:
             if (lockable_modifiers.contains(key.getModifier()))
-              return key.withFlags(flags | KeyValue.FLAG_LOCK);
+              return key.withFlags(key.getFlags() | KeyValue.FLAG_LOCK);
             break;
         }
         return key;
@@ -254,6 +254,7 @@ final class Config
       case "qwertz_hu": return R.xml.qwertz_hu;
       case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
+      case "jcuken_ua": return R.xml.jcuken_ua;
       default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
     }
   }

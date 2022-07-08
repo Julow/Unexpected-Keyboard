@@ -1,0 +1,9 @@
+New languages: Turkish (@erqan), Dutch (Belgium) (@draxaris1010)
+New layouts: Turkish (@erqan), Colemak (@dircsem), Hungarian QWERTY
+
+Less typos: Select the closest key on swipe (@Rodrigodd)
+Removed settings: Vibration, Show every accents
+More tweaks to the layouts
+Fixes to landscape mode, updated translations and more tweaks.
+
+Thanks to the contributors: @erqan, @draxaris1010, @dircsem, @Rodrigodd, @meanindra
