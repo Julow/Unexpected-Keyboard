@@ -15,7 +15,8 @@ final class KeyValue
     SWITCH_BACK_EMOJI,
     CHANGE_METHOD,
     ACTION,
-    SWITCH_PROGRAMMING
+    SWITCH_PROGRAMMING,
+    SWITCH_GREEKMATH
   }
 
   // Must be evaluated in the reverse order of their values.
@@ -276,6 +277,7 @@ final class KeyValue
     addEventKey("switch_emoji", "\u0001" , Event.SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addEventKey("switch_back_emoji", "ABC", Event.SWITCH_BACK_EMOJI, 0);
     addEventKey("switch_programming", "Prog", Event.SWITCH_PROGRAMMING, FLAG_SMALLER_FONT);
+    addEventKey("switch_greekmath", "πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
     addEventKey("change_method", "\u0009", Event.CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addEventKey("action", "Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
 
