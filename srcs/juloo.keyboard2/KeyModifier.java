@@ -119,6 +119,7 @@ class KeyModifier
     {
       case Char: name = apply_fn_char(k.getChar()); break;
       case Keyevent: name = apply_fn_keyevent(k.getKeyevent()); break;
+      case Event: name = apply_fn_event(k.getEvent()); break;
       case String:
         switch (k.getString())
         {
@@ -143,6 +144,15 @@ class KeyModifier
       case KeyEvent.KEYCODE_DPAD_LEFT: return "home";
       case KeyEvent.KEYCODE_DPAD_RIGHT: return "end";
       case KeyEvent.KEYCODE_ESCAPE: return "insert";
+      default: return null;
+    }
+  }
+
+  private static String apply_fn_event(KeyValue.Event ev)
+  {
+    switch (ev)
+    {
+      case SWITCH_NUMERIC: return "switch_greekmath";
       default: return null;
     }
   }

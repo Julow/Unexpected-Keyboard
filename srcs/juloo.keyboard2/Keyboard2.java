@@ -290,6 +290,11 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     }
 
+    public void switchGreekmath()
+    {
+      _keyboardView.setKeyboard(getLayout(R.xml.greekmath));
+    }
+
     public void switchProgramming()
     {
       if (_config.programming_layout == -1)
