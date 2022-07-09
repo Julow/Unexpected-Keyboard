@@ -195,6 +195,7 @@ class KeyModifier
       case ',': return "·";
       case '!': return "¡";
       case '?': return "¿";
+      // arrows
       case '↖': return "⇖";
       case '↑': return "⇑";
       case '↗': return "⇗";
@@ -203,6 +204,8 @@ class KeyModifier
       case '↙': return "⇙";
       case '↓': return "⇓";
       case '↘': return "⇘";
+      case '↔': return "⇔";
+      case '↕': return "⇕";
       // Currency symbols
       case 'e': return "€";
       case 'l': return "£";
@@ -211,6 +214,33 @@ class KeyModifier
       case 'c': return "¢";
       case 'p': return "₱";
       case '€': case '£': return "removed"; // Avoid showing these twice
+      // alternating greek letters
+      case 'π': return "ϖ";
+      case 'θ': return "ϑ";
+      case 'Θ': return "ϴ";
+      case 'ε': return "ϵ";
+      case 'β': return "ϐ";
+      case 'ρ': return "ϱ";
+      case 'σ': return "ς";
+      case 'γ': return "ɣ";
+      case 'φ': return "ϕ";
+      case 'υ': return "ϒ";
+      case 'κ': return "ϰ";
+      // alternating math characters
+      case '∪': return "⋃";
+      case '∩': return "⋂";
+      case '∃': return "∄";
+      case '∈': return "∉";
+      case '∫': return "∮";
+      case 'Π': return "∏";
+      case 'Σ': return "∑";
+      case '∨': return "⋁";
+      case '∧': return "⋀";
+      case '⊷': return "⊶";
+      case '⊂': return "⊆";
+      case '⊃': return "⊇";
+      case '±': return "∓";
+      // other
       case '\t': return "\\t";
       case ' ': return "nbsp";
       default: return null;
