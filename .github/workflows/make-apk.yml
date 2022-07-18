@@ -38,5 +38,5 @@ jobs:
     - name: Save debug apk
       uses: actions/upload-artifact@v2
       with:
-        name: debug apk
+        name: "${{github.repository_owner}} ${{github.ref_name}} debug_apk"
         path: _build/*.apk
