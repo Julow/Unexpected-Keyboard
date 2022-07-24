@@ -90,6 +90,27 @@ public class Keyboard2View extends View
     invalidate();
   }
 
+  /** Called by auto-capitalisation. */
+  public void set_shift_state(boolean state)
+  {
+    KeyValue shift = KeyValue.getKeyByName("shift");
+    KeyboardData.Key key = _keyboard.findKeyWithValue(shift);
+    if (key == null)
+    {
+      // Lookup again for the lockable shift key, which is a different value.
+      shift = shift.withFlags(shift.getFlags() | KeyValue.FLAG_LOCK);
+      key = _keyboard.findKeyWithValue(shift);
+    }
+    if (key != null)
+    {
+      if (state)
+        _pointers.add_fake_pointer(shift, key);
+      else
+        _pointers.remove_fake_pointer(shift, key);
+      invalidate();
+    }
+  }
+
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
   {
     return KeyModifier.modify(k, mods);

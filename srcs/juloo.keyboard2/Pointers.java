@@ -74,6 +74,24 @@ public final class Pointers implements Handler.Callback
     return -1;
   }
 
+  /** Fake pointers are latched and not lockable. */
+  public void add_fake_pointer(KeyValue kv, KeyboardData.Key key)
+  {
+    // Avoid adding a fake pointer to a key that is already down.
+    if (isKeyDown(key))
+      return;
+    Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
+    ptr.flags = ptr.flags & ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK);
+    _ptrs.add(ptr);
+  }
+
+  public void remove_fake_pointer(KeyValue kv, KeyboardData.Key key)
+  {
+    Pointer ptr = getLatched(key, kv);
+    if (ptr != null)
+      removePtr(ptr);
+  }
+
   // Receiving events
 
   public void onTouchUp(int pointerId)
@@ -252,8 +270,11 @@ public final class Pointers implements Handler.Callback
 
   private Pointer getLatched(Pointer target)
   {
-    KeyboardData.Key k = target.key;
-    KeyValue v = target.value;
+    return getLatched(target.key, target.value);
+  }
+
+  private Pointer getLatched(KeyboardData.Key k, KeyValue v)
+  {
     if (v == null)
       return null;
     for (Pointer p : _ptrs)

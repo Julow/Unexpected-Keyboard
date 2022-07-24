@@ -43,6 +43,17 @@ class KeyboardData
     return new KeyboardData(rows, keysWidth, extra_keys);
   }
 
+  public Key findKeyWithValue(KeyValue kv)
+  {
+    for (Row r : rows)
+    {
+      Key k = r.findKeyWithValue(kv);
+      if (k != null)
+        return k;
+    }
+    return null;
+  }
+
   private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
   {
     if (!extra_keys.hasNext())
@@ -168,6 +179,14 @@ class KeyboardData
         public Key apply(Key k) { return k.scaleWidth(s); }
       });
     }
+
+    public Key findKeyWithValue(KeyValue kv)
+    {
+      for (Key k : keys)
+        if (k.hasValue(kv))
+          return k;
+      return null;
+    }
   }
 
   public static class Key
@@ -290,6 +309,17 @@ class KeyboardData
         }
       }
       return (c == null) ? null : c.kv;
+    }
+
+    public boolean hasValue(KeyValue kv)
+    {
+      return (hasValue(key0, kv) || hasValue(key1, kv) || hasValue(key2, kv) ||
+          hasValue(key3, kv) || hasValue(key4, kv));
+    }
+
+    private static boolean hasValue(Corner c, KeyValue kv)
+    {
+      return (c != null && c.kv.equals(kv));
     }
   }
 

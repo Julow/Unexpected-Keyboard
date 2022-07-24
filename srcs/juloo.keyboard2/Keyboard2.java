@@ -35,6 +35,7 @@ public class Keyboard2 extends InputMethodService
   private ViewGroup _emojiPane = null;
 
   private Config _config;
+  private Autocapitalisation _autocap = new Autocapitalisation();
 
   private boolean _debug_logs = false;
 
@@ -55,6 +56,14 @@ public class Keyboard2 extends InputMethodService
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     _debug_logs = getResources().getBoolean(R.bool.debug_logs);
+  }
+
+  private void update_shift_state(boolean might_disable)
+  {
+    if (_autocap.should_enable_shift())
+      _keyboardView.set_shift_state(true);
+    else if (might_disable)
+      _keyboardView.set_shift_state(false);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -163,7 +172,7 @@ public class Keyboard2 extends InputMethodService
     return getResources().getString(res);
   }
 
-  private void refreshEditorInfo(EditorInfo info)
+  private void refresh_action_label(EditorInfo info)
   {
     // First try to look at 'info.actionLabel', if it isn't set, look at
     // 'imeOptions'.
@@ -210,11 +219,13 @@ public class Keyboard2 extends InputMethodService
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
     refreshConfig();
-    refreshEditorInfo(info);
+    refresh_action_label(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+    _autocap.started(info, getCurrentInputConnection());
+    update_shift_state(false);
     setInputView(_keyboardView);
     if (_debug_logs)
       log_editor_info(info);
@@ -234,6 +245,14 @@ public class Keyboard2 extends InputMethodService
   {
     refreshSubtypeImm();
     _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+  }
+
+  @Override
+  public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
+  {
+    super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
+    _autocap.selection_updated(oldSelStart, newSelStart, getCurrentInputConnection());
+    update_shift_state(true);
   }
 
   @Override
@@ -330,11 +349,15 @@ public class Keyboard2 extends InputMethodService
     public void commitText(String text)
     {
       getCurrentInputConnection().commitText(text, 1);
+      _autocap.typed(text);
+      update_shift_state(false);
     }
 
     public void commitChar(char c)
     {
       sendKeyChar(c);
+      _autocap.typed(c);
+      update_shift_state(false);
     }
   }
 
