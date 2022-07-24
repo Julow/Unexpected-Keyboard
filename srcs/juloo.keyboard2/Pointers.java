@@ -104,11 +104,8 @@ public final class Pointers implements Handler.Callback
     if (latched != null) // Already latched
     {
       removePtr(ptr); // Remove dupplicate
-      if ((latched.flags & KeyValue.FLAG_LOCK) != 0) // Locking key, toggle lock
-      {
-        latched.flags = (latched.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
-        _handler.onPointerFlagsChanged();
-      }
+      if ((latched.flags & KeyValue.FLAG_LOCK) != 0) // Toggle lockable key
+        lockPointer(latched, false);
       else // Otherwise, unlatch
       {
         removePtr(latched);
@@ -119,7 +116,7 @@ public final class Pointers implements Handler.Callback
     {
       ptr.flags &= ~KeyValue.FLAG_LATCH;
       ptr.pointerId = -1; // Latch
-      _handler.onPointerFlagsChanged();
+      _handler.onPointerFlagsChanged(false);
     }
     else
     {
@@ -136,7 +133,7 @@ public final class Pointers implements Handler.Callback
       return;
     stopKeyRepeat(ptr);
     removePtr(ptr);
-    _handler.onPointerFlagsChanged();
+    _handler.onPointerFlagsChanged(true);
   }
 
   /* Whether an other pointer is down on a non-special key. */
@@ -161,8 +158,7 @@ public final class Pointers implements Handler.Callback
     KeyValue value = handleKV(key.key0, mods);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
-    if (value != null && !value.hasFlags(KeyValue.FLAG_SPECIAL))
-      startKeyRepeat(ptr);
+    startKeyRepeat(ptr);
     _handler.onPointerDown(false);
   }
 
@@ -245,8 +241,7 @@ public final class Pointers implements Handler.Callback
         if ((old_flags & ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) == 0)
         {
           stopKeyRepeat(ptr);
-          if ((ptr.flags & KeyValue.FLAG_SPECIAL) == 0)
-            startKeyRepeat(ptr);
+          startKeyRepeat(ptr);
         }
         _handler.onPointerDown(true);
       }
@@ -291,10 +286,17 @@ public final class Pointers implements Handler.Callback
       // Latched and not locked, remove
       if (ptr.pointerId == -1 && (ptr.flags & KeyValue.FLAG_LOCKED) == 0)
         _ptrs.remove(i);
-      // Not latched but pressed, don't latch once released
+      // Not latched but pressed, don't latch once released and stop long press.
       else if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
         ptr.flags &= ~KeyValue.FLAG_LATCH;
     }
+  }
+
+  /** Make a pointer into the locked state. */
+  private void lockPointer(Pointer ptr, boolean shouldVibrate)
+  {
+    ptr.flags = (ptr.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
+    _handler.onPointerFlagsChanged(shouldVibrate);
   }
 
   private boolean isModulatedKeyPressed()
@@ -317,26 +319,33 @@ public final class Pointers implements Handler.Callback
     {
       if (ptr.timeoutWhat == msg.what)
       {
-        long nextInterval = _config.longPressInterval;
-        if (_config.preciseRepeat && (ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
-        {
-          // Slower repeat for modulated keys
-          nextInterval *= 2;
-          // Modulate repeat interval depending on the distance of the pointer
-          nextInterval = (long)((float)nextInterval / modulatePreciseRepeat(ptr));
-        }
-        _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextInterval);
-        _handler.onPointerHold(ptr.value, ptr.modifiers);
-        return (true);
+        if (handleKeyRepeat(ptr))
+          _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextRepeatInterval(ptr));
+        else
+          ptr.timeoutWhat = -1;
+        return true;
       }
     }
-    return (false);
+    return false;
+  }
+
+  private long nextRepeatInterval(Pointer ptr)
+  {
+    long t = _config.longPressInterval;
+    if (_config.preciseRepeat && (ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+    {
+      // Modulate repeat interval depending on the distance of the pointer
+      t = (long)((float)t * 2.f / modulatePreciseRepeat(ptr));
+    }
+    return t;
   }
 
   private static int uniqueTimeoutWhat = 0;
 
   private void startKeyRepeat(Pointer ptr)
   {
+    if (ptr.value == null)
+      return;
     int what = (uniqueTimeoutWhat++);
     ptr.timeoutWhat = what;
     long timeout = _config.longPressTimeout;
@@ -354,6 +363,22 @@ public final class Pointers implements Handler.Callback
       ptr.timeoutWhat = -1;
       ptr.repeatingPtrDist = -1.f;
     }
+  }
+
+  /** A pointer is repeating. Returns [true] if repeat should continue. */
+  private boolean handleKeyRepeat(Pointer ptr)
+  {
+    // Long press toggle lock on modifiers
+    if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
+    {
+      lockPointer(ptr, true);
+      return false;
+    }
+    // Stop repeating: Latched key, special keys
+    if (ptr.pointerId == -1 || (ptr.flags & KeyValue.FLAG_SPECIAL) != 0)
+      return false;
+    _handler.onPointerHold(ptr.value, ptr.modifiers);
+    return true;
   }
 
   private float modulatePreciseRepeat(Pointer ptr)
@@ -468,7 +493,7 @@ public final class Pointers implements Handler.Callback
     public void onPointerUp(KeyValue k, Modifiers flags);
 
     /** Flags changed because latched or locked keys or cancelled pointers. */
-    public void onPointerFlagsChanged();
+    public void onPointerFlagsChanged(boolean shouldVibrate);
 
     /** Key is repeating. */
     public void onPointerHold(KeyValue k, Modifiers flags);

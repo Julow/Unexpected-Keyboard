@@ -133,9 +133,11 @@ public class Keyboard2View extends View
     _config.handler.handleKeyUp(k, mods);
   }
 
-  public void onPointerFlagsChanged()
+  public void onPointerFlagsChanged(boolean shouldVibrate)
   {
     invalidate();
+    if (shouldVibrate)
+      vibrate();
   }
 
   private void updateFlags()

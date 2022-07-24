@@ -134,7 +134,8 @@ final class Config
       + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
     lockable_modifiers.clear();
-    if (prefs.getBoolean("lockable_shift", true)) lockable_modifiers.add(KeyValue.Modifier.SHIFT);
+    if (prefs.getBoolean("lock_double_tap", false))
+      lockable_modifiers.add(KeyValue.Modifier.SHIFT);
     if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.Modifier.CTRL);
     if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.Modifier.ALT);
     if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.Modifier.FN);
