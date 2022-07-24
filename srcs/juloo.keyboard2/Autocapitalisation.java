@@ -10,7 +10,8 @@ final class Autocapitalisation
 {
   private boolean _enabled = false;
   private boolean _beginning_of_sentence = false;
-
+  /** Used to avoid enabling shift after an arrow key is pressed. */
+  private boolean _skip_next_selection_update = false;
   /** Keep track of the cursor to differentiate 'selection_updated' events
       corresponding to typing from cursor movement. */
   private int _cursor = 0;
@@ -50,22 +51,50 @@ final class Autocapitalisation
       _beginning_of_sentence = false;
   }
 
-  public void selection_updated(int old_cursor, int new_cursor, InputConnection ic)
+  public void event_sent(int code)
   {
+    switch (code)
+    {
+      // Disable temporarily after a keyboard cursor movement
+      case KeyEvent.KEYCODE_DPAD_UP:
+      case KeyEvent.KEYCODE_DPAD_RIGHT:
+      case KeyEvent.KEYCODE_DPAD_DOWN:
+      case KeyEvent.KEYCODE_DPAD_LEFT:
+      case KeyEvent.KEYCODE_PAGE_UP:
+      case KeyEvent.KEYCODE_PAGE_DOWN:
+      case KeyEvent.KEYCODE_MOVE_HOME:
+      case KeyEvent.KEYCODE_MOVE_END:
+        _skip_next_selection_update = true;
+        _beginning_of_sentence = false;
+        break;
+    }
+  }
+
+  /** Returns [true] if shift might be disabled. */
+  public boolean selection_updated(int old_cursor, int new_cursor, InputConnection ic)
+  {
+    if (_skip_next_selection_update)
+    {
+      _cursor = new_cursor;
+      _skip_next_selection_update = false;
+      return false;
+    }
     if (new_cursor == _cursor)
-      return;
-    // Text has been inserted
+      return false;
+    // Text has been inserted or cursor moved forward
     if (old_cursor == _cursor && new_cursor > old_cursor)
     {
       scan_text_before_cursor(Math.min(new_cursor - old_cursor, 10), ic);
+      return true;
     }
     else
     {
-      // Cursor has moved or [_cursor] wasn't uptodate
+      // Cursor has moved backward or text deleted
       _beginning_of_sentence = false;
       scan_text_before_cursor(10, ic);
+      _cursor = new_cursor;
+      return true;
     }
-    _cursor = new_cursor;
   }
 
   /** Updates [_cursor]. */

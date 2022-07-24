@@ -251,8 +251,8 @@ public class Keyboard2 extends InputMethodService
   public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
   {
     super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
-    _autocap.selection_updated(oldSelStart, newSelStart, getCurrentInputConnection());
-    update_shift_state(true);
+    update_shift_state(
+        _autocap.selection_updated(oldSelStart, newSelStart, getCurrentInputConnection()));
   }
 
   @Override
@@ -337,6 +337,11 @@ public class Keyboard2 extends InputMethodService
       if (conn == null)
         return;
       conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
+      if (eventAction == KeyEvent.ACTION_UP)
+      {
+        _autocap.event_sent(eventCode);
+        update_shift_state(false);
+      }
     }
 
     public void showKeyboardConfig()
