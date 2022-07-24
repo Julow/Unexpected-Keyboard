@@ -19,8 +19,6 @@
   <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>
   <string name="pref_precise_repeat_title">精确控制光标移速</string>
   <string name="pref_precise_repeat_summary">按键重复按下速度由手指滑动的距离决定</string>
-  <string name="pref_lockable_keys_title">组合键锁定</string>
-  <string name="pref_lockable_keys_summary">可以通过输入两次锁定任何组合键(Ctrl, Alt, Fn, 声调符号等)</string>
   <string name="pref_category_style">样式</string>
   <string name="pref_margin_bottom_title">键盘下边距</string>
   <string name="pref_keyboard_height_title">键盘高度</string>

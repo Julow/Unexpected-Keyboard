@@ -17,8 +17,6 @@
   <string name="pref_vibrate_summary">Habilitar/deshabilitar vibración al presionar una tecla</string>
   <string name="pref_precise_repeat_title">Movimientos de cursor preciso</string>
   <string name="pref_precise_repeat_summary">Modular la velocidad de repetición de teclas según si se desliza más o menos</string>
-  <string name="pref_lockable_keys_title">Bloqueo de teclas modificadoras</string>
-  <string name="pref_lockable_keys_summary">Teclas modificadoras que se pueden bloquear pulsándolas dos veces</string>
   <string name="pref_category_style">Estilo</string>
   <string name="pref_margin_bottom_title">Margen del pie</string>
   <string name="pref_keyboard_height_title">Altura del teclado</string>

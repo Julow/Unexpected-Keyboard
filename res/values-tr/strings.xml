@@ -21,8 +21,6 @@
   <string name="pref_vibrate_summary">Tuşa basıldığında titreşimi etkinleştir</string>
   <string name="pref_precise_repeat_title">İmleç hareketini ayarla</string>
   <string name="pref_precise_repeat_summary">Tuş tekrar hızını az ya da çok kaydırarak ayarla</string>
-  <string name="pref_lockable_keys_title">Sabitlenebilir değiştiriciler</string>
-  <string name="pref_lockable_keys_summary">Çift vuruşla sabitlenebilecek değiştirici tuşlar</string>
   <string name="pref_category_style">Stil</string>
   <string name="pref_margin_bottom_title">Alt boşluk</string>
   <string name="pref_keyboard_height_title">Klavye yüksekliği</string>
