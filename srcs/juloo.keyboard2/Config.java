@@ -39,6 +39,7 @@ final class Config
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
+  public boolean autocapitalisation;
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
@@ -146,6 +147,7 @@ final class Config
       * characterSizeScale;
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
+    autocapitalisation = prefs.getBoolean("autocapitalisation", true);
   }
 
   /** Update the layout according to the configuration.

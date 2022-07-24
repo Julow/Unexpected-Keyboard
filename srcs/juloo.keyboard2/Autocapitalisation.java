@@ -25,7 +25,8 @@ final class Autocapitalisation
       isn't stored. */
   public void started(EditorInfo info, InputConnection ic)
   {
-    if ((info.inputType & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) == 0)
+    if (!Config.globalConfig().autocapitalisation
+        || (info.inputType & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) == 0)
     {
       _enabled = false;
       return;
