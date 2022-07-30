@@ -93,6 +93,8 @@ public class Keyboard2View extends View
   /** Called by auto-capitalisation. */
   public void set_shift_state(boolean state)
   {
+    if (_keyboard == null)
+      return;
     KeyValue shift = KeyValue.getKeyByName("shift");
     KeyboardData.Key key = _keyboard.findKeyWithValue(shift);
     if (key == null)
