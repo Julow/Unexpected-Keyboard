@@ -251,8 +251,7 @@ public class Keyboard2 extends InputMethodService
   public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
   {
     super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
-    update_shift_state(
-        _autocap.selection_updated(oldSelStart, newSelStart, getCurrentInputConnection()));
+    update_shift_state(_autocap.selection_updated(oldSelStart, newSelStart));
   }
 
   @Override
