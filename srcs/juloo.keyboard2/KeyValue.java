@@ -59,6 +59,7 @@ final class KeyValue
   public static final int FLAG_SMALLER_FONT = (1 << 25);
   // Used by [Pointers].
   public static final int FLAG_LOCKED = (1 << 26);
+  public static final int FLAG_FAKE_PTR = (1 << 27);
 
   // Kinds
   public static final int KIND_CHAR = (0 << 29);

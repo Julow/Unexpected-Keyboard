@@ -81,14 +81,14 @@ public final class Pointers implements Handler.Callback
     if (isKeyDown(key))
       return;
     Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags = ptr.flags & ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK);
+    ptr.flags = ptr.flags & ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK | KeyValue.FLAG_FAKE_PTR);
     _ptrs.add(ptr);
   }
 
   public void remove_fake_pointer(KeyValue kv, KeyboardData.Key key)
   {
     Pointer ptr = getLatched(key, kv);
-    if (ptr != null)
+    if (ptr != null && (ptr.flags & KeyValue.FLAG_FAKE_PTR) != 0)
       removePtr(ptr);
   }
 
