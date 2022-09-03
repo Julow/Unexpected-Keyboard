@@ -224,6 +224,7 @@ final class Config
       case "light": return R.style.Light;
       case "black": return R.style.Black;
       case "dark": return R.style.Dark;
+      case "white": return R.style.White;
       default:
       case "system":
         if (Build.VERSION.SDK_INT >= 8)
@@ -258,16 +259,6 @@ final class Config
       case "ru_jcuken": return R.xml.local_ru_jcuken;
       case "jcuken_ua": return R.xml.jcuken_ua;
       default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
-    }
-  }
-
-  public static int themeId_of_string(String name)
-  {
-    switch (name)
-    {
-      case "light": return R.style.Light;
-      case "black": return R.style.Black;
-      default: case "dark": return R.style.Dark;
     }
   }
 

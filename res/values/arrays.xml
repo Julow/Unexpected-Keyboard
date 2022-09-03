@@ -67,12 +67,14 @@
     <item>@string/pref_theme_e_dark</item>
     <item>@string/pref_theme_e_light</item>
     <item>@string/pref_theme_e_black</item>
+    <item>@string/pref_theme_e_white</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
     <item>dark</item>
     <item>light</item>
     <item>black</item>
+    <item>white</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
