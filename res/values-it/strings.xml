@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
+  <string name="app_name" product="default">Unexpected Keyboard</string>
+  <string name="settings_activity_label">Impostazioni di Unexpected Keyboard</string>
+  <string name="pref_category_layout">Layout</string>
+  <string name="pref_layout_title">Cambia layout tastiera</string>
+  <string name="pref_layout_e_system">Impostazioni di sistema</string>
+  <string name="pref_accents_title">Accenti</string>
+  <string name="pref_accents_e_all_installed">Mostra accenti per tutte le lingue installate</string>
+  <string name="pref_accents_e_selected">Mostra accenti solo per le lingue selezionate</string>
+  <string name="pref_accents_e_none">Nascondi accenti</string>
+  <string name="pref_autocapitalisation_title">Maiuscole Automatiche</string>
+  <string name="pref_autocapitalisation_summary">Premi Shift all\'inizio di una frase</string>
+  <string name="pref_programming_layout_title">Layout tastiera per programmare</string>
+  <string name="pref_programming_layout_none">Nessuno</string>
+  <string name="pref_category_typing">Digitando</string>
+  <string name="pref_swipe_dist_title">Distanza swipe</string>
+  <string name="pref_swipe_dist_summary">Distanza dei caratteri negli angoli dei tasti (%s)</string>
+  <string name="pref_long_timeout_title">Timeout ripetizione tasto</string>
+  <string name="pref_long_interval_title">Intervallo ripetizione tasto</string>
+  <string name="pref_vibrate_title">Vibrazione</string>
+  <string name="pref_vibrate_summary">Abilita/Disabilita Vibrazione alla pressione dei tasti</string>
+  <string name="pref_precise_repeat_title">Movimento puntatore preciso</string>
+  <string name="pref_precise_repeat_summary">Modula la veocità della ripetizione con lo swipe</string>
+  <string name="pref_lockable_keys_title">Deprecato: Modificatori bloccabili</string>
+  <string name="pref_lock_double_tap_title">Doppio tocco su Shift per attivare CapsLock</string>
+  <string name="pref_lock_double_tap_summary">Invece di premere i modificatori a lungo</string>
+  <string name="pref_category_style">Stile</string>
+  <string name="pref_margin_bottom_title">Margine inferiore</string>
+  <string name="pref_keyboard_height_title">Altezza tastiera</string>
+  <string name="pref_keyboard_height_landscape_title">Altezza tastiera in modalità orizzontale</string>
+  <string name="pref_horizontal_margin_title">Margine orizzontale</string>
+  <string name="pref_character_size_title">Dimensione Caratteri</string>
+  <string name="pref_character_size_summary">Dimensione dei caratteri mostrati sulla tastiera (%.2fx)</string>
+  <string name="pref_theme">Tema</string>
+  <string name="pref_theme_e_system">Impostazioni di sistema</string>
+  <string name="pref_theme_e_dark">Scuro</string>
+  <string name="pref_theme_e_light">Chiaro</string>
+  <string name="pref_theme_e_black">Nero</string>
+  <string name="pref_swipe_dist_e_very_short">Veramente breve</string>
+  <string name="pref_swipe_dist_e_short">Breve</string>
+  <string name="pref_swipe_dist_e_default">Normale</string>
+  <string name="pref_swipe_dist_e_far">Distante</string>
+  <string name="pref_swipe_dist_e_very_far">Molto distante</string>
+  <string name="pref_key_horizontal_space">Spazio orizzontale tra i tasti</string>
+  <string name="pref_key_vertical_space">Spazio verticale tra i tasti</string>
+  <string name="key_action_next">Prossimo</string>
+  <string name="key_action_done">Fatto</string>
+  <string name="key_action_go">Vai</string>
+  <string name="key_action_prev">Precedente</string>
+  <string name="key_action_search">Cerca</string>
+  <string name="key_action_send">Invia</string>
+</resources>
