@@ -17,4 +17,5 @@
   <subtype android:label="%s" android:languageTag="sv" android:imeSubtypeLocale="sv_SE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_sv_se,extra_keys=accent_aigu|accent_trema|accent_ring|€"/>
   <subtype android:label="%s" android:languageTag="tr" android:imeSubtypeLocale="tr_TR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_tr,extra_keys=accent_cedille|accent_trema|₺|ı|ğ"/>
   <subtype android:label="%s" android:languageTag="uk" android:imeSubtypeLocale="uk_UA" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=jcuken_ua"/>
+  <subtype android:label="%s" android:languageTag="cs" android:imeSubtypeLocale="cs_CZ" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwertz_cs,extra_keys=a|accent_cedille|accent_circonflexe"/>
 </input-method>
