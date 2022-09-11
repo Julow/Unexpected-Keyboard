@@ -13,7 +13,8 @@
     <key key0="p" key2="9"/>
   </row>
   <row>
-    <key shift="0.5" key0="a" key1="tab" key4="á"/>
+    <key width="0.5" blind="true"/>
+    <key key0="a" key1="tab" key4="á"/>
     <key key0="s" key1="§" key2="\\" key3="[" key4="]"/>
     <key key0="d" key3="{" key4="}"/>
     <key key0="f" key3="+"/>
@@ -22,6 +23,7 @@
     <key key0="j"/>
     <key key0="k" key3="(" key4=")"/>
     <key key0="l" key1="$" key3="/"/>
+    <key width="0.5" blind="true"/>
   </row>
   <row>
     <key width="1.5" key0="shift"/>

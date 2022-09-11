@@ -13,7 +13,8 @@
     <key key0="п" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
   <row>
-    <key shift="0.5" key0="а" key1="tab" key2="`"/>
+    <key width="0.5" blind="true"/>
+    <key key0="а" key1="tab" key2="`"/>
     <key key0="с"/>
     <key key0="д"/>
     <key key0="ф"/>
@@ -22,6 +23,7 @@
     <key key0="й" key4="}" key3="{"/>
     <key key0="к" key2="ш" key3="[" key4="]"/>
     <key key0="л" key1="щ" key2="|" key3="\\" key4="ю"/>
+    <key width="0.5" blind="true"/>
   </row>
   <row>
     <key width="1.5" key0="shift"/>

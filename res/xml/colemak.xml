@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="q" key1="esc"                key2="loc accent_aigu"    key3="loc accent_tilde"   shift="0.5"/>
+    <key width="0.5" blind="true"/>
+    <key key0="q" key1="esc"                key2="loc accent_aigu"    key3="loc accent_tilde"/>
     <key key0="w" key1="loc accent_grave"       key2=" ́"              key3="~"            />
     <key key0="f" key1="`"                  key2="-"              key3="+" />
     <key key0="p"                           key2="="              key3="%"/>
@@ -10,6 +11,7 @@
     <key key0="l" key1="f11_placeholder"    key2="f12_placeholder"/>
     <key key0="u" key1="loc accent_double_aigu" key2="loc accent_ring"    />
     <key key0="y" key1="&quot;"             key2="'"/>
+    <key width="0.5" blind="true"/>
 
   </row>
   <row>
@@ -34,7 +36,8 @@
     <key key0="b"         key1="("    key2=")"/>
     <key key0="k"         key1=";"    key2=":"/>
     <key key0="m"         key1="|"    key2="\?" />
-    <key key0="backspace" key1="delete" shift="0.25" width="1.25"/>
+    <key width="0.25" blind="true"/>
+    <key key0="backspace" key1="delete" width="1.25"/>
 
   </row>
 </keyboard>

@@ -13,7 +13,8 @@
     <key key0="p" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
   <row>
-    <key shift="0.5" key0="a" key1="tab" key2="`"/>
+    <key width="0.5" blind="true"/>
+    <key key0="a" key1="tab" key2="`"/>
     <key key0="s" key1="loc accent_ring" key3="loc ß" key4="loc accent_ogonek"/>
     <key key0="d" key1="loc accent_grave" key2="loc £" key3="loc accent_aigu"/>
     <key key0="f" key1="loc accent_dot_above"/>
@@ -22,6 +23,7 @@
     <key key0="j" key1="loc accent_trema" key2="loc accent_circonflexe" key4="}" key3="{"/>
     <key key0="k" key1="loc accent_double_aigu" key3="[" key4="]"/>
     <key key0="l" key2="|" key3="\\"/>
+    <key width="0.5" blind="true"/>
   </row>
   <row>
     <key width="1.5" key0="shift"/>
