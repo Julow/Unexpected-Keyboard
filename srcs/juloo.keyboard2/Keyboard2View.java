@@ -203,7 +203,7 @@ public class Keyboard2View extends View
     {
       x += (key.shift + key.width) * _keyWidth;
       if (tx < x)
-        return key;
+        return key.blind ? null : key;
     }
     return null;
   }
@@ -245,25 +245,27 @@ public class Keyboard2View extends View
       for (KeyboardData.Key k : row.keys)
       {
         x += k.shift * _keyWidth;
-        float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
-        boolean isKeyDown = _pointers.isKeyDown(k);
-        _tmpRect.set(x, y, x + keyW, y + keyH);
-        canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
-            isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
-        drawLabel(canvas, k.key0, keyW / 2f + x, y, keyH, isKeyDown);
-        if (k.edgekeys)
-        {
-          drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.TOP, isKeyDown);
-          drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.CENTER, isKeyDown);
-          drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.CENTER, isKeyDown);
-          drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.BOTTOM, isKeyDown);
-        }
-        else
-        {
-          drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.TOP, isKeyDown);
-          drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.BOTTOM, isKeyDown);
-          drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
-          drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
+        if (!k.blind) {
+          float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
+          boolean isKeyDown = _pointers.isKeyDown(k);
+          _tmpRect.set(x, y, x + keyW, y + keyH);
+          canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
+              isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
+          drawLabel(canvas, k.key0, keyW / 2f + x, y, keyH, isKeyDown);
+          if (k.edgekeys)
+          {
+            drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.CENTER, isKeyDown);
+            drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.CENTER, isKeyDown);
+            drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.BOTTOM, isKeyDown);
+          }
+          else
+          {
+            drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.BOTTOM, isKeyDown);
+            drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
+            drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
+          }
         }
         x += _keyWidth * k.width;
       }
