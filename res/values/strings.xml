@@ -14,6 +14,16 @@
   <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string>
   <string name="pref_programming_layout_title">Keyboard layout for programming</string>
   <string name="pref_programming_layout_none">None</string>
+  <string name="pref_show_numpad_title">Show NumPad</string>
+  <string name="pref_show_numpad_never">Never</string>
+  <string name="pref_show_numpad_landscape">Only in landscape mode</string>
+  <string name="pref_show_numpad_always">Always</string>
+  <string name="pref_numpad_layout_title">NumPad layout</string>
+  <string name="pref_numeric">Unexpected NumPad</string>
+  <string name="pref_numpad_narrow_period">Narrow, dec.&#160;separator:&#160;&#160;[&#160;.&#160;]</string>
+  <string name="pref_numpad_narrow_comma">Narrow, dec.&#160;separator:&#160;&#160;[&#160;,&#160;]</string>
+  <string name="pref_numpad_operators_period">Operators, dec.&#160;separator:&#160;&#160;[&#160;.&#160;]</string>
+  <string name="pref_numpad_operators_comma">Operators, dec.&#160;separator:&#160;&#160;[&#160;,&#160;]</string>
   <string name="pref_category_typing">Typing</string>
   <string name="pref_swipe_dist_title">Swiping distance</string>
   <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>

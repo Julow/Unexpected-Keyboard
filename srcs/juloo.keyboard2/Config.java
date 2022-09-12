@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import java.util.Iterator;
+import java.text.DecimalFormatSymbols;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -25,6 +25,8 @@ final class Config
   // From preferences
   public int layout; // Or '-1' for the system defaults
   public int programming_layout; // Or '-1' for none
+  public boolean show_numpad = false;
+  public int numpad_layout;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
   public long longPressTimeout;
@@ -90,6 +92,7 @@ final class Config
    */
   public void refresh(Context context)
   {
+    KeyboardData.clearCaches();
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Resources res = context.getResources();
     DisplayMetrics dm = res.getDisplayMetrics();
@@ -99,8 +102,12 @@ final class Config
     // Scale some dimensions depending on orientation
     float horizontalIntervalScale = 1.f;
     float characterSizeScale = 1.f;
+    String show_numpad_s = prefs.getString("show_numpad", "never");
+    show_numpad = "always".equals(show_numpad_s);
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
+      if ("landscape".equals(show_numpad_s))
+        show_numpad = true;
       keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
       horizontalIntervalScale = 2.f;
       characterSizeScale = 1.25f;
@@ -113,6 +120,7 @@ final class Config
     layout = layout_s.equals("system") ? -1 : layoutId_of_string(layout_s);
     String prog_layout_s = prefs.getString("programming_layout", "none");
     programming_layout = prog_layout_s.equals("none") ? -1 : layoutId_of_string(prog_layout_s);
+    numpad_layout = numpadLayoutId_of_string(prefs.getString("numpad_layout", "system"));
     // The swipe distance is defined relatively to the "exact physical pixels
     // per inch of the screen", which isn't affected by the scaling settings.
     // Take the mean of both dimensions as an approximation of the diagonal.
@@ -204,6 +212,8 @@ final class Config
     });
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.iterator());
+    if (original_kw.num_pad && show_numpad)
+      kw = kw.addNumPad();
     return kw;
   }
 
@@ -258,6 +268,19 @@ final class Config
       case "ru_jcuken": return R.xml.local_ru_jcuken;
       case "jcuken_ua": return R.xml.jcuken_ua;
       default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
+    }
+  }
+
+  public static int numpadLayoutId_of_string(String name) {
+    switch (name) {
+      case "system": return DecimalFormatSymbols.getInstance().getDecimalSeparator() == ',' ?
+              R.xml.numpad_operators_comma : R.xml.numpad_operators_period;
+      case "numeric": return R.xml.numeric;
+      case "numpad_narrow_period": return R.xml.numpad_narrow_period;
+      case "numpad_narrow_comma": return R.xml.numpad_narrow_comma;
+      case "numpad_operators_period": return R.xml.numpad_operators_period;
+      case "numpad_operators_comma": return R.xml.numpad_operators_comma;
+      default: return R.xml.numpad_operators_period; // The config might store an invalid layout, don't crash
     }
   }
 

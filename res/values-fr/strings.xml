@@ -8,6 +8,16 @@
   <string name="pref_accents_e_all_installed">Afficher les accents pour les langues installées</string>
   <string name="pref_accents_e_selected">Afficher les accents pour la langue sélectionnée</string>
   <string name="pref_accents_e_none">Cacher les accents</string>
+  <string name="pref_show_numpad_title">Afficher le pavé numérique</string>
+  <string name="pref_show_numpad_never">Jamais</string>
+  <string name="pref_numpad_layout_title">Disposition du pavé numérique</string>
+  <string name="pref_numeric">Ziffernblock Unexpected</string>
+  <string name="pref_numpad_narrow_period">Étroit, Sép.&#160;décimal:&#160;&#160;[&#160;.&#160;]</string>
+  <string name="pref_numpad_narrow_comma">Étroit, Sép.&#160;décimal:&#160;&#160;[&#160;,&#160;]</string>
+  <string name="pref_numpad_operators_period">Opérateurs, Sép.&#160;décimal:&#160;&#160;[&#160;.&#160;]</string>
+  <string name="pref_numpad_operators_comma">Opérateurs, Sép.&#160;décimal:&#160;&#160;[&#160;,&#160;]</string>
+  <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
+  <string name="pref_show_numpad_always">Toujour</string>
   <string name="pref_autocapitalisation_title">Majuscule automatique</string>
   <string name="pref_autocapitalisation_summary">Active Shift au début des phrases</string>
   <string name="pref_category_typing">Saisie</string>

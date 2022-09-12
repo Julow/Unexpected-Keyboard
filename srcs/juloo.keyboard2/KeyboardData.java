@@ -18,13 +18,15 @@ class KeyboardData
   public final float keysHeight;
   /** Whether to add extra keys. */
   public final boolean extra_keys;
+  /** Whether to possibly add NumPad. */
+  public final boolean num_pad;
 
   public KeyboardData mapKeys(MapKey f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(rows_, keysWidth, extra_keys);
+    return new KeyboardData(rows_, keysWidth, extra_keys, num_pad);
   }
 
   /** Add keys from the given iterator into the keyboard. Extra keys are added
@@ -40,7 +42,31 @@ class KeyboardData
     addExtraKeys_to_row(rows, k, 1, 3);
     addExtraKeys_to_row(rows, k, 2, 2);
     addExtraKeys_to_row(rows, k, 2, 1);
-    return new KeyboardData(rows, keysWidth, extra_keys);
+    return new KeyboardData(rows, keysWidth, extra_keys, num_pad);
+  }
+
+  public KeyboardData addNumPad()
+  {
+    if (!num_pad || _numPadKeyboardData == null)
+      return this;
+    ArrayList<Row> extendedRows = new ArrayList<Row>();
+    Iterator<Row> iterNumPadRows = _numPadKeyboardData.rows.iterator();
+    for (Row row : rows)
+    {
+      ArrayList<KeyboardData.Key> keys = new ArrayList<Key>(row.keys);
+      float height = row.height;
+      float shift = row.shift;
+      if (iterNumPadRows.hasNext())
+      {
+        Row numPadRow = iterNumPadRows.next();
+        keys.add(new Key(null, null, null, null, null, 0.5f, 0.f, false, true));
+        keys.addAll(numPadRow.keys);
+        height = Math.max(height, numPadRow.height);
+        shift = Math.max(shift, numPadRow.shift);
+      }
+      extendedRows.add(new Row(keys, height, shift));
+    }
+    return new KeyboardData(extendedRows, compute_max_width(extendedRows), extra_keys, num_pad);
   }
 
   public Key findKeyWithValue(KeyValue kv)
@@ -69,7 +95,15 @@ class KeyboardData
   }
 
   private static Row _bottomRow = null;
+  private static KeyboardData _numPadKeyboardData = null;
+
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
+
+  public static void clearCaches()
+  {
+    _layoutCache.clear();
+    _numPadKeyboardData = null;
+  }
 
   public static KeyboardData load(Resources res, int id)
   {
@@ -80,6 +114,12 @@ class KeyboardData
       {
         if (_bottomRow == null)
           _bottomRow = parse_bottom_row(res.getXml(R.xml.bottom_row));
+        if (_numPadKeyboardData == null)
+        {
+          _numPadKeyboardData = parse_keyboard(res.getXml(Config.globalConfig().numpad_layout));
+          // just for R.xml.numeric keyboard
+          replaceKeyAbcByFn(_numPadKeyboardData);
+        }
         l = parse_keyboard(res.getXml(id));
         _layoutCache.put(id, l);
       }
@@ -91,19 +131,51 @@ class KeyboardData
     return l;
   }
 
+  // TODO replace this brute force method by general approach
+  private static void replaceKeyAbcByFn(KeyboardData kd) {
+    for (Row row : _numPadKeyboardData.rows)
+    {
+      Key newKey = null;
+      int key_i = 0;
+      for (; key_i < row.keys.size(); key_i++)
+      {
+        Key key = row.keys.get(key_i);
+        for (int i = 0; i < 5; i++)
+        {
+          KeyValue kv = key.getKeyValue(i);
+          if (kv != null && "ABC".equals(kv.getString()))
+          {
+            KeyValue newKv = new KeyValue("Fn",
+                    KeyValue.KIND_MODIFIER, 1, KeyValue.FLAG_SMALLER_FONT | KeyValue.FLAG_LATCH);
+            newKey = key.withKeyValue(i, newKv);
+            break;
+          }
+        }
+        if (newKey != null)
+        {
+          row.keys.set(key_i, newKey);
+          break;
+        }
+      }
+      if (newKey != null)
+        break;
+    }
+  }
+
   private static KeyboardData parse_keyboard(XmlResourceParser parser) throws Exception
   {
     if (!expect_tag(parser, "keyboard"))
       throw new Exception("Empty layout file");
     boolean bottom_row = parser.getAttributeBooleanValue(null, "bottom_row", true);
     boolean extra_keys = parser.getAttributeBooleanValue(null, "extra_keys", true);
+    boolean num_pad = parser.getAttributeBooleanValue(null, "num_pad", true);
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
         rows.add(Row.parse(parser));
     float kw = compute_max_width(rows);
     if (bottom_row)
       rows.add(_bottomRow.updateWidth(kw));
-    return new KeyboardData(rows, kw, extra_keys);
+    return new KeyboardData(rows, kw, extra_keys, num_pad);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -121,7 +193,7 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw, boolean xk)
+  protected KeyboardData(List<Row> rows_, float kw, boolean xk, boolean np)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -130,6 +202,7 @@ class KeyboardData
     keysWidth = kw;
     keysHeight = kh;
     extra_keys = xk;
+    num_pad = np;
   }
 
   public static class Row
@@ -205,7 +278,7 @@ class KeyboardData
     /** Key width in relative unit. */
     public final float width;
     /** Extra empty space on the left of the key. */
-    public final float shift; // TODO remove when nobody
+    public final float shift; // TODO remove, since its obsolete with blind attribute
     /** Put keys 1 to 4 on the edges instead of the corners. */
     public final boolean edgekeys;
     /** is invisible key, which acts as spacer without any function */

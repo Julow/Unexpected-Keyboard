@@ -52,6 +52,33 @@
     <item>Dvorak</item>
     <item>Colemak</item>
   </string-array>
+  <string-array name="pref_show_numpad_values">
+    <item>never</item>
+    <item>landscape</item>
+    <item>always</item>
+  </string-array>
+  <string-array name="pref_show_numpad_entries">
+    <item>@string/pref_show_numpad_never</item>
+    <item>@string/pref_show_numpad_landscape</item>
+    <item>@string/pref_show_numpad_always</item>
+  </string-array>
+  <string-array name="pref_numpad_layout_entries">
+    <item>@string/pref_layout_e_system</item>
+    <item>@string/pref_numeric</item>
+    <item>@string/pref_numpad_narrow_period</item>
+    <item>@string/pref_numpad_narrow_comma</item>
+    <item>@string/pref_numpad_operators_period</item>
+    <item>@string/pref_numpad_operators_comma</item>
+  </string-array>
+  <string-array name="pref_numpad_layout_values">
+    <item>system</item>
+    <item>numeric</item>
+    <item>numpad_narrow_period</item>
+    <item>numpad_narrow_comma</item>
+    <item>numpad_operators_period</item>
+    <item>numpad_operators_comma</item>
+  </string-array>
+
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>
     <item>@string/pref_accents_e_selected</item>

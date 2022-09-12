@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<keyboard bottom_row="false">
+  <row>
+    <key key0="7"/>
+    <key key0="8"/>
+    <key key0="9"/>
+  </row>
+  <row>
+    <key key0="4"/>
+    <key key0="5"/>
+    <key key0="6"/>
+  </row>
+  <row>
+    <key key0="1"/>
+    <key key0="2"/>
+    <key key0="3"/>
+  </row>
+  <row height="0.95">
+    <key width="2.0" key0="0"/>
+    <key key0="," key3="."/>
+  </row>
+</keyboard>
