@@ -26,7 +26,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Keyboard2 extends InputMethodService
-  implements SharedPreferences.OnSharedPreferenceChangeListener
+  implements SharedPreferences.OnSharedPreferenceChangeListener,
+             Autocapitalisation.Callback
 {
   static private final String TAG = "Keyboard2";
 
@@ -58,11 +59,11 @@ public class Keyboard2 extends InputMethodService
     _debug_logs = getResources().getBoolean(R.bool.debug_logs);
   }
 
-  private void update_shift_state(boolean might_disable)
+  public void update_shift_state(boolean should_enable, boolean should_disable)
   {
-    if (_autocap.should_enable_shift())
+    if (should_enable)
       _keyboardView.set_shift_state(true);
-    else if (might_disable)
+    else if (should_disable)
       _keyboardView.set_shift_state(false);
   }
 
@@ -224,8 +225,7 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
-    _autocap.started(info, getCurrentInputConnection());
-    update_shift_state(false);
+    _autocap.started(getMainLooper(), this, info, getCurrentInputConnection());
     setInputView(_keyboardView);
     if (_debug_logs)
       log_editor_info(info);
@@ -251,7 +251,7 @@ public class Keyboard2 extends InputMethodService
   public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
   {
     super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
-    update_shift_state(_autocap.selection_updated(oldSelStart, newSelStart));
+    _autocap.selection_updated(oldSelStart, newSelStart);
   }
 
   @Override
@@ -337,10 +337,7 @@ public class Keyboard2 extends InputMethodService
         return;
       conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
       if (eventAction == KeyEvent.ACTION_UP)
-      {
         _autocap.event_sent(eventCode);
-        update_shift_state(false);
-      }
     }
 
     public void showKeyboardConfig()
@@ -354,14 +351,12 @@ public class Keyboard2 extends InputMethodService
     {
       getCurrentInputConnection().commitText(text, 1);
       _autocap.typed(text);
-      update_shift_state(false);
     }
 
     public void commitChar(char c)
     {
       sendKeyChar(c);
       _autocap.typed(c);
-      update_shift_state(false);
     }
   }
 

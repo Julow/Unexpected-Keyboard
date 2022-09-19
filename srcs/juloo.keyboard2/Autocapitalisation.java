@@ -1,5 +1,7 @@
 package juloo.keyboard2;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
@@ -8,29 +10,54 @@ import android.view.KeyEvent;
 
 final class Autocapitalisation
 {
-  private boolean _enabled = false;
-  private boolean _should_enable_shift = false;
+  boolean _enabled = false;
+  boolean _should_enable_shift = false;
+  boolean _should_disable_shift = false;
+  boolean _should_update_caps_mode = false;
 
-  private InputConnection _ic;
-  private int _caps_mode;
+  Handler _handler;
+  InputConnection _ic;
+  Callback _callback;
+  int _caps_mode;
 
   /** Keep track of the cursor to recognize cursor movements from typing. */
-  private int _cursor;
+  int _cursor;
 
-  static private int SUPPORTED_CAPS_MODES =
+  static int SUPPORTED_CAPS_MODES =
     InputType.TYPE_TEXT_FLAG_CAP_SENTENCES |
     InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 
-  public boolean should_enable_shift()
+  Runnable delayed_callback = new Runnable()
   {
-    return _should_enable_shift;
+    public void run()
+    {
+      if (_should_update_caps_mode)
+      {
+        _should_enable_shift = _enabled && (_ic.getCursorCapsMode(_caps_mode) != 0);
+        _should_update_caps_mode = false;
+      }
+      _callback.update_shift_state(_should_enable_shift, _should_disable_shift);
+    }
+  };
+
+  void callback(final boolean might_disable)
+  {
+    _should_disable_shift = might_disable;
+    // The callback must be delayed because [getCursorCapsMode] would sometimes
+    // be called before the editor finished handling the previous event.
+    _handler.postDelayed(delayed_callback, 1);
   }
 
-  /** Returns [true] if shift should be on initially. The input connection
-      isn't stored. */
-  public void started(EditorInfo info, InputConnection ic)
+  /**
+   * The events are: started, typed, event sent, selection updated
+   * [started] does initialisation work and must be called before any other
+   * event.
+   */
+  public void started(Looper looper, Callback cb, EditorInfo info, InputConnection ic)
   {
+    _handler = new Handler(looper);
     _ic = ic;
+    _callback = cb;
     _caps_mode = info.inputType & TextUtils.CAP_MODE_SENTENCES;
     if (!Config.globalConfig().autocapitalisation || _caps_mode == 0)
     {
@@ -39,19 +66,27 @@ final class Autocapitalisation
     }
     _enabled = true;
     _should_enable_shift = (info.initialCapsMode != 0);
+    _callback.update_shift_state(_should_enable_shift, true);
   }
 
   public void typed(CharSequence c)
   {
     for (int i = 0; i < c.length(); i++)
-      typed(c.charAt(i));
+      type_one_char(c.charAt(i));
+    callback(false);
   }
 
   public void typed(char c)
   {
+    type_one_char(c);
+    callback(false);
+  }
+
+  void type_one_char(char c)
+  {
     _cursor++;
     if (is_trigger_character(c))
-      update_caps_mode();
+      _should_update_caps_mode = true;
     else
       _should_enable_shift = false;
   }
@@ -61,28 +96,24 @@ final class Autocapitalisation
     switch (code)
     {
       case KeyEvent.KEYCODE_DEL:
-        _cursor--;
-        update_caps_mode();
+        if (_cursor > 0) _cursor--;
+        _should_update_caps_mode = true;
         break;
     }
+    callback(true);
   }
 
   /** Returns [true] if shift might be disabled. */
-  public boolean selection_updated(int old_cursor, int new_cursor)
+  public void selection_updated(int old_cursor, int new_cursor)
   {
     if (new_cursor == _cursor) // Just typing
-      return false;
+      return;
     _cursor = new_cursor;
     _should_enable_shift = false;
-    return true;
+    callback(true);
   }
 
-  private void update_caps_mode()
-  {
-    _should_enable_shift = _enabled && (_ic.getCursorCapsMode(_caps_mode) != 0);
-  }
-
-  private boolean is_trigger_character(char c)
+  boolean is_trigger_character(char c)
   {
     switch (c)
     {
@@ -91,5 +122,10 @@ final class Autocapitalisation
       default:
         return false;
     }
+  }
+
+  public static interface Callback
+  {
+    public void update_shift_state(boolean should_enable, boolean should_disable);
   }
 }
