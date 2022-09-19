@@ -117,7 +117,7 @@ public class Keyboard2 extends InputMethodService
       case 4: break;
       default: throw new IllegalArgumentException();
     }
-    _config.extra_keys = extra_keys;
+    _config.extra_keys_subtype = extra_keys;
     if (enabled_subtypes.size() > 1)
       _config.shouldOfferSwitchingToNextInputMethod = true;
   }
@@ -127,8 +127,8 @@ public class Keyboard2 extends InputMethodService
     // Fallback for the accents option: Only respect the "None" case
     switch (_config.accents)
     {
-      case 1: case 2: case 3: _config.extra_keys = null; break;
-      case 4: _config.extra_keys = new HashSet<KeyValue>(); break;
+      case 1: case 2: case 3: _config.extra_keys_subtype = null; break;
+      case 4: _config.extra_keys_subtype = new HashSet<KeyValue>(); break;
     }
     // Fallback for the layout option: Use qwerty in the "system settings" case
     _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;

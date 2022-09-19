@@ -42,7 +42,7 @@ public class Theme
     s.recycle();
     _keyLabelPaint = initLabelPaint(Paint.Align.CENTER, null);
     _keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, null);
-    Typeface specialKeyFont = getSpecialKeyFont(context);
+    Typeface specialKeyFont = getKeyFont(context);
     _specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeyFont);
     _specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeyFont);
   }
@@ -69,14 +69,12 @@ public class Theme
     return (paint);
   }
 
-  private static Typeface _specialKeyFont = null;
+  private static Typeface _key_font = null;
 
-  static public Typeface getSpecialKeyFont(Context context)
+  static public Typeface getKeyFont(Context context)
   {
-    if (_specialKeyFont == null)
-    {
-      _specialKeyFont = Typeface.createFromAsset(context.getAssets(), "special_font.ttf");
-    }
-    return _specialKeyFont;
+    if (_key_font == null)
+      _key_font = Typeface.createFromAsset(context.getAssets(), "special_font.ttf");
+    return _key_font;
   }
 }
