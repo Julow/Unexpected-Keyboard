@@ -19,7 +19,7 @@
     <item>colemak</item>
     <item>neo2</item>
     <item>jcuken_ua</item>
-	<item>bangla</item>
+    <item>bangla</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>@string/pref_layout_e_system</item>
@@ -40,7 +40,7 @@
     <item>Colemak</item>
     <item>Neo 2</item>
     <item>ЙЦУКЕН (Українська)</item>
-	<item>বাংলা</item>
+    <item>বাংলা</item>
   </string-array>
   <string-array name="pref_programming_layout_values">
     <item>none</item>
