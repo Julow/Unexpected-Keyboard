@@ -108,6 +108,13 @@ final class Autocapitalisation
   {
     if (new_cursor == _cursor) // Just typing
       return;
+    if (new_cursor == 0)
+    {
+      // Detect whether the input box has been cleared
+      CharSequence t = _ic.getTextAfterCursor(1, 0);
+      if (t != null && t.equals(""))
+        _should_update_caps_mode = true;
+    }
     _cursor = new_cursor;
     _should_enable_shift = false;
     callback(true);

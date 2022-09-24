@@ -19,6 +19,8 @@ public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
 {
   private KeyboardData _keyboard;
+  private KeyValue _shift_kv;
+  private KeyboardData.Key _shift_key;
 
   private Pointers _pointers;
 
@@ -79,6 +81,13 @@ public class Keyboard2View extends View
   public void setKeyboard(KeyboardData kw)
   {
     _keyboard = _config.modify_layout(kw);
+    _shift_kv = KeyValue.getKeyByName("shift");
+    _shift_key = _keyboard.findKeyWithValue(_shift_kv);
+    if (_shift_key == null)
+    {
+      _shift_kv = _shift_kv.withFlags(_shift_kv.getFlags() | KeyValue.FLAG_LOCK);
+      _shift_key = _keyboard.findKeyWithValue(_shift_kv);
+    }
     reset();
   }
 
@@ -93,24 +102,13 @@ public class Keyboard2View extends View
   /** Called by auto-capitalisation. */
   public void set_shift_state(boolean state)
   {
-    if (_keyboard == null)
+    if (_keyboard == null || _shift_key == null)
       return;
-    KeyValue shift = KeyValue.getKeyByName("shift");
-    KeyboardData.Key key = _keyboard.findKeyWithValue(shift);
-    if (key == null)
-    {
-      // Lookup again for the lockable shift key, which is a different value.
-      shift = shift.withFlags(shift.getFlags() | KeyValue.FLAG_LOCK);
-      key = _keyboard.findKeyWithValue(shift);
-    }
-    if (key != null)
-    {
-      if (state)
-        _pointers.add_fake_pointer(shift, key);
-      else
-        _pointers.remove_fake_pointer(shift, key);
-      invalidate();
-    }
+    if (state)
+      _pointers.add_fake_pointer(_shift_kv, _shift_key);
+    else
+      _pointers.remove_fake_pointer(_shift_kv, _shift_key);
+    invalidate();
   }
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
