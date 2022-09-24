@@ -40,6 +40,12 @@ class KeyboardData
     addExtraKeys_to_row(rows, k, 1, 3);
     addExtraKeys_to_row(rows, k, 2, 2);
     addExtraKeys_to_row(rows, k, 2, 1);
+    if (k.hasNext())
+    {
+      for (int r = 0; r < rows.size(); r++)
+        for (int c = 1; c <= 4; c++)
+          addExtraKeys_to_row(rows, k, r, c);
+    }
     return new KeyboardData(rows, keysWidth, extra_keys);
   }
 
