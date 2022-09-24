@@ -1,0 +1,18 @@
+Tato aplikace je virtuální klávesnící pro Android. Umožňuje rychlejší a plynulejší psaní písmen i symbolů (vč. diakritiky), a to ve vícero jazycích a vlastních rozloženích. To vše zdarma, bez reklam a bez plýtvání vašeho uložiště. Můžete psát libovolné znaky pomocí gest (ASCII i Unicode), používat mrtvé (univerzální) klávesy pro diakritická znaménka a mnohem více.
+
+Klávesnice zobrazuje až 4 další znaky v rozích každé klávesy. Tyto znaky jsou vyvolány přejetím prstu do vybraného rohu.
+
+No zkrátka...:
+
+- Obsahuje každý znak a speciální klávesu, která je běžnou součástí počítačové klávesnice. To přijde vhod obzvláště při používání aplikací jako např. Termux
+
+- Můžete používat modifikační klávesy, obohaceny o speciální klávesy (např. Tab, Esc, šipky, F klávesy, ale také Ctrl nebo Alt !)
+
+- Můžete psát vícero jazyky rychleji a bez chyb. Diakritická znaménka mohou být vyvolána i za pomocí mrtvých kláves. Nejdříve zvolte diakritické znaménko a pak znak, který chcete obohatit o toto znaménko.
+
+- Je vysoce nenáročná a rychlá. Zabere 500x méně místa než klávesnice od Googlu (Gboard) a 15x méně než výchozí klávesnice systému. Bez reklam, bez sledování.
+
+- Má vícero rozložení: QWERTY, QWERTZ, AZERTY. Motivy: Bílá, Tmavá, OLED Černá. A mnoho dalších které si s drobnou znalostí programování můžete upravovat dle libosti.
+
+Nezapomeňte... Jako každá virtuální klávesnice, i tato musí být aktivována v nastavení systému (zařízení). Otevřte (Systémové) Nastavení a přejděte na:
+(Další nastavení NEBO Nastavení systému) > Jazyk & způsob zadávání > Spravovat klávesnice.

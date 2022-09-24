@@ -262,6 +262,7 @@ final class Config
       case "qwerty_no": return R.xml.qwerty_no;
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
       case "qwertz_hu": return R.xml.qwertz_hu;
+      case "qwertz_cs": return R.xml.qwertz_cs;
       case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
       case "jcuken_ua": return R.xml.jcuken_ua;
