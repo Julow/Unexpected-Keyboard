@@ -28,7 +28,8 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "accent_ogonek",
     "€",
     "ß",
-    "£"
+    "£",
+    "switch_greekmath",
   };
 
   boolean _key_font;
