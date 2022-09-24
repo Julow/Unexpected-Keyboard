@@ -147,8 +147,16 @@ public class Keyboard2 extends InputMethodService
     else
     {
       InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
-      refreshSubtypeLayout(subtype);
-      refreshAccentsOption(imm, subtype);
+      if (subtype == null)
+      {
+        // On some rare cases, [subtype] is null.
+        refreshSubtypeLegacyFallback();
+      }
+      else
+      {
+        refreshSubtypeLayout(subtype);
+        refreshAccentsOption(imm, subtype);
+      }
     }
     _config.shouldOfferSwitchingToProgramming =
       _config.programming_layout != -1 &&
