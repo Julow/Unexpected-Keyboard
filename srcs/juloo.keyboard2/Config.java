@@ -248,6 +248,7 @@ final class Config
       case "azerty": return R.xml.azerty;
       case "bangla": return R.xml.bangla;
       case "bgph1": return R.xml.local_bgph1;
+      case "bone": return R.xml.bone;
       case "colemak": return R.xml.colemak;
       case "dvorak": return R.xml.dvorak;
       case "neo2": return R.xml.neo2;

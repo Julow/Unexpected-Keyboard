@@ -19,6 +19,7 @@
     <item>dvorak</item>
     <item>colemak</item>
     <item>neo2</item>
+    <item>bone</item>
     <item>jcuken_ua</item>
     <item>bangla</item>
   </string-array>
@@ -41,6 +42,7 @@
     <item>Dvorak</item>
     <item>Colemak</item>
     <item>Neo 2</item>
+    <item>Bone</item>
     <item>ЙЦУКЕН (Українська)</item>
     <item>বাংলা</item>
   </string-array>
