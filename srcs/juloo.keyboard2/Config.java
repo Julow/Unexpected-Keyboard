@@ -257,6 +257,7 @@ final class Config
       case "qwerty_pt": return R.xml.qwerty_pt;
       case "qwerty_tr": return R.xml.qwerty_tr;
       case "qwerty": return R.xml.qwerty;
+      case "qwerty_no": return R.xml.qwerty_no;
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
       case "qwertz_hu": return R.xml.qwertz_hu;
       case "qwertz": return R.xml.qwertz;
