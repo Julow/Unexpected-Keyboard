@@ -245,6 +245,7 @@ final class Config
     switch (name)
     {
       case "azerty": return R.xml.azerty;
+      case "bangla": return R.xml.bangla;
       case "bgph1": return R.xml.local_bgph1;
       case "colemak": return R.xml.colemak;
       case "dvorak": return R.xml.dvorak;
