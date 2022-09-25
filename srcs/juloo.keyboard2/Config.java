@@ -25,6 +25,7 @@ final class Config
   // From preferences
   public int layout; // Or '-1' for the system defaults
   public int programming_layout; // Or '-1' for none
+  public boolean show_numpad = false;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
   public long longPressTimeout;
@@ -100,8 +101,12 @@ final class Config
     // Scale some dimensions depending on orientation
     float horizontalIntervalScale = 1.f;
     float characterSizeScale = 1.f;
+    String show_numpad_s = prefs.getString("show_numpad", "never");
+    show_numpad = "always".equals(show_numpad_s);
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
+      if ("landscape".equals(show_numpad_s))
+        show_numpad = true;
       keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
       horizontalIntervalScale = 2.f;
       characterSizeScale = 1.25f;
@@ -208,6 +213,8 @@ final class Config
     });
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.iterator());
+    if (original_kw.num_pad && show_numpad)
+      kw = kw.addNumPad();
     return kw;
   }
 

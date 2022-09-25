@@ -199,9 +199,13 @@ public class Keyboard2View extends View
       return null;
     for (KeyboardData.Key key : row.keys)
     {
-      x += (key.shift + key.width) * _keyWidth;
-      if (tx < x)
+      float xLeft = x + key.shift * _keyWidth;
+      float xRight = xLeft + key.width * _keyWidth;
+      if (tx < xLeft)
+        return null;
+      if (tx < xRight)
         return key;
+      x = xRight;
     }
     return null;
   }

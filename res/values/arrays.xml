@@ -67,6 +67,16 @@
     <item>@string/pref_accents_e_selected</item>
     <item>@string/pref_accents_e_none</item>
   </string-array>
+  <string-array name="pref_show_numpad_values">
+    <item>never</item>
+    <item>landscape</item>
+    <item>always</item>
+  </string-array>
+  <string-array name="pref_show_numpad_entries">
+    <item>@string/pref_show_numpad_never</item>
+    <item>@string/pref_show_numpad_landscape</item>
+    <item>@string/pref_show_numpad_always</item>
+  </string-array>
   <string-array name="pref_accents_values">
     <item>1</item>
     <item>2</item>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard bottom_row="false" extra_keys="false">
+<keyboard bottom_row="false" extra_keys="false" num_pad="false">
   <row>
     <key width="0.75" key0="esc" key2="~" key4="!"/>
     <key width="0.75" key0="(" key2="[" key4="{"/>
