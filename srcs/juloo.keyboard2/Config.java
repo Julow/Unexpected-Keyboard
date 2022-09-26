@@ -253,6 +253,7 @@ final class Config
       case "dvorak": return R.xml.dvorak;
       case "neo2": return R.xml.neo2;
       case "qwerty_es": return R.xml.qwerty_es;
+      case "qwerty_el": return R.xml.qwerty_el;
       case "qwerty_hu": return R.xml.qwerty_hu;
       case "qwerty_ko": return R.xml.qwerty_ko;
       case "qwerty_lv": return R.xml.qwerty_lv;
