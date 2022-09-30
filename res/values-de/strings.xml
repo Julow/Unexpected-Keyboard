@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="app_name" product="debug">Unexpected Keyboard (Debug)</string>
+  <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard - Einstellungen</string>
   <string name="pref_category_layout">Layout</string>
   <string name="pref_layout_title">Tastaturlayout ändern</string>
@@ -8,6 +10,9 @@
   <string name="pref_accents_e_all_installed">Akzente für alle installierten Sprachen anzeigen</string>
   <string name="pref_accents_e_selected">Akzente nur für die gewählte Sprache anzeigen</string>
   <string name="pref_accents_e_none">Akzente verbergen</string>
+  <string name="pref_autocapitalisation_title">Automatische Großschreibung</string>
+  <string name="pref_autocapitalisation_summary">Umschalttaste am Satzanfang aktivieren</string>
+  <string name="pref_extra_keys_title">Tasten hinzufügen</string>
   <string name="pref_programming_layout_title">Tastaturlayout zum Programmieren</string>
   <string name="pref_programming_layout_none">Keines</string>
   <string name="pref_category_typing">Tippen</string>
@@ -19,11 +24,14 @@
   <string name="pref_vibrate_summary">Vibration bei Tastendruck ein-/ausschalten</string>
   <string name="pref_precise_repeat_title">Präzise Cursorsteuerung</string>
   <string name="pref_precise_repeat_summary">Geschwindigkeit der Tastenwiederholung durch weniger oder mehr Wischen anpassen</string>
-  <string name="pref_lockable_keys_title">Sperrbare Hilfstasten</string>
-  <string name="pref_lockable_keys_summary">Hilfstasten, die durch zweimaliges Tippen gesperrt (eingerastet) werden können</string>
+  <string name="pref_lockable_keys_title">Veraltet: Sperrbare Hilfstasten</string>
+  <string name="pref_lockable_keys_summary">Wird entfernt. (Hilfstasten, die durch zweimaliges Tippen gesperrt (eingerastet) werden können)</string>
+  <string name="pref_lock_double_tap_title">Umschalttaste mit Doppeltippen einrasten</string>
+  <string name="pref_lock_double_tap_summary">Anstatt Taste längere Zeit gedrückt zu halten</string>
   <string name="pref_category_style">Design</string>
   <string name="pref_margin_bottom_title">Unterer Abstand</string>
   <string name="pref_keyboard_height_title">Höhe der Tastatur</string>
+  <string name="pref_keyboard_height_landscape_title">Höhe der Tastatur im Querformat</string>
   <string name="pref_horizontal_margin_title">Horizontaler Abstand</string>
   <string name="pref_character_size_title">Größe der Beschriftung</string> 
   <string name="pref_character_size_summary">Größe der Buchstaben auf den Tasten (%.2fx)</string>
@@ -32,6 +40,7 @@
   <string name="pref_theme_e_dark">Dunkel</string>
   <string name="pref_theme_e_light">Hell</string>
   <string name="pref_theme_e_black">Schwarz</string>
+  <string name="pref_theme_e_white">Weiß</string>
   <string name="pref_swipe_dist_e_very_short">Sehr kurz</string>
   <string name="pref_swipe_dist_e_short">Kurz</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
