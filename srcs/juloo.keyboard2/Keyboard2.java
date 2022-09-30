@@ -20,12 +20,14 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.util.Log;
 import android.util.LogPrinter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Keyboard2 extends InputMethodService
-  implements SharedPreferences.OnSharedPreferenceChangeListener
+  implements SharedPreferences.OnSharedPreferenceChangeListener,
+             Autocapitalisation.Callback
 {
   static private final String TAG = "Keyboard2";
 
@@ -34,6 +36,7 @@ public class Keyboard2 extends InputMethodService
   private ViewGroup _emojiPane = null;
 
   private Config _config;
+  private Autocapitalisation _autocap = new Autocapitalisation();
 
   private boolean _debug_logs = false;
 
@@ -56,13 +59,21 @@ public class Keyboard2 extends InputMethodService
     _debug_logs = getResources().getBoolean(R.bool.debug_logs);
   }
 
+  public void update_shift_state(boolean should_enable, boolean should_disable)
+  {
+    if (should_enable)
+      _keyboardView.set_shift_state(true);
+    else if (should_disable)
+      _keyboardView.set_shift_state(false);
+  }
+
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
   {
     String pkg = getPackageName();
     for (InputMethodInfo imi : imm.getEnabledInputMethodList())
       if (imi.getPackageName().equals(pkg))
         return imm.getEnabledInputMethodSubtypeList(imi, true);
-    return null;
+    return Arrays.asList();
   }
 
   private void refreshSubtypeLayout(InputMethodSubtype subtype)
@@ -79,23 +90,24 @@ public class Keyboard2 extends InputMethodService
     _currentTextLayout = l;
   }
 
-  private void extra_keys_of_subtype(Set<String> dst, InputMethodSubtype subtype)
+  private void extra_keys_of_subtype(Set<KeyValue> dst, InputMethodSubtype subtype)
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
     if (extra_keys == null)
       return;
     String[] ks = extra_keys.split("\\|");
     for (int i = 0; i < ks.length; i++)
-      dst.add(ks[i]);
+      dst.add(KeyValue.getKeyByName(ks[i]));
   }
 
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
-    HashSet<String> extra_keys = new HashSet<String>();
+    HashSet<KeyValue> extra_keys = new HashSet<KeyValue>();
     List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
     switch (_config.accents)
     {
-      case 1:
+      // '3' was "all accents", now unused
+      case 1: case 3:
         extra_keys_of_subtype(extra_keys, subtype);
         for (InputMethodSubtype s : enabled_subtypes)
           extra_keys_of_subtype(extra_keys, s);
@@ -103,11 +115,10 @@ public class Keyboard2 extends InputMethodService
       case 2:
         extra_keys_of_subtype(extra_keys, subtype);
         break;
-      case 3: extra_keys = null; break;
       case 4: break;
       default: throw new IllegalArgumentException();
     }
-    _config.extra_keys = extra_keys;
+    _config.extra_keys_subtype = extra_keys;
     if (enabled_subtypes.size() > 1)
       _config.shouldOfferSwitchingToNextInputMethod = true;
   }
@@ -117,8 +128,8 @@ public class Keyboard2 extends InputMethodService
     // Fallback for the accents option: Only respect the "None" case
     switch (_config.accents)
     {
-      case 1: case 2: case 3: _config.extra_keys = null; break;
-      case 4: _config.extra_keys = new HashSet<String>(); break;
+      case 1: case 2: case 3: _config.extra_keys_subtype = null; break;
+      case 4: _config.extra_keys_subtype = new HashSet<KeyValue>(); break;
     }
     // Fallback for the layout option: Use qwerty in the "system settings" case
     _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;
@@ -136,8 +147,16 @@ public class Keyboard2 extends InputMethodService
     else
     {
       InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
-      refreshSubtypeLayout(subtype);
-      refreshAccentsOption(imm, subtype);
+      if (subtype == null)
+      {
+        // On some rare cases, [subtype] is null.
+        refreshSubtypeLegacyFallback();
+      }
+      else
+      {
+        refreshSubtypeLayout(subtype);
+        refreshAccentsOption(imm, subtype);
+      }
     }
     _config.shouldOfferSwitchingToProgramming =
       _config.programming_layout != -1 &&
@@ -162,7 +181,7 @@ public class Keyboard2 extends InputMethodService
     return getResources().getString(res);
   }
 
-  private void refreshEditorInfo(EditorInfo info)
+  private void refresh_action_label(EditorInfo info)
   {
     // First try to look at 'info.actionLabel', if it isn't set, look at
     // 'imeOptions'.
@@ -209,11 +228,12 @@ public class Keyboard2 extends InputMethodService
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
     refreshConfig();
-    refreshEditorInfo(info);
+    refresh_action_label(info);
     if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+    _autocap.started(getMainLooper(), this, info, getCurrentInputConnection());
     setInputView(_keyboardView);
     if (_debug_logs)
       log_editor_info(info);
@@ -233,6 +253,13 @@ public class Keyboard2 extends InputMethodService
   {
     refreshSubtypeImm();
     _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+  }
+
+  @Override
+  public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
+  {
+    super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
+    _autocap.selection_updated(oldSelStart, newSelStart);
   }
 
   @Override
@@ -289,15 +316,21 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     }
 
+    public void switchGreekmath()
+    {
+      _keyboardView.setKeyboard(getLayout(R.xml.greekmath));
+    }
+
     public void switchProgramming()
     {
       if (_config.programming_layout == -1)
         return;
       KeyboardData layout =
-        getLayout(_config.programming_layout).replaceKeys(new KeyboardData.MapKeys() {
-          public KeyValue apply(KeyValue key)
+        getLayout(_config.programming_layout).mapKeys(new KeyboardData.MapKeyValues() {
+          public KeyValue apply(KeyValue key, boolean localized)
           {
-            if (key != null && key.eventCode == KeyValue.EVENT_SWITCH_PROGRAMMING)
+            if (key.getKind() == KeyValue.Kind.Event
+                && key.getEvent() == KeyValue.Event.SWITCH_PROGRAMMING)
               return KeyValue.getKeyByName("switch_text");
             return key;
           }
@@ -311,6 +344,8 @@ public class Keyboard2 extends InputMethodService
       if (conn == null)
         return;
       conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
+      if (eventAction == KeyEvent.ACTION_UP)
+        _autocap.event_sent(eventCode);
     }
 
     public void showKeyboardConfig()
@@ -323,11 +358,13 @@ public class Keyboard2 extends InputMethodService
     public void commitText(String text)
     {
       getCurrentInputConnection().commitText(text, 1);
+      _autocap.typed(text);
     }
 
     public void commitChar(char c)
     {
       sendKeyChar(c);
+      _autocap.typed(c);
     }
   }
 

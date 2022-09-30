@@ -14,15 +14,16 @@ public class EmojiKeyButton extends Button
   {
     super(context, attrs);
     setOnClickListener(this);
-    _key = KeyValue.getKeyByName(attrs.getAttributeValue(null, "key"));
-    setText(_key.symbol);
-    if ((_key.flags & KeyValue.FLAG_KEY_FONT) != 0)
-      setTypeface(Theme.getSpecialKeyFont(context));
+    String key_name = attrs.getAttributeValue(null, "key");
+    _key = (key_name == null) ? null : KeyValue.getKeyByName(key_name);
+    setText(_key.getString());
+    if (_key.hasFlags(KeyValue.FLAG_KEY_FONT))
+      setTypeface(Theme.getKeyFont(context));
   }
 
   public void onClick(View v)
   {
     Config config = Config.globalConfig();
-    config.handler.handleKeyUp(_key, 0);
+    config.handler.handleKeyUp(_key, Pointers.Modifiers.EMPTY);
   }
 }

@@ -1,8 +1,9 @@
 # Unexpected Keyboard
 
 A lightweight virtual keyboard for developers.
-
-![Unexpected Keyboard](metadata/android/en-US/images/featureGraphic.png)
+| <img src="/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Screenshot-1" /> | <img src="/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Screenshot-2"/> | <img src="/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Screenshot-3"/> |
+| --- | --- | --- |
+| <img src="/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Screenshot-4" /> | <img src="/metadata/android/en-US/images/phoneScreenshots/5.png" alt="Screenshot-5" /> | <img src="/metadata/android/en-US/images/phoneScreenshots/6.png" alt="Screenshot-6" /> |
 
 This app is a virtual keyboard for Android. The main features are easy typing of every ASCII character using the swipe gesture, dead keys for accents and modifier keys and the presence of special keys (tab, esc, arrows, etc..).
 

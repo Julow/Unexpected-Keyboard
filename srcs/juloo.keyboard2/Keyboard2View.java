@@ -1,29 +1,30 @@
 package juloo.keyboard2;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.Vibrator;
+import android.inputmethodservice.InputMethodService;
+import android.os.Build.VERSION;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 
 public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
 {
-  private static final long VIBRATE_MIN_INTERVAL = 100;
-
   private KeyboardData _keyboard;
+  private KeyValue _shift_kv;
+  private KeyboardData.Key _shift_key;
 
   private Pointers _pointers;
 
-  private int _flags = 0;
-
-  private Vibrator _vibratorService;
-  private long _lastVibration = 0;
+  private Pointers.Modifiers _mods;
 
   private static int _currentWhat = 0;
 
@@ -45,65 +46,103 @@ public class Keyboard2View extends View
   public Keyboard2View(Context context, AttributeSet attrs)
   {
     super(context, attrs);
-    _vibratorService = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
     _theme = new Theme(getContext(), attrs);
     _config = Config.globalConfig();
     _pointers = new Pointers(this, _config);
+    refresh_navigation_bar(context);
     setOnTouchListener(this);
     reset();
+  }
+
+  private Window getParentWindow(Context context)
+  {
+    if (context instanceof InputMethodService)
+      return ((InputMethodService)context).getWindow().getWindow();
+    if (context instanceof ContextWrapper)
+      return getParentWindow(((ContextWrapper)context).getBaseContext());
+    return null;
+  }
+
+  public void refresh_navigation_bar(Context context)
+  {
+    if (VERSION.SDK_INT < 21)
+      return;
+    // The intermediate Window is a [Dialog].
+    Window w = getParentWindow(context);
+    int uiFlags = getSystemUiVisibility();
+    if (_theme.isLightNavBar)
+      uiFlags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+    else
+      uiFlags &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+    w.setNavigationBarColor(_theme.colorNavBar);
+    setSystemUiVisibility(uiFlags);
   }
 
   public void setKeyboard(KeyboardData kw)
   {
     _keyboard = _config.modify_layout(kw);
+    _shift_kv = KeyValue.getKeyByName("shift");
+    _shift_key = _keyboard.findKeyWithValue(_shift_kv);
+    if (_shift_key == null)
+    {
+      _shift_kv = _shift_kv.withFlags(_shift_kv.getFlags() | KeyValue.FLAG_LOCK);
+      _shift_key = _keyboard.findKeyWithValue(_shift_kv);
+    }
     reset();
   }
 
   public void reset()
   {
-    _flags = 0;
+    _mods = Pointers.Modifiers.EMPTY;
     _pointers.clear();
     requestLayout();
     invalidate();
   }
 
-  public KeyValue onPointerDown(KeyValue k)
+  /** Called by auto-capitalisation. */
+  public void set_shift_state(boolean state)
   {
-    k = KeyModifier.handleFlags(k, _flags);
+    if (_keyboard == null || _shift_key == null)
+      return;
+    if (state)
+      _pointers.add_fake_pointer(_shift_kv, _shift_key);
+    else
+      _pointers.remove_fake_pointer(_shift_kv, _shift_key);
     invalidate();
-    if (k != null)
+  }
+
+  public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
+  {
+    return KeyModifier.modify(k, mods);
+  }
+
+  public void onPointerDown(boolean isSwipe)
+  {
+    invalidate();
+    vibrate();
+  }
+
+  public void onPointerUp(KeyValue k, Pointers.Modifiers mods)
+  {
+    _config.handler.handleKeyUp(k, mods);
+    invalidate();
+  }
+
+  public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
+  {
+    _config.handler.handleKeyUp(k, mods);
+  }
+
+  public void onPointerFlagsChanged(boolean shouldVibrate)
+  {
+    invalidate();
+    if (shouldVibrate)
       vibrate();
-    return k;
-  }
-
-  public KeyValue onPointerSwipe(KeyValue k)
-  {
-    k = KeyModifier.handleFlags(k, _flags);
-    invalidate();
-    if (k != null)
-      vibrate();
-    return k;
-  }
-
-  public void onPointerUp(KeyValue k)
-  {
-    _config.handler.handleKeyUp(k, _flags);
-    invalidate();
-  }
-
-  public void onPointerHold(KeyValue k)
-  {
-    _config.handler.handleKeyUp(k, _flags);
-  }
-
-  public void onPointerFlagsChanged()
-  {
-    invalidate();
   }
 
   private void updateFlags()
   {
-    _flags = _pointers.getFlags();
+    _mods = _pointers.getModifiers();
   }
 
   @Override
@@ -171,18 +210,10 @@ public class Keyboard2View extends View
   {
     if (!_config.vibrateEnabled)
       return ;
-    long now = System.currentTimeMillis();
-    if ((now - _lastVibration) > VIBRATE_MIN_INTERVAL)
+    if (VERSION.SDK_INT >= 5)
     {
-      _lastVibration = now;
-      try
-      {
-        _vibratorService.vibrate(_config.vibrateDuration);
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
+      performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+          HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
     }
   }
 
@@ -246,7 +277,7 @@ public class Keyboard2View extends View
 
   private int labelColor(KeyValue k, boolean isKeyDown, int defaultColor)
   {
-    if (isKeyDown && (k.flags & KeyValue.FLAG_LATCH) != 0)
+    if (isKeyDown && k.hasFlags(KeyValue.FLAG_LATCH))
     {
       int flags = _pointers.getKeyFlags(k);
       if (flags != -1)
@@ -260,26 +291,30 @@ public class Keyboard2View extends View
     return defaultColor;
   }
 
-  private void drawLabel(Canvas canvas, KeyValue k, float x, float y, float keyH, boolean isKeyDown)
+  private void drawLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyH, boolean isKeyDown)
   {
-    k = KeyModifier.handleFlags(k, _flags);
     if (k == null)
       return;
-    float textSize = scaleTextSize(k, _config.labelTextSize, keyH);
-    Paint p = _theme.labelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0));
-    p.setColor(labelColor(k, isKeyDown, _theme.labelColor));
+    KeyValue kv = KeyModifier.modify(k.kv, _mods);
+    if (kv == null)
+      return;
+    float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
+    Paint p = _theme.labelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT));
+    p.setColor(labelColor(kv, isKeyDown, _theme.labelColor));
     p.setTextSize(textSize);
-    canvas.drawText(k.symbol, x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
+    canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyValue k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
+  private void drawSubLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
   {
-    k = KeyModifier.handleFlags(k, _flags);
     if (k == null)
       return;
-    float textSize = scaleTextSize(k, _config.sublabelTextSize, keyH);
-    Paint p = _theme.subLabelPaint(((k.flags & KeyValue.FLAG_KEY_FONT) != 0), a);
-    p.setColor(labelColor(k, isKeyDown, _theme.subLabelColor));
+    KeyValue kv = KeyModifier.modify(k.kv, _mods);
+    if (kv == null)
+      return;
+    float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
+    Paint p = _theme.subLabelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT), a);
+    p.setColor(labelColor(kv, isKeyDown, _theme.subLabelColor));
     p.setTextSize(textSize);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
@@ -290,12 +325,12 @@ public class Keyboard2View extends View
       x += keyW / 2f;
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
-    canvas.drawText(k.symbol, x, y, p);
+    canvas.drawText(kv.getString(), x, y, p);
   }
 
   private float scaleTextSize(KeyValue k, float rel_size, float keyH)
   {
-    float smaller_font = ((k.flags & KeyValue.FLAG_SMALLER_FONT) == 0) ? 1.f : 0.75f;
+    float smaller_font = k.hasFlags(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
     return keyH * rel_size * smaller_font * _config.characterSize;
   }
 }

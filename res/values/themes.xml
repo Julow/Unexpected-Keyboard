@@ -20,10 +20,20 @@
     <attr name="emoji_color" type="color" format="color"/>
     <attr name="emoji_key_bg" type="color" format="color"/>
     <attr name="emoji_key_text" type="color" format="color"/>
+    <!-- System integration -->
+    <attr name="navigationBarColor" format="color"/>
+    <attr name="windowLightNavigationBar" format="boolean"/>
   </declare-styleable>
-  <style name="Dark">
-    <item name="android:isLightTheme">false</item>
+  <style name="BaseTheme">
     <item name="android:forceDarkAllowed">false</item>
+    <item name="navigationBarColor">?attr/colorKeyboard</item>
+    <item name="windowLightNavigationBar">?attr/android:isLightTheme</item>
+    <item name="keyBorderRadius">5dp</item>
+    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
+    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+  </style>
+  <style name="Dark" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
     <item name="colorKeyboard">#1b1b1b</item>
     <item name="colorKey">#333333</item>
     <item name="colorKeyActivated">#1b1b1b</item>
@@ -31,15 +41,11 @@
     <item name="colorLabelActivated">#3399ff</item>
     <item name="colorLabelLocked">#33cc33</item>
     <item name="colorSubLabel">#cccccc</item>
-    <item name="keyBorderRadius">5dp</item>
     <item name="emoji_button_bg" type="color">#202020</item>
     <item name="emoji_color" type="color">#ffffff</item>
-    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
-    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
   </style>
-  <style name="Light">
+  <style name="Light" parent="BaseTheme">
     <item name="android:isLightTheme">true</item>
-    <item name="android:forceDarkAllowed">false</item>
     <item name="colorKeyboard">#e3e3e3</item>
     <item name="colorKey">#cccccc</item>
     <item name="colorKeyActivated">#e3e3e3</item>
@@ -47,15 +53,11 @@
     <item name="colorLabelActivated">#0066cc</item>
     <item name="colorLabelLocked">#33cc33</item>
     <item name="colorSubLabel">#333333</item>
-    <item name="keyBorderRadius">5dp</item>
-    <item name="emoji_button_bg" type="color">#dedede</item>
-    <item name="emoji_color" type="color">#000000</item>
-    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
-    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+    <item name="emoji_button_bg">#dedede</item>
+    <item name="emoji_color">#000000</item>
   </style>
-  <style name="Black">
+  <style name="Black" parent="BaseTheme">
     <item name="android:isLightTheme">false</item>
-    <item name="android:forceDarkAllowed">false</item>
     <item name="colorKeyboard">#000000</item>
     <item name="colorKey">#000000</item>
     <item name="colorKeyActivated">#333333</item>
@@ -64,9 +66,19 @@
     <item name="colorLabelLocked">#00ff26</item>
     <item name="colorSubLabel">#bbbbbb</item>
     <item name="keyBorderRadius">1dp</item>
-    <item name="emoji_button_bg" type="color">#000000</item>
-    <item name="emoji_color" type="color">#ffffff</item>
-    <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
-    <item name="emoji_key_text" type="color">?attr/colorLabel</item>
+    <item name="emoji_button_bg">#000000</item>
+    <item name="emoji_color">#ffffff</item>
+  </style>
+  <style name="White" parent="BaseTheme">
+    <item name="android:isLightTheme">true</item>
+    <item name="colorKeyboard">#ffffff</item>
+    <item name="colorKey">#ffffff</item>
+    <item name="colorKeyActivated">#cccccc</item>
+    <item name="colorLabel">#000000</item>
+    <item name="colorLabelActivated">#0066cc</item>
+    <item name="colorLabelLocked">#33cc33</item>
+    <item name="colorSubLabel">#333333</item>
+    <item name="emoji_button_bg">#ffffff</item>
+    <item name="emoji_color">#000000</item>
   </style>
 </resources>

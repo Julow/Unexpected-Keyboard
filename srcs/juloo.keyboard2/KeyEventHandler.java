@@ -11,29 +11,37 @@ class KeyEventHandler implements Config.IKeyEventHandler
     _recv = recv;
   }
 
-  public void handleKeyUp(KeyValue key, int flags)
+  public void handleKeyUp(KeyValue key, Pointers.Modifiers mods)
   {
-    if (key == null || (key.flags & KeyValue.FLAG_NOCHAR) != 0)
+    if (key == null)
       return;
-    switch (key.eventCode)
+    switch (key.getKind())
     {
-    case KeyValue.EVENT_CONFIG: _recv.showKeyboardConfig(); return;
-    case KeyValue.EVENT_SWITCH_TEXT: _recv.switchMain(); return;
-    case KeyValue.EVENT_SWITCH_NUMERIC: _recv.switchNumeric(); return;
-    case KeyValue.EVENT_SWITCH_EMOJI: _recv.setPane_emoji(); return;
-    case KeyValue.EVENT_SWITCH_BACK_EMOJI: _recv.setPane_normal(); return;
-    case KeyValue.EVENT_CHANGE_METHOD: _recv.switchToNextInputMethod(); return;
-    case KeyValue.EVENT_ACTION: _recv.performAction(); return;
-    case KeyValue.EVENT_SWITCH_PROGRAMMING: _recv.switchProgramming(); return;
-    default:
-      if ((flags & (KeyValue.FLAG_CTRL | KeyValue.FLAG_ALT | KeyValue.FLAG_META)) != 0)
-        handleKeyUpWithModifier(key, flags);
-      else if (key.char_ != KeyValue.CHAR_NONE)
-        _recv.commitChar(key.char_);
-      else if (key.eventCode != KeyValue.EVENT_NONE)
-        handleKeyUpWithModifier(key, flags);
-      else
-        _recv.commitText(key.symbol);
+      case Char:
+        _recv.commitChar(key.getChar());
+        break;
+      case String:
+        _recv.commitText(key.getString());
+        break;
+      case Event:
+        switch (key.getEvent())
+        {
+          case CONFIG: _recv.showKeyboardConfig(); break;
+          case SWITCH_TEXT: _recv.switchMain(); break;
+          case SWITCH_NUMERIC: _recv.switchNumeric(); break;
+          case SWITCH_EMOJI: _recv.setPane_emoji(); break;
+          case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
+          case CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
+          case ACTION: _recv.performAction(); break;
+          case SWITCH_PROGRAMMING: _recv.switchProgramming(); break;
+          case SWITCH_GREEKMATH: _recv.switchGreekmath(); break;
+        }
+        break;
+      case Keyevent:
+        handleKeyUpWithModifier(key.getKeyevent(), mods);
+        break;
+      case Modifier:
+        break;
     }
   }
 
@@ -57,31 +65,34 @@ class KeyEventHandler implements Config.IKeyEventHandler
     return updatedMetaState;
   }
 
-  /* Send key events corresponding to pressed modifier keys. */
-  private int sendMetaKeys(int flags, int metaState, boolean down)
+  private int sendMetaKeyForModifier(KeyValue.Modifier mod, int metaState, boolean down)
   {
-		if ((flags & KeyValue.FLAG_CTRL) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, metaState, down);
-		if ((flags & KeyValue.FLAG_ALT) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, metaState, down);
-		if ((flags & KeyValue.FLAG_SHIFT) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, metaState, down);
-    if ((flags & KeyValue.FLAG_META) != 0)
-      metaState = sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, metaState, down);
-    return metaState;
+    switch (mod)
+    {
+      case CTRL:
+        return sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, metaState, down);
+      case ALT:
+        return sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, metaState, down);
+      case SHIFT:
+        return sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, metaState, down);
+      case META:
+        return sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, metaState, down);
+      default: return metaState;
+    }
   }
 
   /*
    * Don't set KeyEvent.FLAG_SOFT_KEYBOARD.
    */
-	private void handleKeyUpWithModifier(KeyValue key, int flags)
+	private void handleKeyUpWithModifier(int keyCode, Pointers.Modifiers mods)
 	{
-		if (key.eventCode == KeyValue.EVENT_NONE)
-			return ;
-    int metaState = sendMetaKeys(flags, 0, true);
-		_recv.sendKeyEvent(KeyEvent.ACTION_DOWN, key.eventCode, metaState);
-    _recv.sendKeyEvent(KeyEvent.ACTION_UP, key.eventCode, metaState);
-    sendMetaKeys(flags, metaState, false);
+    int metaState = 0;
+    for (int i = 0; i < mods.size(); i++)
+      metaState = sendMetaKeyForModifier(mods.get(i), metaState, true);
+		_recv.sendKeyEvent(KeyEvent.ACTION_DOWN, keyCode, metaState);
+    _recv.sendKeyEvent(KeyEvent.ACTION_UP, keyCode, metaState);
+    for (int i = mods.size() - 1; i >= 0; i--)
+      metaState = sendMetaKeyForModifier(mods.get(i), metaState, false);
 	}
 
   public static interface IReceiver
@@ -95,6 +106,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     public void switchMain();
     public void switchNumeric();
     public void switchProgramming();
+    public void switchGreekmath();
 
     public void sendKeyEvent(int eventAction, int eventCode, int meta);
 

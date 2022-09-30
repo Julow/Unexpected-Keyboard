@@ -3,25 +3,75 @@ package juloo.keyboard2;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import java.util.ArrayList;
+import java.util.function.Function;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 class KeyboardData
 {
   public final List<Row> rows;
-  /* Total width of the keyboard. Unit is abstract. */
+  /** Total width of the keyboard. */
   public final float keysWidth;
-  /* Total height of the keyboard. Unit is abstract. */
+  /** Total height of the keyboard. */
   public final float keysHeight;
+  /** Whether to add extra keys. */
+  public final boolean extra_keys;
 
-  public KeyboardData replaceKeys(MapKeys f)
+  public KeyboardData mapKeys(MapKey f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
-      rows_.add(r.replaceKeys(f));
-    return new KeyboardData(rows_, keysWidth);
+      rows_.add(r.mapKeys(f));
+    return new KeyboardData(rows_, keysWidth, extra_keys);
+  }
+
+  /** Add keys from the given iterator into the keyboard. Extra keys are added
+   * on the empty key4 corner of the second row, from right to left. If there's
+   * not enough room, key3 of the second row is tried then key2 and key1 of the
+   * third row. */
+  public KeyboardData addExtraKeys(Iterator<KeyValue> k)
+  {
+    if (!extra_keys)
+      return this;
+    ArrayList<Row> rows = new ArrayList<Row>(this.rows);
+    addExtraKeys_to_row(rows, k, 1, 4);
+    addExtraKeys_to_row(rows, k, 1, 3);
+    addExtraKeys_to_row(rows, k, 2, 2);
+    addExtraKeys_to_row(rows, k, 2, 1);
+    if (k.hasNext())
+    {
+      for (int r = 0; r < rows.size(); r++)
+        for (int c = 1; c <= 4; c++)
+          addExtraKeys_to_row(rows, k, r, c);
+    }
+    return new KeyboardData(rows, keysWidth, extra_keys);
+  }
+
+  public Key findKeyWithValue(KeyValue kv)
+  {
+    for (Row r : rows)
+    {
+      Key k = r.findKeyWithValue(kv);
+      if (k != null)
+        return k;
+    }
+    return null;
+  }
+
+  private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
+  {
+    if (!extra_keys.hasNext())
+      return;
+    rows.set(row_i, rows.get(row_i).mapKeys(new MapKey(){
+      public Key apply(Key k) {
+        if (k.getKeyValue(d) == null && extra_keys.hasNext())
+          return k.withKeyValue(d, extra_keys.next());
+        else
+          return k;
+      }
+    }));
   }
 
   private static Row _bottomRow = null;
@@ -52,13 +102,14 @@ class KeyboardData
     if (!expect_tag(parser, "keyboard"))
       throw new Exception("Empty layout file");
     boolean bottom_row = parser.getAttributeBooleanValue(null, "bottom_row", true);
+    boolean extra_keys = parser.getAttributeBooleanValue(null, "extra_keys", true);
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
         rows.add(Row.parse(parser));
     float kw = compute_max_width(rows);
     if (bottom_row)
       rows.add(_bottomRow.updateWidth(kw));
-    return new KeyboardData(rows, kw);
+    return new KeyboardData(rows, kw, extra_keys);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -76,7 +127,7 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw)
+  protected KeyboardData(List<Row> rows_, float kw, boolean xk)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -84,16 +135,17 @@ class KeyboardData
     rows = rows_;
     keysWidth = kw;
     keysHeight = kh;
+    extra_keys = xk;
   }
 
   public static class Row
   {
     public final List<Key> keys;
-    /* Height of the row, without 'shift'. Unit is abstract. */
+    /** Height of the row, without 'shift'. */
     public final float height;
-    /* Extra empty space on the top. */
+    /** Extra empty space on the top. */
     public final float shift;
-    /* Total width of the row. Unit is abstract. */
+    /** Total width of the row. */
     private final float keysWidth;
 
     protected Row(List<Key> keys_, float h, float s)
@@ -117,22 +169,29 @@ class KeyboardData
       return new Row(keys, h, shift);
     }
 
-    public Row replaceKeys(MapKeys f)
+    public Row mapKeys(MapKey f)
     {
       ArrayList<Key> keys_ = new ArrayList<Key>();
       for (Key k : keys)
-        keys_.add(k.replaceKeys(f));
+        keys_.add(f.apply(k));
       return new Row(keys_, height, shift);
     }
 
     /** Change the width of every keys so that the row is 's' units wide. */
     public Row updateWidth(float newWidth)
     {
-      float s = newWidth / keysWidth;
-      ArrayList<Key> keys_ = new ArrayList<Key>();
+      final float s = newWidth / keysWidth;
+      return mapKeys(new MapKey(){
+        public Key apply(Key k) { return k.scaleWidth(s); }
+      });
+    }
+
+    public Key findKeyWithValue(KeyValue kv)
+    {
       for (Key k : keys)
-        keys_.add(k.scaleWidth(s));
-      return new Row(keys_, height, shift);
+        if (k.hasValue(kv))
+          return k;
+      return null;
     }
   }
 
@@ -143,20 +202,20 @@ class KeyboardData
      **   0
      ** 3   4
      */
-    public final KeyValue key0;
-    public final KeyValue key1;
-    public final KeyValue key2;
-    public final KeyValue key3;
-    public final KeyValue key4;
+    public final Corner key0;
+    public final Corner key1;
+    public final Corner key2;
+    public final Corner key3;
+    public final Corner key4;
 
-    /* Key width in relative unit. */
+    /** Key width in relative unit. */
     public final float width;
-    /* Extra empty space on the left of the key. */
+    /** Extra empty space on the left of the key. */
     public final float shift;
-    /* Put keys 1 to 4 on the edges instead of the corners. */
+    /** Put keys 1 to 4 on the edges instead of the corners. */
     public final boolean edgekeys;
 
-    protected Key(KeyValue k0, KeyValue k1, KeyValue k2, KeyValue k3, KeyValue k4, float w, float s, boolean e)
+    protected Key(Corner k0, Corner k1, Corner k2, Corner k3, Corner k4, float w, float s, boolean e)
     {
       key0 = k0;
       key1 = k1;
@@ -170,11 +229,11 @@ class KeyboardData
 
     public static Key parse(XmlResourceParser parser) throws Exception
     {
-      KeyValue k0 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key0"));
-      KeyValue k1 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key1"));
-      KeyValue k2 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key2"));
-      KeyValue k3 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key3"));
-      KeyValue k4 = KeyValue.getKeyByName(parser.getAttributeValue(null, "key4"));
+      Corner k0 = Corner.parse_of_attr(parser, "key0");
+      Corner k1 = Corner.parse_of_attr(parser, "key1");
+      Corner k2 = Corner.parse_of_attr(parser, "key2");
+      Corner k3 = Corner.parse_of_attr(parser, "key3");
+      Corner k4 = Corner.parse_of_attr(parser, "key4");
       float width = parser.getAttributeFloatValue(null, "width", 1f);
       float shift = parser.getAttributeFloatValue(null, "shift", 0.f);
       boolean edgekeys = parser.getAttributeBooleanValue(null, "edgekeys", false);
@@ -183,34 +242,159 @@ class KeyboardData
       return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
     }
 
-    public Key replaceKeys(MapKeys f)
-    {
-      return new Key(f.apply(key0), f.apply(key1), f.apply(key2),
-          f.apply(key3), f.apply(key4), width, shift, edgekeys);
-    }
-
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
     }
 
-    public KeyValue getValue(int index)
+    public KeyValue getKeyValue(int i)
     {
-      switch (index)
+      Corner c;
+      switch (i)
       {
-        case 1: return key1;
-        case 2: return key2;
-        case 3: return key3;
-        case 4: return key4;
-        default: case 0: return key0;
+        case 0: c = key0; break;
+        case 1: c = key1; break;
+        case 2: c = key2; break;
+        case 3: c = key3; break;
+        case 4: c = key4; break;
+        default: c = null; break;
       }
+      return (c == null) ? null : c.kv;
+    }
+
+    public Key withKeyValue(int i, KeyValue kv)
+    {
+      Corner k0 = key0, k1 = key1, k2 = key2, k3 = key3, k4 = key4;
+      Corner k = Corner.of_kv(kv);
+      switch (i)
+      {
+        case 0: k0 = k; break;
+        case 1: k1 = k; break;
+        case 2: k2 = k; break;
+        case 3: k3 = k; break;
+        case 4: k4 = k; break;
+      }
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
+    }
+
+    /**
+     * See Pointers.onTouchMove() for the represented direction.
+     */
+    public KeyValue getAtDirection(int direction)
+    {
+      Corner c = null;
+      if (edgekeys)
+      {
+        // \ 1 /
+        //  \ /
+        // 3 0 2
+        //  / \
+        // / 4 \
+        switch (direction)
+        {
+          case 2: case 3: c = key1; break;
+          case 4: case 5: c = key2; break;
+          case 6: case 7: c = key4; break;
+          case 8: case 1: c = key3; break;
+        }
+      }
+      else
+      {
+        // 1 | 2
+        //   |
+        // --0--
+        //   |
+        // 3 | 4
+        switch (direction)
+        {
+          case 1: case 2: c = key1; break;
+          case 3: case 4: c = key2; break;
+          case 5: case 6: c = key4; break;
+          case 7: case 8: c = key3; break;
+        }
+      }
+      return (c == null) ? null : c.kv;
+    }
+
+    public boolean hasValue(KeyValue kv)
+    {
+      return (hasValue(key0, kv) || hasValue(key1, kv) || hasValue(key2, kv) ||
+          hasValue(key3, kv) || hasValue(key4, kv));
+    }
+
+    private static boolean hasValue(Corner c, KeyValue kv)
+    {
+      return (c != null && c.kv.equals(kv));
+    }
+  }
+
+  public static final class Corner
+  {
+    public final KeyValue kv;
+    /** Whether the kv is marked with the "loc " prefix. To be removed if not
+        specified in the [extra_keys]. */
+    public final boolean localized;
+
+    protected Corner(KeyValue k, boolean l)
+    {
+      kv = k;
+      localized = l;
+    }
+
+    public static Corner parse_of_attr(XmlResourceParser parser, String attr) throws Exception
+    {
+      String name = parser.getAttributeValue(null, attr);
+      boolean localized = false;
+
+      if (name == null)
+        return null;
+      String name_loc = stripPrefix(name, "loc ");
+      if (name_loc != null)
+      {
+        localized = true;
+        name = name_loc;
+      }
+      return new Corner(KeyValue.getKeyByName(name), localized);
+    }
+
+    public static Corner of_kv(KeyValue kv)
+    {
+      return new Corner(kv, false);
+    }
+
+    private static String stripPrefix(String s, String prefix)
+    {
+      if (s.startsWith(prefix))
+        return s.substring(prefix.length());
+      else
+        return null;
     }
   }
 
   // Not using Function<KeyValue, KeyValue> to keep compatibility with Android 6.
-  public static abstract interface MapKeys {
-    public KeyValue apply(KeyValue kv);
+  public static abstract interface MapKey {
+    public Key apply(Key k);
+  }
+
+  public static abstract class MapKeyValues implements MapKey {
+    abstract public KeyValue apply(KeyValue c, boolean localized);
+
+    public Key apply(Key k)
+    {
+      return new Key(apply(k.key0), apply(k.key1), apply(k.key2),
+          apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys);
+    }
+
+    private Corner apply(Corner c)
+    {
+      if (c == null)
+        return null;
+      KeyValue kv = apply(c.kv, c.localized);
+      if (kv == null)
+        return null;
+      return Corner.of_kv(kv);
+    }
   }
 
   /** Parsing utils */

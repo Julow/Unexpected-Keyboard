@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -26,7 +27,6 @@ final class Config
   public int programming_layout; // Or '-1' for none
   public float swipe_dist_px;
   public boolean vibrateEnabled;
-  public long vibrateDuration;
   public long longPressTimeout;
   public long longPressInterval;
   public float marginBottom;
@@ -35,10 +35,11 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
-  public int lockable_modifiers;
+  public Set<KeyValue.Modifier> lockable_modifiers = new HashSet<KeyValue.Modifier>();
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
+  public boolean autocapitalisation;
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
@@ -46,7 +47,8 @@ final class Config
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  public Set<String> extra_keys; // 'null' means all the keys
+  public Set<KeyValue> extra_keys_subtype;
+  public Set<KeyValue> extra_keys_param;
 
   public final IKeyEventHandler handler;
 
@@ -56,13 +58,12 @@ final class Config
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
-    labelTextSize = Float.valueOf(res.getString(R.integer.label_text_size));
-    sublabelTextSize = Float.valueOf(res.getString(R.integer.sublabel_text_size));
+    labelTextSize = 0.33f;
+    sublabelTextSize = 0.22f;
     // default values
     layout = -1;
     programming_layout = -1;
     vibrateEnabled = true;
-    vibrateDuration = 20;
     longPressTimeout = 600;
     longPressInterval = 65;
     marginBottom = res.getDimension(R.dimen.margin_bottom);
@@ -81,7 +82,7 @@ final class Config
     actionLabel = null;
     actionId = 0;
     swapEnterActionKey = false;
-    extra_keys = null;
+    extra_keys_subtype = null;
     handler = h;
   }
 
@@ -93,13 +94,17 @@ final class Config
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Resources res = context.getResources();
     DisplayMetrics dm = res.getDisplayMetrics();
-    // The height of the keyboard is relative to the height of the screen. This
-    // is not the actual size of the keyboard, which will be bigger if the
-    // layout has a fifth row. 
+    // The height of the keyboard is relative to the height of the screen.
+    // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
+    // Scale some dimensions depending on orientation
+    float horizontalIntervalScale = 1.f;
+    float characterSizeScale = 1.f;
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
-      keyboardHeightPercent = 55;
+      keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
+      horizontalIntervalScale = 2.f;
+      characterSizeScale = 1.25f;
     }
     else
     {
@@ -115,72 +120,95 @@ final class Config
     float physical_scaling = (dm.widthPixels + dm.heightPixels) / (dm.xdpi + dm.ydpi);
     swipe_dist_px = Float.valueOf(prefs.getString("swipe_dist", "15")) * physical_scaling;;
     vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
-    vibrateDuration = prefs.getInt("vibrate_duration", (int)vibrateDuration);
     longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
     marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
     keyVerticalInterval = getDipPref(dm, prefs, "key_vertical_space", keyVerticalInterval);
-    keyHorizontalInterval = getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval);
+    keyHorizontalInterval =
+      getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval)
+      * horizontalIntervalScale;
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
-    horizontalMargin = getDipPref(dm, prefs, "horizontal_margin", horizontalMargin) + res.getDimension(R.dimen.extra_horizontal_margin);
+    horizontalMargin =
+      getDipPref(dm, prefs, "horizontal_margin", horizontalMargin)
+      + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
-    lockable_modifiers =
-      (prefs.getBoolean("lockable_shift", true) ? KeyValue.FLAG_SHIFT : 0)
-      | (prefs.getBoolean("lockable_ctrl", false) ? KeyValue.FLAG_CTRL : 0)
-      | (prefs.getBoolean("lockable_alt", false) ? KeyValue.FLAG_ALT : 0)
-      | (prefs.getBoolean("lockable_fn", false) ? KeyValue.FLAG_FN : 0)
-      | (prefs.getBoolean("lockable_meta", false) ? KeyValue.FLAG_META : 0)
-      | (prefs.getBoolean("lockable_sup", false) ? KeyValue.FLAG_ACCENT_SUPERSCRIPT : 0)
-      | (prefs.getBoolean("lockable_sub", false) ? KeyValue.FLAG_ACCENT_SUBSCRIPT : 0)
-      | (prefs.getBoolean("lockable_box", false) ? KeyValue.FLAG_ACCENT_BOX : 0);
-    characterSize = prefs.getFloat("character_size", characterSize);
+    lockable_modifiers.clear();
+    if (prefs.getBoolean("lock_double_tap", false))
+      lockable_modifiers.add(KeyValue.Modifier.SHIFT);
+    if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.Modifier.CTRL);
+    if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.Modifier.ALT);
+    if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.Modifier.FN);
+    if (prefs.getBoolean("lockable_meta", false)) lockable_modifiers.add(KeyValue.Modifier.META);
+    if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.Modifier.SUPERSCRIPT);
+    if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.Modifier.SUBSCRIPT);
+    if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.Modifier.BOX);
+    characterSize =
+      prefs.getFloat("character_size", characterSize)
+      * characterSizeScale;
     accents = Integer.valueOf(prefs.getString("accents", "1"));
     theme = getThemeId(res, prefs.getString("theme", ""));
+    autocapitalisation = prefs.getBoolean("autocapitalisation", true);
+    extra_keys_param = ExtraKeyCheckBoxPreference.get_extra_keys(prefs);
   }
 
   /** Update the layout according to the configuration.
    *  - Remove the switching key if it isn't needed
-   *  - Remove keys from other locales (not in 'extra_keys')
+   *  - Remove "localized" keys from other locales (not in 'extra_keys')
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
    */
-  public KeyboardData modify_layout(KeyboardData kw)
+  public KeyboardData modify_layout(KeyboardData original_kw)
   {
     // Update the name to avoid caching in KeyModifier
     final KeyValue action_key = (actionLabel == null) ? null :
-      KeyValue.getKeyByName("action").withNameAndSymbol(actionLabel, actionLabel);
-    return kw.replaceKeys(new KeyboardData.MapKeys() {
-      public KeyValue apply(KeyValue key)
+      KeyValue.getKeyByName("action").withSymbol(actionLabel);
+    // Extra keys are removed from the set as they are encountered during the
+    // first iteration then automatically added.
+    final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
+    extra_keys.addAll(extra_keys_subtype);
+    extra_keys.addAll(extra_keys_param);
+    KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
+      public KeyValue apply(KeyValue key, boolean localized)
       {
-        if (key == null)
+        boolean is_extra_key = extra_keys.contains(key);
+        if (is_extra_key)
+          extra_keys.remove(key);
+        if (localized && !is_extra_key)
           return null;
-        switch (key.eventCode)
+        switch (key.getKind())
         {
-          case KeyValue.EVENT_CHANGE_METHOD:
-            return shouldOfferSwitchingToNextInputMethod ? key : null;
-          case KeyEvent.KEYCODE_ENTER:
-            return (swapEnterActionKey && action_key != null) ? action_key : key;
-          case KeyValue.EVENT_ACTION:
-            return (swapEnterActionKey && action_key != null) ?
-              KeyValue.getKeyByName("enter") : action_key;
-          case KeyValue.EVENT_SWITCH_PROGRAMMING:
-            return shouldOfferSwitchingToProgramming ? key : null;
-          default:
-            if (key.flags != 0)
+          case Event:
+            switch (key.getEvent())
             {
-              if ((key.flags & KeyValue.FLAG_LOCALIZED) != 0 &&
-                  extra_keys != null &&
-                  !extra_keys.contains(key.name))
-                return null;
-              if ((key.flags & lockable_modifiers) != 0)
-                return key.withFlags(key.flags | KeyValue.FLAG_LOCK);
+              case CHANGE_METHOD:
+                return shouldOfferSwitchingToNextInputMethod ? key : null;
+              case ACTION:
+                return (swapEnterActionKey && action_key != null) ?
+                  KeyValue.getKeyByName("enter") : action_key;
+              case SWITCH_PROGRAMMING:
+                return shouldOfferSwitchingToProgramming ? key : null;
             }
-            return key;
+            break;
+          case Keyevent:
+            switch (key.getKeyevent())
+            {
+              case KeyEvent.KEYCODE_ENTER:
+                return (swapEnterActionKey && action_key != null) ? action_key : key;
+            }
+            break;
+          case Modifier:
+            if (lockable_modifiers.contains(key.getModifier()))
+              return key.withFlags(key.getFlags() | KeyValue.FLAG_LOCK);
+            break;
         }
+        return key;
       }
     });
+    if (extra_keys.size() > 0)
+      kw = kw.addExtraKeys(extra_keys.iterator());
+    return kw;
   }
 
   private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
@@ -200,6 +228,7 @@ final class Config
       case "light": return R.style.Light;
       case "black": return R.style.Black;
       case "dark": return R.style.Dark;
+      case "white": return R.style.White;
       default:
       case "system":
         if (Build.VERSION.SDK_INT >= 8)
@@ -217,27 +246,27 @@ final class Config
     switch (name)
     {
       case "azerty": return R.xml.azerty;
+      case "bangla": return R.xml.bangla;
       case "bgph1": return R.xml.local_bgph1;
+      case "bone": return R.xml.bone;
+      case "colemak": return R.xml.colemak;
       case "dvorak": return R.xml.dvorak;
+      case "neo2": return R.xml.neo2;
       case "qwerty_es": return R.xml.qwerty_es;
+      case "qwerty_hu": return R.xml.qwerty_hu;
       case "qwerty_ko": return R.xml.qwerty_ko;
       case "qwerty_lv": return R.xml.qwerty_lv;
       case "qwerty_pt": return R.xml.qwerty_pt;
+      case "qwerty_tr": return R.xml.qwerty_tr;
       case "qwerty": return R.xml.qwerty;
+      case "qwerty_no": return R.xml.qwerty_no;
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
+      case "qwertz_hu": return R.xml.qwertz_hu;
+      case "qwertz_cs": return R.xml.qwertz_cs;
       case "qwertz": return R.xml.qwertz;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
+      case "jcuken_ua": return R.xml.jcuken_ua;
       default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
-    }
-  }
-
-  public static int themeId_of_string(String name)
-  {
-    switch (name)
-    {
-      case "light": return R.style.Light;
-      case "black": return R.style.Black;
-      default: case "dark": return R.style.Dark;
     }
   }
 
@@ -255,6 +284,6 @@ final class Config
 
   public static interface IKeyEventHandler
   {
-    public void handleKeyUp(KeyValue value, int flags);
+    public void handleKeyUp(KeyValue value, Pointers.Modifiers flags);
   }
 }

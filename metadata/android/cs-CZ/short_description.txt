@@ -1,0 +1,1 @@
+Nenáročná virtuální klávesnice pro vývojáře.

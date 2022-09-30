@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" product="debug">Unexpected Keyboard</string>
-  <string name="app_name" product="default">Unexpected Keyboard</string>
-  <string name="settings_activity_label">Configurações Unexpected Keyboard</string>
+  <string name="app_name" product="debug">Teclado Unexpected</string>
+  <string name="app_name" product="default">Teclado Unexpected</string>
+  <string name="settings_activity_label">Configurar Teclado Unexpected</string>
   <string name="pref_category_layout">Layout</string>
   <string name="pref_layout_title">Mudar layout do teclado</string>
   <string name="pref_layout_e_system">Mesmo do sistema</string>
   <string name="pref_accents_title">Acentos</string>
   <string name="pref_accents_e_all_installed">Mostrar acentos para todos os idiomas instalados</string>
   <string name="pref_accents_e_selected">Mostrar acentos só para o idioma selecionado</string>
-  <string name="pref_accents_e_all">Mostrar todos acentos</string>
   <string name="pref_accents_e_none">Ocultar acentos</string>
+  <string name="pref_autocapitalisation_title">Maiusculização automática</string>
+  <string name="pref_autocapitalisation_summary">Aciona o shift no início de cada frase</string>
   <string name="pref_programming_layout_title">Layout do teclado para programação</string>
   <string name="pref_programming_layout_none">Nenhum</string>
   <string name="pref_category_typing">Digitação</string>
@@ -18,17 +19,18 @@
   <string name="pref_swipe_dist_summary">Distância até acionar os cantos das teclas (%s)</string>
   <string name="pref_long_timeout_title">Tempo até repetir tecla</string>
   <string name="pref_long_interval_title">Intervalo de repetição de tecla</string>
-  <string name="pref_category_vibrate">Vibração</string>
   <string name="pref_vibrate_title">Vibração</string>
   <string name="pref_vibrate_summary">Ativar/desativar vibração ao digitar</string>
-  <string name="pref_vibrate_duration_title">Duração</string>
   <string name="pref_precise_repeat_title">Precisão nos movimentos do cursor</string>
   <string name="pref_precise_repeat_summary">Varia a velocidade de repetição a depender do quanto deslizar</string>
-  <string name="pref_lockable_keys_title">Teclas traváveis</string>
-  <string name="pref_lockable_keys_summary">Teclas que podem ficar seguradas ao teclar duas vezes</string>
+  <string name="pref_lockable_keys_title">Descontinuado: Modificadores fixáveis</string>
+  <string name="pref_lockable_keys_summary">Essa opção será removida</string>
+  <string name="pref_lock_double_tap_title">Tecle duas vezes no shift para caixa alta</string>
+  <string name="pref_lock_double_tap_summary">Ao invés de apertar e segurar por um tempo</string>
   <string name="pref_category_style">Estilo</string>
   <string name="pref_margin_bottom_title">Margem inferior</string>
   <string name="pref_keyboard_height_title">Altura do teclado</string>
+  <string name="pref_keyboard_height_landscape_title">Altura do teclado em modo paisagem</string>
   <string name="pref_horizontal_margin_title">Margem horizontal</string>
   <string name="pref_character_size_title">Tamanho dos indicadores</string>
   <string name="pref_character_size_summary">Tamanho dos caracteres visíveis no teclado (%.2fx)</string>

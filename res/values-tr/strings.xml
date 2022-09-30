@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
+  <string name="app_name" product="default">Unexpected Keyboard</string>
+  <string name="settings_activity_label">Unexpected Keyboard Ayarları</string>
+  <string name="pref_category_layout">Düzen</string>
+  <string name="pref_layout_title">Klavye Düzenini Değiştir</string>
+  <string name="pref_layout_e_system">Sistem Ayarları</string>
+  <string name="pref_accents_title">Aksanlar</string>
+  <string name="pref_accents_e_all_installed">Yüklü tüm dillerin aksanlarını göster</string>
+  <string name="pref_accents_e_selected">Sadece seçili dilin aksanlarını göster</string>
+  <string name="pref_accents_e_none">Aksanları gizle</string>
+  <string name="pref_programming_layout_title">Programlama için klavye düzeni</string>
+  <string name="pref_programming_layout_none">Hiçbiri</string>
+  <string name="pref_category_typing">Yazma</string>
+  <string name="pref_swipe_dist_title">Kaydırma mesafesi</string>
+  <string name="pref_swipe_dist_summary">Tuşların köşelerindeki karakterlerin uzaklıkları (%s)</string>
+  <string name="pref_long_timeout_title">Tuş tekrarlama beklemesi</string>
+  <string name="pref_long_interval_title">Tuş tekrarlama aralığı</string>
+  <string name="pref_vibrate_title">Titreşim</string>
+  <string name="pref_vibrate_summary">Tuşa basıldığında titreşimi etkinleştir</string>
+  <string name="pref_precise_repeat_title">İmleç hareketini ayarla</string>
+  <string name="pref_precise_repeat_summary">Tuş tekrar hızını az ya da çok kaydırarak ayarla</string>
+  <string name="pref_category_style">Stil</string>
+  <string name="pref_margin_bottom_title">Alt boşluk</string>
+  <string name="pref_keyboard_height_title">Klavye yüksekliği</string>
+  <string name="pref_horizontal_margin_title">Yatay boşluk</string>
+  <string name="pref_character_size_title">Etiket boyutu</string>
+  <string name="pref_character_size_summary">Klavye üzerinde gösterilecek karakter boyutu (%.2fx)</string>
+  <string name="pref_theme">Tema</string>
+  <string name="pref_theme_e_system">Sistem Ayarları</string>
+  <string name="pref_theme_e_dark">Koyu</string>
+  <string name="pref_theme_e_light">Açık</string>
+  <string name="pref_theme_e_black">Siyah</string>
+  <string name="pref_swipe_dist_e_very_short">Çok kısa</string>
+  <string name="pref_swipe_dist_e_short">Kısa</string>
+  <string name="pref_swipe_dist_e_default">Normal</string>
+  <string name="pref_swipe_dist_e_far">Uzun</string>
+  <string name="pref_swipe_dist_e_very_far">Çok uzun</string>
+  <string name="pref_key_horizontal_space">Tuşlar arasındaki yatay boşluk</string>
+  <string name="pref_key_vertical_space">Tuşlar arasındaki dikey boşluk</string>
+  <string name="key_action_next">İleri</string>
+  <string name="key_action_done">Bitti</string>
+  <string name="key_action_go">İlerle</string>
+  <string name="key_action_prev">Geri</string>
+  <string name="key_action_search">Ara</string>
+  <string name="key_action_send">Gönder</string>
+</resources>
