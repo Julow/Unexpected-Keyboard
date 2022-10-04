@@ -78,16 +78,21 @@ make installd
 
 ## Guidelines
 
-### Adding a programming layout
+### Adding a layout
 
-A programming layout must contains every ASCII characters.
-The current programming layouts are: QWERTY, Dvorak.
+Layouts are defined in XML, see `res/xml/qwerty.xml`.
 
-Layouts are defined in XML, see `res/xml/qwerty.xml`. An entry must be added to
-the layout option in `res/values/arrays.xml`, to both `pref_layout_values`
-(correspond to the file name) and `pref_layout_entries` (display name).
+An entry must be added to the layout option in `res/values/arrays.xml`, to both
+`pref_layout_values` (correspond to the file name) and `pref_layout_entries`
+(display name).
+
 The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
 `layoutId_of_string`.
+
+#### Adding a programming layout
+
+A programming layout must contains every ASCII characters.
+The current programming layouts are: QWERTY, Dvorak and Colemak.
 
 Keys with a name starting in `loc ` are hidden unless they are configured for
 the user's installed languages in `res/xml/method.xml`. These keys are optional
@@ -97,7 +102,7 @@ Some users cannot easily type the characters close the the edges of the screen
 due to a bulky phone case. It is best to avoid placing important characters
 there (such as the digits or punctuation).
 
-### Adding a localized layout
+#### Adding a localized layout
 
 Localized layouts (a layout specific to a language) are gladly accepted.
 See for example: 4333575 (Bulgarian), 88e2175 (Latvian), 133b6ec (German).
