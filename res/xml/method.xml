@@ -2,6 +2,7 @@
 <input-method xmlns:android="http://schemas.android.com/apk/res/android" android:settingsActivity="juloo.keyboard2.SettingsActivity" android:supportsSwitchingToNextInputMethod="true">
   <subtype android:label="%s" android:languageTag="bg" android:imeSubtypeLocale="bg_BG" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=bgph1,extra_keys=€"/>
   <subtype android:label="%s" android:languageTag="bn" android:imeSubtypeLocale="bn_BD" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,extra_keys=৳"/>
+  <subtype android:label="%s" android:languageTag="hi" android:imeSubtypeLocale="hi_IN" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,extra_keys=₹"/>
   <subtype android:label="%s" android:languageTag="de" android:imeSubtypeLocale="de_DE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwertz,extra_keys=accent_trema|ß|€"/>
   <subtype android:label="%s" android:languageTag="en-GB" android:imeSubtypeLocale="en_GB" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,extra_keys=£|€"/>
   <subtype android:label="%s" android:languageTag="en-US" android:imeSubtypeLocale="en_US" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty"/>
