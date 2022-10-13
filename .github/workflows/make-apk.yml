@@ -9,14 +9,14 @@ jobs:
   Build-Apk:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-java@v2
+    - uses: actions/setup-java@v3
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
         java-version: '11'
     - name: Checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Cache debug certificate
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: _build/debug.keystore
         key: debug-keystore
@@ -35,8 +35,13 @@ jobs:
         fi
     - name: Build
       run: make
+    - name: Artifact naming
+      run: |
+        artifact="${{github.repository_owner}} ${{github.ref_name}}"
+        artifact="${artifact//\//-}" # replace slashes
+        echo "artifact=${artifact}" >> $GITHUB_ENV
     - name: Save debug apk
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
-        name: "${{github.repository_owner}} ${{github.ref_name}} debug_apk"
+        name: "${{env.artifact}} debug_apk"
         path: _build/*.apk
