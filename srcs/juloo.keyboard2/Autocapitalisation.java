@@ -27,25 +27,10 @@ final class Autocapitalisation
     InputType.TYPE_TEXT_FLAG_CAP_SENTENCES |
     InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 
-  Runnable delayed_callback = new Runnable()
+  public Autocapitalisation(Looper looper, Callback cb)
   {
-    public void run()
-    {
-      if (_should_update_caps_mode)
-      {
-        _should_enable_shift = _enabled && (_ic.getCursorCapsMode(_caps_mode) != 0);
-        _should_update_caps_mode = false;
-      }
-      _callback.update_shift_state(_should_enable_shift, _should_disable_shift);
-    }
-  };
-
-  void callback(final boolean might_disable)
-  {
-    _should_disable_shift = might_disable;
-    // The callback must be delayed because [getCursorCapsMode] would sometimes
-    // be called before the editor finished handling the previous event.
-    _handler.postDelayed(delayed_callback, 1);
+    _handler = new Handler(looper);
+    _callback = cb;
   }
 
   /**
@@ -53,11 +38,9 @@ final class Autocapitalisation
    * [started] does initialisation work and must be called before any other
    * event.
    */
-  public void started(Looper looper, Callback cb, EditorInfo info, InputConnection ic)
+  public void started(EditorInfo info, InputConnection ic)
   {
-    _handler = new Handler(looper);
     _ic = ic;
-    _callback = cb;
     _caps_mode = info.inputType & TextUtils.CAP_MODE_SENTENCES;
     if (!Config.globalConfig().autocapitalisation || _caps_mode == 0)
     {
@@ -82,15 +65,6 @@ final class Autocapitalisation
     callback(false);
   }
 
-  void type_one_char(char c)
-  {
-    _cursor++;
-    if (is_trigger_character(c))
-      _should_update_caps_mode = true;
-    else
-      _should_enable_shift = false;
-  }
-
   public void event_sent(int code)
   {
     switch (code)
@@ -103,12 +77,17 @@ final class Autocapitalisation
     callback(true);
   }
 
+  public static interface Callback
+  {
+    public void update_shift_state(boolean should_enable, boolean should_disable);
+  }
+
   /** Returns [true] if shift might be disabled. */
   public void selection_updated(int old_cursor, int new_cursor)
   {
     if (new_cursor == _cursor) // Just typing
       return;
-    if (new_cursor == 0)
+    if (new_cursor == 0 && _ic != null)
     {
       // Detect whether the input box has been cleared
       CharSequence t = _ic.getTextAfterCursor(1, 0);
@@ -120,6 +99,36 @@ final class Autocapitalisation
     callback(true);
   }
 
+  Runnable delayed_callback = new Runnable()
+  {
+    public void run()
+    {
+      if (_should_update_caps_mode && _ic != null)
+      {
+        _should_enable_shift = _enabled && (_ic.getCursorCapsMode(_caps_mode) != 0);
+        _should_update_caps_mode = false;
+      }
+      _callback.update_shift_state(_should_enable_shift, _should_disable_shift);
+    }
+  };
+
+  void callback(final boolean might_disable)
+  {
+    _should_disable_shift = might_disable;
+    // The callback must be delayed because [getCursorCapsMode] would sometimes
+    // be called before the editor finished handling the previous event.
+    _handler.postDelayed(delayed_callback, 1);
+  }
+
+  void type_one_char(char c)
+  {
+    _cursor++;
+    if (is_trigger_character(c))
+      _should_update_caps_mode = true;
+    else
+      _should_enable_shift = false;
+  }
+
   boolean is_trigger_character(char c)
   {
     switch (c)
@@ -129,10 +138,5 @@ final class Autocapitalisation
       default:
         return false;
     }
-  }
-
-  public static interface Callback
-  {
-    public void update_shift_state(boolean should_enable, boolean should_disable);
   }
 }

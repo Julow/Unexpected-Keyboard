@@ -36,7 +36,7 @@ public class Keyboard2 extends InputMethodService
   private ViewGroup _emojiPane = null;
 
   private Config _config;
-  private Autocapitalisation _autocap = new Autocapitalisation();
+  private Autocapitalisation _autocap;
 
   private boolean _debug_logs = false;
 
@@ -57,6 +57,7 @@ public class Keyboard2 extends InputMethodService
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     _debug_logs = getResources().getBoolean(R.bool.debug_logs);
+    _autocap = new Autocapitalisation(getMainLooper(), this);
   }
 
   public void update_shift_state(boolean should_enable, boolean should_disable)
@@ -233,7 +234,7 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(getLayout(R.xml.numeric));
     else
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
-    _autocap.started(getMainLooper(), this, info, getCurrentInputConnection());
+    _autocap.started(info, getCurrentInputConnection());
     setInputView(_keyboardView);
     if (_debug_logs)
       log_editor_info(info);
