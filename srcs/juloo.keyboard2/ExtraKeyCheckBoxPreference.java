@@ -14,6 +14,8 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
 {
   public static String[] extra_keys = new String[]
   {
+    "alt",
+    "meta",
     "accent_aigu",
     "accent_grave",
     "accent_double_aigu",
@@ -33,6 +35,18 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "switch_greekmath",
   };
 
+  public static boolean default_checked(String name)
+  {
+    switch (name)
+    {
+      case "alt":
+      case "meta":
+        return true;
+      default:
+        return false;
+    }
+  }
+
   boolean _key_font;
 
   public ExtraKeyCheckBoxPreference(Context context, AttributeSet attrs)
@@ -43,6 +57,7 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     a.recycle();
     String key_name = extra_keys[index];
     setKey(pref_key_of_key_name(key_name));
+    setDefaultValue(default_checked(key_name));
     KeyValue kv = KeyValue.getKeyByName(key_name);
     setTitle(kv.getString());
     _key_font = kv.hasFlags(KeyValue.FLAG_KEY_FONT);
@@ -66,7 +81,7 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     HashSet<KeyValue> ks = new HashSet<KeyValue>();
     for (String key_name : extra_keys)
     {
-      if (prefs.getBoolean(pref_key_of_key_name(key_name), false))
+      if (prefs.getBoolean(pref_key_of_key_name(key_name), default_checked(key_name)))
         ks.add(KeyValue.getKeyByName(key_name));
     }
     return ks;
