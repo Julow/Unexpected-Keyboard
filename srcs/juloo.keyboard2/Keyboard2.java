@@ -276,6 +276,13 @@ public class Keyboard2 extends InputMethodService
     refreshConfig();
   }
 
+  @Override
+  public boolean onEvaluateFullscreenMode()
+  {
+    /* Entirely disable fullscreen mode. */
+    return false;
+  }
+
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver
   {
