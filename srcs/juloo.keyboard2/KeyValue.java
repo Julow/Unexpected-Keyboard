@@ -45,7 +45,8 @@ final class KeyValue
     BOX,
     OGONEK,
     SLASH,
-    ARROW_RIGHT
+    ARROW_RIGHT,
+    BREVE
   }
 
   // Behavior flags.
@@ -223,6 +224,11 @@ final class KeyValue
         FLAG_LATCH | FLAG_SPECIAL | extra_flags);
   }
 
+  private static void addDiacritic(String name, int special_font_symbol, Modifier m)
+  {
+    addModifierKey(name, String.valueOf((char)special_font_symbol), m, FLAG_KEY_FONT);
+  }
+
   private static void addEventKey(String name, String symbol, Event e, int flags)
   {
     addKey(name, symbol, KIND_EVENT, e.ordinal(), flags | FLAG_SPECIAL);
@@ -249,21 +255,21 @@ final class KeyValue
         Modifier.SHIFT, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addModifierKey("ctrl", "Ctrl", Modifier.CTRL, FLAG_SMALLER_FONT);
     addModifierKey("alt", "Alt", Modifier.ALT, FLAG_SMALLER_FONT);
-    addModifierKey("accent_aigu", "\u0050", Modifier.AIGU, FLAG_KEY_FONT);
-    addModifierKey("accent_caron", "\u0051", Modifier.CARON, FLAG_KEY_FONT);
-    addModifierKey("accent_cedille", "\u0052", Modifier.CEDILLE, FLAG_KEY_FONT);
-    addModifierKey("accent_circonflexe", "\u0053", Modifier.CIRCONFLEXE, FLAG_KEY_FONT);
-    addModifierKey("accent_grave", "\u0054", Modifier.GRAVE, FLAG_KEY_FONT);
-    addModifierKey("accent_macron", "\u0055", Modifier.MACRON, FLAG_KEY_FONT);
-    addModifierKey("accent_ring", "\u0056", Modifier.RING, FLAG_KEY_FONT);
-    addModifierKey("accent_tilde", "\u0057", Modifier.TILDE, FLAG_KEY_FONT);
-    addModifierKey("accent_trema", "\u0058", Modifier.TREMA, FLAG_KEY_FONT);
-    addModifierKey("accent_ogonek", "\u0059", Modifier.OGONEK, FLAG_KEY_FONT);
-    addModifierKey("accent_dot_above", "\u005a", Modifier.DOT_ABOVE, FLAG_KEY_FONT);
-    addModifierKey("accent_double_aigu", "\u005b", Modifier.DOUBLE_AIGU, FLAG_KEY_FONT);
-    addModifierKey("accent_slash", "\134", // Can't write u005c
-        Modifier.SLASH, FLAG_KEY_FONT);
-    addModifierKey("accent_arrow_right", "\u005d", Modifier.ARROW_RIGHT, FLAG_KEY_FONT);
+    addDiacritic("accent_aigu", 0x50, Modifier.AIGU);
+    addDiacritic("accent_caron", 0x51, Modifier.CARON);
+    addDiacritic("accent_cedille", 0x52, Modifier.CEDILLE);
+    addDiacritic("accent_circonflexe", 0x53, Modifier.CIRCONFLEXE);
+    addDiacritic("accent_grave", 0x54, Modifier.GRAVE);
+    addDiacritic("accent_macron", 0x55, Modifier.MACRON);
+    addDiacritic("accent_ring", 0x56, Modifier.RING);
+    addDiacritic("accent_tilde", 0x57, Modifier.TILDE);
+    addDiacritic("accent_trema", 0x58, Modifier.TREMA);
+    addDiacritic("accent_ogonek", 0x59, Modifier.OGONEK);
+    addDiacritic("accent_dot_above", 0x5A, Modifier.DOT_ABOVE);
+    addDiacritic("accent_double_aigu", 0x5B, Modifier.DOUBLE_AIGU);
+    addDiacritic("accent_slash", 0x5C, Modifier.SLASH);
+    addDiacritic("accent_arrow_right", 0x5D, Modifier.ARROW_RIGHT);
+    addDiacritic("accent_breve", 0x5E, Modifier.BREVE);
     addModifierKey("superscript", "Sup", Modifier.SUPERSCRIPT, FLAG_SMALLER_FONT);
     addModifierKey("subscript", "Sub", Modifier.SUBSCRIPT, FLAG_SMALLER_FONT);
     addModifierKey("ordinal", "Ord", Modifier.ORDINAL, FLAG_SMALLER_FONT);
