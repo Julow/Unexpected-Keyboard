@@ -145,6 +145,7 @@ class KeyModifier
       case KeyEvent.KEYCODE_DPAD_LEFT: return "home";
       case KeyEvent.KEYCODE_DPAD_RIGHT: return "end";
       case KeyEvent.KEYCODE_ESCAPE: return "insert";
+      case KeyEvent.KEYCODE_TAB: return "\\t";
       default: return null;
     }
   }
@@ -242,7 +243,6 @@ class KeyModifier
       case '⊃': return "⊇";
       case '±': return "∓";
       // other
-      case '\t': return "\\t";
       case ' ': return "nbsp";
       default: return null;
     }
