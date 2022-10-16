@@ -65,8 +65,14 @@ final class Autocapitalisation
     callback(false);
   }
 
-  public void event_sent(int code)
+  public void event_sent(int code, int meta)
   {
+    if (meta != 0)
+    {
+      _should_enable_shift = false;
+      _should_update_caps_mode = false;
+      return;
+    }
     switch (code)
     {
       case KeyEvent.KEYCODE_DEL:

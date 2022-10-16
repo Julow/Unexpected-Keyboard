@@ -353,7 +353,7 @@ public class Keyboard2 extends InputMethodService
         return;
       conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
       if (eventAction == KeyEvent.ACTION_UP)
-        _autocap.event_sent(eventCode);
+        _autocap.event_sent(eventCode, meta);
     }
 
     public void showKeyboardConfig()
