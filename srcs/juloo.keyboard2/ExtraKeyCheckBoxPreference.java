@@ -40,9 +40,6 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
   {
     switch (name)
     {
-      case "alt":
-      case "meta":
-        return true;
       default:
         return false;
     }
