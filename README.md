@@ -19,7 +19,7 @@ Highlight of some of the features:
 
 - Very light and fast. Use 500x times less space than Google's keyboard and 15x times less than the default keyboard. No ad, no tracking.
 
-- Multiple layouts: QWERTY, QWERTZ, AZERTY. Themes: White, Dark, OLED Black. And many other options.
+- Personalizable with many options, layouts and themes.
 
 Like any other virtual keyboards, it must be enabled in the system settings. Open the System Settings and go to:
 System > Languages & input > On-screen keyboard > Manage on-screen keyboards.
