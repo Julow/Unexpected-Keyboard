@@ -75,13 +75,14 @@ public final class Pointers implements Handler.Callback
   }
 
   /** Fake pointers are latched and not lockable. */
-  public void add_fake_pointer(KeyValue kv, KeyboardData.Key key)
+  public void add_fake_pointer(KeyValue kv, KeyboardData.Key key, boolean locked)
   {
-    // Avoid adding a fake pointer to a key that is already down.
-    if (isKeyDown(key))
-      return;
+    remove_fake_pointer(kv, key);
     Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags = ptr.flags & ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK | KeyValue.FLAG_FAKE_PTR);
+    ptr.flags &= ~KeyValue.FLAG_LATCH;
+    ptr.flags |= KeyValue.FLAG_LOCK | KeyValue.FLAG_FAKE_PTR;
+    if (locked)
+      ptr.flags = (ptr.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
     _ptrs.add(ptr);
   }
 

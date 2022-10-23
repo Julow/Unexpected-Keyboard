@@ -27,7 +27,7 @@
     <key key0="ä" key1="'" key3="&quot;"/>
   </row>
   <row>
-    <key width="1.5" key0="shift"/>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="z"/>
     <key key0="x"/>
     <key key0="c"/>

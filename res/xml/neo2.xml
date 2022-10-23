@@ -27,7 +27,7 @@
     <key key0="y" key3="\@"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key1="esc"/>
+    <key width="1.5" key0="shift" key1="esc" key2="loc capslock"/>
     <key key0="ü" key4="\#"/>
     <key key0="ö" key4="$"/>
     <key key0="ä" key4="|"/>

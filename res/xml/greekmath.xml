@@ -25,7 +25,7 @@
     <key key0="γ" key1="⌀"/>
   </row>
   <row>
-    <key width="1.5" key0="shift"/>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="φ" key3="⇌" key4="√"/>
     <key key0="η" key3="accent_arrow_right" key4="∪"/>
     <key key0="ϡ" key4="∩"/>

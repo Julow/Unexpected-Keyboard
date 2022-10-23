@@ -25,7 +25,7 @@
     <key key0="m" key3="*"/>
   </row>
   <row>
-    <key width="2.0" key0="shift"/>
+    <key width="2.0" key0="shift" key2="loc capslock"/>
     <key key0="w" key3="&lt;" key4="&gt;"/>
     <key key0="x"/>
     <key key0="c" key1="accent_cedille" key3="," key4="\?"/>

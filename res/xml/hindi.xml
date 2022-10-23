@@ -24,7 +24,7 @@
     <key key0="त" key1="थ" key2="ख़" key3="(" key4=")"/>
   </row>
   <row>
-    <key width="1.4" key0="shift"/>
+    <key width="1.4" key0="shift" key2="loc capslock"/>
     <key shift="0.1" key0="ट" key1="ठ" key2="ड़" key3="\#" key4="*"/>
     <key key0="ं" key1="ँ" key2="।" key3="ॐ" key4="\@"/>
     <key key0="म" key1="ण" key2="य" key3="य़" key4="%"/>

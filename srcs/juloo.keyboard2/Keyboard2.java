@@ -63,9 +63,9 @@ public class Keyboard2 extends InputMethodService
   public void update_shift_state(boolean should_enable, boolean should_disable)
   {
     if (should_enable)
-      _keyboardView.set_shift_state(true);
+      _keyboardView.set_shift_state(true, false);
     else if (should_disable)
-      _keyboardView.set_shift_state(false);
+      _keyboardView.set_shift_state(false, false);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -312,6 +312,11 @@ public class Keyboard2 extends InputMethodService
       if (conn == null)
         return;
       conn.performEditorAction(_config.actionId);
+    }
+
+    public void enableCapsLock()
+    {
+      _keyboardView.set_shift_state(true, true);
     }
 
     public void switchMain()

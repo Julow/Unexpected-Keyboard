@@ -28,7 +28,7 @@
     <key key0="э" key2="|" key3="\\"/>
   </row>
   <row>
-    <key width="1.18" key0="shift"/>
+    <key width="1.18" key0="shift" key2="loc capslock"/>
     <key width="0.96" key0="я"/>
     <key width="0.96" key0="ч"/>
     <key width="0.96" key0="с"/>

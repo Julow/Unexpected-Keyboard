@@ -16,7 +16,8 @@ final class KeyValue
     CHANGE_METHOD,
     ACTION,
     SWITCH_PROGRAMMING,
-    SWITCH_GREEKMATH
+    SWITCH_GREEKMATH,
+    CAPS_LOCK,
   }
 
   // Must be evaluated in the reverse order of their values.
@@ -287,6 +288,7 @@ final class KeyValue
     addEventKey("switch_greekmath", "πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
     addEventKey("change_method", "\u0009", Event.CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     addEventKey("action", "Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
+    addEventKey("capslock", "\u0012", Event.CAPS_LOCK, FLAG_KEY_FONT);
 
     addKeyeventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
     addKeyeventKey("enter", "\u000E", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);

@@ -21,6 +21,10 @@
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="13"/>
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="14"/>
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="15"/>
+      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="16"/>
+      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="17"/>
+      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="18"/>
+      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="19"/>
     </PreferenceScreen>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">

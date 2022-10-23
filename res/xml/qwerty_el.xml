@@ -24,7 +24,7 @@
     <key key0="λ" key2="|" key3="\\"/>
   </row>
   <row>
-    <key width="1.5" key0="shift"/>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="ζ"/>
     <key key0="χ"/>
     <key key0="ψ" key2="&lt;" key3="."/>

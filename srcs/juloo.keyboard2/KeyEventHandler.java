@@ -35,6 +35,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
           case ACTION: _recv.performAction(); break;
           case SWITCH_PROGRAMMING: _recv.switchProgramming(); break;
           case SWITCH_GREEKMATH: _recv.switchGreekmath(); break;
+          case CAPS_LOCK: _recv.enableCapsLock(); break;
         }
         break;
       case Keyevent:
@@ -102,6 +103,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     public void setPane_normal();
     public void showKeyboardConfig();
     public void performAction();
+    public void enableCapsLock();
 
     public void switchMain();
     public void switchNumeric();

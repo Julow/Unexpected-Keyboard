@@ -100,12 +100,12 @@ public class Keyboard2View extends View
   }
 
   /** Called by auto-capitalisation. */
-  public void set_shift_state(boolean state)
+  public void set_shift_state(boolean state, boolean lock)
   {
     if (_keyboard == null || _shift_key == null)
       return;
     if (state)
-      _pointers.add_fake_pointer(_shift_kv, _shift_key);
+      _pointers.add_fake_pointer(_shift_kv, _shift_key, lock);
     else
       _pointers.remove_fake_pointer(_shift_kv, _shift_key);
     invalidate();

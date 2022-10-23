@@ -33,6 +33,7 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "ß",
     "£",
     "switch_greekmath",
+    "capslock",
   };
 
   public static boolean default_checked(String name)
