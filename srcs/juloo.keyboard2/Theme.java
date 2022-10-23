@@ -25,6 +25,7 @@ public class Theme
   private final Paint _specialKeyLabelPaint;
   private final Paint _keySubLabelPaint;
   private final Paint _specialKeySubLabelPaint;
+  private final Paint _indicationPaint;
 
   public Theme(Context context, AttributeSet attrs)
   {
@@ -45,6 +46,7 @@ public class Theme
     Typeface specialKeyFont = getKeyFont(context);
     _specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeyFont);
     _specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeyFont);
+    _indicationPaint = initLabelPaint(Paint.Align.CENTER, null);
   }
 
   public Paint labelPaint(boolean special_font)
@@ -58,6 +60,11 @@ public class Theme
     Paint p = special_font ? _specialKeySubLabelPaint : _keySubLabelPaint;
     p.setTextAlign(align);
     return p;
+  }
+
+  public Paint indicationPaint()
+  {
+    return _indicationPaint;
   }
 
   private Paint initLabelPaint(Paint.Align align, Typeface font)

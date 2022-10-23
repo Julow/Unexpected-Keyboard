@@ -267,6 +267,10 @@ public class Keyboard2View extends View
           drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
           drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
         }
+        if (k.indication != null)
+        {
+          drawIndication(canvas, k.indication, keyW / 2f + x, y, keyH);
+        }
         x += _keyWidth * k.width;
       }
       y += row.height * _config.keyHeight;
@@ -309,7 +313,9 @@ public class Keyboard2View extends View
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyW, float keyH, Paint.Align a, Vertical v, boolean isKeyDown)
+  private void drawSubLabel(Canvas canvas, KeyboardData.Corner k, float x,
+      float y, float keyW, float keyH, Paint.Align a, Vertical v,
+      boolean isKeyDown)
   {
     if (k == null)
       return;
@@ -330,6 +336,17 @@ public class Keyboard2View extends View
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
     canvas.drawText(kv.getString(), x, y, p);
+  }
+
+  private void drawIndication(Canvas canvas, String indication, float x,
+      float y, float keyH)
+  {
+    float textSize = keyH * _config.sublabelTextSize * _config.characterSize;
+    Paint p = _theme.indicationPaint();
+    p.setColor(_theme.subLabelColor);
+    p.setTextSize(textSize);
+    canvas.drawText(indication, x,
+        (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
   private float scaleTextSize(KeyValue k, float rel_size, float keyH)

@@ -249,8 +249,9 @@ class KeyboardData
     public final float shift;
     /** Put keys 1 to 4 on the edges instead of the corners. */
     public final boolean edgekeys;
+    public final String indication;
 
-    protected Key(Corner k0, Corner k1, Corner k2, Corner k3, Corner k4, float w, float s, boolean e)
+    protected Key(Corner k0, Corner k1, Corner k2, Corner k3, Corner k4, float w, float s, boolean e, String i)
     {
       key0 = k0;
       key1 = k1;
@@ -260,6 +261,7 @@ class KeyboardData
       width = w;
       shift = s;
       edgekeys = e;
+      indication = i;
     }
 
     public static Key parse(XmlResourceParser parser) throws Exception
@@ -272,15 +274,17 @@ class KeyboardData
       float width = parser.getAttributeFloatValue(null, "width", 1f);
       float shift = parser.getAttributeFloatValue(null, "shift", 0.f);
       boolean edgekeys = parser.getAttributeBooleanValue(null, "edgekeys", false);
+      String indication = parser.getAttributeValue(null, "indication");
       while (parser.next() != XmlResourceParser.END_TAG)
         continue ;
-      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, indication);
     }
 
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
-      return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys);
+      return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys,
+          indication);
     }
 
     public KeyValue getKeyValue(int i)
@@ -310,12 +314,12 @@ class KeyboardData
         case 3: k3 = k; break;
         case 4: k4 = k; break;
       }
-      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys);
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, indication);
     }
 
     public Key withShift(float s)
     {
-      return new Key(key0, key1, key2, key3, key4, width, s, edgekeys);
+      return new Key(key0, key1, key2, key3, key4, width, s, edgekeys, indication);
     }
 
     /**
@@ -423,7 +427,8 @@ class KeyboardData
     public Key apply(Key k)
     {
       return new Key(apply(k.key0), apply(k.key1), apply(k.key2),
-          apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys);
+          apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys,
+          k.indication);
     }
 
     private Corner apply(Corner c)

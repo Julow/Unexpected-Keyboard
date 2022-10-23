@@ -2,20 +2,20 @@
 <keyboard width="6.0" bottom_row="false" extra_keys="false" num_pad="false">
   <row>
     <key shift="1.0" key0="1"/>
-    <key key0="2"/>
-    <key key0="3"/>
+    <key key0="2" indication="ABC"/>
+    <key key0="3" indication="DEF"/>
     <key key0="backspace" key2="delete"/>
   </row>
   <row>
-    <key shift="1.0" key0="4"/>
-    <key key0="5"/>
-    <key key0="6"/>
+    <key shift="1.0" key0="4" indication="GHI"/>
+    <key key0="5" indication="JKL"/>
+    <key key0="6" indication="MNO"/>
     <key key0="(" key3=":"/>
   </row>
   <row>
-    <key shift="1.0" key0="7"/>
-    <key key0="8"/>
-    <key key0="9"/>
+    <key shift="1.0" key0="7" indication="PQRS"/>
+    <key key0="8" indication="TUV"/>
+    <key key0="9" indication="WXYZ"/>
     <key key0=")" key3="/"/>
   </row>
   <row>
