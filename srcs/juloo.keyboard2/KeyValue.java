@@ -342,6 +342,25 @@ final class KeyValue
     addPlaceholderKey("f12_placeholder");
   }
 
+  static final HashMap<String, String> keys_descr = new HashMap<String, String>();
+
+  /* Some keys have a description attached. Return [null] if otherwise. */
+  public static String getKeyDescription(String name)
+  {
+    return keys_descr.get(name);
+  }
+
+  static void addKeyDescr(String name, String descr)
+  {
+    keys_descr.put(name, descr);
+  }
+
+  static {
+    /* Keys description is shown in the settings. */
+    addKeyDescr("capslock", "Caps lock");
+    addKeyDescr("switch_greekmath", "Greek & math symbols");
+  }
+
   // Substitute for [assert], which has no effect on Android.
   private static void check(boolean b)
   {

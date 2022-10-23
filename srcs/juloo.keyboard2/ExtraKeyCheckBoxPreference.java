@@ -57,10 +57,14 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     int index = a.getInteger(R.styleable.ExtraKeyCheckBoxPreference_index, 0);
     a.recycle();
     String key_name = extra_keys[index];
+    KeyValue kv = KeyValue.getKeyByName(key_name);
+    String title = kv.getString();
+    String descr = KeyValue.getKeyDescription(key_name);
+    if (descr != null)
+      title += " (" + descr + ")";
     setKey(pref_key_of_key_name(key_name));
     setDefaultValue(default_checked(key_name));
-    KeyValue kv = KeyValue.getKeyByName(key_name);
-    setTitle(kv.getString());
+    setTitle(title);
     _key_font = kv.hasFlags(KeyValue.FLAG_KEY_FONT);
   }
 
