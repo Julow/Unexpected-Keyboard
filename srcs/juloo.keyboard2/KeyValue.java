@@ -219,15 +219,22 @@ final class KeyValue
     addKey(name, symbol, KIND_CHAR, c, flags);
   }
 
-  private static void addModifierKey(String name, String symbol, Modifier m, int extra_flags)
+  private static void addModifierKey(String name, String symbol, Modifier m, int flags)
   {
+    if (symbol.length() > 1)
+      flags |= FLAG_SMALLER_FONT;
     addKey(name, symbol, KIND_MODIFIER, m.ordinal(),
-        FLAG_LATCH | FLAG_SPECIAL | extra_flags);
+        FLAG_LATCH | FLAG_SPECIAL | flags);
   }
 
-  private static void addDiacritic(String name, int special_font_symbol, Modifier m)
+  private static void addModifierKey(String name, int symbol, Modifier m, int flags)
   {
-    addModifierKey(name, String.valueOf((char)special_font_symbol), m, FLAG_KEY_FONT);
+    addModifierKey(name, String.valueOf((char)symbol), m, flags | FLAG_KEY_FONT);
+  }
+
+  private static void addDiacritic(String name, int symbol, Modifier m)
+  {
+    addModifierKey(name, symbol, m, 0);
   }
 
   private static void addEventKey(String name, String symbol, Event e, int flags)
@@ -235,9 +242,19 @@ final class KeyValue
     addKey(name, symbol, KIND_EVENT, e.ordinal(), flags | FLAG_SPECIAL);
   }
 
+  private static void addEventKey(String name, int symbol, Event e, int flags)
+  {
+    addEventKey(name, String.valueOf((char)symbol), e, flags | FLAG_KEY_FONT);
+  }
+
   private static void addKeyeventKey(String name, String symbol, int code, int flags)
   {
     addKey(name, symbol, KIND_KEYEVENT, code, flags);
+  }
+
+  private static void addKeyeventKey(String name, int symbol, int code, int flags)
+  {
+    addKeyeventKey(name, String.valueOf((char)symbol), code, flags | FLAG_KEY_FONT);
   }
 
   // Within VALUE_BITS
@@ -252,10 +269,9 @@ final class KeyValue
 
   static
   {
-    addModifierKey("shift", "\n", // Can't write u000A because Java is stupid
-        Modifier.SHIFT, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
-    addModifierKey("ctrl", "Ctrl", Modifier.CTRL, FLAG_SMALLER_FONT);
-    addModifierKey("alt", "Alt", Modifier.ALT, FLAG_SMALLER_FONT);
+    addModifierKey("shift", 0x0A, Modifier.SHIFT, FLAG_SMALLER_FONT);
+    addModifierKey("ctrl", "Ctrl", Modifier.CTRL, 0);
+    addModifierKey("alt", "Alt", Modifier.ALT, 0);
     addDiacritic("accent_aigu", 0x50, Modifier.AIGU);
     addDiacritic("accent_caron", 0x51, Modifier.CARON);
     addDiacritic("accent_cedille", 0x52, Modifier.CEDILLE);
@@ -271,37 +287,37 @@ final class KeyValue
     addDiacritic("accent_slash", 0x5C, Modifier.SLASH);
     addDiacritic("accent_arrow_right", 0x5D, Modifier.ARROW_RIGHT);
     addDiacritic("accent_breve", 0x5E, Modifier.BREVE);
-    addModifierKey("superscript", "Sup", Modifier.SUPERSCRIPT, FLAG_SMALLER_FONT);
-    addModifierKey("subscript", "Sub", Modifier.SUBSCRIPT, FLAG_SMALLER_FONT);
-    addModifierKey("ordinal", "Ord", Modifier.ORDINAL, FLAG_SMALLER_FONT);
-    addModifierKey("arrows", "Arr", Modifier.ARROWS, FLAG_SMALLER_FONT);
-    addModifierKey("box", "Box", Modifier.BOX, FLAG_SMALLER_FONT);
-    addModifierKey("fn", "Fn", Modifier.FN, FLAG_SMALLER_FONT);
-    addModifierKey("meta", "Meta", Modifier.META, FLAG_SMALLER_FONT);
+    addModifierKey("superscript", "Sup", Modifier.SUPERSCRIPT, 0);
+    addModifierKey("subscript", "Sub", Modifier.SUBSCRIPT, 0);
+    addModifierKey("ordinal", "Ord", Modifier.ORDINAL, 0);
+    addModifierKey("arrows", "Arr", Modifier.ARROWS, 0);
+    addModifierKey("box", "Box", Modifier.BOX, 0);
+    addModifierKey("fn", "Fn", Modifier.FN, 0);
+    addModifierKey("meta", "Meta", Modifier.META, 0);
 
-    addEventKey("config", "\u0004", Event.CONFIG, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addEventKey("config", 0x04, Event.CONFIG, FLAG_SMALLER_FONT);
     addEventKey("switch_text", "ABC", Event.SWITCH_TEXT, FLAG_SMALLER_FONT);
     addEventKey("switch_numeric", "123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
-    addEventKey("switch_emoji", "\u0001" , Event.SWITCH_EMOJI, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addEventKey("switch_emoji", 0x01, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
     addEventKey("switch_back_emoji", "ABC", Event.SWITCH_BACK_EMOJI, 0);
     addEventKey("switch_programming", "Prog", Event.SWITCH_PROGRAMMING, FLAG_SMALLER_FONT);
     addEventKey("switch_greekmath", "πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
-    addEventKey("change_method", "\u0009", Event.CHANGE_METHOD, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addEventKey("change_method", 0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
     addEventKey("action", "Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
-    addEventKey("capslock", "\u0012", Event.CAPS_LOCK, FLAG_KEY_FONT);
+    addEventKey("capslock", 0x12, Event.CAPS_LOCK, 0);
 
     addKeyeventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
-    addKeyeventKey("enter", "\u000E", KeyEvent.KEYCODE_ENTER, FLAG_KEY_FONT);
-    addKeyeventKey("up", "\u0005", KeyEvent.KEYCODE_DPAD_UP, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addKeyeventKey("right", "\u0006", KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addKeyeventKey("down", "\u0007", KeyEvent.KEYCODE_DPAD_DOWN, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addKeyeventKey("left", "\u0008", KeyEvent.KEYCODE_DPAD_LEFT, FLAG_KEY_FONT | FLAG_PRECISE_REPEAT);
-    addKeyeventKey("page_up", "\u0002", KeyEvent.KEYCODE_PAGE_UP, FLAG_KEY_FONT);
-    addKeyeventKey("page_down", "\u0003", KeyEvent.KEYCODE_PAGE_DOWN, FLAG_KEY_FONT);
-    addKeyeventKey("home", "\u000B", KeyEvent.KEYCODE_MOVE_HOME, FLAG_KEY_FONT);
-    addKeyeventKey("end", "\u000C", KeyEvent.KEYCODE_MOVE_END, FLAG_KEY_FONT);
-    addKeyeventKey("backspace", "\u0011", KeyEvent.KEYCODE_DEL, FLAG_KEY_FONT);
-    addKeyeventKey("delete", "\u0010", KeyEvent.KEYCODE_FORWARD_DEL, FLAG_KEY_FONT);
+    addKeyeventKey("enter", 0x0E, KeyEvent.KEYCODE_ENTER, 0);
+    addKeyeventKey("up", 0x05, KeyEvent.KEYCODE_DPAD_UP, FLAG_PRECISE_REPEAT);
+    addKeyeventKey("right", 0x06, KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_PRECISE_REPEAT);
+    addKeyeventKey("down", 0x07, KeyEvent.KEYCODE_DPAD_DOWN, FLAG_PRECISE_REPEAT);
+    addKeyeventKey("left", 0x08, KeyEvent.KEYCODE_DPAD_LEFT, FLAG_PRECISE_REPEAT);
+    addKeyeventKey("page_up", 0x02, KeyEvent.KEYCODE_PAGE_UP, 0);
+    addKeyeventKey("page_down", 0x03, KeyEvent.KEYCODE_PAGE_DOWN, 0);
+    addKeyeventKey("home", 0x0B, KeyEvent.KEYCODE_MOVE_HOME, 0);
+    addKeyeventKey("end", 0x0C, KeyEvent.KEYCODE_MOVE_END, 0);
+    addKeyeventKey("backspace", 0x11, KeyEvent.KEYCODE_DEL, 0);
+    addKeyeventKey("delete", 0x10, KeyEvent.KEYCODE_FORWARD_DEL, 0);
     addKeyeventKey("insert", "Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
     addKeyeventKey("f1", "F1", KeyEvent.KEYCODE_F1, 0);
     addKeyeventKey("f2", "F2", KeyEvent.KEYCODE_F2, 0);
@@ -315,11 +331,11 @@ final class KeyValue
     addKeyeventKey("f10", "F10", KeyEvent.KEYCODE_F10, 0);
     addKeyeventKey("f11", "F11", KeyEvent.KEYCODE_F11, FLAG_SMALLER_FONT);
     addKeyeventKey("f12", "F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
-    addKeyeventKey("tab", "\u000F", KeyEvent.KEYCODE_TAB, FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addKeyeventKey("tab", 0x0F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
 
     addCharKey("\\t", "\\t", '\t', 0); // Send the tab character
     addCharKey("space", "\r", ' ', FLAG_KEY_FONT);
-    addCharKey("nbsp", "\u237d", '\u00a0', FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    addCharKey("nbsp", "\u237d", '\u00a0', FLAG_SMALLER_FONT);
 
     addPlaceholderKey("removed");
     addPlaceholderKey("f11_placeholder");
