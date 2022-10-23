@@ -269,7 +269,7 @@ final class KeyValue
 
   static
   {
-    addModifierKey("shift", 0x0A, Modifier.SHIFT, FLAG_SMALLER_FONT);
+    addModifierKey("shift", 0x0A, Modifier.SHIFT, 0);
     addModifierKey("ctrl", "Ctrl", Modifier.CTRL, 0);
     addModifierKey("alt", "Alt", Modifier.ALT, 0);
     addDiacritic("accent_aigu", 0x50, Modifier.AIGU);
