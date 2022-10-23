@@ -225,15 +225,28 @@ public class Keyboard2 extends InputMethodService
     Log.d(TAG, "actionLabel: "+_config.actionLabel);
   }
 
+  private int chooseLayout(EditorInfo info)
+  {
+    switch (info.inputType & InputType.TYPE_MASK_CLASS)
+    {
+      case InputType.TYPE_CLASS_NUMBER:
+        if ((info.inputType & (InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED)) != 0)
+          return R.xml.numeric;
+        return R.xml.pin;
+      case InputType.TYPE_CLASS_PHONE:
+      case InputType.TYPE_CLASS_DATETIME:
+        return R.xml.pin;
+      default:
+        return _currentTextLayout;
+    }
+  }
+
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
     refreshConfig();
     refresh_action_label(info);
-    if ((info.inputType & InputType.TYPE_CLASS_NUMBER) != 0)
-      _keyboardView.setKeyboard(getLayout(R.xml.numeric));
-    else
-      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+    _keyboardView.setKeyboard(getLayout(chooseLayout(info)));
     _autocap.started(info, getCurrentInputConnection());
     setInputView(_keyboardView);
     if (_debug_logs)

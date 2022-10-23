@@ -136,10 +136,11 @@ class KeyboardData
     boolean bottom_row = parser.getAttributeBooleanValue(null, "bottom_row", true);
     boolean extra_keys = parser.getAttributeBooleanValue(null, "extra_keys", true);
     boolean num_pad = parser.getAttributeBooleanValue(null, "num_pad", true);
+    float specified_kw = parser.getAttributeFloatValue(null, "width", 0f);
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
         rows.add(Row.parse(parser));
-    float kw = compute_max_width(rows);
+    float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
     if (bottom_row)
       rows.add(_bottomRow.updateWidth(kw));
     return new KeyboardData(rows, kw, extra_keys, num_pad);
