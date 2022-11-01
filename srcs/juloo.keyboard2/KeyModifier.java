@@ -359,6 +359,7 @@ class KeyModifier
          return 'II'. To make 'İ' accessible, make it the shift of 'ı'. This
          has the inconvenient of swapping i and ı on the keyboard. */
       case 'ı': return 'İ';
+      case '₹': return '₨';
       default: return c;
     }
   }

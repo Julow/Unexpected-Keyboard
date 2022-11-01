@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="ौ" key1="औ" key2="₨" key3="esc" key4="१"/>
+    <key key0="ौ" key1="औ" key2="₹" key3="esc" key4="१"/>
     <key key0="ै" key1="ऐ" key2="ऍ" key3="¶" key4="२"/>
     <key key0="ा" key1="आ" key2="ॅ" key3="ग़" key4="३"/>
     <key key0="ी" key1="ई" key2="ज्ञ" key3="ज़" key4="४"/>
