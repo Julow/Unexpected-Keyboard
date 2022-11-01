@@ -254,27 +254,28 @@ final class Config
     {
       case "azerty": return R.xml.azerty;
       case "bangla": return R.xml.bangla;
-      case "hindi": return R.xml.hindi;
       case "bgph1": return R.xml.local_bgph1;
       case "bone": return R.xml.bone;
       case "colemak": return R.xml.colemak;
       case "dvorak": return R.xml.dvorak;
+      case "hindi": return R.xml.hindi;
+      case "jcuken_ua": return R.xml.jcuken_ua;
       case "neo2": return R.xml.neo2;
-      case "qwerty_es": return R.xml.qwerty_es;
+      case "qwerty": return R.xml.qwerty;
       case "qwerty_el": return R.xml.qwerty_el;
+      case "qwerty_es": return R.xml.qwerty_es;
       case "qwerty_hu": return R.xml.qwerty_hu;
       case "qwerty_ko": return R.xml.qwerty_ko;
       case "qwerty_lv": return R.xml.qwerty_lv;
-      case "qwerty_pt": return R.xml.qwerty_pt;
-      case "qwerty_tr": return R.xml.qwerty_tr;
-      case "qwerty": return R.xml.qwerty;
       case "qwerty_no": return R.xml.qwerty_no;
+      case "qwerty_pt": return R.xml.qwerty_pt;
       case "qwerty_sv_se": return R.xml.qwerty_sv_se;
-      case "qwertz_hu": return R.xml.qwertz_hu;
-      case "qwertz_cs": return R.xml.qwertz_cs;
+      case "qwerty_tr": return R.xml.qwerty_tr;
       case "qwertz": return R.xml.qwertz;
+      case "qwertz_cs": return R.xml.qwertz_cs;
+      case "qwertz_de": return R.xml.qwertz_de;
+      case "qwertz_hu": return R.xml.qwertz_hu;
       case "ru_jcuken": return R.xml.local_ru_jcuken;
-      case "jcuken_ua": return R.xml.jcuken_ua;
       default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
     }
   }

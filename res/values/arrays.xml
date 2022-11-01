@@ -15,6 +15,7 @@
     <item>qwerty_tr</item>
     <item>ru_jcuken</item>
     <item>qwertz</item>
+    <item>qwertz_de</item>
     <item>qwertz_hu</item>
     <item>bgph1</item>
     <item>dvorak</item>
@@ -40,6 +41,7 @@
     <item>QWERTY (Türkçe)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>QWERTZ</item>
+    <item>QWERTZ (Deutsch)</item>
     <item>QWERTZ (Hungarian)</item>
     <item>Bulgarian (Phonetic Traditional)</item>
     <item>Dvorak</item>
