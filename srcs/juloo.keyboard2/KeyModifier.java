@@ -509,13 +509,17 @@ class KeyModifier
         switch (c)
         {
           case 'a': return 'ⱥ';
+          case 'b': return '␢';
           case 'c': return 'ȼ';
           case 'e': return 'ɇ';
           case 'g': return 'ꞡ';
+          case 'k': return 'ꝃ';
           case 'l': return 'ł';
           case 'n': return 'ꞥ';
           case 'o': return 'ø';
-          case ' ': return '/';
+          case 'r': return 'ꞧ';
+          case 's': return 'ꞩ';
+          case 't': return 'ⱦ';
           default: return c;
         }
       }
