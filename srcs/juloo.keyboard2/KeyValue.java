@@ -24,7 +24,6 @@ final class KeyValue
   public static enum Modifier
   {
     SHIFT,
-    FN,
     CTRL,
     ALT,
     META,
@@ -47,7 +46,8 @@ final class KeyValue
     OGONEK,
     SLASH,
     ARROW_RIGHT,
-    BREVE
+    BREVE,
+    FN, // Must be placed last to be applied first
   }
 
   // Behavior flags.
