@@ -29,6 +29,7 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "accent_macron",
     "accent_ogonek",
     "accent_breve",
+    "accent_bar",
     "€",
     "ß",
     "£",

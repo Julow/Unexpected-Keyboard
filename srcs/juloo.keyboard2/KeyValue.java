@@ -47,6 +47,7 @@ final class KeyValue
     SLASH,
     ARROW_RIGHT,
     BREVE,
+    BAR,
     FN, // Must be placed last to be applied first
   }
 
@@ -287,6 +288,7 @@ final class KeyValue
     addDiacritic("accent_slash", 0x5C, Modifier.SLASH);
     addDiacritic("accent_arrow_right", 0x5D, Modifier.ARROW_RIGHT);
     addDiacritic("accent_breve", 0x5E, Modifier.BREVE);
+    addDiacritic("accent_bar", 0x5F, Modifier.BAR);
     addModifierKey("superscript", "Sup", Modifier.SUPERSCRIPT, 0);
     addModifierKey("subscript", "Sub", Modifier.SUBSCRIPT, 0);
     addModifierKey("ordinal", "Ord", Modifier.ORDINAL, 0);

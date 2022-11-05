@@ -58,6 +58,7 @@ class KeyModifier
       case ARROWS: return apply_map_char(k, map_char_arrows);
       case BOX: return apply_map_char(k, map_char_box);
       case SLASH: return apply_map_char(k, map_char_slash);
+      case BAR: return apply_map_char(k, map_char_bar);
       case ARROW_RIGHT: return apply_combining(k, "\u20D7");
       default: return k;
     }
@@ -515,6 +516,33 @@ class KeyModifier
           case 'n': return 'ꞥ';
           case 'o': return 'ø';
           case ' ': return '/';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_bar =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'b': return 'ƀ';
+          case 'c': return 'ꞓ';
+          case 'd': return 'đ';
+          case 'g': return 'ǥ';
+          case 'i': return 'ɨ';
+          case 'j': return 'ɉ';
+          case 'k': return 'ꝁ';
+          case 'l': return 'ƚ';
+          case 'o': return 'ɵ';
+          case 'p': return 'ᵽ';
+          case 'q': return 'ꝗ';
+          case 'r': return 'ɍ';
+          case 't': return 'ŧ';
+          case 'u': return 'ʉ';
+          case 'y': return 'ɏ';
+          case 'z': return 'ƶ';
           default: return c;
         }
       }
