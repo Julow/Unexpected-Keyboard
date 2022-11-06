@@ -24,8 +24,6 @@
   <string name="pref_vibrate_summary">Iespējot/atspējot taustiņa piespiešanas trīcēšanu</string>
   <string name="pref_precise_repeat_title">Pielāgojama kursora kustība</string>
   <string name="pref_precise_repeat_summary">Mainīt taustiņa atkārtošanās ātrumu ar pavilkšanas attālumu</string>
-  <string name="pref_lockable_keys_title">Novecojis: Slēdzami pārveidotāji</string>
-  <string name="pref_lockable_keys_summary">Šī iespēja tiks noņemta</string>
   <string name="pref_lock_double_tap_title">Divkāršs piesitiens burtslēgam</string>
   <string name="pref_lock_double_tap_summary">Tā vietā, lai ilstoši piespiestu pārveidotāju</string>
   <string name="pref_category_style">Izskata pielāgojumi</string>

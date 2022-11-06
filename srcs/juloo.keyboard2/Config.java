@@ -36,7 +36,7 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public boolean preciseRepeat;
-  public Set<KeyValue.Modifier> lockable_modifiers = new HashSet<KeyValue.Modifier>();
+  public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
@@ -139,16 +139,7 @@ final class Config
       getDipPref(dm, prefs, "horizontal_margin", horizontalMargin)
       + res.getDimension(R.dimen.extra_horizontal_margin);
     preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
-    lockable_modifiers.clear();
-    if (prefs.getBoolean("lock_double_tap", false))
-      lockable_modifiers.add(KeyValue.Modifier.SHIFT);
-    if (prefs.getBoolean("lockable_ctrl", false)) lockable_modifiers.add(KeyValue.Modifier.CTRL);
-    if (prefs.getBoolean("lockable_alt", false)) lockable_modifiers.add(KeyValue.Modifier.ALT);
-    if (prefs.getBoolean("lockable_fn", false)) lockable_modifiers.add(KeyValue.Modifier.FN);
-    if (prefs.getBoolean("lockable_meta", false)) lockable_modifiers.add(KeyValue.Modifier.META);
-    if (prefs.getBoolean("lockable_sup", false)) lockable_modifiers.add(KeyValue.Modifier.SUPERSCRIPT);
-    if (prefs.getBoolean("lockable_sub", false)) lockable_modifiers.add(KeyValue.Modifier.SUBSCRIPT);
-    if (prefs.getBoolean("lockable_box", false)) lockable_modifiers.add(KeyValue.Modifier.BOX);
+    double_tap_lock_shift = prefs.getBoolean("lock_double_tap", false);
     characterSize =
       prefs.getFloat("character_size", characterSize)
       * characterSizeScale;
@@ -204,8 +195,12 @@ final class Config
             }
             break;
           case Modifier:
-            if (lockable_modifiers.contains(key.getModifier()))
-              return key.withFlags(key.getFlags() | KeyValue.FLAG_LOCK);
+            switch (key.getModifier())
+            {
+              case SHIFT:
+                if (double_tap_lock_shift)
+                  return key.withFlags(key.getFlags() | KeyValue.FLAG_LOCK);
+            }
             break;
         }
         return key;

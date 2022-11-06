@@ -20,8 +20,6 @@
   <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
   <string name="pref_precise_repeat_title">Точные перемещения курсора</string>
   <string name="pref_precise_repeat_summary">Модулируйте скорость повторения клавиш, проводя пальцем больше или меньше</string>
-  <string name="pref_lockable_keys_title">Запираемые модификаторы</string>
-  <string name="pref_lockable_keys_summary">Модификаторы, которые можно заблокировать, введя их дважды</string>
   <string name="pref_category_style">Стиль</string>
   <string name="pref_margin_bottom_title">Нижняя граница поля</string>
   <string name="pref_keyboard_height_title">Высота клавиатуры</string>

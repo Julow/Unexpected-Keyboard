@@ -23,8 +23,6 @@
   <string name="pref_vibrate_summary">Ativar/desativar vibração ao digitar</string>
   <string name="pref_precise_repeat_title">Precisão nos movimentos do cursor</string>
   <string name="pref_precise_repeat_summary">Varia a velocidade de repetição a depender do quanto deslizar</string>
-  <string name="pref_lockable_keys_title">Descontinuado: Modificadores fixáveis</string>
-  <string name="pref_lockable_keys_summary">Essa opção será removida</string>
   <string name="pref_lock_double_tap_title">Tecle duas vezes no shift para caixa alta</string>
   <string name="pref_lock_double_tap_summary">Ao invés de apertar e segurar por um tempo</string>
   <string name="pref_category_style">Estilo</string>
