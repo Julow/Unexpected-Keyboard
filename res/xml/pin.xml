@@ -10,13 +10,13 @@
     <key shift="1.0" key0="4" indication="GHI"/>
     <key key0="5" indication="JKL"/>
     <key key0="6" indication="MNO"/>
-    <key key0="(" key3=":"/>
+    <key key0="(" key3=":" key4="-"/>
   </row>
   <row>
     <key shift="1.0" key0="7" indication="PQRS"/>
     <key key0="8" indication="TUV"/>
     <key key0="9" indication="WXYZ"/>
-    <key key0=")" key3="/"/>
+    <key key0=")" key2="," key3="/" key4="."/>
   </row>
   <row>
     <key shift="1.0" key0="*" key1="switch_text" key3="switch_numeric"/>

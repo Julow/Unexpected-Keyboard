@@ -230,8 +230,6 @@ public class Keyboard2 extends InputMethodService
     switch (info.inputType & InputType.TYPE_MASK_CLASS)
     {
       case InputType.TYPE_CLASS_NUMBER:
-        if ((info.inputType & (InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED)) != 0)
-          return R.xml.numeric;
         return R.xml.pin;
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
