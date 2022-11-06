@@ -1,0 +1,11 @@
+New layouts: QWERTZ (Deutsch)
+
+Add optional numpad for wide screens.
+Add pin entry layout for numbers.
+Remove option "Lockable modifiers".
+Hide Alt and Meta keys by default.
+Added more optional keys.
+Allow typing password on boot.
+Improvements to the layouts and bug fixes.
+
+Thanks to the contributors: @geroxyz
