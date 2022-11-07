@@ -10,6 +10,10 @@
   <string name="pref_accents_e_all_installed">Rādīt uzsvara zīmes visām uzstādītajām valodām</string>
   <string name="pref_accents_e_selected">Rādīt uzsvara zīmes tikai atlasītajām valodām</string>
   <string name="pref_accents_e_none">Paslēpt uzsvara zīmes</string>
+  <string name="pref_show_numpad_title">Rādīt ciparnīcu</string>
+  <string name="pref_show_numpad_never">Nekad</string>
+  <string name="pref_show_numpad_landscape">Tikai guleniskajā skatā</string>
+  <string name="pref_show_numpad_always">Vienmēr</string>
   <string name="pref_autocapitalisation_title">Automātiski lielie burti</string>
   <string name="pref_autocapitalisation_summary">Piespiest Shift teikuma sākumā</string>
   <string name="pref_extra_keys_title">Pievienot tastatūrai taustiņus</string>
@@ -38,6 +42,7 @@
   <string name="pref_theme_e_dark">Tumšs</string>
   <string name="pref_theme_e_light">Gaišs</string>
   <string name="pref_theme_e_black">Melns</string>
+  <string name="pref_theme_e_white">Balts</string>
   <string name="pref_swipe_dist_e_very_short">Ļoti tuvs</string>
   <string name="pref_swipe_dist_e_short">Tuvs</string>
   <string name="pref_swipe_dist_e_default">Vidējs</string>
