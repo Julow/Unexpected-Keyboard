@@ -3,7 +3,6 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -84,9 +83,8 @@ public class EmojiGridView extends GridView
 
   private void saveLastUsed()
   {
-    SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+    SharedPreferences.Editor edit = emojiSharedPreferences().edit();
     HashSet<String> set = new HashSet<String>();
-
     for (Emoji emoji : _lastUsed.keySet())
       set.add(String.valueOf(_lastUsed.get(emoji)) + "-" + emoji.name());
     edit.putStringSet(LAST_USE_PREF, set);
@@ -95,9 +93,8 @@ public class EmojiGridView extends GridView
 
   private void loadLastUsed()
   {
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+    SharedPreferences prefs = emojiSharedPreferences();
     Set<String> lastUseSet = prefs.getStringSet(LAST_USE_PREF, null);
-
     _lastUsed = new HashMap<Emoji, Integer>();
     if (lastUseSet != null)
       for (String emojiData : lastUseSet)
@@ -112,6 +109,11 @@ public class EmojiGridView extends GridView
           continue ;
         _lastUsed.put(emoji, Integer.valueOf(data[0]));
       }
+  }
+
+  SharedPreferences emojiSharedPreferences()
+  {
+    return getContext().getSharedPreferences("emoji_last_use", Context.MODE_PRIVATE);
   }
 
   private static class EmojiView extends TextView

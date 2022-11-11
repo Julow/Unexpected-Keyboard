@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.content.res.Configuration;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -15,6 +14,8 @@ import java.util.HashSet;
 
 final class Config
 {
+  private final SharedPreferences _prefs;
+
   // From resources
   public final float marginTop;
   public final float keyPadding;
@@ -53,9 +54,9 @@ final class Config
 
   public final IKeyEventHandler handler;
 
-  private Config(Context context, IKeyEventHandler h)
+  private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h)
   {
-    Resources res = context.getResources();
+    _prefs = prefs;
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
@@ -76,7 +77,7 @@ final class Config
     characterSize = 1.f;
     accents = 1;
     // from prefs
-    refresh(context);
+    refresh(res);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
     shouldOfferSwitchingToProgramming = false;
@@ -90,10 +91,8 @@ final class Config
   /*
    ** Reload prefs
    */
-  public void refresh(Context context)
+  public void refresh(Resources res)
   {
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    Resources res = context.getResources();
     DisplayMetrics dm = res.getDisplayMetrics();
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
@@ -101,52 +100,52 @@ final class Config
     // Scale some dimensions depending on orientation
     float horizontalIntervalScale = 1.f;
     float characterSizeScale = 1.f;
-    String show_numpad_s = prefs.getString("show_numpad", "never");
+    String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
     if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
     {
       if ("landscape".equals(show_numpad_s))
         show_numpad = true;
-      keyboardHeightPercent = prefs.getInt("keyboard_height_landscape", 50);
+      keyboardHeightPercent = _prefs.getInt("keyboard_height_landscape", 50);
       horizontalIntervalScale = 2.f;
       characterSizeScale = 1.25f;
     }
     else
     {
-      keyboardHeightPercent = prefs.getInt("keyboard_height", 35);
+      keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
-    String layout_s = prefs.getString("layout", "system");
+    String layout_s = _prefs.getString("layout", "system");
     layout = layout_s.equals("system") ? -1 : layoutId_of_string(layout_s);
-    String prog_layout_s = prefs.getString("programming_layout", "none");
+    String prog_layout_s = _prefs.getString("programming_layout", "none");
     programming_layout = prog_layout_s.equals("none") ? -1 : layoutId_of_string(prog_layout_s);
     // The swipe distance is defined relatively to the "exact physical pixels
     // per inch of the screen", which isn't affected by the scaling settings.
     // Take the mean of both dimensions as an approximation of the diagonal.
     float physical_scaling = (dm.widthPixels + dm.heightPixels) / (dm.xdpi + dm.ydpi);
-    swipe_dist_px = Float.valueOf(prefs.getString("swipe_dist", "15")) * physical_scaling;;
-    vibrateEnabled = prefs.getBoolean("vibrate_enabled", vibrateEnabled);
-    longPressTimeout = prefs.getInt("longpress_timeout", (int)longPressTimeout);
-    longPressInterval = prefs.getInt("longpress_interval", (int)longPressInterval);
-    marginBottom = getDipPref(dm, prefs, "margin_bottom", marginBottom);
-    keyVerticalInterval = getDipPref(dm, prefs, "key_vertical_space", keyVerticalInterval);
+    swipe_dist_px = Float.valueOf(_prefs.getString("swipe_dist", "15")) * physical_scaling;;
+    vibrateEnabled = _prefs.getBoolean("vibrate_enabled", vibrateEnabled);
+    longPressTimeout = _prefs.getInt("longpress_timeout", (int)longPressTimeout);
+    longPressInterval = _prefs.getInt("longpress_interval", (int)longPressInterval);
+    marginBottom = getDipPref(dm, _prefs, "margin_bottom", marginBottom);
+    keyVerticalInterval = getDipPref(dm, _prefs, "key_vertical_space", keyVerticalInterval);
     keyHorizontalInterval =
-      getDipPref(dm, prefs, "key_horizontal_space", keyHorizontalInterval)
+      getDipPref(dm, _prefs, "key_horizontal_space", keyHorizontalInterval)
       * horizontalIntervalScale;
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontalMargin =
-      getDipPref(dm, prefs, "horizontal_margin", horizontalMargin)
+      getDipPref(dm, _prefs, "horizontal_margin", horizontalMargin)
       + res.getDimension(R.dimen.extra_horizontal_margin);
-    preciseRepeat = prefs.getBoolean("precise_repeat", preciseRepeat);
-    double_tap_lock_shift = prefs.getBoolean("lock_double_tap", false);
+    preciseRepeat = _prefs.getBoolean("precise_repeat", preciseRepeat);
+    double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
-      prefs.getFloat("character_size", characterSize)
+      _prefs.getFloat("character_size", characterSize)
       * characterSizeScale;
-    accents = Integer.valueOf(prefs.getString("accents", "1"));
-    theme = getThemeId(res, prefs.getString("theme", ""));
-    autocapitalisation = prefs.getBoolean("autocapitalisation", true);
-    extra_keys_param = ExtraKeyCheckBoxPreference.get_extra_keys(prefs);
+    accents = Integer.valueOf(_prefs.getString("accents", "1"));
+    theme = getThemeId(res, _prefs.getString("theme", ""));
+    autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
+    extra_keys_param = ExtraKeyCheckBoxPreference.get_extra_keys(_prefs);
   }
 
   /** Update the layout according to the configuration.
@@ -277,9 +276,10 @@ final class Config
 
   private static Config _globalConfig = null;
 
-  public static void initGlobalConfig(Context context, IKeyEventHandler handler)
+  public static void initGlobalConfig(SharedPreferences prefs, Resources res,
+      IKeyEventHandler handler)
   {
-    _globalConfig = new Config(context, handler);
+    _globalConfig = new Config(prefs, res, handler);
   }
 
   public static Config globalConfig()

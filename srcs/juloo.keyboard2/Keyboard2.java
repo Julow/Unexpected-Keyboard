@@ -6,23 +6,22 @@ import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.util.Log;
+import android.util.LogPrinter;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.util.Log;
-import android.util.LogPrinter;
 import java.util.Arrays;
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Keyboard2 extends InputMethodService
@@ -49,11 +48,10 @@ public class Keyboard2 extends InputMethodService
   public void onCreate()
   {
     super.onCreate();
-    PreferenceManager.setDefaultValues(this, R.xml.settings, false);
-    PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-    Config.initGlobalConfig(this, new KeyEventHandler(this.new Receiver()));
+    SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
+    prefs.registerOnSharedPreferenceChangeListener(this);
+    Config.initGlobalConfig(prefs, getResources(), new KeyEventHandler(this.new Receiver()));
     _config = Config.globalConfig();
-    _config.refresh(this);
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     _debug_logs = getResources().getBoolean(R.bool.debug_logs);
@@ -205,7 +203,7 @@ public class Keyboard2 extends InputMethodService
   private void refreshConfig()
   {
     int prev_theme = _config.theme;
-    _config.refresh(this);
+    _config.refresh(getResources());
     refreshSubtypeImm();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
