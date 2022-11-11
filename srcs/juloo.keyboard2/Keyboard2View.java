@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import java.util.Arrays;
 
 public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
@@ -232,6 +234,20 @@ public class Keyboard2View extends View
           + _config.marginTop + _config.marginBottom);
     setMeasuredDimension(width, height);
     _keyWidth = (width - (_config.horizontalMargin * 2)) / _keyboard.keysWidth;
+  }
+
+  @Override
+  public void onLayout(boolean changed, int left, int top, int right, int bottom)
+  {
+    if (!changed)
+      return;
+    // Disable the back-gesture on the keyboard area
+    Rect keyboard_area = new Rect(
+        left + (int)_config.horizontalMargin,
+        top + (int)_config.marginTop,
+        right - (int)_config.horizontalMargin,
+        bottom - (int)_config.marginBottom);
+    setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
   }
 
   @Override
