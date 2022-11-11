@@ -11,6 +11,7 @@
     <attr name="colorLabel" format="color"/>
     <attr name="colorLabelActivated" format="color"/>
     <attr name="colorLabelLocked" format="color"/>
+    <attr name="secondaryLightOffset" format="float"/>
     <!-- Corner labels -->
     <attr name="colorSubLabel" format="color"/>
     <!-- Dimens -->
@@ -41,6 +42,7 @@
     <item name="colorLabelActivated">#3399ff</item>
     <item name="colorLabelLocked">#33cc33</item>
     <item name="colorSubLabel">#cccccc</item>
+    <item name="secondaryLightOffset">-0.2</item>
     <item name="emoji_button_bg" type="color">#202020</item>
     <item name="emoji_color" type="color">#ffffff</item>
   </style>
@@ -53,6 +55,7 @@
     <item name="colorLabelActivated">#0066cc</item>
     <item name="colorLabelLocked">#33cc33</item>
     <item name="colorSubLabel">#333333</item>
+    <item name="secondaryLightOffset">+0.3</item>
     <item name="emoji_button_bg">#dedede</item>
     <item name="emoji_color">#000000</item>
   </style>
@@ -65,6 +68,7 @@
     <item name="colorLabelActivated">#009dff</item>
     <item name="colorLabelLocked">#00ff26</item>
     <item name="colorSubLabel">#bbbbbb</item>
+    <item name="secondaryLightOffset">-0.25</item>
     <item name="keyBorderRadius">1dp</item>
     <item name="emoji_button_bg">#000000</item>
     <item name="emoji_color">#ffffff</item>
@@ -78,6 +82,7 @@
     <item name="colorLabelActivated">#0066cc</item>
     <item name="colorLabelLocked">#33cc33</item>
     <item name="colorSubLabel">#333333</item>
+    <item name="secondaryLightOffset">+0.35</item>
     <item name="emoji_button_bg">#ffffff</item>
     <item name="emoji_color">#000000</item>
   </style>

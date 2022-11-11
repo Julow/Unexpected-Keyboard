@@ -299,7 +299,7 @@ public class Keyboard2View extends View
     super.onDetachedFromWindow();
   }
 
-  private int labelColor(KeyValue k, boolean isKeyDown, int defaultColor)
+  private int labelColor(KeyValue k, boolean isKeyDown, boolean sublabel)
   {
     if (isKeyDown && k.hasFlags(KeyValue.FLAG_LATCH))
     {
@@ -312,7 +312,9 @@ public class Keyboard2View extends View
           return _theme.activatedColor;
       }
     }
-    return defaultColor;
+    if (k.hasFlags(KeyValue.FLAG_SECONDARY))
+      return _theme.secondaryLabelColor;
+    return sublabel ? _theme.subLabelColor : _theme.labelColor;
   }
 
   private void drawLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyH, boolean isKeyDown)
@@ -324,7 +326,7 @@ public class Keyboard2View extends View
       return;
     float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
     Paint p = _theme.labelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT));
-    p.setColor(labelColor(kv, isKeyDown, _theme.labelColor));
+    p.setColor(labelColor(kv, isKeyDown, false));
     p.setTextSize(textSize);
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
@@ -340,7 +342,7 @@ public class Keyboard2View extends View
       return;
     float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
     Paint p = _theme.subLabelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT), a);
-    p.setColor(labelColor(kv, isKeyDown, _theme.subLabelColor));
+    p.setColor(labelColor(kv, isKeyDown, true));
     p.setTextSize(textSize);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)

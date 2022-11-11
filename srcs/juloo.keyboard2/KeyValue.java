@@ -58,11 +58,12 @@ final class KeyValue
   public static final int FLAG_SPECIAL = (1 << 22);
   public static final int FLAG_PRECISE_REPEAT = (1 << 23);
   // Rendering flags.
-  public static final int FLAG_KEY_FONT = (1 << 24);
-  public static final int FLAG_SMALLER_FONT = (1 << 25);
+  public static final int FLAG_KEY_FONT = (1 << 24); // special font file
+  public static final int FLAG_SMALLER_FONT = (1 << 25); // 25% smaller symbols
+  public static final int FLAG_SECONDARY = (1 << 26); // dimmer
   // Used by [Pointers].
-  public static final int FLAG_LOCKED = (1 << 26);
-  public static final int FLAG_FAKE_PTR = (1 << 27);
+  public static final int FLAG_LOCKED = (1 << 28);
+  public static final int FLAG_FAKE_PTR = (1 << 29);
 
   // Kinds
   public static final int KIND_CHAR = (0 << 29);
@@ -225,7 +226,7 @@ final class KeyValue
     if (symbol.length() > 1)
       flags |= FLAG_SMALLER_FONT;
     addKey(name, symbol, KIND_MODIFIER, m.ordinal(),
-        FLAG_LATCH | FLAG_SPECIAL | flags);
+        FLAG_LATCH | FLAG_SPECIAL | FLAG_SECONDARY | flags);
   }
 
   private static void addModifierKey(String name, int symbol, Modifier m, int flags)
@@ -235,12 +236,13 @@ final class KeyValue
 
   private static void addDiacritic(String name, int symbol, Modifier m)
   {
-    addModifierKey(name, symbol, m, 0);
+    addKey(name, String.valueOf((char)symbol), KIND_MODIFIER, m.ordinal(),
+        FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
   }
 
   private static void addEventKey(String name, String symbol, Event e, int flags)
   {
-    addKey(name, symbol, KIND_EVENT, e.ordinal(), flags | FLAG_SPECIAL);
+    addKey(name, symbol, KIND_EVENT, e.ordinal(), flags | FLAG_SPECIAL | FLAG_SECONDARY);
   }
 
   private static void addEventKey(String name, int symbol, Event e, int flags)
@@ -250,7 +252,7 @@ final class KeyValue
 
   private static void addKeyeventKey(String name, String symbol, int code, int flags)
   {
-    addKey(name, symbol, KIND_KEYEVENT, code, flags);
+    addKey(name, symbol, KIND_KEYEVENT, code, flags | FLAG_SECONDARY);
   }
 
   private static void addKeyeventKey(String name, int symbol, int code, int flags)
@@ -336,7 +338,7 @@ final class KeyValue
     addKeyeventKey("tab", 0x0F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
 
     addCharKey("\\t", "\\t", '\t', 0); // Send the tab character
-    addCharKey("space", "\r", ' ', FLAG_KEY_FONT);
+    addCharKey("space", "\r", ' ', FLAG_KEY_FONT | FLAG_SECONDARY);
     addCharKey("nbsp", "\u237d", '\u00a0', FLAG_SMALLER_FONT);
 
     addPlaceholderKey("removed");

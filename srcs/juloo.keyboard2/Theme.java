@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
@@ -15,6 +16,7 @@ public class Theme
   public final int activatedColor;
   public final int labelColor;
   public final int subLabelColor;
+  public final int secondaryLabelColor;
 
   public final float keyBorderRadius;
 
@@ -39,6 +41,8 @@ public class Theme
     activatedColor = s.getColor(R.styleable.keyboard_colorLabelActivated, 0);
     lockedColor = s.getColor(R.styleable.keyboard_colorLabelLocked, 0);
     subLabelColor = s.getColor(R.styleable.keyboard_colorSubLabel, 0);
+    float secondaryLightOffset = s.getFloat(R.styleable.keyboard_secondaryLightOffset, 1.f);
+    secondaryLabelColor = adjustLight(labelColor, secondaryLightOffset);
     keyBorderRadius = s.getDimension(R.styleable.keyboard_keyBorderRadius, 0);
     s.recycle();
     _keyLabelPaint = initLabelPaint(Paint.Align.CENTER, null);
@@ -67,7 +71,15 @@ public class Theme
     return _indicationPaint;
   }
 
-  private Paint initLabelPaint(Paint.Align align, Typeface font)
+  int adjustLight(int color, float offset)
+  {
+    float[] hsv = new float[3];
+    Color.colorToHSV(color, hsv);
+    hsv[2] += offset;
+    return Color.HSVToColor(hsv);
+  }
+
+  Paint initLabelPaint(Paint.Align align, Typeface font)
   {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     paint.setTextAlign(align);
@@ -76,7 +88,7 @@ public class Theme
     return (paint);
   }
 
-  private static Typeface _key_font = null;
+  static Typeface _key_font = null;
 
   static public Typeface getKeyFont(Context context)
   {
