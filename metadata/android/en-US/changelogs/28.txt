@@ -1,0 +1,6 @@
+Updated translations: Latvian
+
+Fix crash when typing device password
+Increase target SDK version to 31
+
+Thanks to the contributors: @eandersons
