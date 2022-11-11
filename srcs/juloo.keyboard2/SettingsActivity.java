@@ -14,9 +14,13 @@ public class SettingsActivity extends PreferenceActivity
   {
     detectSystemTheme();
     super.onCreate(savedInstanceState);
+    SharedPreferences prefs;
+    // The preferences can't be read when in direct-boot mode. Avoid crashing
+    // and don't allow changing the settings.
+    try { prefs = PreferenceManager.getDefaultSharedPreferences(this); }
+    catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
-    PreferenceManager.getDefaultSharedPreferences(this)
-      .registerOnSharedPreferenceChangeListener(this.new OnPreferencesChange());
+    prefs.registerOnSharedPreferenceChangeListener(this.new OnPreferencesChange());
   }
 
   /** The default theme is [Theme.DeviceDefault], which is dark. Detect if the
@@ -29,6 +33,12 @@ public class SettingsActivity extends PreferenceActivity
       if ((ui_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
         setTheme(android.R.style.Theme_DeviceDefault_Light);
     }
+  }
+
+  void fallbackEncrypted()
+  {
+    // Can't communicate with the user here.
+    finish();
   }
 
   /** See DirectBootAwarePreferences. */
