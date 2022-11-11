@@ -327,6 +327,7 @@ public class Keyboard2View extends View
     float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
     Paint p = _theme.labelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT));
     p.setColor(labelColor(kv, isKeyDown, false));
+    p.setAlpha(_config.labelBrightness);
     p.setTextSize(textSize);
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
@@ -343,6 +344,7 @@ public class Keyboard2View extends View
     float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
     Paint p = _theme.subLabelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT), a);
     p.setColor(labelColor(kv, isKeyDown, true));
+    p.setAlpha(_config.labelBrightness);
     p.setTextSize(textSize);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)

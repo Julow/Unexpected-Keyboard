@@ -4,6 +4,7 @@
   <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard Settings</string>
   <string name="pref_category_layout">Layout</string>
+  <string name="pref_label_brightness">Adjust label brightness</string>
   <string name="pref_layout_title">Change keyboard layout</string>
   <string name="pref_layout_e_system">System settings</string>
   <string name="pref_accents_title">Accents</string>

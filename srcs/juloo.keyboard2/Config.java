@@ -36,6 +36,7 @@ final class Config
   public float horizontalMargin;
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
+  public int labelBrightness; // 0 - 255
   public boolean preciseRepeat;
   public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
@@ -131,6 +132,8 @@ final class Config
     keyHorizontalInterval =
       getDipPref(dm, _prefs, "key_horizontal_space", keyHorizontalInterval)
       * horizontalIntervalScale;
+    // Label brightness is used as the alpha channel
+    labelBrightness = _prefs.getInt("label_brightness", 100) * 255 / 100;
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
