@@ -436,9 +436,7 @@ class KeyboardData
       if (c == null)
         return null;
       KeyValue kv = apply(c.kv, c.localized);
-      if (kv == null)
-        return null;
-      return Corner.of_kv(kv);
+      return (kv == null) ? null : new Corner(kv, c.localized);
     }
   }
 
