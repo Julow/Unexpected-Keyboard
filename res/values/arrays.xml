@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="pref_layout_values">
-    <item>system</item>
+    <item>none</item>
     <item>azerty</item>
     <item>qwerty</item>
     <item>qwerty_pt</item>
@@ -28,7 +28,7 @@
     <item>hindi</item>
   </string-array>
   <string-array name="pref_layout_entries">
-    <item>@string/pref_layout_e_system</item>
+    <item>None</item>
     <item>AZERTY</item>
     <item>QWERTY</item>
     <item>QWERTY (Brasileiro)</item>
@@ -53,18 +53,6 @@
     <item>ЙЦУКЕН (Українська)</item>
     <item>বাংলা</item>
     <item>हिन्दी</item>
-  </string-array>
-  <string-array name="pref_programming_layout_values">
-    <item>none</item>
-    <item>qwerty</item>
-    <item>dvorak</item>
-    <item>colemak</item>
-  </string-array>
-  <string-array name="pref_programming_layout_entries">
-    <item>@string/pref_programming_layout_none</item>
-    <item>QWERTY</item>
-    <item>Dvorak</item>
-    <item>Colemak</item>
   </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>

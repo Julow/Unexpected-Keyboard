@@ -157,9 +157,9 @@ public class Keyboard2 extends InputMethodService
         refreshAccentsOption(imm, subtype);
       }
     }
-    _config.shouldOfferSwitchingToProgramming =
-      _config.programming_layout != -1 &&
-      _currentTextLayout != _config.programming_layout;
+    _config.shouldOfferSwitchingToSecond =
+      _config.second_layout != -1 &&
+      _currentTextLayout != _config.second_layout;
   }
 
   private String actionLabel_of_imeAction(int action)
@@ -343,17 +343,17 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(getLayout(R.xml.greekmath));
     }
 
-    public void switchProgramming()
+    public void switchSecond()
     {
-      if (_config.programming_layout == -1)
+      if (_config.second_layout == -1)
         return;
       KeyboardData layout =
-        getLayout(_config.programming_layout).mapKeys(new KeyboardData.MapKeyValues() {
+        getLayout(_config.second_layout).mapKeys(new KeyboardData.MapKeyValues() {
           public KeyValue apply(KeyValue key, boolean localized)
           {
             if (key.getKind() == KeyValue.Kind.Event
-                && key.getEvent() == KeyValue.Event.SWITCH_PROGRAMMING)
-              return KeyValue.getKeyByName("switch_text");
+                && key.getEvent() == KeyValue.Event.SWITCH_SECOND)
+              return KeyValue.getKeyByName("switch_second_back");
             return key;
           }
         });

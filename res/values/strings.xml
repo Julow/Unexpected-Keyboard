@@ -18,8 +18,8 @@
   <string name="pref_autocapitalisation_title">Automatic capitalisation</string>
   <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string>
   <string name="pref_extra_keys_title">Add keys to the keyboard</string>
-  <string name="pref_programming_layout_title">Keyboard layout for programming</string>
-  <string name="pref_programming_layout_none">None</string>
+  <string name="pref_second_layout_title">Secondary layout</string>
+  <string name="pref_second_layout_none">None</string>
   <string name="pref_category_typing">Typing</string>
   <string name="pref_swipe_dist_title">Swiping distance</string>
   <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>

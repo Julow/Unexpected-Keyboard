@@ -25,7 +25,7 @@ final class Config
 
   // From preferences
   public int layout; // Or '-1' for the system defaults
-  public int programming_layout; // Or '-1' for none
+  public int second_layout; // Or '-1' for none
   public boolean show_numpad = false;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
@@ -46,7 +46,7 @@ final class Config
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
-  public boolean shouldOfferSwitchingToProgramming;
+  public boolean shouldOfferSwitchingToSecond;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
@@ -65,7 +65,7 @@ final class Config
     sublabelTextSize = 0.22f;
     // default values
     layout = -1;
-    programming_layout = -1;
+    second_layout = -1;
     vibrateEnabled = true;
     longPressTimeout = 600;
     longPressInterval = 65;
@@ -81,7 +81,7 @@ final class Config
     refresh(res);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
-    shouldOfferSwitchingToProgramming = false;
+    shouldOfferSwitchingToSecond = false;
     actionLabel = null;
     actionId = 0;
     swapEnterActionKey = false;
@@ -115,10 +115,8 @@ final class Config
     {
       keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
-    String layout_s = _prefs.getString("layout", "system");
-    layout = layout_s.equals("system") ? -1 : layoutId_of_string(layout_s);
-    String prog_layout_s = _prefs.getString("programming_layout", "none");
-    programming_layout = prog_layout_s.equals("none") ? -1 : layoutId_of_string(prog_layout_s);
+    layout = layoutId_of_string(_prefs.getString("layout", "none"));
+    second_layout = layoutId_of_string(_prefs.getString("second_layout", "none"));
     // The swipe distance is defined relatively to the "exact physical pixels
     // per inch of the screen", which isn't affected by the scaling settings.
     // Take the mean of both dimensions as an approximation of the diagonal.
@@ -185,8 +183,8 @@ final class Config
               case ACTION:
                 return (swapEnterActionKey && action_key != null) ?
                   KeyValue.getKeyByName("enter") : action_key;
-              case SWITCH_PROGRAMMING:
-                return shouldOfferSwitchingToProgramming ? key : null;
+              case SWITCH_SECOND:
+                return shouldOfferSwitchingToSecond ? key : null;
             }
             break;
           case Keyevent:
@@ -249,6 +247,7 @@ final class Config
   {
     switch (name)
     {
+      case "system": case "none": return -1;
       case "azerty": return R.xml.azerty;
       case "bangla": return R.xml.bangla;
       case "bgph1": return R.xml.local_bgph1;

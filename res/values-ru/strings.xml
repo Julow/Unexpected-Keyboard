@@ -9,8 +9,7 @@
   <string name="pref_accents_e_all_installed">Показывать акценты для всех установленных языков</string>
   <string name="pref_accents_e_selected">Показывать акценты только для выбранного языка</string>
   <string name="pref_accents_e_none">Скрыть акценты</string>
-  <string name="pref_programming_layout_title">Раскладка клавиатуры для программирования</string>
-  <string name="pref_programming_layout_none">Нету</string>
+  <string name="pref_second_layout_none">Нету</string>
   <string name="pref_category_typing">Печатание</string>
   <string name="pref_swipe_dist_title">Расстояние пролистывания</string>
   <string name="pref_swipe_dist_summary">Расстояние между символами в углах клавиш (%s)</string>

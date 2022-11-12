@@ -14,9 +14,8 @@
   <string name="pref_show_numpad_never">Nie</string>
   <string name="pref_show_numpad_landscape">Nur im Querformat</string>
   <string name="pref_show_numpad_always">Immer</string>
-  <string name="pref_programming_layout_title">Tastaturlayout zum Programmieren</string>
   <string name="pref_extra_keys_title">Zusätzliche Zeichen zur Tastatur hinzufügen</string>
-  <string name="pref_programming_layout_none">Keines</string>
+  <string name="pref_second_layout_none">Keines</string>
   <string name="pref_category_typing">Tippen</string>
   <string name="pref_autocapitalisation_title">Automatische Großschreibung</string>
   <string name="pref_autocapitalisation_summary">Shift-Taste am Satzanfang aktivieren</string>

@@ -27,13 +27,14 @@ class KeyEventHandler implements Config.IKeyEventHandler
         switch (key.getEvent())
         {
           case CONFIG: _recv.showKeyboardConfig(); break;
-          case SWITCH_TEXT: _recv.switchMain(); break;
+          case SWITCH_TEXT:
+          case SWITCH_SECOND_BACK: _recv.switchMain(); break;
           case SWITCH_NUMERIC: _recv.switchNumeric(); break;
           case SWITCH_EMOJI: _recv.setPane_emoji(); break;
           case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
           case CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
           case ACTION: _recv.performAction(); break;
-          case SWITCH_PROGRAMMING: _recv.switchProgramming(); break;
+          case SWITCH_SECOND: _recv.switchSecond(); break;
           case SWITCH_GREEKMATH: _recv.switchGreekmath(); break;
           case CAPS_LOCK: _recv.enableCapsLock(); break;
         }
@@ -107,7 +108,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
 
     public void switchMain();
     public void switchNumeric();
-    public void switchProgramming();
+    public void switchSecond();
     public void switchGreekmath();
 
     public void sendKeyEvent(int eventAction, int eventCode, int meta);

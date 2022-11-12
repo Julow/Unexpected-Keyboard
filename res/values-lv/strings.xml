@@ -17,8 +17,7 @@
   <string name="pref_autocapitalisation_title">Automātiski lielie burti</string>
   <string name="pref_autocapitalisation_summary">Piespiest Shift teikuma sākumā</string>
   <string name="pref_extra_keys_title">Pievienot tastatūrai taustiņus</string>
-  <string name="pref_programming_layout_title">Tastatūras izkārtojums programmēšanai</string>
-  <string name="pref_programming_layout_none">Neviens</string>
+  <string name="pref_second_layout_none">Neviens</string>
   <string name="pref_category_typing">Rakstīšana</string>
   <string name="pref_swipe_dist_title">Pavilkšanas attālums</string>
   <string name="pref_swipe_dist_summary">Taustiņu stūros esošo rakstzīmju attālums (%s)</string>

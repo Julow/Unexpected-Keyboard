@@ -10,8 +10,7 @@
   <string name="pref_accents_e_all_installed">Yüklü tüm dillerin aksanlarını göster</string>
   <string name="pref_accents_e_selected">Sadece seçili dilin aksanlarını göster</string>
   <string name="pref_accents_e_none">Aksanları gizle</string>
-  <string name="pref_programming_layout_title">Programlama için klavye düzeni</string>
-  <string name="pref_programming_layout_none">Hiçbiri</string>
+  <string name="pref_second_layout_none">Hiçbiri</string>
   <string name="pref_category_typing">Yazma</string>
   <string name="pref_swipe_dist_title">Kaydırma mesafesi</string>
   <string name="pref_swipe_dist_summary">Tuşların köşelerindeki karakterlerin uzaklıkları (%s)</string>

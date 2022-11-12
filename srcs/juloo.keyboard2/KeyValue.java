@@ -15,7 +15,8 @@ final class KeyValue
     SWITCH_BACK_EMOJI,
     CHANGE_METHOD,
     ACTION,
-    SWITCH_PROGRAMMING,
+    SWITCH_SECOND,
+    SWITCH_SECOND_BACK,
     SWITCH_GREEKMATH,
     CAPS_LOCK,
   }
@@ -304,7 +305,8 @@ final class KeyValue
     addEventKey("switch_numeric", "123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
     addEventKey("switch_emoji", 0x01, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
     addEventKey("switch_back_emoji", "ABC", Event.SWITCH_BACK_EMOJI, 0);
-    addEventKey("switch_programming", "Prog", Event.SWITCH_PROGRAMMING, FLAG_SMALLER_FONT);
+    addEventKey("switch_second", 0x13, Event.SWITCH_SECOND, FLAG_SMALLER_FONT);
+    addEventKey("switch_second_back", 0x14, Event.SWITCH_SECOND_BACK, FLAG_SMALLER_FONT);
     addEventKey("switch_greekmath", "πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
     addEventKey("change_method", 0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
     addEventKey("action", "Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
