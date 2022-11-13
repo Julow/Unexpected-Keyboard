@@ -25,17 +25,16 @@ import java.util.List;
 import java.util.Set;
 
 public class Keyboard2 extends InputMethodService
-  implements SharedPreferences.OnSharedPreferenceChangeListener,
-             Autocapitalisation.Callback
+  implements SharedPreferences.OnSharedPreferenceChangeListener
 {
   static private final String TAG = "Keyboard2";
 
   private Keyboard2View _keyboardView;
+  private KeyEventHandler _keyeventhandler;
   private int _currentTextLayout;
   private ViewGroup _emojiPane = null;
 
   private Config _config;
-  private Autocapitalisation _autocap;
 
   private boolean _debug_logs = false;
 
@@ -50,20 +49,12 @@ public class Keyboard2 extends InputMethodService
     super.onCreate();
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     prefs.registerOnSharedPreferenceChangeListener(this);
-    Config.initGlobalConfig(prefs, getResources(), new KeyEventHandler(this.new Receiver()));
+    _keyeventhandler = new KeyEventHandler(getMainLooper(), this.new Receiver());
+    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler);
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     _debug_logs = getResources().getBoolean(R.bool.debug_logs);
-    _autocap = new Autocapitalisation(getMainLooper(), this);
-  }
-
-  public void update_shift_state(boolean should_enable, boolean should_disable)
-  {
-    if (should_enable)
-      _keyboardView.set_shift_state(true, false);
-    else if (should_disable)
-      _keyboardView.set_shift_state(false, false);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -187,14 +178,14 @@ public class Keyboard2 extends InputMethodService
     if (info.actionLabel != null)
     {
       _config.actionLabel = info.actionLabel.toString();
-      _config.actionId = info.actionId;
+      _keyeventhandler.actionId = info.actionId;
       _config.swapEnterActionKey = false;
     }
     else
     {
       int action = info.imeOptions & EditorInfo.IME_MASK_ACTION;
       _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
-      _config.actionId = action;
+      _keyeventhandler.actionId = action;
       _config.swapEnterActionKey =
         (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0;
     }
@@ -243,7 +234,7 @@ public class Keyboard2 extends InputMethodService
     refreshConfig();
     refresh_action_label(info);
     _keyboardView.setKeyboard(getLayout(chooseLayout(info)));
-    _autocap.started(info, getCurrentInputConnection());
+    _keyeventhandler.started(info);
     setInputView(_keyboardView);
     if (_debug_logs)
       log_editor_info(info);
@@ -269,7 +260,7 @@ public class Keyboard2 extends InputMethodService
   public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
   {
     super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
-    _autocap.selection_updated(oldSelStart, newSelStart);
+    _keyeventhandler.selection_updated(oldSelStart, newSelStart);
   }
 
   @Override
@@ -315,35 +306,22 @@ public class Keyboard2 extends InputMethodService
       setInputView(_keyboardView);
     }
 
-    public void performAction()
+    public void set_shift_state(boolean state, boolean lock)
     {
-      InputConnection conn = getCurrentInputConnection();
-      if (conn == null)
-        return;
-      conn.performEditorAction(_config.actionId);
+      _keyboardView.set_shift_state(state, lock);
     }
 
-    public void enableCapsLock()
-    {
-      _keyboardView.set_shift_state(true, true);
-    }
-
-    public void switchMain()
+    public void switch_main()
     {
       _keyboardView.setKeyboard(getLayout(_currentTextLayout));
     }
 
-    public void switchNumeric()
+    public void switch_layout(int layout_id)
     {
-      _keyboardView.setKeyboard(getLayout(R.xml.numeric));
+      _keyboardView.setKeyboard(getLayout(layout_id));
     }
 
-    public void switchGreekmath()
-    {
-      _keyboardView.setKeyboard(getLayout(R.xml.greekmath));
-    }
-
-    public void switchSecond()
+    public void switch_second()
     {
       if (_config.second_layout == -1)
         return;
@@ -360,16 +338,6 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.setKeyboard(layout);
     }
 
-    public void sendKeyEvent(int eventAction, int eventCode, int meta)
-    {
-      InputConnection conn = getCurrentInputConnection();
-      if (conn == null)
-        return;
-      conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
-      if (eventAction == KeyEvent.ACTION_UP)
-        _autocap.event_sent(eventCode, meta);
-    }
-
     public void showKeyboardConfig()
     {
       Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
@@ -377,16 +345,9 @@ public class Keyboard2 extends InputMethodService
       startActivity(intent);
     }
 
-    public void commitText(String text)
+    public InputConnection getCurrentInputConnection()
     {
-      getCurrentInputConnection().commitText(text, 1);
-      _autocap.typed(text);
-    }
-
-    public void commitChar(char c)
-    {
-      sendKeyChar(c);
-      _autocap.typed(c);
+      return Keyboard2.this.getCurrentInputConnection();
     }
   }
 

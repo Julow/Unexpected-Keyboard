@@ -59,12 +59,6 @@ final class Autocapitalisation
     callback(false);
   }
 
-  public void typed(char c)
-  {
-    type_one_char(c);
-    callback(false);
-  }
-
   public void event_sent(int code, int meta)
   {
     if (meta != 0)

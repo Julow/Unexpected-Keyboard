@@ -1,16 +1,16 @@
 package juloo.keyboard2;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.Configuration;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.HashSet;
 
 final class Config
 {
@@ -294,6 +294,6 @@ final class Config
 
   public static interface IKeyEventHandler
   {
-    public void handleKeyUp(KeyValue value, Pointers.Modifiers flags);
+    public void key_up(KeyValue value, Pointers.Modifiers flags);
   }
 }

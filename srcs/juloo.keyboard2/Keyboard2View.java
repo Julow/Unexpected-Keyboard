@@ -126,13 +126,13 @@ public class Keyboard2View extends View
 
   public void onPointerUp(KeyValue k, Pointers.Modifiers mods)
   {
-    _config.handler.handleKeyUp(k, mods);
+    _config.handler.key_up(k, mods);
     invalidate();
   }
 
   public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
   {
-    _config.handler.handleKeyUp(k, mods);
+    _config.handler.key_up(k, mods);
   }
 
   public void onPointerFlagsChanged(boolean shouldVibrate)
