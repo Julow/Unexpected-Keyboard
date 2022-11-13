@@ -52,6 +52,11 @@ final class KeyValue
     FN, // Must be placed last to be applied first
   }
 
+  public static enum Kind
+  {
+    Char, String, Keyevent, Event, Modifier
+  }
+
   // Behavior flags.
   public static final int FLAG_LATCH = (1 << 20);
   public static final int FLAG_LOCK = (1 << 21);
@@ -66,13 +71,6 @@ final class KeyValue
   public static final int FLAG_LOCKED = (1 << 28);
   public static final int FLAG_FAKE_PTR = (1 << 29);
 
-  // Kinds
-  public static final int KIND_CHAR = (0 << 29);
-  public static final int KIND_STRING = (1 << 29);
-  public static final int KIND_KEYEVENT = (2 << 29);
-  public static final int KIND_EVENT = (3 << 29);
-  public static final int KIND_MODIFIER = (4 << 29);
-
   // Ranges for the different components
   private static final int FLAGS_BITS = (0b111111111 << 20); // 9 bits wide
   private static final int KIND_BITS = (0b111 << 29); // 3 bits wide
@@ -85,29 +83,12 @@ final class KeyValue
 
   private final String _symbol;
 
-  /** This field encodes three things:
-      - The kind
-      - The flags
-      - The value for Char, Event and Modifier keys.
-      */
+  /** This field encodes three things: Kind, flags and value. */
   private final int _code;
-
-  public static enum Kind
-  {
-    Char, String, Keyevent, Event, Modifier
-  }
 
   public Kind getKind()
   {
-    switch (_code & KIND_BITS)
-    {
-      case KIND_CHAR: return Kind.Char;
-      case KIND_STRING: return Kind.String;
-      case KIND_KEYEVENT: return Kind.Keyevent;
-      case KIND_EVENT: return Kind.Event;
-      case KIND_MODIFIER: return Kind.Modifier;
-      default: throw new RuntimeException("Corrupted kind flags");
-    }
+    return Kind.values()[(_code & KIND_BITS) >>> 29];
   }
 
   public int getFlags()
@@ -154,12 +135,12 @@ final class KeyValue
   /* Update the char and the symbol. */
   public KeyValue withChar(char c)
   {
-    return new KeyValue(String.valueOf(c), KIND_CHAR, c, getFlags());
+    return new KeyValue(String.valueOf(c), Kind.Char, c, getFlags());
   }
 
   public KeyValue withString(String s)
   {
-    return new KeyValue(s, KIND_STRING, 0, getFlags());
+    return new KeyValue(s, Kind.String, 0, getFlags());
   }
 
   public KeyValue withSymbol(String s)
@@ -169,7 +150,7 @@ final class KeyValue
 
   public KeyValue withKeyevent(int code)
   {
-    return new KeyValue(_symbol, KIND_KEYEVENT, code, getFlags());
+    return new KeyValue(_symbol, Kind.Keyevent, code, getFlags());
   }
 
   public KeyValue withFlags(int f)
@@ -201,32 +182,37 @@ final class KeyValue
     _code = kind | flags | value;
   }
 
+  public KeyValue(String s, Kind k, int v, int f)
+  {
+    this(s, (k.ordinal() << 29), v, f);
+  }
+
   public static KeyValue getKeyByName(String name)
   {
     KeyValue kv = keys.get(name);
     if (kv != null)
       return kv;
     if (name.length() == 1)
-      return new KeyValue(name, KIND_CHAR, name.charAt(0), 0);
+      return new KeyValue(name, Kind.Char, name.charAt(0), 0);
     else
-      return new KeyValue(name, KIND_STRING, 0, 0);
+      return new KeyValue(name, Kind.String, 0, 0);
   }
 
-  private static void addKey(String name, String symbol, int kind, int code, int flags)
+  private static void addKey(String name, String symbol, Kind kind, int code, int flags)
   {
     keys.put(name, new KeyValue(symbol, kind, code, flags));
   }
 
   private static void addCharKey(String name, String symbol, char c, int flags)
   {
-    addKey(name, symbol, KIND_CHAR, c, flags);
+    addKey(name, symbol, Kind.Char, c, flags);
   }
 
   private static void addModifierKey(String name, String symbol, Modifier m, int flags)
   {
     if (symbol.length() > 1)
       flags |= FLAG_SMALLER_FONT;
-    addKey(name, symbol, KIND_MODIFIER, m.ordinal(),
+    addKey(name, symbol, Kind.Modifier, m.ordinal(),
         FLAG_LATCH | FLAG_SPECIAL | FLAG_SECONDARY | flags);
   }
 
@@ -237,13 +223,13 @@ final class KeyValue
 
   private static void addDiacritic(String name, int symbol, Modifier m)
   {
-    addKey(name, String.valueOf((char)symbol), KIND_MODIFIER, m.ordinal(),
+    addKey(name, String.valueOf((char)symbol), Kind.Modifier, m.ordinal(),
         FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
   }
 
   private static void addEventKey(String name, String symbol, Event e, int flags)
   {
-    addKey(name, symbol, KIND_EVENT, e.ordinal(), flags | FLAG_SPECIAL | FLAG_SECONDARY);
+    addKey(name, symbol, Kind.Event, e.ordinal(), flags | FLAG_SPECIAL | FLAG_SECONDARY);
   }
 
   private static void addEventKey(String name, int symbol, Event e, int flags)
@@ -253,7 +239,7 @@ final class KeyValue
 
   private static void addKeyeventKey(String name, String symbol, int code, int flags)
   {
-    addKey(name, symbol, KIND_KEYEVENT, code, flags | FLAG_SECONDARY);
+    addKey(name, symbol, Kind.Keyevent, code, flags | FLAG_SECONDARY);
   }
 
   private static void addKeyeventKey(String name, int symbol, int code, int flags)
@@ -268,7 +254,7 @@ final class KeyValue
       placeholders (it is the empty string). */
   private static void addPlaceholderKey(String name)
   {
-    addKey(name, "", KIND_STRING, placeholder_unique_id++, 0);
+    addKey(name, "", Kind.String, placeholder_unique_id++, 0);
   }
 
   static

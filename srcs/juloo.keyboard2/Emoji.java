@@ -19,7 +19,7 @@ public class Emoji
   protected Emoji(String name, String bytecode, String desc)
   {
     _name = name;
-    _kv = new KeyValue(bytecode, KeyValue.KIND_STRING, 0, 0);
+    _kv = new KeyValue(bytecode, KeyValue.Kind.String, 0, 0);
     _desc = desc;
     emojis_by_name.put(name, this);
   }
