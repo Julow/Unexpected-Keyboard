@@ -301,15 +301,14 @@ public class Keyboard2View extends View
 
   private int labelColor(KeyValue k, boolean isKeyDown, boolean sublabel)
   {
-    if (isKeyDown && k.hasFlags(KeyValue.FLAG_LATCH))
+    if (isKeyDown)
     {
       int flags = _pointers.getKeyFlags(k);
       if (flags != -1)
       {
         if ((flags & KeyValue.FLAG_LOCKED) != 0)
           return _theme.lockedColor;
-        if ((flags & KeyValue.FLAG_LATCH) == 0)
-          return _theme.activatedColor;
+        return _theme.activatedColor;
       }
     }
     if (k.hasFlags(KeyValue.FLAG_SECONDARY))
