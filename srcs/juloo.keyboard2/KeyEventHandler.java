@@ -65,6 +65,15 @@ class KeyEventHandler implements Config.IKeyEventHandler
         break;
       case Modifier:
         break;
+      case Editing:
+        switch (key.getEditing())
+        {
+          case COPY: send_context_menu_action(android.R.id.copy); break;
+          case PASTE: send_context_menu_action(android.R.id.paste); break;
+          case CUT: send_context_menu_action(android.R.id.cut); break;
+          case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
+        }
+        break;
     }
   }
 
@@ -135,6 +144,15 @@ class KeyEventHandler implements Config.IKeyEventHandler
       return;
     conn.commitText(text, 1);
     _autocap.typed(text);
+  }
+
+  /** See {!InputConnection.performContextMenuAction}. */
+  void send_context_menu_action(int id)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    conn.performContextMenuAction(id);
   }
 
   public static interface IReceiver

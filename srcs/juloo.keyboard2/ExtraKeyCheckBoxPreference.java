@@ -36,6 +36,10 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "£",
     "switch_greekmath",
     "capslock",
+    "copy",
+    "paste",
+    "cut",
+    "select_all",
   };
 
   public static boolean default_checked(String name)

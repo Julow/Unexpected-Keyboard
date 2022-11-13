@@ -52,9 +52,17 @@ final class KeyValue
     FN, // Must be placed last to be applied first
   }
 
+  public static enum Editing
+  {
+    COPY,
+    PASTE,
+    CUT,
+    SELECT_ALL,
+  }
+
   public static enum Kind
   {
-    Char, String, Keyevent, Event, Modifier
+    Char, String, Keyevent, Event, Modifier, Editing
   }
 
   // Behavior flags.
@@ -130,6 +138,12 @@ final class KeyValue
   public Modifier getModifier()
   {
     return Modifier.values()[(_code & VALUE_BITS)];
+  }
+
+  /** Defined only when [getKind() == Kind.Editing]. */
+  public Editing getEditing()
+  {
+    return Editing.values()[(_code & VALUE_BITS)];
   }
 
   /* Update the char and the symbol. */
@@ -247,6 +261,12 @@ final class KeyValue
     addKeyeventKey(name, String.valueOf((char)symbol), code, flags | FLAG_KEY_FONT);
   }
 
+  private static void addEditingKey(String name, String symbol, Editing action)
+  {
+    addKey(name, symbol, Kind.Editing, action.ordinal(),
+        FLAG_SPECIAL | FLAG_SECONDARY | FLAG_SMALLER_FONT);
+  }
+
   // Within VALUE_BITS
   private static int placeholder_unique_id = 0;
 
@@ -332,6 +352,11 @@ final class KeyValue
     addPlaceholderKey("removed");
     addPlaceholderKey("f11_placeholder");
     addPlaceholderKey("f12_placeholder");
+
+    addEditingKey("copy", "copy", Editing.COPY);
+    addEditingKey("paste", "paste", Editing.PASTE);
+    addEditingKey("cut", "cut", Editing.CUT);
+    addEditingKey("select_all", "s. all", Editing.SELECT_ALL);
   }
 
   static final HashMap<String, String> keys_descr = new HashMap<String, String>();
