@@ -12,6 +12,7 @@ public class Theme
 {
   public final Paint keyBgPaint = new Paint();
   public final Paint keyDownBgPaint = new Paint();
+  public final Paint keyBorderPaint = new Paint();
   public final int lockedColor;
   public final int activatedColor;
   public final int labelColor;
@@ -19,6 +20,12 @@ public class Theme
   public final int secondaryLabelColor;
 
   public final float keyBorderRadius;
+  public final float keyBorderWidth;
+  public final float keyBorderWidthActivated;
+  public final int keyBorderColorLeft;
+  public final int keyBorderColorTop;
+  public final int keyBorderColorRight;
+  public final int keyBorderColorBottom;
 
   public final int colorNavBar;
   public final boolean isLightNavBar;
@@ -32,7 +39,8 @@ public class Theme
   public Theme(Context context, AttributeSet attrs)
   {
     TypedArray s = context.getTheme().obtainStyledAttributes(attrs, R.styleable.keyboard, 0, 0);
-    keyBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKey, 0));
+    int colorKey = s.getColor(R.styleable.keyboard_colorKey, 0);
+    keyBgPaint.setColor(colorKey);
     keyDownBgPaint.setColor(s.getColor(R.styleable.keyboard_colorKeyActivated, 0));
     // colorKeyboard = s.getColor(R.styleable.keyboard_colorKeyboard, 0);
     colorNavBar = s.getColor(R.styleable.keyboard_navigationBarColor, 0);
@@ -44,6 +52,13 @@ public class Theme
     float secondaryLightOffset = s.getFloat(R.styleable.keyboard_secondaryLightOffset, 1.f);
     secondaryLabelColor = adjustLight(labelColor, secondaryLightOffset);
     keyBorderRadius = s.getDimension(R.styleable.keyboard_keyBorderRadius, 0);
+    keyBorderWidth = s.getDimension(R.styleable.keyboard_keyBorderWidth, 0);
+    keyBorderWidthActivated = s.getDimension(R.styleable.keyboard_keyBorderWidthActivated, 0);
+    keyBorderPaint.setStyle(Paint.Style.STROKE);
+    keyBorderColorLeft = s.getColor(R.styleable.keyboard_keyBorderColorLeft, colorKey);
+    keyBorderColorTop = s.getColor(R.styleable.keyboard_keyBorderColorTop, colorKey);
+    keyBorderColorRight = s.getColor(R.styleable.keyboard_keyBorderColorRight, colorKey);
+    keyBorderColorBottom = s.getColor(R.styleable.keyboard_keyBorderColorBottom, colorKey);
     s.recycle();
     _keyLabelPaint = initLabelPaint(Paint.Align.CENTER, null);
     _keySubLabelPaint = initLabelPaint(Paint.Align.LEFT, null);

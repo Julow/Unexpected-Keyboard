@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -265,9 +266,7 @@ public class Keyboard2View extends View
         x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
         boolean isKeyDown = _pointers.isKeyDown(k);
-        _tmpRect.set(x, y, x + keyW, y + keyH);
-        canvas.drawRoundRect(_tmpRect, _theme.keyBorderRadius, _theme.keyBorderRadius,
-            isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
+        drawKeyFrame(canvas, x, y, keyW, keyH, isKeyDown);
         drawLabel(canvas, k.key0, keyW / 2f + x, y, keyH, isKeyDown);
         if (k.edgekeys)
         {
@@ -297,6 +296,41 @@ public class Keyboard2View extends View
   public void onDetachedFromWindow()
   {
     super.onDetachedFromWindow();
+  }
+
+  /** Draw borders and background of the key. */
+  void drawKeyFrame(Canvas canvas, float x, float y, float keyW, float keyH,
+      boolean isKeyDown)
+  {
+    float r = _theme.keyBorderRadius;
+    float w = isKeyDown ? _theme.keyBorderWidthActivated : _theme.keyBorderWidth;
+    float w2 = _theme.keyBorderWidth / 2.f;
+    _tmpRect.set(x + w2, y + w2, x + keyW - w2, y + keyH - w2);
+    canvas.drawRoundRect(_tmpRect, r, r,
+        isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
+    if (w > 0.f)
+    {
+      _theme.keyBorderPaint.setStrokeWidth(w);
+      float overlap = r - r * 0.85f + w; // sin(45°)
+      drawBorder(canvas, x, y, x + overlap, y + keyH, _theme.keyBorderColorLeft);
+      drawBorder(canvas, x, y, x + keyW, y + overlap, _theme.keyBorderColorTop);
+      drawBorder(canvas, x + keyW - overlap, y, x + keyW, y + keyH, _theme.keyBorderColorRight);
+      drawBorder(canvas, x, y + keyH - overlap, x + keyW, y + keyH, _theme.keyBorderColorBottom);
+    }
+  }
+
+  /** Clip to draw a border at a time. This allows to call [drawRoundRect]
+      several time with the same parameters but a different Paint. */
+  void drawBorder(Canvas canvas, float clipl, float clipt, float clipr,
+      float clipb, int color)
+  {
+    Paint p = _theme.keyBorderPaint;
+    float r = _theme.keyBorderRadius;
+    canvas.save();
+    canvas.clipRect(clipl, clipt, clipr, clipb);
+    p.setColor(color);
+    canvas.drawRoundRect(_tmpRect, r, r, p);
+    canvas.restore();
   }
 
   private int labelColor(KeyValue k, boolean isKeyDown, boolean sublabel)
