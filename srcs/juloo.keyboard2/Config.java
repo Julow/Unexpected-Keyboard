@@ -117,11 +117,14 @@ final class Config
     }
     layout = layoutId_of_string(_prefs.getString("layout", "none"));
     second_layout = layoutId_of_string(_prefs.getString("second_layout", "none"));
-    // The swipe distance is defined relatively to the "exact physical pixels
-    // per inch of the screen", which isn't affected by the scaling settings.
-    // Take the mean of both dimensions as an approximation of the diagonal.
-    float physical_scaling = (dm.widthPixels + dm.heightPixels) / (dm.xdpi + dm.ydpi);
-    swipe_dist_px = Float.valueOf(_prefs.getString("swipe_dist", "15")) * physical_scaling;;
+    // The baseline for the swipe distance correspond to approximately the
+    // width of a key in portrait mode, as most layouts have 10 columns.
+    // Multipled by the DPI ratio because most swipes are made in the diagonals.
+    // The option value uses an unnamed scale where the baseline is around 25.
+    float dpi_ratio = Math.max(dm.xdpi, dm.ydpi) / Math.min(dm.xdpi, dm.ydpi);
+    float swipe_scaling = Math.min(dm.widthPixels, dm.heightPixels) / 10.f * dpi_ratio;
+    float swipe_dist_value = Float.valueOf(_prefs.getString("swipe_dist", "15"));
+    swipe_dist_px = swipe_dist_value / 25.f * swipe_scaling;
     vibrateEnabled = _prefs.getBoolean("vibrate_enabled", vibrateEnabled);
     longPressTimeout = _prefs.getInt("longpress_timeout", (int)longPressTimeout);
     longPressInterval = _prefs.getInt("longpress_interval", (int)longPressInterval);
