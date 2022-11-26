@@ -80,10 +80,10 @@ public final class Pointers implements Handler.Callback
     if (getLatched(key, kv) != null)
       return; // Already latched, don't add an other pointer.
     Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags &= ~KeyValue.FLAG_LATCH;
-    ptr.flags |= KeyValue.FLAG_LOCK | KeyValue.FLAG_FAKE_PTR;
+    ptr.flags &= ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK);
+    ptr.flags |= KeyValue.FLAG_FAKE_PTR;
     if (locked)
-      ptr.flags = (ptr.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
+      ptr.flags |= KeyValue.FLAG_LOCKED;
     _ptrs.add(ptr);
   }
 
