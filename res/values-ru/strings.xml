@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Unexpected Keyboard</string>
+  <!-- <string name="app_name" product="debug">Unexpected Keyboard (debug)</string> -->
+  <!-- <string name="app_name" product="default">Unexpected Keyboard</string> -->
   <string name="settings_activity_label">Unexpected Keyboard Настройки</string>
   <string name="pref_category_layout">Расположение</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Изменить раскладку клавиатуры</string>
   <string name="pref_layout_e_system">Системные настройки</string>
   <string name="pref_accents_title">Акцент</string>
   <string name="pref_accents_e_all_installed">Показывать акценты для всех установленных языков</string>
   <string name="pref_accents_e_selected">Показывать акценты только для выбранного языка</string>
   <string name="pref_accents_e_none">Скрыть акценты</string>
+  <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
+  <!-- <string name="pref_show_numpad_never">Never</string> -->
+  <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
+  <!-- <string name="pref_show_numpad_always">Always</string> -->
+  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
+  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
+  <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Нету</string>
   <string name="pref_category_typing">Печатание</string>
   <string name="pref_swipe_dist_title">Расстояние пролистывания</string>
@@ -19,6 +29,8 @@
   <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
   <string name="pref_precise_repeat_title">Точные перемещения курсора</string>
   <string name="pref_precise_repeat_summary">Модулируйте скорость повторения клавиш, проводя пальцем больше или меньше</string>
+  <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
+  <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
   <string name="pref_category_style">Стиль</string>
   <string name="pref_margin_bottom_title">Нижняя граница поля</string>
   <string name="pref_keyboard_height_title">Высота клавиатуры</string>
@@ -31,6 +43,7 @@
   <string name="pref_theme_e_dark">Темный</string>
   <string name="pref_theme_e_light">Светлый</string>
   <string name="pref_theme_e_black">Черный</string>
+  <!-- <string name="pref_theme_e_white">White</string> -->
   <string name="pref_swipe_dist_e_very_short">Очень короткий</string>
   <string name="pref_swipe_dist_e_short">Короткий</string>
   <string name="pref_swipe_dist_e_default">Обычный</string>

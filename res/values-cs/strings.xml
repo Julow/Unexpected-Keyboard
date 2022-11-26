@@ -4,14 +4,21 @@
   <string name="app_name" product="default">Klávesnice Unexpected</string>
   <string name="settings_activity_label">Nastavení Klávesnice Unexpected</string>
   <string name="pref_category_layout">Rozvržení</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Změnit rozvržení klávesnice</string>
   <string name="pref_layout_e_system">V nastavení systému</string>
   <string name="pref_accents_title">(Univerzální) Diakritická znaménka</string>
   <string name="pref_accents_e_all_installed">Zobrazovat znaménka pro všechny instalované systémové jazyky</string>
   <string name="pref_accents_e_selected">Zobrazovat znaménka pouze pro současně zvolený jazyk</string>
   <string name="pref_accents_e_none">Skrýt (univerzální) diakritická znaménka</string>
+  <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
+  <!-- <string name="pref_show_numpad_never">Never</string> -->
+  <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
+  <!-- <string name="pref_show_numpad_always">Always</string> -->
   <string name="pref_autocapitalisation_title">Automatická kapitalizace</string>
   <string name="pref_autocapitalisation_summary">Stiskne Shift na začátku věty</string>
+  <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Žádné</string>
   <string name="pref_category_typing">Psaní</string>
   <string name="pref_swipe_dist_title">Vzdálenost posunutí prstem</string>
@@ -36,6 +43,7 @@
   <string name="pref_theme_e_dark">Tmavý</string>
   <string name="pref_theme_e_light">Světlý</string>
   <string name="pref_theme_e_black">Černý</string>
+  <!-- <string name="pref_theme_e_white">White</string> -->
   <string name="pref_swipe_dist_e_very_short">Velmi krátká</string>
   <string name="pref_swipe_dist_e_short">Krátká</string>
   <string name="pref_swipe_dist_e_default">Běžná</string>

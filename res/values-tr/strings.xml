@@ -4,12 +4,21 @@
   <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard Ayarları</string>
   <string name="pref_category_layout">Düzen</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Klavye Düzenini Değiştir</string>
   <string name="pref_layout_e_system">Sistem Ayarları</string>
   <string name="pref_accents_title">Aksanlar</string>
   <string name="pref_accents_e_all_installed">Yüklü tüm dillerin aksanlarını göster</string>
   <string name="pref_accents_e_selected">Sadece seçili dilin aksanlarını göster</string>
   <string name="pref_accents_e_none">Aksanları gizle</string>
+  <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
+  <!-- <string name="pref_show_numpad_never">Never</string> -->
+  <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
+  <!-- <string name="pref_show_numpad_always">Always</string> -->
+  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
+  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
+  <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Hiçbiri</string>
   <string name="pref_category_typing">Yazma</string>
   <string name="pref_swipe_dist_title">Kaydırma mesafesi</string>
@@ -20,9 +29,12 @@
   <string name="pref_vibrate_summary">Tuşa basıldığında titreşimi etkinleştir</string>
   <string name="pref_precise_repeat_title">İmleç hareketini ayarla</string>
   <string name="pref_precise_repeat_summary">Tuş tekrar hızını az ya da çok kaydırarak ayarla</string>
+  <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
+  <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
   <string name="pref_category_style">Stil</string>
   <string name="pref_margin_bottom_title">Alt boşluk</string>
   <string name="pref_keyboard_height_title">Klavye yüksekliği</string>
+  <!-- <string name="pref_keyboard_height_landscape_title">Keyboard height in landscape mode</string> -->
   <string name="pref_horizontal_margin_title">Yatay boşluk</string>
   <string name="pref_character_size_title">Etiket boyutu</string>
   <string name="pref_character_size_summary">Klavye üzerinde gösterilecek karakter boyutu (%.2fx)</string>
@@ -31,6 +43,7 @@
   <string name="pref_theme_e_dark">Koyu</string>
   <string name="pref_theme_e_light">Açık</string>
   <string name="pref_theme_e_black">Siyah</string>
+  <!-- <string name="pref_theme_e_white">White</string> -->
   <string name="pref_swipe_dist_e_very_short">Çok kısa</string>
   <string name="pref_swipe_dist_e_short">Kısa</string>
   <string name="pref_swipe_dist_e_default">Normal</string>

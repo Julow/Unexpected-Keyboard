@@ -4,6 +4,7 @@
   <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard - Einstellungen</string>
   <string name="pref_category_layout">Layout</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Tastaturlayout ändern</string>
   <string name="pref_layout_e_system">Systemeinstellung</string>
   <string name="pref_accents_title">Akzente</string>
@@ -14,11 +15,12 @@
   <string name="pref_show_numpad_never">Nie</string>
   <string name="pref_show_numpad_landscape">Nur im Querformat</string>
   <string name="pref_show_numpad_always">Immer</string>
-  <string name="pref_extra_keys_title">Zusätzliche Zeichen zur Tastatur hinzufügen</string>
-  <string name="pref_second_layout_none">Keines</string>
-  <string name="pref_category_typing">Tippen</string>
   <string name="pref_autocapitalisation_title">Automatische Großschreibung</string>
   <string name="pref_autocapitalisation_summary">Shift-Taste am Satzanfang aktivieren</string>
+  <string name="pref_extra_keys_title">Zusätzliche Zeichen zur Tastatur hinzufügen</string>
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
+  <string name="pref_second_layout_none">Keines</string>
+  <string name="pref_category_typing">Tippen</string>
   <string name="pref_swipe_dist_title">Länge der Wischgeste</string>
   <string name="pref_swipe_dist_summary">Abstand der Zeichen in den Ecken der Tasten (%s)</string>
   <string name="pref_long_timeout_title">Zeitüberschreitung bei Tastenwiederholung</string>
@@ -34,7 +36,7 @@
   <string name="pref_keyboard_height_title">Höhe der Tastatur</string>
   <string name="pref_keyboard_height_landscape_title">Höhe der Tastatur im Querformat</string>
   <string name="pref_horizontal_margin_title">Horizontaler Abstand</string>
-  <string name="pref_character_size_title">Größe der Beschriftung</string> 
+  <string name="pref_character_size_title">Größe der Beschriftung</string>
   <string name="pref_character_size_summary">Größe der Buchstaben auf den Tasten (%.2fx)</string>
   <string name="pref_theme">Theme</string>
   <string name="pref_theme_e_system">Systemeinstellung</string>

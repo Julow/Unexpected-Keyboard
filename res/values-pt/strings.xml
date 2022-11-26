@@ -4,14 +4,21 @@
   <string name="app_name" product="default">Teclado Unexpected</string>
   <string name="settings_activity_label">Configurar Teclado Unexpected</string>
   <string name="pref_category_layout">Layout</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Mudar layout do teclado</string>
   <string name="pref_layout_e_system">Mesmo do sistema</string>
   <string name="pref_accents_title">Acentos</string>
   <string name="pref_accents_e_all_installed">Mostrar acentos para todos os idiomas instalados</string>
   <string name="pref_accents_e_selected">Mostrar acentos só para o idioma selecionado</string>
   <string name="pref_accents_e_none">Ocultar acentos</string>
+  <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
+  <!-- <string name="pref_show_numpad_never">Never</string> -->
+  <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
+  <!-- <string name="pref_show_numpad_always">Always</string> -->
   <string name="pref_autocapitalisation_title">Maiusculização automática</string>
   <string name="pref_autocapitalisation_summary">Aciona o shift no início de cada frase</string>
+  <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Nenhum</string>
   <string name="pref_category_typing">Digitação</string>
   <string name="pref_swipe_dist_title">Distância a deslizar</string>
@@ -36,6 +43,7 @@
   <string name="pref_theme_e_dark">Escuro</string>
   <string name="pref_theme_e_light">Claro</string>
   <string name="pref_theme_e_black">Preto</string>
+  <!-- <string name="pref_theme_e_white">White</string> -->
   <string name="pref_swipe_dist_e_very_short">Muito curto</string>
   <string name="pref_swipe_dist_e_short">Curto</string>
   <string name="pref_swipe_dist_e_default">Normal</string>

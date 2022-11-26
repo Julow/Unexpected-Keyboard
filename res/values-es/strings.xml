@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- <string name="app_name" product="debug">Unexpected Keyboard (debug)</string> -->
+  <!-- <string name="app_name" product="default">Unexpected Keyboard</string> -->
   <string name="settings_activity_label">Ajustes de Unexpected Keyboard</string>
   <string name="pref_category_layout">Formato</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Cambiar formato de teclado</string>
   <string name="pref_layout_e_system">Ajustes del sistema</string>
   <string name="pref_accents_title">Acentos</string>
   <string name="pref_accents_e_all_installed">Mostrar acentos para todos los lenguajes instalados</string>
   <string name="pref_accents_e_selected">Solo mostrar acentos para el lenguaje seleccionado</string>
   <string name="pref_accents_e_none">Ocultar acentos</string>
+  <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
+  <!-- <string name="pref_show_numpad_never">Never</string> -->
+  <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
+  <!-- <string name="pref_show_numpad_always">Always</string> -->
+  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
+  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
+  <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
+  <!-- <string name="pref_second_layout_none">None</string> -->
   <string name="pref_category_typing">Escribiendo</string>
   <string name="pref_swipe_dist_title">Distancia para deslizar</string>
   <string name="pref_swipe_dist_summary">Distancia de caracteres en las esquinas de las letras (%s)</string>
@@ -17,9 +29,12 @@
   <string name="pref_vibrate_summary">Habilitar/deshabilitar vibración al presionar una tecla</string>
   <string name="pref_precise_repeat_title">Movimientos de cursor preciso</string>
   <string name="pref_precise_repeat_summary">Modular la velocidad de repetición de teclas según si se desliza más o menos</string>
+  <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
+  <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
   <string name="pref_category_style">Estilo</string>
   <string name="pref_margin_bottom_title">Margen del pie</string>
   <string name="pref_keyboard_height_title">Altura del teclado</string>
+  <!-- <string name="pref_keyboard_height_landscape_title">Keyboard height in landscape mode</string> -->
   <string name="pref_horizontal_margin_title">Margen horizontal</string>
   <string name="pref_character_size_title">Tamaño de etiqueta</string>
   <string name="pref_character_size_summary">Tamaño de caracteres mostrados en el teclado (%.2fx)</string>
@@ -28,6 +43,7 @@
   <string name="pref_theme_e_dark">Oscuro</string>
   <string name="pref_theme_e_light">Claro</string>
   <string name="pref_theme_e_black">Negro</string>
+  <!-- <string name="pref_theme_e_white">White</string> -->
   <string name="pref_swipe_dist_e_very_short">Muy corto</string>
   <string name="pref_swipe_dist_e_short">Corto</string>
   <string name="pref_swipe_dist_e_default">Normal</string>

@@ -3,8 +3,8 @@
   <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
   <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard 设置</string>
-  <string name="pref_label_brightness">调整字母亮度</string>
   <string name="pref_category_layout">布局</string>
+  <string name="pref_label_brightness">调整字母亮度</string>
   <string name="pref_layout_title">改变键盘布局</string>
   <string name="pref_layout_e_system">系统设置</string>
   <string name="pref_accents_title">声调</string>

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- <string name="app_name" product="debug">Unexpected Keyboard (debug)</string> -->
+  <!-- <string name="app_name" product="default">Unexpected Keyboard</string> -->
   <string name="settings_activity_label">Unexpected Keyboard Paramètres</string>
   <string name="pref_category_layout">Disposition</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Disposition des touches</string>
   <string name="pref_layout_e_system">Paramètre système</string>
   <string name="pref_accents_title">Accents</string>
@@ -14,6 +17,9 @@
   <string name="pref_show_numpad_always">Toujour</string>
   <string name="pref_autocapitalisation_title">Majuscule automatique</string>
   <string name="pref_autocapitalisation_summary">Active Shift au début des phrases</string>
+  <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
+  <!-- <string name="pref_second_layout_none">None</string> -->
   <string name="pref_category_typing">Saisie</string>
   <string name="pref_swipe_dist_title">Distance de swipe</string>
   <string name="pref_swipe_dist_summary">La distance des caractères dans les coins (%s)</string>
@@ -23,6 +29,8 @@
   <string name="pref_vibrate_summary">Vibration a chaque touche</string>
   <string name="pref_precise_repeat_title">Mouvement précis du curseur</string>
   <string name="pref_precise_repeat_summary">Modifier la vitesse de répétition en bougeant le doigt</string>
+  <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
+  <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Marge du bas</string>
   <string name="pref_keyboard_height_title">Hauteur du clavier</string>

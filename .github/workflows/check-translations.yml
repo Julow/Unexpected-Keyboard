@@ -1,0 +1,16 @@
+name: Check translations
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  check-translations:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+    - run: python3 sync_translations.py
+    - name: Check that strings files are uptodate, run python3 sync_translations.py otherwise
+      run: git diff --exit-code
