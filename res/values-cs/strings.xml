@@ -7,6 +7,7 @@
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Změnit rozvržení klávesnice</string>
   <string name="pref_layout_e_system">V nastavení systému</string>
+  <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
   <string name="pref_accents_title">(Univerzální) Diakritická znaménka</string>
   <string name="pref_accents_e_all_installed">Zobrazovat znaménka pro všechny instalované systémové jazyky</string>
   <string name="pref_accents_e_selected">Zobrazovat znaménka pouze pro současně zvolený jazyk</string>
@@ -51,6 +52,9 @@
   <string name="pref_swipe_dist_e_very_far">Velmi dlouhá</string>
   <string name="pref_key_horizontal_space">Horizontální mezery mezi klávesami</string>
   <string name="pref_key_vertical_space">Vertikální mezery mezi klávesami</string>
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
+  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
   <string name="key_action_next">Další</string>
   <string name="key_action_done">Dokončit</string>
   <string name="key_action_go">Spustit</string>

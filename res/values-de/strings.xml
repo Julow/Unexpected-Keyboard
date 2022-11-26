@@ -7,6 +7,7 @@
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Tastaturlayout ändern</string>
   <string name="pref_layout_e_system">Systemeinstellung</string>
+  <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
   <string name="pref_accents_title">Akzente</string>
   <string name="pref_accents_e_all_installed">Akzente für alle installierten Sprachen anzeigen</string>
   <string name="pref_accents_e_selected">Akzente nur für die gewählte Sprache anzeigen</string>
@@ -51,6 +52,9 @@
   <string name="pref_swipe_dist_e_very_far">Sehr weit</string>
   <string name="pref_key_horizontal_space">Horizontaler Abstand zwischen den Tasten</string>
   <string name="pref_key_vertical_space">Vertikaler Abstand zwischen den Tasten</string>
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
+  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
   <string name="key_action_next">Nächstes</string>
   <string name="key_action_done">Fertig</string>
   <string name="key_action_go">Los</string>

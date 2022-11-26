@@ -7,6 +7,7 @@
   <string name="pref_label_brightness">调整字母亮度</string>
   <string name="pref_layout_title">改变键盘布局</string>
   <string name="pref_layout_e_system">系统设置</string>
+  <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
   <string name="pref_accents_title">声调</string>
   <string name="pref_accents_e_all_installed">显示所有安装的语言的声调符号</string>
   <string name="pref_accents_e_selected">只显示选择的语言的声调符号</string>
@@ -51,6 +52,9 @@
   <string name="pref_swipe_dist_e_very_far">非常长</string>
   <string name="pref_key_horizontal_space">按键的左右边距</string>
   <string name="pref_key_vertical_space">按键的上下边距</string>
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
+  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
   <string name="key_action_next">下一项</string>
   <string name="key_action_done">完成</string>
   <string name="key_action_go">前往</string>

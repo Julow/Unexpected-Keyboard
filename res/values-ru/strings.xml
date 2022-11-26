@@ -7,6 +7,7 @@
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Изменить раскладку клавиатуры</string>
   <string name="pref_layout_e_system">Системные настройки</string>
+  <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
   <string name="pref_accents_title">Акцент</string>
   <string name="pref_accents_e_all_installed">Показывать акценты для всех установленных языков</string>
   <string name="pref_accents_e_selected">Показывать акценты только для выбранного языка</string>
@@ -51,6 +52,9 @@
   <string name="pref_swipe_dist_e_very_far">Очень далеко</string>
   <string name="pref_key_horizontal_space">Горизонтальное расстояние между клавишами</string>
   <string name="pref_key_vertical_space">Расстояние по вертикали между клавишами</string>
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
+  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
   <string name="key_action_next">Next</string>
   <string name="key_action_done">Ввод</string>
   <string name="key_action_go">Go</string>

@@ -7,6 +7,7 @@
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <string name="pref_layout_title">Cambiar formato de teclado</string>
   <string name="pref_layout_e_system">Ajustes del sistema</string>
+  <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
   <string name="pref_accents_title">Acentos</string>
   <string name="pref_accents_e_all_installed">Mostrar acentos para todos los lenguajes instalados</string>
   <string name="pref_accents_e_selected">Solo mostrar acentos para el lenguaje seleccionado</string>
@@ -51,6 +52,9 @@
   <string name="pref_swipe_dist_e_very_far">Muy lejano</string>
   <string name="pref_key_horizontal_space">Espaciado horizontal entre las teclas</string>
   <string name="pref_key_vertical_space">Espaciado vertical entre las teclas</string>
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
+  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
   <string name="key_action_next">Siguiente</string>
   <string name="key_action_done">Hecho</string>
   <string name="key_action_go">Ir</string>
