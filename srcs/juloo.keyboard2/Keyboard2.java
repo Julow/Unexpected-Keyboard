@@ -128,7 +128,10 @@ public class Keyboard2 extends InputMethodService
   private void refreshSubtypeImm()
   {
     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-    _config.shouldOfferSwitchingToNextInputMethod = imm.shouldOfferSwitchingToNextInputMethod(getConnectionToken());
+    if (VERSION.SDK_INT < 28)
+      _config.shouldOfferSwitchingToNextInputMethod = true;
+    else
+      _config.shouldOfferSwitchingToNextInputMethod = shouldOfferSwitchingToNextInputMethod();
     if (VERSION.SDK_INT < 12)
     {
       // Subtypes won't work well under API level 12 (getExtraValueOf)
