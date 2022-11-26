@@ -24,8 +24,8 @@ final class Config
   public final float sublabelTextSize;
 
   // From preferences
-  public int layout; // Or '-1' for the system defaults
-  public int second_layout; // Or '-1' for none
+  public KeyboardData layout; // Or 'null' for the system defaults
+  public KeyboardData second_layout; // Or 'null' for none
   public boolean show_numpad = false;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
@@ -64,8 +64,8 @@ final class Config
     labelTextSize = 0.33f;
     sublabelTextSize = 0.22f;
     // default values
-    layout = -1;
-    second_layout = -1;
+    layout = null;
+    second_layout = null;
     vibrateEnabled = true;
     longPressTimeout = 600;
     longPressInterval = 65;
@@ -115,8 +115,8 @@ final class Config
     {
       keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
-    layout = layoutId_of_string(_prefs.getString("layout", "none"));
-    second_layout = layoutId_of_string(_prefs.getString("second_layout", "none"));
+    layout = layout_of_string(res, _prefs.getString("layout", "none"));
+    second_layout = layout_of_string(res, _prefs.getString("second_layout", "none"));
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
@@ -246,37 +246,38 @@ final class Config
     }
   }
 
-  public static int layoutId_of_string(String name)
+  public KeyboardData layout_of_string(Resources res, String name)
   {
+    int id = R.xml.qwerty; // The config might store an invalid layout, don't crash
     switch (name)
     {
-      case "system": case "none": return -1;
-      case "azerty": return R.xml.azerty;
-      case "bangla": return R.xml.bangla;
-      case "bgph1": return R.xml.local_bgph1;
-      case "bone": return R.xml.bone;
-      case "colemak": return R.xml.colemak;
-      case "dvorak": return R.xml.dvorak;
-      case "hindi": return R.xml.hindi;
-      case "jcuken_ua": return R.xml.jcuken_ua;
-      case "neo2": return R.xml.neo2;
-      case "qwerty": return R.xml.qwerty;
-      case "qwerty_el": return R.xml.qwerty_el;
-      case "qwerty_es": return R.xml.qwerty_es;
-      case "qwerty_hu": return R.xml.qwerty_hu;
-      case "qwerty_ko": return R.xml.qwerty_ko;
-      case "qwerty_lv": return R.xml.qwerty_lv;
-      case "qwerty_no": return R.xml.qwerty_no;
-      case "qwerty_pt": return R.xml.qwerty_pt;
-      case "qwerty_sv_se": return R.xml.qwerty_sv_se;
-      case "qwerty_tr": return R.xml.qwerty_tr;
-      case "qwertz": return R.xml.qwertz;
-      case "qwertz_cs": return R.xml.qwertz_cs;
-      case "qwertz_de": return R.xml.qwertz_de;
-      case "qwertz_hu": return R.xml.qwertz_hu;
-      case "ru_jcuken": return R.xml.local_ru_jcuken;
-      default: return R.xml.qwerty; // The config might store an invalid layout, don't crash
+      case "system": case "none": return null;
+      case "azerty": id = R.xml.azerty; break;
+      case "bangla": id = R.xml.bangla; break;
+      case "bgph1": id = R.xml.local_bgph1; break;
+      case "bone": id = R.xml.bone; break;
+      case "colemak": id = R.xml.colemak; break;
+      case "dvorak": id = R.xml.dvorak; break;
+      case "hindi": id = R.xml.hindi; break;
+      case "jcuken_ua": id = R.xml.jcuken_ua; break;
+      case "neo2": id = R.xml.neo2; break;
+      case "qwerty": id = R.xml.qwerty; break;
+      case "qwerty_el": id = R.xml.qwerty_el; break;
+      case "qwerty_es": id = R.xml.qwerty_es; break;
+      case "qwerty_hu": id = R.xml.qwerty_hu; break;
+      case "qwerty_ko": id = R.xml.qwerty_ko; break;
+      case "qwerty_lv": id = R.xml.qwerty_lv; break;
+      case "qwerty_no": id = R.xml.qwerty_no; break;
+      case "qwerty_pt": id = R.xml.qwerty_pt; break;
+      case "qwerty_sv_se": id = R.xml.qwerty_sv_se; break;
+      case "qwerty_tr": id = R.xml.qwerty_tr; break;
+      case "qwertz": id = R.xml.qwertz; break;
+      case "qwertz_cs": id = R.xml.qwertz_cs; break;
+      case "qwertz_de": id = R.xml.qwertz_de; break;
+      case "qwertz_hu": id = R.xml.qwertz_hu; break;
+      case "ru_jcuken": id = R.xml.local_ru_jcuken; break;
     }
+    return KeyboardData.load(res, id);
   }
 
   private static Config _globalConfig = null;

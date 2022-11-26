@@ -53,10 +53,10 @@ class KeyboardData
 
   public KeyboardData addNumPad()
   {
-    if (!num_pad || _numPadKeyboardData == null)
+    if (!num_pad)
       return this;
     ArrayList<Row> extendedRows = new ArrayList<Row>();
-    Iterator<Row> iterNumPadRows = _numPadKeyboardData.rows.iterator();
+    Iterator<Row> iterNumPadRows = _num_pad.rows.iterator();
     for (Row row : rows)
     {
       ArrayList<KeyboardData.Key> keys = new ArrayList<Key>(row.keys);
@@ -101,9 +101,30 @@ class KeyboardData
     }));
   }
 
-  private static Row _bottomRow = null;
-  private static KeyboardData _numPadKeyboardData = null;
+  private static Row _bottom_row;
+  private static KeyboardData _num_pad;
+  private static KeyboardData _pin_entry;
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
+
+  public static void init(Resources res)
+  {
+    try
+    {
+      _bottom_row = parse_bottom_row(res.getXml(R.xml.bottom_row));
+      _num_pad = parse_keyboard(res.getXml(R.xml.numpad));
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  public static KeyboardData load_pin_entry(Resources res)
+  {
+    if (_pin_entry == null)
+      _pin_entry = load(res, R.xml.pin);
+    return _pin_entry;
+  }
 
   public static KeyboardData load(Resources res, int id)
   {
@@ -112,12 +133,6 @@ class KeyboardData
     {
       try
       {
-        if (_bottomRow == null)
-          _bottomRow = parse_bottom_row(res.getXml(R.xml.bottom_row));
-        if (_numPadKeyboardData == null)
-        {
-          _numPadKeyboardData = parse_keyboard(res.getXml(R.xml.numpad));
-        }
         l = parse_keyboard(res.getXml(id));
         _layoutCache.put(id, l);
       }
@@ -142,7 +157,7 @@ class KeyboardData
         rows.add(Row.parse(parser));
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
     if (bottom_row)
-      rows.add(_bottomRow.updateWidth(kw));
+      rows.add(_bottom_row.updateWidth(kw));
     return new KeyboardData(rows, kw, extra_keys, num_pad);
   }
 

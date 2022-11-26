@@ -31,22 +31,18 @@ public class Keyboard2 extends InputMethodService
 
   private Keyboard2View _keyboardView;
   private KeyEventHandler _keyeventhandler;
-  private int _currentTextLayout;
+  private KeyboardData _currentTextLayout;
   private ViewGroup _emojiPane = null;
 
   private Config _config;
 
   private boolean _debug_logs = false;
 
-  private KeyboardData getLayout(int resId)
-  {
-    return KeyboardData.load(getResources(), resId);
-  }
-
   @Override
   public void onCreate()
   {
     super.onCreate();
+    KeyboardData.init(getResources());
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     prefs.registerOnSharedPreferenceChangeListener(this);
     _keyeventhandler = new KeyEventHandler(getMainLooper(), this.new Receiver());
@@ -68,14 +64,13 @@ public class Keyboard2 extends InputMethodService
 
   private void refreshSubtypeLayout(InputMethodSubtype subtype)
   {
-    int l = _config.layout;
-    if (l == -1)
+    KeyboardData l = _config.layout;
+    if (l == null)
     {
       String s = subtype.getExtraValueOf("default_layout");
-      if (s != null)
-        l = Config.layoutId_of_string(s);
-      else
-        l = R.xml.qwerty;
+      l = (s != null)
+        ? _config.layout_of_string(getResources(), s)
+        : KeyboardData.load(getResources(), R.xml.qwerty);
     }
     _currentTextLayout = l;
   }
@@ -122,7 +117,10 @@ public class Keyboard2 extends InputMethodService
       case 4: _config.extra_keys_subtype = new HashSet<KeyValue>(); break;
     }
     // Fallback for the layout option: Use qwerty in the "system settings" case
-    _currentTextLayout = (_config.layout == -1) ? R.xml.qwerty : _config.layout;
+    if (_config.layout == null)
+      _currentTextLayout = KeyboardData.load(getResources(), R.xml.qwerty);
+    else
+      _currentTextLayout = _config.layout;
   }
 
   private void refreshSubtypeImm()
@@ -152,7 +150,7 @@ public class Keyboard2 extends InputMethodService
       }
     }
     _config.shouldOfferSwitchingToSecond =
-      _config.second_layout != -1 &&
+      _config.second_layout != null &&
       _currentTextLayout != _config.second_layout;
   }
 
@@ -217,15 +215,14 @@ public class Keyboard2 extends InputMethodService
     Log.d(TAG, "actionLabel: "+_config.actionLabel);
   }
 
-  private int chooseLayout(EditorInfo info)
+  private KeyboardData chooseLayout(EditorInfo info)
   {
     switch (info.inputType & InputType.TYPE_MASK_CLASS)
     {
       case InputType.TYPE_CLASS_NUMBER:
-        return R.xml.pin;
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
-        return R.xml.pin;
+        return KeyboardData.load_pin_entry(getResources());
       default:
         return _currentTextLayout;
     }
@@ -236,7 +233,7 @@ public class Keyboard2 extends InputMethodService
   {
     refreshConfig();
     refresh_action_label(info);
-    _keyboardView.setKeyboard(getLayout(chooseLayout(info)));
+    _keyboardView.setKeyboard(chooseLayout(info));
     _keyeventhandler.started(info);
     setInputView(_keyboardView);
     if (_debug_logs)
@@ -256,7 +253,7 @@ public class Keyboard2 extends InputMethodService
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
     refreshSubtypeImm();
-    _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+    _keyboardView.setKeyboard(_currentTextLayout);
   }
 
   @Override
@@ -316,20 +313,20 @@ public class Keyboard2 extends InputMethodService
 
     public void switch_main()
     {
-      _keyboardView.setKeyboard(getLayout(_currentTextLayout));
+      _keyboardView.setKeyboard(_currentTextLayout);
     }
 
     public void switch_layout(int layout_id)
     {
-      _keyboardView.setKeyboard(getLayout(layout_id));
+      _keyboardView.setKeyboard(KeyboardData.load(getResources(), layout_id));
     }
 
     public void switch_second()
     {
-      if (_config.second_layout == -1)
+      if (_config.second_layout == null)
         return;
       KeyboardData layout =
-        getLayout(_config.second_layout).mapKeys(new KeyboardData.MapKeyValues() {
+        _config.second_layout.mapKeys(new KeyboardData.MapKeyValues() {
           public KeyValue apply(KeyValue key, boolean localized)
           {
             if (key.getKind() == KeyValue.Kind.Event
