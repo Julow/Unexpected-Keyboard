@@ -1,13 +1,13 @@
 package juloo.keyboard2;
 
 import android.content.res.Resources;
-import android.content.res.XmlResourceParser;
 import java.util.ArrayList;
-import java.util.function.Function;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import org.xmlpull.v1.XmlPullParser;
 
 class KeyboardData
 {
@@ -144,14 +144,14 @@ class KeyboardData
     return l;
   }
 
-  private static KeyboardData parse_keyboard(XmlResourceParser parser) throws Exception
+  private static KeyboardData parse_keyboard(XmlPullParser parser) throws Exception
   {
     if (!expect_tag(parser, "keyboard"))
       throw new Exception("Empty layout file");
-    boolean bottom_row = parser.getAttributeBooleanValue(null, "bottom_row", true);
-    boolean extra_keys = parser.getAttributeBooleanValue(null, "extra_keys", true);
-    boolean num_pad = parser.getAttributeBooleanValue(null, "num_pad", true);
-    float specified_kw = parser.getAttributeFloatValue(null, "width", 0f);
+    boolean bottom_row = attribute_bool(parser, "bottom_row", true);
+    boolean extra_keys = attribute_bool(parser, "extra_keys", true);
+    boolean num_pad = attribute_bool(parser, "num_pad", true);
+    float specified_kw = attribute_float(parser, "width", 0f);
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
         rows.add(Row.parse(parser));
@@ -169,7 +169,7 @@ class KeyboardData
     return w;
   }
 
-  private static Row parse_bottom_row(XmlResourceParser parser) throws Exception
+  private static Row parse_bottom_row(XmlPullParser parser) throws Exception
   {
     if (!expect_tag(parser, "row"))
       throw new Exception("Failed to parse bottom row");
@@ -208,12 +208,12 @@ class KeyboardData
       keysWidth = kw;
     }
 
-    public static Row parse(XmlResourceParser parser) throws Exception
+    public static Row parse(XmlPullParser parser) throws Exception
     {
       ArrayList<Key> keys = new ArrayList<Key>();
       int status;
-      float h = parser.getAttributeFloatValue(null, "height", 1f);
-      float shift = parser.getAttributeFloatValue(null, "shift", 0f);
+      float h = attribute_float(parser, "height", 1f);
+      float shift = attribute_float(parser, "shift", 0f);
       while (expect_tag(parser, "key"))
         keys.add(Key.parse(parser));
       return new Row(keys, h, shift);
@@ -279,18 +279,18 @@ class KeyboardData
       indication = i;
     }
 
-    public static Key parse(XmlResourceParser parser) throws Exception
+    public static Key parse(XmlPullParser parser) throws Exception
     {
       Corner k0 = Corner.parse_of_attr(parser, "key0");
       Corner k1 = Corner.parse_of_attr(parser, "key1");
       Corner k2 = Corner.parse_of_attr(parser, "key2");
       Corner k3 = Corner.parse_of_attr(parser, "key3");
       Corner k4 = Corner.parse_of_attr(parser, "key4");
-      float width = parser.getAttributeFloatValue(null, "width", 1f);
-      float shift = parser.getAttributeFloatValue(null, "shift", 0.f);
-      boolean edgekeys = parser.getAttributeBooleanValue(null, "edgekeys", false);
+      float width = attribute_float(parser, "width", 1f);
+      float shift = attribute_float(parser, "shift", 0.f);
+      boolean edgekeys = attribute_bool(parser, "edgekeys", false);
       String indication = parser.getAttributeValue(null, "indication");
-      while (parser.next() != XmlResourceParser.END_TAG)
+      while (parser.next() != XmlPullParser.END_TAG)
         continue ;
       return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, indication);
     }
@@ -401,7 +401,7 @@ class KeyboardData
       localized = l;
     }
 
-    public static Corner parse_of_attr(XmlResourceParser parser, String attr) throws Exception
+    public static Corner parse_of_attr(XmlPullParser parser, String attr) throws Exception
     {
       String name = parser.getAttributeValue(null, attr);
       boolean localized = false;
@@ -458,18 +458,34 @@ class KeyboardData
   /** Parsing utils */
 
   /** Returns [false] on [END_DOCUMENT] or [END_TAG], [true] otherwise. */
-  private static boolean expect_tag(XmlResourceParser parser, String name) throws Exception
+  private static boolean expect_tag(XmlPullParser parser, String name) throws Exception
   {
     int status;
     do
     {
       status = parser.next();
-      if (status == XmlResourceParser.END_DOCUMENT || status == XmlResourceParser.END_TAG)
+      if (status == XmlPullParser.END_DOCUMENT || status == XmlPullParser.END_TAG)
         return false;
     }
-    while (status != XmlResourceParser.START_TAG);
+    while (status != XmlPullParser.START_TAG);
     if (!parser.getName().equals(name))
       throw new Exception("Unknow tag: " + parser.getName());
     return true;
+  }
+
+  private static boolean attribute_bool(XmlPullParser parser, String attr, boolean default_val)
+  {
+    String val = parser.getAttributeValue(null, attr);
+    if (val == null)
+      return default_val;
+    return val.equals("true");
+  }
+
+  private static float attribute_float(XmlPullParser parser, String attr, float default_val)
+  {
+    String val = parser.getAttributeValue(null, attr);
+    if (val == null)
+      return default_val;
+    return Float.parseFloat(val);
   }
 }
