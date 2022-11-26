@@ -26,6 +26,7 @@
     <item>jcuken_ua</item>
     <item>bangla</item>
     <item>hindi</item>
+    <item>custom</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>None</item>
@@ -53,6 +54,7 @@
     <item>ЙЦУКЕН (Українська)</item>
     <item>বাংলা</item>
     <item>हिन्दी</item>
+    <item>@string/pref_layout_e_custom</item>
   </string-array>
   <string-array name="pref_accents_entries">
     <item>@string/pref_accents_e_all_installed</item>

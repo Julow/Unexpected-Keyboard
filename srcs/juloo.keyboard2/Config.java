@@ -26,6 +26,7 @@ final class Config
   // From preferences
   public KeyboardData layout; // Or 'null' for the system defaults
   public KeyboardData second_layout; // Or 'null' for none
+  public KeyboardData custom_layout; // Might be 'null'
   public boolean show_numpad = false;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
@@ -66,6 +67,7 @@ final class Config
     // default values
     layout = null;
     second_layout = null;
+    custom_layout = null;
     vibrateEnabled = true;
     longPressTimeout = 600;
     longPressInterval = 65;
@@ -117,6 +119,7 @@ final class Config
     }
     layout = layout_of_string(res, _prefs.getString("layout", "none"));
     second_layout = layout_of_string(res, _prefs.getString("second_layout", "none"));
+    custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
@@ -252,6 +255,7 @@ final class Config
     switch (name)
     {
       case "system": case "none": return null;
+      case "custom": if (custom_layout != null) return custom_layout; break;
       case "azerty": id = R.xml.azerty; break;
       case "bangla": id = R.xml.bangla; break;
       case "bgph1": id = R.xml.local_bgph1; break;

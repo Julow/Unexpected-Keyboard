@@ -54,4 +54,7 @@
     <juloo.common.IntSlideBarPreference android:key="key_vertical_space" android:title="@string/pref_key_vertical_space" android:summary="%sdp" android:defaultValue="2" min="0" max="8"/>
     <juloo.common.IntSlideBarPreference android:key="key_horizontal_space" android:title="@string/pref_key_horizontal_space" android:summary="%sdp" android:defaultValue="2" min="0" max="8"/>
   </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_category_advanced">
+    <EditTextPreference android:key="custom_layout" android:title="@string/pref_custom_layout_title" android:summary="@string/pref_custom_layout_summary" android:inputType="text|textMultiLine|textLongMessage"/>
+  </PreferenceCategory>
 </PreferenceScreen>

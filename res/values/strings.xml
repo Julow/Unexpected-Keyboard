@@ -7,6 +7,7 @@
   <string name="pref_label_brightness">Adjust label brightness</string>
   <string name="pref_layout_title">Change keyboard layout</string>
   <string name="pref_layout_e_system">System settings</string>
+  <string name="pref_layout_e_custom">Custom layout</string>
   <string name="pref_accents_title">Accents</string>
   <string name="pref_accents_e_all_installed">Show accents for all installed languages</string>
   <string name="pref_accents_e_selected">Only show accents for the selected language</string>
@@ -51,6 +52,9 @@
   <string name="pref_swipe_dist_e_very_far">Very far</string>
   <string name="pref_key_horizontal_space">Horizontal spacing between the keys</string>
   <string name="pref_key_vertical_space">Vertical spacing between the keys</string>
+  <string name="pref_category_advanced">Advanced</string>
+  <string name="pref_custom_layout_title">Custom layout</string>
+  <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string>
   <string name="key_action_next">Next</string>
   <string name="key_action_done">Done</string>
   <string name="key_action_go">Go</string>

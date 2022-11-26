@@ -1,6 +1,9 @@
 package juloo.keyboard2;
 
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
+import android.util.Xml;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -126,6 +129,7 @@ class KeyboardData
     return _pin_entry;
   }
 
+  /** Load a layout from a resource ID. Returns [null] on error. */
   public static KeyboardData load(Resources res, int id)
   {
     KeyboardData l = _layoutCache.get(id);
@@ -133,7 +137,9 @@ class KeyboardData
     {
       try
       {
-        l = parse_keyboard(res.getXml(id));
+        XmlResourceParser parser = res.getXml(id);
+        l = parse_keyboard(parser);
+        parser.close();
         _layoutCache.put(id, l);
       }
       catch (Exception e)
@@ -142,6 +148,21 @@ class KeyboardData
       }
     }
     return l;
+  }
+
+  /** Load a layout from a string. Returns [null] on error. */
+  public static KeyboardData load_string(String src)
+  {
+    try
+    {
+      XmlPullParser parser = Xml.newPullParser();
+      parser.setInput(new StringReader(src));
+      return parse_keyboard(parser);
+    }
+    catch (Exception e)
+    {
+      return null;
+    }
   }
 
   private static KeyboardData parse_keyboard(XmlPullParser parser) throws Exception
