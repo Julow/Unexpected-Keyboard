@@ -48,6 +48,8 @@ public final class Pointers implements Handler.Callback
 
   public void clear()
   {
+    for (Pointer p : _ptrs)
+      stopKeyRepeat(p);
     _ptrs.clear();
   }
 
@@ -128,13 +130,9 @@ public final class Pointers implements Handler.Callback
     }
   }
 
-  public void onTouchCancel(int pointerId)
+  public void onTouchCancel()
   {
-    Pointer ptr = getPtr(pointerId);
-    if (ptr == null)
-      return;
-    stopKeyRepeat(ptr);
-    removePtr(ptr);
+    clear();
     _handler.onPointerFlagsChanged(true);
   }
 

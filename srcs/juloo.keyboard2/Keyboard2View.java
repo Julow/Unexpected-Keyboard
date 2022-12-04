@@ -172,7 +172,7 @@ public class Keyboard2View extends View
           _pointers.onTouchMove(event.getX(p), event.getY(p), event.getPointerId(p));
         break;
       case MotionEvent.ACTION_CANCEL:
-        _pointers.onTouchCancel(event.getPointerId(event.getActionIndex()));
+        _pointers.onTouchCancel();
         break;
       default:
         return (false);
