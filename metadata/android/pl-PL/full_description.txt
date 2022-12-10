@@ -1,0 +1,18 @@
+Ta aplikacja to klawiatura wirtualna dla Androida. Jej główne funkcjonalności obejmują łatwe wprowadzanie każdego znaku ASCII przy użyciu gestu przesunięcia, martwe klawisze dla znaków diakrytycznych i klawisze modyfikujące oraz obecność klawiszy specjalnych (tab, esc, strzałki, itp.).
+
+Klawiatura mieści do czterech dodatkowych znaków w rogach każdego klawisza. Są one wprowadzane poprzez przesuwanie palcem po klawiszu.
+
+Wyróźnione funkcjonalności:
+
+- Wszystkie znaki i klawisze specjalne, które są również dostępne na klawiaturze komputerowej. Doskonałe do korzystania z aplikacji takich jak Termux.
+
+- Obejmują one Tab, Esc, strzałki, klawisze funkcyjne oraz Ctrl i Alt !
+
+- Znaki akcentowane uzyskuje się za pomocą martwych klawiszy. Najpierw naciśnij akcent, a następnie wpisz akcentowaną literę.
+
+- Bardzo lekka i szybka. Zajmuje 500x mniej miejsca niż klawiatura Google i 15x mniej niż klawiatura domyślna. Bez reklam, bez śledzenia.
+
+- Wiele układów: QWERTY, QWERTZ, AZERTY. Motywy: Biały, Ciemny, Czarny (OLED). Oraz wiele innych możliwości.
+
+Tak jak każda inna klawiatura ekranowa, należy ją włączyć w ustawieniach systemowych. Otwórz Ustawienia i przejdź kolejno do:
+System > Języki i metody wprowadzania > Klawiatura ekranowa > Zarządzaj klawiaturami ekranowymi.
