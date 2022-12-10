@@ -33,6 +33,7 @@
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="24"/>
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="25"/>
     </PreferenceScreen>
+    <ListPreference android:key="numpad_layout" android:title="@string/pref_numpad_layout" android:summary="%s" android:defaultValue="high_first" android:entries="@array/pref_numpad_layout_entries" android:entryValues="@array/pref_numpad_layout_values"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
     <CheckBoxPreference android:key="autocapitalisation" android:title="@string/pref_autocapitalisation_title" android:summary="@string/pref_autocapitalisation_summary" android:defaultValue="true"/>

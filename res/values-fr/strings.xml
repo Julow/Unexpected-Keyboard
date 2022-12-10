@@ -16,6 +16,9 @@
   <string name="pref_show_numpad_never">Jamais</string>
   <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
   <string name="pref_show_numpad_always">Toujour</string>
+  <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
+  <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
+  <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
   <string name="pref_autocapitalisation_title">Majuscule automatique</string>
   <string name="pref_autocapitalisation_summary">Activer Shift au début des phrases</string>
   <string name="pref_extra_keys_title">Ajouter des touches au clavier</string>

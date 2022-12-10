@@ -28,6 +28,8 @@ final class Config
   public KeyboardData second_layout; // Or 'null' for none
   public KeyboardData custom_layout; // Might be 'null'
   public boolean show_numpad = false;
+  // From the 'numpad_layout' option, also apply to the numeric pane.
+  public boolean inverse_numpad = false;
   public float swipe_dist_px;
   public boolean vibrateEnabled;
   public long longPressTimeout;
@@ -120,6 +122,7 @@ final class Config
     layout = layout_of_string(res, _prefs.getString("layout", "none"));
     second_layout = layout_of_string(res, _prefs.getString("second_layout", "none"));
     custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
+    inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
@@ -161,7 +164,7 @@ final class Config
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
    */
-  public KeyboardData modify_layout(KeyboardData original_kw)
+  public KeyboardData modify_layout(KeyboardData kw)
   {
     // Update the name to avoid caching in KeyModifier
     final KeyValue action_key = (actionLabel == null) ? null :
@@ -171,7 +174,28 @@ final class Config
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     extra_keys.addAll(extra_keys_subtype);
     extra_keys.addAll(extra_keys_param);
-    KeyboardData kw = original_kw.mapKeys(new KeyboardData.MapKeyValues() {
+    if (kw.num_pad && show_numpad)
+      kw = kw.addNumPad();
+    kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
+      /** Apply to the center value only. Partial match, fallback to [apply]. */
+      public KeyboardData.Corner apply_key0(KeyboardData.Corner corner)
+      {
+        if (corner == null)
+          return null;
+        KeyValue kv = corner.kv;
+        switch (kv.getKind())
+        {
+          case Char:
+            char c = kv.getChar();
+            if (inverse_numpad)
+              c = inverse_numpad_char(c);
+            if (c != kv.getChar())
+              return KeyboardData.Corner.of_kv(kv.withChar(c));
+            break;
+        }
+        return super.apply(corner);
+      }
+
       public KeyValue apply(KeyValue key, boolean localized)
       {
         boolean is_extra_key = extra_keys.contains(key);
@@ -214,8 +238,6 @@ final class Config
     });
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.iterator());
-    if (original_kw.num_pad && show_numpad)
-      kw = kw.addNumPad();
     return kw;
   }
 
@@ -282,6 +304,20 @@ final class Config
       case "ru_jcuken": id = R.xml.local_ru_jcuken; break;
     }
     return KeyboardData.load(res, id);
+  }
+
+  char inverse_numpad_char(char c)
+  {
+    switch (c)
+    {
+      case '7': return '1';
+      case '8': return '2';
+      case '9': return '3';
+      case '1': return '7';
+      case '2': return '8';
+      case '3': return '9';
+      default: return c;
+    }
   }
 
   private static Config _globalConfig = null;

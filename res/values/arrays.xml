@@ -71,6 +71,14 @@
     <item>@string/pref_show_numpad_landscape</item>
     <item>@string/pref_show_numpad_always</item>
   </string-array>
+  <string-array name="pref_numpad_layout_values">
+    <item>high_first</item>
+    <item>low_first</item>
+  </string-array>
+  <string-array name="pref_numpad_layout_entries">
+    <item>@string/pref_numpad_layout_e_high_first</item>
+    <item>@string/pref_numpad_layout_e_low_first</item>
+  </string-array>
   <string-array name="pref_accents_values">
     <item>1</item>
     <item>2</item>

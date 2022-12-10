@@ -16,6 +16,9 @@
   <string name="pref_show_numpad_never">从不</string>
   <string name="pref_show_numpad_landscape">只在横屏显示</string>
   <string name="pref_show_numpad_always">一直显示</string>
+  <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
+  <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
+  <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
   <string name="pref_autocapitalisation_title">句首自动大写</string>
   <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
   <string name="pref_extra_keys_title">选择要显示的按键</string>
