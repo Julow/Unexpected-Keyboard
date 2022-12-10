@@ -7,7 +7,7 @@
   <string name="pref_label_brightness">Luminosité des symboles</string>
   <string name="pref_layout_title">Disposition des touches</string>
   <string name="pref_layout_e_system">Paramètre système</string>
-  <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
+  <string name="pref_layout_e_custom">Disposition personnalisée</string>
   <string name="pref_accents_title">Accents</string>
   <string name="pref_accents_e_all_installed">Afficher les accents pour les langues installées</string>
   <string name="pref_accents_e_selected">Afficher les accents pour la langue sélectionnée</string>
@@ -16,9 +16,9 @@
   <string name="pref_show_numpad_never">Jamais</string>
   <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
   <string name="pref_show_numpad_always">Toujour</string>
-  <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
-  <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
-  <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
+  <string name="pref_numpad_layout">Disposition du pavé numérique</string>
+  <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
+  <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>
   <string name="pref_autocapitalisation_title">Majuscule automatique</string>
   <string name="pref_autocapitalisation_summary">Activer Shift au début des phrases</string>
   <string name="pref_extra_keys_title">Ajouter des touches au clavier</string>
@@ -55,9 +55,9 @@
   <string name="pref_swipe_dist_e_very_far">Très longue</string>
   <string name="pref_key_horizontal_space">Espacement horizontal entre les touches</string>
   <string name="pref_key_vertical_space">Espacement vertical entre les touches</string>
-  <!-- <string name="pref_category_advanced">Advanced</string> -->
-  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
-  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
+  <string name="pref_category_advanced">Avancé</string>
+  <string name="pref_custom_layout_title">Disposition personnalisée</string>
+  <string name="pref_custom_layout_summary">Cette option n'est pas faite pour être utilisée.</string>
   <string name="key_action_next">Suiv.</string>
   <string name="key_action_done">Fin</string>
   <string name="key_action_go">Aller</string>
