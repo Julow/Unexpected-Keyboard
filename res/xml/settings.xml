@@ -47,8 +47,8 @@
     <ListPreference android:key="theme" android:title="@string/pref_theme" android:summary="%s" android:defaultValue="system" android:entries="@array/pref_theme_entries" android:entryValues="@array/pref_theme_values"/>
     <juloo.common.IntSlideBarPreference android:key="label_brightness" android:title="@string/pref_label_brightness" android:summary="%s%%" android:defaultValue="100" min="50" max="100"/>
     <juloo.common.IntSlideBarPreference android:key="margin_bottom" android:title="@string/pref_margin_bottom_title" android:summary="%sdp" android:defaultValue="5" min="0" max="100"/>
-    <juloo.common.IntSlideBarPreference android:key="keyboard_height" android:title="@string/pref_keyboard_height_title" android:summary="%s%%" android:defaultValue="35" min="25" max="50"/>
-    <juloo.common.IntSlideBarPreference android:key="keyboard_height_landscape" android:title="@string/pref_keyboard_height_landscape_title" android:summary="%s%%" android:defaultValue="50" min="35" max="65"/>
+    <juloo.common.IntSlideBarPreference android:key="keyboard_height" android:title="@string/pref_keyboard_height_title" android:summary="%s%%" android:defaultValue="35" min="10" max="50"/>
+    <juloo.common.IntSlideBarPreference android:key="keyboard_height_landscape" android:title="@string/pref_keyboard_height_landscape_title" android:summary="%s%%" android:defaultValue="50" min="20" max="65"/>
     <juloo.common.IntSlideBarPreference android:key="horizontal_margin" android:title="@string/pref_horizontal_margin_title" android:summary="%sdp" android:defaultValue="3" min="0" max="20"/>
     <juloo.common.SlideBarPreference android:key="character_size" android:title="@string/pref_character_size_title" android:summary="@string/pref_character_size_summary" android:defaultValue="1.0" min="0.8" max="1.2"/>
     <juloo.common.IntSlideBarPreference android:key="key_vertical_space" android:title="@string/pref_key_vertical_space" android:summary="%sdp" android:defaultValue="2" min="0" max="8"/>
