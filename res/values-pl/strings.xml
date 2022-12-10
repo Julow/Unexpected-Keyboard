@@ -16,7 +16,7 @@
   <string name="pref_show_numpad_never">Nigdy</string>
   <string name="pref_show_numpad_landscape">Tylko w orientacji poziomej</string>
   <string name="pref_show_numpad_always">Zawsze</string>
-  <string name="pref_numpad_layout">Układ numeryczny</string>
+  <string name="pref_numpad_layout">Układ klawiatury numerycznej</string>
   <string name="pref_numpad_layout_e_high_first">Od największej cyfry</string>
   <string name="pref_numpad_layout_e_low_first">Od najmniejszej cyfry</string>
   <string name="pref_autocapitalisation_title">Automatyczne wielkie litery</string>
