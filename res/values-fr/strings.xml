@@ -57,7 +57,7 @@
   <string name="pref_key_vertical_space">Espacement vertical entre les touches</string>
   <string name="pref_category_advanced">Avancé</string>
   <string name="pref_custom_layout_title">Disposition personnalisée</string>
-  <string name="pref_custom_layout_summary">Cette option n'est pas faite pour être utilisée.</string>
+  <string name="pref_custom_layout_summary">Cette option n\'est pas faite pour être utilisée.</string>
   <string name="key_action_next">Suiv.</string>
   <string name="key_action_done">Fin</string>
   <string name="key_action_go">Aller</string>
