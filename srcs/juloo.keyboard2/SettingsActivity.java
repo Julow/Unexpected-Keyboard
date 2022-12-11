@@ -17,7 +17,7 @@ public class SettingsActivity extends PreferenceActivity
     SharedPreferences prefs;
     // The preferences can't be read when in direct-boot mode. Avoid crashing
     // and don't allow changing the settings.
-    try { prefs = PreferenceManager.getDefaultSharedPreferences(this); }
+    try { prefs = getPreferenceManager().getSharedPreferences(); }
     catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
     prefs.registerOnSharedPreferenceChangeListener(this.new OnPreferencesChange());
