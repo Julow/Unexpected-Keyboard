@@ -14,13 +14,11 @@ public class SettingsActivity extends PreferenceActivity
   {
     detectSystemTheme();
     super.onCreate(savedInstanceState);
-    SharedPreferences prefs;
     // The preferences can't be read when in direct-boot mode. Avoid crashing
     // and don't allow changing the settings.
-    try { prefs = getPreferenceManager().getSharedPreferences(); }
+    try { getPreferenceManager().getSharedPreferences(); }
     catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
-    prefs.registerOnSharedPreferenceChangeListener(this.new OnPreferencesChange());
   }
 
   /** The default theme is [Theme.DeviceDefault], which is dark. Detect if the
@@ -41,14 +39,11 @@ public class SettingsActivity extends PreferenceActivity
     finish();
   }
 
-  /** See DirectBootAwarePreferences. */
-  class OnPreferencesChange implements SharedPreferences.OnSharedPreferenceChangeListener
+  protected void onStop()
   {
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences prefs, String _key)
-    {
-      DirectBootAwarePreferences
-        .copy_preferences_to_protected_storage(SettingsActivity.this, prefs);
-    }
+    DirectBootAwarePreferences
+      .copy_preferences_to_protected_storage(this,
+          getPreferenceManager().getSharedPreferences());
+    super.onStop();
   }
 }
