@@ -258,6 +258,10 @@ public class Keyboard2View extends View
     updateFlags();
     // Set keyboard background opacity
     getBackground().setAlpha(_config.keyboardOpacity);
+    // Set keys opacity
+    _theme.keyBgPaint.setAlpha(_config.keyOpacity);
+    _theme.keyDownBgPaint.setAlpha(_config.keyActivatedOpacity);
+    _theme.keyBorderPaint.setAlpha(_config.keyOpacity);
     float y = _config.marginTop + _config.keyVerticalInterval / 2;
     for (KeyboardData.Row row : _keyboard.rows)
     {
@@ -309,10 +313,6 @@ public class Keyboard2View extends View
     float w = isKeyDown ? _theme.keyBorderWidthActivated : _theme.keyBorderWidth;
     float w2 = _theme.keyBorderWidth / 2.f;
     _tmpRect.set(x + w2, y + w2, x + keyW - w2, y + keyH - w2);
-    // Set keys opacity
-    _theme.keyBgPaint.setAlpha(_config.keyOpacity);
-    _theme.keyDownBgPaint.setAlpha(_config.keyActivatedOpacity);
-    _theme.keyBorderPaint.setAlpha(_config.keyOpacity);
     canvas.drawRoundRect(_tmpRect, r, r,
         isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
     if (w > 0.f)
