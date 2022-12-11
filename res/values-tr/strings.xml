@@ -5,6 +5,9 @@
   <string name="settings_activity_label">Unexpected Keyboard Ayarları</string>
   <string name="pref_category_layout">Düzen</string>
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
+  <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
+  <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
+  <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
   <string name="pref_layout_title">Klavye Düzenini Değiştir</string>
   <string name="pref_layout_e_system">Sistem Ayarları</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->

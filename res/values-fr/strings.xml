@@ -5,6 +5,9 @@
   <string name="settings_activity_label">Unexpected Keyboard Paramètres</string>
   <string name="pref_category_layout">Disposition</string>
   <string name="pref_label_brightness">Luminosité des symboles</string>
+  <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
+  <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
+  <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
   <string name="pref_layout_title">Disposition des touches</string>
   <string name="pref_layout_e_system">Paramètre système</string>
   <string name="pref_layout_e_custom">Disposition personnalisée</string>

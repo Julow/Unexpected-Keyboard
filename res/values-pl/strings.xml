@@ -5,6 +5,9 @@
   <string name="settings_activity_label">Ustawienia Unexpected Keyboard</string>
   <string name="pref_category_layout">Układ</string>
   <string name="pref_label_brightness">Dostosuj jasność znaków</string>
+  <string name="pref_keyboard_opacity">Nieprzezroczystość tła klawiatury</string>
+  <string name="pref_key_opacity">Nieprzezroczystość klawisza</string>
+  <string name="pref_key_activated_opacity">Nieprzezroczystość naciśniętego klawisza</string>
   <string name="pref_layout_title">Zmień układ klawiatury</string>
   <string name="pref_layout_e_system">Systemowy</string>
   <string name="pref_layout_e_custom">Własny układ</string>
