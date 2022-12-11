@@ -312,6 +312,7 @@ public class Keyboard2View extends View
     // Set keys opacity
     _theme.keyBgPaint.setAlpha(_config.keyOpacity);
     _theme.keyDownBgPaint.setAlpha(_config.keyActivatedOpacity);
+    _theme.keyBorderPaint.setAlpha(_config.keyOpacity);
     canvas.drawRoundRect(_tmpRect, r, r,
         isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
     if (w > 0.f)
