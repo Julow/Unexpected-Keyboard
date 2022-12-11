@@ -17,8 +17,10 @@
     <item name="android:textColor">?attr/emoji_key_text</item>
     <item name="android:textSize">18dp</item>
   </style>
-  <!-- Passed to TextView.setTextAppearance -->
   <style name="emojiGridButton">
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:gravity">center</item>
     <item name="android:textSize">@dimen/emoji_text_size</item>
     <item name="android:textColor">?attr/emoji_color</item>
   </style>
