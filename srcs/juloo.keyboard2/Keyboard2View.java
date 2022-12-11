@@ -3,7 +3,6 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -12,7 +11,6 @@ import android.os.Build.VERSION;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.HapticFeedbackConstants;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -258,6 +256,8 @@ public class Keyboard2View extends View
   protected void onDraw(Canvas canvas)
   {
     updateFlags();
+    // Set keyboard background opacity
+    getBackground().setAlpha(_config.keyboardOpacity);
     float y = _config.marginTop + _config.keyVerticalInterval / 2;
     for (KeyboardData.Row row : _keyboard.rows)
     {
@@ -309,6 +309,9 @@ public class Keyboard2View extends View
     float w = isKeyDown ? _theme.keyBorderWidthActivated : _theme.keyBorderWidth;
     float w2 = _theme.keyBorderWidth / 2.f;
     _tmpRect.set(x + w2, y + w2, x + keyW - w2, y + keyH - w2);
+    // Set keys opacity
+    _theme.keyBgPaint.setAlpha(_config.keyOpacity);
+    _theme.keyDownBgPaint.setAlpha(_config.keyActivatedOpacity);
     canvas.drawRoundRect(_tmpRect, r, r,
         isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
     if (w > 0.f)

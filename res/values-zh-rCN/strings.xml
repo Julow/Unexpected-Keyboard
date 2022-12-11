@@ -5,6 +5,9 @@
   <string name="settings_activity_label">Unexpected Keyboard 设置</string>
   <string name="pref_category_layout">布局</string>
   <string name="pref_label_brightness">调整字母亮度</string>
+  <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
+  <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
+  <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
   <string name="pref_layout_title">改变键盘布局</string>
   <string name="pref_layout_e_system">系统设置</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->

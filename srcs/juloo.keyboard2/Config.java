@@ -1,6 +1,5 @@
 package juloo.keyboard2;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -9,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 final class Config
@@ -40,6 +38,9 @@ final class Config
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public int labelBrightness; // 0 - 255
+  public int keyboardOpacity; // 0 - 255
+  public int keyOpacity; // 0 - 255
+  public int keyActivatedOpacity; // 0 - 255
   public boolean preciseRepeat;
   public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
@@ -141,6 +142,10 @@ final class Config
       * horizontalIntervalScale;
     // Label brightness is used as the alpha channel
     labelBrightness = _prefs.getInt("label_brightness", 100) * 255 / 100;
+    // Keyboard opacity
+    keyboardOpacity = _prefs.getInt("keyboard_opacity", 100) * 255 / 100;
+    keyOpacity = _prefs.getInt("key_opacity", 100) * 255 / 100;
+    keyActivatedOpacity = _prefs.getInt("key_activated_opacity", 100) * 255 / 100;
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;

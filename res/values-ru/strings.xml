@@ -5,6 +5,9 @@
   <string name="settings_activity_label">Unexpected Keyboard Настройки</string>
   <string name="pref_category_layout">Расположение</string>
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
+  <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
+  <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
+  <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
   <string name="pref_layout_title">Изменить раскладку клавиатуры</string>
   <string name="pref_layout_e_system">Системные настройки</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->

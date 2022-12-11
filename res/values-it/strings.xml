@@ -5,6 +5,9 @@
   <string name="settings_activity_label">Impostazioni di Unexpected Keyboard</string>
   <string name="pref_category_layout">Layout</string>
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
+  <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
+  <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
+  <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
   <string name="pref_layout_title">Cambia layout tastiera</string>
   <string name="pref_layout_e_system">Impostazioni di sistema</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
