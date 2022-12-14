@@ -58,7 +58,6 @@ public class Keyboard2 extends InputMethodService
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
-    setInputView(_keyboardView);
     _debug_logs = getResources().getBoolean(R.bool.debug_logs);
   }
 
@@ -193,8 +192,8 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
-  /** Might re-create the keyboard view. [_keyboardView.setKeyboard()] must be
-      called soon after. */
+  /** Might re-create the keyboard view. [_keyboardView.setKeyboard()] and
+      [setInputView()] must be called soon after. */
   private void refresh_config()
   {
     int prev_theme = _config.theme;
@@ -204,7 +203,6 @@ public class Keyboard2 extends InputMethodService
     if (prev_theme != _config.theme)
     {
       _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
-      setInputView(_keyboardView);
       _emojiPane = null;
     }
     _keyboardView.reset();
@@ -241,6 +239,7 @@ public class Keyboard2 extends InputMethodService
     refresh_special_layout(info);
     _keyboardView.setKeyboard(main_layout());
     _keyeventhandler.started(info);
+    setInputView(_keyboardView);
     if (_debug_logs)
       log_editor_info(info);
   }
@@ -279,6 +278,7 @@ public class Keyboard2 extends InputMethodService
   public void onSharedPreferenceChanged(SharedPreferences _prefs, String _key)
   {
     refresh_config();
+    setInputView(_keyboardView);
     _keyboardView.setKeyboard(main_layout());
   }
 
