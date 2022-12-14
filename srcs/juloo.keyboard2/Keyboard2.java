@@ -226,8 +226,10 @@ public class Keyboard2 extends InputMethodService
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
         _currentSpecialLayout = KeyboardData.load_pin_entry(getResources());
+        break;
       default:
         _currentSpecialLayout = null;
+        break;
     }
   }
 
