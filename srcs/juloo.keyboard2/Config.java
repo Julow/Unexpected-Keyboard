@@ -177,7 +177,8 @@ final class Config
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
-    extra_keys.addAll(extra_keys_subtype);
+    if (extra_keys_subtype != null)
+      extra_keys.addAll(extra_keys_subtype);
     extra_keys.addAll(extra_keys_param);
     if (kw.num_pad && show_numpad)
       kw = kw.addNumPad();
