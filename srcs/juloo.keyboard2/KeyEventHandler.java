@@ -45,7 +45,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
         {
           case CONFIG: _recv.showKeyboardConfig(); break;
           case SWITCH_TEXT:
-          case SWITCH_SECOND_BACK: _recv.switch_main(); break;
+          case SWITCH_SECOND_BACK: _recv.switch_text(); break;
           case SWITCH_NUMERIC: _recv.switch_layout(R.xml.numeric); break;
           case SWITCH_EMOJI: _recv.setPane_emoji(); break;
           case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
@@ -162,7 +162,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     public void setPane_normal();
     public void showKeyboardConfig();
 
-    public void switch_main();
+    public void switch_text();
     public void switch_second();
     public void switch_layout(int layout_id);
 

@@ -319,9 +319,9 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.set_shift_state(state, lock);
     }
 
-    public void switch_main()
+    public void switch_text()
     {
-      _keyboardView.setKeyboard(main_layout());
+      _keyboardView.setKeyboard(_currentTextLayout);
     }
 
     public void switch_layout(int layout_id)
