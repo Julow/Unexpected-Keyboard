@@ -39,7 +39,14 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "copy",
     "paste",
     "cut",
-    "select_all",
+    "selectAll",
+    "shareText",
+    "pasteAsPlainText",
+    "undo",
+    "redo",
+    "replaceText",
+    "textAssist",
+    "autofill",
   };
 
   public static boolean default_checked(String name)

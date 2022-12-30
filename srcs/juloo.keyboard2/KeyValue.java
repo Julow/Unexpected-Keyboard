@@ -58,6 +58,14 @@ final class KeyValue
     PASTE,
     CUT,
     SELECT_ALL,
+    PASTE_PLAIN,
+    UNDO,
+    REDO,
+    // Android context menu actions
+    REPLACE,
+    SHARE,
+    ASSIST,
+    AUTOFILL,
   }
 
   public static enum Kind
@@ -356,7 +364,14 @@ final class KeyValue
     addEditingKey("copy", "copy", Editing.COPY);
     addEditingKey("paste", "paste", Editing.PASTE);
     addEditingKey("cut", "cut", Editing.CUT);
-    addEditingKey("select_all", "s. all", Editing.SELECT_ALL);
+    addEditingKey("selectAll", "s. all", Editing.SELECT_ALL);
+    addEditingKey("shareText", "share", Editing.SHARE);
+    addEditingKey("pasteAsPlainText", "<paste>", Editing.PASTE_PLAIN);
+    addEditingKey("undo", "undo", Editing.UNDO);
+    addEditingKey("redo", "redo", Editing.REDO);
+    addEditingKey("replaceText", "repl.", Editing.REPLACE);
+    addEditingKey("textAssist", "assist", Editing.ASSIST);
+    addEditingKey("autofill", "auto.", Editing.AUTOFILL);
   }
 
   static final HashMap<String, String> keys_descr = new HashMap<String, String>();

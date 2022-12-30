@@ -66,14 +66,27 @@ class KeyEventHandler implements Config.IKeyEventHandler
       case Modifier:
         break;
       case Editing:
-        switch (key.getEditing())
-        {
-          case COPY: send_context_menu_action(android.R.id.copy); break;
-          case PASTE: send_context_menu_action(android.R.id.paste); break;
-          case CUT: send_context_menu_action(android.R.id.cut); break;
-          case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
-        }
+        send_context_menu_action(action_of_editing_key(key.getEditing()));
         break;
+    }
+  }
+
+  static int action_of_editing_key(KeyValue.Editing e)
+  {
+    switch (e)
+    {
+      case COPY: return android.R.id.copy;
+      case PASTE: return android.R.id.paste;
+      case CUT: return android.R.id.cut;
+      case SELECT_ALL: return android.R.id.selectAll;
+      case SHARE: return android.R.id.shareText;
+      case PASTE_PLAIN: return android.R.id.pasteAsPlainText;
+      case UNDO: return android.R.id.undo;
+      case REDO: return android.R.id.redo;
+      case REPLACE: return android.R.id.replaceText;
+      case ASSIST: return android.R.id.textAssist;
+      case AUTOFILL: return android.R.id.autofill;
+      default: return -1; // sad
     }
   }
 
