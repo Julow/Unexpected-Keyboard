@@ -1,12 +1,10 @@
-This app is a virtual keyboard for Android. The main features are easy typing of every ASCII character using the swipe gesture, dead keys for accents and modifier keys and the presence of special keys (tab, esc, arrows, etc..).
-
-The keyboard shows up to 4 extra characters in the corners of each key. These extra characters are hit by swiping the finger on the key.
+The main feature is easy typing of more characters by swiping the keys toward the corners.
 
 Highlight of some of the features:
 
-- Every character and special keys that are also available on a PC keyboard. This is perfect for using applications like Termux.
+- Every character and special keys of a PC keyboard. This is perfect for using applications like Termux.
 
-- This includes Tab, Esc, the arrows and function keys, but also Ctrl and Alt !
+- This includes Tab, Esc, the arrows and function keys, but also Ctrl and Alt.
 
 - Accented keys are accessible using dead keys. First activate the accent, then type the accented letter.
 

@@ -1,12 +1,10 @@
-Cette application est un clavier virtuel pour Android. Les fonctionnalités principales sont l'accès rapide à tous les caractères ASCII en glissant le doigt, les touches mortes pour les accents et la présence des touches spéciales (Tab, Esc, les flèches, etc..).
-
-Il peut y avoir un caractère supplémentaire dans chaque coin de chaque touche. Ces caractères sont tapés en glissant le doigt sur la touche.
+La fonctionnalité principale est l'accès rapide à plus de caractères en balayant les touches vers les coins.
 
 Quelques fonctionnalités:
 
 - Tous les caractères et toutes les touches spéciales d'un clavier PC. Idéal pour utiliser une application comme Termux.
 
-- Cela comprend les touches Tab, Esc, les flèches et les touches fonctions mais aussi Ctrl et Alt !
+- Cela comprend les touches Tab, Esc, les flèches et les touches fonctions mais aussi Ctrl et Alt.
 
 - Les accents sont des touches mortes. Activez d'abord l'accent et tapez ensuite la lettre accentuée.
 
