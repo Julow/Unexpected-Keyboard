@@ -67,21 +67,6 @@ final class Config
     keyPadding = res.getDimension(R.dimen.key_padding);
     labelTextSize = 0.33f;
     sublabelTextSize = 0.22f;
-    // default values
-    layout = null;
-    second_layout = null;
-    custom_layout = null;
-    vibrateEnabled = true;
-    longPressTimeout = 600;
-    longPressInterval = 65;
-    marginBottom = res.getDimension(R.dimen.margin_bottom);
-    keyHeight = res.getDimension(R.dimen.key_height);
-    horizontalMargin = res.getDimension(R.dimen.horizontal_margin);
-    keyVerticalInterval = res.getDimension(R.dimen.key_vertical_interval);
-    keyHorizontalInterval = res.getDimension(R.dimen.key_horizontal_interval);
-    preciseRepeat = true;
-    characterSize = 1.f;
-    accents = 1;
     // from prefs
     refresh(res);
     // initialized later
@@ -132,13 +117,16 @@ final class Config
     float swipe_scaling = Math.min(dm.widthPixels, dm.heightPixels) / 10.f * dpi_ratio;
     float swipe_dist_value = Float.valueOf(_prefs.getString("swipe_dist", "15"));
     swipe_dist_px = swipe_dist_value / 25.f * swipe_scaling;
-    vibrateEnabled = _prefs.getBoolean("vibrate_enabled", vibrateEnabled);
-    longPressTimeout = _prefs.getInt("longpress_timeout", (int)longPressTimeout);
-    longPressInterval = _prefs.getInt("longpress_interval", (int)longPressInterval);
-    marginBottom = getDipPref(dm, _prefs, "margin_bottom", marginBottom);
-    keyVerticalInterval = getDipPref(dm, _prefs, "key_vertical_space", keyVerticalInterval);
+    vibrateEnabled = _prefs.getBoolean("vibrate_enabled", true);
+    longPressTimeout = _prefs.getInt("longpress_timeout", 600);
+    longPressInterval = _prefs.getInt("longpress_interval", 65);
+    marginBottom = getDipPref(dm, _prefs, "margin_bottom",
+        res.getDimension(R.dimen.margin_bottom));
+    keyVerticalInterval = getDipPref(dm, _prefs, "key_vertical_space",
+        res.getDimension(R.dimen.key_vertical_interval));
     keyHorizontalInterval =
-      getDipPref(dm, _prefs, "key_horizontal_space", keyHorizontalInterval)
+      getDipPref(dm, _prefs, "key_horizontal_space",
+          res.getDimension(R.dimen.key_horizontal_interval))
       * horizontalIntervalScale;
     // Label brightness is used as the alpha channel
     labelBrightness = _prefs.getInt("label_brightness", 100) * 255 / 100;
@@ -150,12 +138,13 @@ final class Config
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontalMargin =
-      getDipPref(dm, _prefs, "horizontal_margin", horizontalMargin)
+      getDipPref(dm, _prefs, "horizontal_margin",
+          res.getDimension(R.dimen.horizontal_margin))
       + res.getDimension(R.dimen.extra_horizontal_margin);
-    preciseRepeat = _prefs.getBoolean("precise_repeat", preciseRepeat);
+    preciseRepeat = _prefs.getBoolean("precise_repeat", true);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
-      _prefs.getFloat("character_size", characterSize)
+      _prefs.getFloat("character_size", 1.f)
       * characterSizeScale;
     accents = Integer.valueOf(_prefs.getString("accents", "1"));
     theme = getThemeId(res, _prefs.getString("theme", ""));
