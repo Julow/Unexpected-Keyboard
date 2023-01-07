@@ -81,7 +81,7 @@
     <item name="colorKeyboard">#000000</item>
     <item name="colorKey">#000000</item>
     <item name="colorKeyActivated">#333333</item>
-    <item name="keyBorderWidth">1dp</item>
+    <item name="keyBorderWidth">0dp</item>
     <item name="keyBorderWidthActivated">1dp</item>
     <item name="keyBorderColorLeft">#2a2a2a</item>
     <item name="keyBorderColorTop">#2a2a2a</item>
