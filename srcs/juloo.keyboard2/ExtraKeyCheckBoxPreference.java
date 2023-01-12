@@ -36,6 +36,8 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "£",
     "switch_greekmath",
     "capslock",
+    "group_separator",
+    "swap_separator",
     "copy",
     "paste",
     "cut",

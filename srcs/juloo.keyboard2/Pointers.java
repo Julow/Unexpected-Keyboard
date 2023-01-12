@@ -445,6 +445,14 @@ public final class Pointers implements Handler.Callback
 
     public KeyValue.Modifier get(int i) { return _mods[_size - 1 - i]; }
     public int size() { return _size; }
+    public boolean contains(KeyValue.Modifier mod)
+    {
+      for (int i = 0; i < _mods.length; i++)
+      {
+        if (_mods[i] == mod) return true;
+      }
+      return false;
+    }
 
     @Override
     public int hashCode() { return Arrays.hashCode(_mods); }

@@ -22,6 +22,8 @@ public class Keyboard2View extends View
   private KeyboardData _keyboard;
   private KeyValue _shift_kv;
   private KeyboardData.Key _shift_key;
+  private KeyValue _swap_separator_kv;
+  private KeyboardData.Key _swap_separator_key;
 
   private Pointers _pointers;
 
@@ -89,6 +91,15 @@ public class Keyboard2View extends View
       _shift_kv = _shift_kv.withFlags(_shift_kv.getFlags() | KeyValue.FLAG_LOCK);
       _shift_key = _keyboard.findKeyWithValue(_shift_kv);
     }
+
+    _swap_separator_kv = KeyValue.getKeyByName("swap_separator");
+    _swap_separator_key = _keyboard.findKeyWithValue(_swap_separator_kv);
+
+    if (_swap_separator_key == null)
+    {
+      _swap_separator_kv = _swap_separator_kv.withFlags(_swap_separator_kv.getFlags() | KeyValue.FLAG_LOCK);
+      _swap_separator_key = _keyboard.findKeyWithValue(_swap_separator_kv);
+    }
     reset();
   }
 
@@ -109,6 +120,17 @@ public class Keyboard2View extends View
       _pointers.add_fake_pointer(_shift_kv, _shift_key, lock);
     else
       _pointers.remove_fake_pointer(_shift_kv, _shift_key);
+    invalidate();
+  }
+
+  public void set_swap_separator_state(boolean state, boolean lock)
+  {
+    if (_keyboard == null || _swap_separator_key == null)
+      return;
+    if (state)
+      _pointers.add_fake_pointer(_swap_separator_kv, _swap_separator_key, lock);
+    else
+      _pointers.remove_fake_pointer(_swap_separator_kv, _swap_separator_key);
     invalidate();
   }
 

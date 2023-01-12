@@ -20,7 +20,7 @@
     </row>
     <row height="0.95">
         <key key0="0"/>
-        <key key0="."/>
+        <key key0="decimal_separator" key1="loc group_separator" key2="loc swap_separator"/>
         <key key0="="/>
         <key key0="+"/>
     </row>

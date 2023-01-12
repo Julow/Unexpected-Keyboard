@@ -24,6 +24,7 @@ final class KeyValue
   // Must be evaluated in the reverse order of their values.
   public static enum Modifier
   {
+    SWAP_SEPARATOR,
     SHIFT,
     CTRL,
     ALT,
@@ -70,7 +71,7 @@ final class KeyValue
 
   public static enum Kind
   {
-    Char, String, Keyevent, Event, Modifier, Editing
+    Char, String, Keyevent, Event, Modifier, Editing, Separator
   }
 
   // Behavior flags.
@@ -275,6 +276,12 @@ final class KeyValue
         FLAG_SPECIAL | FLAG_SECONDARY | FLAG_SMALLER_FONT);
   }
 
+  private static void addSeparatorKey(String name)
+  {
+    addKey(name, name, Kind.Separator, 0, 0);
+  }
+
+
   // Within VALUE_BITS
   private static int placeholder_unique_id = 0;
 
@@ -325,6 +332,10 @@ final class KeyValue
     addEventKey("change_method", 0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
     addEventKey("action", "Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
     addEventKey("capslock", 0x12, Event.CAPS_LOCK, 0);
+
+    addModifierKey("swap_separator", 0x15, Modifier.SWAP_SEPARATOR, FLAG_LOCKED);
+    addSeparatorKey("decimal_separator");
+    addSeparatorKey("group_separator");
 
     addKeyeventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
     addKeyeventKey("enter", 0x0E, KeyEvent.KEYCODE_ENTER, 0);
@@ -391,6 +402,8 @@ final class KeyValue
     /* Keys description is shown in the settings. */
     addKeyDescr("capslock", "Caps lock");
     addKeyDescr("switch_greekmath", "Greek & math symbols");
+    addKeyDescr("group_separator", "',' on Numpad");
+    addKeyDescr("swap_separator", "swap '.' and ',' on Numpad");
   }
 
   // Substitute for [assert], which has no effect on Android.

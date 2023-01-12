@@ -10,7 +10,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.util.LogPrinter;
 import android.view.ContextThemeWrapper;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -317,6 +316,11 @@ public class Keyboard2 extends InputMethodService
     public void set_shift_state(boolean state, boolean lock)
     {
       _keyboardView.set_shift_state(state, lock);
+    }
+
+    public void set_swap_separator_state(boolean state, boolean lock)
+    {
+      _keyboardView.set_swap_separator_state(state, lock);
     }
 
     public void switch_text()

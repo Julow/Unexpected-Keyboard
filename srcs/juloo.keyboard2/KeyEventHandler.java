@@ -180,6 +180,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     public void switch_layout(int layout_id);
 
     public void set_shift_state(boolean state, boolean lock);
+    public void set_swap_separator_state(boolean state, boolean lock);
 
     public InputConnection getCurrentInputConnection();
   }

@@ -21,6 +21,8 @@ class KeyModifier
     if (r == null)
     {
       r = k;
+      if (KeyValue.Kind.Separator == r.getKind())
+        r = apply_separator_replacement(r, mods);
       /* Order: Fn, Shift, accents */
       for (int i = 0; i < n_mods; i++)
         r = modify(r, mods.get(i));
@@ -135,6 +137,17 @@ class KeyModifier
         break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
+  }
+
+  private static KeyValue apply_separator_replacement(KeyValue k, Pointers.Modifiers mods) {
+    boolean swap_separator = mods.contains(KeyValue.Modifier.SWAP_SEPARATOR);
+    if ("decimal_separator".equals(k.getString())) {
+      return k.withString(swap_separator ? "," : ".");
+    }
+    if ("group_separator".equals(k.getString())) {
+      return k.withString(swap_separator ? "." : ",");
+    }
+    return k;
   }
 
   private static String apply_fn_keyevent(int code)
