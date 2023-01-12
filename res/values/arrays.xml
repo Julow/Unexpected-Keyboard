@@ -19,6 +19,7 @@
     <item>qwertz_cs</item>
     <item>qwertz_de</item>
     <item>qwertz_hu</item>
+    <item>qwertz_sk</item>
     <item>bgph1</item>
     <item>dvorak</item>
     <item>colemak</item>
@@ -48,6 +49,7 @@
     <item>QWERTZ (Czech)</item>
     <item>QWERTZ (Deutsch)</item>
     <item>QWERTZ (Hungarian)</item>
+    <item>QWERTZ (Slovak)</item>
     <item>Bulgarian (Phonetic Traditional)</item>
     <item>Dvorak</item>
     <item>Colemak</item>

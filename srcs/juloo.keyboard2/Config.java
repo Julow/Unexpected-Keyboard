@@ -297,6 +297,7 @@ final class Config
       case "qwertz_cs": id = R.xml.qwertz_cs; break;
       case "qwertz_de": id = R.xml.qwertz_de; break;
       case "qwertz_hu": id = R.xml.qwertz_hu; break;
+      case "qwertz_sk": id = R.xml.qwertz_sk; break;
       case "ru_jcuken": id = R.xml.local_ru_jcuken; break;
     }
     return KeyboardData.load(res, id);
