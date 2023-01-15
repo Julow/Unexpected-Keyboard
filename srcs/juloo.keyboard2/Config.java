@@ -108,7 +108,7 @@ final class Config
       keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
     layout = layout_of_string(res, _prefs.getString("layout", "none"));
-    second_layout = layout_of_string(res, _prefs.getString("second_layout", "none"));
+    second_layout = tweak_secondary_layout(layout_of_string(res, _prefs.getString("second_layout", "none")));
     custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
     // The baseline for the swipe distance correspond to approximately the
@@ -235,6 +235,23 @@ final class Config
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.iterator());
     return kw;
+  }
+
+  /** Modify a layout to turn it into a secondary layout by changing the
+      "switch_second" key. */
+  KeyboardData tweak_secondary_layout(KeyboardData layout)
+  {
+    if (layout == null)
+      return null;
+    return layout.mapKeys(new KeyboardData.MapKeyValues() {
+      public KeyValue apply(KeyValue key, boolean localized)
+      {
+        if (key.getKind() == KeyValue.Kind.Event
+            && key.getEvent() == KeyValue.Event.SWITCH_SECOND)
+          return KeyValue.getKeyByName("switch_second_back");
+        return key;
+      }
+    });
   }
 
   private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)

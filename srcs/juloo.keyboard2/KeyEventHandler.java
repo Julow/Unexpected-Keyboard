@@ -44,8 +44,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
         switch (key.getEvent())
         {
           case CONFIG: _recv.showKeyboardConfig(); break;
-          case SWITCH_TEXT:
-          case SWITCH_SECOND_BACK: _recv.switch_text(); break;
+          case SWITCH_TEXT: _recv.switch_text(); break;
           case SWITCH_NUMERIC: _recv.switch_layout(R.xml.numeric); break;
           case SWITCH_EMOJI: _recv.setPane_emoji(); break;
           case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
@@ -56,6 +55,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
               conn.performEditorAction(actionId);
             break;
           case SWITCH_SECOND: _recv.switch_second(); break;
+          case SWITCH_SECOND_BACK: _recv.switch_primary(); break;
           case SWITCH_GREEKMATH: _recv.switch_layout(R.xml.greekmath); break;
           case CAPS_LOCK: _recv.set_shift_state(true, true); break;
         }
@@ -176,6 +176,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     public void showKeyboardConfig();
 
     public void switch_text();
+    public void switch_primary();
     public void switch_second();
     public void switch_layout(int layout_id);
 

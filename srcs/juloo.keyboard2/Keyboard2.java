@@ -33,7 +33,8 @@ public class Keyboard2 extends InputMethodService
   private KeyEventHandler _keyeventhandler;
   // If not 'null', the layout to use instead of [_currentTextLayout].
   private KeyboardData _currentSpecialLayout;
-  private KeyboardData _currentTextLayout;
+  private Current_text_layout _currentTextLayout;
+  // Layout associated with the currently selected locale.
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
 
@@ -41,9 +42,21 @@ public class Keyboard2 extends InputMethodService
 
   private boolean _debug_logs = false;
 
-  KeyboardData main_layout()
+  /** Layout currently visible. */
+  KeyboardData current_layout()
   {
-    return (_currentSpecialLayout != null) ? _currentSpecialLayout : _currentTextLayout;
+    if (_currentSpecialLayout != null)
+      return _currentSpecialLayout;
+    if (_currentTextLayout == Current_text_layout.SECONDARY)
+      return _config.second_layout;
+    return (_config.layout == null) ? _localeTextLayout : _config.layout;
+  }
+
+  void setTextLayout(Current_text_layout layout)
+  {
+    _currentTextLayout = layout;
+    _currentSpecialLayout = null;
+    _keyboardView.setKeyboard(current_layout());
   }
 
   @Override
@@ -148,10 +161,15 @@ public class Keyboard2 extends InputMethodService
         refreshAccentsOption(imm, subtype);
       }
     }
-    _config.shouldOfferSwitchingToSecond =
-      _config.second_layout != null &&
-      _currentTextLayout != _config.second_layout;
-    _currentTextLayout = (_config.layout == null) ? _localeTextLayout : _config.layout;
+    if (_config.second_layout == null)
+    {
+      _config.shouldOfferSwitchingToSecond = false;
+      _currentTextLayout = Current_text_layout.PRIMARY;
+    }
+    else
+    {
+      _config.shouldOfferSwitchingToSecond = true;
+    }
   }
 
   private String actionLabel_of_imeAction(int action)
@@ -239,7 +257,7 @@ public class Keyboard2 extends InputMethodService
     refresh_config();
     refresh_action_label(info);
     refresh_special_layout(info);
-    _keyboardView.setKeyboard(main_layout());
+    _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(info);
     setInputView(_keyboardView);
     if (_debug_logs)
@@ -259,7 +277,7 @@ public class Keyboard2 extends InputMethodService
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
     refreshSubtypeImm();
-    _keyboardView.setKeyboard(main_layout());
+    _keyboardView.setKeyboard(current_layout());
   }
 
   @Override
@@ -281,7 +299,7 @@ public class Keyboard2 extends InputMethodService
   {
     refresh_config();
     setInputView(_keyboardView);
-    _keyboardView.setKeyboard(main_layout());
+    _keyboardView.setKeyboard(current_layout());
   }
 
   @Override
@@ -321,7 +339,8 @@ public class Keyboard2 extends InputMethodService
 
     public void switch_text()
     {
-      _keyboardView.setKeyboard(_currentTextLayout);
+      _currentSpecialLayout = null;
+      _keyboardView.setKeyboard(current_layout());
     }
 
     public void switch_layout(int layout_id)
@@ -331,19 +350,13 @@ public class Keyboard2 extends InputMethodService
 
     public void switch_second()
     {
-      if (_config.second_layout == null)
-        return;
-      KeyboardData layout =
-        _config.second_layout.mapKeys(new KeyboardData.MapKeyValues() {
-          public KeyValue apply(KeyValue key, boolean localized)
-          {
-            if (key.getKind() == KeyValue.Kind.Event
-                && key.getEvent() == KeyValue.Event.SWITCH_SECOND)
-              return KeyValue.getKeyByName("switch_second_back");
-            return key;
-          }
-        });
-      _keyboardView.setKeyboard(layout);
+      if (_config.second_layout != null)
+        setTextLayout(Current_text_layout.SECONDARY);
+    }
+
+    public void switch_primary()
+    {
+      setTextLayout(Current_text_layout.PRIMARY);
     }
 
     public void showKeyboardConfig()
@@ -367,5 +380,11 @@ public class Keyboard2 extends InputMethodService
   private View inflate_view(int layout)
   {
     return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
+  }
+
+  private static enum Current_text_layout
+  {
+    PRIMARY,
+    SECONDARY
   }
 }
