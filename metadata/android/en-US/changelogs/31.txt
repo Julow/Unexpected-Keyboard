@@ -1,0 +1,7 @@
+New layouts: QWERTZ (Slovak)
+
+Bugs fixed.
+Updated translations.
+Tweaked themes and settings.
+
+Thanks to the contributors: Jozef Kundlak, @MAKI1LOVE
