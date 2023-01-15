@@ -195,7 +195,7 @@ public class Keyboard2View extends View
   private KeyboardData.Key getKeyAtPosition(float tx, float ty)
   {
     KeyboardData.Row row = getRowAtPosition(ty);
-    float x = _config.horizontalMargin;
+    float x = _config.horizontal_margin;
     if (row == null || tx < x)
       return null;
     for (KeyboardData.Key key : row.keys)
@@ -232,7 +232,7 @@ public class Keyboard2View extends View
           + _keyboard.rows.size()
           + _config.marginTop + _config.marginBottom);
     setMeasuredDimension(width, height);
-    _keyWidth = (width - (_config.horizontalMargin * 2)) / _keyboard.keysWidth;
+    _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;
   }
 
   @Override
@@ -244,9 +244,9 @@ public class Keyboard2View extends View
     {
       // Disable the back-gesture on the keyboard area
       Rect keyboard_area = new Rect(
-          left + (int)_config.horizontalMargin,
+          left + (int)_config.horizontal_margin,
           top + (int)_config.marginTop,
-          right - (int)_config.horizontalMargin,
+          right - (int)_config.horizontal_margin,
           bottom - (int)_config.marginBottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
@@ -266,7 +266,7 @@ public class Keyboard2View extends View
     for (KeyboardData.Row row : _keyboard.rows)
     {
       y += row.shift * _config.keyHeight;
-      float x = _config.horizontalMargin + _config.keyHorizontalInterval / 2;
+      float x = _config.horizontal_margin + _config.keyHorizontalInterval / 2;
       float keyH = row.height * _config.keyHeight - _config.keyVerticalInterval;
       for (KeyboardData.Key k : row.keys)
       {

@@ -3,6 +3,8 @@
   <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
   <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard Settings</string>
+  <string name="pref_portrait">In portrait mode</string>
+  <string name="pref_landscape">In landscape mode</string>
   <string name="pref_category_layout">Layout</string>
   <string name="pref_label_brightness">Adjust label brightness</string>
   <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string>

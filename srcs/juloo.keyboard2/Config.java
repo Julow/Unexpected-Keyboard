@@ -34,7 +34,7 @@ final class Config
   public long longPressInterval;
   public float marginBottom;
   public float keyHeight;
-  public float horizontalMargin;
+  public float horizontal_margin;
   public float keyVerticalInterval;
   public float keyHorizontalInterval;
   public int labelBrightness; // 0 - 255
@@ -58,6 +58,7 @@ final class Config
   public Set<KeyValue> extra_keys_param;
 
   public final IKeyEventHandler handler;
+  public boolean orientation_landscape = false;
 
   private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h)
   {
@@ -85,6 +86,7 @@ final class Config
   public void refresh(Resources res)
   {
     DisplayMetrics dm = res.getDisplayMetrics();
+    orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
@@ -93,7 +95,7 @@ final class Config
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
-    if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) // Landscape mode
+    if (orientation_landscape)
     {
       if ("landscape".equals(show_numpad_s))
         show_numpad = true;
@@ -120,12 +122,12 @@ final class Config
     vibrateEnabled = _prefs.getBoolean("vibrate_enabled", true);
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
-    marginBottom = getDipPref(dm, _prefs, "margin_bottom",
+    marginBottom = get_dip_pref(dm, "margin_bottom",
         res.getDimension(R.dimen.margin_bottom));
-    keyVerticalInterval = getDipPref(dm, _prefs, "key_vertical_space",
+    keyVerticalInterval = get_dip_pref(dm, "key_vertical_space",
         res.getDimension(R.dimen.key_vertical_interval));
     keyHorizontalInterval =
-      getDipPref(dm, _prefs, "key_horizontal_space",
+      get_dip_pref(dm, "key_horizontal_space",
           res.getDimension(R.dimen.key_horizontal_interval))
       * horizontalIntervalScale;
     // Label brightness is used as the alpha channel
@@ -137,10 +139,9 @@ final class Config
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
-    horizontalMargin =
-      getDipPref(dm, _prefs, "horizontal_margin",
-          res.getDimension(R.dimen.horizontal_margin))
-      + res.getDimension(R.dimen.extra_horizontal_margin);
+    horizontal_margin =
+      get_dip_pref(dm, oriented_pref("horizontal_margin"),
+          res.getDimension(R.dimen.horizontal_margin));
     preciseRepeat = _prefs.getBoolean("precise_repeat", true);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
@@ -236,14 +237,21 @@ final class Config
     return kw;
   }
 
-  private float getDipPref(DisplayMetrics dm, SharedPreferences prefs, String pref_name, float def)
+  private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)
   {
     float value;
-    try { value = prefs.getInt(pref_name, -1); }
-    catch (Exception e) { value = prefs.getFloat(pref_name, -1f); }
+    try { value = _prefs.getInt(pref_name, -1); }
+    catch (Exception e) { value = _prefs.getFloat(pref_name, -1f); }
     if (value < 0f)
       return (def);
     return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
+  }
+
+  /** Returns preference name from a prefix depending on orientation. */
+  private String oriented_pref(String base_name)
+  {
+    String suffix = orientation_landscape ? "_landscape" : "_portrait";
+    return base_name + suffix;
   }
 
   private int getThemeId(Resources res, String theme_name)

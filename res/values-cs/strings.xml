@@ -3,6 +3,8 @@
   <string name="app_name" product="debug">Klávesnice Unexpected (pro ladění)</string>
   <string name="app_name" product="default">Klávesnice Unexpected</string>
   <string name="settings_activity_label">Nastavení Klávesnice Unexpected</string>
+  <!-- <string name="pref_portrait">In portrait mode</string> -->
+  <!-- <string name="pref_landscape">In landscape mode</string> -->
   <string name="pref_category_layout">Rozvržení</string>
   <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
   <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
