@@ -60,7 +60,7 @@
   <string name="pref_key_vertical_space">Расстояние по вертикали между клавишами</string>
   <string name="pref_category_advanced">Расширенные настройки</string>
   <string name="pref_custom_layout_title">Пользовательская раскладка</string>
-  <string name="pref_custom_layout_summary">Откройте исходный код. Эта параметр не предназначен для использования.</string> -->
+  <string name="pref_custom_layout_summary">Откройте исходный код. Эта параметр не предназначен для использования.</string>
   <string name="key_action_next">Далее</string>
   <string name="key_action_done">Ввод</string>
   <string name="key_action_go">Go</string>
