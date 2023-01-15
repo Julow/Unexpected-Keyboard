@@ -32,7 +32,7 @@ final class Config
   public boolean vibrateEnabled;
   public long longPressTimeout;
   public long longPressInterval;
-  public float marginBottom;
+  public float margin_bottom;
   public float keyHeight;
   public float horizontal_margin;
   public float keyVerticalInterval;
@@ -122,7 +122,7 @@ final class Config
     vibrateEnabled = _prefs.getBoolean("vibrate_enabled", true);
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
-    marginBottom = get_dip_pref(dm, "margin_bottom",
+    margin_bottom = get_dip_pref(dm, oriented_pref("margin_bottom"),
         res.getDimension(R.dimen.margin_bottom));
     keyVerticalInterval = get_dip_pref(dm, "key_vertical_space",
         res.getDimension(R.dimen.key_vertical_interval));

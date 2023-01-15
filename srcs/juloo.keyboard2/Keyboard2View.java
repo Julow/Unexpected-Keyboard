@@ -230,7 +230,7 @@ public class Keyboard2View extends View
     int height =
       (int)(_config.keyHeight * _keyboard.keysHeight
           + _keyboard.rows.size()
-          + _config.marginTop + _config.marginBottom);
+          + _config.marginTop + _config.margin_bottom);
     setMeasuredDimension(width, height);
     _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;
   }
@@ -247,7 +247,7 @@ public class Keyboard2View extends View
           left + (int)_config.horizontal_margin,
           top + (int)_config.marginTop,
           right - (int)_config.horizontal_margin,
-          bottom - (int)_config.marginBottom);
+          bottom - (int)_config.margin_bottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
   }
