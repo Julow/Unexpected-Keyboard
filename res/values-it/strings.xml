@@ -43,7 +43,6 @@
   <string name="pref_category_style">Stile</string>
   <string name="pref_margin_bottom_title">Margine inferiore</string>
   <string name="pref_keyboard_height_title">Altezza tastiera</string>
-  <string name="pref_keyboard_height_landscape_title">Altezza tastiera in modalità orizzontale</string>
   <string name="pref_horizontal_margin_title">Margine orizzontale</string>
   <string name="pref_character_size_title">Dimensione Caratteri</string>
   <string name="pref_character_size_summary">Dimensione dei caratteri mostrati sulla tastiera (%.2fx)</string>

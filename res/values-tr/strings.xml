@@ -43,7 +43,6 @@
   <string name="pref_category_style">Stil</string>
   <string name="pref_margin_bottom_title">Alt boşluk</string>
   <string name="pref_keyboard_height_title">Klavye yüksekliği</string>
-  <!-- <string name="pref_keyboard_height_landscape_title">Keyboard height in landscape mode</string> -->
   <string name="pref_horizontal_margin_title">Yatay boşluk</string>
   <string name="pref_character_size_title">Etiket boyutu</string>
   <string name="pref_character_size_summary">Klavye üzerinde gösterilecek karakter boyutu (%.2fx)</string>

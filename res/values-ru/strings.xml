@@ -43,7 +43,6 @@
   <string name="pref_category_style">Стиль</string>
   <string name="pref_margin_bottom_title">Нижняя граница поля</string>
   <string name="pref_keyboard_height_title">Высота клавиатуры</string>
-  <string name="pref_keyboard_height_landscape_title">Высота клавиатуры в ландшафтном режиме</string>
   <string name="pref_horizontal_margin_title">Горизонтальное поле</string>
   <string name="pref_character_size_title">Размер символов</string>
   <string name="pref_character_size_summary">Размер символов, отображаемых на клавиатуре (%.2fx)</string>

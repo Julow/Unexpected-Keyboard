@@ -43,7 +43,6 @@
   <string name="pref_category_style">样式</string>
   <string name="pref_margin_bottom_title">键盘下边距</string>
   <string name="pref_keyboard_height_title">键盘高度</string>
-  <string name="pref_keyboard_height_landscape_title">键盘高度（横屏模式）</string>
   <string name="pref_horizontal_margin_title">键盘左右边距</string>
   <string name="pref_character_size_title">字符大小</string>
   <string name="pref_character_size_summary">按键上显示的字符的大小 (%.2fx)</string>

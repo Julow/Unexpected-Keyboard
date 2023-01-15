@@ -43,7 +43,6 @@
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Margines dolny</string>
   <string name="pref_keyboard_height_title">Wysokość klawiatury</string>
-  <string name="pref_keyboard_height_landscape_title">Wysokość klawiatury w orientacji poziomej</string>
   <string name="pref_horizontal_margin_title">Margines poziomy</string>
   <string name="pref_character_size_title">Wielkość znaku</string>
   <string name="pref_character_size_summary">Wielkość znaków widocznych na klawiaturze (%.2fx)</string>

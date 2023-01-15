@@ -43,7 +43,6 @@
   <string name="pref_category_style">스타일</string>
   <string name="pref_margin_bottom_title">아래 넓이</string>
   <string name="pref_keyboard_height_title">키보드 높이</string>
-  <!-- <string name="pref_keyboard_height_landscape_title">Keyboard height in landscape mode</string> -->
   <string name="pref_horizontal_margin_title">양 옆 넓이</string>
   <string name="pref_character_size_title">폰트 크기</string>
   <string name="pref_character_size_summary">키보드의 표시되는 폰트 크기 (%.2fx)</string>

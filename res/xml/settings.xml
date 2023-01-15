@@ -61,8 +61,10 @@
       <juloo.common.IntSlideBarPreference android:key="margin_bottom_portrait" android:title="@string/pref_portrait" android:summary="%sdp" android:defaultValue="7" min="0" max="100"/>
       <juloo.common.IntSlideBarPreference android:key="margin_bottom_landscape" android:title="@string/pref_landscape" android:summary="%sdp" android:defaultValue="3" min="0" max="100"/>
     </PreferenceScreen>
-    <juloo.common.IntSlideBarPreference android:key="keyboard_height" android:title="@string/pref_keyboard_height_title" android:summary="%s%%" android:defaultValue="35" min="10" max="50"/>
-    <juloo.common.IntSlideBarPreference android:key="keyboard_height_landscape" android:title="@string/pref_keyboard_height_landscape_title" android:summary="%s%%" android:defaultValue="50" min="20" max="65"/>
+    <PreferenceScreen android:title="@string/pref_keyboard_height_title">
+      <juloo.common.IntSlideBarPreference android:key="keyboard_height" android:title="@string/pref_portrait" android:summary="%s%%" android:defaultValue="35" min="10" max="50"/>
+      <juloo.common.IntSlideBarPreference android:key="keyboard_height_landscape" android:title="@string/pref_landscape" android:summary="%s%%" android:defaultValue="50" min="20" max="65"/>
+    </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_horizontal_margin_title">
       <juloo.common.IntSlideBarPreference android:key="horizontal_margin_portrait" android:title="@string/pref_portrait" android:summary="%sdp" android:defaultValue="3" min="0" max="30"/>
       <juloo.common.IntSlideBarPreference android:key="horizontal_margin_landscape" android:title="@string/pref_landscape" android:summary="%sdp" android:defaultValue="28" min="0" max="200"/>

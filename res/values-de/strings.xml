@@ -43,7 +43,6 @@
   <string name="pref_category_style">Design</string>
   <string name="pref_margin_bottom_title">Unterer Abstand</string>
   <string name="pref_keyboard_height_title">Höhe der Tastatur</string>
-  <string name="pref_keyboard_height_landscape_title">Höhe der Tastatur im Querformat</string>
   <string name="pref_horizontal_margin_title">Horizontaler Abstand</string>
   <string name="pref_character_size_title">Größe der Beschriftung</string>
   <string name="pref_character_size_summary">Größe der Buchstaben auf den Tasten (%.2fx)</string>

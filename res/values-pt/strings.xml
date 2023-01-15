@@ -43,7 +43,6 @@
   <string name="pref_category_style">Estilo</string>
   <string name="pref_margin_bottom_title">Margem inferior</string>
   <string name="pref_keyboard_height_title">Altura do teclado</string>
-  <string name="pref_keyboard_height_landscape_title">Altura do teclado em modo paisagem</string>
   <string name="pref_horizontal_margin_title">Margem horizontal</string>
   <string name="pref_character_size_title">Tamanho dos indicadores</string>
   <string name="pref_character_size_summary">Tamanho dos caracteres visíveis no teclado (%.2fx)</string>
