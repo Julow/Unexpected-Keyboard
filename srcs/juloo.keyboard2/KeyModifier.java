@@ -156,6 +156,10 @@ class KeyModifier
     {
       case F11: return "f11";
       case F12: return "f12";
+      case SHINDOT: return "shindot";
+      case SINDOT: return "sindot";
+      case OLE: return "ole";
+      case METEG: return "meteg";
       default: return null;
     }
   }
@@ -198,6 +202,7 @@ class KeyModifier
       case ',': return "·";
       case '!': return "¡";
       case '?': return "¿";
+      case '|': return "¦";
       // arrows
       case '↖': return "⇖";
       case '↑': return "⇑";
@@ -243,6 +248,20 @@ class KeyModifier
       case '⊂': return "⊆";
       case '⊃': return "⊇";
       case '±': return "∓";
+      // hebrew niqqud
+      case 'ק': return "qamats"; // kamatz
+      case 'ר': return "hataf_qamats"; // reduced kamatz
+      case 'ו': return "holam";
+      case 'ם': return "rafe";
+      case 'פ': return "patah"; // patach
+      case 'ש': return "sheva";
+      case 'ד': return "dagesh"; // or mapiq
+      case 'ח': return "hiriq";
+      case 'ף': return "hataf_patah"; // reduced patach
+      case 'ז': return "qubuts"; // kubuts
+      case 'ס': return "segol";
+      case 'ב': return "hataf_segol"; // reduced segol
+      case 'צ': return "tsere";
       // other
       case ' ': return "nbsp";
       default: return null;

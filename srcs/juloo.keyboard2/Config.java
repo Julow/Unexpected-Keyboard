@@ -362,6 +362,8 @@ final class Config
       case "qwertz_hu": id = R.xml.qwertz_hu; break;
       case "qwertz_sk": id = R.xml.qwertz_sk; break;
       case "ru_jcuken": id = R.xml.local_ru_jcuken; break;
+      case "he_il_1452_1": id = R.xml.he_il_1452_1; break;
+      case "he_il_1452_2": id = R.xml.he_il_1452_2; break;
     }
     return KeyboardData.load(res, id);
   }
