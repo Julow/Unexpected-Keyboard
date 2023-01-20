@@ -72,7 +72,11 @@ final class KeyValue
   {
     REMOVED,
     F11,
-    F12
+    F12,
+    SHINDOT,
+    SINDOT,
+    OLE,
+    METEG
   }
 
   public static enum Kind
@@ -357,9 +361,49 @@ final class KeyValue
       case "space": return charKey("\r", ' ', FLAG_KEY_FONT | FLAG_SECONDARY);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
 
+      /* bidi */
+      case "lrm": return charKey("↱", '\u200e', 0); // Send left-to-right mark
+      case "rlm": return charKey("↰", '\u200f', 0); // Send right-to-left mark
+      case "b(": return charKey("(", ')', 0);
+      case "b)": return charKey(")", '(', 0);
+      case "b[": return charKey("[", ']', 0);
+      case "b]": return charKey("]", '[', 0);
+      case "b{": return charKey("{", '}', 0);
+      case "b}": return charKey("}", '{', 0);
+      case "blt": return charKey("<", '>', 0);
+      case "bgt": return charKey(">", '<', 0);
+
       case "removed": return placeholderKey(Placeholder.REMOVED);
       case "f11_placeholder": return placeholderKey(Placeholder.F11);
       case "f12_placeholder": return placeholderKey(Placeholder.F12);
+
+      /* hebrew niqqud */
+      case "qamats": return charKey("\u05E7\u05B8", '\u05B8', 0); // kamatz
+      case "patah": return charKey("\u05E4\u05B7", '\u05B7', 0); // patach
+      case "sheva": return charKey("\u05E9\u05B0", '\u05B0', 0);
+      case "dagesh": return charKey("\u05D3\u05BC", '\u05BC', 0); // or mapiq
+      case "hiriq": return charKey("\u05D7\u05B4", '\u05B4', 0);
+      case "segol": return charKey("\u05E1\u05B6", '\u05B6', 0);
+      case "tsere": return charKey("\u05E6\u05B5", '\u05B5', 0);
+      case "holam": return charKey("\u05D5\u05B9", '\u05B9', 0);
+      case "qubuts": return charKey("\u05E7\u05BB", '\u05BB', 0); // kubuts
+      case "hataf_patah": return charKey("\u05D7\u05B2\u05E4\u05B7", '\u05B2', 0); // reduced patach
+      case "hataf_qamats": return charKey("\u05D7\u05B3\u05E7\u05B8", '\u05B3', 0); // reduced kamatz
+      case "hataf_segol": return charKey("\u05D7\u05B1\u05E1\u05B6", '\u05B1', 0); // reduced segol
+      case "shindot": return charKey("\u05E9\u05C1", '\u05C1', 0);
+      case "shindot_placeholder": return placeholderKey(Placeholder.SHINDOT);
+      case "sindot": return charKey("\u05E9\u05C2", '\u05C2', 0);
+      case "sindot_placeholder": return placeholderKey(Placeholder.SINDOT);
+      /* hebrew punctuation */
+      case "geresh": return charKey("\u05F3", '\u05F3', 0);
+      case "gershayim": return charKey("\u05F4", '\u05F4', 0);
+      case "maqaf": return charKey("\u05BE", '\u05BE', 0);
+      /* hebrew biblical */
+      case "rafe": return charKey("\u05E4\u05BF", '\u05BF', 0);
+      case "ole": return charKey("\u05E2\u05AB", '\u05AB', 0);
+      case "ole_placeholder": return placeholderKey(Placeholder.OLE);
+      case "meteg": return charKey("\u05DE\u05BD", '\u05BD', 0); // or siluq or sof-pasuq
+      case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
 
       case "copy": return editingKey("copy", Editing.COPY);
       case "paste": return editingKey("paste", Editing.PASTE);
