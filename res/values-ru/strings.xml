@@ -3,8 +3,8 @@
   <string name="app_name" product="debug">Unexpected Keyboard (отладка)</string>
   <!-- <string name="app_name" product="default">Unexpected Keyboard</string> -->
   <string name="settings_activity_label">Unexpected Keyboard Настройки</string>
-  <!-- <string name="pref_portrait">In portrait mode</string> -->
-  <!-- <string name="pref_landscape">In landscape mode</string> -->
+  <string name="pref_portrait">В портретном режиме</string>
+  <string name="pref_landscape">В ландшафтном режиме</string>
   <string name="pref_category_layout">Расположение</string>
   <string name="pref_label_brightness">Изменить яркость клавиатуры</string>
   <string name="pref_keyboard_opacity">Изменить прозрачность фона</string>
