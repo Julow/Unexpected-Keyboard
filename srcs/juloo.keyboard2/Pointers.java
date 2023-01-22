@@ -147,6 +147,10 @@ public final class Pointers implements Handler.Callback
 
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)
   {
+    // Ignore new presses while a sliding key is active. On some devices, ghost
+    // touch events can happen while the pointer travels on top of other keys.
+    if (isSliding())
+      return;
     // Don't take latched modifiers into account if an other key is pressed.
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
@@ -198,11 +202,16 @@ public final class Pointers implements Handler.Callback
     // The position in a IME windows is clampled to view.
     // For a better up swipe behaviour, set the y position to a negative value when clamped.
     if (y == 0.0) y = -400;
-
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
-    float dist = Math.abs(dx) + Math.abs(dy);
 
+    if (ptr.sliding)
+    {
+      onTouchMove_sliding(ptr, dx);
+      return;
+    }
+
+    float dist = Math.abs(dx) + Math.abs(dy);
     int direction;
     if (dist < _config.swipe_dist_px)
     {
@@ -228,9 +237,21 @@ public final class Pointers implements Handler.Callback
       KeyValue newValue = getKeyAtDirection(ptr, direction);
       if (newValue != null && (ptr.value == null || !newValue.equals(ptr.value)))
       {
-        int old_flags = ptr.flags;
         ptr.value = newValue;
         ptr.flags = newValue.getFlags();
+        // Sliding mode is entered when key2 or key3 is down on a slider key.
+        if (ptr.key.slider)
+        {
+          switch (direction)
+          {
+            case 1:
+            case 8:
+            case 4:
+            case 5:
+              startSliding(ptr, dy);
+              break;
+          }
+        }
         _handler.onPointerDown(true);
       }
     }
@@ -285,6 +306,14 @@ public final class Pointers implements Handler.Callback
   {
     ptr.flags = (ptr.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
     _handler.onPointerFlagsChanged(shouldVibrate);
+  }
+
+  boolean isSliding()
+  {
+    for (Pointer ptr : _ptrs)
+      if (ptr.sliding)
+        return true;
+    return false;
   }
 
   // Key repeat
@@ -344,6 +373,30 @@ public final class Pointers implements Handler.Callback
     return true;
   }
 
+  // Sliding
+
+  void startSliding(Pointer ptr, float initial_dy)
+  {
+    stopKeyRepeat(ptr);
+    ptr.sliding = true;
+    ptr.sliding_count = (int)(initial_dy / _config.slide_step_px);
+  }
+
+  /** Handle move events for sliding pointers. [dx] is distance travelled from
+      [downX]. */
+  void onTouchMove_sliding(Pointer ptr, float dx)
+  {
+    int count = (int)(dx / _config.slide_step_px);
+    if (count == ptr.sliding_count)
+      return;
+    KeyValue newValue = handleKV(
+        (count < ptr.sliding_count) ? ptr.key.key3 : ptr.key.key2,
+        ptr.modifiers);
+    ptr.sliding_count = count;
+    ptr.value = newValue;
+    if (newValue != null)
+      _handler.onPointerHold(newValue, ptr.modifiers);
+  }
 
   private static final class Pointer
   {
@@ -363,6 +416,10 @@ public final class Pointers implements Handler.Callback
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
+    /** Whether the pointer is "sliding" laterally on a key. */
+    public boolean sliding;
+    /** Number of event already caused by sliding. */
+    public int sliding_count;
 
     public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m)
     {
@@ -375,6 +432,8 @@ public final class Pointers implements Handler.Callback
       modifiers = m;
       flags = (v == null) ? 0 : v.getFlags();
       timeoutWhat = -1;
+      sliding = false;
+      sliding_count = 0;
     }
   }
 

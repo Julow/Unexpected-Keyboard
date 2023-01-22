@@ -285,9 +285,13 @@ class KeyboardData
     public final float shift;
     /** Put keys 1 to 4 on the edges instead of the corners. */
     public final boolean edgekeys;
+    /** Keys 2 and 3 are repeated as the finger moves laterally on the key.
+        Used for the left and right arrow keys on the space bar. */
+    public final boolean slider;
+    /** String printed on the keys. It has no other effect. */
     public final String indication;
 
-    protected Key(Corner k0, Corner k1, Corner k2, Corner k3, Corner k4, float w, float s, boolean e, String i)
+    protected Key(Corner k0, Corner k1, Corner k2, Corner k3, Corner k4, float w, float s, boolean e, boolean sl, String i)
     {
       key0 = k0;
       key1 = k1;
@@ -297,6 +301,7 @@ class KeyboardData
       width = w;
       shift = s;
       edgekeys = e;
+      slider = sl;
       indication = i;
     }
 
@@ -310,17 +315,18 @@ class KeyboardData
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       boolean edgekeys = attribute_bool(parser, "edgekeys", false);
+      boolean slider = attribute_bool(parser, "slider", false);
       String indication = parser.getAttributeValue(null, "indication");
       while (parser.next() != XmlPullParser.END_TAG)
         continue ;
-      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, indication);
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, slider, indication);
     }
 
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys,
-          indication);
+          slider, indication);
     }
 
     public KeyValue getKeyValue(int i)
@@ -350,12 +356,14 @@ class KeyboardData
         case 3: k3 = k; break;
         case 4: k4 = k; break;
       }
-      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, indication);
+      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, slider,
+          indication);
     }
 
     public Key withShift(float s)
     {
-      return new Key(key0, key1, key2, key3, key4, width, s, edgekeys, indication);
+      return new Key(key0, key1, key2, key3, key4, width, s, edgekeys, slider,
+          indication);
     }
 
     /**
@@ -464,7 +472,7 @@ class KeyboardData
     {
       return new Key(apply_key0(k.key0), apply(k.key1), apply(k.key2),
           apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys,
-          k.indication);
+          k.slider, k.indication);
     }
 
     protected Corner apply_key0(Corner c)

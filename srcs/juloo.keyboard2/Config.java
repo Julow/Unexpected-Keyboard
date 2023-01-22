@@ -29,6 +29,7 @@ final class Config
   // From the 'numpad_layout' option, also apply to the numeric pane.
   public boolean inverse_numpad = false;
   public float swipe_dist_px;
+  public float slide_step_px;
   public boolean vibrateEnabled;
   public long longPressTimeout;
   public long longPressInterval;
@@ -118,6 +119,7 @@ final class Config
     float swipe_scaling = Math.min(dm.widthPixels, dm.heightPixels) / 10.f * dpi_ratio;
     float swipe_dist_value = Float.valueOf(_prefs.getString("swipe_dist", "15"));
     swipe_dist_px = swipe_dist_value / 25.f * swipe_scaling;
+    slide_step_px = swipe_dist_px / 4.f;
     vibrateEnabled = _prefs.getBoolean("vibrate_enabled", true);
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
