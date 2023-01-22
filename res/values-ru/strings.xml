@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Интервал повтора клавиш</string>
   <string name="pref_vibrate_title">Вибрация</string>
   <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
-  <string name="pref_precise_repeat_title">Точные перемещения курсора</string>
-  <string name="pref_precise_repeat_summary">Изменяйте скорость повтора клавиш, проводя пальцем больше или меньше</string>
   <string name="pref_lock_double_tap_title">Двойное нажатие на Shift активирует Caps lock</string>
   <string name="pref_lock_double_tap_summary">Вы можете активировать модификатор, удерживая клавишу</string>
   <string name="pref_category_style">Стиль</string>

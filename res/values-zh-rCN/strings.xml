@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">长按后每次重复输入的时间间隔</string>
   <string name="pref_vibrate_title">振动</string>
   <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>
-  <string name="pref_precise_repeat_title">精确控制光标移速</string>
-  <string name="pref_precise_repeat_summary">按键重复按下速度由手指滑动的距离决定</string>
   <string name="pref_lock_double_tap_title">双击Shift键锁定大写</string>
   <string name="pref_lock_double_tap_summary">任何时候都可以长按修改键以锁定</string>
   <string name="pref_category_style">样式</string>

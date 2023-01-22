@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Écart entre les répétitions</string>
   <string name="pref_vibrate_title">Vibreur</string>
   <string name="pref_vibrate_summary">Vibration a chaque touche</string>
-  <string name="pref_precise_repeat_title">Mouvement précis du curseur</string>
-  <string name="pref_precise_repeat_summary">Modifier la vitesse de répétition en bougeant le doigt</string>
   <string name="pref_lock_double_tap_title">Appuyer deux fois pour bloquer la majuscule</string>
   <string name="pref_lock_double_tap_summary">Un appui long bloque la majuscule</string>
   <string name="pref_category_style">Style</string>

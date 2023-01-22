@@ -147,11 +147,6 @@ public final class Pointers implements Handler.Callback
 
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)
   {
-    // Ignore new presses while a modulated key is active. On some devices,
-    // ghost touch events can happen while the pointer travels on top of other
-    // keys.
-    if (isModulatedKeyPressed())
-      return;
     // Don't take latched modifiers into account if an other key is pressed.
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
@@ -207,7 +202,6 @@ public final class Pointers implements Handler.Callback
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
     float dist = Math.abs(dx) + Math.abs(dy);
-    ptr.ptrDist = dist;
 
     int direction;
     if (dist < _config.swipe_dist_px)
@@ -237,12 +231,6 @@ public final class Pointers implements Handler.Callback
         int old_flags = ptr.flags;
         ptr.value = newValue;
         ptr.flags = newValue.getFlags();
-        // Keep the keyrepeat going between modulated keys.
-        if ((old_flags & ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) == 0)
-        {
-          stopKeyRepeat(ptr);
-          startKeyRepeat(ptr);
-        }
         _handler.onPointerDown(true);
       }
     }
@@ -299,16 +287,6 @@ public final class Pointers implements Handler.Callback
     _handler.onPointerFlagsChanged(shouldVibrate);
   }
 
-  private boolean isModulatedKeyPressed()
-  {
-    for (Pointer ptr : _ptrs)
-    {
-      if ((ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
-        return true;
-    }
-    return false;
-  }
-
   // Key repeat
 
   /** Message from [_keyrepeat_handler]. */
@@ -320,24 +298,14 @@ public final class Pointers implements Handler.Callback
       if (ptr.timeoutWhat == msg.what)
       {
         if (handleKeyRepeat(ptr))
-          _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextRepeatInterval(ptr));
+          _keyrepeat_handler.sendEmptyMessageDelayed(msg.what,
+              _config.longPressInterval);
         else
           ptr.timeoutWhat = -1;
         return true;
       }
     }
     return false;
-  }
-
-  private long nextRepeatInterval(Pointer ptr)
-  {
-    long t = _config.longPressInterval;
-    if (_config.preciseRepeat && (ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
-    {
-      // Modulate repeat interval depending on the distance of the pointer
-      t = (long)((float)t * 2.f / modulatePreciseRepeat(ptr));
-    }
-    return t;
   }
 
   private static int uniqueTimeoutWhat = 0;
@@ -348,11 +316,7 @@ public final class Pointers implements Handler.Callback
       return;
     int what = (uniqueTimeoutWhat++);
     ptr.timeoutWhat = what;
-    long timeout = _config.longPressTimeout;
-    // Faster repeat timeout for modulated keys
-    if ((ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
-      timeout /= 2;
-    _keyrepeat_handler.sendEmptyMessageDelayed(what, timeout);
+    _keyrepeat_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
   }
 
   private void stopKeyRepeat(Pointer ptr)
@@ -361,7 +325,6 @@ public final class Pointers implements Handler.Callback
     {
       _keyrepeat_handler.removeMessages(ptr.timeoutWhat);
       ptr.timeoutWhat = -1;
-      ptr.repeatingPtrDist = -1.f;
     }
   }
 
@@ -381,16 +344,6 @@ public final class Pointers implements Handler.Callback
     return true;
   }
 
-  private float modulatePreciseRepeat(Pointer ptr)
-  {
-    if (ptr.repeatingPtrDist < 0.f)
-      ptr.repeatingPtrDist = ptr.ptrDist; // First repeat
-    if (ptr.ptrDist > ptr.repeatingPtrDist * 2.f)
-      ptr.repeatingPtrDist = ptr.ptrDist / 2.f; // Large swipe, move the middle point
-    float left = ptr.repeatingPtrDist / 2.f;
-    float accel = (ptr.ptrDist - left) / (ptr.repeatingPtrDist - left);
-    return Math.min(8.f, Math.max(0.1f, accel));
-  }
 
   private static final class Pointer
   {
@@ -404,16 +357,12 @@ public final class Pointers implements Handler.Callback
     public KeyValue value;
     public float downX;
     public float downY;
-    /** Distance of the pointer to the initial press. */
-    public float ptrDist;
     /** Modifier flags at the time the key was pressed. */
     public Modifiers modifiers;
     /** Flags of the value. Latch, lock and locked flags are updated. */
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
-    /** ptrDist at the first repeat, -1 otherwise. */
-    public float repeatingPtrDist;
 
     public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m)
     {
@@ -423,11 +372,9 @@ public final class Pointers implements Handler.Callback
       value = v;
       downX = x;
       downY = y;
-      ptrDist = 0.f;
       modifiers = m;
       flags = (v == null) ? 0 : v.getFlags();
       timeoutWhat = -1;
-      repeatingPtrDist = -1.f;
     }
   }
 

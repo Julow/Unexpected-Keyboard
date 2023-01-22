@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Interval opakování znaků</string>
   <string name="pref_vibrate_title">Vibrace</string>
   <string name="pref_vibrate_summary">Zapnout/Vypnout vibrace při stisku klávesy</string>
-  <string name="pref_precise_repeat_title">Precizní posun kurzoru</string>
-  <string name="pref_precise_repeat_summary">Zda-li posun prstem ovlivňuje rychlost kurzoru</string>
   <string name="pref_lock_double_tap_title">Dvojklik pro aktivaci caps lock(u)</string>
   <string name="pref_lock_double_tap_summary">Dvojklik namísto držení modifikačních kláves po nějakou dobu</string>
   <string name="pref_category_style">Styl</string>

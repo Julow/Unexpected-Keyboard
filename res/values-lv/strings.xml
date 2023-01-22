@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Taustiņa atkārtošanās aizture</string>
   <string name="pref_vibrate_title">Trīcēšana</string>
   <string name="pref_vibrate_summary">Iespējot/atspējot taustiņa piespiešanas trīcēšanu</string>
-  <string name="pref_precise_repeat_title">Pielāgojama kursora kustība</string>
-  <string name="pref_precise_repeat_summary">Mainīt taustiņa atkārtošanās ātrumu ar pavilkšanas attālumu</string>
   <string name="pref_lock_double_tap_title">Divkāršs piesitiens burtslēgam</string>
   <string name="pref_lock_double_tap_summary">Tā vietā, lai ilstoši piespiestu pārveidotāju</string>
   <string name="pref_category_style">Izskata pielāgojumi</string>

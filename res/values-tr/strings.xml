@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Tuş tekrarlama aralığı</string>
   <string name="pref_vibrate_title">Titreşim</string>
   <string name="pref_vibrate_summary">Tuşa basıldığında titreşimi etkinleştir</string>
-  <string name="pref_precise_repeat_title">İmleç hareketini ayarla</string>
-  <string name="pref_precise_repeat_summary">Tuş tekrar hızını az ya da çok kaydırarak ayarla</string>
   <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
   <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
   <string name="pref_category_style">Stil</string>

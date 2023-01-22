@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Czas pomiędzy powtórzeniami</string>
   <string name="pref_vibrate_title">Wibracja</string>
   <string name="pref_vibrate_summary">Wł./wył. wibrację przy naciśnięciu klawisza</string>
-  <string name="pref_precise_repeat_title">Dokładne poruszanie kursorem</string>
-  <string name="pref_precise_repeat_summary">Reguluj prędkość powtarzania naciśnięć klawisza poprzez przesunięcie dalej lub bliżej</string>
   <string name="pref_lock_double_tap_title">Naciśnij Shift podwójnie, aby włączyć caps lock</string>
   <string name="pref_lock_double_tap_summary">Możesz zablokować modyfikator poprzez jego długie naciśnięcie</string>
   <string name="pref_category_style">Styl</string>

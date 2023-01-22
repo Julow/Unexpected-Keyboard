@@ -47,7 +47,6 @@
     <ListPreference android:key="swipe_dist" android:title="@string/pref_swipe_dist_title" android:summary="@string/pref_swipe_dist_summary" android:defaultValue="15" android:entries="@array/pref_swipe_dist_entries" android:entryValues="@array/pref_swipe_dist_values"/>
     <juloo.common.IntSlideBarPreference android:key="longpress_timeout" android:title="@string/pref_long_timeout_title" android:summary="%sms" android:defaultValue="600" min="50" max="2000"/>
     <juloo.common.IntSlideBarPreference android:key="longpress_interval" android:title="@string/pref_long_interval_title" android:summary="%sms" android:defaultValue="25" min="5" max="100"/>
-    <CheckBoxPreference android:key="precise_repeat" android:title="@string/pref_precise_repeat_title" android:summary="@string/pref_precise_repeat_summary" android:defaultValue="true"/>
     <CheckBoxPreference android:key="lock_double_tap" android:title="@string/pref_lock_double_tap_title" android:summary="@string/pref_lock_double_tap_summary" android:defaultValue="false"/>
     <CheckBoxPreference android:key="vibrate_enabled" android:title="@string/pref_vibrate_title" android:summary="@string/pref_vibrate_summary" android:defaultValue="true"/>
   </PreferenceCategory>

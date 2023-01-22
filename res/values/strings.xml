@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Key repeat interval</string>
   <string name="pref_vibrate_title">Vibration</string>
   <string name="pref_vibrate_summary">Enable/disable vibration on keypress</string>
-  <string name="pref_precise_repeat_title">Precise cursor movements</string>
-  <string name="pref_precise_repeat_summary">Modulate key repeat speed by swiping more or less</string>
   <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string>
   <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string>
   <string name="pref_category_style">Style</string>

@@ -41,7 +41,6 @@ final class Config
   public int keyboardOpacity; // 0 - 255
   public int keyOpacity; // 0 - 255
   public int keyActivatedOpacity; // 0 - 255
-  public boolean preciseRepeat;
   public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
   public int accents; // Values are R.values.pref_accents_v_*
@@ -142,7 +141,6 @@ final class Config
     horizontal_margin =
       get_dip_pref(dm, oriented_pref("horizontal_margin"),
           res.getDimension(R.dimen.horizontal_margin));
-    preciseRepeat = _prefs.getBoolean("precise_repeat", true);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
       _prefs.getFloat("character_size", 1.f)

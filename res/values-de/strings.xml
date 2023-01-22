@@ -36,8 +36,6 @@
   <string name="pref_long_interval_title">Intervall der Tastenwiederholung</string>
   <string name="pref_vibrate_title">Vibration</string>
   <string name="pref_vibrate_summary">Vibration bei Tastendruck ein-/ausschalten</string>
-  <string name="pref_precise_repeat_title">Präzise Cursorsteuerung</string>
-  <string name="pref_precise_repeat_summary">Geschwindigkeit der Tastenwiederholung durch weniger oder mehr Wischen anpassen</string>
   <string name="pref_lock_double_tap_title">Umschalttaste mit Doppeltippen einrasten</string>
   <string name="pref_lock_double_tap_summary">Anstatt Taste längere Zeit gedrückt zu halten</string>
   <string name="pref_category_style">Design</string>

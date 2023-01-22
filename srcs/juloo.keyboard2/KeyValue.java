@@ -78,7 +78,7 @@ final class KeyValue
   public static final int FLAG_LOCK = (1 << 21);
   // Special keys are not repeated and don't clear latched modifiers.
   public static final int FLAG_SPECIAL = (1 << 22);
-  public static final int FLAG_PRECISE_REPEAT = (1 << 23);
+  // Free flag: (1 << 23);
   // Rendering flags.
   public static final int FLAG_KEY_FONT = (1 << 24); // special font file
   public static final int FLAG_SMALLER_FONT = (1 << 25); // 25% smaller symbols
@@ -328,10 +328,10 @@ final class KeyValue
 
     addKeyeventKey("esc", "Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
     addKeyeventKey("enter", 0x0E, KeyEvent.KEYCODE_ENTER, 0);
-    addKeyeventKey("up", 0x05, KeyEvent.KEYCODE_DPAD_UP, FLAG_PRECISE_REPEAT);
-    addKeyeventKey("right", 0x06, KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_PRECISE_REPEAT);
-    addKeyeventKey("down", 0x07, KeyEvent.KEYCODE_DPAD_DOWN, FLAG_PRECISE_REPEAT);
-    addKeyeventKey("left", 0x08, KeyEvent.KEYCODE_DPAD_LEFT, FLAG_PRECISE_REPEAT);
+    addKeyeventKey("up", 0x05, KeyEvent.KEYCODE_DPAD_UP, 0);
+    addKeyeventKey("right", 0x06, KeyEvent.KEYCODE_DPAD_RIGHT, 0);
+    addKeyeventKey("down", 0x07, KeyEvent.KEYCODE_DPAD_DOWN, 0);
+    addKeyeventKey("left", 0x08, KeyEvent.KEYCODE_DPAD_LEFT, 0);
     addKeyeventKey("page_up", 0x02, KeyEvent.KEYCODE_PAGE_UP, 0);
     addKeyeventKey("page_down", 0x03, KeyEvent.KEYCODE_PAGE_DOWN, 0);
     addKeyeventKey("home", 0x0B, KeyEvent.KEYCODE_MOVE_HOME, 0);
