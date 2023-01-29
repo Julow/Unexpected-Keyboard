@@ -103,6 +103,11 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = getPtr(pointerId);
     if (ptr == null)
       return;
+    if (ptr.sliding)
+    {
+      onTouchUp_sliding(ptr);
+      return;
+    }
     stopKeyRepeat(ptr);
     Pointer latched = getLatched(ptr);
     if (latched != null) // Already latched
@@ -380,6 +385,14 @@ public final class Pointers implements Handler.Callback
     stopKeyRepeat(ptr);
     ptr.sliding = true;
     ptr.sliding_count = (int)(initial_dy / _config.slide_step_px);
+  }
+
+  /** Handle a sliding pointer going up. Latched modifiers are not cleared to
+      allow easy adjustments to the cursors. The pointer is cancelled. */
+  void onTouchUp_sliding(Pointer ptr)
+  {
+    removePtr(ptr);
+    _handler.onPointerFlagsChanged(false);
   }
 
   /** Handle move events for sliding pointers. [dx] is distance travelled from
