@@ -68,9 +68,16 @@ final class KeyValue
     AUTOFILL,
   }
 
+  public static enum Placeholder
+  {
+    REMOVED,
+    F11,
+    F12
+  }
+
   public static enum Kind
   {
-    Char, String, Keyevent, Event, Modifier, Editing
+    Char, String, Keyevent, Event, Modifier, Editing, Placeholder
   }
 
   // Behavior flags.
@@ -152,6 +159,11 @@ final class KeyValue
   public Editing getEditing()
   {
     return Editing.values()[(_code & VALUE_BITS)];
+  }
+
+  public Placeholder getPlaceholder()
+  {
+    return Placeholder.values()[(_code & VALUE_BITS)];
   }
 
   /* Update the char and the symbol. */
@@ -257,14 +269,10 @@ final class KeyValue
         FLAG_SPECIAL | FLAG_SECONDARY | FLAG_SMALLER_FONT);
   }
 
-  // Within VALUE_BITS
-  private static int placeholder_unique_id = 0;
-
-  /** Use a unique id as the value because the symbol is shared between every
-      placeholders (it is the empty string). */
-  private static KeyValue placeholderKey()
+  /** A key that do nothing but has a unique ID. */
+  private static KeyValue placeholderKey(Placeholder id)
   {
-    return new KeyValue("", Kind.String, placeholder_unique_id++, 0);
+    return new KeyValue("", Kind.Placeholder, id.ordinal(), 0);
   }
 
   private static KeyValue fallbackMakeKey(String name)
@@ -349,9 +357,9 @@ final class KeyValue
       case "space": return charKey("\r", ' ', FLAG_KEY_FONT | FLAG_SECONDARY);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
 
-      case "removed": return placeholderKey();
-      case "f11_placeholder": return placeholderKey();
-      case "f12_placeholder": return placeholderKey();
+      case "removed": return placeholderKey(Placeholder.REMOVED);
+      case "f11_placeholder": return placeholderKey(Placeholder.F11);
+      case "f12_placeholder": return placeholderKey(Placeholder.F12);
 
       case "copy": return editingKey("copy", Editing.COPY);
       case "paste": return editingKey("paste", Editing.PASTE);

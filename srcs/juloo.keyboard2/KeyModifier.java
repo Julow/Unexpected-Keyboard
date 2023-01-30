@@ -122,17 +122,7 @@ class KeyModifier
       case Char: name = apply_fn_char(k.getChar()); break;
       case Keyevent: name = apply_fn_keyevent(k.getKeyevent()); break;
       case Event: name = apply_fn_event(k.getEvent()); break;
-      case String:
-        switch (k.getString())
-        {
-          case "":
-            if (k == KeyValue.getKeyByName("f11_placeholder"))
-              name = "f11";
-            else if (k == KeyValue.getKeyByName("f12_placeholder"))
-              name = "f12";
-            break;
-        }
-        break;
+      case Placeholder: name = apply_fn_placeholder(k.getPlaceholder()); break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
@@ -156,6 +146,16 @@ class KeyModifier
     switch (ev)
     {
       case SWITCH_NUMERIC: return "switch_greekmath";
+      default: return null;
+    }
+  }
+
+  private static String apply_fn_placeholder(KeyValue.Placeholder p)
+  {
+    switch (p)
+    {
+      case F11: return "f11";
+      case F12: return "f12";
       default: return null;
     }
   }
