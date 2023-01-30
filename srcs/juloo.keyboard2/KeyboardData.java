@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import org.xmlpull.v1.XmlPullParser;
 
@@ -51,7 +52,7 @@ class KeyboardData
   public KeyboardData addNumPad()
   {
     ArrayList<Row> extendedRows = new ArrayList<Row>();
-    Iterator<Row> iterNumPadRows = _num_pad.rows.iterator();
+    Iterator<Row> iterNumPadRows = num_pad.rows.iterator();
     for (Row row : rows)
     {
       ArrayList<KeyboardData.Key> keys = new ArrayList<Key>(row.keys);
@@ -82,6 +83,12 @@ class KeyboardData
     return null;
   }
 
+  public void getKeys(Set<KeyValue> dst)
+  {
+    for (Row r : rows)
+      r.getKeys(dst);
+  }
+
   private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
   {
     if (!extra_keys.hasNext())
@@ -96,17 +103,17 @@ class KeyboardData
     }));
   }
 
-  private static Row _bottom_row;
-  private static KeyboardData _num_pad;
-  private static KeyboardData _pin_entry;
+  public static Row bottom_row;
+  public static KeyboardData num_pad;
+  public static KeyboardData pin_entry;
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
 
   public static void init(Resources res)
   {
     try
     {
-      _bottom_row = parse_bottom_row(res.getXml(R.xml.bottom_row));
-      _num_pad = parse_keyboard(res.getXml(R.xml.numpad));
+      bottom_row = parse_bottom_row(res.getXml(R.xml.bottom_row));
+      num_pad = parse_keyboard(res.getXml(R.xml.numpad));
     }
     catch (Exception e)
     {
@@ -116,9 +123,9 @@ class KeyboardData
 
   public static KeyboardData load_pin_entry(Resources res)
   {
-    if (_pin_entry == null)
-      _pin_entry = load(res, R.xml.pin);
-    return _pin_entry;
+    if (pin_entry == null)
+      pin_entry = load(res, R.xml.pin);
+    return pin_entry;
   }
 
   /** Load a layout from a resource ID. Returns [null] on error. */
@@ -161,14 +168,14 @@ class KeyboardData
   {
     if (!expect_tag(parser, "keyboard"))
       throw new Exception("Empty layout file");
-    boolean bottom_row = attribute_bool(parser, "bottom_row", true);
+    boolean add_bottom_row = attribute_bool(parser, "bottom_row", true);
     float specified_kw = attribute_float(parser, "width", 0f);
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
         rows.add(Row.parse(parser));
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
-    if (bottom_row)
-      rows.add(_bottom_row.updateWidth(kw));
+    if (add_bottom_row)
+      rows.add(bottom_row.updateWidth(kw));
     return new KeyboardData(rows, kw);
   }
 
@@ -226,6 +233,12 @@ class KeyboardData
       while (expect_tag(parser, "key"))
         keys.add(Key.parse(parser));
       return new Row(keys, h, shift);
+    }
+
+    public void getKeys(Set<KeyValue> dst)
+    {
+      for (Key k : keys)
+        k.getKeys(dst);
     }
 
     public Row mapKeys(MapKey f)
@@ -316,6 +329,17 @@ class KeyboardData
       return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys,
           slider, indication);
     }
+
+    public void getKeys(Set<KeyValue> dst)
+    {
+      getCorner(dst, key0);
+      getCorner(dst, key1);
+      getCorner(dst, key2);
+      getCorner(dst, key3);
+      getCorner(dst, key4);
+    }
+
+    void getCorner(Set<KeyValue> dst, Corner k) { if (k != null) dst.add(k.kv); }
 
     public KeyValue getKeyValue(int i)
     {

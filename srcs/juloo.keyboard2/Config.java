@@ -172,11 +172,12 @@ final class Config
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
+    final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     if (extra_keys_subtype != null)
       extra_keys.addAll(extra_keys_subtype);
     extra_keys.addAll(extra_keys_param);
     if (show_numpad)
-      kw = kw.addNumPad();
+      KeyboardData.num_pad.getKeys(remove_keys);
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -184,6 +185,8 @@ final class Config
         if (is_extra_key)
           extra_keys.remove(key);
         if (localized && !is_extra_key)
+          return null;
+        if (remove_keys.contains(key))
           return null;
         switch (key.getKind())
         {
@@ -218,6 +221,8 @@ final class Config
         return key;
       }
     });
+    if (show_numpad)
+      kw = kw.addNumPad();
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.iterator());
     return kw;
