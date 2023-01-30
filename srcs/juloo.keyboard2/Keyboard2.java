@@ -64,6 +64,17 @@ public class Keyboard2 extends InputMethodService
     _keyboardView.setKeyboard(current_layout());
   }
 
+  void setSpecialLayout(KeyboardData l)
+  {
+    _currentSpecialLayout = l;
+    _keyboardView.setKeyboard(l);
+  }
+
+  KeyboardData loadLayout(int layout_id)
+  {
+    return KeyboardData.load(getResources(), layout_id);
+  }
+
   @Override
   public void onCreate()
   {
@@ -248,7 +259,8 @@ public class Keyboard2 extends InputMethodService
       case InputType.TYPE_CLASS_NUMBER:
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
-        _currentSpecialLayout = KeyboardData.load_pin_entry(getResources());
+        _currentSpecialLayout =
+          _config.modify_numpad(KeyboardData.load_pin_entry(getResources()));
         break;
       default:
         _currentSpecialLayout = null;
@@ -317,8 +329,7 @@ public class Keyboard2 extends InputMethodService
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver
   {
-    public void switchToNextInputMethod()
-    {
+    public void switchToNextInputMethod() {
       InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
       imm.showInputMethodPicker();
       // deprecated in version 28: imm.switchToNextInputMethod(getConnectionToken(), false);
@@ -342,26 +353,28 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.set_shift_state(state, lock);
     }
 
-    public void switch_text()
+    public void set_layout(KeyEventHandler.Layout l)
     {
-      _currentSpecialLayout = null;
-      _keyboardView.setKeyboard(current_layout());
-    }
-
-    public void switch_layout(int layout_id)
-    {
-      _keyboardView.setKeyboard(KeyboardData.load(getResources(), layout_id));
-    }
-
-    public void switch_second()
-    {
-      if (_config.second_layout != null)
-        setTextLayout(Current_text_layout.SECONDARY);
-    }
-
-    public void switch_primary()
-    {
-      setTextLayout(Current_text_layout.PRIMARY);
+      switch (l)
+      {
+        case Current:
+          _currentSpecialLayout = null;
+          _keyboardView.setKeyboard(current_layout());
+          break;
+        case Primary:
+          setTextLayout(Current_text_layout.PRIMARY);
+          break;
+        case Secondary:
+          if (_config.second_layout != null)
+            setTextLayout(Current_text_layout.SECONDARY);
+          break;
+        case Numeric:
+          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.numeric)));
+          break;
+        case Greekmath:
+          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.greekmath)));
+          break;
+      }
     }
 
     public void showKeyboardConfig()

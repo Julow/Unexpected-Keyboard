@@ -153,6 +153,13 @@ final class Config
     extra_keys_param = ExtraKeyCheckBoxPreference.get_extra_keys(_prefs);
   }
 
+  KeyValue action_key()
+  {
+    // Update the name to avoid caching in KeyModifier
+    return (actionLabel == null) ? null :
+      KeyValue.getKeyByName("action").withSymbol(actionLabel);
+  }
+
   /** Update the layout according to the configuration.
    *  - Remove the switching key if it isn't needed
    *  - Remove "localized" keys from other locales (not in 'extra_keys')
@@ -161,9 +168,7 @@ final class Config
    */
   public KeyboardData modify_layout(KeyboardData kw)
   {
-    // Update the name to avoid caching in KeyModifier
-    final KeyValue action_key = (actionLabel == null) ? null :
-      KeyValue.getKeyByName("action").withSymbol(actionLabel);
+    final KeyValue action_key = action_key();
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
@@ -173,25 +178,6 @@ final class Config
     if (show_numpad)
       kw = kw.addNumPad();
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
-      /** Apply to the center value only. Partial match, fallback to [apply]. */
-      public KeyboardData.Corner apply_key0(KeyboardData.Corner corner)
-      {
-        if (corner == null)
-          return null;
-        KeyValue kv = corner.kv;
-        switch (kv.getKind())
-        {
-          case Char:
-            char c = kv.getChar();
-            if (inverse_numpad)
-              c = inverse_numpad_char(c);
-            if (c != kv.getChar())
-              return KeyboardData.Corner.of_kv(kv.withChar(c));
-            break;
-        }
-        return super.apply(corner);
-      }
-
       public KeyValue apply(KeyValue key, boolean localized)
       {
         boolean is_extra_key = extra_keys.contains(key);
@@ -235,6 +221,45 @@ final class Config
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.iterator());
     return kw;
+  }
+
+  /**
+   * Handle the numpad layout.
+   */
+  public KeyboardData modify_numpad(KeyboardData kw)
+  {
+    final KeyValue action_key = action_key();
+    return kw.mapKeys(new KeyboardData.MapKeyValues() {
+      public KeyValue apply(KeyValue key, boolean localized)
+      {
+        switch (key.getKind())
+        {
+          case Event:
+            switch (key.getEvent())
+            {
+              case ACTION:
+                return (swapEnterActionKey && action_key != null) ?
+                  KeyValue.getKeyByName("enter") : action_key;
+            }
+            break;
+          case Keyevent:
+            switch (key.getKeyevent())
+            {
+              case KeyEvent.KEYCODE_ENTER:
+                return (swapEnterActionKey && action_key != null) ? action_key : key;
+            }
+            break;
+          case Char:
+            char a = key.getChar(), b = a;
+            if (inverse_numpad)
+              b = inverse_numpad_char(a);
+            if (a != b)
+              return key.withChar(b);
+            break;
+        }
+        return key;
+      }
+    });
   }
 
   /** Modify a layout to turn it into a secondary layout by changing the

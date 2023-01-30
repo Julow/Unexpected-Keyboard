@@ -44,8 +44,8 @@ class KeyEventHandler implements Config.IKeyEventHandler
         switch (key.getEvent())
         {
           case CONFIG: _recv.showKeyboardConfig(); break;
-          case SWITCH_TEXT: _recv.switch_text(); break;
-          case SWITCH_NUMERIC: _recv.switch_layout(R.xml.numeric); break;
+          case SWITCH_TEXT: _recv.set_layout(Layout.Current); break;
+          case SWITCH_NUMERIC: _recv.set_layout(Layout.Numeric); break;
           case SWITCH_EMOJI: _recv.setPane_emoji(); break;
           case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
           case CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
@@ -54,9 +54,9 @@ class KeyEventHandler implements Config.IKeyEventHandler
             if (conn != null)
               conn.performEditorAction(actionId);
             break;
-          case SWITCH_SECOND: _recv.switch_second(); break;
-          case SWITCH_SECOND_BACK: _recv.switch_primary(); break;
-          case SWITCH_GREEKMATH: _recv.switch_layout(R.xml.greekmath); break;
+          case SWITCH_SECOND: _recv.set_layout(Layout.Secondary); break;
+          case SWITCH_SECOND_BACK: _recv.set_layout(Layout.Primary); break;
+          case SWITCH_GREEKMATH: _recv.set_layout(Layout.Greekmath); break;
           case CAPS_LOCK: _recv.set_shift_state(true, true); break;
         }
         break;
@@ -168,20 +168,23 @@ class KeyEventHandler implements Config.IKeyEventHandler
     conn.performContextMenuAction(id);
   }
 
+  public enum Layout
+  {
+    Current, // The primary or secondary layout
+    Primary,
+    Secondary,
+    Numeric,
+    Greekmath
+  }
+
   public static interface IReceiver
   {
     public void switchToNextInputMethod();
     public void setPane_emoji();
     public void setPane_normal();
     public void showKeyboardConfig();
-
-    public void switch_text();
-    public void switch_primary();
-    public void switch_second();
-    public void switch_layout(int layout_id);
-
+    public void set_layout(Layout l);
     public void set_shift_state(boolean state, boolean lock);
-
     public InputConnection getCurrentInputConnection();
   }
 

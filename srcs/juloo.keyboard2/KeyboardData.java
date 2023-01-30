@@ -458,14 +458,9 @@ class KeyboardData
 
     public Key apply(Key k)
     {
-      return new Key(apply_key0(k.key0), apply(k.key1), apply(k.key2),
+      return new Key(apply(k.key0), apply(k.key1), apply(k.key2),
           apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys,
           k.slider, k.indication);
-    }
-
-    protected Corner apply_key0(Corner c)
-    {
-      return apply(c);
     }
 
     protected Corner apply(Corner c)
