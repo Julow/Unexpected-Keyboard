@@ -19,17 +19,13 @@ class KeyboardData
   public final float keysWidth;
   /** Total height of the keyboard. */
   public final float keysHeight;
-  /** Whether to add extra keys. */
-  public final boolean extra_keys;
-  /** Whether to possibly add NumPad. */
-  public final boolean num_pad;
 
   public KeyboardData mapKeys(MapKey f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(rows_, keysWidth, extra_keys, num_pad);
+    return new KeyboardData(rows_, keysWidth);
   }
 
   /** Add keys from the given iterator into the keyboard. Extra keys are added
@@ -38,8 +34,6 @@ class KeyboardData
    * third row. */
   public KeyboardData addExtraKeys(Iterator<KeyValue> k)
   {
-    if (!extra_keys)
-      return this;
     ArrayList<Row> rows = new ArrayList<Row>(this.rows);
     addExtraKeys_to_row(rows, k, 1, 4);
     addExtraKeys_to_row(rows, k, 1, 3);
@@ -51,13 +45,11 @@ class KeyboardData
         for (int c = 1; c <= 4; c++)
           addExtraKeys_to_row(rows, k, r, c);
     }
-    return new KeyboardData(rows, keysWidth, extra_keys, num_pad);
+    return new KeyboardData(rows, keysWidth);
   }
 
   public KeyboardData addNumPad()
   {
-    if (!num_pad)
-      return this;
     ArrayList<Row> extendedRows = new ArrayList<Row>();
     Iterator<Row> iterNumPadRows = _num_pad.rows.iterator();
     for (Row row : rows)
@@ -76,7 +68,7 @@ class KeyboardData
       }
       extendedRows.add(new Row(keys, row.height, row.shift));
     }
-    return new KeyboardData(extendedRows, compute_max_width(extendedRows), extra_keys, num_pad);
+    return new KeyboardData(extendedRows, compute_max_width(extendedRows));
   }
 
   public Key findKeyWithValue(KeyValue kv)
@@ -170,8 +162,6 @@ class KeyboardData
     if (!expect_tag(parser, "keyboard"))
       throw new Exception("Empty layout file");
     boolean bottom_row = attribute_bool(parser, "bottom_row", true);
-    boolean extra_keys = attribute_bool(parser, "extra_keys", true);
-    boolean num_pad = attribute_bool(parser, "num_pad", true);
     float specified_kw = attribute_float(parser, "width", 0f);
     ArrayList<Row> rows = new ArrayList<Row>();
     while (expect_tag(parser, "row"))
@@ -179,7 +169,7 @@ class KeyboardData
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
     if (bottom_row)
       rows.add(_bottom_row.updateWidth(kw));
-    return new KeyboardData(rows, kw, extra_keys, num_pad);
+    return new KeyboardData(rows, kw);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -197,7 +187,7 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw, boolean xk, boolean np)
+  protected KeyboardData(List<Row> rows_, float kw)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -205,8 +195,6 @@ class KeyboardData
     rows = rows_;
     keysWidth = kw;
     keysHeight = kh;
-    extra_keys = xk;
-    num_pad = np;
   }
 
   public static class Row

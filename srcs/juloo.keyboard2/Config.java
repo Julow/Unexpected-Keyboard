@@ -170,7 +170,7 @@ final class Config
     if (extra_keys_subtype != null)
       extra_keys.addAll(extra_keys_subtype);
     extra_keys.addAll(extra_keys_param);
-    if (kw.num_pad && show_numpad)
+    if (show_numpad)
       kw = kw.addNumPad();
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       /** Apply to the center value only. Partial match, fallback to [apply]. */

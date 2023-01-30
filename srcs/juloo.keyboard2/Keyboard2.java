@@ -47,9 +47,14 @@ public class Keyboard2 extends InputMethodService
   {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
+    KeyboardData layout;
     if (_currentTextLayout == Current_text_layout.SECONDARY)
-      return _config.second_layout;
-    return (_config.layout == null) ? _localeTextLayout : _config.layout;
+      layout = _config.second_layout;
+    else if (_config.layout == null)
+      layout = _localeTextLayout;
+    else
+      layout = _config.layout;
+    return _config.modify_layout(layout);
   }
 
   void setTextLayout(Current_text_layout layout)

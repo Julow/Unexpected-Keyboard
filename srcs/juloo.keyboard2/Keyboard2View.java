@@ -81,7 +81,7 @@ public class Keyboard2View extends View
 
   public void setKeyboard(KeyboardData kw)
   {
-    _keyboard = _config.modify_layout(kw);
+    _keyboard = kw;
     _shift_kv = KeyValue.getKeyByName("shift");
     _shift_key = _keyboard.findKeyWithValue(_shift_kv);
     if (_shift_key == null)
