@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!-- <string name="app_name" product="debug">Unexpected Keyboard (debug)</string> -->
-  <!-- <string name="app_name" product="default">Unexpected Keyboard</string> -->
+  <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
+  <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard Paramètres</string>
   <string name="pref_portrait">En mode portrait</string>
   <string name="pref_landscape">En mode landscape</string>
   <string name="pref_category_layout">Disposition</string>
   <string name="pref_label_brightness">Luminosité des symboles</string>
-  <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
-  <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
-  <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
+  <string name="pref_keyboard_opacity">Transparence du clavier</string>
+  <string name="pref_key_opacity">Transparence des touches</string>
+  <string name="pref_key_activated_opacity">Transparence des touches pressées</string>
   <string name="pref_layout_title">Disposition des touches</string>
   <string name="pref_layout_e_system">Paramètre système</string>
   <string name="pref_layout_e_custom">Disposition personnalisée</string>
@@ -21,8 +21,8 @@
   <string name="pref_show_numpad_never">Jamais</string>
   <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
   <string name="pref_show_numpad_always">Toujour</string>
-  <!-- <string name="pref_number_row_title">Show number row</string> -->
-  <!-- <string name="pref_number_row_summary">Add a number row at the top of the keyboard when the numpad is hidden</string> -->
+  <string name="pref_number_row_title">Rangée de nombres</string>
+  <string name="pref_number_row_summary">Ajoute une rangée de nombres en haut du clavier quand le pavé numérique est caché</string>
   <string name="pref_numpad_layout">Disposition du pavé numérique</string>
   <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
   <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>
