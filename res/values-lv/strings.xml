@@ -21,6 +21,8 @@
   <string name="pref_show_numpad_never">Nekad</string>
   <string name="pref_show_numpad_landscape">Tikai guleniskajā skatā</string>
   <string name="pref_show_numpad_always">Vienmēr</string>
+  <!-- <string name="pref_number_row_title">Show number row</string> -->
+  <!-- <string name="pref_number_row_summary">Add a number row at the top of the keyboard when the numpad is hidden</string> -->
   <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->

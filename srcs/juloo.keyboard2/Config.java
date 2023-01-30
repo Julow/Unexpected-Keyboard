@@ -28,6 +28,7 @@ final class Config
   public boolean show_numpad = false;
   // From the 'numpad_layout' option, also apply to the numeric pane.
   public boolean inverse_numpad = false;
+  public boolean number_row;
   public float swipe_dist_px;
   public float slide_step_px;
   public boolean vibrateEnabled;
@@ -111,6 +112,7 @@ final class Config
     second_layout = tweak_secondary_layout(layout_of_string(res, _prefs.getString("second_layout", "none")));
     custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
+    number_row = _prefs.getBoolean("number_row", false);
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
@@ -165,6 +167,7 @@ final class Config
    *  - Remove "localized" keys from other locales (not in 'extra_keys')
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
+   *  - Add the optional numpad and number row
    */
   public KeyboardData modify_layout(KeyboardData kw)
   {
@@ -176,8 +179,11 @@ final class Config
     if (extra_keys_subtype != null)
       extra_keys.addAll(extra_keys_subtype);
     extra_keys.addAll(extra_keys_param);
+    boolean number_row = this.number_row && !show_numpad;
     if (show_numpad)
       KeyboardData.num_pad.getKeys(remove_keys);
+    if (number_row)
+      KeyboardData.number_row.getKeys(remove_keys);
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -223,6 +229,8 @@ final class Config
     });
     if (show_numpad)
       kw = kw.addNumPad();
+    if (number_row)
+      kw = kw.addNumberRow();
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.iterator());
     return kw;

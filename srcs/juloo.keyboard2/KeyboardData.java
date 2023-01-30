@@ -72,6 +72,12 @@ class KeyboardData
     return new KeyboardData(extendedRows, compute_max_width(extendedRows));
   }
 
+  public KeyboardData addNumberRow()
+  {
+    rows.add(0, number_row.updateWidth(keysWidth));
+    return this;
+  }
+
   public Key findKeyWithValue(KeyValue kv)
   {
     for (Row r : rows)
@@ -104,6 +110,7 @@ class KeyboardData
   }
 
   public static Row bottom_row;
+  public static Row number_row;
   public static KeyboardData num_pad;
   public static KeyboardData pin_entry;
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
@@ -112,7 +119,8 @@ class KeyboardData
   {
     try
     {
-      bottom_row = parse_bottom_row(res.getXml(R.xml.bottom_row));
+      bottom_row = parse_row(res.getXml(R.xml.bottom_row));
+      number_row = parse_row(res.getXml(R.xml.number_row));
       num_pad = parse_keyboard(res.getXml(R.xml.numpad));
     }
     catch (Exception e)
@@ -187,10 +195,10 @@ class KeyboardData
     return w;
   }
 
-  private static Row parse_bottom_row(XmlPullParser parser) throws Exception
+  private static Row parse_row(XmlPullParser parser) throws Exception
   {
     if (!expect_tag(parser, "row"))
-      throw new Exception("Failed to parse bottom row");
+      throw new Exception("Failed to parse row");
     return Row.parse(parser);
   }
 
