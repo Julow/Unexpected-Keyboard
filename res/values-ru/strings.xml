@@ -52,6 +52,7 @@
   <string name="pref_theme_e_light">Светлая</string>
   <string name="pref_theme_e_black">Черная</string>
   <string name="pref_theme_e_white">Белая</string>
+  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">Очень близко</string>
   <string name="pref_swipe_dist_e_short">Близко</string>
   <string name="pref_swipe_dist_e_default">Нормально</string>

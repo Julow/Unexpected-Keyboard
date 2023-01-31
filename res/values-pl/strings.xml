@@ -52,6 +52,7 @@
   <string name="pref_theme_e_light">Jasny</string>
   <string name="pref_theme_e_black">Czarny</string>
   <string name="pref_theme_e_white">Biały</string>
+  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">Bardzo mała</string>
   <string name="pref_swipe_dist_e_short">Mała</string>
   <string name="pref_swipe_dist_e_default">Normalna</string>
