@@ -115,4 +115,23 @@
     <item name="emoji_button_bg">#ffffff</item>
     <item name="emoji_color">#000000</item>
   </style>
+  <style name="ePaper" parent="BaseTheme">
+    <item name="android:isLightTheme">true</item>
+    <item name="colorKeyboard">#ffffff</item>
+    <item name="colorKey">#ffffff</item>
+    <item name="keyBorderWidth">2dp</item>
+    <item name="keyBorderWidthActivated">5dp</item>
+    <item name="keyBorderColorLeft">#000000</item>
+    <item name="keyBorderColorTop">#000000</item>
+    <item name="keyBorderColorRight">#000000</item>
+    <item name="keyBorderColorBottom">#000000</item>
+    <item name="colorKeyActivated">#ffffff</item>
+    <item name="colorLabel">#000000</item>
+    <item name="colorLabelActivated">#000000</item>
+    <item name="colorLabelLocked">#33cc33</item>
+    <item name="colorSubLabel">#333333</item>
+    <item name="secondaryLightOffset">+0.35</item>
+    <item name="emoji_button_bg">#ffffff</item>
+    <item name="emoji_color">#000000</item>
+  </style>
 </resources>
