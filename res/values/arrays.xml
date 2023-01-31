@@ -98,6 +98,7 @@
     <item>@string/pref_theme_e_light</item>
     <item>@string/pref_theme_e_black</item>
     <item>@string/pref_theme_e_white</item>
+    <item>@string/pref_theme_e_epaper</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
@@ -105,6 +106,7 @@
     <item>light</item>
     <item>black</item>
     <item>white</item>
+    <item>epaper</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>

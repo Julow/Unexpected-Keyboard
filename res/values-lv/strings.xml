@@ -52,6 +52,7 @@
   <string name="pref_theme_e_light">Gaišs</string>
   <string name="pref_theme_e_black">Melns</string>
   <string name="pref_theme_e_white">Balts</string>
+  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">Ļoti tuvs</string>
   <string name="pref_swipe_dist_e_short">Tuvs</string>
   <string name="pref_swipe_dist_e_default">Vidējs</string>

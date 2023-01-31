@@ -52,6 +52,7 @@
   <string name="pref_theme_e_light">亮色</string>
   <string name="pref_theme_e_black">黑色</string>
   <string name="pref_theme_e_white">白色</string>
+  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">非常短</string>
   <string name="pref_swipe_dist_e_short">短</string>
   <string name="pref_swipe_dist_e_default">中（默认）</string>

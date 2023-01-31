@@ -52,6 +52,7 @@
   <string name="pref_theme_e_light">Claro</string>
   <string name="pref_theme_e_black">Negro</string>
   <!-- <string name="pref_theme_e_white">White</string> -->
+  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">Muy corto</string>
   <string name="pref_swipe_dist_e_short">Corto</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
