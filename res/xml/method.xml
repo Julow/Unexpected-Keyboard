@@ -25,5 +25,5 @@
   <subtype android:label="%s" android:languageTag="cs" android:imeSubtypeLocale="cs_CZ" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwertz_cs,extra_keys=a|accent_cedille|accent_circonflexe"/>
   <subtype android:label="%s" android:languageTag="el" android:imeSubtypeLocale="el" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_el,extra_keys=£|€"/>
   <subtype android:label="%s" android:languageTag="sk" android:imeSubtypeLocale="sk_SK" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwertz_sk,extra_keys=é|ě|ŕ|ř|ť|ž|ü|ú|ů|í|ö|ó|ô|á|ä|ś|š|ď|ĺ|ľ|ý|č|ň"/>
-  <subtype android:label="%s" android:languageTag="vi" android:imeSubtypeLocale="vi_VN" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_vi,extra_keys=accent_dot_below|accent_horn|accent_hook"/>
+  <subtype android:label="%s" android:languageTag="vi" android:imeSubtypeLocale="vi_VN" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty_vi,extra_keys=accent_aigu|accent_grave|accent_hook_above|accent_tilde|accent_dot_below|accent_breve|accent_circonflexe|accent_bar|accent_horn"/>
 </input-method>

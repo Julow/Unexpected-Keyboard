@@ -32,7 +32,7 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
     "accent_slash",
     "accent_bar",
     "accent_dot_below",
-    "accent_hook",
+    "accent_hook_above",
     "accent_horn",
     "€",
     "ß",
