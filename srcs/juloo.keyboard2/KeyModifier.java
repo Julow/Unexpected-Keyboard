@@ -61,7 +61,7 @@ class KeyModifier
       case BAR: return apply_map_char(k, map_char_bar);
       case ARROW_RIGHT: return apply_combining(k, "\u20D7");
       case DOT_BELOW: return apply_dead_char(k, '\u0323');
-      case HORN: return apply_dead_char(k, '\u031B');
+      case HORN: return apply_map_char(k, map_char_horn);
       case HOOK: return apply_dead_char(k, '\u0309');
       default: return k;
     }
