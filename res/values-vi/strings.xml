@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name" product="debug">Unexpected Keyboard (gỡ lỗi)</string>
-  <string name="app_name" product="default">Unexpected Keyboard</string> -->
+  <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Cài đặt Unexpected Keyboard</string>
   <string name="pref_portrait">Trong chế độ chân dung</string>
   <string name="pref_landscape">Trong chế độ phong cảnh</string>
@@ -33,7 +33,7 @@
   <string name="pref_extra_keys_title">Thêm phím vào bàn phím</string>
   <string name="pref_second_layout_title">Bố cục phụ</string>
   <string name="pref_second_layout_none">Không</string>
-  <string name="pref_category_typing">Gõ</string> 
+  <string name="pref_category_typing">Gõ</string>
   <string name="pref_swipe_dist_title">Khoảng cách vuốt</string>
   <string name="pref_swipe_dist_summary">Khoảng cách giữa các ký tự ở góc phím (%s)</string>
   <string name="pref_long_timeout_title">Thời hạn lặp phím</string>
@@ -48,7 +48,7 @@
   <string name="pref_horizontal_margin_title">Căn lề chiều ngang</string>
   <string name="pref_character_size_title">Kích cỡ ký tự phím</string>
   <string name="pref_character_size_summary">Kích cỡ các ký tự hiển thị trên bàn phím (%.2fx)</string>
-  <string name="pref_theme">Chủ đề</string> -->
+  <string name="pref_theme">Chủ đề</string>
   <string name="pref_theme_e_system">Hệ thống</string>
   <string name="pref_theme_e_dark">Tối</string>
   <string name="pref_theme_e_light">Sáng</string>
@@ -62,12 +62,12 @@
   <string name="pref_swipe_dist_e_very_far">Rất xa</string>
   <string name="pref_key_horizontal_space">Khoảng cách giữa các phím theo chiều ngang</string>
   <string name="pref_key_vertical_space">Khoảng cách giữa các phím theo chiều dọc</string>
-<string name="pref_category_advanced">Nâng cao</string>
+  <string name="pref_category_advanced">Nâng cao</string>
   <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
   <string name="pref_custom_layout_summary">Hãy xem mã nguồn. Lựa chọn này không có mục đích sử dụng.</string>
-<string name="key_action_next">Tiếp</string>
-<string name="key_action_done">Xong</string>
-<string name="key_action_go">Đi</string>
+  <string name="key_action_next">Tiếp</string>
+  <string name="key_action_done">Xong</string>
+  <string name="key_action_go">Đi</string>
   <string name="key_action_prev">Trước</string>
   <string name="key_action_search">Tìm</string>
   <string name="key_action_send">Gửi</string>
