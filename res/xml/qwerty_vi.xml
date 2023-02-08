@@ -13,7 +13,7 @@
     <key key0="p" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
   <row>
-    <key shift="0.5" key0="a" key1="tab" key2="`"/>
+    <key shift="0.5" key0="a" key1="tab" key2="`" key3="â"/>
     <key key0="s" key1="loc accent_aigu"/>
     <key key0="d" key1="loc accent_bar" key2="₫" key3="đ"/>
     <key key0="f" key1="loc accent_grave"/>
