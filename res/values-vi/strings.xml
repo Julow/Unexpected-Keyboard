@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name" product="debug">Unexpected Keyboard (gỡ lỗi)</string>
+  <string name="app_name" product="default">Unexpected Keyboard</string> -->
+  <string name="settings_activity_label">Cài đặt Unexpected Keyboard</string>
+  <string name="pref_portrait">Trong chế độ chân dung</string>
+  <string name="pref_landscape">Trong chế độ phong cảnh</string>
+  <string name="pref_category_layout">Bố cục</string>
+  <string name="pref_label_brightness">Tùy chỉnh độ sáng của phím</string>
+  <string name="pref_keyboard_opacity">Tùy chỉnh độ trong suốt của bàn phím</string>
+  <string name="pref_key_opacity">Tùy chỉnh độ trong suốt của phím</string>
+  <string name="pref_key_activated_opacity">Tùy chỉnh độ trong suốt của phím khi nhấn</string>
+  <string name="pref_layout_title">Thay đổi bố cục bàn phím</string>
+  <string name="pref_layout_e_system">Hệ thống</string>
+  <string name="pref_layout_e_custom">Tùy chỉnh bố cục</string>
+  <string name="pref_accents_title">Dấu phụ</string>
+  <string name="pref_accents_e_all_installed">Hiển thị cho các ngôn ngữ đã cài đặt</string>
+  <string name="pref_accents_e_selected">Chỉ hiển thị cho các ngôn ngữ đã chọn</string>
+  <string name="pref_accents_e_none">
+    Ẩn dấu phụ
+  </string>
+  <string name="pref_show_numpad_title">Hiện NumPad</string>
+  <string name="pref_show_numpad_never">Không bao giờ</string>
+  <string name="pref_show_numpad_landscape">Chỉ trong chế độ phong cảnh</string>
+  <string name="pref_show_numpad_always">Luôn luôn</string>
+  <string name="pref_number_row_title">Hiện số dòng</string>
+  <string name="pref_number_row_summary">Hiện số dòng trên đầu bàn phím khi NumPad ẩn</string>
+  <string name="pref_numpad_layout">Bố cục NumPad</string>
+  <string name="pref_numpad_layout_e_high_first">Số lớn nhất trước</string>
+  <string name="pref_numpad_layout_e_low_first">Số nhỏ nhất trước</string>
+  <string name="pref_autocapitalisation_title">Tự động viết hoa</string>
+  <string name="pref_autocapitalisation_summary">Nhấn Shift ở đầu câu</string>
+  <string name="pref_extra_keys_title">Thêm phím vào bàn phím</string>
+  <string name="pref_second_layout_title">Bố cục phụ</string>
+  <string name="pref_second_layout_none">Không</string>
+  <string name="pref_category_typing">Gõ</string> 
+  <string name="pref_swipe_dist_title">Khoảng cách vuốt</string>
+  <string name="pref_swipe_dist_summary">Khoảng cách giữa các ký tự ở góc phím (%s)</string>
+  <string name="pref_long_timeout_title">Thời hạn lặp phím</string>
+  <string name="pref_long_interval_title">Khoảng thời gian lặp phím</string>
+  <string name="pref_vibrate_title">Sự rung</string>
+  <string name="pref_vibrate_summary">Bật/tắt rung khi nhấn</string>
+  <string name="pref_lock_double_tap_title">Nhấn hai lần Shift để bật Caps Lock</string>
+  <string name="pref_lock_double_tap_summary">Bạn có thể khóa phím hỗ trợ bằng cách giữ vào nó</string>
+  <string name="pref_category_style">Kiểu cách</string>
+  <string name="pref_margin_bottom_title">Căn lề dưới</string>
+  <string name="pref_keyboard_height_title">Chiều cao bàn phím</string>
+  <string name="pref_horizontal_margin_title">Căn lề chiều ngang</string>
+  <string name="pref_character_size_title">Kích cỡ ký tự phím</string>
+  <string name="pref_character_size_summary">Kích cỡ các ký tự hiển thị trên bàn phím (%.2fx)</string>
+  <string name="pref_theme">Chủ đề</string> -->
+  <string name="pref_theme_e_system">Hệ thống</string>
+  <string name="pref_theme_e_dark">Tối</string>
+  <string name="pref_theme_e_light">Sáng</string>
+  <string name="pref_theme_e_black">Đen</string>
+  <string name="pref_theme_e_white">Trắng</string>
+  <string name="pref_theme_e_epaper">ePaper</string>
+  <string name="pref_swipe_dist_e_very_short">Rất gần</string>
+  <string name="pref_swipe_dist_e_short">Gần</string>
+  <string name="pref_swipe_dist_e_default">Trungbình</string>
+  <string name="pref_swipe_dist_e_far">Xa</string>
+  <string name="pref_swipe_dist_e_very_far">Rất xa</string>
+  <string name="pref_key_horizontal_space">Khoảng cách giữa các phím theo chiều ngang</string>
+  <string name="pref_key_vertical_space">Khoảng cách giữa các phím theo chiều dọc</string>
+<string name="pref_category_advanced">Nâng cao</string>
+  <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
+  <string name="pref_custom_layout_summary">Hãy xem mã nguồn. Lựa chọn này không có mục đích sử dụng.</string>
+<string name="key_action_next">Tiếp</string>
+<string name="key_action_done">Xong</string>
+<string name="key_action_go">Đi</string>
+  <string name="key_action_prev">Trước</string>
+  <string name="key_action_search">Tìm</string>
+  <string name="key_action_send">Gửi</string>
+</resources>
