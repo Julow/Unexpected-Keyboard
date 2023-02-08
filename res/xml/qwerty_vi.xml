@@ -2,9 +2,9 @@
 <keyboard>
   <row>
     <key key0="q" key1="~" key2="1" key4="esc"/>
-    <key key0="w" key1="loc accent_breve" key2="2" key3="\@" key4="loc accent_horn"/>
+    <key key0="w" key1="loc accent_breve" key2="2" key3="\@" key4="accent_horn"/>
     <key key0="e" key1="!" key2="3" key3="\#" key4="ê"/>
-    <key key0="r" key2="4" key3="$" key1="loc accent_hook_above"/>
+    <key key0="r" key2="4" key3="$" key1="accent_hook_above"/>
     <key key0="t" key2="5" key3="%"/>
     <key key0="y" key2="6" key3="^"/>
     <key key0="u" key2="7" key3="&amp;"/>
@@ -14,20 +14,20 @@
   </row>
   <row>
     <key shift="0.5" key0="a" key1="tab" key2="`" key3="â"/>
-    <key key0="s" key1="loc accent_aigu"/>
-    <key key0="d" key1="loc accent_bar" key2="₫" key3="đ"/>
-    <key key0="f" key1="loc accent_grave"/>
+    <key key0="s" key1="accent_aigu"/>
+    <key key0="d" key1="accent_bar" key2="₫" key3="đ"/>
+    <key key0="f" key1="accent_grave"/>
     <key key0="g" key2="-" key3="_"/>
     <key key0="h" key2="=" key3="+"/>
-    <key key0="j" key1="loc accent_dot_below" key3="{" key4="}"/>
-    <key key0="k" key1="loc accent_hook" key3="[" key4="]"/>
+    <key key0="j" key1="accent_dot_below" key3="{" key4="}"/>
+    <key key0="k" key3="[" key4="]"/>
     <key key0="l" key2="|" key3="\"/>
   </row>
   <row>
     <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="z"/>
-    <key key0="x" key1="loc accent_tilde"/>
-    <key key0="c" key1="loc accent_cedille" key2="&lt;" key3="."/>
+    <key key0="x" key1="accent_tilde"/>
+    <key key0="c" key1="accent_cedille" key2="&lt;" key3="."/>
     <key key0="v" key2="&gt;" key3=","/>
     <key key0="b" key2="\?" key3="/"/>
     <key key0="n" key2=":" key3=";"/>
