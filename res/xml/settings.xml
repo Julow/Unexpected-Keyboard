@@ -40,6 +40,9 @@
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="30"/>
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="31"/>
       <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="32"/>
+      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="33"/>
+      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="34"/>
+      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="35"/>
     </PreferenceScreen>
     <ListPreference android:key="numpad_layout" android:title="@string/pref_numpad_layout" android:summary="%s" android:defaultValue="high_first" android:entries="@array/pref_numpad_layout_entries" android:entryValues="@array/pref_numpad_layout_values"/>
   </PreferenceCategory>
