@@ -60,9 +60,9 @@ class KeyModifier
       case SLASH: return apply_map_char(k, map_char_slash);
       case BAR: return apply_map_char(k, map_char_bar);
       case ARROW_RIGHT: return apply_combining(k, "\u20D7");
-      case DOT_BELOW: return apply_dead_char(k, '\u0323');
+      case DOT_BELOW: return apply_map_char(k, map_char_dot_below);
       case HORN: return apply_map_char(k, map_char_horn);
-      case HOOK_ABOVE: return apply_dead_char(k, '\u0309');
+      case HOOK_ABOVE: return apply_map_char(k, map_char_hook_above);
       default: return k;
     }
   }
@@ -573,6 +573,29 @@ class KeyModifier
         }
       }
     };
+
+  private static final Map_char map_char_dot_below =
+          new Map_char() {
+            public char apply(char c)
+            {
+              switch (c)
+              {
+                case 'a': return 'ạ';
+                case 'ă': return 'ặ';
+                case 'â': return 'ậ';
+                case 'e': return 'ẹ';
+                case 'ê': return 'ệ';
+                case 'i': return 'ị';
+                case 'o': return 'ọ';
+                case 'ô': return 'ộ';
+                case 'ơ': return 'ợ';
+                case 'u': return 'ụ';
+                case 'ư': return 'ự';
+                case 'y': return 'ỵ';
+                default: return c;
+              }
+            }
+          };
   private static final Map_char map_char_horn =
           new Map_char() {
             public char apply(char c)
@@ -581,6 +604,29 @@ class KeyModifier
               {
                 case 'o': return 'ơ';
                 case 'u': return 'ư';
+                default: return c;
+              }
+            }
+          };
+
+  private static final Map_char map_char_hook_above =
+          new Map_char() {
+            public char apply(char c)
+            {
+              switch (c)
+              {
+                case 'a': return 'ả';
+                case 'ă': return 'ẳ';
+                case 'â': return 'ẩ';
+                case 'e': return 'ẻ';
+                case 'ê': return 'ể';
+                case 'i': return 'ỉ';
+                case 'o': return 'ỏ';
+                case 'ô': return 'ổ';
+                case 'ơ': return 'ở';
+                case 'u': return 'ủ';
+                case 'ư': return 'ử';
+                case 'y': return 'ỷ';
                 default: return c;
               }
             }
