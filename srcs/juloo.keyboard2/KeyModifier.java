@@ -603,7 +603,17 @@ class KeyModifier
               switch (c)
               {
                 case 'o': return 'ơ';
+                case 'ó': return 'ớ';
+                case 'ò': return 'ờ';
+                case 'ỏ': return 'ở';
+                case 'õ': return 'ỡ';
+                case 'ọ': return 'ợ';
                 case 'u': return 'ư';
+                case 'ú': return 'ứ';
+                case 'ù': return 'ừ';
+                case 'ủ': return 'ử';
+                case 'ũ': return 'ữ';
+                case 'ụ': return 'ự';
                 default: return c;
               }
             }
