@@ -1,6 +1,5 @@
 package juloo.keyboard2;
 
-import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
@@ -30,12 +29,15 @@ final class KeyValue
     META,
     DOUBLE_AIGU,
     DOT_ABOVE,
+    DOT_BELOW,
     GRAVE,
     AIGU,
     CIRCONFLEXE,
     TILDE,
     CEDILLE,
     TREMA,
+    HORN,
+    HOOK_ABOVE,
     SUPERSCRIPT,
     SUBSCRIPT,
     RING,
@@ -310,6 +312,9 @@ final class KeyValue
       case "accent_arrow_right": return diacritic(0x5D, Modifier.ARROW_RIGHT);
       case "accent_breve": return diacritic(0x5E, Modifier.BREVE);
       case "accent_bar": return diacritic(0x5F, Modifier.BAR);
+      case "accent_dot_below": return diacritic(0x60, Modifier.DOT_BELOW);
+      case "accent_horn": return diacritic(0x61, Modifier.HORN);
+      case "accent_hook_above": return diacritic(0x62, Modifier.HOOK_ABOVE);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
