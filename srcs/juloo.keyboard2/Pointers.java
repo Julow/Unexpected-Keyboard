@@ -346,8 +346,6 @@ public final class Pointers implements Handler.Callback
 
   private void startKeyRepeat(Pointer ptr)
   {
-    if (ptr.value == null)
-      return;
     int what = (uniqueTimeoutWhat++);
     ptr.timeoutWhat = what;
     _keyrepeat_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
