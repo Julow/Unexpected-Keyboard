@@ -26,8 +26,6 @@
   <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
-  <string name="pref_autocapitalisation_title">Automātiski lielie burti</string>
-  <string name="pref_autocapitalisation_summary">Piespiest Shift teikuma sākumā</string>
   <string name="pref_extra_keys_title">Pievienot tastatūrai taustiņus</string>
   <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Neviens</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">Taustiņu stūros esošo rakstzīmju attālums (%s)</string>
   <string name="pref_long_timeout_title">Taustiņa atkārtošanās ātrums</string>
   <string name="pref_long_interval_title">Taustiņa atkārtošanās aizture</string>
-  <string name="pref_vibrate_title">Trīcēšana</string>
-  <string name="pref_vibrate_summary">Iespējot/atspējot taustiņa piespiešanas trīcēšanu</string>
   <string name="pref_lock_double_tap_title">Divkāršs piesitiens burtslēgam</string>
   <string name="pref_lock_double_tap_summary">Tā vietā, lai ilstoši piespiestu pārveidotāju</string>
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_autocapitalisation_title">Automātiski lielie burti</string>
+  <string name="pref_autocapitalisation_summary">Piespiest Shift teikuma sākumā</string>
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">Trīcēšana</string>
+  <string name="pref_vibrate_summary">Iespējot/atspējot taustiņa piespiešanas trīcēšanu</string>
   <string name="pref_category_style">Izskata pielāgojumi</string>
   <string name="pref_margin_bottom_title">Apakšējā apmale</string>
   <string name="pref_keyboard_height_title">Tastatūras augstums</string>

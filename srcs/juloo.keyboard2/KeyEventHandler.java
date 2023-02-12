@@ -48,7 +48,8 @@ class KeyEventHandler implements Config.IKeyEventHandler
           case SWITCH_NUMERIC: _recv.set_layout(Layout.Numeric); break;
           case SWITCH_EMOJI: _recv.setPane_emoji(); break;
           case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
-          case CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
+          case CHANGE_METHOD: _recv.switchInputMethod(); break;
+          case CHANGE_METHOD_PREV: _recv.switchToPrevInputMethod(); break;
           case ACTION:
             InputConnection conn = _recv.getCurrentInputConnection();
             if (conn != null)
@@ -179,7 +180,8 @@ class KeyEventHandler implements Config.IKeyEventHandler
 
   public static interface IReceiver
   {
-    public void switchToNextInputMethod();
+    public void switchInputMethod();
+    public void switchToPrevInputMethod();
     public void setPane_emoji();
     public void setPane_normal();
     public void showKeyboardConfig();

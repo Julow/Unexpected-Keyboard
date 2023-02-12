@@ -26,8 +26,6 @@
   <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
-  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
-  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
   <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
   <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <!-- <string name="pref_second_layout_none">None</string> -->
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">Distancia de caracteres en las esquinas de las letras (%s)</string>
   <string name="pref_long_timeout_title">Tiempo de espera de repetición de tecla</string>
   <string name="pref_long_interval_title">Intervalo de repetición de tecla</string>
-  <string name="pref_vibrate_title">Vibración</string>
-  <string name="pref_vibrate_summary">Habilitar/deshabilitar vibración al presionar una tecla</string>
   <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
   <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
+  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">Vibración</string>
+  <string name="pref_vibrate_summary">Habilitar/deshabilitar vibración al presionar una tecla</string>
   <string name="pref_category_style">Estilo</string>
   <string name="pref_margin_bottom_title">Margen del pie</string>
   <string name="pref_keyboard_height_title">Altura del teclado</string>

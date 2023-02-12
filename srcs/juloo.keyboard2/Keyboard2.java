@@ -329,11 +329,21 @@ public class Keyboard2 extends InputMethodService
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver
   {
-    public void switchToNextInputMethod() {
+    public void switchInputMethod()
+    {
       InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
       imm.showInputMethodPicker();
-      // deprecated in version 28: imm.switchToNextInputMethod(getConnectionToken(), false);
-      // added in version 28: switchToNextInputMethod(false);
+    }
+
+    public void switchToPrevInputMethod()
+    {
+      if (VERSION.SDK_INT < 28)
+      {
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        imm.switchToLastInputMethod(getConnectionToken());
+      }
+      else
+        Keyboard2.this.switchToPreviousInputMethod();
     }
 
     public void setPane_emoji()

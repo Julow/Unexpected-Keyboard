@@ -26,8 +26,6 @@
   <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
-  <string name="pref_autocapitalisation_title">Maiuscole Automatiche</string>
-  <string name="pref_autocapitalisation_summary">Premi Shift all\'inizio di una frase</string>
   <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
   <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Nessuno</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">Distanza dei caratteri negli angoli dei tasti (%s)</string>
   <string name="pref_long_timeout_title">Timeout ripetizione tasto</string>
   <string name="pref_long_interval_title">Intervallo ripetizione tasto</string>
-  <string name="pref_vibrate_title">Vibrazione</string>
-  <string name="pref_vibrate_summary">Abilita/Disabilita Vibrazione alla pressione dei tasti</string>
   <string name="pref_lock_double_tap_title">Doppio tocco su Shift per attivare CapsLock</string>
   <string name="pref_lock_double_tap_summary">Invece di premere i modificatori a lungo</string>
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_autocapitalisation_title">Maiuscole Automatiche</string>
+  <string name="pref_autocapitalisation_summary">Premi Shift all\'inizio di una frase</string>
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">Vibrazione</string>
+  <string name="pref_vibrate_summary">Abilita/Disabilita Vibrazione alla pressione dei tasti</string>
   <string name="pref_category_style">Stile</string>
   <string name="pref_margin_bottom_title">Margine inferiore</string>
   <string name="pref_keyboard_height_title">Altezza tastiera</string>

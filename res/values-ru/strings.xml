@@ -26,8 +26,6 @@
   <string name="pref_numpad_layout">NumPad раскладка</string>
   <string name="pref_numpad_layout_e_high_first">Старшие цифры сверху</string>
   <string name="pref_numpad_layout_e_low_first">Младшие цифры сверху</string>
-  <string name="pref_autocapitalisation_title">Автоматическая смена регистра</string>
-  <string name="pref_autocapitalisation_summary">Автонажатие Shift в начале каждого предложения</string>
   <string name="pref_extra_keys_title">Добавить клавиши на клавиатуру</string>
   <string name="pref_second_layout_title">Дополнительная раскладка</string>
   <string name="pref_second_layout_none">Нет</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">Расстояние между символами в углах клавиш (%s)</string>
   <string name="pref_long_timeout_title">Тайм-аут повтора клавиш</string>
   <string name="pref_long_interval_title">Интервал повтора клавиш</string>
-  <string name="pref_vibrate_title">Вибрация</string>
-  <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
   <string name="pref_lock_double_tap_title">Двойное нажатие на Shift активирует Caps lock</string>
   <string name="pref_lock_double_tap_summary">Вы можете активировать модификатор, удерживая клавишу</string>
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_autocapitalisation_title">Автоматическая смена регистра</string>
+  <string name="pref_autocapitalisation_summary">Автонажатие Shift в начале каждого предложения</string>
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">Вибрация</string>
+  <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
   <string name="pref_category_style">Стиль</string>
   <string name="pref_margin_bottom_title">Нижняя граница поля</string>
   <string name="pref_keyboard_height_title">Высота клавиатуры</string>

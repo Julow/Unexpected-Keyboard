@@ -70,6 +70,16 @@ class KeyModifier
   /** Modify a key after a long press. */
   public static KeyValue modify_long_press(KeyValue k)
   {
+    switch (k.getKind())
+    {
+      case Event:
+        switch (k.getEvent())
+        {
+          case CHANGE_METHOD_PREV:
+            return KeyValue.getKeyByName("change_method");
+        }
+        break;
+    }
     return k;
   }
 

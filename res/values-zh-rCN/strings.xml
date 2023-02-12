@@ -26,8 +26,6 @@
   <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
-  <string name="pref_autocapitalisation_title">句首自动大写</string>
-  <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
   <string name="pref_extra_keys_title">选择要显示的按键</string>
   <string name="pref_second_layout_title">第二键盘布局</string>
   <string name="pref_second_layout_none">无</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">输入按键四角的符号需要滑动的距离 (%s)</string>
   <string name="pref_long_timeout_title">长按到开始重复输入的时间</string>
   <string name="pref_long_interval_title">长按后每次重复输入的时间间隔</string>
-  <string name="pref_vibrate_title">振动</string>
-  <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>
   <string name="pref_lock_double_tap_title">双击Shift键锁定大写</string>
   <string name="pref_lock_double_tap_summary">任何时候都可以长按修改键以锁定</string>
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_autocapitalisation_title">句首自动大写</string>
+  <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">振动</string>
+  <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>
   <string name="pref_category_style">样式</string>
   <string name="pref_margin_bottom_title">键盘下边距</string>
   <string name="pref_keyboard_height_title">键盘高度</string>

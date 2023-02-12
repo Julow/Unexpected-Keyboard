@@ -26,8 +26,6 @@
   <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
-  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
-  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
   <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
   <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Hiçbiri</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">Tuşların köşelerindeki karakterlerin uzaklıkları (%s)</string>
   <string name="pref_long_timeout_title">Tuş tekrarlama beklemesi</string>
   <string name="pref_long_interval_title">Tuş tekrarlama aralığı</string>
-  <string name="pref_vibrate_title">Titreşim</string>
-  <string name="pref_vibrate_summary">Tuşa basıldığında titreşimi etkinleştir</string>
   <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
   <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
+  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">Titreşim</string>
+  <string name="pref_vibrate_summary">Tuşa basıldığında titreşimi etkinleştir</string>
   <string name="pref_category_style">Stil</string>
   <string name="pref_margin_bottom_title">Alt boşluk</string>
   <string name="pref_keyboard_height_title">Klavye yüksekliği</string>

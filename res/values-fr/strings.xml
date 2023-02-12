@@ -26,8 +26,6 @@
   <string name="pref_numpad_layout">Disposition du pavé numérique</string>
   <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
   <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>
-  <string name="pref_autocapitalisation_title">Majuscule automatique</string>
-  <string name="pref_autocapitalisation_summary">Activer Shift au début des phrases</string>
   <string name="pref_extra_keys_title">Ajouter des touches au clavier</string>
   <string name="pref_second_layout_title">Disposition secondaire</string>
   <string name="pref_second_layout_none">Aucune</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">La distance des caractères dans les coins (%s)</string>
   <string name="pref_long_timeout_title">Délai avant répétition</string>
   <string name="pref_long_interval_title">Écart entre les répétitions</string>
-  <string name="pref_vibrate_title">Vibreur</string>
-  <string name="pref_vibrate_summary">Vibration a chaque touche</string>
   <string name="pref_lock_double_tap_title">Appuyer deux fois pour bloquer la majuscule</string>
   <string name="pref_lock_double_tap_summary">Un appui long bloque la majuscule</string>
+  <string name="pref_category_behavior">Comportement</string>
+  <string name="pref_autocapitalisation_title">Majuscule automatique</string>
+  <string name="pref_autocapitalisation_summary">Activer Shift au début des phrases</string>
+  <string name="pref_switch_input_immediate_title">Changer vers le clavier utilisé en dernier</string>
+  <string name="pref_switch_input_immediate_summary">Comportement de la touche de changement de clavier</string>
+  <string name="pref_vibrate_title">Vibreur</string>
+  <string name="pref_vibrate_summary">Vibration a chaque touche</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Marge du bas</string>
   <string name="pref_keyboard_height_title">Hauteur du clavier</string>

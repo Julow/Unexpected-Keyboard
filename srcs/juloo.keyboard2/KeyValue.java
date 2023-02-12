@@ -13,6 +13,7 @@ final class KeyValue
     SWITCH_EMOJI,
     SWITCH_BACK_EMOJI,
     CHANGE_METHOD,
+    CHANGE_METHOD_PREV,
     ACTION,
     SWITCH_SECOND,
     SWITCH_SECOND_BACK,
@@ -332,6 +333,7 @@ final class KeyValue
       case "switch_second_back": return eventKey(0x14, Event.SWITCH_SECOND_BACK, FLAG_SMALLER_FONT);
       case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
       case "change_method": return eventKey(0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
+      case "change_method_prev": return eventKey(0x09, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
       case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
       case "capslock": return eventKey(0x12, Event.CAPS_LOCK, 0);
 

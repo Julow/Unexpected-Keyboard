@@ -26,8 +26,6 @@
   <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
-  <string name="pref_autocapitalisation_title">Automatická kapitalizace</string>
-  <string name="pref_autocapitalisation_summary">Stiskne Shift na začátku věty</string>
   <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
   <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Žádné</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">Jak daleko je třeba posunout prst pro napsaní znaku/diakritiky v rozích klávey (%s)</string>
   <string name="pref_long_timeout_title">Časová prodleva opakování znaků</string>
   <string name="pref_long_interval_title">Interval opakování znaků</string>
-  <string name="pref_vibrate_title">Vibrace</string>
-  <string name="pref_vibrate_summary">Zapnout/Vypnout vibrace při stisku klávesy</string>
   <string name="pref_lock_double_tap_title">Dvojklik pro aktivaci caps lock(u)</string>
   <string name="pref_lock_double_tap_summary">Dvojklik namísto držení modifikačních kláves po nějakou dobu</string>
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_autocapitalisation_title">Automatická kapitalizace</string>
+  <string name="pref_autocapitalisation_summary">Stiskne Shift na začátku věty</string>
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">Vibrace</string>
+  <string name="pref_vibrate_summary">Zapnout/Vypnout vibrace při stisku klávesy</string>
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Spodní odsazení</string>
   <string name="pref_keyboard_height_title">Výška klávesnice</string>

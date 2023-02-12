@@ -48,6 +48,7 @@ final class Config
   public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
+  public boolean switch_input_immediate;
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
@@ -152,6 +153,7 @@ final class Config
     accents = Integer.valueOf(_prefs.getString("accents", "1"));
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
+    switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
     extra_keys_param = ExtraKeyCheckBoxPreference.get_extra_keys(_prefs);
   }
 
@@ -200,7 +202,11 @@ final class Config
             switch (key.getEvent())
             {
               case CHANGE_METHOD:
-                return shouldOfferSwitchingToNextInputMethod ? key : null;
+                if (!shouldOfferSwitchingToNextInputMethod)
+                  return null;
+                if (switch_input_immediate)
+                  return KeyValue.getKeyByName("change_method_prev");
+                return key;
               case ACTION:
                 return (swapEnterActionKey && action_key != null) ?
                   KeyValue.getKeyByName("enter") : action_key;

@@ -26,8 +26,6 @@
   <string name="pref_numpad_layout">Układ klawiatury numerycznej</string>
   <string name="pref_numpad_layout_e_high_first">Od największej cyfry</string>
   <string name="pref_numpad_layout_e_low_first">Od najmniejszej cyfry</string>
-  <string name="pref_autocapitalisation_title">Automatyczne wielkie litery</string>
-  <string name="pref_autocapitalisation_summary">Naciśnij Shift na początku zdania</string>
   <string name="pref_extra_keys_title">Dodaj klawisze do klawiatury</string>
   <string name="pref_second_layout_title">Drugi układ</string>
   <string name="pref_second_layout_none">Żaden</string>
@@ -36,10 +34,15 @@
   <string name="pref_swipe_dist_summary">Odległość znaków od rogów klawiszy (%s)</string>
   <string name="pref_long_timeout_title">Opóźnienie powtarzania naciśnięć klawisza</string>
   <string name="pref_long_interval_title">Czas pomiędzy powtórzeniami</string>
-  <string name="pref_vibrate_title">Wibracja</string>
-  <string name="pref_vibrate_summary">Wł./wył. wibrację przy naciśnięciu klawisza</string>
   <string name="pref_lock_double_tap_title">Naciśnij Shift podwójnie, aby włączyć caps lock</string>
   <string name="pref_lock_double_tap_summary">Możesz zablokować modyfikator poprzez jego długie naciśnięcie</string>
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_autocapitalisation_title">Automatyczne wielkie litery</string>
+  <string name="pref_autocapitalisation_summary">Naciśnij Shift na początku zdania</string>
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_vibrate_title">Wibracja</string>
+  <string name="pref_vibrate_summary">Wł./wył. wibrację przy naciśnięciu klawisza</string>
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Margines dolny</string>
   <string name="pref_keyboard_height_title">Wysokość klawiatury</string>
