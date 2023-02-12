@@ -1,0 +1,10 @@
+New translations: Vietnamese
+New layouts: Hebrew, Vietnamese
+
+Move the cursor by sliding on the space bar.
+New ePaper theme.
+Added number row.
+Option to switch to the previous keyboard.
+Updated translations.
+
+Thanks to the contributors: @K4zoku, @rVnPower, @RamKromberg, @MAKI1LOVE
