@@ -67,6 +67,12 @@ class KeyModifier
     }
   }
 
+  /** Modify a key after a long press. */
+  public static KeyValue modify_long_press(KeyValue k)
+  {
+    return k;
+  }
+
   private static KeyValue apply_map_char(KeyValue k, Map_char map)
   {
     switch (k.getKind())

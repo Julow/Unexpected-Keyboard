@@ -369,10 +369,21 @@ public final class Pointers implements Handler.Callback
       lockPointer(ptr, true);
       return false;
     }
-    // Stop repeating: Latched key, special keys
-    if (ptr.pointerId == -1 || (ptr.flags & KeyValue.FLAG_SPECIAL) != 0)
+    // Stop repeating: Latched key, no key
+    if (ptr.pointerId == -1 || ptr.value == null)
       return false;
-    _handler.onPointerHold(ptr.value, ptr.modifiers);
+    KeyValue kv = KeyModifier.modify_long_press(ptr.value);
+    if (!kv.equals(ptr.value))
+    {
+      ptr.value = kv;
+      ptr.flags = kv.getFlags();
+      _handler.onPointerDown(true);
+      return true;
+    }
+    // Stop repeating: Special keys
+    if (kv.hasFlags(KeyValue.FLAG_SPECIAL))
+      return false;
+    _handler.onPointerHold(kv, ptr.modifiers);
     return true;
   }
 
