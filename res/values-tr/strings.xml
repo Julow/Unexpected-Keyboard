@@ -54,6 +54,7 @@
   <string name="pref_theme_e_dark">Koyu</string>
   <string name="pref_theme_e_light">Açık</string>
   <string name="pref_theme_e_black">Siyah</string>
+  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
   <!-- <string name="pref_theme_e_white">White</string> -->
   <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">Çok kısa</string>
