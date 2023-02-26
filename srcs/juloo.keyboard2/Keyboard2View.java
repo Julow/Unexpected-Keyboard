@@ -229,7 +229,6 @@ public class Keyboard2View extends View
     int width = dm.widthPixels;
     int height =
       (int)(_config.keyHeight * _keyboard.keysHeight
-          + _keyboard.rows.size()
           + _config.marginTop + _config.margin_bottom);
     setMeasuredDimension(width, height);
     _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;

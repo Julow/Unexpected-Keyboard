@@ -74,8 +74,9 @@ class KeyboardData
 
   public KeyboardData addNumberRow()
   {
-    rows.add(0, number_row.updateWidth(keysWidth));
-    return this;
+    ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
+    rows_.add(0, number_row.updateWidth(keysWidth));
+    return new KeyboardData(rows_, keysWidth);
   }
 
   public Key findKeyWithValue(KeyValue kv)
