@@ -39,7 +39,7 @@
   <!-- <string name="pref_category_behavior">Behavior</string> -->
   <string name="pref_autocapitalisation_title">句首自动大写</string>
   <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">振动</string>
   <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>

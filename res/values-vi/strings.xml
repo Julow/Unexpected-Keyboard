@@ -41,7 +41,7 @@
   <!-- <string name="pref_category_behavior">Behavior</string> -->
   <string name="pref_autocapitalisation_title">Tự động viết hoa</string>
   <string name="pref_autocapitalisation_summary">Nhấn Shift ở đầu câu</string>
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">Sự rung</string>
   <string name="pref_vibrate_summary">Bật/tắt rung khi nhấn</string>

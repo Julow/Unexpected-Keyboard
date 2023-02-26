@@ -39,7 +39,7 @@
   <!-- <string name="pref_category_behavior">Behavior</string> -->
   <string name="pref_autocapitalisation_title">Maiusculização automática</string>
   <string name="pref_autocapitalisation_summary">Aciona o shift no início de cada frase</string>
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">Vibração</string>
   <string name="pref_vibrate_summary">Ativar/desativar vibração ao digitar</string>
