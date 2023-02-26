@@ -60,9 +60,9 @@
   <PreferenceCategory android:title="@string/pref_category_style">
     <ListPreference android:key="theme" android:title="@string/pref_theme" android:summary="%s" android:defaultValue="system" android:entries="@array/pref_theme_entries" android:entryValues="@array/pref_theme_values"/>
     <juloo.common.IntSlideBarPreference android:key="label_brightness" android:title="@string/pref_label_brightness" android:summary="%s%%" android:defaultValue="100" min="50" max="100"/>
-    <juloo.common.IntSlideBarPreference android:key="keyboard_opacity" android:title="@string/pref_keyboard_opacity" android:summary="%s%%" android:defaultValue="100" min="30" max="100"/>
-    <juloo.common.IntSlideBarPreference android:key="key_opacity" android:title="@string/pref_key_opacity" android:summary="%s%%" android:defaultValue="100" min="30" max="100"/>
-    <juloo.common.IntSlideBarPreference android:key="key_activated_opacity" android:title="@string/pref_key_activated_opacity" android:summary="%s%%" android:defaultValue="100" min="30" max="100"/>
+    <juloo.common.IntSlideBarPreference android:key="keyboard_opacity" android:title="@string/pref_keyboard_opacity" android:summary="%s%%" android:defaultValue="100" min="0" max="100"/>
+    <juloo.common.IntSlideBarPreference android:key="key_opacity" android:title="@string/pref_key_opacity" android:summary="%s%%" android:defaultValue="100" min="0" max="100"/>
+    <juloo.common.IntSlideBarPreference android:key="key_activated_opacity" android:title="@string/pref_key_activated_opacity" android:summary="%s%%" android:defaultValue="100" min="0" max="100"/>
     <PreferenceScreen android:title="@string/pref_margin_bottom_title">
       <juloo.common.IntSlideBarPreference android:key="margin_bottom_portrait" android:title="@string/pref_portrait" android:summary="%sdp" android:defaultValue="7" min="0" max="100"/>
       <juloo.common.IntSlideBarPreference android:key="margin_bottom_landscape" android:title="@string/pref_landscape" android:summary="%sdp" android:defaultValue="3" min="0" max="100"/>
