@@ -99,6 +99,7 @@
     <item>@string/pref_theme_e_dark</item>
     <item>@string/pref_theme_e_light</item>
     <item>@string/pref_theme_e_black</item>
+    <item>@string/pref_theme_e_altblack</item>
     <item>@string/pref_theme_e_white</item>
     <item>@string/pref_theme_e_epaper</item>
   </string-array>
@@ -107,6 +108,7 @@
     <item>dark</item>
     <item>light</item>
     <item>black</item>
+    <item>altblack</item>
     <item>white</item>
     <item>epaper</item>
   </string-array>

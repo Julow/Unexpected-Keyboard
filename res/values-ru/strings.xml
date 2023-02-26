@@ -54,6 +54,7 @@
   <string name="pref_theme_e_dark">Темная</string>
   <string name="pref_theme_e_light">Светлая</string>
   <string name="pref_theme_e_black">Черная</string>
+  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
   <string name="pref_theme_e_white">Белая</string>
   <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">Очень близко</string>
