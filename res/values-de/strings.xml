@@ -12,7 +12,7 @@
   <string name="pref_key_activated_opacity">Deckkraft gedrückter Tasten anpassen</string>
   <string name="pref_layout_title">Tastaturlayout ändern</string>
   <string name="pref_layout_e_system">Systemeinstellung</string>
-  <string name="pref_layout_e_custom">Eigenes Layout</string> -->
+  <string name="pref_layout_e_custom">Eigenes Layout</string>
   <string name="pref_accents_title">Akzente</string>
   <string name="pref_accents_e_all_installed">Akzente für alle installierten Sprachen anzeigen</string>
   <string name="pref_accents_e_selected">Akzente nur für die gewählte Sprache anzeigen</string>
@@ -36,7 +36,7 @@
   <string name="pref_long_interval_title">Intervall der Tastenwiederholung</string>
   <string name="pref_lock_double_tap_title">Umschalttaste mit Doppeltippen einrasten</string>
   <string name="pref_lock_double_tap_summary">Anstatt Taste längere Zeit gedrückt zu halten</string>
-  <string name="pref_category_behavior">Verhalten</string> -->
+  <string name="pref_category_behavior">Verhalten</string>
   <string name="pref_autocapitalisation_title">Automatische Großschreibung</string>
   <string name="pref_autocapitalisation_summary">Umschalttaste am Satzanfang aktivieren</string>
   <string name="pref_switch_input_immediate_title">Sofort zur nächsten Tastatur wechseln</string>
