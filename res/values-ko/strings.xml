@@ -39,7 +39,7 @@
   <!-- <string name="pref_category_behavior">Behavior</string> -->
   <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
   <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">진동</string>
   <string name="pref_vibrate_summary">키 누를 때 진동 키거/끄기</string>
@@ -54,6 +54,7 @@
   <string name="pref_theme_e_dark">Dark</string>
   <string name="pref_theme_e_light">Light</string>
   <string name="pref_theme_e_black">Black</string>
+  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
   <!-- <string name="pref_theme_e_white">White</string> -->
   <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">매우 짧음</string>

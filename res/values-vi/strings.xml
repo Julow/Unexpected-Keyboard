@@ -41,7 +41,7 @@
   <!-- <string name="pref_category_behavior">Behavior</string> -->
   <string name="pref_autocapitalisation_title">Tự động viết hoa</string>
   <string name="pref_autocapitalisation_summary">Nhấn Shift ở đầu câu</string>
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">Sự rung</string>
   <string name="pref_vibrate_summary">Bật/tắt rung khi nhấn</string>
@@ -56,6 +56,7 @@
   <string name="pref_theme_e_dark">Tối</string>
   <string name="pref_theme_e_light">Sáng</string>
   <string name="pref_theme_e_black">Đen</string>
+  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
   <string name="pref_theme_e_white">Trắng</string>
   <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_swipe_dist_e_very_short">Rất gần</string>

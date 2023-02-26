@@ -39,7 +39,7 @@
   <!-- <string name="pref_category_behavior">Behavior</string> -->
   <string name="pref_autocapitalisation_title">Automatyczne wielkie litery</string>
   <string name="pref_autocapitalisation_summary">Naciśnij Shift na początku zdania</string>
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the next keyboard immediately</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">Wibracja</string>
   <string name="pref_vibrate_summary">Wł./wył. wibrację przy naciśnięciu klawisza</string>
@@ -54,6 +54,7 @@
   <string name="pref_theme_e_dark">Ciemny</string>
   <string name="pref_theme_e_light">Jasny</string>
   <string name="pref_theme_e_black">Czarny</string>
+  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
   <string name="pref_theme_e_white">Biały</string>
   <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">Bardzo mała</string>
