@@ -105,10 +105,19 @@ public class Keyboard2View extends View
   {
     if (_keyboard == null || _shift_key == null)
       return;
+    int flags = _pointers.getKeyFlags(_shift_key, _shift_kv);
     if (state)
+    {
+      if (flags != -1 && !lock)
+        return; // Don't replace an existing pointer
       _pointers.add_fake_pointer(_shift_kv, _shift_key, lock);
+    }
     else
+    {
+      if ((flags & KeyValue.FLAG_FAKE_PTR) != 0)
+        return; // Don't remove locked pointers
       _pointers.remove_fake_pointer(_shift_kv, _shift_key);
+    }
     invalidate();
   }
 
