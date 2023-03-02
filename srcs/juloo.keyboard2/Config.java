@@ -182,8 +182,6 @@ final class Config
       extra_keys.addAll(extra_keys_subtype);
     extra_keys.addAll(extra_keys_param);
     boolean number_row = this.number_row && !show_numpad;
-    if (show_numpad)
-      KeyboardData.num_pad.getKeys(remove_keys);
     if (number_row)
       KeyboardData.number_row.getKeys(remove_keys);
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
