@@ -167,32 +167,49 @@ public final class Pointers implements Handler.Callback
     // Don't take latched modifiers into account if an other key is pressed.
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
-    KeyValue value = handleKV(key.key0, mods);
+    KeyValue value = handleKV(key.keys[0], mods);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     startKeyRepeat(ptr);
     _handler.onPointerDown(false);
   }
 
+  static final int[] DIRECTION_TO_INDEX = new int[]{
+    7, 2, 2, 6, 6, 4, 4, 8, 8, 3, 3, 5, 5, 1, 1, 7
+  };
+
+  /**
+   * [direction] is an int between [0] and [15] that represent 16 sections of a
+   * circle, clockwise, starting at the top.
+   */
+  KeyValue getKeyAtDirection(KeyboardData.Key k, int direction)
+  {
+    int i = DIRECTION_TO_INDEX[direction];
+    if (k.keys[i] == null)
+      return null;
+    return k.keys[i].kv;
+  }
+
   /*
-   * Get the KeyValue at the given direction. In case of swipe (!= 0), get the
-   * nearest KeyValue that is not key0.
+   * Get the KeyValue at the given direction. In case of swipe (direction !=
+   * null), get the nearest KeyValue that is not key0.
    * Take care of applying [_handler.onPointerSwipe] to the selected key, this
    * must be done at the same time to be sure to treat removed keys correctly.
    * Return [null] if no key could be found in the given direction or if the
    * selected key didn't change.
    */
-  private KeyValue getKeyAtDirection(Pointer ptr, int direction)
+  private KeyValue getNearestKeyAtDirection(Pointer ptr, Integer direction)
   {
-    if (direction == 0)
-      return handleKV(ptr.key.key0, ptr.modifiers);
+    if (direction == null)
+      return handleKV(ptr.key.keys[0], ptr.modifiers);
     KeyValue k;
-    for (int i = 0; i > -3; i = (~i>>31) - i)
+    // [i] is [0, -1, 1, -2, 2, ...]
+    for (int i = 0; i > -4; i = (~i>>31) - i)
     {
-      int d = (direction + i + 8 - 1) % 8 + 1;
+      int d = (direction + i + 16 - 1) % 16;
       // Don't make the difference between a key that doesn't exist and a key
       // that is removed by [_handler]. Triggers side effects.
-      k = _handler.modifyKey(ptr.key.getAtDirection(d), ptr.modifiers);
+      k = _handler.modifyKey(getKeyAtDirection(ptr.key, d), ptr.modifiers);
       if (k != null)
         return k;
     }
@@ -225,45 +242,32 @@ public final class Pointers implements Handler.Callback
     }
 
     float dist = Math.abs(dx) + Math.abs(dy);
-    int direction;
+    Integer direction;
     if (dist < _config.swipe_dist_px)
     {
-      direction = 0;
+      direction = null;
     }
     else
     {
-      // One of the 8 directions:
-      // |\2|3/|
-      // |1\|/4|
-      // |-----|
-      // |8/|\5|
-      // |/7|6\|
-      direction = 1;
-      if (dx > 0) direction += 2;
-      if (dx > Math.abs(dy) || (dx < 0 && dx > -Math.abs(dy))) direction += 1;
-      if (dy > 0) direction = 9 - direction;
+      // See [getKeyAtDirection()] for the meaning. The starting point on the
+      // circle is the top direction.
+      double a = Math.atan2(dy, dx); // between -pi and +pi, 0 is to the right
+      direction = ((int)(a * 16 / (Math.PI * 2)) + 21) % 16;
     }
 
     if (direction != ptr.selected_direction)
     {
       ptr.selected_direction = direction;
-      KeyValue newValue = getKeyAtDirection(ptr, direction);
-      if (newValue != null && (ptr.value == null || !newValue.equals(ptr.value)))
+      KeyValue newValue = getNearestKeyAtDirection(ptr, direction);
+      if (newValue != null && !newValue.equals(ptr.value))
       {
         ptr.value = newValue;
         ptr.flags = newValue.getFlags();
-        // Sliding mode is entered when key2 or key3 is down on a slider key.
-        if (ptr.key.slider)
+        // Sliding mode is entered when key5 or key6 is down on a slider key.
+        if (ptr.key.slider &&
+            (ptr.key.hasValue(newValue, 5) || ptr.key.hasValue(newValue, 6)))
         {
-          switch (direction)
-          {
-            case 1:
-            case 8:
-            case 4:
-            case 5:
-              startSliding(ptr, dy);
-              break;
-          }
+          startSliding(ptr, dy);
         }
         _handler.onPointerDown(true);
       }
@@ -419,9 +423,8 @@ public final class Pointers implements Handler.Callback
     int count = (int)(dx / _config.slide_step_px);
     if (count == ptr.sliding_count)
       return;
-    KeyValue newValue = handleKV(
-        (count < ptr.sliding_count) ? ptr.key.key3 : ptr.key.key2,
-        ptr.modifiers);
+    int key_index = (count < ptr.sliding_count) ? 5 : 6;
+    KeyValue newValue = handleKV(ptr.key.keys[key_index], ptr.modifiers);
     ptr.sliding_count = count;
     ptr.value = newValue;
     if (newValue != null)
@@ -434,8 +437,8 @@ public final class Pointers implements Handler.Callback
     public int pointerId;
     /** The Key pressed by this Pointer */
     public final KeyboardData.Key key;
-    /** Current direction. */
-    public int selected_direction;
+    /** Current direction. [null] means not swiping. */
+    public Integer selected_direction;
     /** Selected value with [modifiers] applied. */
     public KeyValue value;
     public float downX;
@@ -455,7 +458,7 @@ public final class Pointers implements Handler.Callback
     {
       pointerId = p;
       key = k;
-      selected_direction = 0;
+      selected_direction = null;
       value = v;
       downX = x;
       downY = y;

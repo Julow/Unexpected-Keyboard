@@ -202,7 +202,14 @@ final class KeyValue
   @Override
   public boolean equals(Object obj)
   {
-    KeyValue snd = (KeyValue)obj;
+    return sameKey((KeyValue)obj);
+  }
+
+  /** Type-safe alternative to [equals]. */
+  public boolean sameKey(KeyValue snd)
+  {
+    if (snd == null)
+      return false;
     return _symbol.equals(snd._symbol) && _code == snd._code;
   }
 

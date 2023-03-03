@@ -260,6 +260,19 @@ public class Keyboard2View extends View
     }
   }
 
+  /** Horizontal and vertical position of the 9 indexes. */
+  static final Paint.Align[] LABEL_POSITION_H = new Paint.Align[]{
+    Paint.Align.CENTER, Paint.Align.LEFT, Paint.Align.RIGHT, Paint.Align.LEFT,
+    Paint.Align.RIGHT, Paint.Align.LEFT, Paint.Align.RIGHT,
+    Paint.Align.CENTER, Paint.Align.CENTER
+  };
+
+  static final Vertical[] LABEL_POSITION_V = new Vertical[]{
+    Vertical.CENTER, Vertical.TOP, Vertical.TOP, Vertical.BOTTOM,
+    Vertical.BOTTOM, Vertical.CENTER, Vertical.CENTER, Vertical.TOP,
+    Vertical.BOTTOM
+  };
+
   @Override
   protected void onDraw(Canvas canvas)
   {
@@ -282,20 +295,12 @@ public class Keyboard2View extends View
         float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
         boolean isKeyDown = _pointers.isKeyDown(k);
         drawKeyFrame(canvas, x, y, keyW, keyH, isKeyDown);
-        drawLabel(canvas, k.key0, keyW / 2f + x, y, keyH, isKeyDown);
-        if (k.edgekeys)
+        if (k.keys[0] != null)
+          drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown);
+        for (int i = 1; i < 9; i++)
         {
-          drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.TOP, isKeyDown);
-          drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.CENTER, isKeyDown);
-          drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.CENTER, isKeyDown);
-          drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.CENTER, Vertical.BOTTOM, isKeyDown);
-        }
-        else
-        {
-          drawSubLabel(canvas, k.key1, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.TOP, isKeyDown);
-          drawSubLabel(canvas, k.key3, x, y, keyW, keyH, Paint.Align.LEFT, Vertical.BOTTOM, isKeyDown);
-          drawSubLabel(canvas, k.key2, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.TOP, isKeyDown);
-          drawSubLabel(canvas, k.key4, x, y, keyW, keyH, Paint.Align.RIGHT, Vertical.BOTTOM, isKeyDown);
+          if (k.keys[i] != null)
+            drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown);
         }
         if (k.indication != null)
         {
@@ -367,8 +372,6 @@ public class Keyboard2View extends View
 
   private void drawLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyH, boolean isKeyDown)
   {
-    if (k == null)
-      return;
     KeyValue kv = KeyModifier.modify(k.kv, _mods);
     if (kv == null)
       return;
@@ -381,11 +384,10 @@ public class Keyboard2View extends View
   }
 
   private void drawSubLabel(Canvas canvas, KeyboardData.Corner k, float x,
-      float y, float keyW, float keyH, Paint.Align a, Vertical v,
-      boolean isKeyDown)
+      float y, float keyW, float keyH, int sub_index, boolean isKeyDown)
   {
-    if (k == null)
-      return;
+    Paint.Align a = LABEL_POSITION_H[sub_index];
+    Vertical v = LABEL_POSITION_V[sub_index];
     KeyValue kv = KeyModifier.modify(k.kv, _mods);
     if (kv == null)
       return;

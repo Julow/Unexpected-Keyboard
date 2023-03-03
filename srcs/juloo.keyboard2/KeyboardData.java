@@ -5,6 +5,7 @@ import android.content.res.XmlResourceParser;
 import android.util.Xml;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -278,50 +279,44 @@ class KeyboardData
 
   public static class Key
   {
-    /*
-     ** 1   2
-     **   0
-     ** 3   4
+    /**
+     *  1 7 2
+     *  5 0 6
+     *  3 8 4
      */
-    public final Corner key0;
-    public final Corner key1;
-    public final Corner key2;
-    public final Corner key3;
-    public final Corner key4;
+    public final Corner[] keys;
 
     /** Key width in relative unit. */
     public final float width;
     /** Extra empty space on the left of the key. */
     public final float shift;
-    /** Put keys 1 to 4 on the edges instead of the corners. */
-    public final boolean edgekeys;
     /** Keys 2 and 3 are repeated as the finger moves laterally on the key.
         Used for the left and right arrow keys on the space bar. */
     public final boolean slider;
     /** String printed on the keys. It has no other effect. */
     public final String indication;
 
-    protected Key(Corner k0, Corner k1, Corner k2, Corner k3, Corner k4, float w, float s, boolean e, boolean sl, String i)
+    protected Key(Corner[] ks, float w, float s, boolean sl, String i)
     {
-      key0 = k0;
-      key1 = k1;
-      key2 = k2;
-      key3 = k3;
-      key4 = k4;
+      keys = ks;
       width = w;
       shift = s;
-      edgekeys = e;
       slider = sl;
       indication = i;
     }
 
     public static Key parse(XmlPullParser parser) throws Exception
     {
-      Corner k0 = Corner.parse_of_attr(parser, "key0");
-      Corner k1 = Corner.parse_of_attr(parser, "key1");
-      Corner k2 = Corner.parse_of_attr(parser, "key2");
-      Corner k3 = Corner.parse_of_attr(parser, "key3");
-      Corner k4 = Corner.parse_of_attr(parser, "key4");
+      Corner[] ks = new Corner[9];
+      ks[0] = Corner.parse_of_attr(parser, "key0");
+      ks[1] = Corner.parse_of_attr(parser, "key1");
+      ks[2] = Corner.parse_of_attr(parser, "key2");
+      ks[3] = Corner.parse_of_attr(parser, "key3");
+      ks[4] = Corner.parse_of_attr(parser, "key4");
+      ks[5] = Corner.parse_of_attr(parser, "key5");
+      ks[6] = Corner.parse_of_attr(parser, "key6");
+      ks[7] = Corner.parse_of_attr(parser, "key7");
+      ks[8] = Corner.parse_of_attr(parser, "key8");
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       boolean edgekeys = attribute_bool(parser, "edgekeys", false);
@@ -329,112 +324,86 @@ class KeyboardData
       String indication = parser.getAttributeValue(null, "indication");
       while (parser.next() != XmlPullParser.END_TAG)
         continue ;
-      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, slider, indication);
+      if (edgekeys)
+        ks = rearange_edgekeys(ks);
+      return new Key(ks, width, shift, slider, indication);
     }
 
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
-      return new Key(key0, key1, key2, key3, key4, width * s, shift, edgekeys,
-          slider, indication);
+      return new Key(keys, width * s, shift, slider, indication);
     }
 
     public void getKeys(Set<KeyValue> dst)
     {
-      getCorner(dst, key0);
-      getCorner(dst, key1);
-      getCorner(dst, key2);
-      getCorner(dst, key3);
-      getCorner(dst, key4);
+      for (int i = 0; i < keys.length; i++)
+        if (keys[i] != null)
+          dst.add(keys[i].kv);
     }
-
-    void getCorner(Set<KeyValue> dst, Corner k) { if (k != null) dst.add(k.kv); }
 
     public KeyValue getKeyValue(int i)
     {
-      Corner c;
-      switch (i)
-      {
-        case 0: c = key0; break;
-        case 1: c = key1; break;
-        case 2: c = key2; break;
-        case 3: c = key3; break;
-        case 4: c = key4; break;
-        default: c = null; break;
-      }
-      return (c == null) ? null : c.kv;
+      if (keys[i] == null)
+        return null;
+      return keys[i].kv;
     }
 
     public Key withKeyValue(int i, KeyValue kv)
     {
-      Corner k0 = key0, k1 = key1, k2 = key2, k3 = key3, k4 = key4;
-      Corner k = Corner.of_kv(kv);
-      switch (i)
-      {
-        case 0: k0 = k; break;
-        case 1: k1 = k; break;
-        case 2: k2 = k; break;
-        case 3: k3 = k; break;
-        case 4: k4 = k; break;
-      }
-      return new Key(k0, k1, k2, k3, k4, width, shift, edgekeys, slider,
-          indication);
+      Corner[] ks = Arrays.copyOf(keys, keys.length);
+      ks[i] = Corner.of_kv(kv);
+      return new Key(ks, width, shift, slider, indication);
     }
 
     public Key withShift(float s)
     {
-      return new Key(key0, key1, key2, key3, key4, width, s, edgekeys, slider,
-          indication);
-    }
-
-    /**
-     * See Pointers.onTouchMove() for the represented direction.
-     */
-    public KeyValue getAtDirection(int direction)
-    {
-      Corner c = null;
-      if (edgekeys)
-      {
-        // \ 1 /
-        //  \ /
-        // 3 0 2
-        //  / \
-        // / 4 \
-        switch (direction)
-        {
-          case 2: case 3: c = key1; break;
-          case 4: case 5: c = key2; break;
-          case 6: case 7: c = key4; break;
-          case 8: case 1: c = key3; break;
-        }
-      }
-      else
-      {
-        // 1 | 2
-        //   |
-        // --0--
-        //   |
-        // 3 | 4
-        switch (direction)
-        {
-          case 1: case 2: c = key1; break;
-          case 3: case 4: c = key2; break;
-          case 5: case 6: c = key4; break;
-          case 7: case 8: c = key3; break;
-        }
-      }
-      return (c == null) ? null : c.kv;
+      return new Key(keys, width, s, slider, indication);
     }
 
     public boolean hasValue(KeyValue kv)
     {
-      return (hasValue(key0, kv) || hasValue(key1, kv) || hasValue(key2, kv) ||
-          hasValue(key3, kv) || hasValue(key4, kv));
+      for (int i = 0; i < keys.length; i++)
+        if (keys[i] != null && keys[i].kv.equals(kv))
+          return true;
+      return false;
     }
 
-    private static boolean hasValue(Corner c, KeyValue kv)
+    public boolean hasValue(KeyValue kv, int i)
     {
-      return (c != null && c.kv.equals(kv));
+      if (keys[i] == null)
+        return false;
+      return kv.equals(keys[i].kv);
+    }
+
+    /** Transform the key index for edgekeys.
+     *  This option is no longer useful but is used by some layouts.
+     *  1 7 2     5 1 7
+     *  5 0 6  →  3 0 2
+     *  3 8 4     8 4 6
+     */
+    static Corner[] rearange_edgekeys(Corner[] ks)
+    {
+      Corner[] edge_ks = new Corner[ks.length];
+      for (int i = 0; i < ks.length; i++)
+        edge_ks[edgekey_index(i)] = ks[i];
+      return edge_ks;
+    }
+
+    static int edgekey_index(int i)
+    {
+      switch (i)
+      {
+        case 5: return 1;
+        case 1: return 7;
+        case 7: return 2;
+        case 3: return 5;
+        case 2: return 6;
+        case 8: return 3;
+        case 4: return 8;
+        case 6: return 4;
+        default: return i;
+      }
     }
   }
 
@@ -491,15 +460,15 @@ class KeyboardData
 
     public Key apply(Key k)
     {
-      return new Key(apply(k.key0), apply(k.key1), apply(k.key2),
-          apply(k.key3), apply(k.key4), k.width, k.shift, k.edgekeys,
-          k.slider, k.indication);
+      Corner[] ks = new Corner[k.keys.length];
+      for (int i = 0; i < ks.length; i++)
+        if (k.keys[i] != null)
+          ks[i] = apply(k.keys[i]);
+      return new Key(ks, k.width, k.shift, k.slider, k.indication);
     }
 
     protected Corner apply(Corner c)
     {
-      if (c == null)
-        return null;
       KeyValue kv = apply(c.kv, c.localized);
       return (kv == null) ? null : new Corner(kv, c.localized);
     }
