@@ -319,13 +319,10 @@ class KeyboardData
       ks[8] = Corner.parse_of_attr(parser, "key8");
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
-      boolean edgekeys = attribute_bool(parser, "edgekeys", false);
       boolean slider = attribute_bool(parser, "slider", false);
       String indication = parser.getAttributeValue(null, "indication");
       while (parser.next() != XmlPullParser.END_TAG)
         continue ;
-      if (edgekeys)
-        ks = rearange_edgekeys(ks);
       return new Key(ks, width, shift, slider, indication);
     }
 
@@ -374,36 +371,6 @@ class KeyboardData
       if (keys[i] == null)
         return false;
       return kv.equals(keys[i].kv);
-    }
-
-    /** Transform the key index for edgekeys.
-     *  This option is no longer useful but is used by some layouts.
-     *  1 7 2     5 1 7
-     *  5 0 6  →  3 0 2
-     *  3 8 4     8 4 6
-     */
-    static Corner[] rearange_edgekeys(Corner[] ks)
-    {
-      Corner[] edge_ks = new Corner[ks.length];
-      for (int i = 0; i < ks.length; i++)
-        edge_ks[edgekey_index(i)] = ks[i];
-      return edge_ks;
-    }
-
-    static int edgekey_index(int i)
-    {
-      switch (i)
-      {
-        case 5: return 1;
-        case 1: return 7;
-        case 7: return 2;
-        case 3: return 5;
-        case 2: return 6;
-        case 8: return 3;
-        case 4: return 8;
-        case 6: return 4;
-        default: return i;
-      }
     }
   }
 
