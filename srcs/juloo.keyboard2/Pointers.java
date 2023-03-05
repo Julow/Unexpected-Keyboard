@@ -167,7 +167,7 @@ public final class Pointers implements Handler.Callback
     // Don't take latched modifiers into account if an other key is pressed.
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
-    KeyValue value = handleKV(key.keys[0], mods);
+    KeyValue value = _handler.modifyKey(key.keys[0], mods);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     startKeyRepeat(ptr);
@@ -184,10 +184,7 @@ public final class Pointers implements Handler.Callback
    */
   KeyValue getKeyAtDirection(KeyboardData.Key k, int direction)
   {
-    int i = DIRECTION_TO_INDEX[direction];
-    if (k.keys[i] == null)
-      return null;
-    return k.keys[i].kv;
+    return k.keys[DIRECTION_TO_INDEX[direction]];
   }
 
   /*
@@ -201,7 +198,7 @@ public final class Pointers implements Handler.Callback
   private KeyValue getNearestKeyAtDirection(Pointer ptr, Integer direction)
   {
     if (direction == null)
-      return handleKV(ptr.key.keys[0], ptr.modifiers);
+      return _handler.modifyKey(ptr.key.keys[0], ptr.modifiers);
     KeyValue k;
     // [i] is [0, -1, 1, -2, 2, ...]
     for (int i = 0; i > -4; i = (~i>>31) - i)
@@ -214,13 +211,6 @@ public final class Pointers implements Handler.Callback
         return k;
     }
     return null;
-  }
-
-  private KeyValue handleKV(KeyboardData.Corner c, Modifiers modifiers)
-  {
-    if (c == null)
-      return null;
-    return _handler.modifyKey(c.kv, modifiers);
   }
 
   public void onTouchMove(float x, float y, int pointerId)
@@ -265,7 +255,8 @@ public final class Pointers implements Handler.Callback
         ptr.flags = newValue.getFlags();
         // Sliding mode is entered when key5 or key6 is down on a slider key.
         if (ptr.key.slider &&
-            (ptr.key.hasValue(newValue, 5) || ptr.key.hasValue(newValue, 6)))
+            (newValue.equals(ptr.key.getKeyValue(5))
+             || newValue.equals(ptr.key.getKeyValue(6))))
         {
           startSliding(ptr, dy);
         }
@@ -424,7 +415,7 @@ public final class Pointers implements Handler.Callback
     if (count == ptr.sliding_count)
       return;
     int key_index = (count < ptr.sliding_count) ? 5 : 6;
-    KeyValue newValue = handleKV(ptr.key.keys[key_index], ptr.modifiers);
+    KeyValue newValue = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
     ptr.sliding_count = count;
     ptr.value = newValue;
     if (newValue != null)

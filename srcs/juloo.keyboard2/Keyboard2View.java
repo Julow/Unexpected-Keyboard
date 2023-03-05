@@ -370,9 +370,9 @@ public class Keyboard2View extends View
     return sublabel ? _theme.subLabelColor : _theme.labelColor;
   }
 
-  private void drawLabel(Canvas canvas, KeyboardData.Corner k, float x, float y, float keyH, boolean isKeyDown)
+  private void drawLabel(Canvas canvas, KeyValue kv, float x, float y, float keyH, boolean isKeyDown)
   {
-    KeyValue kv = KeyModifier.modify(k.kv, _mods);
+    kv = KeyModifier.modify(kv, _mods);
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
@@ -383,12 +383,12 @@ public class Keyboard2View extends View
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyboardData.Corner k, float x,
-      float y, float keyW, float keyH, int sub_index, boolean isKeyDown)
+  private void drawSubLabel(Canvas canvas, KeyValue kv, float x, float y,
+      float keyW, float keyH, int sub_index, boolean isKeyDown)
   {
     Paint.Align a = LABEL_POSITION_H[sub_index];
     Vertical v = LABEL_POSITION_V[sub_index];
-    KeyValue kv = KeyModifier.modify(k.kv, _mods);
+    kv = KeyModifier.modify(kv, _mods);
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);

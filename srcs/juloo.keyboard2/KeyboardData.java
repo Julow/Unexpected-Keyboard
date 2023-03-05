@@ -284,8 +284,9 @@ class KeyboardData
      *  5 0 6
      *  3 8 4
      */
-    public final Corner[] keys;
-
+    public final KeyValue[] keys;
+    /** Pack flags for every key values. Flags are: [F_LOC]. */
+    private final int keysflags;
     /** Key width in relative unit. */
     public final float width;
     /** Extra empty space on the left of the key. */
@@ -296,124 +297,111 @@ class KeyboardData
     /** String printed on the keys. It has no other effect. */
     public final String indication;
 
-    protected Key(Corner[] ks, float w, float s, boolean sl, String i)
+    /** Whether a key was declared with the 'loc' prefix. */
+    public static final int F_LOC = 1;
+    public static final int ALL_FLAGS = F_LOC;
+
+    protected Key(KeyValue[] ks, int f, float w, float s, boolean sl, String i)
     {
       keys = ks;
+      keysflags = f;
       width = w;
       shift = s;
       slider = sl;
       indication = i;
     }
 
+    /** Write the parsed key into [ks] at [index]. Doesn't write if the
+        attribute is not present. Return flags that can be aggregated into the
+        value for [keysflags]. */
+    static int parse_key_attr(XmlPullParser parser, String attr, KeyValue[] ks,
+        int index)
+        throws Exception
+    {
+      String name = parser.getAttributeValue(null, attr);
+      int flags = 0;
+      if (name == null)
+        return 0;
+      String name_loc = stripPrefix(name, "loc ");
+      if (name_loc != null)
+      {
+        flags |= F_LOC;
+        name = name_loc;
+      }
+      ks[index] = KeyValue.getKeyByName(name);
+      return (flags << index);
+    }
+
+    static String stripPrefix(String s, String prefix)
+    {
+      return s.startsWith(prefix) ? s.substring(prefix.length()) : null;
+    }
+
     public static Key parse(XmlPullParser parser) throws Exception
     {
-      Corner[] ks = new Corner[9];
-      ks[0] = Corner.parse_of_attr(parser, "key0");
-      ks[1] = Corner.parse_of_attr(parser, "key1");
-      ks[2] = Corner.parse_of_attr(parser, "key2");
-      ks[3] = Corner.parse_of_attr(parser, "key3");
-      ks[4] = Corner.parse_of_attr(parser, "key4");
-      ks[5] = Corner.parse_of_attr(parser, "key5");
-      ks[6] = Corner.parse_of_attr(parser, "key6");
-      ks[7] = Corner.parse_of_attr(parser, "key7");
-      ks[8] = Corner.parse_of_attr(parser, "key8");
+      KeyValue[] ks = new KeyValue[9];
+      int keysflags = 0;
+      keysflags |= parse_key_attr(parser, "key0", ks, 0);
+      keysflags |= parse_key_attr(parser, "key1", ks, 1);
+      keysflags |= parse_key_attr(parser, "key2", ks, 2);
+      keysflags |= parse_key_attr(parser, "key3", ks, 3);
+      keysflags |= parse_key_attr(parser, "key4", ks, 4);
+      keysflags |= parse_key_attr(parser, "key5", ks, 5);
+      keysflags |= parse_key_attr(parser, "key6", ks, 6);
+      keysflags |= parse_key_attr(parser, "key7", ks, 7);
+      keysflags |= parse_key_attr(parser, "key8", ks, 8);
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       boolean slider = attribute_bool(parser, "slider", false);
       String indication = parser.getAttributeValue(null, "indication");
       while (parser.next() != XmlPullParser.END_TAG)
-        continue ;
-      return new Key(ks, width, shift, slider, indication);
+        continue;
+      return new Key(ks, keysflags, width, shift, slider, indication);
+    }
+
+    /** Whether key at [index] as [flag]. */
+    public boolean keyHasFlag(int index, int flag)
+    {
+      return (keysflags & (flag << index)) != 0;
     }
 
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
-      return new Key(keys, width * s, shift, slider, indication);
+      return new Key(keys, keysflags, width * s, shift, slider, indication);
     }
 
     public void getKeys(Set<KeyValue> dst)
     {
       for (int i = 0; i < keys.length; i++)
         if (keys[i] != null)
-          dst.add(keys[i].kv);
+          dst.add(keys[i]);
     }
 
     public KeyValue getKeyValue(int i)
     {
-      if (keys[i] == null)
-        return null;
-      return keys[i].kv;
+      return keys[i];
     }
 
     public Key withKeyValue(int i, KeyValue kv)
     {
-      Corner[] ks = Arrays.copyOf(keys, keys.length);
-      ks[i] = Corner.of_kv(kv);
-      return new Key(ks, width, shift, slider, indication);
+      KeyValue[] ks = Arrays.copyOf(keys, keys.length);
+      ks[i] = kv;
+      int flags = (keysflags & ~(ALL_FLAGS << i));
+      return new Key(ks, flags, width, shift, slider, indication);
     }
 
     public Key withShift(float s)
     {
-      return new Key(keys, width, s, slider, indication);
+      return new Key(keys, keysflags, width, s, slider, indication);
     }
 
     public boolean hasValue(KeyValue kv)
     {
       for (int i = 0; i < keys.length; i++)
-        if (keys[i] != null && keys[i].kv.equals(kv))
+        if (keys[i] != null && keys[i].equals(kv))
           return true;
       return false;
-    }
-
-    public boolean hasValue(KeyValue kv, int i)
-    {
-      if (keys[i] == null)
-        return false;
-      return kv.equals(keys[i].kv);
-    }
-  }
-
-  public static final class Corner
-  {
-    public final KeyValue kv;
-    /** Whether the kv is marked with the "loc " prefix. To be removed if not
-        specified in the [extra_keys]. */
-    public final boolean localized;
-
-    protected Corner(KeyValue k, boolean l)
-    {
-      kv = k;
-      localized = l;
-    }
-
-    public static Corner parse_of_attr(XmlPullParser parser, String attr) throws Exception
-    {
-      String name = parser.getAttributeValue(null, attr);
-      boolean localized = false;
-
-      if (name == null)
-        return null;
-      String name_loc = stripPrefix(name, "loc ");
-      if (name_loc != null)
-      {
-        localized = true;
-        name = name_loc;
-      }
-      return new Corner(KeyValue.getKeyByName(name), localized);
-    }
-
-    public static Corner of_kv(KeyValue kv)
-    {
-      return new Corner(kv, false);
-    }
-
-    private static String stripPrefix(String s, String prefix)
-    {
-      if (s.startsWith(prefix))
-        return s.substring(prefix.length());
-      else
-        return null;
     }
   }
 
@@ -427,17 +415,11 @@ class KeyboardData
 
     public Key apply(Key k)
     {
-      Corner[] ks = new Corner[k.keys.length];
+      KeyValue[] ks = new KeyValue[k.keys.length];
       for (int i = 0; i < ks.length; i++)
         if (k.keys[i] != null)
-          ks[i] = apply(k.keys[i]);
-      return new Key(ks, k.width, k.shift, k.slider, k.indication);
-    }
-
-    protected Corner apply(Corner c)
-    {
-      KeyValue kv = apply(c.kv, c.localized);
-      return (kv == null) ? null : new Corner(kv, c.localized);
+          ks[i] = apply(k.keys[i], k.keyHasFlag(i, Key.F_LOC));
+      return new Key(ks, k.keysflags, k.width, k.shift, k.slider, k.indication);
     }
   }
 
