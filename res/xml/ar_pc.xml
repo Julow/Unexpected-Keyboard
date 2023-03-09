@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="ض" key1="&#1614;" key2="1" key3="`" key4="esc"/>
-    <key key0="ص" key1="&#1611;" key2="2" key3="\@"/>
-    <key key0="ث" key1="&#1615;" key2="3" key3="\#" key4="loc €"/>
-    <key key0="ق" key1="&#1612;" key2="4" key3="$" key4="loc £"/>
-    <key key0="ف" key1="&#1604;&#1573;" key2="5" key3="%"/>
-    <key key0="غ" key1="&#1573;" key2="6" key3="^"/>
-    <key key0="ع" key1="&#8216;" key2="7" key3="&amp;"/>
-    <key key0="ه" key1="&#0247;" key2="8" key3="*"/>
-    <key key0="خ" key1="&#0215;" key2="9" key3="("/>
-    <key key0="ح" key1="&#1563;" key2="0" key3=")"/>
+    <key key0="ض" key1="&#1614;" key2="١" key3="`" key4="esc"/>
+    <key key0="ص" key1="&#1611;" key2="٢" key3="\@"/>
+    <key key0="ث" key1="&#1615;" key2="٣" key3="\#" key4="loc €"/>
+    <key key0="ق" key1="&#1612;" key2="٤" key3="$" key4="loc £"/>
+    <key key0="ف" key1="&#1604;&#1573;" key2="٥" key3="%"/>
+    <key key0="غ" key1="&#1573;" key2="٦" key3="^"/>
+    <key key0="ع" key1="&#8216;" key2="٧" key3="&amp;"/>
+    <key key0="ه" key1="&#0247;" key2="٨" key3="*"/>
+    <key key0="خ" key1="&#0215;" key2="٩" key3="("/>
+    <key key0="ح" key1="&#1563;" key2="٠" key3=")"/>
     <key key0="ج" key1="&gt;" key2="-" key3="_"/>
     <key key0="د" key1="&lt;" key2="=" key3="ذ"/>
     <!-- <key key0="ذ" key1="&#1617;" key3="\\" key4="|"/> -->
