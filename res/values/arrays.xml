@@ -31,6 +31,7 @@
     <item>hindi</item>
     <item>he_il_1452_1</item>
     <item>he_il_1452_2</item>
+    <item>ar_pc</item>
     <item>custom</item>
   </string-array>
   <string-array name="pref_layout_entries">
@@ -64,6 +65,7 @@
     <item>हिन्दी</item>
     <item>Hebrew SI-1452-1</item>
     <item>Hebrew SI-1452-2</item>
+    <item>Arabic PC</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
   <string-array name="pref_accents_entries">

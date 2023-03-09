@@ -371,6 +371,7 @@ final class Config
       case "ru_jcuken": id = R.xml.local_ru_jcuken; break;
       case "he_il_1452_1": id = R.xml.he_il_1452_1; break;
       case "he_il_1452_2": id = R.xml.he_il_1452_2; break;
+      case "ar_pc": id = R.xml.ar_pc; break;
     }
     return KeyboardData.load(res, id);
   }
