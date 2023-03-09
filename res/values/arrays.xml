@@ -28,8 +28,8 @@
     <item>bone</item>
     <item>jcuken_ua</item>
     <item>bangla</item>
-    <item>hindi</item>
-    <item>devanagari</item>
+    <item>devanagari_1</item>
+    <item>devanagari_2</item>
     <item>he_il_1452_1</item>
     <item>he_il_1452_2</item>
     <item>custom</item>
@@ -62,8 +62,8 @@
     <item>Bone</item>
     <item>ЙЦУКЕН (Українська)</item>
     <item>বাংলা</item>
-    <item>हिन्दी</item>
-    <item>देवनागरी (हिन्दी)</item>
+    <item>देवनागरी (हिंदी)-1</item>
+    <item>देवनागरी (हिंदी)-2</item>
     <item>Hebrew SI-1452-1</item>
     <item>Hebrew SI-1452-2</item>
     <item>@string/pref_layout_e_custom</item>
