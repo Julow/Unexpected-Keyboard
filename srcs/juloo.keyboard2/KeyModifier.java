@@ -338,6 +338,7 @@ class KeyModifier
       case '़': return "ॎ";
       case 'ऽ': return "ॽ";
       case ' ': return "nbsp";
+      // other
       default: return null;
     }
   }
