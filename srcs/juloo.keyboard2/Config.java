@@ -348,7 +348,8 @@ final class Config
       case "bone": id = R.xml.bone; break;
       case "colemak": id = R.xml.colemak; break;
       case "dvorak": id = R.xml.dvorak; break;
-      case "hindi": id = R.xml.hindi; break;
+      case "devanagari_1": id = R.xml.devanagari_1; break;
+      case "devanagari_2": id = R.xml.devanagari_2; break;
       case "jcuken_ua": id = R.xml.jcuken_ua; break;
       case "neo2": id = R.xml.neo2; break;
       case "qwerty": id = R.xml.qwerty; break;
