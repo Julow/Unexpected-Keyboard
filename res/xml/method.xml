@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="http://schemas.android.com/apk/res/android" android:settingsActivity="juloo.keyboard2.SettingsActivity" android:supportsSwitchingToNextInputMethod="true">
+  <subtype android:label="%s" android:languageTag="ar" android:imeSubtypeLocale="ar" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=ar_pc"/>
   <subtype android:label="%s" android:languageTag="be" android:imeSubtypeLocale="be_BY" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=ru_jcuken,extra_keys=ґ|є|і|ї|ў"/>
   <subtype android:label="%s" android:languageTag="bg" android:imeSubtypeLocale="bg_BG" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=bgph1,extra_keys=€"/>
   <subtype android:label="%s" android:languageTag="bn" android:imeSubtypeLocale="bn_BD" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=qwerty,extra_keys=৳"/>
