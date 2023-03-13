@@ -203,7 +203,7 @@ public final class Pointers implements Handler.Callback
     // [i] is [0, -1, 1, -2, 2, ...]
     for (int i = 0; i > -4; i = (~i>>31) - i)
     {
-      int d = (direction + i + 16 - 1) % 16;
+      int d = (direction + i + 16) % 16;
       // Don't make the difference between a key that doesn't exist and a key
       // that is removed by [_handler]. Triggers side effects.
       k = _handler.modifyKey(getKeyAtDirection(ptr.key, d), ptr.modifiers);
@@ -241,8 +241,10 @@ public final class Pointers implements Handler.Callback
     {
       // See [getKeyAtDirection()] for the meaning. The starting point on the
       // circle is the top direction.
-      double a = Math.atan2(dy, dx); // between -pi and +pi, 0 is to the right
-      direction = ((int)(a * 16 / (Math.PI * 2)) + 21) % 16;
+      double a = Math.atan2(dy, dx) + Math.PI;
+      // a is between 0 and 2pi, 0 is pointing to the left
+      // add 12 to align 0 to the top
+      direction = ((int)(a * 8 / Math.PI) + 12) % 16;
     }
 
     if (direction != ptr.selected_direction)
