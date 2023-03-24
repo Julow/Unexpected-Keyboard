@@ -3,8 +3,8 @@
   <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
   <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Ustawienia Unexpected Keyboard</string>
-  <!-- <string name="pref_portrait">In portrait mode</string> -->
-  <!-- <string name="pref_landscape">In landscape mode</string> -->
+  <string name="pref_portrait">W widoku pionowym</string>
+  <string name="pref_landscape">W widoku poziomym</string>
   <string name="pref_category_layout">Układ</string>
   <string name="pref_label_brightness">Dostosuj jasność znaków</string>
   <string name="pref_keyboard_opacity">Nieprzezroczystość tła klawiatury</string>
@@ -21,8 +21,8 @@
   <string name="pref_show_numpad_never">Nigdy</string>
   <string name="pref_show_numpad_landscape">Tylko w orientacji poziomej</string>
   <string name="pref_show_numpad_always">Zawsze</string>
-  <!-- <string name="pref_number_row_title">Show number row</string> -->
-  <!-- <string name="pref_number_row_summary">Add a number row at the top of the keyboard when the numpad is hidden</string> -->
+  <string name="pref_number_row_title">Pokaż rząd cyfr</string>
+  <string name="pref_number_row_summary">Dodaj rząd cyfr na górze klawiatury, kiedy klaw. numeryczna jest schowana</string>
   <string name="pref_numpad_layout">Układ klawiatury numerycznej</string>
   <string name="pref_numpad_layout_e_high_first">Od największej cyfry</string>
   <string name="pref_numpad_layout_e_low_first">Od najmniejszej cyfry</string>
@@ -36,11 +36,11 @@
   <string name="pref_long_interval_title">Czas pomiędzy powtórzeniami</string>
   <string name="pref_lock_double_tap_title">Naciśnij Shift podwójnie, aby włączyć caps lock</string>
   <string name="pref_lock_double_tap_summary">Możesz zablokować modyfikator poprzez jego długie naciśnięcie</string>
-  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_category_behavior">Zachowanie</string>
   <string name="pref_autocapitalisation_title">Automatyczne wielkie litery</string>
   <string name="pref_autocapitalisation_summary">Naciśnij Shift na początku zdania</string>
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
-  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_switch_input_immediate_title">Przełącz na ostatnio używaną klawiaturę</string>
+  <string name="pref_switch_input_immediate_summary">Działanie klawisza przełączającego klawiaturę</string>
   <string name="pref_vibrate_title">Wibracja</string>
   <string name="pref_vibrate_summary">Wł./wył. wibrację przy naciśnięciu klawisza</string>
   <string name="pref_category_style">Styl</string>
@@ -54,9 +54,9 @@
   <string name="pref_theme_e_dark">Ciemny</string>
   <string name="pref_theme_e_light">Jasny</string>
   <string name="pref_theme_e_black">Czarny</string>
-  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
+  <string name="pref_theme_e_altblack">Alternatywny Czarny</string>
   <string name="pref_theme_e_white">Biały</string>
-  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
+  <string name="pref_theme_e_epaper">e-paper</string>
   <string name="pref_swipe_dist_e_very_short">Bardzo mała</string>
   <string name="pref_swipe_dist_e_short">Mała</string>
   <string name="pref_swipe_dist_e_default">Normalna</string>
