@@ -260,7 +260,7 @@ public class Keyboard2 extends InputMethodService
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
         _currentSpecialLayout =
-          _config.modify_numpad(KeyboardData.load_pin_entry(getResources()));
+          _config.modify_numpad(KeyboardData.load(getResources(), R.xml.pin));
         break;
       default:
         _currentSpecialLayout = null;

@@ -114,7 +114,6 @@ class KeyboardData
   public static Row bottom_row;
   public static Row number_row;
   public static KeyboardData num_pad;
-  public static KeyboardData pin_entry;
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
 
   public static void init(Resources res)
@@ -129,13 +128,6 @@ class KeyboardData
     {
       e.printStackTrace();
     }
-  }
-
-  public static KeyboardData load_pin_entry(Resources res)
-  {
-    if (pin_entry == null)
-      pin_entry = load(res, R.xml.pin);
-    return pin_entry;
   }
 
   /** Load a layout from a resource ID. Returns [null] on error. */
