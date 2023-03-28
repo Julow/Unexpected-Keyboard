@@ -9,27 +9,24 @@ import glob
 # The baseline is 'values/strings.xml', which is english.
 
 def parse_strings_file(file):
-    resources = ET.parse(file).getroot()
-    return [
-        ((ent.get("name"), ent.get("product")), ent.text)
-        for ent in resources if ent.tag == "string"
-    ]
+    def key(ent): return ent.get("name"), ent.get("product")
+    resrcs = ET.parse(file).getroot()
+    return { key(ent): ent for ent in resrcs if ent.tag == "string" }
 
-def string_entry_str(name, text, product):
-    product_attr = ' product="%s"' % product if product != None else ""
-    text_encoded = saxutils.escape(text)
-    return '<string name="%s"%s>%s</string>' % (name, product_attr, text_encoded)
+def dump_entry(out, entry, comment):
+    out.write("  ")
+    if comment: out.write("<!-- ")
+    out.write(ET.tostring(entry, "unicode").strip())
+    if comment: out.write(" -->")
+    out.write("\n")
 
 def write_updated_strings(out, baseline, strings):
     out.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n')
-    for key, default_text in baseline:
-        name, product = key
+    for key, baseline_entry in baseline.items():
         if key in strings:
-            ent = string_entry_str(name, strings[key], product)
-            out.write("  %s\n" % ent)
+            dump_entry(out, strings[key], False)
         else:
-            def_ent = string_entry_str(name, default_text, product)
-            out.write("  <!-- %s -->\n" % def_ent)
+            dump_entry(out, baseline_entry, True)
     out.write('</resources>\n')
 
 baseline = parse_strings_file("res/values/strings.xml")
