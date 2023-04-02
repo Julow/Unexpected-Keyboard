@@ -1,0 +1,7 @@
+New layouts: Arabic, Devanagari
+
+Updated translations.
+Updated layouts.
+Bugs fixed.
+
+Thanks to the contributors: @ChasmSolacer, @mostafaayesh, @lrvideckis, @eandersons, @mscheidemann, @JackDotJS
