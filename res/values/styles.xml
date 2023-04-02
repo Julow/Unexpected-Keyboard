@@ -24,4 +24,11 @@
     <item name="android:textSize">@dimen/emoji_text_size</item>
     <item name="android:textColor">?attr/emoji_color</item>
   </style>
+  <style name="paragraph">
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginVertical">8dp</item>
+    <item name="android:layout_marginHorizontal">16dp</item>
+    <item name="android:layout_gravity">center</item>
+  </style>
 </resources>

@@ -73,7 +73,8 @@
   <string name="key_action_prev">Предыдущий</string>
   <string name="key_action_search">Поиск</string>
   <string name="key_action_send">Отправить</string>
+  <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
   <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
   <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
-  <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
+  <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
 </resources>
