@@ -113,6 +113,7 @@ public final class Pointers implements Handler.Callback
       return;
     if (ptr.sliding)
     {
+      clearLatched();
       onTouchUp_sliding(ptr);
       return;
     }
