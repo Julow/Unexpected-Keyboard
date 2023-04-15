@@ -345,7 +345,7 @@ final class Config
       case "arab_ara_ibm": id = R.xml.arab_ara_ibm; break;
       case "arab_ara_ibm_ma": id = R.xml.arab_ara_ibm_ma; break;
       case "beng_ben_rh": id = R.xml.beng_ben_rh; break;
-      case "cyrl_bul_iaverti": id = R.xml.cyrl_bul_iaverti; break;
+      case "cyrl_bul_yaverti": id = R.xml.cyrl_bul_yaverti; break;
       case "cyrl_ukr_jcuken": id = R.xml.cyrl_ukr_jcuken; break;
       case "cyrl_rus_jcuken": id = R.xml.cyrl_rus_jcuken; break;
       case "deva_hin_inscript": id = R.xml.deva_hin_inscript; break;
