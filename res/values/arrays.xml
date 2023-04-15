@@ -11,9 +11,9 @@
     <item>deva_hin_inscript</item>
     <item>deva_hin_lv</item>
     <item>grek_ell_qwerty</item>
+    <item>hang_kor_dubeolsik_ks_x_5002</item>
     <item>hebr_heb_si_1452_1</item>
     <item>hebr_heb_si_1452_2</item>
-    <item>kore_kor_ks_x_5002</item>
     <item>latn_ces_qwertz</item>
     <item>latn_deu_bone</item>
     <item>latn_deu_neo2</item>
@@ -38,18 +38,18 @@
   </string-array>
   <string-array name="pref_layout_entries">
     <item>None</item>
-    <item>العربية: IBM</item>
-    <item>العربية: IBM [Mostafa Ayesh]</item>
+    <item>الْعَرَبِيَّة: IBM</item>
+    <item>الْعَرَبِيَّة: IBM [Mostafa Ayesh]</item>
     <item>বাংলা: [Md Rasel Hossain]</item>
-    <item>български: ЯВЕРТЪ</item>
-    <item>русский: ЙЦУКЕН</item>
-    <item>українська: ЙЦУКЕН</item>
+    <item>бъ́лгарски: ЯВЕРТЪ</item>
+    <item>ру́сский: ЙЦУКЕН</item>
+    <item>украї́нська: ЙЦУКЕН</item>
     <item>हिंदी: InScript</item>
-    <item>हिदी: [Luke Videckis]</item>
+    <item>हिंदी: [Luke Videckis]</item>
     <item>ελληνικά: QWERTY</item>
-    <item>עברית: ת״י 1452-1</item>
-    <item>עברית: ת״י 1452-2</item>
     <item>한국어/조선말: 두벌식 KS X 5002</item>
+    <item>עִבְרִית: ת״י 1452-1</item>
+    <item>עִבְרִית: ת״י 1452-2</item>
     <item>čeština: QWERTZ</item>
     <item>Deutsch: Bone</item>
     <item>Deutsch: Neo 2</item>

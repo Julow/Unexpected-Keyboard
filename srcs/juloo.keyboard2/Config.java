@@ -337,7 +337,7 @@ final class Config
 
   public KeyboardData layout_of_string(Resources res, String name)
   {
-    int id = R.xml.qwerty; // The config might store an invalid layout, don't crash
+    int id = R.xml.latn_eng_qwerty; // The config might store an invalid layout, don't crash
     switch (name)
     {
       case "system": case "none": return null;
@@ -351,9 +351,9 @@ final class Config
       case "deva_hin_inscript": id = R.xml.deva_hin_inscript; break;
       case "deva_hin_lv": id = R.xml.deva_hin_lv; break;
       case "grek_ell_qwerty": id = R.xml.grek_ell_qwerty; break;
+      case "hang_kor_dubeolsik_ks_x_5002": id = R.xml.hang_kor_dubeolsik_ks_x_5002; break;
       case "hebr_heb_si_1452_1": id = R.xml.hebr_heb_si_1452_1; break;
       case "hebr_heb_si_1452_2": id = R.xml.hebr_heb_si_1452_2; break;
-      case "kore_kor_ks_x_5002": id = R.xml.kore_kor_ks_x_5002; break;
       case "latn_ces_qwertz": id = R.xml.latn_ces_qwertz; break;
       case "latn_deu_bone": id = R.xml.latn_deu_bone; break;
       case "latn_deu_neo2": id = R.xml.latn_deu_neo2; break;
