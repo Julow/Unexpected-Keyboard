@@ -37,7 +37,7 @@ gpg -c --armor --pinentry-mode loopback --passphrase debug0 --yes "debug.keystor
 
 A file will be generated inside the local `_build/` folder, called `debug.keystore.asc`
 
-You can copy the content of this file, and with that, paste it into a new github secret in your repo settings. 
+You can copy the content of this file, and with that, paste it into a new github secret in your repo settings.
 
 The secret must be named `DEBUG_KEYSTORE`
 
@@ -52,11 +52,8 @@ And finally, install the application with:
 make installd
 ```
 
-The debug version of the application won't be removed, both versions will stay
-installed at the same time.
-
-The application must be enabled in the settings:
-System > Languages & input > On-screen keyboard > Manage on-screen keyboards.
+The released version of the application won't be removed, both versions will
+be installed at the same time.
 
 ## Debugging the application: INSTALL_FAILED_UPDATE_INCOMPATIBLE
 
@@ -94,9 +91,14 @@ The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
 A programming layout must contains every ASCII characters.
 The current programming layouts are: QWERTY, Dvorak and Colemak.
 
-Keys with a name starting in `loc ` are hidden unless they are configured for
-the user's installed languages in `res/xml/method.xml`. These keys are optional
-and will be added automatically when necessary.
+See for example, Dvorak, added in https://github.com/Julow/Unexpected-Keyboard/pull/16
+
+It's best to leave free spots on the layout for language-specific symbols that
+are added automatically when necessary.
+These symbols are defined in `res/xml/method.xml` (`extra_keys`).
+
+It's possible to place extra keys with the `loc` prefix. These keys are
+normally hidden unless they are needed.
 
 Some users cannot easily type the characters close the the edges of the screen
 due to a bulky phone case. It is best to avoid placing important characters
@@ -116,7 +118,11 @@ Supported locales are defined in `res/xml/method.xml`.
 
 The attributes `languageTag` and `imeSubtypeLocale` define a locale, the
 attribute `imeSubtypeExtraValue` defines the default layout and the dead-keys
-and other extra keys to show. 
+and other extra keys to show.
+
+The list of language tags (generally two letters)
+and locales (generally of the form `xx_XX`)
+can be found in this stackoverflow answer: https://stackoverflow.com/a/7989085
 
 ### Translations
 
@@ -134,3 +140,13 @@ before a release and older ones are never shown to anyone currently.
 
 The app name might be partially translated, the "unexpected" word should remain
 untranslated.
+
+### Adding key combinations
+
+Key combinations are defined in `srcs/juloo.keyboard2/KeyModifier.java`.
+For example, keys modified by the `Fn` key are defined in method
+`apply_fn_char`.
+
+Keys with special meaning are defined in `KeyValue.java` in method
+`getKeyByName`. Their special action are defined in `KeyEventHandler.java` in
+method `key_up`
