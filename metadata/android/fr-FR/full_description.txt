@@ -1,16 +1,6 @@
 La fonctionnalité principale est l'accès rapide à plus de caractères en balayant les touches vers les coins.
 
-Quelques fonctionnalités:
+Cette application a été conçue à l'origine pour les programmeurs utilisant Termux.
+Elle est maintenant parfaite pour une utilisation quotidienne.
 
-- Tous les caractères et toutes les touches spéciales d'un clavier PC. Idéal pour utiliser une application comme Termux.
-
-- Cela comprend les touches Tab, Esc, les flèches et les touches fonctions mais aussi Ctrl et Alt.
-
-- Les accents sont des touches mortes. Activez d'abord l'accent et tapez ensuite la lettre accentuée.
-
-- Léger et rapide. Utilise 500x fois moins d'espace que le clavier de Google et 15x fois moins que le clavier de base. Pas de pub, pas de traqueur.
-
-- Plusieurs configurations: QWERTY, QWERTZ, AZERTY. Thèmes: Clair, Sombre, Noir OLED. Et beaucoup d'autres options.
-
-Comme tous les claviers virtuels, il doit être activé dans les paramètres systèmes. Ouvrez les paramètres et allez dans:
-Système > Langue & saisie > Clavier à l'écran > Gérer les claviers à l'écran.
+Cette application ne contient pas de publicité, n'accède pas au réseau et est Open Source.
