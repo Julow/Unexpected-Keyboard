@@ -1,16 +1,6 @@
-Jej główną cechą jest łatwość wprowadzania wielu znaków poprzez przesuwanie po klawiszu do rogu.
+Główną cechą tej klawiatury jest możliwość wprowadzania więcej znaków poprzez przesuwanie po klawiszach do ich rogów.
 
-Wyróźnione funkcjonalności:
+Ta aplikacja została pierwotnie zaprojektowana z myślą o programistach używających Termuxa.
+Obecnie nadaje się doskonale do codziennego użytku.
 
-- Wszystkie znaki i klawisze specjalne dostępne na klawiaturze komputerowej. Doskonałe do korzystania z aplikacji takich jak Termux.
-
-- Obejmują one Tab, Esc, strzałki, klawisze funkcyjne, a także Ctrl i Alt.
-
-- Znaki akcentowane uzyskuje się za pomocą martwych klawiszy. Najpierw naciśnij akcent, a następnie wpisz akcentowaną literę.
-
-- Bardzo lekka i szybka. Zajmuje 500x mniej miejsca niż klawiatura Google i 15x mniej niż klawiatura domyślna. Bez reklam, bez śledzenia.
-
-- Wiele układów: QWERTY, QWERTZ, AZERTY. Motywy: Biały, Ciemny, Czarny (OLED). Oraz wiele innych ustawień.
-
-Tak jak każda inna klawiatura ekranowa, należy ją włączyć w ustawieniach systemowych. Otwórz Ustawienia i przejdź kolejno do:
-System > Języki i metody wprowadzania > Klawiatura ekranowa > Zarządzaj klawiaturami ekranowymi.
+Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źródłowy jest dostępny publicznie.
