@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Adapted from standard SI 1452 -->
 <keyboard>
   <row>
     <key key0="/" key2="1" key3="!" key4="esc"/>

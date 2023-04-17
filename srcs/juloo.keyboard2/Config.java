@@ -337,43 +337,43 @@ final class Config
 
   public KeyboardData layout_of_string(Resources res, String name)
   {
-    int id = R.xml.latn_eng_qwerty; // The config might store an invalid layout, don't crash
+    int id = R.xml.latn_eng_us_qwerty; // The config might store an invalid layout, don't crash
     switch (name)
     {
       case "system": case "none": return null;
       case "custom": if (custom_layout != null) return custom_layout; break;
-      case "arab_ara_ibm": id = R.xml.arab_ara_ibm; break;
-      case "arab_ara_ibm_ma": id = R.xml.arab_ara_ibm_ma; break;
-      case "beng_ben_rh": id = R.xml.beng_ben_rh; break;
-      case "cyrl_bul_yaverti": id = R.xml.cyrl_bul_yaverti; break;
-      case "cyrl_ukr_jcuken": id = R.xml.cyrl_ukr_jcuken; break;
-      case "cyrl_rus_jcuken": id = R.xml.cyrl_rus_jcuken; break;
-      case "deva_hin_inscript": id = R.xml.deva_hin_inscript; break;
-      case "deva_hin_lv": id = R.xml.deva_hin_lv; break;
-      case "grek_ell_qwerty": id = R.xml.grek_ell_qwerty; break;
-      case "hang_kor_dubeolsik_ks_x_5002": id = R.xml.hang_kor_dubeolsik_ks_x_5002; break;
-      case "hebr_heb_si_1452_1": id = R.xml.hebr_heb_si_1452_1; break;
-      case "hebr_heb_si_1452_2": id = R.xml.hebr_heb_si_1452_2; break;
-      case "latn_ces_qwertz": id = R.xml.latn_ces_qwertz; break;
-      case "latn_deu_bone": id = R.xml.latn_deu_bone; break;
-      case "latn_deu_neo2": id = R.xml.latn_deu_neo2; break;
-      case "latn_deu_qwertz": id = R.xml.latn_deu_qwertz; break;
-      case "latn_eng_colemak": id = R.xml.latn_eng_colemak; break;
-      case "latn_eng_dvorak": id = R.xml.latn_eng_dvorak; break;
-      case "latn_eng_qwerty": id = R.xml.latn_eng_qwerty; break;
-      case "latn_eng_qwertz": id = R.xml.latn_eng_qwertz; break;
-      case "latn_spa_qwerty": id = R.xml.latn_spa_qwerty; break;
-      case "latn_fra_azerty": id = R.xml.latn_fra_azerty; break;
-      case "latn_lat_qwerty": id = R.xml.latn_lat_qwerty; break;
-      case "latn_hun_qwerty": id = R.xml.latn_hun_qwerty; break;
-      case "latn_hun_qwertz": id = R.xml.latn_hun_qwertz; break;
-      case "latn_nor_qwerty": id = R.xml.latn_nor_qwerty; break;
-      case "latn_pol_qwerty": id = R.xml.latn_pol_qwerty; break;
-      case "latn_por_qwerty": id = R.xml.latn_por_qwerty; break;
-      case "latn_slk_qwertz": id = R.xml.latn_slk_qwertz; break;
-      case "latn_swe_qwerty": id = R.xml.latn_swe_qwerty; break;
-      case "latn_vie_qwerty": id = R.xml.latn_vie_qwerty; break;
-      case "latn_tur_qwerty": id = R.xml.latn_tur_qwerty; break;
+      case "arab_ara_aa_ibm": id = R.xml.arab_ara_aa_ibm; break;
+      case "arab_ara_zz_ibm_ma": id = R.xml.arab_ara_zz_ibm_ma; break;
+      case "beng_ben_zz_rh": id = R.xml.beng_ben_zz_rh; break;
+      case "cyrl_bul_zz_yaverti": id = R.xml.cyrl_bul_zz_yaverti; break;
+      case "cyrl_rus_ru_jcuken": id = R.xml.cyrl_rus_ru_jcuken; break;
+      case "cyrl_ukr_uk_jcuken": id = R.xml.cyrl_ukr_uk_jcuken; break;
+      case "deva_hin_in_inscript": id = R.xml.deva_hin_in_inscript; break;
+      case "deva_hin_zz_lv": id = R.xml.deva_hin_zz_lv; break;
+      case "grek_ell_gr_qwerty": id = R.xml.grek_ell_gr_qwerty; break;
+      case "hang_kor_kr_dubeolsik": id = R.xml.hang_kor_kr_dubeolsik; break;
+      case "hebr_heb_il_": id = R.xml.hebr_heb_il_; break;
+      case "hebr_heb_il_2": id = R.xml.hebr_heb_il_2; break;
+      case "latn_ces_cz_qwertz": id = R.xml.latn_ces_cz_qwertz; break;
+      case "latn_deu_zz_bone": id = R.xml.latn_deu_zz_bone; break;
+      case "latn_deu_zz_neo2": id = R.xml.latn_deu_zz_neo2; break;
+      case "latn_deu_zz_qwertz": id = R.xml.latn_deu_zz_qwertz; break;
+      case "latn_eng_zz_colemak": id = R.xml.latn_eng_zz_colemak; break;
+      case "latn_eng_zz_dvorak": id = R.xml.latn_eng_zz_dvorak; break;
+      case "latn_eng_us_qwerty": id = R.xml.latn_eng_us_qwerty; break;
+      case "latn_deu_zz_qwertz": id = R.xml.latn_deu_zz_qwertz; break;
+      case "latn_spa_es_qwerty": id = R.xml.latn_spa_es_qwerty; break;
+      case "latn_fra_fr_azerty": id = R.xml.latn_fra_fr_azerty; break;
+      case "latn_lav_lv_qwerty": id = R.xml.latn_lav_lv_qwerty; break;
+      case "latn_hun_hu_qwerty": id = R.xml.latn_hun_hu_qwerty; break;
+      case "latn_hun_hu_qwertz": id = R.xml.latn_hun_hu_qwertz; break;
+      case "latn_nor_no_qwerty": id = R.xml.latn_nor_no_qwerty; break;
+      case "latn_pol_pl_qwerty": id = R.xml.latn_pol_pl_qwerty; break;
+      case "latn_por_br_qwerty": id = R.xml.latn_por_br_qwerty; break;
+      case "latn_slk_sk_qwertz": id = R.xml.latn_slk_sk_qwertz; break;
+      case "latn_swe_se_qwerty": id = R.xml.latn_swe_se_qwerty; break;
+      case "latn_vie_vi_qwerty": id = R.xml.latn_vie_vi_qwerty; break;
+      case "latn_tur_tr_qwerty": id = R.xml.latn_tur_tr_qwerty; break;
     }
     return KeyboardData.load(res, id);
   }

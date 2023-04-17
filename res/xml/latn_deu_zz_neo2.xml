@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- https://www.neo-layout.org/Layouts/neo/ -->
 <keyboard bottom_row="false">
   <row>
     <key key0="x" key1="°" key2="1" key4="…"/>
@@ -39,11 +40,11 @@
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
   <row height="0.95">
-	  <key width="1.8" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
-	  <key width="1.2" key0="fn" key1="loc alt" key2="change_method" key3="switch_emoji" key4="config"/>
-	  <key width="4.0" key0="space" key7="switch_second"/>
-	  <key width="1.2" key7="up" key6="right" key5="left" key8="down"/>
-	  <key key0="j" key4=";"/>
-	  <key width="1.8" key0="enter" key2="action"/>
-	</row>
+    <key width="1.8" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
+    <key width="1.2" key0="fn" key1="loc alt" key2="change_method" key3="switch_emoji" key4="config"/>
+    <key width="4.0" key0="space" key7="switch_second"/>
+    <key width="1.2" key7="up" key6="right" key5="left" key8="down"/>
+    <key key0="j" key4=";"/>
+    <key width="1.8" key0="enter" key2="action"/>
+  </row>
 </keyboard>
