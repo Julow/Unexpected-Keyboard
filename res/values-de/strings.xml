@@ -54,7 +54,7 @@
   <string name="pref_theme_e_dark">Dunkel</string>
   <string name="pref_theme_e_light">Hell</string>
   <string name="pref_theme_e_black">Schwarz</string>
-  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
+  <string name="pref_theme_e_altblack">Alternatives Schwarz</string> 
   <string name="pref_theme_e_white">Weiß</string>
   <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_swipe_dist_e_very_short">Sehr kurz</string>
@@ -73,8 +73,8 @@
   <string name="key_action_prev">Vorheriges</string>
   <string name="key_action_search">Suchen</string>
   <string name="key_action_send">Senden</string>
-  <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
-  <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
-  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
-  <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
+  <string name="launcher_button_imesettings">Tastatur aktivieren</string>
+  <string name="launcher_description">Diese App ist eine virtuelle Tastatur. Tippe auf den Button unten und aktivere Unexpected Keyboard in den Systemeinstellungen.</string>
+  <string name="launcher_sourcecode">Dies ist eine freie und quelloffene App. Du findest den Quellcode auf <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>. Dort können auch Bugs gemeldet werden.</string>
+  <string name="launcher_tryhere">Nach Aktivierung kannst du die Tastatur hier ausprobieren:</string>
 </resources>
