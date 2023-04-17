@@ -342,7 +342,7 @@ final class Config
     {
       case "system": case "none": return null;
       case "custom": if (custom_layout != null) return custom_layout; break;
-      case "arab_ara_aa_ibm": id = R.xml.arab_ara_aa_ibm; break;
+      case "arab_ara_sa_ibm": id = R.xml.arab_ara_sa_ibm; break;
       case "arab_ara_zz_ibm_ma": id = R.xml.arab_ara_zz_ibm_ma; break;
       case "beng_ben_zz_rh": id = R.xml.beng_ben_zz_rh; break;
       case "cyrl_bul_zz_yaverti": id = R.xml.cyrl_bul_zz_yaverti; break;
@@ -357,11 +357,11 @@ final class Config
       case "latn_ces_cz_qwertz": id = R.xml.latn_ces_cz_qwertz; break;
       case "latn_deu_zz_bone": id = R.xml.latn_deu_zz_bone; break;
       case "latn_deu_zz_neo2": id = R.xml.latn_deu_zz_neo2; break;
+      case "latn_deu_de_qwertz": id = R.xml.latn_deu_de_qwertz; break;
       case "latn_deu_zz_qwertz": id = R.xml.latn_deu_zz_qwertz; break;
       case "latn_eng_zz_colemak": id = R.xml.latn_eng_zz_colemak; break;
       case "latn_eng_zz_dvorak": id = R.xml.latn_eng_zz_dvorak; break;
       case "latn_eng_us_qwerty": id = R.xml.latn_eng_us_qwerty; break;
-      case "latn_deu_zz_qwertz": id = R.xml.latn_deu_zz_qwertz; break;
       case "latn_spa_es_qwerty": id = R.xml.latn_spa_es_qwerty; break;
       case "latn_fra_fr_azerty": id = R.xml.latn_fra_fr_azerty; break;
       case "latn_lav_lv_qwerty": id = R.xml.latn_lav_lv_qwerty; break;
