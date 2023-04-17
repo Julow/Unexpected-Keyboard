@@ -1,1 +1,1 @@
-Eine schlanke Bildschirmtastatur für Entwickler
+Eine schlanke, datenschutzfreundliche Bildschirmtastatur für Android.
