@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="ض" key2="١" key3="`" key4="esc"/>
-    <key key0="ص" key2="٢" key3="\@"/>
-    <key key0="ث" key2="٣" key3="\#"/>
-    <key key0="ق" key2="٤" key3="$"/>
-    <key key0="ف" key2="٥" key3="%"/>
-    <key key0="غ" key2="٦" key3="^"/>
-    <key key0="ع" key2="٧" key3="&amp;"/>
-    <key key0="ه" key2="٨" key3="*"/>
-    <key key0="خ" key2="٩" key3="("/>
-    <key key0="ح" key2="٠" key3=")"/>
-    <key key0="ج"/>
+    <key k0="ض" k2="١" k6="`" k4="esc"/>
+    <key k0="ص" k2="٢" k6="\@"/>
+    <key k0="ث" k2="٣" k6="\#"/>
+    <key k0="ق" k2="٤" k6="$"/>
+    <key k0="ف" k2="٥" k6="%"/>
+    <key k0="غ" k2="٦" k6="^"/>
+    <key k0="ع" k2="٧" k6="&amp;"/>
+    <key k0="ه" k2="٨" k6="*"/>
+    <key k0="خ" k2="٩" k6="("/>
+    <key k0="ح" k2="٠" k6=")"/>
+    <key k0="ج"/>
   </row>
   <row>
-    <key key0="ش" key4="tab"/>
-    <key key0="س"/>
-    <key key0="ي"/>
-    <key key0="ب"/>
-    <key key0="ل"/>
-    <key key0="ا" key1="أ"/>
-    <key key0="ت"/>
-    <key key0="ن"/>
-    <key key0="م"/>
-    <key key0="ك"/>
-    <key key0="ط"/>
+    <key k0="ش" k4="tab"/>
+    <key k0="س"/>
+    <key k0="ي"/>
+    <key k0="ب"/>
+    <key k0="ل"/>
+    <key k0="ا" k8="أ"/>
+    <key k0="ت"/>
+    <key k0="ن"/>
+    <key k0="م"/>
+    <key k0="ك"/>
+    <key k0="ط"/>
   </row>
   <row>
-    <key key0="ذ"/>
-    <key key0="ء"/>
-    <key key0="ؤ" key1="{"/>
-    <key key0="ر" key1="}"/>
-    <key key0="ى" key1="ئ"/>
-    <key key0="ة"/>
-    <key key0="و" key3=","/>
-    <key key0="ز" key3="."/>
-    <key key0="ظ" key3="&#1567;"/>
-    <key key0="د"/>
-    <key width="1.0" key0="backspace" key2="delete"/>
+    <key k0="ذ"/>
+    <key k0="ء"/>
+    <key k0="ؤ" k8="{"/>
+    <key k0="ر" k8="}"/>
+    <key k0="ى" k8="ئ"/>
+    <key k0="ة"/>
+    <key k0="و" k6=","/>
+    <key k0="ز" k6="."/>
+    <key k0="ظ" k6="&#1567;"/>
+    <key k0="د"/>
+    <key width="1.0" k0="backspace" k2="delete"/>
   </row>
 </keyboard>

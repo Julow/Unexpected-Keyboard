@@ -176,7 +176,7 @@ public final class Pointers implements Handler.Callback
   }
 
   static final int[] DIRECTION_TO_INDEX = new int[]{
-    7, 2, 2, 6, 6, 4, 4, 8, 8, 3, 3, 5, 5, 1, 1, 7
+	1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 1
   };
 
   /**
@@ -190,7 +190,7 @@ public final class Pointers implements Handler.Callback
 
   /*
    * Get the KeyValue at the given direction. In case of swipe (direction !=
-   * null), get the nearest KeyValue that is not key0.
+   * null), get the nearest KeyValue that is not k0.
    * Take care of applying [_handler.onPointerSwipe] to the selected key, this
    * must be done at the same time to be sure to treat removed keys correctly.
    * Return [null] if no key could be found in the given direction or if the
@@ -256,7 +256,7 @@ public final class Pointers implements Handler.Callback
       {
         ptr.value = newValue;
         ptr.flags = newValue.getFlags();
-        // Sliding mode is entered when key5 or key6 is down on a slider key.
+        // Sliding mode is entered when k7 or k3 is down on a slider key.
         if (ptr.key.slider &&
             (newValue.equals(ptr.key.getKeyValue(5))
              || newValue.equals(ptr.key.getKeyValue(6))))

@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="ض" key1="&#1614;" key2="١" key3="`" key4="esc"/>
-    <key key0="ص" key1="&#1611;" key2="٢" key3="\@"/>
-    <key key0="ث" key1="&#1615;" key2="٣" key3="\#" key4="loc €"/>
-    <key key0="ق" key1="&#1612;" key2="٤" key3="$" key4="loc £"/>
-    <key key0="ف" key1="&#1604;&#1573;" key2="٥" key3="%"/>
-    <key key0="غ" key1="&#1573;" key2="٦" key3="^"/>
-    <key key0="ع" key1="&#8216;" key2="٧" key3="&amp;"/>
-    <key key0="ه" key1="&#0247;" key2="٨" key3="*"/>
-    <key key0="خ" key1="&#0215;" key2="٩" key3="("/>
-    <key key0="ح" key1="&#1563;" key2="٠" key3=")"/>
-    <key key0="ج" key1="&gt;" key2="-" key3="_"/>
-    <key key0="د" key1="&lt;" key2="=" key3="ذ"/>
-  <!-- <key key0="ذ" key1="&#1617;" key3="\\" key4="|"/> -->
+    <key k0="ض" k2="١" k6="`" k4="esc" k8="&#1614;"/>
+    <key k0="ص" k2="٢" k6="\@" k8="&#1611;"/>
+    <key k0="ث" k2="٣" k6="\#" k4="loc €" k8="&#1615;"/>
+    <key k0="ق" k2="٤" k6="$" k4="loc £" k8="&#1612;"/>
+    <key k0="ف" k2="٥" k6="%" k8="&#1604;&#1573;"/>
+    <key k0="غ" k2="٦" k6="^" k8="&#1573;"/>
+    <key k0="ع" k2="٧" k6="&amp;" k8="&#8216;"/>
+    <key k0="ه" k2="٨" k6="*" k8="&#0247;"/>
+    <key k0="خ" k2="٩" k6="(" k8="&#0215;"/>
+    <key k0="ح" k2="٠" k6=")" k8="&#1563;"/>
+    <key k0="ج" k2="-" k6="_" k8="&gt;"/>
+    <key k0="د" k2="=" k6="ذ" k8="&lt;"/>
+  <!-- <key k0="ذ" k6="\\" k4="|" k8="&#1617;"/> -->
   </row>
   <row>
-    <key shift="0.5" key0="ش" key1="&#1616;" key4="tab"/>
-    <key key0="س" key1="&#1613;"/>
-    <key key0="ي" key1="["/>
-    <key key0="ب" key1="]"/>
-    <key key0="ل" key1="&#1604;&#1571;"/>
-    <key key0="ا" key1="أ"/>
-    <key key0="ت" key1="ـ"/>
-    <key key0="ن" key1="&#1548;"/>
-    <key key0="م" key1="/"/>
-    <key key0="ك" key1=":"/>
-    <key key0="ط" key1="&quot;"/>
+    <key shift="0.5" k0="ش" k4="tab" k8="&#1616;"/>
+    <key k0="س" k8="&#1613;"/>
+    <key k0="ي" k8="["/>
+    <key k0="ب" k8="]"/>
+    <key k0="ل" k8="&#1604;&#1571;"/>
+    <key k0="ا" k8="أ"/>
+    <key k0="ت" k8="ـ"/>
+    <key k0="ن" k8="&#1548;"/>
+    <key k0="م" k8="/"/>
+    <key k0="ك" k8=":"/>
+    <key k0="ط" k8="&quot;"/>
   </row>
   <row>
-    <key shift="0.5" key0="ئ" key1="~"/>
-    <key key0="ء" key1="&#1618;"/>
-    <key key0="ؤ" key1="{"/>
-    <key key0="ر" key1="}"/>
-    <key key0="لا" key1="&#1604;&#1570;"/>
-    <key key0="ى" key1="&#1570;"/>
-    <key key0="ة" key1="&#8217;"/>
-    <key key0="و" key1=","/>
-    <key key0="ز" key1="."/>
-    <key key0="ظ" key1="&#1567;"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key shift="0.5" k0="ئ" k8="~"/>
+    <key k0="ء" k8="&#1618;"/>
+    <key k0="ؤ" k8="{"/>
+    <key k0="ر" k8="}"/>
+    <key k0="لا" k8="&#1604;&#1570;"/>
+    <key k0="ى" k8="&#1570;"/>
+    <key k0="ة" k8="&#8217;"/>
+    <key k0="و" k8=","/>
+    <key k0="ز" k8="."/>
+    <key k0="ظ" k8="&#1567;"/>
+    <key width="1.5" k0="backspace" k2="delete"/>
   </row>
 </keyboard>

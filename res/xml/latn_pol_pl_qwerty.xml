@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="q" key2="1" key4="esc"/>
-    <key key0="w" key1="~" key2="2" key3="\@"/>
-    <key key0="e" key1="!" key2="3" key3="\#" key4="ę"/>
-    <key key0="r" key2="4" key3="$"/>
-    <key key0="t" key2="5" key3="%"/>
-    <key key0="y" key2="6" key3="^"/>
-    <key key0="u" key2="7" key3="&amp;" key4="loc €"/>
-    <key key0="i" key1="loc accent_macron" key2="8" key3="*"/>
-    <key key0="o" key1="ó" key2="9" key3="(" key4=")"/>
-    <key key0="p" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
+    <key k0="q" k2="1" k4="esc"/>
+    <key k0="w" k2="2" k6="\@" k8="~"/>
+    <key k0="e" k2="3" k4="ę" k6="\#" k8="!"/>
+    <key k0="r" k2="4" k6="$"/>
+    <key k0="t" k2="5" k6="%"/>
+    <key k0="y" k2="6" k6="^"/>
+    <key k0="u" k2="7" k4="loc €" k6="&amp;"/>
+    <key k0="i" k2="8" k6="*" k8="loc macron"/>
+    <key k0="o" k2="9" k4=")" k6="(" k8="ó"/>
+    <key k0="p" k2="0" k4="f12_placeholder" k6="f11_placeholder"/>
   </row>
   <row>
-    <key shift="0.5" key0="a" key1="tab" key2="`" key4="ą"/>
-    <key key0="s" key1="loc accent_ring" key3="loc ß" key4="ś"/>
-    <key key0="d" key1="loc accent_grave" key2="loc £" key3="loc accent_aigu"/>
-    <key key0="f" key1="loc accent_dot_above" key4="loc accent_ogonek"/>
-    <key key0="g" key1="loc accent_caron" key2="-" key3="_"/>
-    <key key0="h" key2="=" key3="+"/>
-    <key key0="j" key1="loc accent_trema" key2="loc accent_circonflexe" key3="{" key4="}"/>
-    <key key0="k" key1="loc accent_double_aigu" key3="[" key4="]"/>
-    <key key0="l" key2="|" key3="\\" key4="ł"/>
+    <key shift="0.5" k0="a" k2="`" k4="ą" k8="tab"/>
+    <key k0="s" k4="ś" k6="loc ß" k8="loc ring_above"/>
+    <key k0="d" k2="loc £" k6="loc acute" k8="loc grave"/>
+    <key k0="f" k4="loc ogonek" k8="loc dot_above"/>
+    <key k0="g" k2="-" k6="_" k8="loc caron"/>
+    <key k0="h" k2="=" k6="+"/>
+    <key k0="j" k2="loc circumflex" k4="}" k6="{" k8="loc two_dots_above"/>
+    <key k0="k" k4="]" k6="[" k8="loc double_acute"/>
+    <key k0="l" k2="|" k4="ł" k6="\\"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key2="loc capslock"/>
-    <key key0="z" key4="ż"/>
-    <key key0="x" key4="ź"/>
-    <key key0="c" key1="loc accent_cedille" key2="&lt;" key3="." key4="ć"/>
-    <key key0="v" key2="&gt;" key3=","/>
-    <key key0="b" key2="\?" key3="/"/>
-    <key key0="n" key1="loc accent_tilde" key2=":" key3=";" key4="ń"/>
-    <key key0="m" key2="&quot;" key3="'"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key width="1.5" k0="shift" k2="loc capslock"/>
+    <key k0="z" k4="ż"/>
+    <key k0="x" k4="ź"/>
+    <key k0="c" k2="&lt;" k4="ć" k6="." k8="loc cedille"/>
+    <key k0="v" k2="&gt;" k6=","/>
+    <key k0="b" k2="\?" k6="/"/>
+    <key k0="n" k2=":" k4="ń" k6=";" k8="loc tilde"/>
+    <key k0="m" k2="&quot;" k6="'"/>
+    <key width="1.5" k0="backspace" k2="delete"/>
   </row>
 </keyboard>

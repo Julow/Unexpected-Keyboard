@@ -2,41 +2,41 @@
 <!-- Adapted from standard SI 1452 -->
 <keyboard>
   <row>
-    <key key0="/" key2="1" key3="!" key4="esc"/>
-    <key key0="'" key2="2" key3="\@" key1=";"/>
-    <key key0="ק" key2="3" key3="\#" key1="€"/>
-    <key key0="ר" key2="4" key3="$" key1="₪"/>
-    <key key0="א" key2="5" key3="%"/>
-    <key key0="ט" key2="6" key3="^" key4="ole_placeholder"/>
-    <key key0="ו" key2="7" key3="&amp;" key4="meteg_placeholder"/>
-    <key key0="ן" key2="8" key3="*"/>
-    <key key0="ם" key2="9" key3="b(" key4="lrm"/>
-    <key key0="פ" key2="0" key3="b)" key4="rlm"/>
-    <key key0="backspace" key2="delete" key3="f11_placeholder" key4="f12_placeholder"/>
+    <key k0="/" k2="1" k4="esc" k6="!"/>
+    <key k0="'" k2="2" k6="\@" k8=";"/>
+    <key k0="ק" k2="3" k6="\#" k8="€"/>
+    <key k0="ר" k2="4" k6="$" k8="₪"/>
+    <key k0="א" k2="5" k6="%"/>
+    <key k0="ט" k2="6" k4="ole_placeholder" k6="^"/>
+    <key k0="ו" k2="7" k4="meteg_placeholder" k6="&amp;"/>
+    <key k0="ן" k2="8" k6="*"/>
+    <key k0="ם" k2="9" k4="lrm" k6="b("/>
+    <key k0="פ" k2="0" k4="rlm" k6="b)"/>
+    <key k0="backspace" k2="delete" k6="f11_placeholder" k4="f12_placeholder"/>
   </row>
   <row>
-    <key key0="ש" key2="`" key1="tab" key3="sindot_placeholder" key4="shindot_placeholder" width="1.333"/>
-    <key key0="ד" key1="~" width="1.0333"/>
-    <key key0="ג" key1="geresh" key2="gershayim" width="1.0333"/>
-    <key key0="כ" width="1.0333"/>
-    <key key0="ע" width="1.0333"/>
-    <key key0="י" key2="-" key3="_" key4="maqaf" width="1.0333"/>
-    <key key0="ח" key2="=" key3="+" width="1.0333"/>
-    <key key0="ל" key2="b[" key3="b{" width="1.0333"/>
-    <key key0="ך" key2="b]" key3="b}" width="1.0333"/>
-    <key key0="ף" key2="," key3="&quot;" key1=":" width="1.4006"/>
+    <key width="1.333" k0="ש" k2="`" k4="shindot_placeholder" k6="sindot_placeholder" k8="tab"/>
+    <key width="1.0333" k0="ד" k8="~"/>
+    <key width="1.0333" k0="ג" k8="geresh" k2="gershayim"/>
+    <key width="1.0333" k0="כ"/>
+    <key width="1.0333" k0="ע"/>
+    <key width="1.0333" k0="י" k2="-" k6="_" k4="maqaf"/>
+    <key width="1.0333" k0="ח" k2="=" k6="+"/>
+    <key width="1.0333" k0="ל" k2="b[" k6="b{"/>
+    <key width="1.0333" k0="ך" k2="b]" k6="b}"/>
+    <key width="1.4006" k0="ף" k2="," k6="&quot;" k8=":"/>
   </row>
   <row>
-    <key key0="\\" key1="|" key2="shift" key3="loc capslock"/>
-    <key key0="ז"/>
-    <key key0="ס"/>
-    <key key0="ב"/>
-    <key key0="ה"/>
-    <key key0="נ"/>
-    <key key0="מ"/>
-    <key key0="צ"/>
-    <key key0="ת" key1="blt"/>
-    <key key0="ץ" key1="bgt"/>
-    <key key0="." key1="\?"/>
+    <key k0="\\" k2="shift" k6="loc capslock" k8="|"/>
+    <key k0="ז"/>
+    <key k0="ס"/>
+    <key k0="ב"/>
+    <key k0="ה"/>
+    <key k0="נ"/>
+    <key k0="מ"/>
+    <key k0="צ"/>
+    <key k0="ת" k8="blt"/>
+    <key k0="ץ" k8="bgt"/>
+    <key k0="." k8="\?"/>
   </row>
 </keyboard>

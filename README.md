@@ -9,9 +9,9 @@
 
 Lightweight and privacy-conscious virtual keyboard for Android.
 
-| <img src="/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Screenshot-1" /> | <img src="/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Screenshot-2"/> | <img src="/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Screenshot-3"/> |
+| <img src="/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Screenshot-1"/> | <img src="/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Screenshot-2"/> | <img src="/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Screenshot-3"/> |
 | --- | --- | --- |
-| <img src="/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Screenshot-4" /> | <img src="/metadata/android/en-US/images/phoneScreenshots/5.png" alt="Screenshot-5" /> | <img src="/metadata/android/en-US/images/phoneScreenshots/6.png" alt="Screenshot-6" /> |
+| <img src="/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Screenshot-4"/> | <img src="/metadata/android/en-US/images/phoneScreenshots/5.png" alt="Screenshot-5"/> | <img src="/metadata/android/en-US/images/phoneScreenshots/6.png" alt="Screenshot-6"/> |
 
 The main feature is that you can type more characters by swiping the keys towards the corners.
 

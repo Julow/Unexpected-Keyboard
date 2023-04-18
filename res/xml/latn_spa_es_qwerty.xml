@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="q" key2="1" key4="esc"/>
-    <key key0="w" key1="~" key2="2" key3="\@"/>
-    <key key0="e" key1="!" key2="3" key3="\#" key4="€"/>
-    <key key0="r" key2="4" key3="$"/>
-    <key key0="t" key2="5" key3="%"/>
-    <key key0="y" key2="6" key3="^"/>
-    <key key0="u" key2="7" key3="&amp;"/>
-    <key key0="i" key2="8" key3="*"/>
-    <key key0="o" key2="9" key3="(" key4=")"/>
-    <key key0="p" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
+    <key k0="q" k2="1" k4="esc"/>
+    <key k0="w" k2="2" k6="\@" k8="~"/>
+    <key k0="e" k2="3" k4="€" k6="\#" k8="!"/>
+    <key k0="r" k2="4" k6="$"/>
+    <key k0="t" k2="5" k6="%"/>
+    <key k0="y" k2="6" k6="^"/>
+    <key k0="u" k2="7" k6="&amp;"/>
+    <key k0="i" k2="8" k6="*"/>
+    <key k0="o" k2="9" k4=")" k6="("/>
+    <key k0="p" k2="0" k4="f12_placeholder" k6="f11_placeholder"/>
   </row>
   <row>
-    <key key0="a" key2="tab" key4="`"/>
-    <key key0="s" key2="¡" key3="loc ß"/>
-    <key key0="d" key1="accent_grave" key3="accent_aigu"/>
-    <key key0="f"/>
-    <key key0="g" key2="-" key3="_"/>
-    <key key0="h" key2="=" key3="+"/>
-    <key key0="j" key1="accent_trema" key4="}" key3="{"/>
-    <key key0="k" key3="[" key4="]"/>
-    <key key0="l" key2="|" key3="\\"/>
-    <key key0="ñ" key1="·" key3="ç" />
+    <key k0="a" k2="tab" k4="`"/>
+    <key k0="s" k2="¡" k6="loc ß"/>
+    <key k0="d" k6="acute" k8="grave"/>
+    <key k0="f"/>
+    <key k0="g" k2="-" k6="_"/>
+    <key k0="h" k2="=" k6="+"/>
+    <key k0="j" k4="}" k6="{" k8="two_dots_above"/>
+    <key k0="k" k4="]" k6="["/>
+    <key k0="l" k2="|" k6="\\"/>
+    <key k0="ñ" k6="ç" k8="·"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key2="loc capslock"/>
-    <key key0="z"/>
-    <key key0="x"/>
-    <key key0="c" key1="loc accent_cedille" key2="&lt;" key3="."/>
-    <key key0="v" key2="&gt;" key3=","/>
-    <key key0="b" key2="\?" key3="/" key4="¿"/>
-    <key key0="n" key1="accent_tilde" key2=":" key3=";"/>
-    <key key0="m" key2="&quot;" key3="'"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key width="1.5" k0="shift" k2="loc capslock"/>
+    <key k0="z"/>
+    <key k0="x"/>
+    <key k0="c" k2="&lt;" k6="." k8="loc cedille"/>
+    <key k0="v" k2="&gt;" k6=","/>
+    <key k0="b" k2="\?" k4="¿" k6="/"/>
+    <key k0="n" k2=":" k6=";" k8="tilde"/>
+    <key k0="m" k2="&quot;" k6="'"/>
+    <key width="1.5" k0="backspace" k2="delete"/>
   </row>
 </keyboard>

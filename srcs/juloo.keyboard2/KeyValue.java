@@ -28,30 +28,32 @@ final class KeyValue
     CTRL,
     ALT,
     META,
-    DOUBLE_AIGU,
+	
+    ACUTE,
+    ARROW_RIGHT_ABOVE,
+    BAR,
+    BREVE,
+    CARON,
+    CEDILLE,
+    CIRCUMFLEX,
     DOT_ABOVE,
     DOT_BELOW,
+    DOUBLE_ACUTE,
     GRAVE,
-    AIGU,
-    CIRCONFLEXE,
-    TILDE,
-    CEDILLE,
-    TREMA,
     HORN,
     HOOK_ABOVE,
+    MACRON,
+    OGONEK,
+    RING_ABOVE,
+    STROKE,
+    TILDE,
+    TWO_DOTS_ABOVE,
+
     SUPERSCRIPT,
     SUBSCRIPT,
-    RING,
-    CARON,
-    MACRON,
     ORDINAL,
     ARROWS,
     BOX,
-    OGONEK,
-    SLASH,
-    ARROW_RIGHT,
-    BREVE,
-    BAR,
     FN, // Must be placed last to be applied first
   }
 
@@ -301,28 +303,30 @@ final class KeyValue
   {
     switch (name)
     {
-      case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
-      case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
+      case "acute": return diacritic(0x50, Modifier.ACUTE);
+      case "arrow_right_above": return diacritic(0x5D, Modifier.ARROW_RIGHT_ABOVE);
+      case "bar": return diacritic(0x5F, Modifier.BAR);
+      case "breve": return diacritic(0x5E, Modifier.BREVE);
+      case "dot_above": return diacritic(0x5A, Modifier.DOT_ABOVE);
+      case "dot_below": return diacritic(0x60, Modifier.DOT_BELOW);
+      case "double_acute": return diacritic(0x5B, Modifier.DOUBLE_ACUTE);
+      case "caron": return diacritic(0x51, Modifier.CARON);
+      case "cedille": return diacritic(0x52, Modifier.CEDILLE);
+      case "circumflex": return diacritic(0x53, Modifier.CIRCUMFLEX);
+      case "grave": return diacritic(0x54, Modifier.GRAVE);
+      case "horn": return diacritic(0x61, Modifier.HORN);
+      case "hook_above": return diacritic(0x62, Modifier.HOOK_ABOVE);
+      case "macron": return diacritic(0x55, Modifier.MACRON);
+      case "ogonek": return diacritic(0x59, Modifier.OGONEK);
+      case "ring_above": return diacritic(0x56, Modifier.RING_ABOVE);
+      case "stroke": return diacritic(0x5C, Modifier.STROKE);
+      case "tilde": return diacritic(0x57, Modifier.TILDE);
+      case "two_dots_above": return diacritic(0x58, Modifier.TWO_DOTS_ABOVE);
+
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
-      case "accent_aigu": return diacritic(0x50, Modifier.AIGU);
-      case "accent_caron": return diacritic(0x51, Modifier.CARON);
-      case "accent_cedille": return diacritic(0x52, Modifier.CEDILLE);
-      case "accent_circonflexe": return diacritic(0x53, Modifier.CIRCONFLEXE);
-      case "accent_grave": return diacritic(0x54, Modifier.GRAVE);
-      case "accent_macron": return diacritic(0x55, Modifier.MACRON);
-      case "accent_ring": return diacritic(0x56, Modifier.RING);
-      case "accent_tilde": return diacritic(0x57, Modifier.TILDE);
-      case "accent_trema": return diacritic(0x58, Modifier.TREMA);
-      case "accent_ogonek": return diacritic(0x59, Modifier.OGONEK);
-      case "accent_dot_above": return diacritic(0x5A, Modifier.DOT_ABOVE);
-      case "accent_double_aigu": return diacritic(0x5B, Modifier.DOUBLE_AIGU);
-      case "accent_slash": return diacritic(0x5C, Modifier.SLASH);
-      case "accent_arrow_right": return diacritic(0x5D, Modifier.ARROW_RIGHT);
-      case "accent_breve": return diacritic(0x5E, Modifier.BREVE);
-      case "accent_bar": return diacritic(0x5F, Modifier.BAR);
-      case "accent_dot_below": return diacritic(0x60, Modifier.DOT_BELOW);
-      case "accent_horn": return diacritic(0x61, Modifier.HORN);
-      case "accent_hook_above": return diacritic(0x62, Modifier.HOOK_ABOVE);
+      case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
+      case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
+
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
@@ -391,7 +395,7 @@ final class KeyValue
       case "f11_placeholder": return placeholderKey(Placeholder.F11);
       case "f12_placeholder": return placeholderKey(Placeholder.F12);
 
-      /* hebrew niqqud */
+      /* Hebrew niqqud */
       case "qamats": return charKey("\u05E7\u05B8", '\u05B8', 0); // kamatz
       case "patah": return charKey("\u05E4\u05B7", '\u05B7', 0); // patach
       case "sheva": return charKey("\u05E9\u05B0", '\u05B0', 0);
@@ -408,11 +412,11 @@ final class KeyValue
       case "shindot_placeholder": return placeholderKey(Placeholder.SHINDOT);
       case "sindot": return charKey("\u05E9\u05C2", '\u05C2', 0);
       case "sindot_placeholder": return placeholderKey(Placeholder.SINDOT);
-      /* hebrew punctuation */
+      /* Hebrew punctuation */
       case "geresh": return charKey("\u05F3", '\u05F3', 0);
       case "gershayim": return charKey("\u05F4", '\u05F4', 0);
       case "maqaf": return charKey("\u05BE", '\u05BE', 0);
-      /* hebrew biblical */
+      /* Hebrew biblical */
       case "rafe": return charKey("\u05E4\u05BF", '\u05BF', 0);
       case "ole": return charKey("\u05E2\u05AB", '\u05AB', 0);
       case "ole_placeholder": return placeholderKey(Placeholder.OLE);

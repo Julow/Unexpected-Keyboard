@@ -31,8 +31,8 @@ class KeyboardData
   }
 
   /** Add keys from the given iterator into the keyboard. Extra keys are added
-   * on the empty key4 corner of the second row, from right to left. If there's
-   * not enough room, key3 of the second row is tried then key2 and key1 of the
+   * on the empty k4 corner of the second row, from right to left. If there's
+   * not enough room, k6 of the second row is tried then k2 and k8 of the
    * third row. */
   public KeyboardData addExtraKeys(Iterator<KeyValue> k)
   {
@@ -232,7 +232,7 @@ class KeyboardData
       int status;
       float h = attribute_float(parser, "height", 1f);
       float shift = attribute_float(parser, "shift", 0f);
-      while (expect_tag(parser, "key"))
+      while (expect_tag(parser, "k"))
         keys.add(Key.parse(parser));
       return new Row(keys, h, shift);
     }
@@ -333,15 +333,15 @@ class KeyboardData
     {
       KeyValue[] ks = new KeyValue[9];
       int keysflags = 0;
-      keysflags |= parse_key_attr(parser, "key0", ks, 0);
-      keysflags |= parse_key_attr(parser, "key1", ks, 1);
-      keysflags |= parse_key_attr(parser, "key2", ks, 2);
-      keysflags |= parse_key_attr(parser, "key3", ks, 3);
-      keysflags |= parse_key_attr(parser, "key4", ks, 4);
-      keysflags |= parse_key_attr(parser, "key5", ks, 5);
-      keysflags |= parse_key_attr(parser, "key6", ks, 6);
-      keysflags |= parse_key_attr(parser, "key7", ks, 7);
-      keysflags |= parse_key_attr(parser, "key8", ks, 8);
+      keysflags |= parse_key_attr(parser, "k0", ks, 0);
+      keysflags |= parse_key_attr(parser, "k1", ks, 1);
+      keysflags |= parse_key_attr(parser, "k2", ks, 2);
+      keysflags |= parse_key_attr(parser, "k3", ks, 3);
+      keysflags |= parse_key_attr(parser, "k4", ks, 4);
+      keysflags |= parse_key_attr(parser, "k5", ks, 5);
+      keysflags |= parse_key_attr(parser, "k6", ks, 6);
+      keysflags |= parse_key_attr(parser, "k7", ks, 7);
+      keysflags |= parse_key_attr(parser, "k8", ks, 8);
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       boolean slider = attribute_bool(parser, "slider", false);

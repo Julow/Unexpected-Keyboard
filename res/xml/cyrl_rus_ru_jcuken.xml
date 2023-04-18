@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key key0="й" key2="1" key4="esc"/>
-    <key key0="ц" key1="loc ї" key2="2" key3="\@" key4="~"/>
-    <key key0="у" key1="loc ў" key2="3" key3="\#" key4="!"/>
-    <key key0="к" key2="4" key3="$"/>
-    <key key0="е" key1="ё" key2="5" key3="%"/>
-    <key key0="н" key1="loc є" key2="6" key3="^"/>
-    <key key0="г" key1="loc ґ" key2="7" key3="&amp;"/>
-    <key key0="ш" key2="8" key3="*"/>
-    <key key0="щ" key2="9" key3="(" key4=")"/>
-    <key key0="з" key2="0" key3="{" key4="}"/>
-    <key key0="х" key3="[" key4="]" key1="f11_placeholder" key2="f12_placeholder"/>
+    <key k0="й" k2="1" k4="esc"/>
+    <key k0="ц" k2="2" k4="~" k6="\@" k8="loc ї"/>
+    <key k0="у" k2="3" k4="!" k6="\#" k8="loc ў"/>
+    <key k0="к" k2="4" k6="$"/>
+    <key k0="е" k2="5" k6="%" k8="ё"/>
+    <key k0="н" k2="6" k6="^" k8="loc є"/>
+    <key k0="г" k2="7" k6="&amp;" k8="loc ґ"/>
+    <key k0="ш" k2="8" k6="*"/>
+    <key k0="щ" k2="9" k4=")" k6="("/>
+    <key k0="з" k2="0" k4="}" k6="{"/>
+    <key k0="х" k2="f12_placeholder" k4="]" k6="[" k8="f11_placeholder"/>
   </row>
   <row>
-    <key key0="ф" key1="tab" key2="`"/>
-    <key key0="ы"/>
-    <key key0="в"/>
-    <key key0="а"/>
-    <key key0="п"/>
-    <key key0="р"/>
-    <key key0="о"/>
-    <key key0="л"/>
-    <key key0="д" key2="-" key3="_"/>
-    <key key0="ж" key2="=" key3="+"/>
-    <key key0="э" key2="|" key3="\\"/>
+    <key k0="ф" k2="`" k8="tab"/>
+    <key k0="ы"/>
+    <key k0="в"/>
+    <key k0="а"/>
+    <key k0="п"/>
+    <key k0="р"/>
+    <key k0="о"/>
+    <key k0="л"/>
+    <key k0="д" k2="-" k6="_"/>
+    <key k0="ж" k2="=" k6="+"/>
+    <key k0="э" k2="|" k6="\\"/>
   </row>
   <row>
-    <key width="1.18" key0="shift" key2="loc capslock"/>
-    <key width="0.96" key0="я"/>
-    <key width="0.96" key0="ч"/>
-    <key width="0.96" key0="с"/>
-    <key width="0.96" key0="м"/>
-    <key width="0.96" key0="и" key1="loc і" key2="&lt;" key3="."/>
-    <key width="0.96" key0="т" key2="&gt;" key3=","/>
-    <key width="0.96" key0="ь" key1="ъ" key2="\?" key3="/"/>
-    <key width="0.96" key0="б" key2=":" key3=";"/>
-    <key width="0.96" key0="ю" key2="&quot;" key3="'"/>
-    <key width="1.18" key0="backspace" key2="delete"/>
+    <key width="1.18" k0="shift" k2="loc capslock"/>
+    <key width="0.96" k0="я"/>
+    <key width="0.96" k0="ч"/>
+    <key width="0.96" k0="с"/>
+    <key width="0.96" k0="м"/>
+    <key width="0.96" k0="и" k2="&lt;" k6="." k8="loc і"/>
+    <key width="0.96" k0="т" k2="&gt;" k6=","/>
+    <key width="0.96" k0="ь" k2="\?" k6="/" k8="ъ"/>
+    <key width="0.96" k0="б" k2=":" k6=";"/>
+    <key width="0.96" k0="ю" k2="&quot;" k6="'"/>
+    <key width="1.18" k0="backspace" k2="delete"/>
   </row>
 </keyboard>
