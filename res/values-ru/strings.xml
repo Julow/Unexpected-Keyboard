@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name" product="debug">Unexpected Keyboard (отладка)</string>
-  <!-- <string name="app_name" product="default">Unexpected Keyboard</string> -->
+  <string name="app_name" product="default">Unexpected Keyboard</string>
   <string name="settings_activity_label">Unexpected Keyboard Настройки</string>
   <string name="pref_portrait">В портретном режиме</string>
   <string name="pref_landscape">В ландшафтном режиме</string>
@@ -21,8 +21,8 @@
   <string name="pref_show_numpad_never">Никогда</string>
   <string name="pref_show_numpad_landscape">Только в ландшафтном режиме</string>
   <string name="pref_show_numpad_always">Всегда</string>
-  <!-- <string name="pref_number_row_title">Show number row</string> -->
-  <!-- <string name="pref_number_row_summary">Add a number row at the top of the keyboard when the numpad is hidden</string> -->
+  <string name="pref_number_row_title">Показывать номер ряда</string>
+  <string name="pref_number_row_summary">Добавить ряд цифр над клавиатурой, когда numpad не активен</string>
   <string name="pref_numpad_layout">NumPad раскладка</string>
   <string name="pref_numpad_layout_e_high_first">Старшие цифры сверху</string>
   <string name="pref_numpad_layout_e_low_first">Младшие цифры сверху</string>
@@ -36,11 +36,11 @@
   <string name="pref_long_interval_title">Интервал повтора клавиш</string>
   <string name="pref_lock_double_tap_title">Двойное нажатие на Shift активирует Caps lock</string>
   <string name="pref_lock_double_tap_summary">Вы можете активировать модификатор, удерживая клавишу</string>
-  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <string name="pref_category_behavior">Поведение</string>
   <string name="pref_autocapitalisation_title">Автоматическая смена регистра</string>
   <string name="pref_autocapitalisation_summary">Автонажатие Shift в начале каждого предложения</string>
-  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
-  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
+  <string name="pref_switch_input_immediate_title">Переключаться к последней используемой клавиатуре</string>
+  <string name="pref_switch_input_immediate_summary">Поведение клавиши переключения клавиатуры</string>
   <string name="pref_vibrate_title">Вибрация</string>
   <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
   <string name="pref_category_style">Стиль</string>
@@ -54,9 +54,9 @@
   <string name="pref_theme_e_dark">Темная</string>
   <string name="pref_theme_e_light">Светлая</string>
   <string name="pref_theme_e_black">Черная</string>
-  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
+  <string name="pref_theme_e_altblack">Альтернативный черный</string>
   <string name="pref_theme_e_white">Белая</string>
-  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
+  <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_swipe_dist_e_very_short">Очень близко</string>
   <string name="pref_swipe_dist_e_short">Близко</string>
   <string name="pref_swipe_dist_e_default">Нормально</string>
@@ -73,8 +73,8 @@
   <string name="key_action_prev">Предыдущий</string>
   <string name="key_action_search">Поиск</string>
   <string name="key_action_send">Отправить</string>
-  <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
-  <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
-  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
-  <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
+  <string name="launcher_button_imesettings">Включить клавиатуру</string>
+  <string name="launcher_description">Данное приложение является виртуальной клавиатурой. Зайдите в настройки, нажав кнопку внизу и активируйте Unexpected-Keyboard.</string>
+  <string name="launcher_sourcecode">Это бесплатное приложение с открытым исходным кодом. Вы можете изучить код или сообщить об ошибках по ссылке <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
+  <string name="launcher_tryhere">После активации вы можете попробовать клавиатуру прямо здесь:</string>
 </resources>
