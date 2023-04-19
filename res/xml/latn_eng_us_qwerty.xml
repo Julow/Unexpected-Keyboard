@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Adapted from standard ISO/IEC 9995 -->
 <!-- This file defines the QWERTY layout.
 
 A layout is made of keys arranged into rows. Keys can be made bigger with the

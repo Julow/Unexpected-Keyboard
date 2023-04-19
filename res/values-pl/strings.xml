@@ -73,8 +73,8 @@
   <string name="key_action_prev">Wstecz</string>
   <string name="key_action_search">Szukaj</string>
   <string name="key_action_send">Wyślij</string>
-  <string name="launcher_button_imesettings">Włącz klawiaturę</string>
-  <string name="launcher_description">Ta aplikacja jest klawiaturą ekranową. Naciśnij poniższy przycisk, aby przejść do ustawień systemu i włącz Unexpected-Keyboard.</string>
-  <string name="launcher_sourcecode">Jest to darmowa aplikacja o otwartym kodzie źródłowym. Możesz zobaczyć kod źródłowy oraz zgłosić błedy na <a href="https://github.com/Julow/Unexpected-Keyboard/">Githubie</a>.</string>
-  <string name="launcher_tryhere">Po jej włączeniu, możesz wypróbować klawiaturę tutaj:</string>
+  <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
+  <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
+  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
+  <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
 </resources>

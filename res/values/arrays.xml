@@ -2,74 +2,74 @@
 <resources>
   <string-array name="pref_layout_values">
     <item>none</item>
-    <item>azerty</item>
-    <item>qwerty</item>
-    <item>qwerty_pt</item>
-    <item>qwerty_es</item>
-    <item>qwerty_el</item>
-    <item>qwerty_ko</item>
-    <item>qwerty_lv</item>
-    <item>qwerty_no</item>
-    <item>qwerty_sv_se</item>
-    <item>qwerty_hu</item>
-    <item>qwerty_tr</item>
-    <item>qwerty_pl</item>
-    <item>qwerty_vi</item>
-    <item>ru_jcuken</item>
-    <item>qwertz</item>
-    <item>qwertz_cs</item>
-    <item>qwertz_de</item>
-    <item>qwertz_hu</item>
-    <item>qwertz_sk</item>
-    <item>bgph1</item>
-    <item>dvorak</item>
-    <item>colemak</item>
-    <item>neo2</item>
-    <item>bone</item>
-    <item>jcuken_ua</item>
-    <item>bangla</item>
-    <item>devanagari_1</item>
-    <item>devanagari_2</item>
-    <item>he_il_1452_1</item>
-    <item>he_il_1452_2</item>
-    <item>ar_pc</item>
-    <item>ar_alt</item>
+    <item>arab_ara_sa_ibm</item>
+    <item>arab_ara_zz_ibm_ma</item>
+    <item>beng_ben_zz_rh</item>
+    <item>cyrl_bul_zz_yaverti</item>
+    <item>cyrl_rus_ru_jcuken</item>
+    <item>cyrl_ukr_uk_jcuken</item>
+    <item>deva_hin_in_inscript</item>
+    <item>deva_hin_zz_lv</item>
+    <item>grek_ell_gr_qwerty</item>
+    <item>hang_kor_kr_dubeolsik</item>
+    <item>hebr_heb_il_</item>
+    <item>hebr_heb_il_2</item>
+    <item>latn_ces_cz_qwertz</item>
+    <item>latn_deu_zz_bone</item>
+    <item>latn_deu_zz_neo2</item>
+    <item>latn_deu_de_qwertz</item>
+    <item>latn_deu_zz_qwertz</item>
+    <item>latn_eng_zz_colemak</item>
+    <item>latn_eng_zz_dvorak</item>
+    <item>latn_eng_us_qwerty</item>
+    <item>latn_spa_es_qwerty</item>
+    <item>latn_fra_fr_azerty</item>
+    <item>latn_lav_lv_qwerty</item>
+    <item>latn_hun_zz_qwerty</item>
+    <item>latn_hun_hu_qwertz</item>
+    <item>latn_nor_no_qwerty</item>
+    <item>latn_pol_pl_qwerty</item>
+    <item>latn_por_br_qwerty</item>
+    <item>latn_slk_sk_qwertz</item>
+    <item>latn_swe_se_qwerty</item>
+    <item>latn_vie_vi_qwerty</item>
+    <item>latn_tur_tr_qwerty</item>
     <item>custom</item>
   </string-array>
   <string-array name="pref_layout_entries">
     <item>None</item>
-    <item>AZERTY</item>
-    <item>QWERTY</item>
-    <item>QWERTY (Brasileiro)</item>
-    <item>QWERTY (Español)</item>
-    <item>QWERTY (Greek)</item>
-    <item>QWERTY (Korean)</item>
-    <item>QWERTY (Latvian)</item>
-    <item>QWERTY (Norwegian)</item>
-    <item>QWERTY (Swedish)</item>
-    <item>QWERTY (Hungarian)</item>
-    <item>QWERTY (Türkçe)</item>
-    <item>QWERTY (Polski)</item>
-    <item>QWERTY (Vietnamese)</item>
-    <item>ЙЦУКЕН (Русский)</item>
-    <item>QWERTZ</item>
-    <item>QWERTZ (Czech)</item>
-    <item>QWERTZ (Deutsch)</item>
-    <item>QWERTZ (Hungarian)</item>
-    <item>QWERTZ (Slovak)</item>
-    <item>Bulgarian (Phonetic Traditional)</item>
-    <item>Dvorak</item>
-    <item>Colemak</item>
-    <item>Neo 2</item>
-    <item>Bone</item>
-    <item>ЙЦУКЕН (Українська)</item>
-    <item>বাংলা</item>
-    <item>देवनागरी (हिंदी)-1</item>
-    <item>देवनागरी (हिंदी)-2</item>
-    <item>Hebrew SI-1452-1</item>
-    <item>Hebrew SI-1452-2</item>
-    <item>Arabic PC</item>
-    <item>Arabic ALT</item>
+    <item>الْعَرَبِيَّة: IBM [السَّعُودِيَّة]</item>
+    <item>الْعَرَبِيَّة: IBM (Mostafa Ayesh)</item>
+    <item>বাংলা: (Md Rasel Hossain)</item>
+    <item>бъ́лгарски: ЯВЕРТЪ</item>
+    <item>ру́сский: ЙЦУКЕН [Росси́я]</item>
+    <item>украї́нська: ЙЦУКЕН [Украї́на]</item>
+    <item>हिंदी: InScript [भारत]</item>
+    <item>हिंदी: (Luke Videckis)</item>
+    <item>ελληνικά: QWERTY [Ελλάδα]</item>
+    <item>한국어/조선말: 두벌식 [대한민국]</item>
+    <item>עִבְרִית: [יִשְׂרָאֵל]</item>
+    <item>עִבְרִית: [יִשְׂרָאֵל] 2</item>
+    <item>čeština: QWERTZ [Česko]</item>
+    <item>Deutsch: Bone</item>
+    <item>Deutsch: Neo 2</item>
+    <item>Deutsch: QWERTZ [Deutschland]</item>
+    <item>Deutsch: QWERTZ</item>
+    <item>English: Colemak</item>
+    <item>English: Dvorak</item>
+    <item>English: QWERTY [United States of America]</item>
+    <item>español: QWERTY [España]</item>
+    <item>français: AZERTY [France]</item>
+    <item>latviešu valoda: QWERTY [Latvija]</item>
+    <item>magyar: QWERTY</item>
+    <item>magyar: QWERTZ [Magyarország]</item>
+    <item>norsk: QWERTY [Norge/Noreg]</item>
+    <item>polski: QWERTY [Polska]</item>
+    <item>português: QWERTY [Brasil]</item>
+    <item>slovenčina: QWERTZ [Slovensko]</item>
+    <item>svenska: QWERTY [Sverige]</item>
+    <item>Tiếng Việt: QWERTY [Việt Nam]</item>
+    <item>Türkçe: Türkçe Q [Türkiye]</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
   <string-array name="pref_accents_entries">
