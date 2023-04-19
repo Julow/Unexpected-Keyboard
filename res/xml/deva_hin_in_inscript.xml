@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key k0="ौ" k2="₹" k4="१" k6="esc" k8="औ"/>
-    <key k0="ै" k2="ऍ" k4="२" k6="¶" k8="ऐ"/>
-    <key k0="ा" k2="ॅ" k4="३" k6="ग़" k8="आ"/>
-    <key k0="ी" k2="ज्ञ" k4="४" k6="ज़" k8="ई"/>
-    <key k0="ू" k2="त्र" k4="५" k6="ऩ" k8="ऊ"/>
-    <key k0="ब" k2="क्ष" k4="६" k6="÷" k8="भ"/>
-    <key k0="ह" k2="श्र" k4="७" k6="×" k8="ङ"/>
-    <key k0="ग" k2="ः" k4="८" k6="=" k8="घ"/>
-    <key k0="द" k2="ऋ" k4="९" k6="+" k8="ध"/>
-    <key k0="ज" k2="ृ" k4="०" k6="-" k8="झ"/>
+    <key key0="ौ" key1="औ" key2="₹" key3="esc" key4="१"/>
+    <key key0="ै" key1="ऐ" key2="ऍ" key3="¶" key4="२"/>
+    <key key0="ा" key1="आ" key2="ॅ" key3="ग़" key4="३"/>
+    <key key0="ी" key1="ई" key2="ज्ञ" key3="ज़" key4="४"/>
+    <key key0="ू" key1="ऊ" key2="त्र" key3="ऩ" key4="५"/>
+    <key key0="ब" key1="भ" key2="क्ष" key3="÷" key4="६"/>
+    <key key0="ह" key1="ङ" key2="श्र" key3="×" key4="७"/>
+    <key key0="ग" key1="घ" key2="ः" key3="=" key4="८"/>
+    <key key0="द" key1="ध" key2="ऋ" key3="+" key4="९"/>
+    <key key0="ज" key1="झ" key2="ृ" key3="-" key4="०"/>
   </row>
   <row>
-    <key shift="0.5" k0="ो" k2="ॉ" k4="ऑ" k6="tab" k8="ओ"/>
-    <key k0="े" k2="ञ" k4="॰" k6="~" k8="ए"/>
-    <key k0="्" k2="़" k4="ऺ" k6="ऽ" k8="अ"/>
-    <key k0="ि" k2="ढ" k4="ॄ" k6="॥" k8="इ"/>
-    <key k0="ु" k2="ड" k4="/" k6="\\" k8="उ"/>
-    <key k0="प" k2="छ" k4="&gt;" k6="&lt;" k8="फ"/>
-    <key k0="र" k2="च" k4="]" k6="[" k8="ऱ"/>
-    <key k0="क" k2="क़" k4="}" k6="{" k8="ख"/>
-    <key k0="त" k2="ख़" k4=")" k6="(" k8="थ"/>
+    <key shift="0.5" key0="ो" key1="ओ" key2="ॉ" key3="tab" key4="ऑ"/>
+    <key key0="े" key1="ए" key2="ञ" key3="~" key4="॰"/>
+    <key key0="्" key1="अ" key2="़" key3="ऽ" key4="ऺ"/>
+    <key key0="ि" key1="इ" key2="ढ" key3="॥" key4="ॄ"/>
+    <key key0="ु" key1="उ" key2="ड" key3="\\" key4="/"/>
+    <key key0="प" key1="फ" key2="छ" key3="&lt;" key4="&gt;"/>
+    <key key0="र" key1="ऱ" key2="च" key3="[" key4="]"/>
+    <key key0="क" key1="ख" key2="क़" key3="{" key4="}"/>
+    <key key0="त" key1="थ" key2="ख़" key3="(" key4=")"/>
   </row>
   <row>
-    <key width="1.4" k0="shift" k2="loc capslock"/>
-    <key shift="0.1" k0="ट" k2="ड़" k4="*" k6="\#" k8="ठ"/>
-    <key k0="ं" k2="।" k4="\@" k6="ॐ" k8="ँ"/>
-    <key k0="म" k2="य" k4="%" k6="य़" k8="ण"/>
-    <key k0="न" k2="।" k4="&amp;" k6=":" k8=""/>
-    <key k0="व" k2="ढ़" k4="." k6=";" k8=""/>
-    <key k0="ल" k2="फ़" k4="," k6="!" k8="ळ"/>
-    <key k0="स" k2="ष" k4="।" k6="\?" k8="श"/>
-    <key shift="0.1" width="1.4" k0="backspace" k2="delete"/>
+    <key width="1.4" key0="shift" key2="loc capslock"/>
+    <key shift="0.1" key0="ट" key1="ठ" key2="ड़" key3="\#" key4="*"/>
+    <key key0="ं" key1="ँ" key2="।" key3="ॐ" key4="\@"/>
+    <key key0="म" key1="ण" key2="य" key3="य़" key4="%"/>
+    <key key0="न" key1="" key2="।" key3=":" key4="&amp;"/>
+    <key key0="व" key1="" key2="ढ़" key3=";" key4="."/>
+    <key key0="ल" key1="ळ" key2="फ़" key3="!" key4=","/>
+    <key key0="स" key1="श" key2="ष" key3="\?" key4="।"/>
+    <key shift="0.1" width="1.4" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

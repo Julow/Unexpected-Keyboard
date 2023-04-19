@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key k0="q" k4="esc" k8="1"/>
-    <key k0="w" k8="2"/>
-    <key k0="e" k4="ě" k6="é" k8="3"/>
-    <key k0="r" k4="ř" k6="ŕ" k8="4"/>
-    <key k0="t" k4="ť" k8="5"/>
-    <key k0="z" k4="ž" k8="6"/>
-    <key k0="u" k2="ü" k4="ů" k6="ú" k8="7"/>
-    <key k0="i" k6="í" k8="8"/>
-    <key k0="o" k2="ö" k4="ô" k6="ó" k8="9"/>
-    <key k0="p" k2="=" k4="/" k6="\" k8="0"/>
+    <key key0="q" key1="1" key4="esc"/>
+    <key key0="w" key1="2"/>
+    <key key0="e" key1="3" key3="é" key4="ě"/>
+    <key key0="r" key1="4" key3="ŕ" key4="ř"/>
+    <key key0="t" key1="5" key4="ť"/>
+    <key key0="z" key1="6" key4="ž"/>
+    <key key0="u" key1="7" key2="ü" key3="ú" key4="ů"/>
+    <key key0="i" key1="8" key3="í"/>
+    <key key0="o" key1="9" key2="ö" key3="ó" key4="ô"/>
+    <key key0="p" key1="0" key2="=" key3="\" key4="/"/>
   </row>
   <row>
-    <key k0="a" k4="ä" k6="á" k8="tab"/>
-    <key k0="s" k4="š" k6="ś"/>
-    <key k0="d" k4="ď"/>
-    <key k0="f" k2="*" k8="%"/>
-    <key k0="g" k2="^"/>
-    <key k0="h" k2="÷" k8="~"/>
-    <key k0="j" k2="}" k4="+" k6="|" k8="{"/>
-    <key k0="k" k2="]" k4="&quot;" k6="'" k8="["/>
-    <key k0="l" k2=")" k4="ľ" k6="ĺ" k8="("/>
-    <key k0="backspace" k6="delete"/>
+    <key key0="a" key1="tab" key3="á" key4="ä"/>
+    <key key0="s" key3="ś" key4="š"/>
+    <key key0="d" key4="ď"/>
+    <key key0="f" key1="%" key2="*"/>
+    <key key0="g" key2="^"/>
+    <key key0="h" key1="~" key2="÷"/>
+    <key key0="j" key1="{" key2="}" key3="|" key4="+"/>
+    <key key0="k" key1="[" key2="]" key3="'" key4="&quot;"/>
+    <key key0="l" key1="(" key2=")" key3="ĺ" key4="ľ"/>
+    <key key0="backspace" key3="delete"/>
   </row>
   <row>
-    <key k0="shift" k2="loc capslock"/>
-    <key k0="y" k6="ý" k8="$"/>
-    <key k0="x"/>
-    <key k0="c" k4="č"/>
-    <key k0="v" k4="\@"/>
-    <key k0="b" k2="&amp;" k4="_" k6="-" k8="\#"/>
-    <key k0="n" k2="»" k4="ň" k8="«"/>
-    <key k0="m" k2="&gt;" k8="&lt;"/>
-    <key k0="," k2="\?" k8=":"/>
-    <key k0="." k2="!" k8=";"/>
+    <key key0="shift" key2="loc capslock"/>
+    <key key0="y" key1="$" key3="ý"/>
+    <key key0="x"/>
+    <key key0="c" key4="č"/>
+    <key key0="v" key4="\@"/>
+    <key key0="b" key1="\#" key2="&amp;" key3="-" key4="_"/>
+    <key key0="n" key1="«" key2="»" key4="ň"/>
+    <key key0="m" key1="&lt;" key2="&gt;"/>
+    <key key0="," key1=":" key2="\?"/>
+    <key key0="." key1=";" key2="!"/>
   </row>
 </keyboard>

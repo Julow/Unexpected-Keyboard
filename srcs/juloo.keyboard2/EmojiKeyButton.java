@@ -14,7 +14,7 @@ public class EmojiKeyButton extends Button
   {
     super(context, attrs);
     setOnClickListener(this);
-    String key_name = attrs.getAttributeValue(null, "k");
+    String key_name = attrs.getAttributeValue(null, "key");
     _key = (key_name == null) ? null : KeyValue.getKeyByName(key_name);
     setText(_key.getString());
     if (_key.hasFlags(KeyValue.FLAG_KEY_FONT))

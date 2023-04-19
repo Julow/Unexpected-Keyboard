@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard bottom_row="false">
   <row>
-    <key width="0.75" k0="esc" k2="~" k4="!"/>
-    <key width="0.75" k0="(" k2="[" k4="{"/>
-    <key k0="7" k8="&lt;" k2="&gt;"/>
-    <key k0="8" k2="∞"/>
-    <key k0="9" k2="π"/>
-    <key width="0.75" k0="*" k8="√" k2="×" k6="\#"/>
-    <key width="0.75" k0="/" k8="%" k6="÷"/>
+    <key width="0.75" key0="esc" key2="~" key4="!"/>
+    <key width="0.75" key0="(" key2="[" key4="{"/>
+    <key key0="7" key1="&lt;" key2="&gt;"/>
+    <key key0="8" key2="∞"/>
+    <key key0="9" key2="π"/>
+    <key width="0.75" key0="*" key1="√" key2="×" key3="\#"/>
+    <key width="0.75" key0="/" key1="%" key3="÷"/>
   </row>
   <row>
-    <key width="0.75" k0="tab" k2="|" k4="\\"/>
-    <key width="0.75" k0=")" k2="]" k4="}"/>
-    <key k0="4" k8="box" k6="arrows"/>
-    <key k0="5" k1="up" k3="right" k7="left" k5="down"/>
-    <key k0="6"/>
-    <key width="0.75" k0="+" k8="Σ" k2="$"/>
-    <key width="0.75" k0="-" k8="^"/>
+    <key width="0.75" key0="tab" key2="|" key4="\\"/>
+    <key width="0.75" key0=")" key2="]" key4="}"/>
+    <key key0="4" key1="box" key3="arrows"/>
+    <key key0="5" key7="up" key6="right" key5="left" key8="down"/>
+    <key key0="6"/>
+    <key width="0.75" key0="+" key1="Σ" key2="$"/>
+    <key width="0.75" key0="-" key1="^"/>
   </row>
   <row>
-    <key width="0.75" k0="switch_greekmath"/>
-    <key width="0.75" k0="shift" k2="fn" k4="loc alt"/>
-    <key k0="1" k8="superscript" k2="ordinal" k6="subscript"/>
-    <key k0="2"/>
-    <key k0="3"/>
-    <key width="1.5" k0="backspace" k2="delete"/>
+    <key width="0.75" key0="switch_greekmath"/>
+    <key width="0.75" key0="shift" key2="fn" key4="loc alt"/>
+    <key key0="1" key1="superscript" key2="ordinal" key3="subscript"/>
+    <key key0="2"/>
+    <key key0="3"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
   </row>
   <row height="0.95">
-    <key width="1.5" k0="switch_text" k2="ctrl"/>
-    <key width="1.5" k0="0" k6="f11_placeholder" k4="f12_placeholder"/>
-    <key width="0.75" k0="." k8=":" k2="," k6=";"/>
-    <key width="0.75" k0="space" k8="&quot;" k2="'" k4="_"/>
-    <key width="1.5" k0="enter" k8="±" k2="action" k6="="/>
+    <key width="1.5" key0="switch_text" key2="ctrl"/>
+    <key width="1.5" key0="0" key3="f11_placeholder" key4="f12_placeholder"/>
+    <key width="0.75" key0="." key1=":" key2="," key3=";"/>
+    <key width="0.75" key0="space" key1="&quot;" key2="'" key4="_"/>
+    <key width="1.5" key0="enter" key1="±" key2="action" key3="="/>
   </row>
 </keyboard>

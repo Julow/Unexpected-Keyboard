@@ -2,37 +2,37 @@
 <!-- Adapted from standard KS X 5002 -->
 <keyboard>
   <row>
-    <key k0="ㅂ" k2="1" k4="esc"/>
-    <key k0="ㅈ" k2="2" k6="\@" k8="~"/>
-    <key k0="ㄷ" k2="3" k6="\#" k8="!"/>
-    <key k0="ㄱ" k2="4" k6="$"/>
-    <key k0="ㅅ" k2="5" k6="%"/>
-    <key k0="ㅛ" k2="6" k6="^"/>
-    <key k0="ㅕ" k2="7" k6="&amp;"/>
-    <key k0="ㅑ" k2="8" k6="*"/>
-    <key k0="ㅐ" k2="9" k4=")" k6="("/>
-    <key k0="ㅔ" k2="0" k4="f12_placeholder" k6="f11_placeholder"/>
+    <key key0="ㅂ" key2="1" key4="esc"/>
+    <key key0="ㅈ" key1="~" key2="2" key3="\@"/>
+    <key key0="ㄷ" key1="!" key2="3" key3="\#"/>
+    <key key0="ㄱ" key2="4" key3="$"/>
+    <key key0="ㅅ" key2="5" key3="%"/>
+    <key key0="ㅛ" key2="6" key3="^"/>
+    <key key0="ㅕ" key2="7" key3="&amp;"/>
+    <key key0="ㅑ" key2="8" key3="*"/>
+    <key key0="ㅐ" key2="9" key3="(" key4=")"/>
+    <key key0="ㅔ" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
   <row>
-    <key shift="0.5" k0="ㅁ" k8="tab" k2="`"/>
-    <key k0="ㄴ"/>
-    <key k0="ㅇ"/>
-    <key k0="ㄹ"/>
-    <key k0="ㅎ" k2="-" k6="_"/>
-    <key k0="ㅗ" k2="=" k6="+"/>
-    <key k0="ㅓ" k4="}" k6="{"/>
-    <key k0="ㅏ" k4="]" k6="["/>
-    <key k0="ㅣ" k2="|" k6="\\"/>
+    <key shift="0.5" key0="ㅁ" key1="tab" key2="`"/>
+    <key key0="ㄴ"/>
+    <key key0="ㅇ"/>
+    <key key0="ㄹ"/>
+    <key key0="ㅎ" key2="-" key3="_"/>
+    <key key0="ㅗ" key2="=" key3="+"/>
+    <key key0="ㅓ" key4="}" key3="{"/>
+    <key key0="ㅏ" key3="[" key4="]"/>
+    <key key0="ㅣ" key2="|" key3="\\"/>
   </row>
   <row>
-    <key width="1.5" k0="shift" k2="loc capslock"/>
-    <key k0="ㅋ"/>
-    <key k0="ㅌ"/>
-    <key k0="ㅊ" k2="&lt;" k6="."/>
-    <key k0="ㅍ" k2="&gt;" k6=","/>
-    <key k0="ㅠ" k2="\?" k6="/"/>
-    <key k0="ㅜ" k2=":" k6=";"/>
-    <key k0="ㅡ" k2="&quot;" k6="'"/>
-    <key width="1.5" k0="backspace" k2="delete"/>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key key0="ㅋ"/>
+    <key key0="ㅌ"/>
+    <key key0="ㅊ" key2="&lt;" key3="."/>
+    <key key0="ㅍ" key2="&gt;" key3=","/>
+    <key key0="ㅠ" key2="\?" key3="/"/>
+    <key key0="ㅜ" key2=":" key3=";"/>
+    <key key0="ㅡ" key2="&quot;" key3="'"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

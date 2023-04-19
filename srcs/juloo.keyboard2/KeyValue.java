@@ -7,90 +7,84 @@ final class KeyValue
 {
   public static enum Event
   {
-    ACTION,
-    CAPS_LOCK,
     CONFIG,
+    SWITCH_TEXT,
+    SWITCH_NUMERIC,
+    SWITCH_EMOJI,
+    SWITCH_BACK_EMOJI,
     CHANGE_METHOD,
     CHANGE_METHOD_PREV,
-    SWITCH_EMOJI,
-    SWITCH_GREEKMATH,
-    SWITCH_NUMERIC,
-    SWITCH_BACK_EMOJI,
+    ACTION,
     SWITCH_SECOND,
     SWITCH_SECOND_BACK,
-    SWITCH_TEXT,
+    SWITCH_GREEKMATH,
+    CAPS_LOCK,
   }
 
   // Must be evaluated in the reverse order of their values.
   public static enum Modifier
   {
-	// diacritics
-    ACUTE,
-    ARROW_RIGHT_ABOVE,
-    BAR_DIAGONAL,
-    BAR_HORIZONTAL,
-    BREVE,
-    CARON,
-    CEDILLE,
-    CIRCUMFLEX,
+    SHIFT,
+    CTRL,
+    ALT,
+    META,
+    DOUBLE_AIGU,
     DOT_ABOVE,
     DOT_BELOW,
-    DOUBLE_ACUTE,
     GRAVE,
+    AIGU,
+    CIRCONFLEXE,
+    TILDE,
+    CEDILLE,
+    TREMA,
     HORN,
     HOOK_ABOVE,
+    SUPERSCRIPT,
+    SUBSCRIPT,
+    RING,
+    CARON,
     MACRON,
-    OGONEK,
-    RING_ABOVE,
-    TILDE,
-    TWO_DOTS_ABOVE,
-
-    // other replacements
+    ORDINAL,
     ARROWS,
     BOX,
-    ORDINAL,
-    SUBSCRIPT,
-    SUPERSCRIPT,
-
-    ALT,
-    CTRL,
-    META,
-    SHIFT,
-
+    OGONEK,
+    SLASH,
+    ARROW_RIGHT,
+    BREVE,
+    BAR,
     FN, // Must be placed last to be applied first
   }
 
   public static enum Editing
   {
     COPY,
-    CUT,
     PASTE,
-    PASTE_PLAIN,
-    REDO,
+    CUT,
     SELECT_ALL,
+    PASTE_PLAIN,
     UNDO,
-
+    REDO,
     // Android context menu actions
-    ASSIST,
-    AUTOFILL,
     REPLACE,
     SHARE,
+    ASSIST,
+    AUTOFILL,
   }
 
   public static enum Placeholder
   {
+    REMOVED,
     F11,
     F12,
-    OLE,
-    METEG,
-    REMOVED,
     SHINDOT,
     SINDOT,
+    OLE,
+    METEG
   }
 
   public static enum Kind
   {
-    Char, Editing, Event, Keyevent, Modifier, Placeholder, String
+    Char, String, Keyevent, Event, Modifier, Editing, Placeholder
   }
 
   // Behavior flags.
@@ -307,67 +301,62 @@ final class KeyValue
   {
     switch (name)
     {
-      case "acute": return diacritic(0x50, Modifier.ACUTE);
-      case "arrow_right_above": return diacritic(0x5D, Modifier.ARROW_RIGHT_ABOVE);
-      case "bar_diagonal": return diacritic(0x5C, Modifier.BAR_DIAGONAL);
-      case "bar_horizontal": return diacritic(0x5F, Modifier.BAR_HORIZONTAL);
-      case "breve": return diacritic(0x5E, Modifier.BREVE);
-      case "dot_above": return diacritic(0x5A, Modifier.DOT_ABOVE);
-      case "dot_below": return diacritic(0x60, Modifier.DOT_BELOW);
-      case "double_acute": return diacritic(0x5B, Modifier.DOUBLE_ACUTE);
-      case "caron": return diacritic(0x51, Modifier.CARON);
-      case "cedille": return diacritic(0x52, Modifier.CEDILLE);
-      case "circumflex": return diacritic(0x53, Modifier.CIRCUMFLEX);
-      case "grave": return diacritic(0x54, Modifier.GRAVE);
-      case "horn": return diacritic(0x61, Modifier.HORN);
-      case "hook_above": return diacritic(0x62, Modifier.HOOK_ABOVE);
-      case "macron": return diacritic(0x55, Modifier.MACRON);
-      case "ogonek": return diacritic(0x59, Modifier.OGONEK);
-      case "ring_above": return diacritic(0x56, Modifier.RING_ABOVE);
-      case "tilde": return diacritic(0x57, Modifier.TILDE);
-      case "two_dots_above": return diacritic(0x58, Modifier.TWO_DOTS_ABOVE);
-
+      case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
+      case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
+      case "alt": return modifierKey("Alt", Modifier.ALT, 0);
+      case "accent_aigu": return diacritic(0x50, Modifier.AIGU);
+      case "accent_caron": return diacritic(0x51, Modifier.CARON);
+      case "accent_cedille": return diacritic(0x52, Modifier.CEDILLE);
+      case "accent_circonflexe": return diacritic(0x53, Modifier.CIRCONFLEXE);
+      case "accent_grave": return diacritic(0x54, Modifier.GRAVE);
+      case "accent_macron": return diacritic(0x55, Modifier.MACRON);
+      case "accent_ring": return diacritic(0x56, Modifier.RING);
+      case "accent_tilde": return diacritic(0x57, Modifier.TILDE);
+      case "accent_trema": return diacritic(0x58, Modifier.TREMA);
+      case "accent_ogonek": return diacritic(0x59, Modifier.OGONEK);
+      case "accent_dot_above": return diacritic(0x5A, Modifier.DOT_ABOVE);
+      case "accent_double_aigu": return diacritic(0x5B, Modifier.DOUBLE_AIGU);
+      case "accent_slash": return diacritic(0x5C, Modifier.SLASH);
+      case "accent_arrow_right": return diacritic(0x5D, Modifier.ARROW_RIGHT);
+      case "accent_breve": return diacritic(0x5E, Modifier.BREVE);
+      case "accent_bar": return diacritic(0x5F, Modifier.BAR);
+      case "accent_dot_below": return diacritic(0x60, Modifier.DOT_BELOW);
+      case "accent_horn": return diacritic(0x61, Modifier.HORN);
+      case "accent_hook_above": return diacritic(0x62, Modifier.HOOK_ABOVE);
+      case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
+      case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
+      case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
       case "arrows": return modifierKey("Arr", Modifier.ARROWS, 0);
       case "box": return modifierKey("Box", Modifier.BOX, 0);
-      case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
-      case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
-      case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
-
-      case "alt": return modifierKey("Alt", Modifier.ALT, 0);
-      case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "fn": return modifierKey("Fn", Modifier.FN, 0);
       case "meta": return modifierKey("Meta", Modifier.META, 0);
-      case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
 
-      case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
-      case "capslock": return eventKey(0x12, Event.CAPS_LOCK, 0);
-      case "change_method": return eventKey(0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
-      case "change_method_prev": return eventKey(0x09, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
       case "config": return eventKey(0x04, Event.CONFIG, FLAG_SMALLER_FONT);
-      case "switch_back_emoji": return eventKey("ABC", Event.SWITCH_BACK_EMOJI, 0);
-      case "switch_emoji": return eventKey(0x01, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
-      case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
-      case "switch_second": return eventKey(0x13, Event.SWITCH_SECOND, FLAG_SMALLER_FONT);
-      case "switch_second_back": return eventKey(0x14, Event.SWITCH_SECOND_BACK, FLAG_SMALLER_FONT);
       case "switch_text": return eventKey("ABC", Event.SWITCH_TEXT, FLAG_SMALLER_FONT);
       case "switch_numeric": return eventKey("123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
+      case "switch_emoji": return eventKey(0x01, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
+      case "switch_back_emoji": return eventKey("ABC", Event.SWITCH_BACK_EMOJI, 0);
+      case "switch_second": return eventKey(0x13, Event.SWITCH_SECOND, FLAG_SMALLER_FONT);
+      case "switch_second_back": return eventKey(0x14, Event.SWITCH_SECOND_BACK, FLAG_SMALLER_FONT);
+      case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
+      case "change_method": return eventKey(0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
+      case "change_method_prev": return eventKey(0x09, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
+      case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
+      case "capslock": return eventKey(0x12, Event.CAPS_LOCK, 0);
 
+      case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
+      case "enter": return keyeventKey(0x0E, KeyEvent.KEYCODE_ENTER, 0);
+      case "up": return keyeventKey(0x05, KeyEvent.KEYCODE_DPAD_UP, 0);
+      case "right": return keyeventKey(0x06, KeyEvent.KEYCODE_DPAD_RIGHT, 0);
       case "down": return keyeventKey(0x07, KeyEvent.KEYCODE_DPAD_DOWN, 0);
       case "left": return keyeventKey(0x08, KeyEvent.KEYCODE_DPAD_LEFT, 0);
-      case "right": return keyeventKey(0x06, KeyEvent.KEYCODE_DPAD_RIGHT, 0);
-      case "up": return keyeventKey(0x05, KeyEvent.KEYCODE_DPAD_UP, 0);
-
-      case "backspace": return keyeventKey(0x11, KeyEvent.KEYCODE_DEL, 0);
-      case "delete": return keyeventKey(0x10, KeyEvent.KEYCODE_FORWARD_DEL, 0);
-      case "end": return keyeventKey(0x0C, KeyEvent.KEYCODE_MOVE_END, 0);
-      case "enter": return keyeventKey(0x0E, KeyEvent.KEYCODE_ENTER, 0);
-      case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
-      case "home": return keyeventKey(0x0B, KeyEvent.KEYCODE_MOVE_HOME, 0);
-      case "insert": return keyeventKey("Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
       case "page_up": return keyeventKey(0x02, KeyEvent.KEYCODE_PAGE_UP, 0);
       case "page_down": return keyeventKey(0x03, KeyEvent.KEYCODE_PAGE_DOWN, 0);
-      case "tab": return keyeventKey(0x0F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
-
+      case "home": return keyeventKey(0x0B, KeyEvent.KEYCODE_MOVE_HOME, 0);
+      case "end": return keyeventKey(0x0C, KeyEvent.KEYCODE_MOVE_END, 0);
+      case "backspace": return keyeventKey(0x11, KeyEvent.KEYCODE_DEL, 0);
+      case "delete": return keyeventKey(0x10, KeyEvent.KEYCODE_FORWARD_DEL, 0);
+      case "insert": return keyeventKey("Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
       case "f1": return keyeventKey("F1", KeyEvent.KEYCODE_F1, 0);
       case "f2": return keyeventKey("F2", KeyEvent.KEYCODE_F2, 0);
       case "f3": return keyeventKey("F3", KeyEvent.KEYCODE_F3, 0);
@@ -380,16 +369,15 @@ final class KeyValue
       case "f10": return keyeventKey("F10", KeyEvent.KEYCODE_F10, 0);
       case "f11": return keyeventKey("F11", KeyEvent.KEYCODE_F11, FLAG_SMALLER_FONT);
       case "f12": return keyeventKey("F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
-
-      case "f11_placeholder": return placeholderKey(Placeholder.F11);
-      case "f12_placeholder": return placeholderKey(Placeholder.F12);
-      case "removed": return placeholderKey(Placeholder.REMOVED);
+      case "tab": return keyeventKey(0x0F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
 
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
-      case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
       case "space": return charKey("\r", ' ', FLAG_KEY_FONT | FLAG_SECONDARY);
+      case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
 
       /* bidi */
+      case "lrm": return charKey("↱", '\u200e', 0); // Send left-to-right mark
+      case "rlm": return charKey("↰", '\u200f', 0); // Send right-to-left mark
       case "b(": return charKey("(", ')', 0);
       case "b)": return charKey(")", '(', 0);
       case "b[": return charKey("[", ']', 0);
@@ -398,20 +386,21 @@ final class KeyValue
       case "b}": return charKey("}", '{', 0);
       case "blt": return charKey("<", '>', 0);
       case "bgt": return charKey(">", '<', 0);
-      case "lrm": return charKey("↱", '\u200e', 0); // Send left-to-right mark
-      case "rlm": return charKey("↰", '\u200f', 0); // Send right-to-left mark
 
-      // Hebrew
-	  // niqqud
+      case "removed": return placeholderKey(Placeholder.REMOVED);
+      case "f11_placeholder": return placeholderKey(Placeholder.F11);
+      case "f12_placeholder": return placeholderKey(Placeholder.F12);
+
+      /* hebrew niqqud */
+      case "qamats": return charKey("\u05E7\u05B8", '\u05B8', 0); // kamatz
+      case "patah": return charKey("\u05E4\u05B7", '\u05B7', 0); // patach
+      case "sheva": return charKey("\u05E9\u05B0", '\u05B0', 0);
       case "dagesh": return charKey("\u05D3\u05BC", '\u05BC', 0); // or mapiq
       case "hiriq": return charKey("\u05D7\u05B4", '\u05B4', 0);
-      case "holam": return charKey("\u05D5\u05B9", '\u05B9', 0);
-      case "patah": return charKey("\u05E4\u05B7", '\u05B7', 0); // patach
-      case "qamats": return charKey("\u05E7\u05B8", '\u05B8', 0); // kamatz
-      case "qubuts": return charKey("\u05E7\u05BB", '\u05BB', 0); // kubuts
       case "segol": return charKey("\u05E1\u05B6", '\u05B6', 0);
-      case "sheva": return charKey("\u05E9\u05B0", '\u05B0', 0);
       case "tsere": return charKey("\u05E6\u05B5", '\u05B5', 0);
+      case "holam": return charKey("\u05D5\u05B9", '\u05B9', 0);
+      case "qubuts": return charKey("\u05E7\u05BB", '\u05BB', 0); // kubuts
       case "hataf_patah": return charKey("\u05D7\u05B2\u05E4\u05B7", '\u05B2', 0); // reduced patach
       case "hataf_qamats": return charKey("\u05D7\u05B3\u05E7\u05B8", '\u05B3', 0); // reduced kamatz
       case "hataf_segol": return charKey("\u05D7\u05B1\u05E1\u05B6", '\u05B1', 0); // reduced segol
@@ -419,28 +408,28 @@ final class KeyValue
       case "shindot_placeholder": return placeholderKey(Placeholder.SHINDOT);
       case "sindot": return charKey("\u05E9\u05C2", '\u05C2', 0);
       case "sindot_placeholder": return placeholderKey(Placeholder.SINDOT);
-      // punctuation
+      /* hebrew punctuation */
       case "geresh": return charKey("\u05F3", '\u05F3', 0);
       case "gershayim": return charKey("\u05F4", '\u05F4', 0);
       case "maqaf": return charKey("\u05BE", '\u05BE', 0);
-      // biblical letter
-      case "meteg": return charKey("\u05DE\u05BD", '\u05BD', 0); // or siluq or sof-pasuq
-      case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
+      /* hebrew biblical */
+      case "rafe": return charKey("\u05E4\u05BF", '\u05BF', 0);
       case "ole": return charKey("\u05E2\u05AB", '\u05AB', 0);
       case "ole_placeholder": return placeholderKey(Placeholder.OLE);
-      case "rafe": return charKey("\u05E4\u05BF", '\u05BF', 0);
+      case "meteg": return charKey("\u05DE\u05BD", '\u05BD', 0); // or siluq or sof-pasuq
+      case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
 
-      case "autofill": return editingKey("auto.", Editing.AUTOFILL);
       case "copy": return editingKey("copy", Editing.COPY);
-      case "cut": return editingKey("cut", Editing.CUT);
       case "paste": return editingKey("paste", Editing.PASTE);
-      case "pasteAsPlainText": return editingKey("<paste>", Editing.PASTE_PLAIN);
-      case "redo": return editingKey("redo", Editing.REDO);
-      case "replaceText": return editingKey("repl.", Editing.REPLACE);
+      case "cut": return editingKey("cut", Editing.CUT);
       case "selectAll": return editingKey("s. all", Editing.SELECT_ALL);
       case "shareText": return editingKey("share", Editing.SHARE);
-      case "textAssist": return editingKey("assist", Editing.ASSIST);
+      case "pasteAsPlainText": return editingKey("<paste>", Editing.PASTE_PLAIN);
       case "undo": return editingKey("undo", Editing.UNDO);
+      case "redo": return editingKey("redo", Editing.REDO);
+      case "replaceText": return editingKey("repl.", Editing.REPLACE);
+      case "textAssist": return editingKey("assist", Editing.ASSIST);
+      case "autofill": return editingKey("auto.", Editing.AUTOFILL);
       default: return fallbackMakeKey(name);
     }
   }

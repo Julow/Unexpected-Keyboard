@@ -2,49 +2,49 @@
 <!-- https://www.neo-layout.org/Layouts/neo/ -->
 <keyboard bottom_row="false">
   <row>
-    <key k0="x" k2="1" k4="…" k8="°"/>
-    <key k0="v" k2="2" k4="_" k8="§"/>
-    <key k0="l" k2="3" k4="["/>
-    <key k0="c" k2="4" k4="]"/>
-    <key k0="w" k2="5" k4="^"/>
-    <key k0="k" k2="6" k4="!"/>
-    <key k0="h" k2="7" k4="&lt;"/>
-    <key k0="g" k2="8" k4="&gt;"/>
-    <key k0="f" k2="9" k4="=" k6="f11_placeholder"/>
-    <key k0="q" k2="0" k4="&amp;" k6="f12_placeholder"/>
-    <key k0="ß" k8="-"/>
+    <key key0="x" key1="°" key2="1" key4="…"/>
+    <key key0="v" key1="§" key2="2" key4="_"/>
+    <key key0="l" key2="3" key4="["/>
+    <key key0="c" key2="4" key4="]"/>
+    <key key0="w" key2="5" key4="^"/>
+    <key key0="k" key2="6" key4="!"/>
+    <key key0="h" key2="7" key4="&lt;"/>
+    <key key0="g" key2="8" key4="&gt;"/>
+    <key key0="f" key2="9" key3="f11_placeholder" key4="="/>
+    <key key0="q" key2="0" key3="f12_placeholder" key4="&amp;"/>
+    <key key0="ß" key1="-"/>
   </row>
   <row>
-    <key k0="u" k4="\\" k8="tab"/>
-    <key k0="i" k4="/"/>
-    <key k0="a" k4="{"/>
-    <key k0="e" k4="}"/>
-    <key k0="o" k4="*"/>
-    <key k0="s" k4="\?"/>
-    <key k0="n" k4="("/>
-    <key k0="r" k4=")"/>
-    <key k0="t" k4="-"/>
-    <key k0="d" k4=":"/>
-    <key k0="y" k6="\@"/>
+    <key key0="u" key1="tab" key4="\\"/>
+    <key key0="i" key4="/"/>
+    <key key0="a" key4="{"/>
+    <key key0="e" key4="}"/>
+    <key key0="o" key4="*"/>
+    <key key0="s" key4="\?"/>
+    <key key0="n" key4="("/>
+    <key key0="r" key4=")"/>
+    <key key0="t" key4="-"/>
+    <key key0="d" key4=":"/>
+    <key key0="y" key3="\@"/>
   </row>
   <row>
-    <key width="1.5" k0="shift" k2="loc capslock" k8="esc"/>
-    <key k0="ü" k4="\#"/>
-    <key k0="ö" k4="$"/>
-    <key k0="ä" k4="|"/>
-    <key k0="p" k4="~"/>
-    <key k0="z" k4="`"/>
-    <key k0="b" k4="+"/>
-    <key k0="m" k4="%"/>
-    <key k0="." k4="'" k6="&quot;" k8=","/>
-    <key width="1.5" k0="backspace" k2="delete"/>
+    <key width="1.5" key0="shift" key1="esc" key2="loc capslock"/>
+    <key key0="ü" key4="\#"/>
+    <key key0="ö" key4="$"/>
+    <key key0="ä" key4="|"/>
+    <key key0="p" key4="~"/>
+    <key key0="z" key4="`"/>
+    <key key0="b" key4="+"/>
+    <key key0="m" key4="%"/>
+    <key key0="." key1="," key3="&quot;" key4="'"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
   </row>
   <row height="0.95">
-    <key width="1.8" k0="ctrl" k2="loc meta" k4="switch_numeric"/>
-    <key width="1.2" k0="fn" k2="change_method" k4="config" k6="switch_emoji" k8="loc alt"/>
-    <key width="4.0" k0="space" k1="switch_second"/>
-    <key width="1.2" k1="up" k3="right" k5="down" k7="left"/>
-    <key k0="j" k4=";"/>
-    <key width="1.8" k0="enter" k2="action"/>
+    <key width="1.8" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
+    <key width="1.2" key0="fn" key1="loc alt" key2="change_method" key3="switch_emoji" key4="config"/>
+    <key width="4.0" key0="space" key7="switch_second"/>
+    <key width="1.2" key7="up" key6="right" key5="left" key8="down"/>
+    <key key0="j" key4=";"/>
+    <key width="1.8" key0="enter" key2="action"/>
   </row>
 </keyboard>

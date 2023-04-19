@@ -4,5 +4,5 @@ fill="currentColor">
   <!-- Material Icons by @google - https://github.com/google/material-design-icons 
   License - Apache-2.0 License -->
   <title>space-bar</title>
-  <path d="M18 9v4H6V9H4v6h16V9h-2z"/>
+  <path d="M18 9v4H6V9H4v6h16V9h-2z "/>
 </svg>

@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key k0="q" k2="0" k4="esc"/>
-    <key k0="w" k2="1" k4="|" k6="~" k8="'"/>
-    <key k0="e" k2="2" k4="é" k8="&quot;"/>
-    <key k0="r" k2="3" k4="^"/>
-    <key k0="t" k2="4" k4="f11_placeholder" k8="!"/>
-    <key k0="y" k2="5" k4="f12_placeholder" k6="°" k8="%" k8="%"/>
-    <key k0="u" k2="6" k4="ú" k6="ü" k8="ű"/>
-    <key k0="i" k2="7" k4="í" k6="`" k8="="/>
-    <key k0="o" k2="8" k4="ó" k6="ö" k8="ő"/>
-    <key k0="p" k2="9"/>
+    <key key0="q" key2="0" key4="esc"/>
+    <key key0="w" key1="'" key2="1" key3="~" key4="|"/>
+    <key key0="e" key1="&quot;" key2="2" key4="é"/>
+    <key key0="r" key2="3" key4="^"/>
+    <key key0="t" key1="!" key2="4" key4="f11_placeholder"/>
+    <key key0="y" key1="%" key2="5" key3="°" key4="f12_placeholder"/>
+    <key key0="u" key1="ű" key2="6" key3="ü" key4="ú"/>
+    <key key0="i" key1="=" key2="7" key3="`" key4="í"/>
+    <key key0="o" key1="ő" key2="8" key3="ö" key4="ó"/>
+    <key key0="p" key2="9"/>
   </row>
   <row>
-    <key shift="0.5" k0="a" k4="á" k8="tab"/>
-    <key k0="s" k2="\\" k4="]" k6="[" k8="§"/>
-    <key k0="d" k4="}" k6="{"/>
-    <key k0="f" k6="+"/>
-    <key k0="g" k6="*"/>
-    <key k0="h"/>
-    <key k0="j"/>
-    <key k0="k" k4=")" k6="("/>
-    <key k0="l" k6="/" k8="$"/>
+    <key shift="0.5" key0="a" key1="tab" key4="á"/>
+    <key key0="s" key1="§" key2="\\" key3="[" key4="]"/>
+    <key key0="d" key3="{" key4="}"/>
+    <key key0="f" key3="+"/>
+    <key key0="g" key3="*"/>
+    <key key0="h"/>
+    <key key0="j"/>
+    <key key0="k" key3="(" key4=")"/>
+    <key key0="l" key1="$" key3="/"/>
   </row>
   <row>
-    <key width="1.5" k0="shift" k2="loc capslock"/>
-    <key k0="z" k4="&gt;" k6="&lt;"/>
-    <key k0="x" k4="\#"/>
-    <key k0="c" k4="&amp;"/>
-    <key k0="v" k4="\@"/>
-    <key k0="b" k4=";" k6="," k8="\?"/>
-    <key k0="n" k6="." k8=":"/>
-    <key k0="m" k6="-" k8="_"/>
-    <key width="1.5" k0="backspace" k2="delete"/>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key key0="z" key3="&lt;" key4="&gt;"/>
+    <key key0="x" key4="\#"/>
+    <key key0="c" key4="&amp;"/>
+    <key key0="v" key4="\@"/>
+    <key key0="b" key1="\?" key3="," key4=";"/>
+    <key key0="n" key1=":" key3="."/>
+    <key key0="m" key1="_" key3="-"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
   </row>
 </keyboard>
