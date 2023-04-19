@@ -91,15 +91,17 @@ class KeyEventHandler implements Config.IKeyEventHandler
     }
   }
 
-  // private void handleDelKey(int before, int after)
-  // {
-  //  CharSequence selection = getCurrentInputConnection().getSelectedText(0);
+/*
+  private void handleDelKey(int before, int after)
+  {
+   CharSequence selection = getCurrentInputConnection().getSelectedText(0);
 
-  //  if (selection != null && selection.length() > 0)
-  //  getCurrentInputConnection().commitText("", 1);
-  //  else
-  //  getCurrentInputConnection().deleteSurroundingText(before, after);
-  // }
+   if (selection != null && selection.length() > 0)
+   getCurrentInputConnection().commitText("", 1);
+   else
+   getCurrentInputConnection().deleteSurroundingText(before, after);
+  }
+*/
 
   int sendMetaKey(int eventCode, int metaFlags, int metaState, boolean down)
   {
