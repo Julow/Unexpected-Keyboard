@@ -9,7 +9,7 @@
     <key k0="н" k2="6" k6="^"/>
     <key k0="г" k2="7" k6="&amp;" k8="ґ"/>
     <key k0="ш" k2="8" k6="*"/>
-    <key k0="щ" k2="9" k6="(" k4=")"/>
+    <key k0="щ" k2="9" k4=")" k6="("/>
     <key k0="з" k2="0" k4="f12_placeholder" k6="f11_placeholder"/>
     <key k0="х"/>
   </row>

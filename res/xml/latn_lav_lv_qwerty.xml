@@ -21,7 +21,7 @@
     <key k0="h" k2="macron" k4="cedille" k6="caron"/>
     <key k0="j" k2="=" k4="_" k6="-" k8="+"/>
     <key k0="k" k4="]" k6="[" k8="ķ"/>
-    <key k0="l" k2="|" k8="ļ" k6="/"x k8="ļ"/>
+    <key k0="l" k2="|" k6="/"x k8="ļ"/>
   </row>
   <row>
     <key width="1.5" k0="shift" k2="loc capslock"/>

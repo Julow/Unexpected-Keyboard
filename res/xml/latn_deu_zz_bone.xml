@@ -32,7 +32,7 @@
     <key k0="ß" k4="`"/>
     <key k0="y" k4="1" k6="%"/>
     <key k0="z" k4="2" k6="+" k8="&quot;"/>
-    <key k0="q" k6="," k4="3" k8="&apos;"/>
+    <key k0="q" k4="3" k6="," k8="&apos;"/>
     <key k0="k" k6="."/>
     <key width="1.5" k0="backspace" k6=";" k8="delete"/>
   </row>

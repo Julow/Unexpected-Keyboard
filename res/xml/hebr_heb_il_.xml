@@ -20,7 +20,7 @@
     <key width="1.0333" k0="ג" k8="geresh" k2="gershayim"/>
     <key width="1.0333" k0="כ"/>
     <key width="1.0333" k0="ע"/>
-    <key width="1.0333" k0="י" k2="-" k6="_" k4="maqaf"/>
+    <key width="1.0333" k0="י" k2="-" k4="maqaf" k6="_"/>
     <key width="1.0333" k0="ח" k2="=" k6="+"/>
     <key width="1.0333" k0="ל" k2="b[" k6="b{"/>
     <key width="1.0333" k0="ך" k2="b]" k6="b}"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key k0="ض" k2="١" k6="`" k4="esc"/>
+    <key k0="ض" k2="١" k4="esc" k6="`"/>
     <key k0="ص" k2="٢" k6="\@"/>
     <key k0="ث" k2="٣" k6="\#"/>
     <key k0="ق" k2="٤" k6="$"/>
