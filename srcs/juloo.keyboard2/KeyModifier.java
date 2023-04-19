@@ -36,7 +36,8 @@ class KeyModifier
     {
       case ACUTE: return apply_dead_char(k, '\u00B4');
       case ARROW_RIGHT_ABOVE: return apply_combining(k, "\u20D7");
-      case BAR: return apply_map_char(k, map_char_bar);
+      case BAR_DIAGONAL: return apply_map_char(k, map_char_bar_diagonal);
+      case BAR_HORIZONTAL: return apply_map_char(k, map_char_bar_horizontal);
       case BOX: return apply_map_char(k, map_char_box);
       case BREVE: return apply_dead_char(k, '\u02D8');
       case CARON: return apply_dead_char(k, '\u02C7');
@@ -51,13 +52,12 @@ class KeyModifier
       case MACRON: return apply_dead_char(k, '\u00AF');
       case OGONEK: return apply_dead_char(k, '\u02DB');
       case RING_ABOVE: return apply_dead_char(k, '\u02DA');
-      case ORDINAL: return apply_map_char(k, map_char_ordinal);
       case SHIFT: return apply_shift(k);
-      case STROKE: return apply_map_char(k, map_char_stroke);
       case TILDE: return apply_dead_char(k, '\u02DC');
       case TWO_DOTS_ABOVE: return apply_dead_char(k, '\u00A8');
 
       case ARROWS: return apply_map_char(k, map_char_arrows);
+      case ORDINAL: return apply_map_char(k, map_char_ordinal);
       case SUBSCRIPT: return apply_map_char(k, map_char_subscript);
       case SUPERSCRIPT: return apply_map_char(k, map_char_superscript);
 
@@ -546,7 +546,6 @@ class KeyModifier
       }
     };
 
-  // diacritics
   private static final Map_char map_char_arrows =
     new Map_char() {
       public char apply(char c)
@@ -588,7 +587,31 @@ class KeyModifier
       }
     };
 
-  private static final Map_char map_char_bar =
+  // diacritics
+  private static final Map_char map_char_bar_diagonal =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return 'ⱥ';
+          case 'b': return '␢';
+          case 'c': return 'ȼ';
+          case 'e': return 'ɇ';
+          case 'g': return 'ꞡ';
+          case 'k': return 'ꝃ';
+          case 'l': return 'ł';
+          case 'n': return 'ꞥ';
+          case 'o': return 'ø';
+          case 'r': return 'ꞧ';
+          case 's': return 'ꞩ';
+          case 't': return 'ⱦ';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_bar_horizontal =
     new Map_char() {
       public char apply(char c)
       {
@@ -698,29 +721,6 @@ class KeyModifier
           case 'u': return 'ủ';
           case 'ư': return 'ử';
           case 'y': return 'ỷ';
-          default: return c;
-        }
-      }
-    };
-
-  private static final Map_char map_char_stroke =
-    new Map_char() {
-      public char apply(char c)
-      {
-        switch (c)
-        {
-          case 'a': return 'ⱥ';
-          case 'b': return '␢';
-          case 'c': return 'ȼ';
-          case 'e': return 'ɇ';
-          case 'g': return 'ꞡ';
-          case 'k': return 'ꝃ';
-          case 'l': return 'ł';
-          case 'n': return 'ꞥ';
-          case 'o': return 'ø';
-          case 'r': return 'ꞧ';
-          case 's': return 'ꞩ';
-          case 't': return 'ⱦ';
           default: return c;
         }
       }

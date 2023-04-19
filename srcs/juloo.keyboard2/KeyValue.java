@@ -27,7 +27,8 @@ final class KeyValue
 	// diacritics
     ACUTE,
     ARROW_RIGHT_ABOVE,
-    BAR,
+    BAR_DIAGONAL,
+    BAR_HORIZONTAL,
     BREVE,
     CARON,
     CEDILLE,
@@ -41,7 +42,6 @@ final class KeyValue
     MACRON,
     OGONEK,
     RING_ABOVE,
-    STROKE,
     TILDE,
     TWO_DOTS_ABOVE,
 
@@ -309,7 +309,8 @@ final class KeyValue
     {
       case "acute": return diacritic(0x50, Modifier.ACUTE);
       case "arrow_right_above": return diacritic(0x5D, Modifier.ARROW_RIGHT_ABOVE);
-      case "bar": return diacritic(0x5F, Modifier.BAR);
+      case "bar_diagonal": return diacritic(0x5C, Modifier.BAR_DIAGONAL);
+      case "bar_horizontal": return diacritic(0x5F, Modifier.BAR_HORIZONTAL);
       case "breve": return diacritic(0x5E, Modifier.BREVE);
       case "dot_above": return diacritic(0x5A, Modifier.DOT_ABOVE);
       case "dot_below": return diacritic(0x60, Modifier.DOT_BELOW);
@@ -323,7 +324,6 @@ final class KeyValue
       case "macron": return diacritic(0x55, Modifier.MACRON);
       case "ogonek": return diacritic(0x59, Modifier.OGONEK);
       case "ring_above": return diacritic(0x56, Modifier.RING_ABOVE);
-      case "stroke": return diacritic(0x5C, Modifier.STROKE);
       case "tilde": return diacritic(0x57, Modifier.TILDE);
       case "two_dots_above": return diacritic(0x58, Modifier.TWO_DOTS_ABOVE);
 

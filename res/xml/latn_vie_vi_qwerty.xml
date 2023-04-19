@@ -16,7 +16,7 @@
   <row>
     <key shift="0.5" k0="a" k2="ă" k6="â" k8="tab"/>
     <key k0="s" k8="acute"/>
-    <key k0="d" k2="₫" k6="đ" k8="bar"/>
+    <key k0="d" k2="₫" k6="đ" k8="bar_horizontal"/>
     <key k0="f" k8="grave"/>
     <key k0="g" k2="-" k6="_"/>
     <key k0="h" k2="=" k6="+"/>
