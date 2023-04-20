@@ -4,7 +4,8 @@
   <juloo.keyboard2.EmojiGridView android:id="@+id/emoji_grid" android:layout_width="fill_parent" android:layout_height="@dimen/emoji_grid_height" android:orientation="vertical" android:numColumns="auto_fit" android:columnWidth="45sp" android:background="?attr/colorKeyboard"/>
   <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
     <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" key="switch_back_emoji"/>
-    <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" android:layout_weight="4" key="space"/>
+    <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" key="search_text_input_emoji"/>
+    <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" android:layout_weight="3" key="space"/>
     <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" key="backspace"/>
     <juloo.keyboard2.EmojiKeyButton style="@style/emojiKeyButton" key="enter"/>
   </LinearLayout>

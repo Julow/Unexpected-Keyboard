@@ -45,6 +45,11 @@ public class EmojiGridView extends GridView
     setAdapter(new EmojiViewAdpater(getContext(), _emojiArray));
   }
 
+  public void setEmojisBySearchText(String searchText) {
+  //TODO: need to display all emojis which fuzzy-match search text
+    //we have access to hard-coded list of emojis, and their names && descriptions
+  }
+
   public void onItemClick(AdapterView<?> parent, View v, int pos, long id)
   {
     Config config = Config.globalConfig();

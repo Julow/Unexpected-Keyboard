@@ -12,6 +12,7 @@ final class KeyValue
     SWITCH_NUMERIC,
     SWITCH_EMOJI,
     SWITCH_BACK_EMOJI,
+    SEARCH_TEXT_INPUT_EMOJI,
     CHANGE_METHOD,
     CHANGE_METHOD_PREV,
     ACTION,
@@ -336,6 +337,7 @@ final class KeyValue
       case "switch_numeric": return eventKey("123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
       case "switch_emoji": return eventKey(0x01, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
       case "switch_back_emoji": return eventKey("ABC", Event.SWITCH_BACK_EMOJI, 0);
+      case "search_text_input_emoji": return eventKey("Search", Event.SEARCH_TEXT_INPUT_EMOJI, 0);
       case "switch_second": return eventKey(0x13, Event.SWITCH_SECOND, FLAG_SMALLER_FONT);
       case "switch_second_back": return eventKey(0x14, Event.SWITCH_SECOND_BACK, FLAG_SMALLER_FONT);
       case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);

@@ -36,7 +36,7 @@ public class Keyboard2 extends InputMethodService
   private Current_text_layout _currentTextLayout;
   // Layout associated with the currently selected locale.
   private KeyboardData _localeTextLayout;
-  private ViewGroup _emojiPane = null;
+  private ViewGroup _emojiPane = null, _emojiSearchPane = null;
 
   private Config _config;
 
@@ -351,6 +351,13 @@ public class Keyboard2 extends InputMethodService
       if (_emojiPane == null)
         _emojiPane = (ViewGroup)inflate_view(R.layout.emoji_pane);
       setInputView(_emojiPane);
+    }
+
+    public void setPane_emoji_search()
+    {
+      if (_emojiSearchPane == null)
+        _emojiSearchPane = (ViewGroup)inflate_view(R.layout.emoji_search_pane);
+      setInputView(_emojiSearchPane);
     }
 
     public void setPane_normal()
