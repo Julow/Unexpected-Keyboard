@@ -49,6 +49,8 @@ public class Keyboard2View extends View
     super(context, attrs);
     _theme = new Theme(getContext(), attrs);
     _config = Config.globalConfig();
+    //TODO: now unable to switch to secondary keyboard in emoji_search_pane
+    if(_keyboard == null) _keyboard = _config.layout;
     _pointers = new Pointers(this, _config);
     refresh_navigation_bar(context);
     setOnTouchListener(this);
