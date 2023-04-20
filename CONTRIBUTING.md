@@ -84,7 +84,7 @@ An entry must be added to the layout option in `res/values/arrays.xml`, to both
 (display name).
 
 The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
-`layoutId_of_string`.
+`layout_of_string`.
 
 #### Adding a programming layout
 
