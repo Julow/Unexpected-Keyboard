@@ -34,6 +34,7 @@
     <item>he_il_1452_2</item>
     <item>ar_pc</item>
     <item>ar_alt</item>
+    <item>persian</item>
     <item>custom</item>
   </string-array>
   <string-array name="pref_layout_entries">
@@ -70,6 +71,7 @@
     <item>Hebrew SI-1452-2</item>
     <item>Arabic PC</item>
     <item>Arabic ALT</item>
+    <item>Persian</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
   <string-array name="pref_accents_entries">
