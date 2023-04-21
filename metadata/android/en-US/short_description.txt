@@ -1,1 +1,1 @@
-Bàn phím ảo gọn nhẹ và tôn trọng quyền riêng tư cho Android.
+Lightweight and privacy-conscious virtual keyboard for Android.
