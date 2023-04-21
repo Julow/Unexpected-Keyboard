@@ -27,8 +27,6 @@ public class Keyboard2View extends View
 
   private Pointers.Modifiers _mods;
 
-  private static int _currentWhat = 0;
-
   private Config _config;
 
   private float _keyWidth;
