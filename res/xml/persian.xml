@@ -8,18 +8,18 @@
     <key key0="ف" key2="٥" key3="%"/>
     <key key0="غ" key2="٦" key3="^"/>
     <key key0="ع" key2="٧" key3="&amp;"/>
-    <key key0="ه" key2="٨" key3="*"/>
+    <key key0="ه" key2="٨" key3="×"/>
     <key key0="خ" key2="٩" key3="("/>
     <key key0="ح" key2="٠" key3=")"/>
-    <key key0="ج"/>
+    <key key0="ج" key2="!"/>
   </row>
   <row>
     <key key0="ش" key4="tab"/>
-    <key key0="س"/>
-    <key key0="ی"/>
-    <key key0="ب"/>
-    <key key0="ل"/>
-    <key key0="ا" key1="آ" key2="!"/>
+    <key key0="س" key2="*"/>
+    <key key0="ی" key2="+"/>
+    <key key0="ب" key2="/"/>
+    <key key0="ل" key2="-"/>
+    <key key0="ا" key1="آ"/>
     <key key0="ت" key1="&#x200C;"/>
     <key key0="ن"/>
     <key key0="م" key1="»"/>
