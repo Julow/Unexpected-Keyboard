@@ -374,6 +374,7 @@ final class Config
       case "he_il_1452_2": id = R.xml.he_il_1452_2; break;
       case "ar_pc": id = R.xml.ar_pc; break;
       case "ar_alt": id = R.xml.ar_alt; break;
+      case "persian": id = R.xml.persian; break;
     }
     return KeyboardData.load(res, id);
   }
