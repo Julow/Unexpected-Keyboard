@@ -1,16 +1,6 @@
 Chức năng chính là dễ dàng gõ nhiều ký tự bằng cách kéo phím về góc của nó.
 
-Các chức năng tiêu biểu:
+Ứng dụng này ban đầu được thiết kế cho các lập trình viên dùng Termux.
+Bây giờ đã hoàn hảo cho việc sử dụng hàng ngày.
 
-- Chứa tất cả ký tự và phím cơ bản lẫn đặc biệt của một cái bàn phím máy tính. Hoàn hảo cho các ứng dụng như Termux.
-
-- Bao gồm Tab, Esc, các phím mũi tên và phím chức năng, còn có thêm Ctrl và Alt.
-
-- Các phím có dấu phụ có thể được sử dụng qua phím liệt. Đầu tiên là bật dấu phụ, sau đó thì gõ.
-
-- Rất nhẹ và nhanh. Nhẹ hơn bàn phím của Google 500 lần và 15 lần bàn phím mặc định. Không quảng cáo, không theo dõi.
-
-- Nhiều bố cục phím: QWERTY, QWERTZ, AZERTY. Nhiều chủ đề: Sáng, tối, đen OLED. Với nhiều lựa chọn khác.
-
-Như các bàn phím ảo khác, nó phải được bật trong cài đặt. Đầu tiên là vào cài đặt hệ thống và đi đến:
-Hệ thống -> Ngôn ngữ và nhập liệu -> Bàn phím ảo -> Quản lý bàn phím ảo
+Ứng dụng này không chứa quảng cáo, không cần đến mạng, và có mã nguồn mở.
