@@ -1,4 +1,5 @@
 <?xml	version="1.0"	encoding="utf-8"?>
+<!-- https://neo-layout.org/Layouts/bone/ -->
 <keyboard bottom_row="false">
 	<row>
 		<key key0="j"				key2="esc"				key4="…"/>

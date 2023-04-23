@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Adapted from standard ABNT NBR 10346 -->
 <keyboard>
   <row>
     <key key0="q" key2="1" key4="esc"/>
