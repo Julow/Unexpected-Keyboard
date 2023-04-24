@@ -337,7 +337,7 @@ final class Config
 
   public KeyboardData layout_of_string(Resources res, String name)
   {
-    int id = R.xml.qwerty; // The config might store an invalid layout, don't crash
+    int id = R.xml.latn_qwerty_us; // The config might store an invalid layout, don't crash
     switch (name)
     {
       case "system": case "none": return null;

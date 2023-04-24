@@ -105,7 +105,7 @@ public class Keyboard2 extends InputMethodService
     if (s != null)
       _localeTextLayout = _config.layout_of_string(getResources(), s);
     else
-      _localeTextLayout = KeyboardData.load(getResources(), R.xml.qwerty);
+      _localeTextLayout = KeyboardData.load(getResources(), R.xml.latn_qwerty_us);
   }
 
   private void extra_keys_of_subtype(Set<KeyValue> dst, InputMethodSubtype subtype)
