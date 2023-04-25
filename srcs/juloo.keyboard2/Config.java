@@ -374,7 +374,7 @@ final class Config
       case "latn_qwertz_cz": id = R.xml.latn_qwertz_cz; break;
       case "latn_qwertz_de": id = R.xml.latn_qwertz_de; break;
       case "latn_qwertz_hu": id = R.xml.latn_qwertz_hu; break;
-      case "latn_qwertz_sk": id = R.xml.latn_qwerty_sk; break;
+      case "latn_qwertz_sk": id = R.xml.latn_qwertz_sk; break;
     }
     return KeyboardData.load(res, id);
   }
