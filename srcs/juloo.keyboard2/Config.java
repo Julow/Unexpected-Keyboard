@@ -375,6 +375,7 @@ final class Config
       case "ar_pc": id = R.xml.ar_pc; break;
       case "ar_alt": id = R.xml.ar_alt; break;
       case "persian": id = R.xml.persian; break;
+      case "kurdish": id = R.xml.kurdish; break;
     }
     return KeyboardData.load(res, id);
   }
