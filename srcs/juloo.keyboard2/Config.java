@@ -343,7 +343,8 @@ final class Config
       case "system": case "none": return null;
       case "custom": if (custom_layout != null) return custom_layout; break;
       case "azerty": id = R.xml.azerty; break;
-      case "bangla": id = R.xml.bangla; break;
+      case "bengali_national": id = R.xml.bengali_national; break;
+      case "bengali_provat": id = R.xml.bengali_provat; break;
       case "bgph1": id = R.xml.local_bgph1; break;
       case "bone": id = R.xml.bone; break;
       case "colemak": id = R.xml.colemak; break;

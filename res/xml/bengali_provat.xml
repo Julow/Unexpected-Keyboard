@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<keyboard>
+	<row>
+		<key 				key0="দ"	key1="ধ"	key2="১"	key3="!"				key5="esc"	/>
+		<key 				key0="ূ"		key1="ঊ"	key2="২"	key3="‌‌‌‌@"							/>
+		<key 				key0="ী"		key1="ঈ"	key2="৩"	key3="‌‌‌‌#"							/>
+		<key 				key0="র"	key1="ড়"	key2="৪"	key3="৳"							/>
+		<key 				key0="ট"		key1="ঠ"	key2="৫"	key3="%"							/>
+		<key 				key0="এ"	key1="ঐ"	key2="৬"	key3="^"							/>
+		<key 				key0="ু"		key1="উ"	key2="৭"	key3="ঞ"							/>
+		<key 				key0="ি"		key1="ই"		key2="৮"	key3="ৎ"								/>
+		<key 				key0="ও"	key1="ঔ"	key2="৯"	key3="("	key4=")"				/>
+		<key 				key0="প"	key1="ফ"	key2="০"	key3="zwj"	key4="~"				/>
+	</row>
+	<row>
+		<key shift="0.5"	key0="া"		key1="অ"										key5="tab"	/>
+		<key 				key0="স"	key1="ষ"													/>
+		<key 				key0="ড"	key1="ঢ"														/>
+		<key 				key0="ত"	key1="থ"													/>
+		<key 				key0="গ"	key1="ঘ"	key2="-"	key3="_"							/>
+		<key 				key0="হ"		key1="ঃ"		key2="="	key3="+"							/>
+		<key 				key0="জ"	key1="ঝ"				key3="ে"		key4="ৈ"					/>
+		<key 				key0="ক"	key1="খ"				key3="ো"	key4="ৌ"				/>
+		<key 				key0="ল"	key1="ং"		key2="॥"		key3="zwnj"							/>
+	</row>
+	<row>
+		<key width="1.5"	key0="shift"															/>
+		<key 				key0="য়"	key1="য"													/>
+		<key 				key0="শ"	key1="ঢ়"														/>
+		<key 				key0="চ"		key1="ছ"	key2="ৃ"			key3=","						/>
+		<key 				key0="আ"	key1="ঋ"	key2="ঁ"			key3="।"							/>
+		<key 				key0="ব"	key1="ভ"	key2="\?"		key3="্"							/>
+		<key 				key0="ন"	key1="ণ"	key2=":"		key3=";"						/>
+		<key 				key0="ম"	key1="ঙ"	key2="&quot;"	key3="'"						/>
+		<key width="1.5"	key0="backspace"		key2="delete"									/>
+	</row>
+</keyboard>
