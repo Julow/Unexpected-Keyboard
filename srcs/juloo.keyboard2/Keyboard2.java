@@ -340,9 +340,6 @@ public class Keyboard2 extends InputMethodService
         params.gravity = layoutGravity;
         view.setLayoutParams(params);
       }
-    } else {
-      throw new IllegalArgumentException(
-              "Layout parameter doesn't have gravity: " + lp.getClass().getName());
     }
   }
 
