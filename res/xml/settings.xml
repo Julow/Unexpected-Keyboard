@@ -75,7 +75,7 @@
       <juloo.common.IntSlideBarPreference android:key="horizontal_margin_portrait" android:title="@string/pref_portrait" android:summary="%sdp" android:defaultValue="3" min="0" max="30"/>
       <juloo.common.IntSlideBarPreference android:key="horizontal_margin_landscape" android:title="@string/pref_landscape" android:summary="%sdp" android:defaultValue="28" min="0" max="200"/>
     </PreferenceScreen>
-    <juloo.common.SlideBarPreference android:key="character_size" android:title="@string/pref_character_size_title" android:summary="@string/pref_character_size_summary" android:defaultValue="1.0" min="0.8" max="1.2"/>
+    <juloo.common.SlideBarPreference android:key="character_size" android:title="@string/pref_character_size_title" android:summary="@string/pref_character_size_summary" android:defaultValue="1.0" min="0.75" max="1.5"/>
     <juloo.common.IntSlideBarPreference android:key="key_vertical_space" android:title="@string/pref_key_vertical_space" android:summary="%sdp" android:defaultValue="2" min="0" max="8"/>
     <juloo.common.IntSlideBarPreference android:key="key_horizontal_space" android:title="@string/pref_key_horizontal_space" android:summary="%sdp" android:defaultValue="2" min="0" max="8"/>
   </PreferenceCategory>
