@@ -2,8 +2,8 @@
 <keyboard>
 	<row>
 		<key 				key0="দ"	key1="ধ"	key2="১"	key3="!"				key5="esc"	/>
-		<key 				key0="ূ"		key1="ঊ"	key2="২"	key3="‌‌‌‌@"							/>
-		<key 				key0="ী"		key1="ঈ"	key2="৩"	key3="‌‌‌‌#"							/>
+		<key 				key0="ূ"		key1="ঊ"	key2="২"	key3="\@"							/>
+		<key 				key0="ী"		key1="ঈ"	key2="৩"	key3="\#"							/>
 		<key 				key0="র"	key1="ড়"	key2="৪"	key3="৳"							/>
 		<key 				key0="ট"		key1="ঠ"	key2="৫"	key3="%"							/>
 		<key 				key0="এ"	key1="ঐ"	key2="৬"	key3="^"							/>
