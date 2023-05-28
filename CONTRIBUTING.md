@@ -78,6 +78,8 @@ make installd
 ### Adding a layout
 
 Layouts are defined in XML, see `res/xml/qwerty.xml`.
+An online tool for editing layout files written by @Lixquid is available
+[here](https://unexpected-keyboard-layout-editor.lixquid.com/).
 
 An entry must be added to the layout option in `res/values/arrays.xml`, to both
 `pref_layout_values` (correspond to the file name) and `pref_layout_entries`
