@@ -36,6 +36,7 @@ public class Keyboard2 extends InputMethodService
   // Layout associated with the currently selected locale.
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
+  public int actionId; // Action performed by the Action key.
 
   private Config _config;
 
@@ -150,9 +151,14 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  InputMethodManager get_imm()
+  {
+    return (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+  }
+
   private void refreshSubtypeImm()
   {
-    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    InputMethodManager imm = get_imm();
     if (VERSION.SDK_INT < 28)
       _config.shouldOfferSwitchingToNextInputMethod = true;
     else
@@ -213,14 +219,14 @@ public class Keyboard2 extends InputMethodService
     if (info.actionLabel != null)
     {
       _config.actionLabel = info.actionLabel.toString();
-      _keyeventhandler.actionId = info.actionId;
+      actionId = info.actionId;
       _config.swapEnterActionKey = false;
     }
     else
     {
       int action = info.imeOptions & EditorInfo.IME_MASK_ACTION;
       _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
-      _keyeventhandler.actionId = action;
+      actionId = action;
       _config.swapEnterActionKey =
         (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0;
     }
@@ -398,82 +404,85 @@ public class Keyboard2 extends InputMethodService
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver
   {
-    public void switchInputMethod()
+    public void handle_event_key(KeyValue.Event ev)
     {
-      InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-      imm.showInputMethodPicker();
-    }
-
-    public void switchToPrevInputMethod()
-    {
-      if (VERSION.SDK_INT < 28)
+      switch (ev)
       {
-        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        imm.switchToLastInputMethod(getConnectionToken());
+        case CONFIG:
+          Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          startActivity(intent);
+          break;
+
+        case SWITCH_TEXT:
+          _currentSpecialLayout = null;
+          _keyboardView.setKeyboard(current_layout());
+          break;
+
+        case SWITCH_NUMERIC:
+          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.numeric)));
+          break;
+
+        case SWITCH_EMOJI:
+          if (_emojiPane == null)
+            _emojiPane = (ViewGroup)inflate_view(R.layout.emoji_pane);
+          setInputView(_emojiPane);
+          break;
+
+        case SWITCH_BACK_EMOJI:
+          setInputView(_keyboardView);
+          break;
+
+        case CHANGE_METHOD:
+          get_imm().showInputMethodPicker();
+          break;
+
+        case CHANGE_METHOD_PREV:
+          if (VERSION.SDK_INT < 28)
+            get_imm().switchToLastInputMethod(getConnectionToken());
+          else
+            switchToPreviousInputMethod();
+          break;
+
+        case ACTION:
+          InputConnection conn = getCurrentInputConnection();
+          if (conn != null)
+            conn.performEditorAction(actionId);
+          break;
+
+        case SWITCH_SECOND:
+          if (_config.second_layout != null)
+            setTextLayout(Current_text_layout.SECONDARY);
+          break;
+
+        case SWITCH_SECOND_BACK:
+          setTextLayout(Current_text_layout.PRIMARY);
+          break;
+
+        case SWITCH_GREEKMATH:
+          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.greekmath)));
+          break;
+
+        case CAPS_LOCK:
+          set_shift_state(true, true);
+          break;
+
+        case SWITCH_VOICE_TYPING:
+          SimpleEntry<String, InputMethodSubtype> im = get_voice_typing_im(get_imm());
+          if (im == null)
+            return;
+          // Best-effort. Good enough for triggering Google's voice typing.
+          if (VERSION.SDK_INT < 28)
+            switchInputMethod(im.getKey());
+          else
+            switchInputMethod(im.getKey(), im.getValue());
+          break;
       }
-      else
-        Keyboard2.this.switchToPreviousInputMethod();
-    }
-
-    public void switch_voice_typing()
-    {
-      InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-      SimpleEntry<String, InputMethodSubtype> im = get_voice_typing_im(imm);
-      if (im == null)
-        return;
-      // Best-effort. Good enough for triggering Google's voice typing.
-      if (VERSION.SDK_INT < 28)
-        Keyboard2.this.switchInputMethod(im.getKey());
-      else
-        Keyboard2.this.switchInputMethod(im.getKey(), im.getValue());
-    }
-
-    public void setPane_emoji()
-    {
-      if (_emojiPane == null)
-        _emojiPane = (ViewGroup)inflate_view(R.layout.emoji_pane);
-      setInputView(_emojiPane);
-    }
-
-    public void setPane_normal()
-    {
-      setInputView(_keyboardView);
     }
 
     public void set_shift_state(boolean state, boolean lock)
     {
       _keyboardView.set_shift_state(state, lock);
-    }
-
-    public void set_layout(KeyEventHandler.Layout l)
-    {
-      switch (l)
-      {
-        case Current:
-          _currentSpecialLayout = null;
-          _keyboardView.setKeyboard(current_layout());
-          break;
-        case Primary:
-          setTextLayout(Current_text_layout.PRIMARY);
-          break;
-        case Secondary:
-          if (_config.second_layout != null)
-            setTextLayout(Current_text_layout.SECONDARY);
-          break;
-        case Numeric:
-          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.numeric)));
-          break;
-        case Greekmath:
-          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.greekmath)));
-          break;
-      }
-    }
-
-    public void showKeyboardConfig()
-    {
-      Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      startActivity(intent);
     }
 
     public InputConnection getCurrentInputConnection()

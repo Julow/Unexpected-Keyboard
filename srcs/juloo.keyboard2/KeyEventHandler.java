@@ -10,8 +10,6 @@ class KeyEventHandler implements Config.IKeyEventHandler
   IReceiver _recv;
   Autocapitalisation _autocap;
 
-  public int actionId; // Action performed by the Action key.
-
   public KeyEventHandler(Looper looper, IReceiver recv)
   {
     _recv = recv;
@@ -40,28 +38,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     {
       case Char: send_text(String.valueOf(key.getChar())); break;
       case String: send_text(key.getString()); break;
-      case Event:
-        switch (key.getEvent())
-        {
-          case CONFIG: _recv.showKeyboardConfig(); break;
-          case SWITCH_TEXT: _recv.set_layout(Layout.Current); break;
-          case SWITCH_NUMERIC: _recv.set_layout(Layout.Numeric); break;
-          case SWITCH_EMOJI: _recv.setPane_emoji(); break;
-          case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
-          case CHANGE_METHOD: _recv.switchInputMethod(); break;
-          case CHANGE_METHOD_PREV: _recv.switchToPrevInputMethod(); break;
-          case ACTION:
-            InputConnection conn = _recv.getCurrentInputConnection();
-            if (conn != null)
-              conn.performEditorAction(actionId);
-            break;
-          case SWITCH_SECOND: _recv.set_layout(Layout.Secondary); break;
-          case SWITCH_SECOND_BACK: _recv.set_layout(Layout.Primary); break;
-          case SWITCH_GREEKMATH: _recv.set_layout(Layout.Greekmath); break;
-          case CAPS_LOCK: _recv.set_shift_state(true, true); break;
-          case SWITCH_VOICE_TYPING: _recv.switch_voice_typing(); break;
-        }
-        break;
+      case Event: _recv.handle_event_key(key.getEvent()); break;
       case Keyevent:
         handleKeyUpWithModifier(key.getKeyevent(), mods);
         break;
@@ -170,24 +147,9 @@ class KeyEventHandler implements Config.IKeyEventHandler
     conn.performContextMenuAction(id);
   }
 
-  public enum Layout
-  {
-    Current, // The primary or secondary layout
-    Primary,
-    Secondary,
-    Numeric,
-    Greekmath
-  }
-
   public static interface IReceiver
   {
-    public void switchInputMethod();
-    public void switchToPrevInputMethod();
-    public void switch_voice_typing();
-    public void setPane_emoji();
-    public void setPane_normal();
-    public void showKeyboardConfig();
-    public void set_layout(Layout l);
+    public void handle_event_key(KeyValue.Event ev);
     public void set_shift_state(boolean state, boolean lock);
     public InputConnection getCurrentInputConnection();
   }
