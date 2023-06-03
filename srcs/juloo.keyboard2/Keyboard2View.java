@@ -123,6 +123,15 @@ public class Keyboard2View extends View
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
   {
+    if (_keyboard.modmap != null)
+    {
+      if (mods.has(KeyValue.Modifier.SHIFT))
+      {
+        KeyValue km = _keyboard.modmap.shift.get(k);
+        if (km != null)
+          return km;
+      }
+    }
     return KeyModifier.modify(k, mods);
   }
 
@@ -372,7 +381,7 @@ public class Keyboard2View extends View
 
   private void drawLabel(Canvas canvas, KeyValue kv, float x, float y, float keyH, boolean isKeyDown)
   {
-    kv = KeyModifier.modify(kv, _mods);
+    kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
@@ -388,7 +397,7 @@ public class Keyboard2View extends View
   {
     Paint.Align a = LABEL_POSITION_H[sub_index];
     Vertical v = LABEL_POSITION_V[sub_index];
-    kv = KeyModifier.modify(kv, _mods);
+    kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
