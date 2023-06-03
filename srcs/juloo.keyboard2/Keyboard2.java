@@ -399,6 +399,28 @@ public class Keyboard2 extends InputMethodService
         Keyboard2.this.switchToPreviousInputMethod();
     }
 
+    public void switch_voice_typing()
+    {
+      if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
+        return;
+      InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+      for (InputMethodInfo im : imm.getEnabledInputMethodList())
+      {
+        for (InputMethodSubtype imst : imm.getEnabledInputMethodSubtypeList(im, true))
+        {
+          // Switch to the first IM that has a subtype of this mode
+          if (imst.getMode().equals("voice"))
+          {
+            // Best-effort. Good enough for triggering Google's voice typing
+            if (VERSION.SDK_INT < 28)
+              Keyboard2.this.switchInputMethod(im.getId());
+            else
+              Keyboard2.this.switchInputMethod(im.getId(), imst);
+          }
+        }
+      }
+    }
+
     public void setPane_emoji()
     {
       if (_emojiPane == null)

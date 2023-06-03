@@ -59,6 +59,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
           case SWITCH_SECOND_BACK: _recv.set_layout(Layout.Primary); break;
           case SWITCH_GREEKMATH: _recv.set_layout(Layout.Greekmath); break;
           case CAPS_LOCK: _recv.set_shift_state(true, true); break;
+          case SWITCH_VOICE_TYPING: _recv.switch_voice_typing(); break;
         }
         break;
       case Keyevent:
@@ -182,6 +183,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
   {
     public void switchInputMethod();
     public void switchToPrevInputMethod();
+    public void switch_voice_typing();
     public void setPane_emoji();
     public void setPane_normal();
     public void showKeyboardConfig();

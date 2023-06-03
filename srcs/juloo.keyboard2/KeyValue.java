@@ -19,6 +19,7 @@ final class KeyValue
     SWITCH_SECOND_BACK,
     SWITCH_GREEKMATH,
     CAPS_LOCK,
+    SWITCH_VOICE_TYPING,
   }
 
   // Must be evaluated in the reverse order of their values.
@@ -343,6 +344,7 @@ final class KeyValue
       case "change_method_prev": return eventKey(0x09, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
       case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
       case "capslock": return eventKey(0x12, Event.CAPS_LOCK, 0);
+      case "voice_typing": return eventKey(0x15, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
 
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
       case "enter": return keyeventKey(0x0E, KeyEvent.KEYCODE_ENTER, 0);
@@ -451,6 +453,7 @@ final class KeyValue
     /* Keys description is shown in the settings. */
     addKeyDescr("capslock", "Caps lock");
     addKeyDescr("switch_greekmath", "Greek & math symbols");
+    addKeyDescr("voice_typing", "Voice typing");
   }
 
   // Substitute for [assert], which has no effect on Android.
