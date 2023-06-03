@@ -478,6 +478,10 @@ public final class Pointers implements Handler.Callback
 
     public KeyValue.Modifier get(int i) { return _mods[_size - 1 - i]; }
     public int size() { return _size; }
+    public boolean has(KeyValue.Modifier m)
+    {
+      return (Arrays.binarySearch(_mods, 0, _size, m) >= 0);
+    }
 
     @Override
     public int hashCode() { return Arrays.hashCode(_mods); }

@@ -31,7 +31,7 @@ final class Config
   public boolean number_row;
   public float swipe_dist_px;
   public float slide_step_px;
-  public boolean vibrateEnabled;
+  public VibratorCompat.VibrationBehavior vibration_behavior;
   public long longPressTimeout;
   public long longPressInterval;
   public float margin_bottom;
@@ -123,7 +123,8 @@ final class Config
     float swipe_dist_value = Float.valueOf(_prefs.getString("swipe_dist", "15"));
     swipe_dist_px = swipe_dist_value / 25.f * swipe_scaling;
     slide_step_px = swipe_dist_px / 4.f;
-    vibrateEnabled = _prefs.getBoolean("vibrate_enabled", true);
+    vibration_behavior =
+      VibratorCompat.VibrationBehavior.of_string(_prefs.getString("vibration_behavior", "system"));
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
     margin_bottom = get_dip_pref(dm, oriented_pref("margin_bottom"),
