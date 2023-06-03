@@ -10,7 +10,6 @@ import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -231,13 +230,7 @@ public class Keyboard2View extends View
 
   private void vibrate()
   {
-    if (!_config.vibrateEnabled)
-      return ;
-    if (VERSION.SDK_INT >= 5)
-    {
-      performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
-          HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
-    }
+    VibratorCompat.vibrate(this, _config.vibration_behavior);
   }
 
   @Override

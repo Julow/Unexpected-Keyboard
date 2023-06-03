@@ -134,4 +134,18 @@
     <item>25</item>
     <item>35</item>
   </string-array>
+  <string-array name="pref_vibration_entries">
+    <item>@string/pref_vibration_e_disabled</item>
+    <item>@string/pref_vibration_e_system</item>
+    <item>@string/pref_vibration_e_strong</item>
+    <item>@string/pref_vibration_e_medium</item>
+    <item>@string/pref_vibration_e_light</item>
+  </string-array>
+  <string-array name="pref_vibration_values">
+    <item>disabled</item>
+    <item>system</item>
+    <item>strong</item>
+    <item>medium</item>
+    <item>light</item>
+  </string-array>
 </resources>

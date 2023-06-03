@@ -67,6 +67,11 @@
   <string name="pref_category_advanced">Zaawansowane</string>
   <string name="pref_custom_layout_title">Własny układ</string>
   <string name="pref_custom_layout_summary">Zobacz kod źródłowy. Ta opcja nie jest przeznaczona do użycia.</string>
+  <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
+  <!-- <string name="pref_vibration_e_system">System</string> -->
+  <!-- <string name="pref_vibration_e_strong">Strong</string> -->
+  <!-- <string name="pref_vibration_e_medium">Medium</string> -->
+  <!-- <string name="pref_vibration_e_light">Light</string> -->
   <string name="key_action_next">Dalej</string>
   <string name="key_action_done">OK</string>
   <string name="key_action_go">Przejdź</string>
