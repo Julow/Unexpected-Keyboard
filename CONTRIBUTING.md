@@ -143,6 +143,10 @@ before a release and older ones are never shown to anyone currently.
 The app name might be partially translated, the "unexpected" word should remain
 untranslated.
 
+As translations need to be updated regularly, you can subscribe to this issue
+to receive a notification when an update is needed:
+https://github.com/Julow/Unexpected-Keyboard/issues/373
+
 ### Adding key combinations
 
 Key combinations are defined in `srcs/juloo.keyboard2/KeyModifier.java`.
