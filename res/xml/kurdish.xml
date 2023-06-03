@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key shift="0.1665"/>
-    <key key0="ق" key1="ٯ" key2="١" key3="esc"/>
+    <key shift="0.1665" key0="ق" key1="ٯ" key2="١" key3="esc"/>
     <key key0="و" key1="وو" key2="٢" key3="\@"/>
     <key key0="ە" key1="ة" key2="٣" key3="\#" />
     <key key0="ر" key1="ڕ" key2="٤" key3="$"/>
