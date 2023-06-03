@@ -5,4 +5,5 @@
   <TextView style="@style/paragraph" android:text="@string/launcher_sourcecode" android:autoLink="web"/>
   <TextView android:id="@+id/launcher_tryhere_text" style="@style/paragraph" android:text="@string/launcher_tryhere"/>
   <EditText android:id="@+id/launcher_tryhere_area" style="@style/paragraph" android:inputType="text"/>
+  <Button style="@style/paragraph" android:text="@string/launcher_button_hide" android:onClick="hide_activity" android:layout_width="wrap_content"/>
 </LinearLayout>

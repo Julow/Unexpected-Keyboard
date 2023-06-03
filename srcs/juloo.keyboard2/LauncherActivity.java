@@ -1,7 +1,9 @@
 package juloo.keyboard2;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -31,6 +33,14 @@ public class LauncherActivity extends Activity
   public void launch_imesettings(View _btn)
   {
     startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS));
+  }
+
+  public void hide_activity(View _btn)
+  {
+    getPackageManager().setComponentEnabledSetting(
+        new ComponentName(this, LauncherActivity.class),
+        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+        PackageManager.DONT_KILL_APP);
   }
 
   final class Tryhere_OnUnhandledKeyEventListener implements View.OnUnhandledKeyEventListener

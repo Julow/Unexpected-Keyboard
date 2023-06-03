@@ -79,6 +79,7 @@
   <string name="key_action_search">Поиск</string>
   <string name="key_action_send">Отправить</string>
   <string name="launcher_button_imesettings">Включить клавиатуру</string>
+  <!-- <string name="launcher_button_hide">Hide this icon</string> -->
   <string name="launcher_description">Данное приложение является виртуальной клавиатурой. Зайдите в настройки, нажав кнопку внизу и активируйте Unexpected-Keyboard.</string>
   <string name="launcher_sourcecode">Это бесплатное приложение с открытым исходным кодом. Вы можете изучить код или сообщить об ошибках по ссылке <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
   <string name="launcher_tryhere">После активации вы можете попробовать клавиатуру прямо здесь:</string>
