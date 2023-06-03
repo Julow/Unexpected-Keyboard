@@ -129,14 +129,9 @@ final class Config
       VibratorCompat.VibrationBehavior.of_string(_prefs.getString("vibration_behavior", "system"));
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
-    margin_bottom = get_dip_pref(dm, oriented_pref("margin_bottom"),
-        res.getDimension(R.dimen.margin_bottom));
-    keyVerticalInterval = get_dip_pref(dm, "key_vertical_space",
-        res.getDimension(R.dimen.key_vertical_interval));
-    keyHorizontalInterval =
-      get_dip_pref(dm, "key_horizontal_space",
-          res.getDimension(R.dimen.key_horizontal_interval))
-      * horizontalIntervalScale;
+    margin_bottom = get_dip_pref_oriented(dm, "margin_bottom", 7, 3);
+    keyVerticalInterval = get_dip_pref(dm, "key_vertical_space", 2);
+    keyHorizontalInterval = get_dip_pref(dm, "key_horizontal_space", 2) * horizontalIntervalScale;
     // Label brightness is used as the alpha channel
     labelBrightness = _prefs.getInt("label_brightness", 100) * 255 / 100;
     // Keyboard opacity
@@ -147,8 +142,7 @@ final class Config
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontal_margin =
-      get_dip_pref(dm, oriented_pref("horizontal_margin"),
-          res.getDimension(R.dimen.horizontal_margin));
+      get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
       _prefs.getFloat("character_size", 1.f)
@@ -311,11 +305,12 @@ final class Config
     return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
   }
 
-  /** Returns preference name from a prefix depending on orientation. */
-  private String oriented_pref(String base_name)
+  /** [get_dip_pref] depending on orientation. */
+  float get_dip_pref_oriented(DisplayMetrics dm, String pref_base_name, float def_port, float def_land)
   {
     String suffix = orientation_landscape ? "_landscape" : "_portrait";
-    return base_name + suffix;
+    float def = orientation_landscape ? def_land : def_port;
+    return get_dip_pref(dm, pref_base_name + suffix, def);
   }
 
   private int getThemeId(Resources res, String theme_name)
