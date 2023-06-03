@@ -15,12 +15,13 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -156,6 +157,7 @@ public class Keyboard2 extends InputMethodService
       _config.shouldOfferSwitchingToNextInputMethod = true;
     else
       _config.shouldOfferSwitchingToNextInputMethod = shouldOfferSwitchingToNextInputMethod();
+    _config.shouldOfferVoiceTyping = (get_voice_typing_im(imm) != null);
     if (VERSION.SDK_INT < 12)
     {
       // Subtypes won't work well under API level 12 (getExtraValueOf)
@@ -238,6 +240,20 @@ public class Keyboard2 extends InputMethodService
       _emojiPane = null;
     }
     _keyboardView.reset();
+  }
+
+  /** Returns the id and subtype of the voice typing IM. Returns [null] if none
+      is installed or if the feature is unsupported. */
+  SimpleEntry<String, InputMethodSubtype> get_voice_typing_im(InputMethodManager imm)
+  {
+    if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
+      return null;
+    for (InputMethodInfo im : imm.getEnabledInputMethodList())
+      for (InputMethodSubtype imst : imm.getEnabledInputMethodSubtypeList(im, true))
+        // Switch to the first IM that has a subtype of this mode
+        if (imst.getMode().equals("voice"))
+          return new SimpleEntry(im.getId(), imst);
+    return null;
   }
 
   private void log_editor_info(EditorInfo info)
@@ -401,24 +417,15 @@ public class Keyboard2 extends InputMethodService
 
     public void switch_voice_typing()
     {
-      if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
-        return;
       InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-      for (InputMethodInfo im : imm.getEnabledInputMethodList())
-      {
-        for (InputMethodSubtype imst : imm.getEnabledInputMethodSubtypeList(im, true))
-        {
-          // Switch to the first IM that has a subtype of this mode
-          if (imst.getMode().equals("voice"))
-          {
-            // Best-effort. Good enough for triggering Google's voice typing
-            if (VERSION.SDK_INT < 28)
-              Keyboard2.this.switchInputMethod(im.getId());
-            else
-              Keyboard2.this.switchInputMethod(im.getId(), imst);
-          }
-        }
-      }
+      SimpleEntry<String, InputMethodSubtype> im = get_voice_typing_im(imm);
+      if (im == null)
+        return;
+      // Best-effort. Good enough for triggering Google's voice typing.
+      if (VERSION.SDK_INT < 28)
+        Keyboard2.this.switchInputMethod(im.getKey());
+      else
+        Keyboard2.this.switchInputMethod(im.getKey(), im.getValue());
     }
 
     public void setPane_emoji()

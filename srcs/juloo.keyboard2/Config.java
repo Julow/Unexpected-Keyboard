@@ -53,6 +53,7 @@ final class Config
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
   public boolean shouldOfferSwitchingToSecond;
+  public boolean shouldOfferVoiceTyping;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
@@ -75,6 +76,7 @@ final class Config
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
     shouldOfferSwitchingToSecond = false;
+    shouldOfferVoiceTyping = false;
     actionLabel = null;
     actionId = 0;
     swapEnterActionKey = false;
@@ -211,6 +213,8 @@ final class Config
                   KeyValue.getKeyByName("enter") : action_key;
               case SWITCH_SECOND:
                 return shouldOfferSwitchingToSecond ? key : null;
+              case SWITCH_VOICE_TYPING:
+                return shouldOfferVoiceTyping ? key : null;
             }
             break;
           case Keyevent:
