@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard>
   <row>
-    <key shift="0.1665" key0="ق" key1="ٯ" key2="١" key3="esc"/>
+    <key key0="ق" key1="ٯ" key2="١" key3="esc"/>
     <key key0="و" key1="وو" key2="٢" key3="\@"/>
     <key key0="ە" key1="ة" key2="٣" key3="\#" />
     <key key0="ر" key1="ڕ" key2="٤" key3="$"/>
@@ -13,7 +13,7 @@
     <key key0="پ" key1="ث" key2="٠"/>
   </row>
   <row>
-    <key shift="0.1665" key0="ا" key1="أ" key2="tab"/>
+    <key key0="ا" key1="أ" key2="tab"/>
     <key key0="س" key1="ص"/>
     <key key0="ش" key1="ض"/>
     <key key0="د" key1="ذ" key2="ۮ"/>
@@ -34,6 +34,6 @@
     <key key0="ب"/>
     <key key0="ن" key2="&#1548;" key3="&#1563;"/>
     <key key0="م"/>
-    <key key0="backspace" key2="delete" key3="f11_placeholder" key4="f12_placeholder" width="1.333"/>
+    <key key0="backspace" key2="delete" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
 </keyboard>
