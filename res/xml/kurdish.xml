@@ -13,8 +13,7 @@
     <key key0="پ" key1="ث" key2="٠"/>
   </row>
   <row>
-    <key shift="0.1665"/>
-    <key key0="ا" key1="أ" key2="tab"/>
+    <key shift="0.1665" key0="ا" key1="أ" key2="tab"/>
     <key key0="س" key1="ص"/>
     <key key0="ش" key1="ض"/>
     <key key0="د" key1="ذ" key2="ۮ"/>
