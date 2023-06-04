@@ -42,7 +42,7 @@ class KeyModifier
       case GRAVE: return apply_dead_char(k, '\u02CB');
       case AIGU: return apply_dead_char(k, '\u00B4');
       case CIRCONFLEXE: return apply_dead_char(k, '\u02C6');
-      case TILDE: return apply_dead_char(k, '\u02DC');
+      case TILDE: return apply_map_or_dead_char(k, map_char_tilde, '\u02DC');
       case CEDILLE: return apply_dead_char(k, '\u00B8');
       case TREMA: return apply_dead_char(k, '\u00A8');
       case CARON: return apply_dead_char(k, '\u02C7');
@@ -103,6 +103,21 @@ class KeyModifier
         char kc = k.getChar();
         char c = (char)KeyCharacterMap.getDeadChar(dead_char, kc);
         return (c == 0 || kc == c) ? k : k.withChar(c);
+      default: return k;
+    }
+  }
+
+  /** Apply a [Map_char] or fallback to [apply_dead_char]. */
+  private static KeyValue apply_map_or_dead_char(KeyValue k, Map_char map, char dead_char)
+  {
+    switch (k.getKind())
+    {
+      case Char:
+        char kc = k.getChar();
+        char c = map.apply(kc);
+        if (kc == c)
+          return apply_dead_char(k, dead_char);
+        return k.withChar(c);
       default: return k;
     }
   }
@@ -458,6 +473,18 @@ class KeyModifier
       default: return c;
     }
   }
+
+  private static final Map_char map_char_tilde =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'n': return 'ñ';
+          default: return c;
+        }
+      }
+    };
 
   private static final Map_char map_char_double_aigu =
     new Map_char() {
