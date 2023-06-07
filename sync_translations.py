@@ -34,5 +34,5 @@ baseline = parse_strings_file("res/values/strings.xml")
 for strings_file in glob.glob("res/values-*/strings.xml"):
     print(strings_file)
     strings = dict(parse_strings_file(strings_file))
-    with open(strings_file, "w") as out:
+    with open(strings_file, "w", encoding="utf-8") as out:
         write_updated_strings(out, baseline, strings)
