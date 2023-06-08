@@ -33,7 +33,7 @@ public class Keyboard2 extends InputMethodService
   // If not 'null', the layout to use instead of [_currentTextLayout].
   private KeyboardData _currentSpecialLayout;
   private Current_text_layout _currentTextLayout;
-  // Layout associated with the currently selected locale.
+  // Layout associated with the currently selected locale. Not 'null'.
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
   public int actionId; // Action performed by the Action key.
@@ -99,15 +99,6 @@ public class Keyboard2 extends InputMethodService
     return Arrays.asList();
   }
 
-  private void refreshSubtypeLayout(InputMethodSubtype subtype)
-  {
-    String s = subtype.getExtraValueOf("default_layout");
-    if (s != null)
-      _localeTextLayout = _config.layout_of_string(getResources(), s);
-    else
-      _localeTextLayout = KeyboardData.load(getResources(), R.xml.qwerty);
-  }
-
   private void extra_keys_of_subtype(Set<KeyValue> dst, InputMethodSubtype subtype)
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
@@ -164,6 +155,7 @@ public class Keyboard2 extends InputMethodService
     else
       _config.shouldOfferSwitchingToNextInputMethod = shouldOfferSwitchingToNextInputMethod();
     _config.shouldOfferVoiceTyping = (get_voice_typing_im(imm) != null);
+    KeyboardData default_layout = null;
     if (VERSION.SDK_INT < 12)
     {
       // Subtypes won't work well under API level 12 (getExtraValueOf)
@@ -179,10 +171,15 @@ public class Keyboard2 extends InputMethodService
       }
       else
       {
-        refreshSubtypeLayout(subtype);
+        String s = subtype.getExtraValueOf("default_layout");
+        if (s != null)
+          default_layout = _config.layout_of_string(getResources(), s);
         refreshAccentsOption(imm, subtype);
       }
     }
+    if (default_layout == null)
+      default_layout = KeyboardData.load(getResources(), R.xml.qwerty);
+    _localeTextLayout = default_layout;
     if (_config.second_layout == null)
     {
       _config.shouldOfferSwitchingToSecond = false;

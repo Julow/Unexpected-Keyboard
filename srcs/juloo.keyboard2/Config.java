@@ -335,13 +335,13 @@ final class Config
     }
   }
 
+  /** Might return [null] if the selected layout is "system", "custom" or if
+      the name is not recognized. */
   public KeyboardData layout_of_string(Resources res, String name)
   {
-    int id = R.xml.qwerty; // The config might store an invalid layout, don't crash
+    int id;
     switch (name)
     {
-      case "system": case "none": return null;
-      case "custom": if (custom_layout != null) return custom_layout; break;
       case "azerty": id = R.xml.azerty; break;
       case "bangla": id = R.xml.bangla; break;
       case "bgph1": id = R.xml.local_bgph1; break;
@@ -376,6 +376,8 @@ final class Config
       case "ar_alt": id = R.xml.ar_alt; break;
       case "persian": id = R.xml.persian; break;
       case "kurdish": id = R.xml.kurdish; break;
+      case "custom": return custom_layout;
+      case "system": case "none": default: return null;
     }
     return KeyboardData.load(res, id);
   }
