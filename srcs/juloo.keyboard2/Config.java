@@ -366,6 +366,7 @@ final class Config
       case "qwerty_vi": id = R.xml.qwerty_vi; break;
       case "qwertz": id = R.xml.qwertz; break;
       case "qwertz_cs": id = R.xml.qwertz_cs; break;
+      case "qwertz_cs_minimal": id = R.xml.qwertz_cs_minimal; break;
       case "qwertz_de": id = R.xml.qwertz_de; break;
       case "qwertz_hu": id = R.xml.qwertz_hu; break;
       case "qwertz_sk": id = R.xml.qwertz_sk; break;

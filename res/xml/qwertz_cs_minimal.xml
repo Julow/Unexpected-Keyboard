@@ -5,8 +5,8 @@
     <key                 key0="w"         key1="2"                          key3="|"          key4="\\"     />
     <key                 key0="e"         key1="3"         key2="é"         key3="^"          key4="ì"      />
     <key                 key0="r"         key1="4"         key2="à"                           key4="ø"      />
-    <key                 key0="t"         key1="5"                          key3="°"          key4=""      />
-    <key                 key0="z"         key1="6"                                            key4=""      />
+    <key                 key0="t"         key1="5"                          key3="°"          key4="ť"      />
+    <key                 key0="z"         key1="6"                                            key4="ž"      />
     <key                 key0="u"         key1="7"         key2="ú"         key3="`"         key4="ù"      />
     <key                 key0="i"         key1="8"         key2="í"         key3="("                        />
     <key                 key0="o"         key1="9"         key2="ó"         key3=")"                        />
@@ -14,7 +14,7 @@
   </row>
   <row>
     <key shift="0.5"     key0="a"         key1="tab"       key2="á"         key3=";"                        />
-    <key                 key0="s"                                                             key4=""      />
+    <key                 key0="s"                                                             key4="š"      />
     <key                 key0="d"                                                             key4="ï"      />
     <key                 key0="f"                                           key3="["                        />
     <key                 key0="g"                                           key3="]"                        />
