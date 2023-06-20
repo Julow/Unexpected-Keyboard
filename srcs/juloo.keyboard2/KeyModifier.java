@@ -237,6 +237,8 @@ class KeyModifier
       case '!': return "¡";
       case '?': return "¿";
       case '|': return "¦";
+      case '§': return "¶";
+      case '×': return "∙";
       // arrows
       case '↖': return "⇖";
       case '↑': return "⇑";
