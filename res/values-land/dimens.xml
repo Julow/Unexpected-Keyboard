@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <dimen name="emoji_type_button_height">48dp</dimen>
-  <dimen name="extra_horizontal_margin">25dp</dimen>
 </resources>

@@ -18,12 +18,12 @@ public class EmojiKeyButton extends Button
     _key = (key_name == null) ? null : KeyValue.getKeyByName(key_name);
     setText(_key.getString());
     if (_key.hasFlags(KeyValue.FLAG_KEY_FONT))
-      setTypeface(Theme.getSpecialKeyFont(context));
+      setTypeface(Theme.getKeyFont(context));
   }
 
   public void onClick(View v)
   {
     Config config = Config.globalConfig();
-    config.handler.handleKeyUp(_key, Pointers.Modifiers.EMPTY);
+    config.handler.key_up(_key, Pointers.Modifiers.EMPTY);
   }
 }

@@ -48,6 +48,8 @@ public final class Pointers implements Handler.Callback
 
   public void clear()
   {
+    for (Pointer p : _ptrs)
+      stopKeyRepeat(p);
     _ptrs.clear();
   }
 
@@ -74,14 +76,24 @@ public final class Pointers implements Handler.Callback
     return -1;
   }
 
-  /** Fake pointers are latched and not lockable. */
-  public void add_fake_pointer(KeyValue kv, KeyboardData.Key key)
+  public int getKeyFlags(KeyboardData.Key key, KeyValue kv)
   {
-    // Avoid adding a fake pointer to a key that is already down.
-    if (isKeyDown(key))
-      return;
-    Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags = ptr.flags & ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK | KeyValue.FLAG_FAKE_PTR);
+    Pointer ptr = getLatched(key, kv);
+    if (ptr == null) return -1;
+    return ptr.flags;
+  }
+
+  /** Fake pointers are latched and not lockable. */
+  public void add_fake_pointer(KeyValue kv, KeyboardData.Key key, boolean locked)
+  {
+    Pointer ptr = getLatched(key, kv);
+    if (ptr != null)
+      removePtr(ptr); // Already latched, replace pointer.
+    ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
+    ptr.flags &= ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK);
+    ptr.flags |= KeyValue.FLAG_FAKE_PTR;
+    if (locked)
+      ptr.flags |= KeyValue.FLAG_LOCKED;
     _ptrs.add(ptr);
   }
 
@@ -99,6 +111,12 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = getPtr(pointerId);
     if (ptr == null)
       return;
+    if (ptr.sliding)
+    {
+      clearLatched();
+      onTouchUp_sliding(ptr);
+      return;
+    }
     stopKeyRepeat(ptr);
     Pointer latched = getLatched(ptr);
     if (latched != null) // Already latched
@@ -126,13 +144,9 @@ public final class Pointers implements Handler.Callback
     }
   }
 
-  public void onTouchCancel(int pointerId)
+  public void onTouchCancel()
   {
-    Pointer ptr = getPtr(pointerId);
-    if (ptr == null)
-      return;
-    stopKeyRepeat(ptr);
-    removePtr(ptr);
+    clear();
     _handler.onPointerFlagsChanged(true);
   }
 
@@ -147,51 +161,57 @@ public final class Pointers implements Handler.Callback
 
   public void onTouchDown(float x, float y, int pointerId, KeyboardData.Key key)
   {
-    // Ignore new presses while a modulated key is active. On some devices,
-    // ghost touch events can happen while the pointer travels on top of other
-    // keys.
-    if (isModulatedKeyPressed())
+    // Ignore new presses while a sliding key is active. On some devices, ghost
+    // touch events can happen while the pointer travels on top of other keys.
+    if (isSliding())
       return;
     // Don't take latched modifiers into account if an other key is pressed.
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
-    KeyValue value = handleKV(key.key0, mods);
+    KeyValue value = _handler.modifyKey(key.keys[0], mods);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     startKeyRepeat(ptr);
     _handler.onPointerDown(false);
   }
 
+  static final int[] DIRECTION_TO_INDEX = new int[]{
+    7, 2, 2, 6, 6, 4, 4, 8, 8, 3, 3, 5, 5, 1, 1, 7
+  };
+
+  /**
+   * [direction] is an int between [0] and [15] that represent 16 sections of a
+   * circle, clockwise, starting at the top.
+   */
+  KeyValue getKeyAtDirection(KeyboardData.Key k, int direction)
+  {
+    return k.keys[DIRECTION_TO_INDEX[direction]];
+  }
+
   /*
-   * Get the KeyValue at the given direction. In case of swipe (!= 0), get the
-   * nearest KeyValue that is not key0.
+   * Get the KeyValue at the given direction. In case of swipe (direction !=
+   * null), get the nearest KeyValue that is not key0.
    * Take care of applying [_handler.onPointerSwipe] to the selected key, this
    * must be done at the same time to be sure to treat removed keys correctly.
    * Return [null] if no key could be found in the given direction or if the
    * selected key didn't change.
    */
-  private KeyValue getKeyAtDirection(Pointer ptr, int direction)
+  private KeyValue getNearestKeyAtDirection(Pointer ptr, Integer direction)
   {
-    if (direction == 0)
-      return handleKV(ptr.key.key0, ptr.modifiers);
+    if (direction == null)
+      return _handler.modifyKey(ptr.key.keys[0], ptr.modifiers);
     KeyValue k;
-    for (int i = 0; i > -3; i = (~i>>31) - i)
+    // [i] is [0, -1, 1, -2, 2, ...]
+    for (int i = 0; i > -4; i = (~i>>31) - i)
     {
-      int d = (direction + i + 8 - 1) % 8 + 1;
+      int d = (direction + i + 16) % 16;
       // Don't make the difference between a key that doesn't exist and a key
       // that is removed by [_handler]. Triggers side effects.
-      k = _handler.modifyKey(ptr.key.getAtDirection(d), ptr.modifiers);
+      k = _handler.modifyKey(getKeyAtDirection(ptr.key, d), ptr.modifiers);
       if (k != null)
         return k;
     }
     return null;
-  }
-
-  private KeyValue handleKV(KeyboardData.Corner c, Modifiers modifiers)
-  {
-    if (c == null)
-      return null;
-    return _handler.modifyKey(c.kv, modifiers);
   }
 
   public void onTouchMove(float x, float y, int pointerId)
@@ -203,45 +223,45 @@ public final class Pointers implements Handler.Callback
     // The position in a IME windows is clampled to view.
     // For a better up swipe behaviour, set the y position to a negative value when clamped.
     if (y == 0.0) y = -400;
-
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
-    float dist = Math.abs(dx) + Math.abs(dy);
-    ptr.ptrDist = dist;
 
-    int direction;
+    if (ptr.sliding)
+    {
+      onTouchMove_sliding(ptr, dx);
+      return;
+    }
+
+    float dist = Math.abs(dx) + Math.abs(dy);
+    Integer direction;
     if (dist < _config.swipe_dist_px)
     {
-      direction = 0;
+      direction = null;
     }
     else
     {
-      // One of the 8 directions:
-      // |\2|3/|
-      // |1\|/4|
-      // |-----|
-      // |8/|\5|
-      // |/7|6\|
-      direction = 1;
-      if (dx > 0) direction += 2;
-      if (dx > Math.abs(dy) || (dx < 0 && dx > -Math.abs(dy))) direction += 1;
-      if (dy > 0) direction = 9 - direction;
+      // See [getKeyAtDirection()] for the meaning. The starting point on the
+      // circle is the top direction.
+      double a = Math.atan2(dy, dx) + Math.PI;
+      // a is between 0 and 2pi, 0 is pointing to the left
+      // add 12 to align 0 to the top
+      direction = ((int)(a * 8 / Math.PI) + 12) % 16;
     }
 
     if (direction != ptr.selected_direction)
     {
       ptr.selected_direction = direction;
-      KeyValue newValue = getKeyAtDirection(ptr, direction);
-      if (newValue != null && (ptr.value == null || !newValue.equals(ptr.value)))
+      KeyValue newValue = getNearestKeyAtDirection(ptr, direction);
+      if (newValue != null && !newValue.equals(ptr.value))
       {
-        int old_flags = ptr.flags;
         ptr.value = newValue;
         ptr.flags = newValue.getFlags();
-        // Keep the keyrepeat going between modulated keys.
-        if ((old_flags & ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) == 0)
+        // Sliding mode is entered when key5 or key6 is down on a slider key.
+        if (ptr.key.slider &&
+            (newValue.equals(ptr.key.getKeyValue(5))
+             || newValue.equals(ptr.key.getKeyValue(6))))
         {
-          stopKeyRepeat(ptr);
-          startKeyRepeat(ptr);
+          startSliding(ptr, dy);
         }
         _handler.onPointerDown(true);
       }
@@ -299,13 +319,11 @@ public final class Pointers implements Handler.Callback
     _handler.onPointerFlagsChanged(shouldVibrate);
   }
 
-  private boolean isModulatedKeyPressed()
+  boolean isSliding()
   {
     for (Pointer ptr : _ptrs)
-    {
-      if ((ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
+      if (ptr.sliding)
         return true;
-    }
     return false;
   }
 
@@ -320,7 +338,8 @@ public final class Pointers implements Handler.Callback
       if (ptr.timeoutWhat == msg.what)
       {
         if (handleKeyRepeat(ptr))
-          _keyrepeat_handler.sendEmptyMessageDelayed(msg.what, nextRepeatInterval(ptr));
+          _keyrepeat_handler.sendEmptyMessageDelayed(msg.what,
+              _config.longPressInterval);
         else
           ptr.timeoutWhat = -1;
         return true;
@@ -329,30 +348,13 @@ public final class Pointers implements Handler.Callback
     return false;
   }
 
-  private long nextRepeatInterval(Pointer ptr)
-  {
-    long t = _config.longPressInterval;
-    if (_config.preciseRepeat && (ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
-    {
-      // Modulate repeat interval depending on the distance of the pointer
-      t = (long)((float)t * 2.f / modulatePreciseRepeat(ptr));
-    }
-    return t;
-  }
-
   private static int uniqueTimeoutWhat = 0;
 
   private void startKeyRepeat(Pointer ptr)
   {
-    if (ptr.value == null)
-      return;
     int what = (uniqueTimeoutWhat++);
     ptr.timeoutWhat = what;
-    long timeout = _config.longPressTimeout;
-    // Faster repeat timeout for modulated keys
-    if ((ptr.flags & KeyValue.FLAG_PRECISE_REPEAT) != 0)
-      timeout /= 2;
-    _keyrepeat_handler.sendEmptyMessageDelayed(what, timeout);
+    _keyrepeat_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
   }
 
   private void stopKeyRepeat(Pointer ptr)
@@ -361,7 +363,6 @@ public final class Pointers implements Handler.Callback
     {
       _keyrepeat_handler.removeMessages(ptr.timeoutWhat);
       ptr.timeoutWhat = -1;
-      ptr.repeatingPtrDist = -1.f;
     }
   }
 
@@ -374,22 +375,54 @@ public final class Pointers implements Handler.Callback
       lockPointer(ptr, true);
       return false;
     }
-    // Stop repeating: Latched key, special keys
-    if (ptr.pointerId == -1 || (ptr.flags & KeyValue.FLAG_SPECIAL) != 0)
+    // Stop repeating: Latched key, no key
+    if (ptr.pointerId == -1 || ptr.value == null)
       return false;
-    _handler.onPointerHold(ptr.value, ptr.modifiers);
+    KeyValue kv = KeyModifier.modify_long_press(ptr.value);
+    if (!kv.equals(ptr.value))
+    {
+      ptr.value = kv;
+      ptr.flags = kv.getFlags();
+      _handler.onPointerDown(true);
+      return true;
+    }
+    // Stop repeating: Special keys
+    if (kv.hasFlags(KeyValue.FLAG_SPECIAL))
+      return false;
+    _handler.onPointerHold(kv, ptr.modifiers);
     return true;
   }
 
-  private float modulatePreciseRepeat(Pointer ptr)
+  // Sliding
+
+  void startSliding(Pointer ptr, float initial_dy)
   {
-    if (ptr.repeatingPtrDist < 0.f)
-      ptr.repeatingPtrDist = ptr.ptrDist; // First repeat
-    if (ptr.ptrDist > ptr.repeatingPtrDist * 2.f)
-      ptr.repeatingPtrDist = ptr.ptrDist / 2.f; // Large swipe, move the middle point
-    float left = ptr.repeatingPtrDist / 2.f;
-    float accel = (ptr.ptrDist - left) / (ptr.repeatingPtrDist - left);
-    return Math.min(8.f, Math.max(0.1f, accel));
+    stopKeyRepeat(ptr);
+    ptr.sliding = true;
+    ptr.sliding_count = (int)(initial_dy / _config.slide_step_px);
+  }
+
+  /** Handle a sliding pointer going up. Latched modifiers are not cleared to
+      allow easy adjustments to the cursors. The pointer is cancelled. */
+  void onTouchUp_sliding(Pointer ptr)
+  {
+    removePtr(ptr);
+    _handler.onPointerFlagsChanged(false);
+  }
+
+  /** Handle move events for sliding pointers. [dx] is distance travelled from
+      [downX]. */
+  void onTouchMove_sliding(Pointer ptr, float dx)
+  {
+    int count = (int)(dx / _config.slide_step_px);
+    if (count == ptr.sliding_count)
+      return;
+    int key_index = (count < ptr.sliding_count) ? 5 : 6;
+    KeyValue newValue = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
+    ptr.sliding_count = count;
+    ptr.value = newValue;
+    if (newValue != null)
+      _handler.onPointerHold(newValue, ptr.modifiers);
   }
 
   private static final class Pointer
@@ -398,36 +431,36 @@ public final class Pointers implements Handler.Callback
     public int pointerId;
     /** The Key pressed by this Pointer */
     public final KeyboardData.Key key;
-    /** Current direction. */
-    public int selected_direction;
+    /** Current direction. [null] means not swiping. */
+    public Integer selected_direction;
     /** Selected value with [modifiers] applied. */
     public KeyValue value;
     public float downX;
     public float downY;
-    /** Distance of the pointer to the initial press. */
-    public float ptrDist;
     /** Modifier flags at the time the key was pressed. */
     public Modifiers modifiers;
     /** Flags of the value. Latch, lock and locked flags are updated. */
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
-    /** ptrDist at the first repeat, -1 otherwise. */
-    public float repeatingPtrDist;
+    /** Whether the pointer is "sliding" laterally on a key. */
+    public boolean sliding;
+    /** Number of event already caused by sliding. */
+    public int sliding_count;
 
     public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m)
     {
       pointerId = p;
       key = k;
-      selected_direction = 0;
+      selected_direction = null;
       value = v;
       downX = x;
       downY = y;
-      ptrDist = 0.f;
       modifiers = m;
       flags = (v == null) ? 0 : v.getFlags();
       timeoutWhat = -1;
-      repeatingPtrDist = -1.f;
+      sliding = false;
+      sliding_count = 0;
     }
   }
 
@@ -445,6 +478,10 @@ public final class Pointers implements Handler.Callback
 
     public KeyValue.Modifier get(int i) { return _mods[_size - 1 - i]; }
     public int size() { return _size; }
+    public boolean has(KeyValue.Modifier m)
+    {
+      return (Arrays.binarySearch(_mods, 0, _size, m) >= 0);
+    }
 
     @Override
     public int hashCode() { return Arrays.hashCode(_mods); }

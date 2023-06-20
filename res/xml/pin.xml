@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard width="6.0" bottom_row="false">
+  <row>
+    <key shift="1.0" key0="1"/>
+    <key key0="2" indication="ABC"/>
+    <key key0="3" indication="DEF"/>
+    <key key0="backspace" key2="delete"/>
+  </row>
+  <row>
+    <key shift="1.0" key0="4" indication="GHI"/>
+    <key key0="5" indication="JKL"/>
+    <key key0="6" indication="MNO"/>
+    <key key0="(" key3=":" key4="-"/>
+  </row>
+  <row>
+    <key shift="1.0" key0="7" indication="PQRS"/>
+    <key key0="8" indication="TUV"/>
+    <key key0="9" indication="WXYZ"/>
+    <key key0=")" key2="," key3="/" key4="."/>
+  </row>
+  <row>
+    <key shift="1.0" key0="*" key1="switch_text" key3="switch_numeric"/>
+    <key key0="0" key3="+" key4="space"/>
+    <key key0="\#" key7="up" key6="right" key5="left" key8="down"/>
+    <key key0="enter" key2="action"/>
+  </row>
+</keyboard>

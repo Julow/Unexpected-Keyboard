@@ -27,7 +27,7 @@
     <key key0="y" key3="\@"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key1="esc"/>
+    <key width="1.5" key0="shift" key1="esc" key2="loc capslock"/>
     <key key0="ü" key4="\#"/>
     <key key0="ö" key4="$"/>
     <key key0="ä" key4="|"/>
@@ -39,10 +39,10 @@
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
   <row height="0.95">
-	  <key width="1.8" key0="ctrl" key2="meta" key4="switch_numeric"/>
-	  <key width="1.2" key0="fn" key1="alt" key2="change_method" key3="switch_emoji" key4="config"/>
-	  <key width="4.0" key0="space" key1="switch_programming" edgekeys="true"/>
-	  <key width="1.2" key1="up" key2="right" key3="left" key4="down" edgekeys="true"/>
+	  <key width="1.8" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
+	  <key width="1.2" key0="fn" key1="loc alt" key2="change_method" key3="switch_emoji" key4="config"/>
+	  <key width="4.0" key0="space" key7="switch_second"/>
+	  <key width="1.2" key7="up" key6="right" key5="left" key8="down"/>
 	  <key key0="j" key4=";"/>
 	  <key width="1.8" key0="enter" key2="action"/>
 	</row>

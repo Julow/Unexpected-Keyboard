@@ -37,7 +37,7 @@ gpg -c --armor --pinentry-mode loopback --passphrase debug0 --yes "debug.keystor
 
 A file will be generated inside the local `_build/` folder, called `debug.keystore.asc`
 
-You can copy the content of this file, and with that, paste it into a new github secret in your repo settings. 
+You can copy the content of this file, and with that, paste it into a new github secret in your repo settings.
 
 The secret must be named `DEBUG_KEYSTORE`
 
@@ -52,11 +52,8 @@ And finally, install the application with:
 make installd
 ```
 
-The debug version of the application won't be removed, both versions will stay
-installed at the same time.
-
-The application must be enabled in the settings:
-System > Languages & input > On-screen keyboard > Manage on-screen keyboards.
+The released version of the application won't be removed, both versions will
+be installed at the same time.
 
 ## Debugging the application: INSTALL_FAILED_UPDATE_INCOMPATIBLE
 
@@ -78,26 +75,41 @@ make installd
 
 ## Guidelines
 
-### Adding a programming layout
+### Adding a layout
+
+Layouts are defined in XML, see `res/xml/qwerty.xml`.
+An online tool for editing layout files written by @Lixquid is available
+[here](https://unexpected-keyboard-layout-editor.lixquid.com/).
+
+An entry must be added to the layout option in `res/values/arrays.xml`, to both
+`pref_layout_values` (correspond to the file name) and `pref_layout_entries`
+(display name).
+
+The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
+`layout_of_string`.
+
+Run `make check_layouts` to check some properties about your layout. This will
+change the file `check_layout.output`, which you should commit.
+
+#### Adding a programming layout
 
 A programming layout must contains every ASCII characters.
-The current programming layouts are: QWERTY, Dvorak.
+The current programming layouts are: QWERTY, Dvorak and Colemak.
 
-Layouts are defined in XML, see `res/xml/qwerty.xml`. An entry must be added to
-the layout option in `res/values/arrays.xml`, to both `pref_layout_values`
-(correspond to the file name) and `pref_layout_entries` (display name).
-The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
-`layoutId_of_string`.
+See for example, Dvorak, added in https://github.com/Julow/Unexpected-Keyboard/pull/16
 
-Keys with a name starting in `loc ` are hidden unless they are configured for
-the user's installed languages in `res/xml/method.xml`. These keys are optional
-and will be added automatically when necessary.
+It's best to leave free spots on the layout for language-specific symbols that
+are added automatically when necessary.
+These symbols are defined in `res/xml/method.xml` (`extra_keys`).
+
+It's possible to place extra keys with the `loc` prefix. These keys are
+normally hidden unless they are needed.
 
 Some users cannot easily type the characters close the the edges of the screen
 due to a bulky phone case. It is best to avoid placing important characters
 there (such as the digits or punctuation).
 
-### Adding a localized layout
+#### Adding a localized layout
 
 Localized layouts (a layout specific to a language) are gladly accepted.
 See for example: 4333575 (Bulgarian), 88e2175 (Latvian), 133b6ec (German).
@@ -111,7 +123,11 @@ Supported locales are defined in `res/xml/method.xml`.
 
 The attributes `languageTag` and `imeSubtypeLocale` define a locale, the
 attribute `imeSubtypeExtraValue` defines the default layout and the dead-keys
-and other extra keys to show. 
+and other extra keys to show.
+
+The list of language tags (generally two letters)
+and locales (generally of the form `xx_XX`)
+can be found in this stackoverflow answer: https://stackoverflow.com/a/7989085
 
 ### Translations
 
@@ -122,10 +138,26 @@ The app can be translated by writing `res/values-<language code>/strings.xml`
 (for example `values-fr`, `values-lv`), based on the default:
 `res/values/strings.xml` (English).
 
+To check that `strings.xml` is formatted correctly, run
+`python sync_translations.py`. This will modify your files.
+
 The store description is found in `metadata/android/<locale>/`,
 `short_description.txt` and `full_description.txt`.
-Translating changelogs is not useful. Changelogs are written quickly just
-before a release and older ones are never shown to anyone currently.
+Translating changelogs is not useful.
 
 The app name might be partially translated, the "unexpected" word should remain
 untranslated.
+
+As translations need to be updated regularly, you can subscribe to this issue
+to receive a notification when an update is needed:
+https://github.com/Julow/Unexpected-Keyboard/issues/373
+
+### Adding key combinations
+
+Key combinations are defined in `srcs/juloo.keyboard2/KeyModifier.java`.
+For example, keys modified by the `Fn` key are defined in method
+`apply_fn_char`.
+
+Keys with special meaning are defined in `KeyValue.java` in method
+`getKeyByName`. Their special action are defined in `KeyEventHandler.java` in
+method `key_up`

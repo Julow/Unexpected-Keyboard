@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- <string name="app_name" product="debug">Unexpected Keyboard (debug)</string> -->
+  <!-- <string name="app_name" product="default">Unexpected Keyboard</string> -->
   <string name="settings_activity_label">Unexpected Keyboard 설정</string>
+  <!-- <string name="pref_portrait">In portrait mode</string> -->
+  <!-- <string name="pref_landscape">In landscape mode</string> -->
   <string name="pref_category_layout">레이아웃</string>
+  <!-- <string name="pref_label_brightness">Adjust label brightness</string> -->
+  <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
+  <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
+  <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
   <string name="pref_layout_title">키보드 레이아웃 변경</string>
   <string name="pref_layout_e_system">시스템 세팅</string>
+  <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
   <string name="pref_accents_title">악센트</string>
   <string name="pref_accents_e_all_installed">설치된 모든 언어의 악센트 표시</string>
   <string name="pref_accents_e_selected">선택한 언어의 악센트만 표시</string>
   <string name="pref_accents_e_none">모든 언어의 악센트 숨기기</string>
+  <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
+  <!-- <string name="pref_show_numpad_never">Never</string> -->
+  <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
+  <!-- <string name="pref_show_numpad_always">Always</string> -->
+  <!-- <string name="pref_number_row_title">Show number row</string> -->
+  <!-- <string name="pref_number_row_summary">Add a number row at the top of the keyboard when the numpad is hidden</string> -->
+  <!-- <string name="pref_numpad_layout">NumPad layout</string> -->
+  <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
+  <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
+  <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
+  <!-- <string name="pref_second_layout_none">None</string> -->
   <string name="pref_category_typing">타자</string>
   <string name="pref_swipe_dist_title">스와이프 범위</string>
   <string name="pref_swipe_dist_summary">키 모서리 문자의 입력 범위 (%s)</string>
   <string name="pref_long_timeout_title">키 길게 누르기 지연</string>
   <string name="pref_long_interval_title">키 반복 간격</string>
+  <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
+  <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
+  <!-- <string name="pref_category_behavior">Behavior</string> -->
+  <!-- <string name="pref_autocapitalisation_title">Automatic capitalisation</string> -->
+  <!-- <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string> -->
+  <!-- <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string> -->
+  <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">진동</string>
   <string name="pref_vibrate_summary">키 누를 때 진동 키거/끄기</string>
-  <string name="pref_precise_repeat_title">정확한 커서 움직임</string>
-  <string name="pref_precise_repeat_summary">더 많거나 적은 스와이프로 키 반복 조절</string>
   <string name="pref_category_style">스타일</string>
   <string name="pref_margin_bottom_title">아래 넓이</string>
   <string name="pref_keyboard_height_title">키보드 높이</string>
@@ -28,6 +54,9 @@
   <string name="pref_theme_e_dark">Dark</string>
   <string name="pref_theme_e_light">Light</string>
   <string name="pref_theme_e_black">Black</string>
+  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
+  <!-- <string name="pref_theme_e_white">White</string> -->
+  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
   <string name="pref_swipe_dist_e_very_short">매우 짧음</string>
   <string name="pref_swipe_dist_e_short">짧음</string>
   <string name="pref_swipe_dist_e_default">보통</string>
@@ -35,10 +64,22 @@
   <string name="pref_swipe_dist_e_very_far">매우 넓음</string>
   <string name="pref_key_horizontal_space">키보드 양 옆 간격</string>
   <string name="pref_key_vertical_space">키보드 세로 간격</string>
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
+  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
+  <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
+  <!-- <string name="pref_vibration_e_system">System</string> -->
+  <!-- <string name="pref_vibration_e_strong">Strong</string> -->
+  <!-- <string name="pref_vibration_e_medium">Medium</string> -->
+  <!-- <string name="pref_vibration_e_light">Light</string> -->
   <string name="key_action_next">다음</string>
   <string name="key_action_done">확인</string>
   <string name="key_action_go">Go</string>
   <string name="key_action_prev">이전</string>
   <string name="key_action_search">검색</string>
   <string name="key_action_send">보내기</string>
+  <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
+  <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
+  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
+  <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
 </resources>

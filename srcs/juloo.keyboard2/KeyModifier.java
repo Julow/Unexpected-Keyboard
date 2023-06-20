@@ -42,7 +42,7 @@ class KeyModifier
       case GRAVE: return apply_dead_char(k, '\u02CB');
       case AIGU: return apply_dead_char(k, '\u00B4');
       case CIRCONFLEXE: return apply_dead_char(k, '\u02C6');
-      case TILDE: return apply_dead_char(k, '\u02DC');
+      case TILDE: return apply_map_or_dead_char(k, map_char_tilde, '\u02DC');
       case CEDILLE: return apply_dead_char(k, '\u00B8');
       case TREMA: return apply_dead_char(k, '\u00A8');
       case CARON: return apply_dead_char(k, '\u02C7');
@@ -50,6 +50,7 @@ class KeyModifier
       case MACRON: return apply_dead_char(k, '\u00AF');
       case OGONEK: return apply_dead_char(k, '\u02DB');
       case DOT_ABOVE: return apply_dead_char(k, '\u02D9');
+      case BREVE: return apply_dead_char(k, '\u02D8');
       case DOUBLE_AIGU: return apply_map_char(k, map_char_double_aigu);
       case ORDINAL: return apply_map_char(k, map_char_ordinal);
       case SUPERSCRIPT: return apply_map_char(k, map_char_superscript);
@@ -57,9 +58,29 @@ class KeyModifier
       case ARROWS: return apply_map_char(k, map_char_arrows);
       case BOX: return apply_map_char(k, map_char_box);
       case SLASH: return apply_map_char(k, map_char_slash);
+      case BAR: return apply_map_char(k, map_char_bar);
       case ARROW_RIGHT: return apply_combining(k, "\u20D7");
+      case DOT_BELOW: return apply_map_char(k, map_char_dot_below);
+      case HORN: return apply_map_char(k, map_char_horn);
+      case HOOK_ABOVE: return apply_map_char(k, map_char_hook_above);
       default: return k;
     }
+  }
+
+  /** Modify a key after a long press. */
+  public static KeyValue modify_long_press(KeyValue k)
+  {
+    switch (k.getKind())
+    {
+      case Event:
+        switch (k.getEvent())
+        {
+          case CHANGE_METHOD_PREV:
+            return KeyValue.getKeyByName("change_method");
+        }
+        break;
+    }
+    return k;
   }
 
   private static KeyValue apply_map_char(KeyValue k, Map_char map)
@@ -82,6 +103,21 @@ class KeyModifier
         char kc = k.getChar();
         char c = (char)KeyCharacterMap.getDeadChar(dead_char, kc);
         return (c == 0 || kc == c) ? k : k.withChar(c);
+      default: return k;
+    }
+  }
+
+  /** Apply a [Map_char] or fallback to [apply_dead_char]. */
+  private static KeyValue apply_map_or_dead_char(KeyValue k, Map_char map, char dead_char)
+  {
+    switch (k.getKind())
+    {
+      case Char:
+        char kc = k.getChar();
+        char c = map.apply(kc);
+        if (kc == c)
+          return apply_dead_char(k, dead_char);
+        return k.withChar(c);
       default: return k;
     }
   }
@@ -120,17 +156,7 @@ class KeyModifier
       case Char: name = apply_fn_char(k.getChar()); break;
       case Keyevent: name = apply_fn_keyevent(k.getKeyevent()); break;
       case Event: name = apply_fn_event(k.getEvent()); break;
-      case String:
-        switch (k.getString())
-        {
-          case "":
-            if (k == KeyValue.getKeyByName("f11_placeholder"))
-              name = "f11";
-            else if (k == KeyValue.getKeyByName("f12_placeholder"))
-              name = "f12";
-            break;
-        }
-        break;
+      case Placeholder: name = apply_fn_placeholder(k.getPlaceholder()); break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
@@ -144,6 +170,7 @@ class KeyModifier
       case KeyEvent.KEYCODE_DPAD_LEFT: return "home";
       case KeyEvent.KEYCODE_DPAD_RIGHT: return "end";
       case KeyEvent.KEYCODE_ESCAPE: return "insert";
+      case KeyEvent.KEYCODE_TAB: return "\\t";
       default: return null;
     }
   }
@@ -153,6 +180,20 @@ class KeyModifier
     switch (ev)
     {
       case SWITCH_NUMERIC: return "switch_greekmath";
+      default: return null;
+    }
+  }
+
+  private static String apply_fn_placeholder(KeyValue.Placeholder p)
+  {
+    switch (p)
+    {
+      case F11: return "f11";
+      case F12: return "f12";
+      case SHINDOT: return "shindot";
+      case SINDOT: return "sindot";
+      case OLE: return "ole";
+      case METEG: return "meteg";
       default: return null;
     }
   }
@@ -195,6 +236,7 @@ class KeyModifier
       case ',': return "·";
       case '!': return "¡";
       case '?': return "¿";
+      case '|': return "¦";
       // arrows
       case '↖': return "⇖";
       case '↑': return "⇑";
@@ -240,8 +282,77 @@ class KeyModifier
       case '⊂': return "⊆";
       case '⊃': return "⊇";
       case '±': return "∓";
+      // hebrew niqqud
+      case 'ק': return "qamats"; // kamatz
+      case 'ר': return "hataf_qamats"; // reduced kamatz
+      case 'ו': return "holam";
+      case 'ם': return "rafe";
+      case 'פ': return "patah"; // patach
+      case 'ש': return "sheva";
+      case 'ד': return "dagesh"; // or mapiq
+      case 'ח': return "hiriq";
+      case 'ף': return "hataf_patah"; // reduced patach
+      case 'ז': return "qubuts"; // kubuts
+      case 'ס': return "segol";
+      case 'ב': return "hataf_segol"; // reduced segol
+      case 'צ': return "tsere";
+      // Devanagari symbols
+      case 'ए': return "ऍ";
+      case 'े': return "ॅ";
+      case 'ऐ': return "ऎ";
+      case 'ै': return "ॆ";
+      case 'ऋ': return "ॠ";
+      case 'ृ': return "ॄ";
+      case 'ळ': return "ऴ";
+      case 'र': return "ऱ";
+      case 'क': return "क़";
+      case 'ख': return "ख़";
+      case 'ग': return "ग़";
+      case 'घ': return "ॻ";
+      case 'ढ': return "ढ़";
+      case 'न': return "ऩ";
+      case 'ड': return "ड़";
+      case 'ट': return "ॸ";
+      case 'ण': return "ॾ";
+      case 'फ': return "फ़";
+      case 'ऌ': return "ॡ";
+      case 'ॢ': return "ॣ";
+      case 'औ': return "ॵ";
+      case 'ौ': return "ॏ";
+      case 'ओ': return "ऒ";
+      case 'ो': return "ॊ";
+      case 'च': return "ॼ";
+      case 'ज': return "ज़";
+      case 'ब': return "ॿ";
+      case 'व': return "ॺ";
+      case 'य': return "य़";
+      case 'अ': return "ॲ";
+      case 'आ': return "ऑ";
+      case 'ा': return "ॉ";
+      case 'झ': return "ॹ";
+      case 'ई': return "ॴ";
+      case 'ी': return "ऻ";
+      case 'इ': return "ॳ";
+      case 'ि': return "ऺ";
+      case 'उ': return "ॶ";
+      case 'ऊ': return "ॷ";
+      case 'ु': return "ऄ";
+      case 'ष': return "क्ष";
+      case 'थ': return "त्र";
+      case 'द': return "द्र";
+      case 'प': return "प्र";
+      case 'श': return "श्र";
+      case 'छ': return "श्च";
+      case 'ँ': return "ऀ";
+      case '₹': return "₨";
+      case 'ॖ': return "ॗ";
+      case '॓': return "॔";
+      case '॰': return "ॱ";
+      case '।': return "॥";
+      case 'ं': return "ॕ";
+      case '़': return "ॎ";
+      case 'ऽ': return "ॽ";
       // other
-      case '\t': return "\\t";
       case ' ': return "nbsp";
       default: return null;
     }
@@ -354,9 +465,26 @@ class KeyModifier
       case '─': return '═';
       case '│': return '║';
       case 'ß': return 'ẞ';
+      /* In Turkish, upper case of 'iı' is 'İI' but Java's toUpperCase will
+         return 'II'. To make 'İ' accessible, make it the shift of 'ı'. This
+         has the inconvenient of swapping i and ı on the keyboard. */
+      case 'ı': return 'İ';
+      case '₹': return '₨';
       default: return c;
     }
   }
+
+  private static final Map_char map_char_tilde =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'n': return 'ñ';
+          default: return c;
+        }
+      }
+    };
 
   private static final Map_char map_char_double_aigu =
     new Map_char() {
@@ -502,15 +630,114 @@ class KeyModifier
         switch (c)
         {
           case 'a': return 'ⱥ';
+          case 'b': return '␢';
           case 'c': return 'ȼ';
           case 'e': return 'ɇ';
           case 'g': return 'ꞡ';
+          case 'k': return 'ꝃ';
           case 'l': return 'ł';
           case 'n': return 'ꞥ';
           case 'o': return 'ø';
-          case ' ': return '/';
+          case 'r': return 'ꞧ';
+          case 's': return 'ꞩ';
+          case 't': return 'ⱦ';
           default: return c;
         }
       }
     };
+
+  private static final Map_char map_char_bar =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'b': return 'ƀ';
+          case 'c': return 'ꞓ';
+          case 'd': return 'đ';
+          case 'g': return 'ǥ';
+          case 'i': return 'ɨ';
+          case 'j': return 'ɉ';
+          case 'k': return 'ꝁ';
+          case 'l': return 'ƚ';
+          case 'o': return 'ɵ';
+          case 'p': return 'ᵽ';
+          case 'q': return 'ꝗ';
+          case 'r': return 'ɍ';
+          case 't': return 'ŧ';
+          case 'u': return 'ʉ';
+          case 'y': return 'ɏ';
+          case 'z': return 'ƶ';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_dot_below =
+          new Map_char() {
+            public char apply(char c)
+            {
+              switch (c)
+              {
+                case 'a': return 'ạ';
+                case 'ă': return 'ặ';
+                case 'â': return 'ậ';
+                case 'e': return 'ẹ';
+                case 'ê': return 'ệ';
+                case 'i': return 'ị';
+                case 'o': return 'ọ';
+                case 'ô': return 'ộ';
+                case 'ơ': return 'ợ';
+                case 'u': return 'ụ';
+                case 'ư': return 'ự';
+                case 'y': return 'ỵ';
+                default: return c;
+              }
+            }
+          };
+  private static final Map_char map_char_horn =
+          new Map_char() {
+            public char apply(char c)
+            {
+              switch (c)
+              {
+                case 'o': return 'ơ';
+                case 'ó': return 'ớ';
+                case 'ò': return 'ờ';
+                case 'ỏ': return 'ở';
+                case 'õ': return 'ỡ';
+                case 'ọ': return 'ợ';
+                case 'u': return 'ư';
+                case 'ú': return 'ứ';
+                case 'ù': return 'ừ';
+                case 'ủ': return 'ử';
+                case 'ũ': return 'ữ';
+                case 'ụ': return 'ự';
+                default: return c;
+              }
+            }
+          };
+
+  private static final Map_char map_char_hook_above =
+          new Map_char() {
+            public char apply(char c)
+            {
+              switch (c)
+              {
+                case 'a': return 'ả';
+                case 'ă': return 'ẳ';
+                case 'â': return 'ẩ';
+                case 'e': return 'ẻ';
+                case 'ê': return 'ể';
+                case 'i': return 'ỉ';
+                case 'o': return 'ỏ';
+                case 'ô': return 'ổ';
+                case 'ơ': return 'ở';
+                case 'u': return 'ủ';
+                case 'ư': return 'ử';
+                case 'y': return 'ỷ';
+                default: return c;
+              }
+            }
+          };
 }

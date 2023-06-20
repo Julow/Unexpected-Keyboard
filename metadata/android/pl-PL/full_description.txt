@@ -1,0 +1,6 @@
+Główną cechą tej klawiatury jest możliwość wprowadzania więcej znaków poprzez przesuwanie po klawiszach do ich rogów.
+
+Ta aplikacja została pierwotnie zaprojektowana z myślą o programistach używających Termuxa.
+Obecnie nadaje się doskonale do codziennego użytku.
+
+Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źródłowy jest dostępny publicznie.

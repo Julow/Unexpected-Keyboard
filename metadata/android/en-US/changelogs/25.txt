@@ -1,0 +1,12 @@
+New supported languages: Polish, Ukrainian, Bengali, Norwegian
+New layouts: Ukrainian, Bengali, Norwegian, Bone, Czech
+New translations: Brazilian Portuguese, Italian, Russian, Czech
+
+Hold modifiers to lock, double tap on shift disabled by default.
+Option to add more keys to the keyboard.
+Automatic capitalisation at beginning of sentences.
+Added e-ink oriented theme.
+New pane for greek letters and mathematical symbols.
+Improvements to the layouts and various bug fixes.
+
+Thanks to the contributors: @nanno, @Quantenzitrone, @eandersons, @iamrasel, @ChristianGynnild, @igorSilCar, @CastixGitHub, @94KONG, @ptrm, @Validbit

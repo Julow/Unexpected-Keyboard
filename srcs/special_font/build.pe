@@ -2,8 +2,8 @@
 # files, one for each glyph.
 New()
 
-# Imports glyphs, file name is position in the font.
-i = 1
+# Imports glyphs, first argument is file name for the generated font
+i = 2
 while (i < $argc)
   Select(Strtol($argv[i]:t:r, 16))
   Import($argv[i], 0, 0, 4.0, 0.1)
@@ -11,4 +11,4 @@ while (i < $argc)
   i++
 endloop
 
-Generate("result.ttf")
+Generate($argv[1])

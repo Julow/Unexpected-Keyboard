@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="ExtraKeyCheckBoxPreference">
+    <attr name="index" format="integer"/>
+  </declare-styleable>
+  <declare-styleable name="LayoutListPreference">
+    <attr name="defaultString" format="string"/>
+  </declare-styleable>
+</resources>

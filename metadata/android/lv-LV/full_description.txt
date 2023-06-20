@@ -1,18 +1,6 @@
-Šī lietotne ir tastatūra Android tālruņiem. Galvenās iespējas ir ērta ASCII rakstzīmju ievadīšana ar pavilkšanas kustību, taustiņi piekļūšanai uzsvara zīmēm un pārveidošanas taustiņiem un īpašo taustiņu esamība (Tab, Esc, bultas utt.).
+Galvenā iezīme ir iespēja ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.
 
-Tastatūrā ir redzamas līdz 4 papildus rakstzīmēm katra taustiņa stūros. Tām var piekļūt ar pirksta pavilkšanu uz taustiņa attiecīgajā virzienā.
+Šī lietotne sākotnēji tika izstrādāta programmētājiem, kas izmanto Termux.
+Tagad lieliski piemērota izmantošanai ikdienā.
 
-Izceltās iespējas:
-
-- Visas rakstzīmes un īpašie taustiņi, kas ir atrodami arī datora tastatūrā. Tas lieliski noder tādās lietotnēs kā, piemēram, Termux.
-
-- Ir iekļauti Tab, Esc, bultas un darbību taustiņi, kā arī Ctrl un Alt.
-
-- Uzsvara zīmju taustiņi ir pieejami ar īpašām pogām. Vispirms jāizvēlas uzsvara zīmes veids, tad jāievada vēlamais burts.
-
-- Ļoti viegla un ātra. Izmanto 500 reižu mazāk vietas kā Google tastatūra un 15 reižu mazāk kā noklusējuma tastatūra. Bez reklāmām un izsekošanas.
-
-- Dažādi izkārtojumi: QWERTY, QWERTZ, AZERTY. Izskats: Gaišs, Tumšs, OLED melns. Kā arī daudzas citas papildiespējas.
-
-Kā jebkura cita tālruņa tastatūra, tā ir jāiespējo ierīces iestatījumos. Jāatver Iestatījumi un tad:
-Sistēma > Valodas un ievade > Virtuālā tastatūra > Pārvaldīt tastatūras.
+Šī lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.

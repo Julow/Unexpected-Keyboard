@@ -1,0 +1,10 @@
+New layouts: QWERTY (Polski)
+
+Allow switching quickly between two layouts.
+Allow choosing opacity of the keyboard.
+Improved themes and rendering.
+Updated translations.
+Fixed key repeat bug when holding 3 keys.
+Tweaked the swipe gesture. Added some options.
+
+Thanks to the contributors: @9-2-1, @ChasmSolacer

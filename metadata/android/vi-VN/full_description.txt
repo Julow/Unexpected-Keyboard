@@ -1,0 +1,6 @@
+Chức năng chính là dễ dàng gõ nhiều ký tự bằng cách kéo phím về góc của nó.
+
+Ứng dụng này ban đầu được thiết kế cho các lập trình viên dùng Termux.
+Bây giờ đã hoàn hảo cho việc sử dụng hàng ngày.
+
+Ứng dụng này không chứa quảng cáo, không cần đến mạng, và có mã nguồn mở.

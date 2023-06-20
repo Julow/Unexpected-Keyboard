@@ -1,47 +1,71 @@
 package juloo.keyboard2;
 
+import android.os.Looper;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 
 class KeyEventHandler implements Config.IKeyEventHandler
 {
-  private IReceiver _recv;
+  IReceiver _recv;
+  Autocapitalisation _autocap;
 
-  public KeyEventHandler(IReceiver recv)
+  public KeyEventHandler(Looper looper, IReceiver recv)
   {
     _recv = recv;
+    _autocap = new Autocapitalisation(looper,
+        this.new Autocapitalisation_callback());
   }
 
-  public void handleKeyUp(KeyValue key, Pointers.Modifiers mods)
+  /** Editing just started. */
+  public void started(EditorInfo info)
+  {
+    _autocap.started(info, _recv.getCurrentInputConnection());
+  }
+
+  /** Selection has been updated. */
+  public void selection_updated(int oldSelStart, int newSelStart)
+  {
+    _autocap.selection_updated(oldSelStart, newSelStart);
+  }
+
+  /** A key has been released. */
+  public void key_up(KeyValue key, Pointers.Modifiers mods)
   {
     if (key == null)
       return;
     switch (key.getKind())
     {
-      case Char:
-        _recv.commitChar(key.getChar());
-        break;
-      case String:
-        _recv.commitText(key.getString());
-        break;
-      case Event:
-        switch (key.getEvent())
-        {
-          case CONFIG: _recv.showKeyboardConfig(); break;
-          case SWITCH_TEXT: _recv.switchMain(); break;
-          case SWITCH_NUMERIC: _recv.switchNumeric(); break;
-          case SWITCH_EMOJI: _recv.setPane_emoji(); break;
-          case SWITCH_BACK_EMOJI: _recv.setPane_normal(); break;
-          case CHANGE_METHOD: _recv.switchToNextInputMethod(); break;
-          case ACTION: _recv.performAction(); break;
-          case SWITCH_PROGRAMMING: _recv.switchProgramming(); break;
-          case SWITCH_GREEKMATH: _recv.switchGreekmath(); break;
-        }
-        break;
+      case Char: send_text(String.valueOf(key.getChar())); break;
+      case String: send_text(key.getString()); break;
+      case Event: _recv.handle_event_key(key.getEvent()); break;
       case Keyevent:
         handleKeyUpWithModifier(key.getKeyevent(), mods);
         break;
       case Modifier:
         break;
+      case Editing:
+        send_context_menu_action(action_of_editing_key(key.getEditing()));
+        break;
+    }
+  }
+
+  static int action_of_editing_key(KeyValue.Editing e)
+  {
+    switch (e)
+    {
+      case COPY: return android.R.id.copy;
+      case PASTE: return android.R.id.paste;
+      case CUT: return android.R.id.cut;
+      case SELECT_ALL: return android.R.id.selectAll;
+      case SHARE: return android.R.id.shareText;
+      case PASTE_PLAIN: return android.R.id.pasteAsPlainText;
+      case UNDO: return android.R.id.undo;
+      case REDO: return android.R.id.redo;
+      case REPLACE: return android.R.id.replaceText;
+      case ASSIST: return android.R.id.textAssist;
+      case AUTOFILL: return android.R.id.autofill;
+      default: return -1; // sad
     }
   }
 
@@ -55,17 +79,17 @@ class KeyEventHandler implements Config.IKeyEventHandler
   //  getCurrentInputConnection().deleteSurroundingText(before, after);
   // }
 
-  private int sendMetaKey(int eventCode, int metaFlags, int metaState, boolean down)
+  int sendMetaKey(int eventCode, int metaFlags, int metaState, boolean down)
   {
     int action;
     int updatedMetaState;
     if (down) { action = KeyEvent.ACTION_DOWN; updatedMetaState = metaState | metaFlags; }
     else { action = KeyEvent.ACTION_UP; updatedMetaState = metaState & ~metaFlags; }
-    _recv.sendKeyEvent(action, eventCode, metaState);
+    send_keyevent(action, eventCode, metaState);
     return updatedMetaState;
   }
 
-  private int sendMetaKeyForModifier(KeyValue.Modifier mod, int metaState, boolean down)
+  int sendMetaKeyForModifier(KeyValue.Modifier mod, int metaState, boolean down)
   {
     switch (mod)
     {
@@ -84,33 +108,61 @@ class KeyEventHandler implements Config.IKeyEventHandler
   /*
    * Don't set KeyEvent.FLAG_SOFT_KEYBOARD.
    */
-	private void handleKeyUpWithModifier(int keyCode, Pointers.Modifiers mods)
-	{
+  void handleKeyUpWithModifier(int keyCode, Pointers.Modifiers mods)
+  {
     int metaState = 0;
     for (int i = 0; i < mods.size(); i++)
       metaState = sendMetaKeyForModifier(mods.get(i), metaState, true);
-		_recv.sendKeyEvent(KeyEvent.ACTION_DOWN, keyCode, metaState);
-    _recv.sendKeyEvent(KeyEvent.ACTION_UP, keyCode, metaState);
+    send_keyevent(KeyEvent.ACTION_DOWN, keyCode, metaState);
+    send_keyevent(KeyEvent.ACTION_UP, keyCode, metaState);
     for (int i = mods.size() - 1; i >= 0; i--)
       metaState = sendMetaKeyForModifier(mods.get(i), metaState, false);
-	}
+  }
+
+  void send_keyevent(int eventAction, int eventCode, int meta)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
+    if (eventAction == KeyEvent.ACTION_UP)
+      _autocap.event_sent(eventCode, meta);
+  }
+
+  void send_text(CharSequence text)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    conn.commitText(text, 1);
+    _autocap.typed(text);
+  }
+
+  /** See {!InputConnection.performContextMenuAction}. */
+  void send_context_menu_action(int id)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    conn.performContextMenuAction(id);
+  }
 
   public static interface IReceiver
   {
-    public void switchToNextInputMethod();
-    public void setPane_emoji();
-    public void setPane_normal();
-    public void showKeyboardConfig();
-    public void performAction();
+    public void handle_event_key(KeyValue.Event ev);
+    public void set_shift_state(boolean state, boolean lock);
+    public InputConnection getCurrentInputConnection();
+  }
 
-    public void switchMain();
-    public void switchNumeric();
-    public void switchProgramming();
-    public void switchGreekmath();
-
-    public void sendKeyEvent(int eventAction, int eventCode, int meta);
-
-    public void commitText(String text);
-    public void commitChar(char c);
+  class Autocapitalisation_callback implements Autocapitalisation.Callback
+  {
+    @Override
+    public void update_shift_state(boolean should_enable, boolean should_disable)
+    {
+      if (should_enable)
+        _recv.set_shift_state(true, false);
+      else if (should_disable)
+        _recv.set_shift_state(false, false);
+    }
   }
 }
