@@ -1,5 +1,5 @@
 <?xml	version="1.0"	encoding="utf-8"?>
-<keyboard bottom_row="false">
+<keyboard bottom_row="false" script="latin">
 	<row>
 		<key key0="j"				key2="esc"				key4="…"/>
 		<key key0="d"				key2="°"				key4="_"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard>
+<keyboard script="arabic">
   <row>
     <key key0="ق" key1="ٯ" key2="١" key3="esc"/>
     <key key0="و" key1="وو" key2="٢" key3="\@"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard>
+<keyboard script="devanagari">
   <row>
     <key shift="0.35" width="0.9" key0="क" key1="ख" key2="घ" key3="ङ"  key4="ग"/>
     <key              width="0.9" key0="च" key1="छ" key2="झ" key3="ञ"  key4="ज"/>

@@ -1,37 +1,29 @@
 # res/xml/ar_alt.xml
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
-Layout doesn't specify a script.
-2 warnings
+1 warnings
 # res/xml/ar_pc.xml
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
-Layout doesn't specify a script.
-2 warnings
-# res/xml/azerty.xml
-Layout doesn't specify a script.
 1 warnings
+# res/xml/azerty.xml
+0 warnings
 # res/xml/bangla.xml
 Layout includes some ASCII punctuation but not all, missing: $
 Layout doesn't specify a script.
 2 warnings
 # res/xml/bone.xml
 Layout includes some ASCII punctuation but not all, missing: $
-Layout doesn't specify a script.
-2 warnings
+1 warnings
 Not a layout file: res/xml/bottom_row.xml
 # res/xml/colemak.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/devanagari_1.xml
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
-Layout doesn't specify a script.
-2 warnings
+1 warnings
 # res/xml/devanagari_2.xml
 Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, @, [, \, ], ^, _, `, {, |, }, ~
-Layout doesn't specify a script.
-2 warnings
-# res/xml/dvorak.xml
-Layout doesn't specify a script.
 1 warnings
+# res/xml/dvorak.xml
+0 warnings
 # res/xml/greekmath.xml
 Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), *, +, ,, -, /, :, ;, <, >, ?, @, [, \, ], _, `, {, |, }, ~
 Layout redefines the bottom row but some important keys are missing, missing: change_method, config, ctrl, switch_emoji, switch_second
@@ -39,30 +31,23 @@ Layout doesn't specify a script.
 3 warnings
 # res/xml/he_il_1452_1.xml
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
-Layout doesn't specify a script.
-2 warnings
+1 warnings
 # res/xml/he_il_1452_2.xml
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
-Layout doesn't specify a script.
-2 warnings
-# res/xml/jcuken_ua.xml
-Layout doesn't specify a script.
 1 warnings
+# res/xml/jcuken_ua.xml
+0 warnings
 # res/xml/kurdish.xml
 Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
-Layout doesn't specify a script.
-2 warnings
+1 warnings
 # res/xml/local_bgph1.xml
 Layout includes some ASCII punctuation but not all, missing: ~
-Layout doesn't specify a script.
-2 warnings
-# res/xml/local_ru_jcuken.xml
-Layout doesn't specify a script.
 1 warnings
+# res/xml/local_ru_jcuken.xml
+0 warnings
 Not a layout file: res/xml/method.xml
 # res/xml/neo2.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 Not a layout file: res/xml/number_row.xml
 # res/xml/numeric.xml
 Layout includes some ASCII punctuation but not all, missing: &, ?, @, `
@@ -77,65 +62,47 @@ Layout doesn't specify a script.
 4 warnings
 # res/xml/persian.xml
 Layout includes some ASCII punctuation but not all, missing: ", $, %, ', *, ,, /, ;, <, =, >, ?, [, \, ], ^, _, `, {, |, }, ~
-Layout doesn't specify a script.
-2 warnings
+1 warnings
 # res/xml/pin.xml
 Layout includes some ASCII punctuation but not all, missing: !, ", $, %, &, ', ;, <, =, >, ?, @, [, \, ], ^, _, `, {, |, }, ~
 Layout redefines the bottom row but some important keys are missing, missing: change_method, config, ctrl, fn, switch_emoji, switch_second
 Layout doesn't specify a script.
 3 warnings
 # res/xml/qwerty_el.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_es.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_hu.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_ko.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_lv.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_no.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_pl.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_pt.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_sv_se.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_tr.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwerty_vi.xml
 Layout includes some ASCII punctuation but not all, missing: \
-Layout doesn't specify a script.
-2 warnings
-# res/xml/qwerty.xml
-Layout doesn't specify a script.
 1 warnings
+# res/xml/qwerty.xml
+0 warnings
 # res/xml/qwertz_cs.xml
 Layout includes some ASCII punctuation but not all, missing: `
-Layout doesn't specify a script.
-2 warnings
+1 warnings
 # res/xml/qwertz_de.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwertz_hu.xml
-Layout doesn't specify a script.
-1 warnings
+0 warnings
 # res/xml/qwertz_sk.xml
 Layout includes some ASCII punctuation but not all, missing: \, `
-Layout doesn't specify a script.
-2 warnings
-# res/xml/qwertz.xml
-Layout doesn't specify a script.
 1 warnings
+# res/xml/qwertz.xml
+0 warnings
 Not a layout file: res/xml/settings.xml

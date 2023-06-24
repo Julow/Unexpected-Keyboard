@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard>
+<keyboard script="hebrew">
   <row>
     <key key0="/" key2="1" key3="!" key4="esc"/>
     <key key0="'" key2="2" key3="\@" key1=";"/>
