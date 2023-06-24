@@ -57,7 +57,7 @@ final class Config
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  public Set<KeyValue> extra_keys_subtype;
+  public ExtraKeys extra_keys_subtype;
   public Set<KeyValue> extra_keys_param;
 
   public final IKeyEventHandler handler;
@@ -176,7 +176,7 @@ final class Config
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     if (extra_keys_subtype != null)
-      extra_keys.addAll(extra_keys_subtype);
+      extra_keys_subtype.compute(extra_keys, kw.script);
     extra_keys.addAll(extra_keys_param);
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
