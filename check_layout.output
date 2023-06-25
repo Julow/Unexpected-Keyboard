@@ -99,6 +99,8 @@ Layout includes some ASCII punctuation but not all, missing: \
 1 warnings
 # res/xml/qwerty.xml
 0 warnings
+# res/xml/qwertz_cs_minimal.xml
+0 warnings
 # res/xml/qwertz_cs.xml
 Layout includes some ASCII punctuation but not all, missing: `
 1 warnings
