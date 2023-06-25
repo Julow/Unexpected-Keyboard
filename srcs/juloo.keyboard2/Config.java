@@ -345,14 +345,14 @@ final class Config
       case "arab_ckb": id = R.xml.arab_ckb; break;
       case "arab_fa_ir": id = R.xml.arab_ir; break;
       case "arab_ibm": id = R.xml.arab_ibm; break;
-      case "arab_ibm_ma": id = R.xml.arab_ibm_ma; break;
+      case "arab_ibm_alt": id = R.xml.arab_ibm_alt; break;
       case "bengali_national": id = R.xml.bengali_national; break;
       case "bengali_provat": id = R.xml.bengali_provat; break;
       case "cyrl_jcuken_ru": id = R.xml.cyrl_jcuken_ru; break;
       case "cyrl_jcuken_uk": id = R.xml.cyrl_jcuken_uk; break;
       case "cyrl_yaverti": id = R.xml.cyrl_yaverti; break;
       case "deva_inscript": id = R.xml.deva_inscript; break;
-      case "deva_lv": id = R.xml.deva_lv; break;
+      case "deva_alt": id = R.xml.deva_alt; break;
       case "grek_qwerty": id = R.xml.grek_qwerty; break;
       case "hang_dubeolsik_kr": id = R.xml.hang_dubeolsik_kr; break;
       case "hebr_1_il": id = R.xml.hebr_1_il; break;

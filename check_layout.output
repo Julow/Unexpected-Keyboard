@@ -1,7 +1,7 @@
 # res/xml/arab_ckb.xml
 Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
 1 warnings
-# res/xml/arab_ibm_ma.xml
+# res/xml/arab_ibm_alt.xml
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
 1 warnings
 # res/xml/arab_ibm.xml
@@ -26,11 +26,11 @@ Not a layout file: res/xml/bottom_row.xml
 # res/xml/cyrl_yaverti.xml
 Layout includes some ASCII punctuation but not all, missing: ~
 1 warnings
+# res/xml/deva_alt.xml
+Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, @, [, \, ], ^, _, `, {, |, }, ~
+1 warnings
 # res/xml/deva_inscript.xml
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
-1 warnings
-# res/xml/deva_lv.xml
-Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, @, [, \, ], ^, _, `, {, |, }, ~
 1 warnings
 # res/xml/greekmath.xml
 Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), *, +, ,, -, /, :, ;, <, >, ?, @, [, \, ], _, `, {, |, }, ~

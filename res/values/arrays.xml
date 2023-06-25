@@ -7,14 +7,14 @@
     <item>latn_dvorak</item>
     <item>arab_ckb</item>
     <item>arab_ibm</item>
-    <item>arab_ibm_ma</item>
+    <item>arab_ibm_alt</item>
     <item>arab_ir</item>
     <item>beng_rh</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
     <item>cyrl_yaverti</item>
     <item>deva_inscript</item>
-    <item>deva_lv</item>
+    <item>deva_alt</item>
     <item>grek_qwerty</item>
     <item>hang_dubeolsik_kr</item>
     <item>hebr_1_il</item>
@@ -46,14 +46,14 @@
     <item>Dvorak</item>
     <item>Arabic (کوردی)</item>
     <item>IBM Arabic</item>
-    <item>IBM Arabic (Mostafa Ayesh)</item>
+    <item>IBM Arabic Alt</item>
     <item>Persian</item>
     <item>Bengali (Md Rasel Hossain)</item>
     <item>ЙЦУКЕН [Russia]</item>
     <item>ЙЦУКЕН [Ukraine]</item>
     <item>ЯВЕРТЪ</item>
-    <item>InScript Devanagari</item>
-    <item>Devanagari (Luke Videckis)</item>
+    <item>Devanagari InScript </item>
+    <item>Devanagari Alt</item>
     <item>QWERTY [Hellas]</item>
     <item>두벌식 [Republic of Korea]</item>
     <item>Hebrew 1</item>
