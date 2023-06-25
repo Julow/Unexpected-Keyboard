@@ -81,4 +81,44 @@
     <item>QWERTZ (Slovak)</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
+  <integer-array name="layout_ids">
+    <item>-1</item>
+    <item>@xml/latn_qwerty_us</item>
+    <item>@xml/latn_colemak</item>
+    <item>@xml/latn_dvorak</item>
+    <item>@xml/arab_alt</item>
+    <item>@xml/arab_pc</item>
+    <item>@xml/arab_pc_ckb</item>
+    <item>@xml/arab_pc_ir</item>
+    <item>@xml/beng_national</item>
+    <item>@xml/beng_provat</item>
+    <item>@xml/cyrl_jcuken_ru</item>
+    <item>@xml/cyrl_jcuken_uk</item>
+    <item>@xml/cyrl_yaverti</item>
+    <item>@xml/deva_alt</item>
+    <item>@xml/deva_inscript</item>
+    <item>@xml/grek_qwerty</item>
+    <item>@xml/hang_dubeolsik_kr</item>
+    <item>@xml/hebr_1_il</item>
+    <item>@xml/hebr_2_il</item>
+    <item>@xml/latn_azerty_fr</item>
+    <item>@xml/latn_bone</item>
+    <item>@xml/latn_neo2</item>
+    <item>@xml/latn_qwerty_br</item>
+    <item>@xml/latn_qwerty_es</item>
+    <item>@xml/latn_qwerty_hu</item>
+    <item>@xml/latn_qwerty_lv</item>
+    <item>@xml/latn_qwerty_no</item>
+    <item>@xml/latn_qwerty_pl</item>
+    <item>@xml/latn_qwerty_ro</item>
+    <item>@xml/latn_qwerty_se</item>
+    <item>@xml/latn_qwerty_tr</item>
+    <item>@xml/latn_qwerty_vi</item>
+    <item>@xml/latn_qwertz</item>
+    <item>@xml/latn_qwertz_cz</item>
+    <item>@xml/latn_qwertz_de</item>
+    <item>@xml/latn_qwertz_hu</item>
+    <item>@xml/latn_qwertz_sk</item>
+    <item>-1</item>
+  </integer-array>
 </resources>

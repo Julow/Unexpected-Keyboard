@@ -40,22 +40,22 @@ def sort_layouts(layouts):
 
 # Write the XML arrays used in the preferences.
 def generate_arrays(out, layouts):
-    def add_items(parent, strings):
-        for s in strings:
+    def mk_array(tag, name, strings_items):
+        elem = XML.Element(tag, name=name)
+        for s in strings_items:
             item = XML.Element("item")
             item.text = s
-            parent.append(item)
+            elem.append(item)
+        return elem
     none_item = [ ("none", "None") ]
     custom_item = [ ("custom", "@string/pref_layout_e_custom") ]
-    lids, names = zip(*(none_item + layouts + custom_item)) # unzip
-    values = XML.Element("string-array", name="pref_layout_values")
-    add_items(values, lids)
-    entries = XML.Element("string-array", name="pref_layout_entries")
-    add_items(entries, names)
+    values_items, entries_items = zip(*(none_item + layouts + custom_item)) # unzip
+    ids_items = map(lambda s: "@xml/%s" % s if s not in ["none", "custom"] else "-1", values_items)
     root = XML.Element("resources")
     root.append(XML.Comment(text="DO NOT EDIT. This file is generated, see gen_layouts.py."))
-    root.append(values)
-    root.append(entries)
+    root.append(mk_array("string-array", "pref_layout_values", values_items))
+    root.append(mk_array("string-array", "pref_layout_entries", entries_items))
+    root.append(mk_array("integer-array", "layout_ids", ids_items))
     XML.indent(root)
     XML.ElementTree(element=root).write(out, encoding="unicode", xml_declaration=True)
 

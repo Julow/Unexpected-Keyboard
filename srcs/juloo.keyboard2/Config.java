@@ -3,11 +3,14 @@ package juloo.keyboard2;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 final class Config
@@ -335,53 +338,34 @@ final class Config
     }
   }
 
+  /** Obtained from XML. */
+  static List<String> layout_ids_str = null;
+  static TypedArray layout_ids_res = null;
+
   /** Might return [null] if the selected layout is "system", "custom" or if
       the name is not recognized. */
   public KeyboardData layout_of_string(Resources res, String name)
   {
-    int id;
+    if (layout_ids_str == null)
+    {
+      layout_ids_str = Arrays.asList(res.getStringArray(R.array.pref_layout_values));
+      layout_ids_res = res.obtainTypedArray(R.array.layout_ids);
+    }
+    int i = layout_ids_str.indexOf(name);
+    if (i >= 0)
+    {
+      int id = layout_ids_res.getResourceId(i, 0);
+      if (id > 0)
+        return KeyboardData.load(res, id);
+      // Fallthrough
+    }
     switch (name)
     {
-      case "arab_pc_ckb": id = R.xml.arab_pc_ckb; break;
-      case "arab_pc_ir": id = R.xml.arab_pc_ir; break;
-      case "arab_pc": id = R.xml.arab_pc; break;
-      case "arab_alt": id = R.xml.arab_alt; break;
-      case "beng_national": id = R.xml.beng_national; break;
-      case "beng_provat": id = R.xml.beng_provat; break;
-      case "cyrl_jcuken_ru": id = R.xml.cyrl_jcuken_ru; break;
-      case "cyrl_jcuken_uk": id = R.xml.cyrl_jcuken_uk; break;
-      case "cyrl_yaverti": id = R.xml.cyrl_yaverti; break;
-      case "deva_inscript": id = R.xml.deva_inscript; break;
-      case "deva_alt": id = R.xml.deva_alt; break;
-      case "grek_qwerty": id = R.xml.grek_qwerty; break;
-      case "hang_dubeolsik_kr": id = R.xml.hang_dubeolsik_kr; break;
-      case "hebr_1_il": id = R.xml.hebr_1_il; break;
-      case "hebr_2_il": id = R.xml.hebr_2_il; break;
-      case "latn_azerty_fr": id = R.xml.latn_azerty_fr; break;
-      case "latn_bone": id = R.xml.latn_bone; break;
-      case "latn_colemak": id = R.xml.latn_colemak; break;
-      case "latn_dvorak": id = R.xml.latn_dvorak; break;
-      case "latn_neo2": id = R.xml.latn_neo2; break;
-      case "latn_qwerty_hu": id = R.xml.latn_qwerty_hu; break;
-      case "latn_qwerty_br": id = R.xml.latn_qwerty_br; break;
-      case "latn_qwerty_es": id = R.xml.latn_qwerty_es; break;
-      case "latn_qwerty_lv": id = R.xml.latn_qwerty_lv; break;
-      case "latn_qwerty_no": id = R.xml.latn_qwerty_no; break;
-      case "latn_qwerty_pl": id = R.xml.latn_qwerty_pl; break;
-      case "latn_qwerty_ro": id = R.xml.latn_qwerty_ro; break;
-      case "latn_qwerty_se": id = R.xml.latn_qwerty_se; break;
-      case "latn_qwerty_tr": id = R.xml.latn_qwerty_tr; break;
-      case "latn_qwerty_us": id = R.xml.latn_qwerty_us; break;
-      case "latn_qwerty_vi": id = R.xml.latn_qwerty_vi; break;
-      case "latn_qwertz": id = R.xml.latn_qwertz; break;
-      case "latn_qwertz_cz": id = R.xml.latn_qwertz_cz; break;
-      case "latn_qwertz_de": id = R.xml.latn_qwertz_de; break;
-      case "latn_qwertz_hu": id = R.xml.latn_qwertz_hu; break;
-      case "latn_qwertz_sk": id = R.xml.latn_qwertz_sk; break;
       case "custom": return custom_layout;
-      case "system": case "none": default: return null;
+      case "system":
+      case "none":
+      default: return null;
     }
-    return KeyboardData.load(res, id);
   }
 
   char inverse_numpad_char(char c)
