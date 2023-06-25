@@ -11,6 +11,11 @@ import xml.etree.ElementTree as XML
 # are sorted alphabetically.
 FIRST_LAYOUTS = [ "latn_qwerty_us", "latn_colemak", "latn_dvorak" ]
 
+# File names that are known not to be layouts. Avoid warning about them.
+KNOWN_NOT_LAYOUT = set([
+    "number_row", "numpad", "pin", "bottom_row", "settings", "method",
+    "greekmath", "numeric" ])
+
 # Read a layout from a file. Returns [None] if [fname] is not a layout.
 def read_layout(fname):
     root = XML.parse(fname).getroot()
@@ -23,7 +28,9 @@ def read_layouts(files):
     for layout_file in files:
         layout_id, _ = os.path.splitext(os.path.basename(layout_file))
         layout = read_layout(layout_file)
-        if layout == None:
+        if layout_id in KNOWN_NOT_LAYOUT:
+            continue
+        elif layout == None:
             print("Not a layout file: %s" % layout_file)
         elif layout["name"] == None:
             print("Layout doesn't have a name: %s" % layout_id)
