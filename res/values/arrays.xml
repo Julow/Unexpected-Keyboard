@@ -28,7 +28,8 @@
     <item>neo2</item>
     <item>bone</item>
     <item>jcuken_ua</item>
-    <item>bangla</item>
+    <item>bengali_national</item>
+    <item>bengali_provat</item>
     <item>devanagari_1</item>
     <item>devanagari_2</item>
     <item>he_il_1452_1</item>
@@ -36,6 +37,7 @@
     <item>ar_pc</item>
     <item>ar_alt</item>
     <item>persian</item>
+    <item>kurdish</item>
     <item>custom</item>
   </string-array>
   <string-array name="pref_layout_entries">
@@ -66,7 +68,8 @@
     <item>Neo 2</item>
     <item>Bone</item>
     <item>ЙЦУКЕН (Українська)</item>
-    <item>বাংলা</item>
+    <item>বাংলা (জাতীয়)</item>
+    <item>বাংলা (প্রভাত)</item>
     <item>देवनागरी (हिंदी)-1</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>Hebrew SI-1452-1</item>
@@ -74,6 +77,7 @@
     <item>Arabic PC</item>
     <item>Arabic ALT</item>
     <item>Persian</item>
+    <item>کوردی</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
   <string-array name="pref_accents_entries">
@@ -135,5 +139,19 @@
     <item>15</item>
     <item>25</item>
     <item>35</item>
+  </string-array>
+  <string-array name="pref_vibration_entries">
+    <item>@string/pref_vibration_e_disabled</item>
+    <item>@string/pref_vibration_e_system</item>
+    <item>@string/pref_vibration_e_strong</item>
+    <item>@string/pref_vibration_e_medium</item>
+    <item>@string/pref_vibration_e_light</item>
+  </string-array>
+  <string-array name="pref_vibration_values">
+    <item>disabled</item>
+    <item>system</item>
+    <item>strong</item>
+    <item>medium</item>
+    <item>light</item>
   </string-array>
 </resources>

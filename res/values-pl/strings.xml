@@ -41,7 +41,7 @@
   <string name="pref_autocapitalisation_summary">Naciśnij Shift na początku zdania</string>
   <string name="pref_switch_input_immediate_title">Przełącz na ostatnio używaną klawiaturę</string>
   <string name="pref_switch_input_immediate_summary">Działanie klawisza przełączającego klawiaturę</string>
-  <string name="pref_vibrate_title">Wibracja</string>
+  <string name="pref_vibrate_title">Wibracje</string>
   <string name="pref_vibrate_summary">Wł./wył. wibrację przy naciśnięciu klawisza</string>
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Margines dolny</string>
@@ -67,6 +67,11 @@
   <string name="pref_category_advanced">Zaawansowane</string>
   <string name="pref_custom_layout_title">Własny układ</string>
   <string name="pref_custom_layout_summary">Zobacz kod źródłowy. Ta opcja nie jest przeznaczona do użycia.</string>
+  <string name="pref_vibration_e_disabled">Wyłączone</string>
+  <string name="pref_vibration_e_system">Systemowe</string>
+  <string name="pref_vibration_e_strong">Silne</string>
+  <string name="pref_vibration_e_medium">Normalne</string>
+  <string name="pref_vibration_e_light">Słabe</string>
   <string name="key_action_next">Dalej</string>
   <string name="key_action_done">OK</string>
   <string name="key_action_go">Przejdź</string>

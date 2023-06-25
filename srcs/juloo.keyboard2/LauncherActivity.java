@@ -37,6 +37,9 @@ public class LauncherActivity extends Activity
   {
     public boolean onUnhandledKeyEvent(View v, KeyEvent ev)
     {
+      // Don't handle the back key
+      if (ev.getKeyCode() == KeyEvent.KEYCODE_BACK)
+        return false;
       // Key release of modifiers would erase interesting data
       if (KeyEvent.isModifierKey(ev.getKeyCode()))
         return false;

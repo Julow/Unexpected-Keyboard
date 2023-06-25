@@ -16,6 +16,7 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
   {
     "alt",
     "meta",
+    "voice_typing",
     "accent_aigu",
     "accent_grave",
     "accent_double_aigu",
@@ -56,6 +57,8 @@ public class ExtraKeyCheckBoxPreference extends CheckBoxPreference
   {
     switch (name)
     {
+      case "voice_typing":
+        return true;
       default:
         return false;
     }

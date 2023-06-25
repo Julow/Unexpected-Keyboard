@@ -49,7 +49,7 @@
   <string name="pref_horizontal_margin_title">حاشیه افقی</string>
   <string name="pref_character_size_title">اندازه برچسب</string>
   <string name="pref_character_size_summary">اندازه نویسه‌های نشان داده شده روی صفحه کلید (%.2fx)</string>
-  <string name="pref_theme">تم</string>
+  <string name="pref_theme">زمینه</string>
   <string name="pref_theme_e_system">تنظیمات سامانه</string>
   <string name="pref_theme_e_dark">تاریک</string>
   <string name="pref_theme_e_light">روشن</string>
@@ -67,6 +67,11 @@
   <string name="pref_category_advanced">پیشرفته</string>
   <string name="pref_custom_layout_title">طرح شخصی</string>
   <string name="pref_custom_layout_summary">کد منبع را ببینید. این گزینه قرار نیست استفاده شود.</string>
+  <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
+  <!-- <string name="pref_vibration_e_system">System</string> -->
+  <!-- <string name="pref_vibration_e_strong">Strong</string> -->
+  <!-- <string name="pref_vibration_e_medium">Medium</string> -->
+  <!-- <string name="pref_vibration_e_light">Light</string> -->
   <string name="key_action_next">بعدی</string>
   <string name="key_action_done">اتمام</string>
   <string name="key_action_go">برو</string>

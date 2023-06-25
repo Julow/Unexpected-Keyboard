@@ -78,6 +78,8 @@ make installd
 ### Adding a layout
 
 Layouts are defined in XML, see `res/xml/qwerty.xml`.
+An online tool for editing layout files written by @Lixquid is available
+[here](https://unexpected-keyboard-layout-editor.lixquid.com/).
 
 An entry must be added to the layout option in `res/values/arrays.xml`, to both
 `pref_layout_values` (correspond to the file name) and `pref_layout_entries`
@@ -85,6 +87,9 @@ An entry must be added to the layout option in `res/values/arrays.xml`, to both
 
 The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
 `layout_of_string`.
+
+Run `make check_layouts` to check some properties about your layout. This will
+change the file `check_layout.output`, which you should commit.
 
 #### Adding a programming layout
 
@@ -133,13 +138,19 @@ The app can be translated by writing `res/values-<language code>/strings.xml`
 (for example `values-fr`, `values-lv`), based on the default:
 `res/values/strings.xml` (English).
 
+To check that `strings.xml` is formatted correctly, run
+`python sync_translations.py`. This will modify your files.
+
 The store description is found in `metadata/android/<locale>/`,
 `short_description.txt` and `full_description.txt`.
-Translating changelogs is not useful. Changelogs are written quickly just
-before a release and older ones are never shown to anyone currently.
+Translating changelogs is not useful.
 
 The app name might be partially translated, the "unexpected" word should remain
 untranslated.
+
+As translations need to be updated regularly, you can subscribe to this issue
+to receive a notification when an update is needed:
+https://github.com/Julow/Unexpected-Keyboard/issues/373
 
 ### Adding key combinations
 
