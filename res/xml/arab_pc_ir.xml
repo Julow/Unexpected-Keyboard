@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Adapted from standard SIRI 9147 -->
-<keyboard script="arabic">
+<keyboard name="Persian PC" script="arabic">
   <row>
     <key key0="ض" key2="۱"/>
     <key key0="ص" key2="۲"/>

@@ -20,7 +20,7 @@ See bottom_row.xml for the definition of the bottom row and neo2.xml for a
 layout that re-defines it.
 See srcs/juloo.keyboard2/KeyValue.java for the keys that have a special meaning.
 -->
-<keyboard script="latin">
+<keyboard name="QWERTY (US)" script="latin">
   <row>
     <key key0="q" key2="1" key4="esc"/>
     <key key0="w" key1="~" key2="2" key3="\@"/>

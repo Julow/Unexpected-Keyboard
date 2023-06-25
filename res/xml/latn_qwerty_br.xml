@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Adapted from standard ABNT NBR 10346 -->
-<keyboard script="latin">
+<keyboard name="QWERTY (Brasileiro)" script="latin">
   <row>
     <key key0="q" key2="1" key4="esc"/>
     <key key0="w" key1="~" key2="2" key3="\@" key4="!"/>

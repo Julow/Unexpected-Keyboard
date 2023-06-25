@@ -31,10 +31,14 @@ sync_translations:
 check_layouts:
 	python check_layout.py $(wildcard res/xml/*.xml) > check_layout.output
 
-# Will modify the source tree.
-runtest: rebuild_special_font sync_translations check_layouts
+gen_layouts:
+	python gen_layouts.py
 
-.PHONY: release debug installd clean rebuild_special_font check_layouts sync_translations runtest
+# Will modify the source tree.
+runtest: rebuild_special_font sync_translations check_layouts gen_layouts
+
+.PHONY: release debug installd clean rebuild_special_font check_layouts \
+	sync_translations runtest gen_layouts
 
 $(shell mkdir -p _build)
 

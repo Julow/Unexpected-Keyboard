@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard script="latin">
+<keyboard name="Dvorak" script="latin">
   <row>
     <key key0="shift" width="1.5" key2="esc" key4="tab"/>
     <key key0="p" key1="loc accent_ring" key2="." key3="&lt;" key4="f11_placeholder"/>

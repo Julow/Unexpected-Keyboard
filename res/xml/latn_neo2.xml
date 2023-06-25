@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://neo-layout.org/Layouts/neo/ -->
-<keyboard bottom_row="false" script="latin">
+<keyboard name="Neo 2" bottom_row="false" script="latin">
   <row>
     <key key0="x" key1="°" key2="1" key4="…"/>
     <key key0="v" key1="§" key2="2" key4="_"/>

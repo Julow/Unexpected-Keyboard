@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as ET
-from xml.sax import saxutils
 import glob
 
 # Edit every strings.xml files:

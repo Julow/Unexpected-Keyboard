@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://colemak.com/ -->
-<keyboard script="latin">
+<keyboard name="Colemak" script="latin">
   <row>
     <key key0="q" key1="esc"                key2="loc accent_aigu"    key3="loc accent_tilde"   shift="0.5"/>
     <key key0="w" key1="loc accent_grave"       key2=" ́"              key3="~"            />
