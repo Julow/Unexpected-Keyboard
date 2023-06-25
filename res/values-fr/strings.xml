@@ -54,9 +54,9 @@
   <string name="pref_theme_e_dark">Sombre</string>
   <string name="pref_theme_e_light">Clair</string>
   <string name="pref_theme_e_black">Noir</string>
-  <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
+  <string name="pref_theme_e_altblack">Noir 2</string>
   <string name="pref_theme_e_white">Blanc</string>
-  <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
+  <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_swipe_dist_e_very_short">Très courte</string>
   <string name="pref_swipe_dist_e_short">Courte</string>
   <string name="pref_swipe_dist_e_default">Normale</string>
@@ -67,14 +67,19 @@
   <string name="pref_category_advanced">Avancé</string>
   <string name="pref_custom_layout_title">Disposition personnalisée</string>
   <string name="pref_custom_layout_summary">Cette option n\'est pas faite pour être utilisée.</string>
+  <string name="pref_vibration_e_disabled">Désactivé</string>
+  <string name="pref_vibration_e_system">Système</string>
+  <string name="pref_vibration_e_strong">Fort</string>
+  <string name="pref_vibration_e_medium">Moyen</string>
+  <string name="pref_vibration_e_light">Léger</string>
   <string name="key_action_next">Suiv.</string>
   <string name="key_action_done">Fin</string>
   <string name="key_action_go">Aller</string>
   <string name="key_action_prev">Prec.</string>
   <string name="key_action_search">Chercher</string>
   <string name="key_action_send">Envoyer</string>
-  <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
-  <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
-  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
-  <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
+  <string name="launcher_button_imesettings">Activer le clavier</string>
+  <string name="launcher_description">Cette application est un clavier virtuel. Activez-le dans les paramètres système en cliquant sur le bouton ci-dessous.</string>
+  <string name="launcher_sourcecode">Cette application est libre et open-source. Lisez le source code et reportez des problèmes sur <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
+  <string name="launcher_tryhere">Après l\'avoir activé, vous pouvez l\'essayer ici:</string>
 </resources>

@@ -5,6 +5,7 @@
     <item>latn_qwerty_us</item>
     <item>latn_colemak</item>
     <item>latn_dvorak</item>
+    <item>arab_ckb</item>
     <item>arab_ibm</item>
     <item>arab_ibm_ma</item>
     <item>arab_ir</item>
@@ -16,12 +17,12 @@
     <item>deva_lv</item>
     <item>grek_qwerty</item>
     <item>hang_dubeolsik_kr</item>
-    <item>hebr_</item>
-    <item>hebr_2</item>
+    <item>hebr_1_il</item>
+    <item>hebr_2_il</item>
     <item>latn_azerty_fr</item>
     <item>latn_bone</item>
     <item>latn_neo2</item>
-    <item>latn_qwerty</item>
+    <item>latn_qwerty_hu</item>
     <item>latn_qwerty_br</item>
     <item>latn_qwerty_es</item>
     <item>latn_qwerty_lv</item>
@@ -30,6 +31,7 @@
     <item>latn_qwerty_se</item>
     <item>latn_qwerty_tr</item>
     <item>latn_qwerty_vi</item>
+    <item>latn_qwerty_ro</item>
     <item>latn_qwertz</item>
     <item>latn_qwertz_cz</item>
     <item>latn_qwertz_de</item>
@@ -42,6 +44,7 @@
     <item>QWERTY [United States of America]</item>
     <item>Colemak</item>
     <item>Dvorak</item>
+    <item>Arabic (کوردی)</item>
     <item>IBM Arabic</item>
     <item>IBM Arabic (Mostafa Ayesh)</item>
     <item>Persian</item>
@@ -52,13 +55,13 @@
     <item>InScript Devanagari</item>
     <item>Devanagari (Luke Videckis)</item>
     <item>QWERTY [Hellas]</item>
-    <item>Hebrew</item>
-    <item>Hebrew 2</item>
     <item>두벌식 [Republic of Korea]</item>
+    <item>Hebrew 1</item>
+    <item>Hebrew 2</item>
     <item>AZERTY [France]</item>
     <item>Bone</item>
     <item>Neo 2</item>
-    <item>QWERTY</item>
+    <item>QWERTY [Hungary]</item>
     <item>QWERTY [Brazil]</item>
     <item>QWERTY [Spain]</item>
     <item>QWERTY [Latvia]</item>
@@ -67,6 +70,7 @@
     <item>QWERTY [Sweden]</item>
     <item>QWERTY [Türkiye]</item>
     <item>QWERTY [Vietnam]</item>
+    <item>QWERTY [Romania]</item>
     <item>QWERTZ</item>
     <item>QWERTZ [Czechia]</item>
     <item>QWERTZ [Germany]</item>
@@ -133,5 +137,19 @@
     <item>15</item>
     <item>25</item>
     <item>35</item>
+  </string-array>
+  <string-array name="pref_vibration_entries">
+    <item>@string/pref_vibration_e_disabled</item>
+    <item>@string/pref_vibration_e_system</item>
+    <item>@string/pref_vibration_e_strong</item>
+    <item>@string/pref_vibration_e_medium</item>
+    <item>@string/pref_vibration_e_light</item>
+  </string-array>
+  <string-array name="pref_vibration_values">
+    <item>disabled</item>
+    <item>system</item>
+    <item>strong</item>
+    <item>medium</item>
+    <item>light</item>
   </string-array>
 </resources>

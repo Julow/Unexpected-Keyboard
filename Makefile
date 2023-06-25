@@ -22,10 +22,19 @@ clean:
 	rm -rf _build/*.dex _build/class _build/gen _build/*.apk _build/*.unsigned-apk \
 		_build/*.idsig _build/assets
 
-rebuild_special_font:
-	cd srcs/special_font && fontforge -lang=ff -script build.pe *.svg
+rebuild_special_font: _build/special_font.ttf
+	cp "$<" srcs/special_font/result.ttf
 
-.PHONY: release debug installd clean rebuild_special_font
+sync_translations:
+	python sync_translations.py
+
+check_layouts:
+	python check_layout.py $(wildcard res/xml/*.xml) > check_layout.output
+
+# Will modify the source tree.
+runtest: rebuild_special_font sync_translations check_layouts
+
+.PHONY: release debug installd clean rebuild_special_font check_layouts sync_translations runtest
 
 $(shell mkdir -p _build)
 
@@ -117,3 +126,10 @@ _build/classes.dex: $(JAVA_FILES) $(R_FILE)
 		-sourcepath $(SRC_DIR):$(GEN_DIR) \
 		$^
 	$(ANDROID_BUILD_TOOLS)/d8 --output $(@D) $(OBJ_DIR)/*/*/* $(subst :, ,$(EXTRA_JARS))
+
+# Font file
+
+FONT_GLYPHS = $(wildcard srcs/special_font/*.svg)
+
+_build/special_font.ttf: srcs/special_font/build.pe $(FONT_GLYPHS)
+	fontforge -lang=ff -script $< "$@" $(FONT_GLYPHS)

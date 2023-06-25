@@ -1,0 +1,6 @@
+Funcționalitatea principală este accesul rapid la o mulțime de caractere ASCII prin glisarea către colțurile tastelor.
+
+Această aplicație a fost concepută inițial pentru programatori care folosec Termux.
+Este perfectă pentru uzul cotidian.
+
+Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e Open Source.

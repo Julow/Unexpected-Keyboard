@@ -1,0 +1,114 @@
+# res/xml/arab_ckb.xml
+Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
+1 warnings
+# res/xml/arab_ibm_ma.xml
+Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
+1 warnings
+# res/xml/arab_ibm.xml
+Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
+1 warnings
+# res/xml/arab_ir.xml
+Layout includes some ASCII punctuation but not all, missing: ", $, %, ', *, ,, /, ;, <, =, >, ?, [, \, ], ^, _, `, {, |, }, ~
+1 warnings
+# res/xml/bengali_national.xml
+Layout includes some ASCII punctuation but not all, missing: $
+Layout doesn't specify a script.
+2 warnings
+# res/xml/bengali_provat.xml
+Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
+Layout doesn't specify a script.
+2 warnings
+Not a layout file: res/xml/bottom_row.xml
+# res/xml/cyrl_jcuken_ru.xml
+0 warnings
+# res/xml/cyrl_jcuken_uk.xml
+0 warnings
+# res/xml/cyrl_yaverti.xml
+Layout includes some ASCII punctuation but not all, missing: ~
+1 warnings
+# res/xml/deva_inscript.xml
+Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
+1 warnings
+# res/xml/deva_lv.xml
+Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, @, [, \, ], ^, _, `, {, |, }, ~
+1 warnings
+# res/xml/greekmath.xml
+Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), *, +, ,, -, /, :, ;, <, >, ?, @, [, \, ], _, `, {, |, }, ~
+Layout redefines the bottom row but some important keys are missing, missing: change_method, config, ctrl, switch_emoji, switch_second
+Layout doesn't specify a script.
+3 warnings
+# res/xml/grek_qwerty.xml
+0 warnings
+# res/xml/hang_dubeolsik_kr.xml
+0 warnings
+# res/xml/hebr_1_il.xml
+Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
+1 warnings
+# res/xml/hebr_2_il.xml
+Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
+1 warnings
+# res/xml/latn_azerty_fr.xml
+0 warnings
+# res/xml/latn_bone.xml
+Layout includes some ASCII punctuation but not all, missing: $
+1 warnings
+# res/xml/latn_colemak.xml
+0 warnings
+# res/xml/latn_dvorak.xml
+0 warnings
+# res/xml/latn_neo2.xml
+0 warnings
+# res/xml/latn_qwerty_br.xml
+0 warnings
+# res/xml/latn_qwerty_es.xml
+0 warnings
+# res/xml/latn_qwerty_hu.xml
+0 warnings
+# res/xml/latn_qwerty_lv.xml
+0 warnings
+# res/xml/latn_qwerty_no.xml
+0 warnings
+# res/xml/latn_qwerty_pl.xml
+0 warnings
+# res/xml/latn_qwerty_ro.xml
+0 warnings
+# res/xml/latn_qwerty_se.xml
+0 warnings
+# res/xml/latn_qwerty_tr.xml
+0 warnings
+# res/xml/latn_qwerty_us.xml
+0 warnings
+# res/xml/latn_qwerty_vi.xml
+Layout includes some ASCII punctuation but not all, missing: \
+1 warnings
+# res/xml/latn_qwertz_cz.xml
+Layout includes some ASCII punctuation but not all, missing: `
+1 warnings
+# res/xml/latn_qwertz_de.xml
+0 warnings
+# res/xml/latn_qwertz_hu.xml
+0 warnings
+# res/xml/latn_qwertz_sk.xml
+Layout includes some ASCII punctuation but not all, missing: \, `
+1 warnings
+# res/xml/latn_qwertz.xml
+0 warnings
+Not a layout file: res/xml/method.xml
+Not a layout file: res/xml/number_row.xml
+# res/xml/numeric.xml
+Layout includes some ASCII punctuation but not all, missing: &, ?, @, `
+Layout redefines the bottom row but some important keys are missing, missing: change_method, config, switch_emoji, switch_numeric, switch_second
+Layout doesn't specify a script.
+3 warnings
+# res/xml/numpad.xml
+Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), ,, :, ;, <, >, ?, @, [, \, ], ^, _, `, {, |, }, ~
+Layout doesn't define some important keys, missing: backspace, delete
+Layout redefines the bottom row but some important keys are missing, missing: action, change_method, config, ctrl, down, enter, fn, left, right, space, switch_emoji, switch_numeric, switch_second, up
+Layout doesn't specify a script.
+4 warnings
+# res/xml/pin.xml
+Layout includes some ASCII punctuation but not all, missing: !, ", $, %, &, ', ;, <, =, >, ?, @, [, \, ], ^, _, `, {, |, }, ~
+Layout redefines the bottom row but some important keys are missing, missing: change_method, config, ctrl, fn, switch_emoji, switch_second
+Layout doesn't specify a script.
+3 warnings
+Not a layout file: res/xml/settings.xml

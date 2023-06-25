@@ -31,7 +31,7 @@ final class Config
   public boolean number_row;
   public float swipe_dist_px;
   public float slide_step_px;
-  public boolean vibrateEnabled;
+  public VibratorCompat.VibrationBehavior vibration_behavior;
   public long longPressTimeout;
   public long longPressInterval;
   public float margin_bottom;
@@ -53,10 +53,11 @@ final class Config
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
   public boolean shouldOfferSwitchingToSecond;
+  public boolean shouldOfferVoiceTyping;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  public Set<KeyValue> extra_keys_subtype;
+  public ExtraKeys extra_keys_subtype;
   public Set<KeyValue> extra_keys_param;
 
   public final IKeyEventHandler handler;
@@ -75,6 +76,7 @@ final class Config
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
     shouldOfferSwitchingToSecond = false;
+    shouldOfferVoiceTyping = false;
     actionLabel = null;
     actionId = 0;
     swapEnterActionKey = false;
@@ -123,17 +125,13 @@ final class Config
     float swipe_dist_value = Float.valueOf(_prefs.getString("swipe_dist", "15"));
     swipe_dist_px = swipe_dist_value / 25.f * swipe_scaling;
     slide_step_px = swipe_dist_px / 4.f;
-    vibrateEnabled = _prefs.getBoolean("vibrate_enabled", true);
+    vibration_behavior =
+      VibratorCompat.VibrationBehavior.of_string(_prefs.getString("vibration_behavior", "system"));
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
-    margin_bottom = get_dip_pref(dm, oriented_pref("margin_bottom"),
-        res.getDimension(R.dimen.margin_bottom));
-    keyVerticalInterval = get_dip_pref(dm, "key_vertical_space",
-        res.getDimension(R.dimen.key_vertical_interval));
-    keyHorizontalInterval =
-      get_dip_pref(dm, "key_horizontal_space",
-          res.getDimension(R.dimen.key_horizontal_interval))
-      * horizontalIntervalScale;
+    margin_bottom = get_dip_pref_oriented(dm, "margin_bottom", 7, 3);
+    keyVerticalInterval = get_dip_pref(dm, "key_vertical_space", 2);
+    keyHorizontalInterval = get_dip_pref(dm, "key_horizontal_space", 2) * horizontalIntervalScale;
     // Label brightness is used as the alpha channel
     labelBrightness = _prefs.getInt("label_brightness", 100) * 255 / 100;
     // Keyboard opacity
@@ -144,8 +142,7 @@ final class Config
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontal_margin =
-      get_dip_pref(dm, oriented_pref("horizontal_margin"),
-          res.getDimension(R.dimen.horizontal_margin));
+      get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
       _prefs.getFloat("character_size", 1.f)
@@ -179,7 +176,7 @@ final class Config
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     if (extra_keys_subtype != null)
-      extra_keys.addAll(extra_keys_subtype);
+      extra_keys_subtype.compute(extra_keys, kw.script);
     extra_keys.addAll(extra_keys_param);
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
@@ -210,6 +207,8 @@ final class Config
                   KeyValue.getKeyByName("enter") : action_key;
               case SWITCH_SECOND:
                 return shouldOfferSwitchingToSecond ? key : null;
+              case SWITCH_VOICE_TYPING:
+                return shouldOfferVoiceTyping ? key : null;
             }
             break;
           case Keyevent:
@@ -306,11 +305,12 @@ final class Config
     return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
   }
 
-  /** Returns preference name from a prefix depending on orientation. */
-  private String oriented_pref(String base_name)
+  /** [get_dip_pref] depending on orientation. */
+  float get_dip_pref_oriented(DisplayMetrics dm, String pref_base_name, float def_port, float def_land)
   {
     String suffix = orientation_landscape ? "_landscape" : "_portrait";
-    return base_name + suffix;
+    float def = orientation_landscape ? def_land : def_port;
+    return get_dip_pref(dm, pref_base_name + suffix, def);
   }
 
   private int getThemeId(Resources res, String theme_name)
@@ -335,17 +335,19 @@ final class Config
     }
   }
 
+  /** Might return [null] if the selected layout is "system", "custom" or if
+      the name is not recognized. */
   public KeyboardData layout_of_string(Resources res, String name)
   {
-    int id = R.xml.latn_qwerty_us; // The config might store an invalid layout, don't crash
+    int id;
     switch (name)
     {
-      case "system": case "none": return null;
-      case "custom": if (custom_layout != null) return custom_layout; break;
+      case "arab_ckb": id = R.xml.arab_ckb; break;
+      case "arab_fa_ir": id = R.xml.arab_ir; break;
       case "arab_ibm": id = R.xml.arab_ibm; break;
       case "arab_ibm_ma": id = R.xml.arab_ibm_ma; break;
-      case "arab_ir": id = R.xml.arab_ir; break;
-      case "beng_rh": id = R.xml.beng_rh; break;
+      case "bengali_national": id = R.xml.bengali_national; break;
+      case "bengali_provat": id = R.xml.bengali_provat; break;
       case "cyrl_jcuken_ru": id = R.xml.cyrl_jcuken_ru; break;
       case "cyrl_jcuken_uk": id = R.xml.cyrl_jcuken_uk; break;
       case "cyrl_yaverti": id = R.xml.cyrl_yaverti; break;
@@ -353,19 +355,20 @@ final class Config
       case "deva_lv": id = R.xml.deva_lv; break;
       case "grek_qwerty": id = R.xml.grek_qwerty; break;
       case "hang_dubeolsik_kr": id = R.xml.hang_dubeolsik_kr; break;
-      case "hebr_": id = R.xml.hebr_; break;
-      case "hebr_2": id = R.xml.hebr_2; break;
+      case "hebr_1_il": id = R.xml.hebr_1_il; break;
+      case "hebr_2_il": id = R.xml.hebr_2_il; break;
       case "latn_azerty_fr": id = R.xml.latn_azerty_fr; break;
       case "latn_bone": id = R.xml.latn_bone; break;
       case "latn_colemak": id = R.xml.latn_colemak; break;
       case "latn_dvorak": id = R.xml.latn_dvorak; break;
       case "latn_neo2": id = R.xml.latn_neo2; break;
-      case "latn_qwerty": id = R.xml.latn_qwerty; break;
+      case "latn_qwerty_hu": id = R.xml.latn_qwerty_hu; break;
       case "latn_qwerty_br": id = R.xml.latn_qwerty_br; break;
       case "latn_qwerty_es": id = R.xml.latn_qwerty_es; break;
       case "latn_qwerty_lv": id = R.xml.latn_qwerty_lv; break;
       case "latn_qwerty_no": id = R.xml.latn_qwerty_no; break;
       case "latn_qwerty_pl": id = R.xml.latn_qwerty_pl; break;
+      case "latn_qwerty_ro": id = R.xml.latn_qwerty_ro; break;
       case "latn_qwerty_se": id = R.xml.latn_qwerty_se; break;
       case "latn_qwerty_tr": id = R.xml.latn_qwerty_tr; break;
       case "latn_qwerty_us": id = R.xml.latn_qwerty_us; break;
@@ -375,6 +378,8 @@ final class Config
       case "latn_qwertz_de": id = R.xml.latn_qwertz_de; break;
       case "latn_qwertz_hu": id = R.xml.latn_qwertz_hu; break;
       case "latn_qwertz_sk": id = R.xml.latn_qwertz_sk; break;
+      case "custom": return custom_layout;
+      case "system": case "none": default: return null;
     }
     return KeyboardData.load(res, id);
   }

@@ -21,13 +21,17 @@ class KeyboardData
   public final float keysWidth;
   /** Total height of the keyboard. */
   public final float keysHeight;
+  /** Might be null. */
+  public final Modmap modmap;
+  /** Might be null. */
+  public final String script;
 
   public KeyboardData mapKeys(MapKey f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(rows_, keysWidth);
+    return new KeyboardData(rows_, keysWidth, modmap, script);
   }
 
   /** Add keys from the given iterator into the keyboard. Extra keys are added
@@ -47,7 +51,7 @@ class KeyboardData
         for (int c = 1; c <= 4; c++)
           addExtraKeys_to_row(rows, k, r, c);
     }
-    return new KeyboardData(rows, keysWidth);
+    return new KeyboardData(rows, keysWidth, modmap, script);
   }
 
   public KeyboardData addNumPad()
@@ -70,14 +74,15 @@ class KeyboardData
       }
       extendedRows.add(new Row(keys, row.height, row.shift));
     }
-    return new KeyboardData(extendedRows, compute_max_width(extendedRows));
+    return new
+      KeyboardData(extendedRows, compute_max_width(extendedRows), modmap, script);
   }
 
   public KeyboardData addNumberRow()
   {
     ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
     rows_.add(0, number_row.updateWidth(keysWidth));
-    return new KeyboardData(rows_, keysWidth);
+    return new KeyboardData(rows_, keysWidth, modmap, script);
   }
 
   public Key findKeyWithValue(KeyValue kv)
@@ -172,13 +177,27 @@ class KeyboardData
       throw new Exception("Empty layout file");
     boolean add_bottom_row = attribute_bool(parser, "bottom_row", true);
     float specified_kw = attribute_float(parser, "width", 0f);
+    String script = parser.getAttributeValue(null, "script");
     ArrayList<Row> rows = new ArrayList<Row>();
-    while (expect_tag(parser, "row"))
-        rows.add(Row.parse(parser));
+    Modmap modmap = null;
+    while (next_tag(parser))
+    {
+      switch (parser.getName())
+      {
+        case "row":
+          rows.add(Row.parse(parser));
+          break;
+        case "modmap":
+          modmap = Modmap.parse(parser);
+          break;
+        default:
+          throw new Exception("Unknown tag: " + parser.getName());
+      }
+    }
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
     if (add_bottom_row)
       rows.add(bottom_row.updateWidth(kw));
-    return new KeyboardData(rows, kw);
+    return new KeyboardData(rows, kw, modmap, script);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -196,12 +215,14 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw)
+  protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc)
   {
     float kh = 0.f;
     for (Row r : rows_)
       kh += r.height + r.shift;
     rows = rows_;
+    modmap = mm;
+    script = sc;
     keysWidth = kw;
     keysHeight = kh;
   }
@@ -415,10 +436,37 @@ class KeyboardData
     }
   }
 
+  public static class Modmap
+  {
+    public final Map<KeyValue, KeyValue> shift;
+
+    public Modmap(Map<KeyValue, KeyValue> s)
+    {
+      shift = s;
+    }
+
+    public static Modmap parse(XmlPullParser parser) throws Exception
+    {
+      HashMap<KeyValue, KeyValue> shift = new HashMap<KeyValue, KeyValue>();
+      while (expect_tag(parser, "shift"))
+        parse_mapping(parser, shift);
+      return new Modmap(shift);
+    }
+
+    private static void parse_mapping(XmlPullParser parser, Map<KeyValue, KeyValue> dst) throws Exception
+    {
+      KeyValue a = KeyValue.getKeyByName(parser.getAttributeValue(null, "a"));
+      KeyValue b = KeyValue.getKeyByName(parser.getAttributeValue(null, "b"));
+      while (parser.next() != XmlPullParser.END_TAG)
+        continue;
+      dst.put(a, b);
+    }
+  }
+
   /** Parsing utils */
 
   /** Returns [false] on [END_DOCUMENT] or [END_TAG], [true] otherwise. */
-  private static boolean expect_tag(XmlPullParser parser, String name) throws Exception
+  private static boolean next_tag(XmlPullParser parser) throws Exception
   {
     int status;
     do
@@ -428,8 +476,16 @@ class KeyboardData
         return false;
     }
     while (status != XmlPullParser.START_TAG);
+    return true;
+  }
+
+  /** Returns [false] on [END_DOCUMENT] or [END_TAG], [true] otherwise. */
+  private static boolean expect_tag(XmlPullParser parser, String name) throws Exception
+  {
+    if (!next_tag(parser))
+      return false;
     if (!parser.getName().equals(name))
-      throw new Exception("Unknow tag: " + parser.getName());
+      throw new Exception("Unknown tag: " + parser.getName());
     return true;
   }
 
