@@ -342,10 +342,10 @@ final class Config
     int id;
     switch (name)
     {
-      case "arab_ckb": id = R.xml.arab_ckb; break;
-      case "arab_fa_ir": id = R.xml.arab_ir; break;
-      case "arab_ibm": id = R.xml.arab_ibm; break;
-      case "arab_ibm_alt": id = R.xml.arab_ibm_alt; break;
+      case "arab_pc_ckb": id = R.xml.arab_pc_ckb; break;
+      case "arab_pc_ir": id = R.xml.arab_pc_ir; break;
+      case "arab_pc": id = R.xml.arab_pc; break;
+      case "arab_alt": id = R.xml.arab_alt; break;
       case "beng_national": id = R.xml.beng_national; break;
       case "beng_provat": id = R.xml.beng_provat; break;
       case "cyrl_jcuken_ru": id = R.xml.cyrl_jcuken_ru; break;

@@ -1,14 +1,14 @@
-# res/xml/arab_ckb.xml
-Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
-1 warnings
-# res/xml/arab_ibm_alt.xml
+# res/xml/arab_alt.xml
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
 1 warnings
-# res/xml/arab_ibm.xml
-Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
+# res/xml/arab_pc_ckb.xml
+Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
 1 warnings
-# res/xml/arab_ir.xml
+# res/xml/arab_pc_ir.xml
 Layout includes some ASCII punctuation but not all, missing: ", $, %, ', *, ,, /, ;, <, =, >, ?, [, \, ], ^, _, `, {, |, }, ~
+1 warnings
+# res/xml/arab_pc.xml
+Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
 # res/xml/beng_national.xml
 Layout includes some ASCII punctuation but not all, missing: $

@@ -5,10 +5,10 @@
     <item>latn_qwerty_us</item>
     <item>latn_colemak</item>
     <item>latn_dvorak</item>
-    <item>arab_ckb</item>
-    <item>arab_ibm</item>
-    <item>arab_ibm_alt</item>
-    <item>arab_ir</item>
+    <item>arab_pc_ckb</item>
+    <item>arab_pc</item>
+    <item>arab_alt</item>
+    <item>arab_pc_ir</item>
     <item>beng_national</item>
     <item>beng_provat</item>
     <item>cyrl_jcuken_ru</item>
