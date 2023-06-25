@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Based on standard SI-1452-1 -->
 <keyboard script="hebrew">
   <row>
     <key key0="/" key2="1" key3="!" key4="esc"/>

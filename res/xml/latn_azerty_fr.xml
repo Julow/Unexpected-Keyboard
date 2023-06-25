@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Adapted from standard NF Z71-300 -->
+<!-- https://norme-azerty.fr/ -->
 <keyboard script="latin">
   <row>
     <key key0="a" key2="1" key4="esc"/>
