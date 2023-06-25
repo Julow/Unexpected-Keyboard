@@ -33,7 +33,7 @@ public class Keyboard2 extends InputMethodService
   // If not 'null', the layout to use instead of [_currentTextLayout].
   private KeyboardData _currentSpecialLayout;
   private Current_text_layout _currentTextLayout;
-  // Layout associated with the currently selected locale.
+  // Layout associated with the currently selected locale. Not 'null'.
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
   public int actionId; // Action performed by the Action key.
@@ -99,28 +99,18 @@ public class Keyboard2 extends InputMethodService
     return Arrays.asList();
   }
 
-  private void refreshSubtypeLayout(InputMethodSubtype subtype)
-  {
-    String s = subtype.getExtraValueOf("default_layout");
-    if (s != null)
-      _localeTextLayout = _config.layout_of_string(getResources(), s);
-    else
-      _localeTextLayout = KeyboardData.load(getResources(), R.xml.qwerty);
-  }
-
-  private void extra_keys_of_subtype(Set<KeyValue> dst, InputMethodSubtype subtype)
+  private void extra_keys_of_subtype(ExtraKeys dst, InputMethodSubtype subtype)
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
+    String script = subtype.getExtraValueOf("script");
     if (extra_keys == null)
       return;
-    String[] ks = extra_keys.split("\\|");
-    for (int i = 0; i < ks.length; i++)
-      dst.add(KeyValue.getKeyByName(ks[i]));
+    dst.add_keys_for_script(script, ExtraKeys.parse_extra_keys(extra_keys));
   }
 
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
-    HashSet<KeyValue> extra_keys = new HashSet<KeyValue>();
+    ExtraKeys extra_keys = new ExtraKeys();
     List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
     switch (_config.accents)
     {
@@ -141,16 +131,6 @@ public class Keyboard2 extends InputMethodService
       _config.shouldOfferSwitchingToNextInputMethod = true;
   }
 
-  private void refreshSubtypeLegacyFallback()
-  {
-    // Fallback for the accents option: Only respect the "None" case
-    switch (_config.accents)
-    {
-      case 1: case 2: case 3: _config.extra_keys_subtype = null; break;
-      case 4: _config.extra_keys_subtype = new HashSet<KeyValue>(); break;
-    }
-  }
-
   InputMethodManager get_imm()
   {
     return (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -164,25 +144,22 @@ public class Keyboard2 extends InputMethodService
     else
       _config.shouldOfferSwitchingToNextInputMethod = shouldOfferSwitchingToNextInputMethod();
     _config.shouldOfferVoiceTyping = (get_voice_typing_im(imm) != null);
-    if (VERSION.SDK_INT < 12)
-    {
-      // Subtypes won't work well under API level 12 (getExtraValueOf)
-      refreshSubtypeLegacyFallback();
-    }
-    else
+    KeyboardData default_layout = null;
+    _config.extra_keys_subtype = null;
+    if (VERSION.SDK_INT >= 12)
     {
       InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
-      if (subtype == null)
+      if (subtype != null)
       {
-        // On some rare cases, [subtype] is null.
-        refreshSubtypeLegacyFallback();
-      }
-      else
-      {
-        refreshSubtypeLayout(subtype);
+        String s = subtype.getExtraValueOf("default_layout");
+        if (s != null)
+          default_layout = _config.layout_of_string(getResources(), s);
         refreshAccentsOption(imm, subtype);
       }
     }
+    if (default_layout == null)
+      default_layout = KeyboardData.load(getResources(), R.xml.qwerty);
+    _localeTextLayout = default_layout;
     if (_config.second_layout == null)
     {
       _config.shouldOfferSwitchingToSecond = false;

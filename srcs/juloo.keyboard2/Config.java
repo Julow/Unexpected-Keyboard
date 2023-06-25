@@ -57,7 +57,7 @@ final class Config
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  public Set<KeyValue> extra_keys_subtype;
+  public ExtraKeys extra_keys_subtype;
   public Set<KeyValue> extra_keys_param;
 
   public final IKeyEventHandler handler;
@@ -176,7 +176,7 @@ final class Config
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     if (extra_keys_subtype != null)
-      extra_keys.addAll(extra_keys_subtype);
+      extra_keys_subtype.compute(extra_keys, kw.script);
     extra_keys.addAll(extra_keys_param);
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
@@ -335,15 +335,16 @@ final class Config
     }
   }
 
+  /** Might return [null] if the selected layout is "system", "custom" or if
+      the name is not recognized. */
   public KeyboardData layout_of_string(Resources res, String name)
   {
-    int id = R.xml.qwerty; // The config might store an invalid layout, don't crash
+    int id;
     switch (name)
     {
-      case "system": case "none": return null;
-      case "custom": if (custom_layout != null) return custom_layout; break;
       case "azerty": id = R.xml.azerty; break;
-      case "bangla": id = R.xml.bangla; break;
+      case "bengali_national": id = R.xml.bengali_national; break;
+      case "bengali_provat": id = R.xml.bengali_provat; break;
       case "bgph1": id = R.xml.local_bgph1; break;
       case "bone": id = R.xml.bone; break;
       case "colemak": id = R.xml.colemak; break;
@@ -355,6 +356,7 @@ final class Config
       case "qwerty": id = R.xml.qwerty; break;
       case "qwerty_el": id = R.xml.qwerty_el; break;
       case "qwerty_es": id = R.xml.qwerty_es; break;
+      case "qwerty_ro": id = R.xml.qwerty_ro; break;
       case "qwerty_hu": id = R.xml.qwerty_hu; break;
       case "qwerty_ko": id = R.xml.qwerty_ko; break;
       case "qwerty_lv": id = R.xml.qwerty_lv; break;
@@ -377,6 +379,8 @@ final class Config
       case "ar_alt": id = R.xml.ar_alt; break;
       case "persian": id = R.xml.persian; break;
       case "kurdish": id = R.xml.kurdish; break;
+      case "custom": return custom_layout;
+      case "system": case "none": default: return null;
     }
     return KeyboardData.load(res, id);
   }
