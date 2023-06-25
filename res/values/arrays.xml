@@ -9,7 +9,8 @@
     <item>arab_ibm</item>
     <item>arab_ibm_alt</item>
     <item>arab_ir</item>
-    <item>beng_rh</item>
+    <item>beng_national</item>
+    <item>beng_provat</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
     <item>cyrl_yaverti</item>
@@ -48,7 +49,8 @@
     <item>IBM Arabic</item>
     <item>IBM Arabic Alt</item>
     <item>Persian</item>
-    <item>Bengali (Md Rasel Hossain)</item>
+    <item>বাংলা (জাতীয়)</item>
+    <item>বাংলা (প্রভাত)</item>
     <item>ЙЦУКЕН [Russia]</item>
     <item>ЙЦУКЕН [Ukraine]</item>
     <item>ЯВЕРТЪ</item>
