@@ -81,9 +81,11 @@ Layout includes some ASCII punctuation but not all, missing: $
 # res/xml/latn_qwerty_vi.xml
 Layout includes some ASCII punctuation but not all, missing: \
 1 warnings
-# res/xml/latn_qwertz_cz.xml
+# res/xml/latn_qwertz_cz_multifunctional.xml
 Layout includes some ASCII punctuation but not all, missing: `
 1 warnings
+# res/xml/latn_qwertz_cz.xml
+0 warnings
 # res/xml/latn_qwertz_de.xml
 0 warnings
 # res/xml/latn_qwertz_hu.xml
