@@ -39,17 +39,17 @@ class KeyModifier
       case META: return turn_into_keyevent(k);
       case FN: return apply_fn(k);
       case SHIFT: return apply_shift(k);
-      case GRAVE: return apply_dead_char(k, '\u02CB');
-      case AIGU: return apply_dead_char(k, '\u00B4');
-      case CIRCONFLEXE: return apply_dead_char(k, '\u02C6');
+      case GRAVE: return apply_map_or_dead_char(k, map_char_grave, '\u02CB');
+      case AIGU: return apply_map_or_dead_char(k, map_char_aigu, '\u00B4');
+      case CIRCONFLEXE: return apply_map_or_dead_char(k, map_char_circonflexe, '\u02C6');
       case TILDE: return apply_map_or_dead_char(k, map_char_tilde, '\u02DC');
-      case CEDILLE: return apply_dead_char(k, '\u00B8');
-      case TREMA: return apply_dead_char(k, '\u00A8');
-      case CARON: return apply_dead_char(k, '\u02C7');
-      case RING: return apply_dead_char(k, '\u02DA');
-      case MACRON: return apply_dead_char(k, '\u00AF');
-      case OGONEK: return apply_dead_char(k, '\u02DB');
-      case DOT_ABOVE: return apply_dead_char(k, '\u02D9');
+      case CEDILLE: return apply_map_or_dead_char(k, map_char_cedille, '\u00B8');
+      case TREMA: return apply_map_or_dead_char(k, map_char_trema, '\u00A8');
+      case CARON: return apply_map_or_dead_char(k, map_char_caron, '\u02C7');
+      case RING: return apply_map_or_dead_char(k, map_char_ring, '\u02DA');
+      case MACRON: return apply_map_or_dead_char(k, map_char_macron, '\u00AF');
+      case OGONEK: return apply_map_or_dead_char(k, map_char_ogonek, '\u02DB');
+      case DOT_ABOVE: return apply_map_or_dead_char(k, map_char_dot_above, '\u02D9');
       case BREVE: return apply_dead_char(k, '\u02D8');
       case DOUBLE_AIGU: return apply_map_char(k, map_char_double_aigu);
       case ORDINAL: return apply_map_char(k, map_char_ordinal);
@@ -474,13 +474,177 @@ class KeyModifier
     }
   }
 
+  private static final Map_char map_char_aigu =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          // Composite characters: 'j́'
+          case 'a': return 'á';
+          case 'e': return 'é';
+          case 'i': return 'í';
+          case 'l': return 'ĺ';
+          case 'o': return 'ó';
+          case 'r': return 'ŕ';
+          case 's': return 'ś';
+          case 'u': return 'ú';
+          case 'y': return 'ý';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_caron =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'c': return 'č';
+          case 'd': return 'ď';
+          case 'e': return 'ě';
+          case 'l': return 'ľ';
+          case 'n': return 'ň';
+          case 'r': return 'ř';
+          case 's': return 'š';
+          case 't': return 'ť';
+          case 'z': return 'ž';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_cedille =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'c': return 'ç';
+          case 's': return 'ş';
+          case 'g': return 'ģ';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_circonflexe =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return 'â';
+          case 'e': return 'ê';
+          case 'i': return 'î';
+          case 'o': return 'ô';
+          case 'u': return 'û';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_dot_above =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'ė': return 'ė';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_grave =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return 'à';
+          case 'e': return 'è';
+          case 'i': return 'ì';
+          case 'o': return 'ò';
+          case 'u': return 'ù';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_macron =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return 'ā';
+          case 'e': return 'ē';
+          case 'i': return 'ī';
+          case 'u': return 'ū';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_ogonek =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return 'ą';
+          case 'e': return 'ę';
+          case 'i': return 'į';
+          case 'k': return 'ķ';
+          case 'l': return 'ļ';
+          case 'n': return 'ņ';
+          case 'u': return 'ų';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_ring =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return 'å';
+          case 'u': return 'ů';
+          default: return c;
+        }
+      }
+    };
+
   private static final Map_char map_char_tilde =
     new Map_char() {
       public char apply(char c)
       {
         switch (c)
         {
+          case 'a': return 'ã';
+          case 'o': return 'õ';
           case 'n': return 'ñ';
+          default: return c;
+        }
+      }
+    };
+
+  private static final Map_char map_char_trema =
+    new Map_char() {
+      public char apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return 'ä';
+          case 'e': return 'ë';
+          case 'i': return 'ï';
+          case 'o': return 'ö';
+          case 'u': return 'ü';
+          case 'y': return 'ÿ';
           default: return c;
         }
       }

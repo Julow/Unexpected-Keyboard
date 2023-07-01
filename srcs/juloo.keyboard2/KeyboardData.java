@@ -104,7 +104,7 @@ class KeyboardData
 
   private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
   {
-    if (!extra_keys.hasNext())
+    if (!extra_keys.hasNext() || row_i >= rows.size())
       return;
     rows.set(row_i, rows.get(row_i).mapKeys(new MapKey(){
       public Key apply(Key k) {

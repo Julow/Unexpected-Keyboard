@@ -1,0 +1,19 @@
+name: Check layouts
+
+# Runs 'gen_layouts.py' and checks that the generated file were uptodate.
+# This doesn't run 'check_layout.py'.
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  check-layouts:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+    - run: python3 gen_layouts.py
+    - name: Check that the generated layouts.xml is uptodate, run python3 gen_layouts.py otherwise
+      run: git diff --exit-code

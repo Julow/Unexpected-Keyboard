@@ -302,6 +302,14 @@ final class KeyValue
   {
     switch (name)
     {
+      /* These symbols have special meaning when in `res/xml` and are escaped in
+         standard layouts. The backslash is not stripped when parsed from the
+         custom layout option. */
+      case "\\?": return fallbackMakeKey("?");
+      case "\\#": return fallbackMakeKey("#");
+      case "\\@": return fallbackMakeKey("@");
+      case "\\\\": return fallbackMakeKey("\\");
+
       case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);

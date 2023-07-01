@@ -158,7 +158,7 @@ public class Keyboard2 extends InputMethodService
       }
     }
     if (default_layout == null)
-      default_layout = KeyboardData.load(getResources(), R.xml.qwerty);
+      default_layout = KeyboardData.load(getResources(), R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
     if (_config.second_layout == null)
     {
