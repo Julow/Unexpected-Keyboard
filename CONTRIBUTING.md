@@ -149,6 +149,7 @@ To check that `strings.xml` is formatted correctly, run
 
 The store description is found in `metadata/android/<locale>/`,
 `short_description.txt` and `full_description.txt`.
+The short description must not exceed 80 characters.
 Translating changelogs is not useful.
 
 The app name might be partially translated, the "unexpected" word should remain
