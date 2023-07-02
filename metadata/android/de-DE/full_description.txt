@@ -1,4 +1,4 @@
-Diese Tastatur zeichnet sich dadurch aus, dass man zusätzliche Zeichen durch Wischgesten in Richtung der Tastenecken eingeben kann. 
+Diese Tastatur zeichnet sich dadurch aus, dass man zusätzliche Zeichen durch Wischgesten in Richtung der Tastenecken eingeben kann.
 
 Die Anwendung wurde ursprünglich für das Programmieren in Termux entwickelt.
 Mittlerweile ist sie auch für den täglichen Gebrauch perfekt geeignet.

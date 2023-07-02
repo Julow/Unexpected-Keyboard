@@ -77,16 +77,22 @@ make installd
 
 ### Adding a layout
 
-Layouts are defined in XML, see `res/xml/qwerty.xml`.
+Layouts are defined in XML, see `res/xml/latn_qwerty_us.xml`.
 An online tool for editing layout files written by @Lixquid is available
 [here](https://unexpected-keyboard-layout-editor.lixquid.com/).
 
-An entry must be added to the layout option in `res/values/arrays.xml`, to both
-`pref_layout_values` (correspond to the file name) and `pref_layout_entries`
-(display name).
+Makes sure to specify the `name` attribute like in `latn_qwerty_us.xml`,
+otherwise the layout won't be added to the app.
 
-The layout must also be referenced in `srcs/juloo.keyboard2/Config.java` in
-`layout_of_string`.
+The layout file must be placed in the `res/xml/` directory and named according to:
+- script (`latn` for latin, etc..)
+- layout name (eg. the name of a standard)
+- country code (or language code if more adequate)
+
+Then, run `make gen_layouts` to add the layout to the app.
+
+The last step will update the file `res/values/layouts.xml`, that you should
+not edit directly.
 
 Run `make check_layouts` to check some properties about your layout. This will
 change the file `check_layout.output`, which you should commit.
@@ -143,6 +149,7 @@ To check that `strings.xml` is formatted correctly, run
 
 The store description is found in `metadata/android/<locale>/`,
 `short_description.txt` and `full_description.txt`.
+The short description must not exceed 80 characters.
 Translating changelogs is not useful.
 
 The app name might be partially translated, the "unexpected" word should remain

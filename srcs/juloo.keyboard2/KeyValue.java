@@ -302,6 +302,14 @@ final class KeyValue
   {
     switch (name)
     {
+      /* These symbols have special meaning when in `res/xml` and are escaped in
+         standard layouts. The backslash is not stripped when parsed from the
+         custom layout option. */
+      case "\\?": return fallbackMakeKey("?");
+      case "\\#": return fallbackMakeKey("#");
+      case "\\@": return fallbackMakeKey("@");
+      case "\\\\": return fallbackMakeKey("\\");
+
       case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
@@ -420,6 +428,9 @@ final class KeyValue
       case "ole_placeholder": return placeholderKey(Placeholder.OLE);
       case "meteg": return charKey("\u05DE\u05BD", '\u05BD', 0); // or siluq or sof-pasuq
       case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
+      /* intending/preventing ligature - supported by many scripts*/
+      case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
+      case "zwnj": return charKey("zwnj", '\u200C', 0); // zero-width non joiner (prevents unintended ligature)
 
       case "copy": return editingKey("copy", Editing.COPY);
       case "paste": return editingKey("paste", Editing.PASTE);

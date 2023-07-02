@@ -23,13 +23,15 @@ class KeyboardData
   public final float keysHeight;
   /** Might be null. */
   public final Modmap modmap;
+  /** Might be null. */
+  public final String script;
 
   public KeyboardData mapKeys(MapKey f)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(rows_, keysWidth, modmap);
+    return new KeyboardData(rows_, keysWidth, modmap, script);
   }
 
   /** Add keys from the given iterator into the keyboard. Extra keys are added
@@ -49,7 +51,7 @@ class KeyboardData
         for (int c = 1; c <= 4; c++)
           addExtraKeys_to_row(rows, k, r, c);
     }
-    return new KeyboardData(rows, keysWidth, modmap);
+    return new KeyboardData(rows, keysWidth, modmap, script);
   }
 
   public KeyboardData addNumPad()
@@ -73,14 +75,14 @@ class KeyboardData
       extendedRows.add(new Row(keys, row.height, row.shift));
     }
     return new
-      KeyboardData(extendedRows, compute_max_width(extendedRows), modmap);
+      KeyboardData(extendedRows, compute_max_width(extendedRows), modmap, script);
   }
 
   public KeyboardData addNumberRow()
   {
     ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
     rows_.add(0, number_row.updateWidth(keysWidth));
-    return new KeyboardData(rows_, keysWidth, modmap);
+    return new KeyboardData(rows_, keysWidth, modmap, script);
   }
 
   public Key findKeyWithValue(KeyValue kv)
@@ -102,7 +104,7 @@ class KeyboardData
 
   private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
   {
-    if (!extra_keys.hasNext())
+    if (!extra_keys.hasNext() || row_i >= rows.size())
       return;
     rows.set(row_i, rows.get(row_i).mapKeys(new MapKey(){
       public Key apply(Key k) {
@@ -175,6 +177,7 @@ class KeyboardData
       throw new Exception("Empty layout file");
     boolean add_bottom_row = attribute_bool(parser, "bottom_row", true);
     float specified_kw = attribute_float(parser, "width", 0f);
+    String script = parser.getAttributeValue(null, "script");
     ArrayList<Row> rows = new ArrayList<Row>();
     Modmap modmap = null;
     while (next_tag(parser))
@@ -194,7 +197,7 @@ class KeyboardData
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
     if (add_bottom_row)
       rows.add(bottom_row.updateWidth(kw));
-    return new KeyboardData(rows, kw, modmap);
+    return new KeyboardData(rows, kw, modmap, script);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -212,13 +215,14 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw, Modmap mm)
+  protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc)
   {
     float kh = 0.f;
     for (Row r : rows_)
       kh += r.height + r.shift;
     rows = rows_;
     modmap = mm;
+    script = sc;
     keysWidth = kw;
     keysHeight = kh;
   }

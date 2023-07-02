@@ -61,6 +61,9 @@ def check_layout(layout):
         unexpected_keys(keys, bottom_row_keys,
                         "Layout contains keys present in the bottom row")
 
+    if root.get("script") == None:
+        warn("Layout doesn't specify a script.")
+
 for fname in sys.argv[1:]:
     layout = parse_layout(fname)
     if layout == None:
