@@ -18,8 +18,6 @@
     <item>ru_jcuken</item>
     <item>qwertz</item>
     <item>qwertz_cs</item>
-    <item>qwertz_cs_aosp</item>
-    <item>qwertz_cs_multi</item>
     <item>qwertz_de</item>
     <item>qwertz_hu</item>
     <item>qwertz_sk</item>
@@ -58,8 +56,6 @@
     <item>ЙЦУКЕН (Русский)</item>
     <item>QWERTZ</item>
     <item>QWERTZ (Czech)</item>
-    <item>QWERTZ (Czech AOSP)</item>
-    <item>QWERTZ (Czech Multifunctional)</item>
     <item>QWERTZ (Deutsch)</item>
     <item>QWERTZ (Hungarian)</item>
     <item>QWERTZ (Slovak)</item>
