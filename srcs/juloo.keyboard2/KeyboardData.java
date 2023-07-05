@@ -398,7 +398,8 @@ class KeyboardData
 
     public Key withKeyValue(int i, KeyValue kv)
     {
-      KeyValue[] ks = Arrays.copyOf(keys, keys.length);
+      KeyValue[] ks = new KeyValue[keys.length];
+      for (int j = 0; j < keys.length; j++) ks[j] = keys[j];
       ks[i] = kv;
       int flags = (keysflags & ~(ALL_FLAGS << i));
       return new Key(ks, flags, width, shift, slider, indication);
