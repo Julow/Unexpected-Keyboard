@@ -88,6 +88,8 @@ Layout includes some ASCII punctuation but not all, missing: `
 0 warnings
 # res/xml/latn_qwertz_de.xml
 0 warnings
+# res/xml/latn_qwertz_fr_ch.xml
+0 warnings
 # res/xml/latn_qwertz_hu.xml
 0 warnings
 # res/xml/latn_qwertz_sk.xml

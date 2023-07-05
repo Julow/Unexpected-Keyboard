@@ -38,6 +38,7 @@
     <item>latn_qwertz_cz</item>
     <item>latn_qwertz_cz_multifunctional</item>
     <item>latn_qwertz_de</item>
+    <item>latn_qwertz_fr_ch</item>
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
     <item>custom</item>
@@ -79,6 +80,7 @@
     <item>QWERTZ (Czech)</item>
     <item>QWERTZ Multifunctional (Czech)</item>
     <item>QWERTZ (Deutsch)</item>
+    <item>QWERTZ (Swiss French)</item>
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
     <item>@string/pref_layout_e_custom</item>
@@ -120,6 +122,7 @@
     <item>@xml/latn_qwertz_cz</item>
     <item>@xml/latn_qwertz_cz_multifunctional</item>
     <item>@xml/latn_qwertz_de</item>
+    <item>@xml/latn_qwertz_fr_ch</item>
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
     <item>-1</item>
