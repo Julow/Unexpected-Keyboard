@@ -154,7 +154,7 @@ final class Config
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
-    extra_keys_param = ExtraKeyCheckBoxPreference.get_extra_keys(_prefs);
+    extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
   }
 
   KeyValue action_key()

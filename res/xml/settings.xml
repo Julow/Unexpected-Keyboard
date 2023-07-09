@@ -7,42 +7,7 @@
     <ListPreference android:key="show_numpad" android:title="@string/pref_show_numpad_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_show_numpad_entries" android:entryValues="@array/pref_show_numpad_values"/>
     <CheckBoxPreference android:key="number_row" android:title="@string/pref_number_row_title" android:summary="@string/pref_number_row_summary" android:defaultValue="false"/>
     <PreferenceScreen android:title="@string/pref_extra_keys_title">
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="0"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="1"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="2"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="3"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="4"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="5"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="6"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="7"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="8"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="9"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="10"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="11"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="12"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="13"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="14"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="15"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="16"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="17"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="18"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="19"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="20"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="21"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="22"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="23"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="24"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="25"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="26"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="27"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="28"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="29"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="30"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="31"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="32"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="33"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="34"/>
-      <juloo.keyboard2.ExtraKeyCheckBoxPreference app:index="35"/>
+      <juloo.keyboard2.ExtraKeysPreference/>
     </PreferenceScreen>
     <ListPreference android:key="numpad_layout" android:title="@string/pref_numpad_layout" android:summary="%s" android:defaultValue="high_first" android:entries="@array/pref_numpad_layout_entries" android:entryValues="@array/pref_numpad_layout_values"/>
   </PreferenceCategory>
