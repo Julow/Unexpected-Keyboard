@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard>
+<keyboard name="Persian Alt" script="persian">
   <row>
     <key key0="ض" key2="۱"/>
     <key key0="ص" key2="۲" key1="~" key3="\@"/>
