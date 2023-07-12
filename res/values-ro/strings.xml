@@ -27,6 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">Mai întâi cifrele mari</string>
   <string name="pref_numpad_layout_e_low_first">Mai întâi cifrele mici</string>
   <string name="pref_extra_keys_title">Adaugă taste pe tastatură</string>
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Aranjament secundar</string>
   <string name="pref_second_layout_none">Nimic</string>
   <string name="pref_category_typing">Tipărire</string>

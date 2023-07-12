@@ -27,6 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
   <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>
   <string name="pref_extra_keys_title">Ajouter des touches au clavier</string>
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Disposition secondaire</string>
   <string name="pref_second_layout_none">Aucune</string>
   <string name="pref_category_typing">Saisie</string>

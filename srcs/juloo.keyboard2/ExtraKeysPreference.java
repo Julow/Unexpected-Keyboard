@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.CheckBoxPreference;
-import android.preference.PreferenceGroup;
+import android.preference.PreferenceCategory;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +13,7 @@ import java.util.Set;
 
 /** This class implements the "extra keys" preference but also defines the
     possible extra keys. */
-public class ExtraKeysPreference extends PreferenceGroup
+public class ExtraKeysPreference extends PreferenceCategory
 {
   public static String[] extra_keys = new String[]
   {
@@ -86,9 +86,7 @@ public class ExtraKeysPreference extends PreferenceGroup
   public ExtraKeysPreference(Context context, AttributeSet attrs)
   {
     super(context, attrs);
-    Resources res = context.getResources();
     setOrderingAsAdded(true);
-    setLayoutResource(R.layout.extra_keys_preference);
   }
 
   protected void onAttachedToActivity()

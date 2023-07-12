@@ -27,6 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">Старшие цифры сверху</string>
   <string name="pref_numpad_layout_e_low_first">Младшие цифры сверху</string>
   <string name="pref_extra_keys_title">Добавить клавиши на клавиатуру</string>
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Дополнительная раскладка</string>
   <string name="pref_second_layout_none">Нет</string>
   <string name="pref_category_typing">Печать</string>
