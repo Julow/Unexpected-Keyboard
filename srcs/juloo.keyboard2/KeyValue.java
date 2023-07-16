@@ -290,12 +290,13 @@ final class KeyValue
     return new KeyValue("", Kind.Placeholder, id.ordinal(), 0);
   }
 
-  private static KeyValue fallbackMakeKey(String name)
+  /** Make a key that types a string. */
+  public static KeyValue makeStringKey(String str)
   {
-    if (name.length() == 1)
-      return new KeyValue(name, Kind.Char, name.charAt(0), 0);
+    if (str.length() == 1)
+      return new KeyValue(str, Kind.Char, str.charAt(0), 0);
     else
-      return new KeyValue(name, Kind.String, 0, 0);
+      return new KeyValue(str, Kind.String, 0, 0);
   }
 
   public static KeyValue getKeyByName(String name)
@@ -305,10 +306,10 @@ final class KeyValue
       /* These symbols have special meaning when in `res/xml` and are escaped in
          standard layouts. The backslash is not stripped when parsed from the
          custom layout option. */
-      case "\\?": return fallbackMakeKey("?");
-      case "\\#": return fallbackMakeKey("#");
-      case "\\@": return fallbackMakeKey("@");
-      case "\\\\": return fallbackMakeKey("\\");
+      case "\\?": return makeStringKey("?");
+      case "\\#": return makeStringKey("#");
+      case "\\@": return makeStringKey("@");
+      case "\\\\": return makeStringKey("\\");
 
       case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
@@ -443,7 +444,7 @@ final class KeyValue
       case "replaceText": return editingKey("repl.", Editing.REPLACE);
       case "textAssist": return editingKey("assist", Editing.ASSIST);
       case "autofill": return editingKey("auto.", Editing.AUTOFILL);
-      default: return fallbackMakeKey(name);
+      default: return makeStringKey(name);
     }
   }
 
