@@ -29,6 +29,7 @@
   <string name="pref_numpad_layout_e_high_first">Số lớn nhất trước</string>
   <string name="pref_numpad_layout_e_low_first">Số nhỏ nhất trước</string>
   <string name="pref_extra_keys_title">Thêm phím vào bàn phím</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
   <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Bố cục phụ</string>
   <string name="pref_second_layout_none">Không</string>

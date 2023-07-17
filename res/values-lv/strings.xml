@@ -27,6 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">Vispirms lielākie cipari</string>
   <string name="pref_numpad_layout_e_low_first">Vispirms mazākie cipari</string>
   <string name="pref_extra_keys_title">Pievienot tastatūrai taustiņus</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
   <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Otrējais izkārtojums</string>
   <string name="pref_second_layout_none">Neviens</string>

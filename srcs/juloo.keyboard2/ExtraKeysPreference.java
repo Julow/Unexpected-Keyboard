@@ -81,7 +81,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     return ks;
   }
 
-  boolean _attached; /** Whether it has already been attached. */
+  boolean _attached = false; /** Whether it has already been attached. */
 
   public ExtraKeysPreference(Context context, AttributeSet attrs)
   {
@@ -89,6 +89,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     setOrderingAsAdded(true);
   }
 
+  @Override
   protected void onAttachedToActivity()
   {
     if (_attached)
@@ -104,7 +105,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     return "extra_key_" + key_name;
   }
 
-  final class ExtraKeyCheckBoxPreference extends CheckBoxPreference
+  static class ExtraKeyCheckBoxPreference extends CheckBoxPreference
   {
     boolean _key_font;
 

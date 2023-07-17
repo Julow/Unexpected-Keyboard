@@ -27,6 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">Hohe Ziffern zuerst</string>
   <string name="pref_numpad_layout_e_low_first">Niedrige Ziffern zuerst</string>
   <string name="pref_extra_keys_title">Zusätzliche Zeichen zur Tastatur hinzufügen</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
   <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Zweites Layout</string>
   <string name="pref_second_layout_none">Keines</string>

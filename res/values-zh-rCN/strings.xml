@@ -27,6 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">大数字在上方</string>
   <string name="pref_numpad_layout_e_low_first">小数字在上方</string>
   <string name="pref_extra_keys_title">选择要显示的按键</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
   <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">第二键盘布局</string>
   <string name="pref_second_layout_none">无</string>

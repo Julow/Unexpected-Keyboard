@@ -27,6 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">Dígitos maiores primeiro</string>
   <string name="pref_numpad_layout_e_low_first">Dígitos menores primeiro</string>
   <string name="pref_extra_keys_title">Adicionar teclas ao teclado</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
   <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Layout secundário</string>
   <string name="pref_second_layout_none">Nenhum</string>
