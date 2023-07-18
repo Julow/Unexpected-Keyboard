@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Inspired by the bépo layout, but adapted to smartphone -->
+<keyboard name="BEPO (Français)" script="latin">
+<row>
+    <key key0="b" key1="esc" key2="1" key4="|"/>
+    <key key0="é" key2="2" key4="è"/>
+    <key key0="p" key2="3"/>
+    <key key0="o" key2="4" key3="œ" key4="accent_circonflexe"/>
+    <key key0="v" key2="5" key4="{"/>
+    <key key0="d" key2="6" key4="}"/>
+    <key key0="l" key2="7" key4="("/>
+    <key key0="j" key2="8" key4=")"/>
+    <key key0="z" key2="9" key4="["/>
+    <key key0="w" key2="0" key4="]"/>
+  </row>
+  <row>
+    <key key0="a" key1="tab" key3="æ" key4="à"/>
+    <key key0="u" key1="accent_trema" key4="$"/>
+    <key key0="i" key4="&amp;"/>
+    <key key0="e" key1="€" key3="accent_aigu" key4="accent_grave"/>
+    <key key0="c" key4="ç"/>
+    <key key0="t" key1="²" key4=";"/>
+    <key key0="s" key4="!"/>
+    <key key0="r" key4="\?"/>
+    <key key0="n" key2="'" key4=":"/>
+    <key key0="m" key2="&quot;"/>
+  </row>
+  <row>
+    <key width="1.5" key0="shift" key2="capslock" key3="&lt;"/>
+    <key key0="y" key4="%"/>
+    <key key0="x" key4="\@"/>
+    <key key0="k" key4="~"/>
+    <key key0="." key1="\#" key4="," key6="-" key8="_"/>
+    <key key0="q" key4="*"/>
+    <key key0="h" key3="/" key4="\\"/>
+    <key key0="f"/>
+    <key width="1.5" key0="backspace" key2="delete" key3=">"/>
+  </row>
+</keyboard>
