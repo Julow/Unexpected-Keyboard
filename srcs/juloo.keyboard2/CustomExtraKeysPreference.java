@@ -109,7 +109,10 @@ public class CustomExtraKeysPreference extends PreferenceCategory
       for (int i = 0; i < arr.length(); i++)
         keys.add(arr.getString(i));
     }
-    catch (JSONException e) {}
+    catch (JSONException e)
+    {
+      Logs.err_load_custom_extra_keys(e);
+    }
     return keys;
   }
 

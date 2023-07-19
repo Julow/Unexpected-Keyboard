@@ -26,8 +26,6 @@ import java.util.Set;
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-  static private final String TAG = "Keyboard2";
-
   private Keyboard2View _keyboardView;
   private KeyEventHandler _keyeventhandler;
   // If not 'null', the layout to use instead of [_currentTextLayout].
@@ -39,8 +37,6 @@ public class Keyboard2 extends InputMethodService
   public int actionId; // Action performed by the Action key.
 
   private Config _config;
-
-  private boolean _debug_logs = false;
 
   /** Layout currently visible. */
   KeyboardData current_layout()
@@ -87,7 +83,7 @@ public class Keyboard2 extends InputMethodService
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
-    _debug_logs = getResources().getBoolean(R.bool.debug_logs);
+    Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -239,16 +235,6 @@ public class Keyboard2 extends InputMethodService
     return null;
   }
 
-  private void log_editor_info(EditorInfo info)
-  {
-    LogPrinter p = new LogPrinter(Log.DEBUG, TAG);
-    info.dump(p, "");
-    if (info.extras != null)
-      Log.d(TAG, "extras: "+info.extras.toString());
-    Log.d(TAG, "swapEnterActionKey: "+_config.swapEnterActionKey);
-    Log.d(TAG, "actionLabel: "+_config.actionLabel);
-  }
-
   private void refresh_special_layout(EditorInfo info)
   {
     switch (info.inputType & InputType.TYPE_MASK_CLASS)
@@ -274,8 +260,7 @@ public class Keyboard2 extends InputMethodService
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(info);
     setInputView(_keyboardView);
-    if (_debug_logs)
-      log_editor_info(info);
+    Logs.debug_startup_input_view(info, _config);
   }
 
   @Override
