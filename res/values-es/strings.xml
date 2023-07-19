@@ -27,7 +27,7 @@
   <string name="pref_numpad_layout_e_high_first">Dígitos descendientes</string>
   <string name="pref_numpad_layout_e_low_first">Dígitos ascendientes</string>
   <string name="pref_extra_keys_title">Agregar teclas</string>
-  <string name="pref_extra_keys_custom">Agregar teclas personalizadas</string> -->
+  <string name="pref_extra_keys_custom">Agregar teclas personalizadas</string>
   <string name="pref_extra_keys_internal">Selecciona teclas para agregar al teclado</string>
   <string name="pref_second_layout_title">Formato secundario</string>
   <string name="pref_second_layout_none">Ninguno</string>
