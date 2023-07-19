@@ -62,6 +62,7 @@ final class Config
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
   public ExtraKeys extra_keys_subtype;
   public Set<KeyValue> extra_keys_param;
+  public List<KeyValue> extra_keys_custom;
 
   public final IKeyEventHandler handler;
   public boolean orientation_landscape = false;
@@ -155,6 +156,7 @@ final class Config
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
+    extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
   }
 
   KeyValue action_key()
@@ -170,6 +172,7 @@ final class Config
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
    *  - Add the optional numpad and number row
+   *  - Add the extra keys
    */
   public KeyboardData modify_layout(KeyboardData kw)
   {
@@ -181,6 +184,7 @@ final class Config
     if (extra_keys_subtype != null)
       extra_keys_subtype.compute(extra_keys, kw.script);
     extra_keys.addAll(extra_keys_param);
+    extra_keys.addAll(extra_keys_custom);
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
       KeyboardData.number_row.getKeys(remove_keys);

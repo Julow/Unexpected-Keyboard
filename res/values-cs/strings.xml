@@ -27,6 +27,8 @@
   <string name="pref_numpad_layout_e_high_first">Vyšší číslice jako první</string>
   <string name="pref_numpad_layout_e_low_first">Nižší číslice jako první</string>
   <string name="pref_extra_keys_title">Přidat klávesy do klávesnice</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Vedlejší rozvržení</string>
   <string name="pref_second_layout_none">Žádné</string>
   <string name="pref_category_typing">Psaní</string>

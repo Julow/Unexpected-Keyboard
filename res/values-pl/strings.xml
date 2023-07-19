@@ -27,6 +27,8 @@
   <string name="pref_numpad_layout_e_high_first">Od największej cyfry</string>
   <string name="pref_numpad_layout_e_low_first">Od najmniejszej cyfry</string>
   <string name="pref_extra_keys_title">Dodaj klawisze do klawiatury</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Drugi układ</string>
   <string name="pref_second_layout_none">Żaden</string>
   <string name="pref_category_typing">Pisanie</string>
