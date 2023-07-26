@@ -14,8 +14,8 @@
   </row>
   <row>
     <key key0="a" key1="tab" key3="á" key4="ä"/>
-    <key key0="s" key3="ś" key4="š"/>
-    <key key0="d" key4="ď"/>
+    <key key0="s" key1="§" key3="ś" key4="š"/>
+    <key key0="d" key1="†" key4="ď"/>
     <key key0="f" key1="%" key2="*"/>
     <key key0="g" key2="^"/>
     <key key0="h" key1="~" key2="÷"/>
