@@ -35,7 +35,7 @@ See srcs/juloo.keyboard2/KeyValue.java for the keys that have a special meaning.
   </row>
   <row>
     <key shift="0.5" key0="a" key1="tab" key2="`"/>
-    <key key0="s" key1="loc accent_ring" key3="loc ß" key4="loc accent_ogonek"/>
+    <key key0="s" key1="loc accent_ring" key2="loc §" key3="loc ß" key4="loc accent_ogonek"/>
     <key key0="d" key1="loc accent_grave" key2="loc £" key3="loc accent_aigu"/>
     <key key0="f" key1="loc accent_dot_above"/>
     <key key0="g" key1="loc accent_caron" key2="-" key3="_"/>

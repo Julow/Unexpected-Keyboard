@@ -15,7 +15,7 @@
   </row>
   <row>
     <key shift="0.5" key0="a" key1="tab" key2="ă" key3="â"/>
-    <key key0="s" key1="accent_aigu"/>
+    <key key0="s" key1="accent_aigu" key2="loc §"/>
     <key key0="d" key1="accent_bar" key2="₫" key3="đ"/>
     <key key0="f" key1="accent_grave"/>
     <key key0="g" key2="-" key3="_"/>

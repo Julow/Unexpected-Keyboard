@@ -41,6 +41,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "€",
     "ß",
     "£",
+    "§",
     "switch_greekmath",
     "capslock",
     "copy",

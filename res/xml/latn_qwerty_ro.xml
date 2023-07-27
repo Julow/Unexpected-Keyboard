@@ -14,7 +14,7 @@
   </row>
   <row>
     <key shift="0.5" key0="a" key1="â" key2="ă" key3="`" key4="tab"/>
-    <key key0="s" key1="ș" key3="loc ß" key4="loc accent_ogonek"/>
+    <key key0="s" key1="ș" key2="loc §" key3="loc ß" key4="loc accent_ogonek"/>
     <key key0="d" key1="loc accent_grave" key2="loc £" key3="loc accent_aigu"/>
     <key key0="f" key1="loc accent_dot_above"/>
     <key key0="g" key1="loc accent_caron" key2="-" key3="_"/>
