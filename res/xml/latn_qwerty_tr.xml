@@ -26,7 +26,7 @@
   <row>
     <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="z"/>
-    <key key0="x"/>
+    <key key0="x" key2="loc †"/>
     <key key0="c" key1="ç" key2="&lt;" key3="."/>
     <key key0="v" key2="&gt;" key3=","/>
     <key key0="b" key2="\?" key3="/"/>
