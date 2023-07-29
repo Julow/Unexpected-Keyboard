@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Deckkraft des Tastaturhintergrunds anpassen</string>
   <string name="pref_key_opacity">Deckkraft der Tasten anpassen</string>
   <string name="pref_key_activated_opacity">Deckkraft gedrückter Tasten anpassen</string>
-  <string name="pref_layout_title">Tastaturlayout ändern</string>
   <string name="pref_layout_e_system">Systemeinstellung</string>
   <string name="pref_layout_e_custom">Eigenes Layout</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Akzente</string>
   <string name="pref_accents_e_all_installed">Akzente für alle installierten Sprachen anzeigen</string>
   <string name="pref_accents_e_selected">Akzente nur für die gewählte Sprache anzeigen</string>

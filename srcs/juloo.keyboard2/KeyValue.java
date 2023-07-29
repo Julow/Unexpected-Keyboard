@@ -15,8 +15,8 @@ final class KeyValue
     CHANGE_METHOD,
     CHANGE_METHOD_PREV,
     ACTION,
-    SWITCH_SECOND,
-    SWITCH_SECOND_BACK,
+    SWITCH_FORWARD,
+    SWITCH_BACKWARD,
     SWITCH_GREEKMATH,
     CAPS_LOCK,
     SWITCH_VOICE_TYPING,
@@ -346,8 +346,8 @@ final class KeyValue
       case "switch_numeric": return eventKey("123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
       case "switch_emoji": return eventKey(0x01, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
       case "switch_back_emoji": return eventKey("ABC", Event.SWITCH_BACK_EMOJI, 0);
-      case "switch_second": return eventKey(0x13, Event.SWITCH_SECOND, FLAG_SMALLER_FONT);
-      case "switch_second_back": return eventKey(0x14, Event.SWITCH_SECOND_BACK, FLAG_SMALLER_FONT);
+      case "switch_forward": return eventKey(0x13, Event.SWITCH_FORWARD, FLAG_SMALLER_FONT);
+      case "switch_backward": return eventKey(0x14, Event.SWITCH_BACKWARD, FLAG_SMALLER_FONT);
       case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
       case "change_method": return eventKey(0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
       case "change_method_prev": return eventKey(0x09, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);

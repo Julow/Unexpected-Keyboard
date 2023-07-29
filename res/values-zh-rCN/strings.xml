@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">调整键盘背景透明度</string>
   <string name="pref_key_opacity">调整按键透明度</string>
   <string name="pref_key_activated_opacity">调整按下的按键的透明度</string>
-  <string name="pref_layout_title">改变键盘布局</string>
   <string name="pref_layout_e_system">系统设置</string>
   <string name="pref_layout_e_custom">自定义布局</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">声调</string>
   <string name="pref_accents_e_all_installed">显示所有安装的语言的声调符号</string>
   <string name="pref_accents_e_selected">只显示选择的语言的声调符号</string>

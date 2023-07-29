@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Ajustar opacidade do fundo do teclado</string>
   <string name="pref_key_opacity">Ajustar opacidade das teclas</string>
   <string name="pref_key_activated_opacity">Ajustar opacidade das teclas pressionadas</string>
-  <string name="pref_layout_title">Mudar layout do teclado</string>
   <string name="pref_layout_e_system">Mesmo do sistema</string>
   <string name="pref_layout_e_custom">Layout personalizado</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Acentos</string>
   <string name="pref_accents_e_all_installed">Mostrar acentos para todos os idiomas instalados</string>
   <string name="pref_accents_e_selected">Mostrar acentos só para o idioma selecionado</string>

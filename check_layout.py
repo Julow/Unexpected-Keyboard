@@ -50,8 +50,8 @@ def check_layout(layout):
 
     bottom_row_keys = [
             "ctrl", "fn", "switch_numeric", "change_method", "switch_emoji",
-            "config", "switch_second", "enter", "action", "left", "up", "right",
-            "down", "space"
+            "config", "switch_forward", "switch_backward", "enter", "action",
+            "left", "up", "right", "down", "space"
             ]
 
     if root.get("bottom_row") == "false":

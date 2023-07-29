@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Modifică opacitatea fundalului tastaturii</string>
   <string name="pref_key_opacity">Modifică opacitatea tastelor</string>
   <string name="pref_key_activated_opacity">Modifică opacitatea tastei apăsate</string>
-  <string name="pref_layout_title">Schimbă aranjamentul tastaturii</string>
   <string name="pref_layout_e_system">Setări de Sistem</string>
   <string name="pref_layout_e_custom">Aranjament personalizat</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Accente</string>
   <string name="pref_accents_e_all_installed">Arată accentele pentru toate limbile instalate</string>
   <string name="pref_accents_e_selected">Aratp accentele doar pentru limba selectată</string>

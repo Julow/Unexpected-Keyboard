@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Изменить прозрачность фона</string>
   <string name="pref_key_opacity">Изменить прозрачность клавиш</string>
   <string name="pref_key_activated_opacity">Изменить прозрачность нажатой клавиши</string>
-  <string name="pref_layout_title">Изменить раскладку клавиатуры</string>
   <string name="pref_layout_e_system">Системные настройки</string>
   <string name="pref_layout_e_custom">Пользовательская раскладка</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Акцент</string>
   <string name="pref_accents_e_all_installed">Показывать акценты для всех установленных языков</string>
   <string name="pref_accents_e_selected">Показывать акценты только для выбранного языка</string>

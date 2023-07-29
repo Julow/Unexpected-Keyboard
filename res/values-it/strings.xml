@@ -10,9 +10,10 @@
   <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
   <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
   <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
-  <string name="pref_layout_title">Cambia layout tastiera</string>
   <string name="pref_layout_e_system">Impostazioni di sistema</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Accenti</string>
   <string name="pref_accents_e_all_installed">Mostra accenti per tutte le lingue installate</string>
   <string name="pref_accents_e_selected">Mostra accenti solo per le lingue selezionate</string>

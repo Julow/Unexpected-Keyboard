@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Upravit průhlednost pozadí klávesnice</string>
   <string name="pref_key_opacity">Upravit průhlednost kláves</string>
   <string name="pref_key_activated_opacity">Upravit průhlednost stisknutých kláves</string>
-  <string name="pref_layout_title">Změnit rozvržení klávesnice</string>
   <string name="pref_layout_e_system">Dle nastavení systému</string>
   <string name="pref_layout_e_custom">Vlastní rozvržení</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">(Univerzální) Diakritická znaménka</string>
   <string name="pref_accents_e_all_installed">Zobrazovat znaménka pro všechny instalované systémové jazyky</string>
   <string name="pref_accents_e_selected">Zobrazovat znaménka pouze pro současně zvolený jazyk</string>

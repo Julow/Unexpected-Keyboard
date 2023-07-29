@@ -10,9 +10,10 @@
   <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
   <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
   <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
-  <string name="pref_layout_title">Klavye Düzenini Değiştir</string>
   <string name="pref_layout_e_system">Sistem Ayarları</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Aksanlar</string>
   <string name="pref_accents_e_all_installed">Yüklü tüm dillerin aksanlarını göster</string>
   <string name="pref_accents_e_selected">Sadece seçili dilin aksanlarını göster</string>

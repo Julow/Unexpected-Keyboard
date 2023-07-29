@@ -8,6 +8,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -25,8 +26,8 @@ final class Config
   public final float sublabelTextSize;
 
   // From preferences
-  public KeyboardData layout; // Or 'null' for the system defaults
-  public KeyboardData second_layout; // Or 'null' for none
+  /** [null] represent the [system] layout. */
+  public List<KeyboardData> layouts;
   public KeyboardData custom_layout; // Might be 'null'
   public boolean show_numpad = false;
   // From the 'numpad_layout' option, also apply to the numeric pane.
@@ -56,7 +57,6 @@ final class Config
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
-  public boolean shouldOfferSwitchingToSecond;
   public boolean shouldOfferVoiceTyping;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
@@ -80,7 +80,6 @@ final class Config
     refresh(res);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
-    shouldOfferSwitchingToSecond = false;
     shouldOfferVoiceTyping = false;
     actionLabel = null;
     actionId = 0;
@@ -116,8 +115,10 @@ final class Config
     {
       keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
-    layout = layout_of_string(res, _prefs.getString("layout", "none"));
-    second_layout = tweak_secondary_layout(layout_of_string(res, _prefs.getString("second_layout", "none")));
+    List<String> layout_names = LayoutsPreference.load_from_preferences(_prefs);
+    layouts = new ArrayList<KeyboardData>();
+    for (String l : layout_names)
+      layouts.add(layout_of_string(res, l));
     custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
     number_row = _prefs.getBoolean("number_row", false);
@@ -214,8 +215,10 @@ final class Config
               case ACTION:
                 return (swapEnterActionKey && action_key != null) ?
                   KeyValue.getKeyByName("enter") : action_key;
-              case SWITCH_SECOND:
-                return shouldOfferSwitchingToSecond ? key : null;
+              case SWITCH_FORWARD:
+                return (layouts.size() > 1) ? key : null;
+              case SWITCH_BACKWARD:
+                return (layouts.size() > 2) ? key : null;
               case SWITCH_VOICE_TYPING:
                 return shouldOfferVoiceTyping ? key : null;
             }
@@ -282,23 +285,6 @@ final class Config
               return key.withChar(b);
             break;
         }
-        return key;
-      }
-    });
-  }
-
-  /** Modify a layout to turn it into a secondary layout by changing the
-      "switch_second" key. */
-  KeyboardData tweak_secondary_layout(KeyboardData layout)
-  {
-    if (layout == null)
-      return null;
-    return layout.mapKeys(new KeyboardData.MapKeyValues() {
-      public KeyValue apply(KeyValue key, boolean localized)
-      {
-        if (key.getKind() == KeyValue.Kind.Event
-            && key.getEvent() == KeyValue.Event.SWITCH_SECOND)
-          return KeyValue.getKeyByName("switch_second_back");
         return key;
       }
     });

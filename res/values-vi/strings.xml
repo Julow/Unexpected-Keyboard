@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Tùy chỉnh độ trong suốt của bàn phím</string>
   <string name="pref_key_opacity">Tùy chỉnh độ trong suốt của phím</string>
   <string name="pref_key_activated_opacity">Tùy chỉnh độ trong suốt của phím khi nhấn</string>
-  <string name="pref_layout_title">Thay đổi bố cục bàn phím</string>
   <string name="pref_layout_e_system">Hệ thống</string>
   <string name="pref_layout_e_custom">Tùy chỉnh bố cục</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Dấu phụ</string>
   <string name="pref_accents_e_all_installed">Hiển thị cho các ngôn ngữ đã cài đặt</string>
   <string name="pref_accents_e_selected">Chỉ hiển thị cho các ngôn ngữ đã chọn</string>

@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Pielāgot tastatūras fona necaurredzamību</string>
   <string name="pref_key_opacity">Pielāgot taustiņu necaurredzamību</string>
   <string name="pref_key_activated_opacity">Pielāgot piespiesta taustiņa necaurredzamību</string>
-  <string name="pref_layout_title">Mainīt tastatūras izkārtojumu</string>
   <string name="pref_layout_e_system">Ierīces iestatījumi</string>
   <string name="pref_layout_e_custom">Pielāgots izkārtojums</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Uzsvara zīmes</string>
   <string name="pref_accents_e_all_installed">Rādīt uzsvara zīmes visām uzstādītajām valodām</string>
   <string name="pref_accents_e_selected">Rādīt uzsvara zīmes tikai atlasītajām valodām</string>

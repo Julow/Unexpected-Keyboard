@@ -10,9 +10,10 @@
   <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
   <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
   <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
-  <string name="pref_layout_title">키보드 레이아웃 변경</string>
   <string name="pref_layout_e_system">시스템 세팅</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">악센트</string>
   <string name="pref_accents_e_all_installed">설치된 모든 언어의 악센트 표시</string>
   <string name="pref_accents_e_selected">선택한 언어의 악센트만 표시</string>
