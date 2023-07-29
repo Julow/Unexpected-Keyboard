@@ -45,6 +45,8 @@
   <string name="pref_switch_input_immediate_summary">Jak bude klávesa pro přepnutí klávesnice reagovat</string>
   <string name="pref_vibrate_title">Vibrace</string>
   <string name="pref_vibrate_summary">Preference intenzity vibrací při stisku klávesy</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Spodní odsazení</string>
   <string name="pref_keyboard_height_title">Výška klávesnice</string>

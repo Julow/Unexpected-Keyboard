@@ -45,6 +45,8 @@
   <string name="pref_switch_input_immediate_summary">رفتار کلید تغییردهنده صفحه کلید</string>
   <string name="pref_vibrate_title">لرزش</string>
   <string name="pref_vibrate_summary">فعال/غیرفعال کردن لرزش در زمان فشار دادن کلیدها</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">سبک</string>
   <string name="pref_margin_bottom_title">حاشیه پایین</string>
   <string name="pref_keyboard_height_title">ارتفاع صفحه کلید</string>

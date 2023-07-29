@@ -45,6 +45,8 @@
   <string name="pref_switch_input_immediate_summary">Поведение клавиши переключения клавиатуры</string>
   <string name="pref_vibrate_title">Вибрация</string>
   <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Стиль</string>
   <string name="pref_margin_bottom_title">Нижняя граница поля</string>
   <string name="pref_keyboard_height_title">Высота клавиатуры</string>

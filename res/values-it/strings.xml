@@ -45,6 +45,8 @@
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">Vibrazione</string>
   <string name="pref_vibrate_summary">Abilita/Disabilita Vibrazione alla pressione dei tasti</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Stile</string>
   <string name="pref_margin_bottom_title">Margine inferiore</string>
   <string name="pref_keyboard_height_title">Altezza tastiera</string>

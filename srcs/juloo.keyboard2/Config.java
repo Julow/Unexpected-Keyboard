@@ -52,6 +52,7 @@ final class Config
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
+  public boolean pin_entry_enabled;
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
@@ -157,6 +158,7 @@ final class Config
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
+    pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
   }
 
   KeyValue action_key()

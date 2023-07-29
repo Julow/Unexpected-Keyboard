@@ -45,6 +45,8 @@
   <string name="pref_switch_input_immediate_summary">Verhalten der Tastaturumschalttaste</string>
   <string name="pref_vibrate_title">Vibration</string>
   <string name="pref_vibrate_summary">Vibration bei Tastendruck ein-/ausschalten</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Design</string>
   <string name="pref_margin_bottom_title">Unterer Abstand</string>
   <string name="pref_keyboard_height_title">Höhe der Tastatur</string>

@@ -45,6 +45,8 @@
   <string name="pref_switch_input_immediate_summary">Comportamentul tastei pentru schimbarea tastaturii</string>
   <string name="pref_vibrate_title">Vibrație</string>
   <string name="pref_vibrate_summary">Activați/dezactivați vibrația la apăsarea tastelor</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Stil</string>
   <string name="pref_margin_bottom_title">Marginea de jos</string>
   <string name="pref_keyboard_height_title">Înălțimea tastaturii</string>

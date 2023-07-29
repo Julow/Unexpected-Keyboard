@@ -71,6 +71,12 @@ public class Keyboard2 extends InputMethodService
     return KeyboardData.load(getResources(), layout_id);
   }
 
+  /** Load a layout that contains a numpad (eg. the pin entry). */
+  KeyboardData loadNumpad(int layout_id)
+  {
+    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id));
+  }
+
   @Override
   public void onCreate()
   {
@@ -154,7 +160,7 @@ public class Keyboard2 extends InputMethodService
       }
     }
     if (default_layout == null)
-      default_layout = KeyboardData.load(getResources(), R.xml.latn_qwerty_us);
+      default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
     if (_config.second_layout == null)
     {
@@ -235,20 +241,21 @@ public class Keyboard2 extends InputMethodService
     return null;
   }
 
-  private void refresh_special_layout(EditorInfo info)
+  private KeyboardData refresh_special_layout(EditorInfo info)
   {
     switch (info.inputType & InputType.TYPE_MASK_CLASS)
     {
       case InputType.TYPE_CLASS_NUMBER:
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
-        _currentSpecialLayout =
-          _config.modify_numpad(KeyboardData.load(getResources(), R.xml.pin));
-        break;
+        if (_config.pin_entry_enabled)
+          return loadNumpad(R.xml.pin);
+        else
+          return loadNumpad(R.xml.numeric);
       default:
-        _currentSpecialLayout = null;
         break;
     }
+    return null;
   }
 
   @Override
@@ -256,7 +263,7 @@ public class Keyboard2 extends InputMethodService
   {
     refresh_config();
     refresh_action_label(info);
-    refresh_special_layout(info);
+    _currentSpecialLayout = refresh_special_layout(info);
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(info);
     setInputView(_keyboardView);
@@ -382,7 +389,7 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_NUMERIC:
-          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.numeric)));
+          setSpecialLayout(loadNumpad(R.xml.numeric));
           break;
 
         case SWITCH_EMOJI:
@@ -422,7 +429,7 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_GREEKMATH:
-          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.greekmath)));
+          setSpecialLayout(loadNumpad(R.xml.greekmath));
           break;
 
         case CAPS_LOCK:
