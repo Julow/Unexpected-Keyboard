@@ -26,9 +26,4 @@ public final class Logs
     _debug_logs.println("swapEnterActionKey: "+conf.swapEnterActionKey);
     _debug_logs.println("actionLabel: "+conf.actionLabel);
   }
-
-  public static void err_load_custom_extra_keys(JSONException e)
-  {
-    Log.e(TAG, "Failed to read custom extra keys from preferences", e);
-  }
 }
