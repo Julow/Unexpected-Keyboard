@@ -19,6 +19,7 @@ public abstract class ListGroupPreference extends PreferenceGroup
 {
   boolean _attached = false;
   List<String> _values;
+  AddButton _prev_add_button;
 
   public ListGroupPreference(Context context, AttributeSet attrs)
   {
@@ -34,6 +35,16 @@ public abstract class ListGroupPreference extends PreferenceGroup
   String label_of_value(String value, int i)
   {
     return value;
+  }
+
+  /** Called every time the list changes and allows to change the "Add" button
+      appearance.
+      [prev_btn] is the previously attached button, might be null. */
+  AddButton on_attach_add_button(AddButton prev_btn)
+  {
+    if (prev_btn == null)
+      return new AddButton(getContext());
+    return prev_btn;
   }
 
   /** Called when an item is added or modified. Returns [null] to cancel the
@@ -125,6 +136,8 @@ public abstract class ListGroupPreference extends PreferenceGroup
 
   void reattach()
   {
+    if (!_attached)
+      return;
     removeAll();
     int i = 0;
     for (String v : _values)
@@ -134,7 +147,9 @@ public abstract class ListGroupPreference extends PreferenceGroup
       addPreference(item);
       i++;
     }
-    addPreference(this.new AddButton(getContext()));
+    _prev_add_button = on_attach_add_button(_prev_add_button);
+    _prev_add_button.setOrder(Preference.DEFAULT_ORDER);
+    addPreference(_prev_add_button);
   }
 
   class Item extends Preference
@@ -165,7 +180,7 @@ public abstract class ListGroupPreference extends PreferenceGroup
     }
   }
 
-  final class AddButton extends Preference
+  class AddButton extends Preference
   {
     public AddButton(Context ctx)
     {
