@@ -19,7 +19,8 @@ public abstract class ListGroupPreference extends PreferenceGroup
 {
   boolean _attached = false;
   List<String> _values;
-  AddButton _prev_add_button;
+  /** The "add" button currently displayed. */
+  AddButton _add_button = null;
 
   public ListGroupPreference(Context context, AttributeSet attrs)
   {
@@ -45,6 +46,14 @@ public abstract class ListGroupPreference extends PreferenceGroup
     if (prev_btn == null)
       return new AddButton(getContext());
     return prev_btn;
+  }
+
+  /** Called every time the list changes and allows to disable the "Remove"
+      buttons on every items. Might be used to enforce a minimum number of
+      items. */
+  boolean should_allow_remove_item()
+  {
+    return true;
   }
 
   /** Called when an item is added or modified. Returns [null] to cancel the
@@ -139,37 +148,40 @@ public abstract class ListGroupPreference extends PreferenceGroup
     if (!_attached)
       return;
     removeAll();
+    boolean allow_remove_item = should_allow_remove_item();
     int i = 0;
     for (String v : _values)
     {
-      Item item = this.new Item(getContext(), v);
+      Item item = this.new Item(getContext(), v, allow_remove_item);
       item.setTitle(label_of_value(v, i));
       addPreference(item);
       i++;
     }
-    _prev_add_button = on_attach_add_button(_prev_add_button);
-    _prev_add_button.setOrder(Preference.DEFAULT_ORDER);
-    addPreference(_prev_add_button);
+    _add_button = on_attach_add_button(_add_button);
+    _add_button.setOrder(Preference.DEFAULT_ORDER);
+    addPreference(_add_button);
   }
 
   class Item extends Preference
   {
     final String _value;
 
-    public Item(Context ctx, String value)
+    public Item(Context ctx, String value, boolean allow_remove)
     {
       super(ctx);
       _value = value;
       setPersistent(false);
-      setWidgetLayoutResource(R.layout.pref_listgroup_item_widget);
+      if (allow_remove)
+        setWidgetLayoutResource(R.layout.pref_listgroup_item_widget);
     }
 
     @Override
     protected View onCreateView(ViewGroup parent)
     {
       View v = super.onCreateView(parent);
-      v.findViewById(R.id.pref_listgroup_remove_btn)
-        .setOnClickListener(new View.OnClickListener() {
+      View remove_btn = v.findViewById(R.id.pref_listgroup_remove_btn);
+      if (remove_btn != null)
+        remove_btn.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View _v)
           {
