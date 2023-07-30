@@ -113,9 +113,15 @@ public abstract class ListGroupPreference extends PreferenceGroup
     set_values(_values, true);
   }
 
-  void remove_item(String v)
+  void change_item(int i, String v)
   {
-    _values.remove(v);
+    _values.set(i, v);
+    set_values(_values, true);
+  }
+
+  void remove_item(int i)
+  {
+    _values.remove(i);
     set_values(_values, true);
   }
 
@@ -152,9 +158,7 @@ public abstract class ListGroupPreference extends PreferenceGroup
     int i = 0;
     for (String v : _values)
     {
-      Item item = this.new Item(getContext(), v, allow_remove_item);
-      item.setTitle(label_of_value(v, i));
-      addPreference(item);
+      addPreference(this.new Item(getContext(), i, v, allow_remove_item));
       i++;
     }
     _add_button = on_attach_add_button(_add_button);
@@ -165,14 +169,28 @@ public abstract class ListGroupPreference extends PreferenceGroup
   class Item extends Preference
   {
     final String _value;
+    final int _index;
 
-    public Item(Context ctx, String value, boolean allow_remove)
+    public Item(Context ctx, int index, String value, boolean allow_remove)
     {
       super(ctx);
       _value = value;
+      _index = index;
       setPersistent(false);
+      setTitle(label_of_value(value, index));
       if (allow_remove)
         setWidgetLayoutResource(R.layout.pref_listgroup_item_widget);
+    }
+
+    @Override
+    protected void onClick()
+    {
+      select(new SelectionCallback() {
+        public void select(String value)
+        {
+          change_item(_index, value);
+        }
+      });
     }
 
     @Override
@@ -185,7 +203,7 @@ public abstract class ListGroupPreference extends PreferenceGroup
           @Override
           public void onClick(View _v)
           {
-            remove_item(_value);
+            remove_item(_index);
           }
         });
       return v;
