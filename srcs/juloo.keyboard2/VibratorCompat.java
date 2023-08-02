@@ -20,13 +20,13 @@ public final class VibratorCompat
               HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
         break;
       case STRONG:
-        vibrator_vibrate(v, 60);
+        vibrator_vibrate(v, 90);
         break;
       case MEDIUM:
-        vibrator_vibrate(v, 30);
+        vibrator_vibrate(v, 45);
         break;
       case LIGHT:
-        vibrator_vibrate(v, 15);
+        vibrator_vibrate(v, 20);
         break;
     }
   }
