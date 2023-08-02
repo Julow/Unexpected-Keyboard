@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<keyboard name="Nepali phonetic" script="nepali">
+  <row>
+    <key key0="ए" key2="ऐ" key4="esc" key7="१"/>
+    <key key0="उ" key2="ऊ" key3="\@" key7="२"/>
+    <key key0="ओ" key1="!" key2="औ" key3="\#" key7="३"/>
+    <key key0="र" key2="ऋ" key3="$" key7="४"/>
+    <key key0="त" key1="त्र" key2="थ" key3="%" key7="५"/>
+    <key key0="ट" key2="ठ" key3="^" key7="६"/>
+    <key key0="इ" key2="ई" key3="&amp;" key7="७"/>
+    <key key0="य" key2="ज्ञ" key3="*" key7="८"/>
+    <key key0="व" key1="'" key2="&quot;" key3="(" key4=")" key7="९"/>
+    <key key0="प" key1="ौ" key2="०" key3="f11_placeholder" key4="f12_placeholder" key5="ो" key7="ं" key8="प्र"/>
+  </row>
+  <row>
+    <key width="1.1" key0="अ" key1="tab" key2="आ"/>
+    <key width="1.1" key0="स" key2="ष"/>
+    <key width="1.1" key0="द" key2="ढ"/>
+    <key width="1.1" key0="फ"/>
+    <key width="1.15" key0="ग" key1="-" key2="घ" key3="_"/>
+    <key width="1.1" key0="ह" key2="=" key3="+" key7="ँ"/>
+    <key width="1.1" key0="ज" key1="}" key2="झ" key3="{" key8="ृ"/>
+    <key width="1.1" key0="क" key1="]" key2="ख" key3="[" key4="्" key6="ा"/>
+    <key width="1.15" key0="ल" key1="े" key3="۔" key5="ः" key7="ै" key8="ु"/>
+  </row>
+  <row>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key key0="ध" key2="ड"/>
+    <key key0="श" key2="श्र"/>
+    <key key0="च" key3="।"/>
+    <key key0="छ" key2="क्ष" key3=","/>
+    <key key0="ब" key2="भ" key3="/" key4="\\"/>
+    <key key0="न" key1="ञ" key2="ण" key3=";" key4=":" key8="ङ"/>
+    <key key0="म" key5="ि" key6="ी" key8="ू"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
+  </row>
+</keyboard>
