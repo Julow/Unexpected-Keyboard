@@ -13,7 +13,7 @@
     <key key0="پ" key2="0" key3="f11_placeholder" key4="f12_placeholder" key5="ٓ" key6="ٰ" key7="ٗ" key8="ٖ"/>
   </row>
   <row>
-    <key width="1.1" key0="ا" key2="آ"/>
+    <key width="1.1" key0="ا" key1="tab" key2="آ"/>
     <key width="1.1" key0="س" key2="ص"/>
     <key width="1.1" key0="د" key2="ڈ"/>
     <key width="1.1" key0="ف" key2="پھ"/>
