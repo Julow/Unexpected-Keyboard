@@ -116,3 +116,6 @@ Layout redefines the bottom row but some important keys are missing, missing: ch
 Layout doesn't specify a script.
 3 warnings
 Not a layout file: res/xml/settings.xml
+# res/xml/urdu_phonetic_ur.xml
+Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
+1 warnings
