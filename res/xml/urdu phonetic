@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <keyboard name="Urdu phonetic" script="urdu">
   <row>
-    <key key0="ق" key2="1" key4="esc"/>
-    <key key0="و" key2="2" key4="redo"/>
-    <key key0="ع" key1="!" key2="3"/>
-    <key key0="ر" key2="ڑ" key4="cut"/>
-    <key key0="ت" key2="ٹ" key4="selectAll"/>
+    <key key0="ق" key4="esc" key7="1"/>
+    <key key0="و" key2="ؤ" key4="redo" key7="2"/>
+    <key key0="ع" key1="!" key7="3"/>
+    <key key0="ر" key2="ڑ" key4="cut" key7="4"/>
+    <key key0="ت" key2="ٹ" key4="selectAll" key7="5"/>
     <key key0="ے" key2="6" key4="copy"/>
-    <key key0="ئ" key2="ء" key4="paste"/>
-    <key key0="ی" key2="8" key4="undo"/>
-    <key key0="ہ" key1="'" key2="&quot;" key3="(" key4=")" key8="ۃ"/>
-    <key key0="پ" key2="0" key3="f11_placeholder" key4="f12_placeholder" key5="ٓ" key6="ٰ" key7="ٗ" key8="ٖ"/>
+    <key key0="ئ" key2="ء" key4="paste" key7="7"/>
+    <key key0="ی" key4="undo" key7="8"/>
+    <key key0="ہ" key1="'" key2="&quot;" key3="(" key4=")" key7="9" key8="ۃ"/>
+    <key key0="پ" key1="ٰ" key2="0" key3="f11_placeholder" key4="f12_placeholder" key5="ٓ" key7="ٗ" key8="ٖ"/>
   </row>
   <row>
     <key width="1.1" key0="ا" key1="tab" key2="آ"/>
