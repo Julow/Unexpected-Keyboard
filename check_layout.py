@@ -47,6 +47,15 @@ def check_layout(layout):
     missing_some_of(keys, ["f11_placeholder", "f12_placeholder"])
     missing_some_of(keys, ["esc", "tab"])
     missing_required(keys, ["backspace", "delete"], "Layout doesn't define some important keys")
+    unexpected_keys(keys,
+                    ["copy", "paste", "cut", "selectAll", "shareText",
+                     "pasteAsPlainText", "undo", "redo", "replaceText",
+                     "textAssist", "autofill" ],
+                    "Layout contains editing keys")
+    unexpected_keys(keys,
+                    [ "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
+                     "f10", "f11", "f12" ],
+                    "Layout contains function keys")
 
     bottom_row_keys = [
             "ctrl", "fn", "switch_numeric", "change_method", "switch_emoji",
