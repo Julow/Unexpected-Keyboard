@@ -31,7 +31,7 @@
     <key key0="छ" key2="क्ष" key3=","/>
     <key key0="ब" key2="भ" key3="/" key4="\\"/>
     <key key0="न" key1="ञ" key2="ण" key3=";" key4=":" key8="ङ"/>
-    <key key0="म" key5="ि" key6="ी" key8="ू"/>
+    <key key0="म" key5="ि" key6="ी" key7="?" key8="ू"/>
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
 </keyboard>
