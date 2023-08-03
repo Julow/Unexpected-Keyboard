@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<keyboard name="Nepali phonetic" script="nepali">
+<keyboard name="devanagari" script="nepali">
   <row>
     <key key0="ए" key2="ऐ" key4="esc" key7="१"/>
     <key key0="उ" key2="ऊ" key3="\@" key7="२"/>
