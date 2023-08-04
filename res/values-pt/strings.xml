@@ -85,6 +85,6 @@
   <string name="key_action_send">Enviar</string>
   <string name="launcher_button_imesettings">Ativar teclado</string>
   <string name="launcher_description">Este app é um teclado virtual. Vá para as configurações do sistema clicando no botão abaixo e ative o Teclado Unexpected.</string>
-  <string name="launcher_sourcecode">Este app é gratuito é de código aberto. Você pode consultar o código ou fazer sugestões em <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
+  <string name="launcher_sourcecode">Este app é gratuito é de código aberto. Você pode consultar o código ou fazer sugestões em Github.</string>
   <string name="launcher_tryhere">Após ativar, experimente aqui:</string>
 </resources>
