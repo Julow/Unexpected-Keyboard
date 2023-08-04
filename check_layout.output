@@ -32,6 +32,9 @@ Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, )
 # res/xml/deva_inscript.xml
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 1 warnings
+# res/xml/deva_phonetic_npl.xml
+Layout includes some ASCII punctuation but not all, missing: ., `, |
+1 warnings
 # res/xml/greekmath.xml
 Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), *, +, ,, -, /, :, ;, <, >, ?, @, [, \, ], _, `, {, |, }, ~
 Layout redefines the bottom row but some important keys are missing, missing: change_method, config, ctrl, switch_backward, switch_emoji, switch_forward

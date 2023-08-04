@@ -17,6 +17,7 @@
     <item>cyrl_yaverti</item>
     <item>deva_alt</item>
     <item>deva_inscript</item>
+    <item>deva_phonetic_npl</item>
     <item>grek_qwerty</item>
     <item>hang_dubeolsik_kr</item>
     <item>hebr_1_il</item>
@@ -58,6 +59,7 @@
     <item>ЯВЕРТЪ</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
+    <item>Nepali phonetic</item>
     <item>QWERTY (Greek)</item>
     <item>두벌식 (Korean)</item>
     <item>Hebrew 1</item>
@@ -99,6 +101,7 @@
     <item>@xml/cyrl_yaverti</item>
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
+    <item>@xml/deva_phonetic_npl</item>
     <item>@xml/grek_qwerty</item>
     <item>@xml/hang_dubeolsik_kr</item>
     <item>@xml/hebr_1_il</item>
