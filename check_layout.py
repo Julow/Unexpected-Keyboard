@@ -3,6 +3,11 @@ import sys
 
 warning_count = 0
 
+KNOWN_NOT_LAYOUT = set([
+    "res/xml/number_row.xml", "res/xml/numpad.xml", "res/xml/pin.xml",
+    "res/xml/bottom_row.xml", "res/xml/settings.xml", "res/xml/method.xml",
+    "res/xml/greekmath.xml", "res/xml/numeric.xml" ])
+
 def warn(msg):
     global warning_count
     print(msg)
@@ -44,9 +49,10 @@ def check_layout(layout):
     root, keys = layout
     missing_some_of(keys, "~!@#$%^&*(){}`[]=\\-_;:/.,?<>'\"+|", "ASCII punctuation")
     missing_some_of(keys, "0123456789", "digits")
-    missing_some_of(keys, ["f11_placeholder", "f12_placeholder"])
-    missing_some_of(keys, ["esc", "tab"])
-    missing_required(keys, ["backspace", "delete"], "Layout doesn't define some important keys")
+    missing_required(keys,
+                     ["esc", "tab", "backspace", "delete",
+                      "f11_placeholder", "f12_placeholder"],
+                     "Layout doesn't define some important keys")
     unexpected_keys(keys,
                     ["copy", "paste", "cut", "selectAll", "shareText",
                      "pasteAsPlainText", "undo", "redo", "replaceText",
@@ -74,6 +80,8 @@ def check_layout(layout):
         warn("Layout doesn't specify a script.")
 
 for fname in sys.argv[1:]:
+    if fname in KNOWN_NOT_LAYOUT:
+        continue
     layout = parse_layout(fname)
     if layout == None:
         print("Not a layout file: %s" % fname)
