@@ -185,7 +185,14 @@ final class Config
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     if (extra_keys_subtype != null)
-      extra_keys_subtype.compute(extra_keys, kw.script);
+    {
+      Set<KeyValue> present = new HashSet<KeyValue>();
+      kw.getKeys(present);
+      present.addAll(extra_keys_param);
+      present.addAll(extra_keys_custom);
+      extra_keys_subtype.compute(extra_keys,
+          new ExtraKeys.Query(kw.script, present));
+    }
     extra_keys.addAll(extra_keys_param);
     extra_keys.addAll(extra_keys_custom);
     boolean number_row = this.number_row && !show_numpad;

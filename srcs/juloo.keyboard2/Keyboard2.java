@@ -114,9 +114,8 @@ public class Keyboard2 extends InputMethodService
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
     String script = subtype.getExtraValueOf("script");
-    if (extra_keys == null)
-      return;
-    dst.add_keys_for_script(script, ExtraKeys.parse_extra_keys(extra_keys));
+    if (extra_keys != null)
+      dst.parse_and_add_keys_for_script(script, extra_keys);
   }
 
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
