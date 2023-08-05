@@ -20,6 +20,9 @@ Now perfect for everyday use.
 
 This application contains no ads, doesn't make any network requests and is Open Source.
 
+## Similar apps
+* [Calculator++](https://github.com/Bubu/android-calculatorpp) - A calculator for Android with a similar UX, allowing to swipe to corners to input advanced math symbols and operators. Works up to Android 13 but maybe unmaintained.
+
 ## Contributing
 
 For instructions on building the application, see
