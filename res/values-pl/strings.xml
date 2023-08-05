@@ -87,4 +87,7 @@
   <string name="launcher_description">Ta aplikacja jest klawiaturą ekranową. Naciśnij poniższy przycisk, aby przejść do ustawień systemu i włącz Unexpected-Keyboard.</string>
   <string name="launcher_sourcecode">Jest to darmowa aplikacja o otwartym kodzie źródłowym. Możesz zobaczyć kod źródłowy oraz zgłosić błedy na Githubie.</string>
   <string name="launcher_tryhere">Po jej włączeniu, możesz wypróbować klawiaturę tutaj:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
 </resources>

@@ -87,4 +87,7 @@
   <string name="launcher_description">Esta aplicación es un teclado virtual. Apretar el botón de abajo te facilitará habilitarlo.</string>
   <string name="launcher_sourcecode">Esta es una aplicación gratuita, libre y de fuente abierta. EL código fuente se puede encontrar también para reportar errores en Github.</string>
   <string name="launcher_tryhere">Tras habilitar, debajo se puede probar el teclado:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
 </resources>

@@ -15,6 +15,7 @@ import java.util.Set;
     possible extra keys. */
 public class ExtraKeysPreference extends PreferenceCategory
 {
+  /** Array of the keys that can be selected. */
   public static String[] extra_keys = new String[]
   {
     "alt",
@@ -70,6 +71,21 @@ public class ExtraKeysPreference extends PreferenceCategory
     }
   }
 
+  /** Text that describe a key. Might be null. */
+  static String key_description(Resources res, String name)
+  {
+    int id = 0;
+    switch (name)
+    {
+      case "capslock": id = R.string.key_descr_capslock; break;
+      case "switch_greekmath": id = R.string.key_descr_switch_greekmath; break;
+      case "voice_typing": id = R.string.key_descr_voice_typing; break;
+    }
+    if (id == 0)
+      return null;
+    return res.getString(id);
+  }
+
   /** Get the set of enabled extra keys. */
   public static Set<KeyValue> get_extra_keys(SharedPreferences prefs)
   {
@@ -111,13 +127,13 @@ public class ExtraKeysPreference extends PreferenceCategory
   {
     boolean _key_font;
 
-    public ExtraKeyCheckBoxPreference(Context context, String key_name,
+    public ExtraKeyCheckBoxPreference(Context ctx, String key_name,
         boolean default_checked)
     {
-      super(context);
+      super(ctx);
       KeyValue kv = KeyValue.getKeyByName(key_name);
       String title = kv.getString();
-      String descr = KeyValue.getKeyDescription(key_name);
+      String descr = key_description(ctx.getResources(), key_name);
       if (descr != null)
         title += " (" + descr + ")";
       setKey(pref_key_of_key_name(key_name));

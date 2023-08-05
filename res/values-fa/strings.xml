@@ -87,4 +87,7 @@
   <string name="launcher_description">این برنامه یک صفحه کلید مجازی است. با کلیک روی گزینه زیر به تنظیمات سامانه بروید و صفحه کلید غیرمنتظره را فعال کنید.</string>
   <string name="launcher_sourcecode">این یک برنامه متن باز و آزاد است. شما می‌توانید کد منبع را در گیتهاب پیدا کرده و نیز باگ‌ها را گزارش کنید.</string>
   <string name="launcher_tryhere">بعد از فعالسازی، صفحه کلید را اینجا امتحان کنید:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
 </resources>

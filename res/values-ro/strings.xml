@@ -87,4 +87,7 @@
   <string name="launcher_description">Această aplicație este o tastatură virtuală. Accesați setările sistemului făcând clic pe butonul de mai jos și activați tastatura Unexpected.</string>
   <string name="launcher_sourcecode">Aceasta este o aplicație gratuită și open source. Puteți găsi codul sursă sau raporta erori folosind link-ul Github.</string>
   <string name="launcher_tryhere">După activare, puteți să încercați tastatura aici:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
 </resources>
