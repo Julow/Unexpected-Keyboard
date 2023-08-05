@@ -12,8 +12,8 @@
   <string name="pref_key_activated_opacity">Nieprzezroczystość naciśniętego klawisza</string>
   <string name="pref_layout_e_system">Systemowy</string>
   <string name="pref_layout_e_custom">Własny układ</string>
-  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
-  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <string name="pref_layouts_add">Dodaj dodatkowy układ</string>
+  <string name="pref_layouts_item">Układ %1$d: %2$s</string>
   <string name="pref_accents_title">Znaki diakrytyczne</string>
   <string name="pref_accents_e_all_installed">Pokaż znaki diakryt. dla wszystkich zainstalowanych języków</string>
   <string name="pref_accents_e_selected">Pokaż znaki diakryt. tylko dla wybranego języka</string>
@@ -28,8 +28,8 @@
   <string name="pref_numpad_layout_e_high_first">Od największej cyfry</string>
   <string name="pref_numpad_layout_e_low_first">Od najmniejszej cyfry</string>
   <string name="pref_extra_keys_title">Dodaj klawisze do klawiatury</string>
-  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
-  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
+  <string name="pref_extra_keys_custom">Dodaj niestandardowe klawisze</string>
+  <string name="pref_extra_keys_internal">Wybierz klawisze, które chcesz dodać do klawiatury</string>
   <string name="pref_second_layout_title">Drugi układ</string>
   <string name="pref_second_layout_none">Żaden</string>
   <string name="pref_category_typing">Pisanie</string>
@@ -46,8 +46,8 @@
   <string name="pref_switch_input_immediate_summary">Działanie klawisza przełączającego klawiaturę</string>
   <string name="pref_vibrate_title">Wibracje</string>
   <string name="pref_vibrate_summary">Wł./wył. wibrację przy naciśnięciu klawisza</string>
-  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
-  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
+  <string name="pref_pin_entry_enabled_title">Układ klawiatury PIN</string>
+  <string name="pref_pin_entry_enabled_summary">Podczas wpisywania liczb, dat i numerów telefonu</string>
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Margines dolny</string>
   <string name="pref_keyboard_height_title">Wysokość klawiatury</string>
@@ -87,7 +87,7 @@
   <string name="launcher_description">Ta aplikacja jest klawiaturą ekranową. Naciśnij poniższy przycisk, aby przejść do ustawień systemu i włącz Unexpected-Keyboard.</string>
   <string name="launcher_sourcecode">Jest to darmowa aplikacja o otwartym kodzie źródłowym. Możesz zobaczyć kod źródłowy oraz zgłosić błedy na Githubie.</string>
   <string name="launcher_tryhere">Po jej włączeniu, możesz wypróbować klawiaturę tutaj:</string>
-  <!-- <string name="key_descr_capslock">Caps lock</string> -->
-  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
-  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <string name="key_descr_capslock">Caps lock</string>
+  <string name="key_descr_switch_greekmath">Symbole greckie i matematyczne</string>
+  <string name="key_descr_voice_typing">Pisanie głosowe</string>
 </resources>
