@@ -12,8 +12,8 @@
   <string name="pref_key_activated_opacity">Transparence des touches pressées</string>
   <string name="pref_layout_e_system">Paramètre système</string>
   <string name="pref_layout_e_custom">Disposition personnalisée</string>
-  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
-  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <string name="pref_layouts_add">Ajouter un clavier alternatif</string>
+  <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
   <string name="pref_accents_title">Accents</string>
   <string name="pref_accents_e_all_installed">Afficher les accents pour les langues installées</string>
   <string name="pref_accents_e_selected">Afficher les accents pour la langue sélectionnée</string>
@@ -28,8 +28,8 @@
   <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
   <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>
   <string name="pref_extra_keys_title">Ajouter des touches au clavier</string>
-  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
-  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
+  <string name="pref_extra_keys_custom">Ajouter des touches personnalisées</string>
+  <string name="pref_extra_keys_internal">Sélectionner les touches à ajouter au clavier</string>
   <string name="pref_second_layout_title">Disposition secondaire</string>
   <string name="pref_second_layout_none">Aucune</string>
   <string name="pref_category_typing">Saisie</string>
@@ -46,8 +46,8 @@
   <string name="pref_switch_input_immediate_summary">Comportement de la touche de changement de clavier</string>
   <string name="pref_vibrate_title">Vibreur</string>
   <string name="pref_vibrate_summary">Vibration a chaque touche</string>
-  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
-  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
+  <string name="pref_pin_entry_enabled_title">Clavier PIN</string>
+  <string name="pref_pin_entry_enabled_summary">Lors de la saisie de nombres, de dates et de numéros de téléphone</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Marge du bas</string>
   <string name="pref_keyboard_height_title">Hauteur du clavier</string>
@@ -87,7 +87,7 @@
   <string name="launcher_description">Cette application est un clavier virtuel. Activez-le dans les paramètres système en cliquant sur le bouton ci-dessous.</string>
   <string name="launcher_sourcecode">Cette application est libre et open-source. Lisez le source code et reportez des problèmes sur Github.</string>
   <string name="launcher_tryhere">Après l\'avoir activé, vous pouvez l\'essayer ici:</string>
-  <!-- <string name="key_descr_capslock">Caps lock</string> -->
-  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
-  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <string name="key_descr_capslock">Verrouillage majuscules</string>
+  <string name="key_descr_switch_greekmath">Symboles mathématiques</string>
+  <string name="key_descr_voice_typing">Saisie vocale</string>
 </resources>
