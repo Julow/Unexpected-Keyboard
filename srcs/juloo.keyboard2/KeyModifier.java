@@ -240,6 +240,7 @@ class KeyModifier
       case '§': return "¶";
       case '†': return "‡";
       case '×': return "∙";
+      case ' ': return "nbsp";
       // arrows
       case '↖': return "⇖";
       case '↑': return "⇑";
@@ -356,8 +357,28 @@ class KeyModifier
       case 'ं': return "ॕ";
       case '़': return "ॎ";
       case 'ऽ': return "ॽ";
-      // other
-      case ' ': return "nbsp";
+      // Persian numbers
+      case '۱': return "f1";
+      case '۲': return "f2";
+      case '۳': return "f3";
+      case '۴': return "f4";
+      case '۵': return "f5";
+      case '۶': return "f6";
+      case '۷': return "f7";
+      case '۸': return "f8";
+      case '۹': return "f9";
+      case '۰': return "f10";
+      // Arabic numbers
+      case '١': return "f1";
+      case '٢': return "f2";
+      case '٣': return "f3";
+      case '٤': return "f4";
+      case '٥': return "f5";
+      case '٦': return "f6";
+      case '٧': return "f7";
+      case '٨': return "f8";
+      case '٩': return "f9";
+      case '٠': return "f10";
       default: return null;
     }
   }

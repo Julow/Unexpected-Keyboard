@@ -7,12 +7,11 @@ Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :
 1 warnings
 # res/xml/arab_pc_ir.xml
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
-Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
+Layout doesn't define some important keys, missing: esc, tab
 2 warnings
 # res/xml/arab_pc.xml
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+1 warnings
 # res/xml/beng_national.xml
 Layout includes some ASCII punctuation but not all, missing: $
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
