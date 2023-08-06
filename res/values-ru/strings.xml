@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">Пользовательская раскладка</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
-  <string name="pref_accents_title">Акцент</string>
-  <string name="pref_accents_e_all_installed">Показывать акценты для всех установленных языков</string>
-  <string name="pref_accents_e_selected">Показывать акценты только для выбранного языка</string>
-  <string name="pref_accents_e_none">Скрыть акценты</string>
   <string name="pref_show_numpad_title">Показывать NumPad</string>
   <string name="pref_show_numpad_never">Никогда</string>
   <string name="pref_show_numpad_landscape">Только в ландшафтном режиме</string>

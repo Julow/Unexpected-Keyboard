@@ -49,7 +49,6 @@ final class Config
   public int keyActivatedOpacity; // 0 - 255
   public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
-  public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
@@ -153,7 +152,6 @@ final class Config
     characterSize =
       _prefs.getFloat("character_size", 1.f)
       * characterSizeScale;
-    accents = Integer.valueOf(_prefs.getString("accents", "1"));
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);

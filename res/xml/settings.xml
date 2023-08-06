@@ -11,7 +11,6 @@
     <CheckBoxPreference android:key="number_row" android:title="@string/pref_number_row_title" android:summary="@string/pref_number_row_summary" android:defaultValue="false"/>
     <ListPreference android:key="show_numpad" android:title="@string/pref_show_numpad_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_show_numpad_entries" android:entryValues="@array/pref_show_numpad_values"/>
     <ListPreference android:key="numpad_layout" android:title="@string/pref_numpad_layout" android:summary="%s" android:defaultValue="high_first" android:entries="@array/pref_numpad_layout_entries" android:entryValues="@array/pref_numpad_layout_values"/>
-    <ListPreference android:key="accents" android:title="@string/pref_accents_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_accents_entries" android:entryValues="@array/pref_accents_values"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
     <ListPreference android:key="swipe_dist" android:title="@string/pref_swipe_dist_title" android:summary="@string/pref_swipe_dist_summary" android:defaultValue="15" android:entries="@array/pref_swipe_dist_entries" android:entryValues="@array/pref_swipe_dist_values"/>

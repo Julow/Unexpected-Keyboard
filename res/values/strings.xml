@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">Custom layout</string>
   <string name="pref_layouts_add">Add an alternate layout</string>
   <string name="pref_layouts_item">Layout %1$d: %2$s</string>
-  <string name="pref_accents_title">Accents</string>
-  <string name="pref_accents_e_all_installed">Show accents for all installed languages</string>
-  <string name="pref_accents_e_selected">Only show accents for the selected language</string>
-  <string name="pref_accents_e_none">Hide accents</string>
   <string name="pref_show_numpad_title">Show NumPad</string>
   <string name="pref_show_numpad_never">Never</string>
   <string name="pref_show_numpad_landscape">Only in landscape mode</string>

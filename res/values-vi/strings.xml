@@ -14,12 +14,6 @@
   <string name="pref_layout_e_custom">Tùy chỉnh bố cục</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
-  <string name="pref_accents_title">Dấu phụ</string>
-  <string name="pref_accents_e_all_installed">Hiển thị cho các ngôn ngữ đã cài đặt</string>
-  <string name="pref_accents_e_selected">Chỉ hiển thị cho các ngôn ngữ đã chọn</string>
-  <string name="pref_accents_e_none">
-    Ẩn dấu phụ
-  </string>
   <string name="pref_show_numpad_title">Hiện NumPad</string>
   <string name="pref_show_numpad_never">Không bao giờ</string>
   <string name="pref_show_numpad_landscape">Chỉ trong chế độ phong cảnh</string>

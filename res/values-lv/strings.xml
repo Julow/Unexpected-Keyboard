@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">Pielāgots izkārtojums</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
-  <string name="pref_accents_title">Uzsvara zīmes</string>
-  <string name="pref_accents_e_all_installed">Rādīt uzsvara zīmes visām uzstādītajām valodām</string>
-  <string name="pref_accents_e_selected">Rādīt uzsvara zīmes tikai atlasītajām valodām</string>
-  <string name="pref_accents_e_none">Paslēpt uzsvara zīmes</string>
   <string name="pref_show_numpad_title">Rādīt ciparnīcu</string>
   <string name="pref_show_numpad_never">Nekad</string>
   <string name="pref_show_numpad_landscape">Tikai guleniskajā skatā</string>

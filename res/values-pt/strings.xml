@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">Layout personalizado</string>
   <string name="pref_layouts_add">Adicione um layout alternativo</string>
   <string name="pref_layouts_item">Layout %1$d: %2$s</string>
-  <string name="pref_accents_title">Acentuação</string>
-  <string name="pref_accents_e_all_installed">Mostrar acentos de todos os idiomas instalados</string>
-  <string name="pref_accents_e_selected">Mostrar acentos apenas do idioma selecionado</string>
-  <string name="pref_accents_e_none">Ocultar acentos</string>
   <string name="pref_show_numpad_title">Mostrar Teclado Numérico</string>
   <string name="pref_show_numpad_never">Nunca</string>
   <string name="pref_show_numpad_landscape">Somente no modo paisagem</string>

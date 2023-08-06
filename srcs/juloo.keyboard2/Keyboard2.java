@@ -124,20 +124,10 @@ public class Keyboard2 extends InputMethodService
   {
     List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
     List<ExtraKeys> extra_keys = new ArrayList<ExtraKeys>();
-    switch (_config.accents)
-    {
-      // '3' was "all accents", now unused
-      case 1: case 3:
-        extra_keys.add(extra_keys_of_subtype(subtype));
-        for (InputMethodSubtype s : enabled_subtypes)
-          extra_keys.add(extra_keys_of_subtype(s));
-        break;
-      case 2:
-        extra_keys.add(extra_keys_of_subtype(subtype));
-        break;
-      case 4: break;
-      default: throw new IllegalArgumentException();
-    }
+    // Gather extra keys from all enabled subtypes
+    extra_keys.add(extra_keys_of_subtype(subtype));
+    for (InputMethodSubtype s : enabled_subtypes)
+      extra_keys.add(extra_keys_of_subtype(s));
     _config.extra_keys_subtype = ExtraKeys.merge(extra_keys);
     if (enabled_subtypes.size() > 1)
       _config.shouldOfferSwitchingToNextInputMethod = true;
