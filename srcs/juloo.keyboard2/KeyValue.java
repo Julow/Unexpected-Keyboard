@@ -296,7 +296,7 @@ final class KeyValue
     if (str.length() == 1)
       return new KeyValue(str, Kind.Char, str.charAt(0), 0);
     else
-      return new KeyValue(str, Kind.String, 0, 0);
+      return new KeyValue(str, Kind.String, 0, FLAG_SMALLER_FONT);
   }
 
   public static KeyValue getKeyByName(String name)

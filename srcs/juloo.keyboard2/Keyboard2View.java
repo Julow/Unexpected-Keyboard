@@ -407,7 +407,8 @@ public class Keyboard2View extends View
       x += keyW / 2f;
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
-    canvas.drawText(kv.getString(), x, y, p);
+    String label = kv.getString();
+    canvas.drawText(label, 0, Math.min(4, label.length()), x, y, p);
   }
 
   private void drawIndication(Canvas canvas, String indication, float x,
