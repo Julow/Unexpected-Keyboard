@@ -6,8 +6,9 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
 1 warnings
 # res/xml/arab_pc_ir.xml
+Duplicate keys: (, )
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
-1 warnings
+2 warnings
 # res/xml/arab_pc.xml
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
@@ -33,11 +34,13 @@ Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, )
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
 # res/xml/deva_inscript.xml
+Duplicate keys: , ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+3 warnings
 # res/xml/grek_qwerty.xml
-0 warnings
+Duplicate keys: ;
+1 warnings
 # res/xml/hang_dubeolsik_kr.xml
 0 warnings
 # res/xml/hebr_1_il.xml
@@ -57,8 +60,9 @@ Layout redefines the bottom row but some important keys are missing, missing: sw
 # res/xml/latn_dvorak.xml
 0 warnings
 # res/xml/latn_neo2.xml
+Duplicate keys: -
 Layout redefines the bottom row but some important keys are missing, missing: switch_forward
-1 warnings
+2 warnings
 # res/xml/latn_qwerty_br.xml
 0 warnings
 # res/xml/latn_qwerty_es.xml
@@ -74,7 +78,8 @@ Layout redefines the bottom row but some important keys are missing, missing: sw
 # res/xml/latn_qwerty_ro.xml
 0 warnings
 # res/xml/latn_qwerty_se.xml
-0 warnings
+Duplicate keys: !, ', ,, -, ., ?
+1 warnings
 # res/xml/latn_qwerty_tr.xml
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
