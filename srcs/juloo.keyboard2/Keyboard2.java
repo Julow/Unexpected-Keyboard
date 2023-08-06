@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -110,33 +111,34 @@ public class Keyboard2 extends InputMethodService
     return Arrays.asList();
   }
 
-  private void extra_keys_of_subtype(ExtraKeys dst, InputMethodSubtype subtype)
+  private ExtraKeys extra_keys_of_subtype(InputMethodSubtype subtype)
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
     String script = subtype.getExtraValueOf("script");
     if (extra_keys != null)
-      dst.parse_and_add_keys_for_script(script, extra_keys);
+      return ExtraKeys.parse(script, extra_keys);
+    return ExtraKeys.EMPTY;
   }
 
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
-    ExtraKeys extra_keys = new ExtraKeys();
     List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
+    List<ExtraKeys> extra_keys = new ArrayList<ExtraKeys>();
     switch (_config.accents)
     {
       // '3' was "all accents", now unused
       case 1: case 3:
-        extra_keys_of_subtype(extra_keys, subtype);
+        extra_keys.add(extra_keys_of_subtype(subtype));
         for (InputMethodSubtype s : enabled_subtypes)
-          extra_keys_of_subtype(extra_keys, s);
+          extra_keys.add(extra_keys_of_subtype(s));
         break;
       case 2:
-        extra_keys_of_subtype(extra_keys, subtype);
+        extra_keys.add(extra_keys_of_subtype(subtype));
         break;
       case 4: break;
       default: throw new IllegalArgumentException();
     }
-    _config.extra_keys_subtype = extra_keys;
+    _config.extra_keys_subtype = ExtraKeys.merge(extra_keys);
     if (enabled_subtypes.size() > 1)
       _config.shouldOfferSwitchingToNextInputMethod = true;
   }

@@ -2,6 +2,8 @@ package juloo.keyboard2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,35 +11,45 @@ import java.util.Set;
 
 class ExtraKeys
 {
-  List<ExtraKey> _ks;
+  public static final ExtraKeys EMPTY = new ExtraKeys(Collections.EMPTY_LIST);
 
-  public ExtraKeys()
-  {
-    _ks = new ArrayList<ExtraKey>();
-  }
+  Collection<ExtraKey> _ks;
 
-  public void parse_and_add_keys_for_script(String script, String extra_keys_str)
+  public ExtraKeys(Collection<ExtraKey> ks)
   {
-    _ks.addAll(parse_extra_keys(script, extra_keys_str));
+    _ks = ks;
   }
 
   /** Add the keys that should be added to the keyboard into [dst]. */
   public void compute(Set<KeyValue> dst, Query q)
   {
     for (ExtraKey k : _ks)
-    {
-      if (k.should_add(q))
-        dst.add(k.kv);
-    }
+      k.compute(dst, q);
   }
 
-  public static List<ExtraKey> parse_extra_keys(String script, String str)
+  public static ExtraKeys parse(String script, String str)
   {
-    List<ExtraKey> dst = new ArrayList<ExtraKey>();
+    Collection<ExtraKey> dst = new ArrayList<ExtraKey>();
     String[] ks = str.split("\\|");
     for (int i = 0; i < ks.length; i++)
       dst.add(ExtraKey.parse(ks[i], script));
-    return dst;
+    return new ExtraKeys(dst);
+  }
+
+  /** Merge identical keys. This is required to decide whether to add
+      alternatives. Script is generalized (set to null) on any conflict. */
+  public static ExtraKeys merge(List<ExtraKeys> kss)
+  {
+    Map<KeyValue, ExtraKey> merged_keys = new HashMap<KeyValue, ExtraKey>();
+    for (ExtraKeys ks : kss)
+      for (ExtraKey k : ks._ks)
+      {
+        ExtraKey k2 = merged_keys.get(k.kv);
+        if (k2 != null)
+          k = k.merge_with(k2);
+        merged_keys.put(k.kv, k);
+      }
+    return new ExtraKeys(merged_keys.values());
   }
 
   final static class ExtraKey
@@ -59,11 +71,30 @@ class ExtraKeys
     }
 
     /** Whether the key should be added to the keyboard. */
-    public boolean should_add(Query q)
+    public void compute(Set<KeyValue> dst, Query q)
     {
-      return
-        (q.script == null || script == null || q.script.equals(script))
-        && (alternatives.size() == 0 || !q.present.containsAll(alternatives));
+      // Add the alternative if it's the only one. The list of alternatives is
+      // enforced to be complete by the merging step. The same [kv] will not
+      // appear again in the list of extra keys with a different list of
+      // alternatives.
+      KeyValue k = (alternatives.size() == 1) ? alternatives.get(0) : kv;
+      if
+        ((q.script == null || script == null || q.script.equals(script))
+        && (alternatives.size() == 0 || !q.present.containsAll(alternatives)))
+        dst.add(k);
+    }
+
+    /** Return a new key from two. [kv] are expected to be equal. [script] is
+        generalized to [null] on any conflict. [alternatives] are concatenated.
+        */
+    public ExtraKey merge_with(ExtraKey k2)
+    {
+      String script_ =
+        (script != null && k2.script != null && script.equals(k2.script))
+        ? script : null;
+      List<KeyValue> alts = new ArrayList<KeyValue>(alternatives);
+      alts.addAll(k2.alternatives);
+      return new ExtraKey(kv, script_, alts);
     }
 
     /** Extra keys are of the form "key name" or "key name:alt 1:alt 2". */
