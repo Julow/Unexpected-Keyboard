@@ -182,6 +182,8 @@ final class Config
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
+    extra_keys.addAll(extra_keys_param);
+    extra_keys.addAll(extra_keys_custom);
     if (extra_keys_subtype != null)
     {
       Set<KeyValue> present = new HashSet<KeyValue>();
@@ -191,8 +193,6 @@ final class Config
       extra_keys_subtype.compute(extra_keys,
           new ExtraKeys.Query(kw.script, present));
     }
-    extra_keys.addAll(extra_keys_param);
-    extra_keys.addAll(extra_keys_custom);
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
       KeyboardData.number_row.getKeys(remove_keys);

@@ -20,7 +20,8 @@ class ExtraKeys
     _ks = ks;
   }
 
-  /** Add the keys that should be added to the keyboard into [dst]. */
+  /** Add the keys that should be added to the keyboard into [dst]. Keys
+      already added to [dst] might have an impact, see [ExtraKey.compute].  */
   public void compute(Set<KeyValue> dst, Query q)
   {
     for (ExtraKey k : _ks)
@@ -77,11 +78,13 @@ class ExtraKeys
       // enforced to be complete by the merging step. The same [kv] will not
       // appear again in the list of extra keys with a different list of
       // alternatives.
-      KeyValue k = (alternatives.size() == 1) ? alternatives.get(0) : kv;
+      // Selecting the dead key in the "Add key to the keyboard" option would
+      // disable this behavior for a key.
+      boolean use_alternative = (alternatives.size() == 1 && !dst.contains(kv));
       if
         ((q.script == null || script == null || q.script.equals(script))
         && (alternatives.size() == 0 || !q.present.containsAll(alternatives)))
-        dst.add(k);
+        dst.add(use_alternative ? alternatives.get(0) : kv);
     }
 
     /** Return a new key from two. [kv] are expected to be equal. [script] is
