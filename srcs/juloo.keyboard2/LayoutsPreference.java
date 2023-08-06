@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class LayoutsPreference extends ListGroupPreference
   static final List<String> DEFAULT = Collections.singletonList("system");
 
   /** Layout names as stored in the preferences. */
-  String[] _layout_names;
+  List<String> _layout_names;
   /** Text displayed for each layout in the dialog list. */
   String[] _layout_display_names;
 
@@ -27,7 +28,7 @@ public class LayoutsPreference extends ListGroupPreference
     super(ctx, attrs);
     setKey(KEY);
     Resources res = ctx.getResources();
-    _layout_names = res.getStringArray(R.array.pref_layout_values);
+    _layout_names = Arrays.asList(res.getStringArray(R.array.pref_layout_values));
     _layout_display_names = res.getStringArray(R.array.pref_layout_entries);
   }
 
@@ -47,7 +48,9 @@ public class LayoutsPreference extends ListGroupPreference
   @Override
   String label_of_value(String value, int i)
   {
-    return getContext().getString(R.string.pref_layouts_item, i + 1, value);
+    int value_i = _layout_names.indexOf(value);
+    String lname = value_i < 0 ? value : _layout_display_names[value_i];
+    return getContext().getString(R.string.pref_layouts_item, i + 1, lname);
   }
 
   @Override
@@ -72,7 +75,7 @@ public class LayoutsPreference extends ListGroupPreference
       .setAdapter(layouts, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface dialog, int which)
         {
-          callback.select(_layout_names[which]);
+          callback.select(_layout_names.get(which));
         }
       })
       .show();
