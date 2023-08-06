@@ -86,4 +86,15 @@
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Symbole greckie i matematyczne</string>
   <string name="key_descr_voice_typing">Pisanie głosowe</string>
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
 </resources>
