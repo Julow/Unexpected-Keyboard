@@ -97,4 +97,8 @@
   <!-- <string name="key_descr_replaceText">Replace</string> -->
   <!-- <string name="key_descr_textAssist">Assist</string> -->
   <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <string name="key_descr_ª">Indicador Ordinal</string>
+  <string name="key_descr_º">Indicador Ordinal</string>
+  <string name="key_descr_superscript">Sobrescrito</string>
+  <string name="key_descr_subscript">Subscrito</string>
 </resources>
