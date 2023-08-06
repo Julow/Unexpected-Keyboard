@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Deckkraft des Tastaturhintergrunds anpassen</string>
   <string name="pref_key_opacity">Deckkraft der Tasten anpassen</string>
   <string name="pref_key_activated_opacity">Deckkraft gedrückter Tasten anpassen</string>
-  <string name="pref_layout_title">Tastaturlayout ändern</string>
   <string name="pref_layout_e_system">Systemeinstellung</string>
   <string name="pref_layout_e_custom">Eigenes Layout</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Akzente</string>
   <string name="pref_accents_e_all_installed">Akzente für alle installierten Sprachen anzeigen</string>
   <string name="pref_accents_e_selected">Akzente nur für die gewählte Sprache anzeigen</string>
@@ -27,6 +28,8 @@
   <string name="pref_numpad_layout_e_high_first">Hohe Ziffern zuerst</string>
   <string name="pref_numpad_layout_e_low_first">Niedrige Ziffern zuerst</string>
   <string name="pref_extra_keys_title">Zusätzliche Zeichen zur Tastatur hinzufügen</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Zweites Layout</string>
   <string name="pref_second_layout_none">Keines</string>
   <string name="pref_category_typing">Tippen</string>
@@ -43,6 +46,8 @@
   <string name="pref_switch_input_immediate_summary">Verhalten der Tastaturumschalttaste</string>
   <string name="pref_vibrate_title">Vibration</string>
   <string name="pref_vibrate_summary">Vibration bei Tastendruck ein-/ausschalten</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Design</string>
   <string name="pref_margin_bottom_title">Unterer Abstand</string>
   <string name="pref_keyboard_height_title">Höhe der Tastatur</string>
@@ -80,6 +85,9 @@
   <string name="key_action_send">Senden</string>
   <string name="launcher_button_imesettings">Tastatur aktivieren</string>
   <string name="launcher_description">Diese App ist eine virtuelle Tastatur. Tippe auf den Button unten und aktivere Unexpected Keyboard in den Systemeinstellungen.</string>
-  <string name="launcher_sourcecode">Dies ist eine freie und quelloffene App. Du findest den Quellcode auf <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>. Dort können auch Bugs gemeldet werden.</string>
+  <string name="launcher_sourcecode">Dies ist eine freie und quelloffene App. Du findest den Quellcode auf Github. Dort können auch Bugs gemeldet werden.</string>
   <string name="launcher_tryhere">Nach Aktivierung kannst du die Tastatur hier ausprobieren:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
 </resources>

@@ -2,7 +2,7 @@
 <resources>
   <!--DO NOT EDIT. This file is generated, see gen_layouts.py.-->
   <string-array name="pref_layout_values">
-    <item>none</item>
+    <item>system</item>
     <item>latn_qwerty_us</item>
     <item>latn_colemak</item>
     <item>latn_dvorak</item>
@@ -43,13 +43,13 @@
     <item>custom</item>
   </string-array>
   <string-array name="pref_layout_entries">
-    <item>None</item>
+    <item>@string/pref_layout_e_system</item>
     <item>QWERTY (US)</item>
     <item>Colemak</item>
     <item>Dvorak</item>
     <item>Arabic Alt</item>
     <item>Arabic PC</item>
-    <item>Arabic (کوردی)</item>
+    <item>Kurdish (کوردی)</item>
     <item>Persian PC</item>
     <item>বাংলা (জাতীয়)</item>
     <item>বাংলা (প্রভাত)</item>

@@ -14,7 +14,7 @@
   </row>
   <row>
     <key shift="0.5" key0="a" key1="tab" key2="`" key4="ą"/>
-    <key key0="s" key1="loc accent_ring" key3="loc ß" key4="ś"/>
+    <key key0="s" key1="loc accent_ring" key2="loc §" key3="loc ß" key4="ś"/>
     <key key0="d" key1="loc accent_grave" key2="loc £" key3="loc accent_aigu"/>
     <key key0="f" key1="loc accent_dot_above" key4="loc accent_ogonek"/>
     <key key0="g" key1="loc accent_caron" key2="-" key3="_"/>
@@ -26,7 +26,7 @@
   <row>
     <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="z" key4="ż"/>
-    <key key0="x" key4="ź"/>
+    <key key0="x" key2="loc †" key4="ź"/>
     <key key0="c" key1="loc accent_cedille" key2="&lt;" key3="." key4="ć"/>
     <key key0="v" key2="&gt;" key3=","/>
     <key key0="b" key2="\?" key3="/"/>

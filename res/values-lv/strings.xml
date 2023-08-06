@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Pielāgot tastatūras fona necaurredzamību</string>
   <string name="pref_key_opacity">Pielāgot taustiņu necaurredzamību</string>
   <string name="pref_key_activated_opacity">Pielāgot piespiesta taustiņa necaurredzamību</string>
-  <string name="pref_layout_title">Mainīt tastatūras izkārtojumu</string>
   <string name="pref_layout_e_system">Ierīces iestatījumi</string>
   <string name="pref_layout_e_custom">Pielāgots izkārtojums</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Uzsvara zīmes</string>
   <string name="pref_accents_e_all_installed">Rādīt uzsvara zīmes visām uzstādītajām valodām</string>
   <string name="pref_accents_e_selected">Rādīt uzsvara zīmes tikai atlasītajām valodām</string>
@@ -27,6 +28,8 @@
   <string name="pref_numpad_layout_e_high_first">Vispirms lielākie cipari</string>
   <string name="pref_numpad_layout_e_low_first">Vispirms mazākie cipari</string>
   <string name="pref_extra_keys_title">Pievienot tastatūrai taustiņus</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Otrējais izkārtojums</string>
   <string name="pref_second_layout_none">Neviens</string>
   <string name="pref_category_typing">Rakstīšana</string>
@@ -43,6 +46,8 @@
   <string name="pref_switch_input_immediate_summary">Tastatūras pārslēgšanas taustiņa uzvedība</string>
   <string name="pref_vibrate_title">Trīcēšana</string>
   <string name="pref_vibrate_summary">Iespējot/atspējot taustiņa piespiešanas trīcēšanu</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Izskata pielāgojumi</string>
   <string name="pref_margin_bottom_title">Apakšējā apmale</string>
   <string name="pref_keyboard_height_title">Tastatūras augstums</string>
@@ -80,6 +85,9 @@
   <string name="key_action_send">Sūtīt</string>
   <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
   <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
-  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
+  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on Github.</string> -->
   <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
 </resources>

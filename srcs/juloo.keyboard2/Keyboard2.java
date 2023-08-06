@@ -26,13 +26,12 @@ import java.util.Set;
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-  static private final String TAG = "Keyboard2";
-
   private Keyboard2View _keyboardView;
   private KeyEventHandler _keyeventhandler;
   // If not 'null', the layout to use instead of [_currentTextLayout].
   private KeyboardData _currentSpecialLayout;
-  private Current_text_layout _currentTextLayout;
+  /** Current layout index in [Config.layouts]. */
+  private int _currentTextLayout;
   // Layout associated with the currently selected locale. Not 'null'.
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
@@ -40,28 +39,34 @@ public class Keyboard2 extends InputMethodService
 
   private Config _config;
 
-  private boolean _debug_logs = false;
-
   /** Layout currently visible. */
   KeyboardData current_layout()
   {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
-    KeyboardData layout;
-    if (_currentTextLayout == Current_text_layout.SECONDARY)
-      layout = _config.second_layout;
-    else if (_config.layout == null)
+    KeyboardData layout = null;
+    if (_currentTextLayout >= _config.layouts.size())
+      _currentTextLayout = 0;
+    if (_currentTextLayout < _config.layouts.size())
+      layout = _config.layouts.get(_currentTextLayout);
+    if (layout == null)
       layout = _localeTextLayout;
-    else
-      layout = _config.layout;
     return _config.modify_layout(layout);
   }
 
-  void setTextLayout(Current_text_layout layout)
+  void setTextLayout(int l)
   {
-    _currentTextLayout = layout;
+    if (l == _currentTextLayout)
+      return;
+    _currentTextLayout = l;
     _currentSpecialLayout = null;
     _keyboardView.setKeyboard(current_layout());
+  }
+
+  void incrTextLayout(int delta)
+  {
+    int s = _config.layouts.size();
+    setTextLayout((_currentTextLayout + delta + s) % s);
   }
 
   void setSpecialLayout(KeyboardData l)
@@ -73,6 +78,12 @@ public class Keyboard2 extends InputMethodService
   KeyboardData loadLayout(int layout_id)
   {
     return KeyboardData.load(getResources(), layout_id);
+  }
+
+  /** Load a layout that contains a numpad (eg. the pin entry). */
+  KeyboardData loadNumpad(int layout_id)
+  {
+    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id));
   }
 
   @Override
@@ -87,7 +98,7 @@ public class Keyboard2 extends InputMethodService
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
-    _debug_logs = getResources().getBoolean(R.bool.debug_logs);
+    Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -158,17 +169,8 @@ public class Keyboard2 extends InputMethodService
       }
     }
     if (default_layout == null)
-      default_layout = KeyboardData.load(getResources(), R.xml.latn_qwerty_us);
+      default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
-    if (_config.second_layout == null)
-    {
-      _config.shouldOfferSwitchingToSecond = false;
-      _currentTextLayout = Current_text_layout.PRIMARY;
-    }
-    else
-    {
-      _config.shouldOfferSwitchingToSecond = true;
-    }
   }
 
   private String actionLabel_of_imeAction(int action)
@@ -239,30 +241,21 @@ public class Keyboard2 extends InputMethodService
     return null;
   }
 
-  private void log_editor_info(EditorInfo info)
-  {
-    LogPrinter p = new LogPrinter(Log.DEBUG, TAG);
-    info.dump(p, "");
-    if (info.extras != null)
-      Log.d(TAG, "extras: "+info.extras.toString());
-    Log.d(TAG, "swapEnterActionKey: "+_config.swapEnterActionKey);
-    Log.d(TAG, "actionLabel: "+_config.actionLabel);
-  }
-
-  private void refresh_special_layout(EditorInfo info)
+  private KeyboardData refresh_special_layout(EditorInfo info)
   {
     switch (info.inputType & InputType.TYPE_MASK_CLASS)
     {
       case InputType.TYPE_CLASS_NUMBER:
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
-        _currentSpecialLayout =
-          _config.modify_numpad(KeyboardData.load(getResources(), R.xml.pin));
-        break;
+        if (_config.pin_entry_enabled)
+          return loadNumpad(R.xml.pin);
+        else
+          return loadNumpad(R.xml.numeric);
       default:
-        _currentSpecialLayout = null;
         break;
     }
+    return null;
   }
 
   @Override
@@ -270,12 +263,11 @@ public class Keyboard2 extends InputMethodService
   {
     refresh_config();
     refresh_action_label(info);
-    refresh_special_layout(info);
+    _currentSpecialLayout = refresh_special_layout(info);
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(info);
     setInputView(_keyboardView);
-    if (_debug_logs)
-      log_editor_info(info);
+    Logs.debug_startup_input_view(info, _config);
   }
 
   @Override
@@ -397,7 +389,7 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_NUMERIC:
-          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.numeric)));
+          setSpecialLayout(loadNumpad(R.xml.numeric));
           break;
 
         case SWITCH_EMOJI:
@@ -427,17 +419,16 @@ public class Keyboard2 extends InputMethodService
             conn.performEditorAction(actionId);
           break;
 
-        case SWITCH_SECOND:
-          if (_config.second_layout != null)
-            setTextLayout(Current_text_layout.SECONDARY);
+        case SWITCH_FORWARD:
+          incrTextLayout(1);
           break;
 
-        case SWITCH_SECOND_BACK:
-          setTextLayout(Current_text_layout.PRIMARY);
+        case SWITCH_BACKWARD:
+          incrTextLayout(-1);
           break;
 
         case SWITCH_GREEKMATH:
-          setSpecialLayout(_config.modify_numpad(loadLayout(R.xml.greekmath)));
+          setSpecialLayout(loadNumpad(R.xml.greekmath));
           break;
 
         case CAPS_LOCK:
@@ -476,11 +467,5 @@ public class Keyboard2 extends InputMethodService
   private View inflate_view(int layout)
   {
     return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
-  }
-
-  private static enum Current_text_layout
-  {
-    PRIMARY,
-    SECONDARY
   }
 }

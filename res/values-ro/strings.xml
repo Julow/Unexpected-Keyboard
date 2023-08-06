@@ -10,9 +10,10 @@
   <string name="pref_keyboard_opacity">Modifică opacitatea fundalului tastaturii</string>
   <string name="pref_key_opacity">Modifică opacitatea tastelor</string>
   <string name="pref_key_activated_opacity">Modifică opacitatea tastei apăsate</string>
-  <string name="pref_layout_title">Schimbă aranjamentul tastaturii</string>
   <string name="pref_layout_e_system">Setări de Sistem</string>
   <string name="pref_layout_e_custom">Aranjament personalizat</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
   <string name="pref_accents_title">Accente</string>
   <string name="pref_accents_e_all_installed">Arată accentele pentru toate limbile instalate</string>
   <string name="pref_accents_e_selected">Aratp accentele doar pentru limba selectată</string>
@@ -27,6 +28,8 @@
   <string name="pref_numpad_layout_e_high_first">Mai întâi cifrele mari</string>
   <string name="pref_numpad_layout_e_low_first">Mai întâi cifrele mici</string>
   <string name="pref_extra_keys_title">Adaugă taste pe tastatură</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Aranjament secundar</string>
   <string name="pref_second_layout_none">Nimic</string>
   <string name="pref_category_typing">Tipărire</string>
@@ -43,6 +46,8 @@
   <string name="pref_switch_input_immediate_summary">Comportamentul tastei pentru schimbarea tastaturii</string>
   <string name="pref_vibrate_title">Vibrație</string>
   <string name="pref_vibrate_summary">Activați/dezactivați vibrația la apăsarea tastelor</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Stil</string>
   <string name="pref_margin_bottom_title">Marginea de jos</string>
   <string name="pref_keyboard_height_title">Înălțimea tastaturii</string>
@@ -80,6 +85,9 @@
   <string name="key_action_send">Trimite</string>
   <string name="launcher_button_imesettings">Activează tastatura</string>
   <string name="launcher_description">Această aplicație este o tastatură virtuală. Accesați setările sistemului făcând clic pe butonul de mai jos și activați tastatura Unexpected.</string>
-  <string name="launcher_sourcecode">Aceasta este o aplicație gratuită și open source. Puteți găsi codul sursă sau raporta erori folosind link-ul <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
+  <string name="launcher_sourcecode">Aceasta este o aplicație gratuită și open source. Puteți găsi codul sursă sau raporta erori folosind link-ul Github.</string>
   <string name="launcher_tryhere">După activare, puteți să încercați tastatura aici:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
 </resources>
