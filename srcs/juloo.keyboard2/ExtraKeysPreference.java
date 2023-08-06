@@ -44,6 +44,8 @@ public class ExtraKeysPreference extends PreferenceCategory
     "£",
     "§",
     "†",
+    "ª",
+    "º",
     "switch_greekmath",
     "capslock",
     "copy",
@@ -57,6 +59,8 @@ public class ExtraKeysPreference extends PreferenceCategory
     "replaceText",
     "textAssist",
     "autofill",
+    "superscript",
+    "subscript",
   };
 
   /** Whether an extra key is enabled by default. */
@@ -90,6 +94,10 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "redo": id = R.string.key_descr_redo; break;
       case "textAssist": id = R.string.key_descr_textAssist; break;
       case "autofill": id = R.string.key_descr_autofill; break;
+      case "ª": id = R.string.key_descr_ª; break;
+      case "º": id = R.string.key_descr_º; break;
+      case "superscript": id = R.string.key_descr_superscript; break;
+      case "subscript": id = R.string.key_descr_subscript; break;
     }
     if (id == 0)
       return null;

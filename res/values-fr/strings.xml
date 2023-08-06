@@ -97,4 +97,8 @@
   <!-- <string name="key_descr_replaceText">Replace</string> -->
   <!-- <string name="key_descr_textAssist">Assist</string> -->
   <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
 </resources>
