@@ -278,10 +278,20 @@ final class KeyValue
     return keyeventKey(String.valueOf((char)symbol), code, flags | FLAG_KEY_FONT);
   }
 
-  private static KeyValue editingKey(String symbol, Editing action)
+  private static KeyValue editingKey(String symbol, Editing action, int flags)
   {
     return new KeyValue(symbol, Kind.Editing, action.ordinal(),
-        FLAG_SPECIAL | FLAG_SECONDARY | FLAG_SMALLER_FONT);
+        flags | FLAG_SPECIAL | FLAG_SECONDARY);
+  }
+
+  private static KeyValue editingKey(String symbol, Editing action)
+  {
+    return editingKey(symbol, action, FLAG_SMALLER_FONT);
+  }
+
+  private static KeyValue editingKey(int symbol, Editing action)
+  {
+    return editingKey(String.valueOf((char)symbol), action, FLAG_KEY_FONT);
   }
 
   /** A key that do nothing but has a unique ID. */
@@ -296,7 +306,7 @@ final class KeyValue
     if (str.length() == 1)
       return new KeyValue(str, Kind.Char, str.charAt(0), 0);
     else
-      return new KeyValue(str, Kind.String, 0, 0);
+      return new KeyValue(str, Kind.String, 0, FLAG_SMALLER_FONT);
   }
 
   public static KeyValue getKeyByName(String name)
@@ -433,17 +443,17 @@ final class KeyValue
       case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
       case "zwnj": return charKey("zwnj", '\u200C', 0); // zero-width non joiner (prevents unintended ligature)
 
-      case "copy": return editingKey("copy", Editing.COPY);
-      case "paste": return editingKey("paste", Editing.PASTE);
-      case "cut": return editingKey("cut", Editing.CUT);
-      case "selectAll": return editingKey("s. all", Editing.SELECT_ALL);
-      case "shareText": return editingKey("share", Editing.SHARE);
-      case "pasteAsPlainText": return editingKey("<paste>", Editing.PASTE_PLAIN);
-      case "undo": return editingKey("undo", Editing.UNDO);
-      case "redo": return editingKey("redo", Editing.REDO);
-      case "replaceText": return editingKey("repl.", Editing.REPLACE);
-      case "textAssist": return editingKey("assist", Editing.ASSIST);
-      case "autofill": return editingKey("auto.", Editing.AUTOFILL);
+      case "copy": return editingKey(0xE030, Editing.COPY);
+      case "paste": return editingKey(0xE032, Editing.PASTE);
+      case "cut": return editingKey(0xE031, Editing.CUT);
+      case "selectAll": return editingKey(0xE033, Editing.SELECT_ALL);
+      case "shareText": return editingKey(0xE034, Editing.SHARE);
+      case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
+      case "undo": return editingKey(0xE036, Editing.UNDO);
+      case "redo": return editingKey(0xE037, Editing.REDO);
+      case "replaceText": return editingKey("repl", Editing.REPLACE);
+      case "textAssist": return editingKey(0xE038, Editing.ASSIST);
+      case "autofill": return editingKey("auto", Editing.AUTOFILL);
       default: return makeStringKey(name);
     }
   }

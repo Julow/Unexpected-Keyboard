@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">طرح صفارشی</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
-  <string name="pref_accents_title">لهجه‌ها</string>
-  <string name="pref_accents_e_all_installed">نمایش لهجه‌ها برای تمام زبان‌هی نصب شده</string>
-  <string name="pref_accents_e_selected">فقط نمایش لهجه‌ها برای زبان‌های انتخاب شده</string>
-  <string name="pref_accents_e_none">پنهان کردن لهجه‌ها</string>
   <string name="pref_show_numpad_title">نمایش پد شماره‌ها</string>
   <string name="pref_show_numpad_never">هرگز</string>
   <string name="pref_show_numpad_landscape">فقط در حالت افقی</string>
@@ -90,4 +86,19 @@
   <!-- <string name="key_descr_capslock">Caps lock</string> -->
   <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
   <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
 </resources>

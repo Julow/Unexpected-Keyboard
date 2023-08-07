@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">Disposition personnalisée</string>
   <string name="pref_layouts_add">Ajouter un clavier alternatif</string>
   <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
-  <string name="pref_accents_title">Accents</string>
-  <string name="pref_accents_e_all_installed">Afficher les accents pour les langues installées</string>
-  <string name="pref_accents_e_selected">Afficher les accents pour la langue sélectionnée</string>
-  <string name="pref_accents_e_none">Cacher les accents</string>
   <string name="pref_show_numpad_title">Afficher le pavé numérique</string>
   <string name="pref_show_numpad_never">Jamais</string>
   <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
@@ -90,4 +86,19 @@
   <string name="key_descr_capslock">Verrouillage majuscules</string>
   <string name="key_descr_switch_greekmath">Symboles mathématiques</string>
   <string name="key_descr_voice_typing">Saisie vocale</string>
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
 </resources>

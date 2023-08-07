@@ -44,6 +44,8 @@ public class ExtraKeysPreference extends PreferenceCategory
     "£",
     "§",
     "†",
+    "ª",
+    "º",
     "switch_greekmath",
     "capslock",
     "copy",
@@ -57,6 +59,8 @@ public class ExtraKeysPreference extends PreferenceCategory
     "replaceText",
     "textAssist",
     "autofill",
+    "superscript",
+    "subscript",
   };
 
   /** Whether an extra key is enabled by default. */
@@ -80,6 +84,20 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "capslock": id = R.string.key_descr_capslock; break;
       case "switch_greekmath": id = R.string.key_descr_switch_greekmath; break;
       case "voice_typing": id = R.string.key_descr_voice_typing; break;
+      case "copy": id = R.string.key_descr_copy; break;
+      case "paste": id = R.string.key_descr_paste; break;
+      case "cut": id = R.string.key_descr_cut; break;
+      case "selectAll": id = R.string.key_descr_selectAll; break;
+      case "shareText": id = R.string.key_descr_shareText; break;
+      case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
+      case "undo": id = R.string.key_descr_undo; break;
+      case "redo": id = R.string.key_descr_redo; break;
+      case "textAssist": id = R.string.key_descr_textAssist; break;
+      case "autofill": id = R.string.key_descr_autofill; break;
+      case "ª": id = R.string.key_descr_ª; break;
+      case "º": id = R.string.key_descr_º; break;
+      case "superscript": id = R.string.key_descr_superscript; break;
+      case "subscript": id = R.string.key_descr_subscript; break;
     }
     if (id == 0)
       return null;

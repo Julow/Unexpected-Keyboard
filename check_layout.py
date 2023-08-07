@@ -36,17 +36,22 @@ def unexpected_keys(keys, symbols, msg):
 
 def parse_layout(fname):
     keys = set()
+    dup = set()
     root = ET.parse(fname).getroot()
     if root.tag != "keyboard":
         return None
     for row in root:
         for key in row:
             for attr in key.keys():
-                keys.add(key.get(attr).removeprefix("\\"))
-    return root, keys
+                if attr.startswith("key"):
+                    k = key.get(attr).removeprefix("\\")
+                    if k in keys: dup.add(k)
+                    keys.add(k)
+    return root, keys, dup
 
 def check_layout(layout):
-    root, keys = layout
+    root, keys, dup = layout
+    if len(dup) > 0: warn("Duplicate keys: " + key_list_str(dup))
     missing_some_of(keys, "~!@#$%^&*(){}`[]=\\-_;:/.,?<>'\"+|", "ASCII punctuation")
     missing_some_of(keys, "0123456789", "digits")
     missing_required(keys,

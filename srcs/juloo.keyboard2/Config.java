@@ -49,7 +49,6 @@ final class Config
   public int keyActivatedOpacity; // 0 - 255
   public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
-  public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
@@ -153,7 +152,6 @@ final class Config
     characterSize =
       _prefs.getFloat("character_size", 1.f)
       * characterSizeScale;
-    accents = Integer.valueOf(_prefs.getString("accents", "1"));
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
@@ -184,10 +182,17 @@ final class Config
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
-    if (extra_keys_subtype != null)
-      extra_keys_subtype.compute(extra_keys, kw.script);
     extra_keys.addAll(extra_keys_param);
     extra_keys.addAll(extra_keys_custom);
+    if (extra_keys_subtype != null)
+    {
+      Set<KeyValue> present = new HashSet<KeyValue>();
+      kw.getKeys(present);
+      present.addAll(extra_keys_param);
+      present.addAll(extra_keys_custom);
+      extra_keys_subtype.compute(extra_keys,
+          new ExtraKeys.Query(kw.script, present));
+    }
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
       KeyboardData.number_row.getKeys(remove_keys);

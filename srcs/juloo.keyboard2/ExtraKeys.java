@@ -1,6 +1,9 @@
 package juloo.keyboard2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,50 +11,118 @@ import java.util.Set;
 
 class ExtraKeys
 {
-  Map<String, List<KeyValue>> _keys_per_script;
+  public static final ExtraKeys EMPTY = new ExtraKeys(Collections.EMPTY_LIST);
 
-  public ExtraKeys()
+  Collection<ExtraKey> _ks;
+
+  public ExtraKeys(Collection<ExtraKey> ks)
   {
-    _keys_per_script = new HashMap<String, List<KeyValue>>();
+    _ks = ks;
   }
 
-  public void add_keys_for_script(String script, List<KeyValue> kvs)
+  /** Add the keys that should be added to the keyboard into [dst]. Keys
+      already added to [dst] might have an impact, see [ExtraKey.compute].  */
+  public void compute(Set<KeyValue> dst, Query q)
   {
-    List<KeyValue> ks = _keys_per_script.get(script);
-    if (ks == null) ks = new ArrayList<KeyValue>();
-    ks.addAll(kvs);
-    _keys_per_script.put(script, ks);
+    for (ExtraKey k : _ks)
+      k.compute(dst, q);
   }
 
-  /** Add the keys that should be added to the keyboard into [dst]. [null] is
-      a valid script. */
-  public void compute(Set<KeyValue> dst, String script)
+  public static ExtraKeys parse(String script, String str)
   {
-    if (script == null)
-    {
-      for (String sc : _keys_per_script.keySet())
-        get_keys_of_script(dst, sc);
-    }
-    else
-    {
-      get_keys_of_script(dst, null);
-      get_keys_of_script(dst, script);
-    }
-  }
-
-  void get_keys_of_script(Set<KeyValue> dst, String script)
-  {
-    List<KeyValue> ks = _keys_per_script.get(script);
-    if (ks != null)
-      dst.addAll(ks);
-  }
-
-  public static List<KeyValue> parse_extra_keys(String str)
-  {
-    List<KeyValue> dst = new ArrayList<KeyValue>();
+    Collection<ExtraKey> dst = new ArrayList<ExtraKey>();
     String[] ks = str.split("\\|");
     for (int i = 0; i < ks.length; i++)
-      dst.add(KeyValue.getKeyByName(ks[i]));
-    return dst;
+      dst.add(ExtraKey.parse(ks[i], script));
+    return new ExtraKeys(dst);
+  }
+
+  /** Merge identical keys. This is required to decide whether to add
+      alternatives. Script is generalized (set to null) on any conflict. */
+  public static ExtraKeys merge(List<ExtraKeys> kss)
+  {
+    Map<KeyValue, ExtraKey> merged_keys = new HashMap<KeyValue, ExtraKey>();
+    for (ExtraKeys ks : kss)
+      for (ExtraKey k : ks._ks)
+      {
+        ExtraKey k2 = merged_keys.get(k.kv);
+        if (k2 != null)
+          k = k.merge_with(k2);
+        merged_keys.put(k.kv, k);
+      }
+    return new ExtraKeys(merged_keys.values());
+  }
+
+  final static class ExtraKey
+  {
+    /** The key to add. */
+    final KeyValue kv;
+    /** The key will be added to layouts of the same script. If null, might be
+        added to layouts of any script. */
+    final String script;
+    /** The key will not be added to layout that already contain all the
+        alternatives. */
+    final List<KeyValue> alternatives;
+
+    ExtraKey(KeyValue kv_, String script_, List<KeyValue> alts_)
+    {
+      kv = kv_;
+      script = script_;
+      alternatives = alts_;
+    }
+
+    /** Whether the key should be added to the keyboard. */
+    public void compute(Set<KeyValue> dst, Query q)
+    {
+      // Add the alternative if it's the only one. The list of alternatives is
+      // enforced to be complete by the merging step. The same [kv] will not
+      // appear again in the list of extra keys with a different list of
+      // alternatives.
+      // Selecting the dead key in the "Add key to the keyboard" option would
+      // disable this behavior for a key.
+      boolean use_alternative = (alternatives.size() == 1 && !dst.contains(kv));
+      if
+        ((q.script == null || script == null || q.script.equals(script))
+        && (alternatives.size() == 0 || !q.present.containsAll(alternatives)))
+        dst.add(use_alternative ? alternatives.get(0) : kv);
+    }
+
+    /** Return a new key from two. [kv] are expected to be equal. [script] is
+        generalized to [null] on any conflict. [alternatives] are concatenated.
+        */
+    public ExtraKey merge_with(ExtraKey k2)
+    {
+      String script_ =
+        (script != null && k2.script != null && script.equals(k2.script))
+        ? script : null;
+      List<KeyValue> alts = new ArrayList<KeyValue>(alternatives);
+      alts.addAll(k2.alternatives);
+      return new ExtraKey(kv, script_, alts);
+    }
+
+    /** Extra keys are of the form "key name" or "key name:alt 1:alt 2". */
+    public static ExtraKey parse(String str, String script)
+    {
+      String[] strs = str.split(":");
+      KeyValue kv = KeyValue.getKeyByName(strs[0]);
+      KeyValue[] alts = new KeyValue[strs.length-1];
+      for (int i = 1; i < strs.length; i++)
+        alts[i-1] = KeyValue.getKeyByName(strs[i]);
+      return new ExtraKey(kv, script, Arrays.asList(alts));
+    }
+  }
+
+  public final static class Query
+  {
+    /** Script of the current layout. Might be null. */
+    final String script;
+    /** Keys present on the layout. */
+    final Set<KeyValue> present;
+
+    public Query(String script_, Set<KeyValue> present_)
+    {
+      script = script_;
+      present = present_;
+    }
   }
 }

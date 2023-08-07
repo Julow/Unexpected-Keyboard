@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">Layout personalizado</string>
   <string name="pref_layouts_add">Adicione um layout alternativo</string>
   <string name="pref_layouts_item">Layout %1$d: %2$s</string>
-  <string name="pref_accents_title">Acentuação</string>
-  <string name="pref_accents_e_all_installed">Mostrar acentos de todos os idiomas instalados</string>
-  <string name="pref_accents_e_selected">Mostrar acentos apenas do idioma selecionado</string>
-  <string name="pref_accents_e_none">Ocultar acentos</string>
   <string name="pref_show_numpad_title">Mostrar Teclado Numérico</string>
   <string name="pref_show_numpad_never">Nunca</string>
   <string name="pref_show_numpad_landscape">Somente no modo paisagem</string>
@@ -90,4 +86,19 @@
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Grego &amp; símbolos matemáticos</string>
   <string name="key_descr_voice_typing">Digitação por voz</string>
+  <string name="key_descr_copy">Copiar</string>
+  <string name="key_descr_paste">Colar</string>
+  <string name="key_descr_cut">Cortar</string>
+  <string name="key_descr_selectAll">Selecionar tudo</string>
+  <string name="key_descr_shareText">Compartilhar texto</string>
+  <string name="key_descr_pasteAsPlainText">Colar texto não formatado</string>
+  <string name="key_descr_undo">Desfazer</string>
+  <string name="key_descr_redo">Refazer</string>
+  <string name="key_descr_replaceText">Substituir</string>
+  <string name="key_descr_textAssist">Assistente</string>
+  <string name="key_descr_autofill">Autopreenchimento</string>
+  <string name="key_descr_ª">Indicador Ordinal</string>
+  <string name="key_descr_º">Indicador Ordinal</string>
+  <string name="key_descr_superscript">Sobrescrito</string>
+  <string name="key_descr_subscript">Subscrito</string>
 </resources>

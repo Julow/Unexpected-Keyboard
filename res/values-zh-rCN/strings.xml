@@ -14,10 +14,6 @@
   <string name="pref_layout_e_custom">自定义布局</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
-  <string name="pref_accents_title">声调</string>
-  <string name="pref_accents_e_all_installed">显示所有安装的语言的声调符号</string>
-  <string name="pref_accents_e_selected">只显示选择的语言的声调符号</string>
-  <string name="pref_accents_e_none">隐藏声调符号</string>
   <string name="pref_show_numpad_title">显示数字小键盘</string>
   <string name="pref_show_numpad_never">从不</string>
   <string name="pref_show_numpad_landscape">只在横屏显示</string>
@@ -90,4 +86,19 @@
   <!-- <string name="key_descr_capslock">Caps lock</string> -->
   <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
   <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
 </resources>

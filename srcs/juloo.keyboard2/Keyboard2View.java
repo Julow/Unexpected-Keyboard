@@ -407,7 +407,12 @@ public class Keyboard2View extends View
       x += keyW / 2f;
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
-    canvas.drawText(kv.getString(), x, y, p);
+    String label = kv.getString();
+    int label_len = label.length();
+    // Limit the label of string keys to 3 characters
+    if (label_len > 3 && kv.getKind() == KeyValue.Kind.String)
+      label_len = 3;
+    canvas.drawText(label, 0, label_len, x, y, p);
   }
 
   private void drawIndication(Canvas canvas, String indication, float x,
