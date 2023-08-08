@@ -13,10 +13,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class LayoutsPreference extends ListGroupPreference
+public class LayoutsPreference extends ListGroupPreference<String>
 {
   static final String KEY = "layouts";
   static final List<String> DEFAULT = Collections.singletonList("system");
+  static final ListGroupPreference.Serializer<String> SERIALIZER =
+    new ListGroupPreference.StringSerializer();
 
   /** Layout names as stored in the preferences. */
   List<String> _layout_names;
@@ -34,7 +36,7 @@ public class LayoutsPreference extends ListGroupPreference
 
   public static List<String> load_from_preferences(SharedPreferences prefs)
   {
-    return load_from_preferences(KEY, prefs, DEFAULT);
+    return load_from_preferences(KEY, prefs, DEFAULT, SERIALIZER);
   }
 
   @Override
@@ -66,6 +68,9 @@ public class LayoutsPreference extends ListGroupPreference
   {
     return (_values.size() > 1);
   }
+
+  @Override
+  Serializer<String> get_serializer() { return SERIALIZER; }
 
   void select(final SelectionCallback callback)
   {

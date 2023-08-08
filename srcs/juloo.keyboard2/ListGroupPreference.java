@@ -15,10 +15,10 @@ import org.json.JSONException;
 /** A list of preferences where the users can add items to the end and modify
     and remove items. Backed by a string list. Implement user selection in
     [select()]. */
-public abstract class ListGroupPreference extends PreferenceGroup
+public abstract class ListGroupPreference<E> extends PreferenceGroup
 {
   boolean _attached = false;
-  List<String> _values;
+  List<E> _values;
   /** The "add" button currently displayed. */
   AddButton _add_button = null;
 
@@ -27,16 +27,13 @@ public abstract class ListGroupPreference extends PreferenceGroup
     super(context, attrs);
     setOrderingAsAdded(true);
     setLayoutResource(R.layout.pref_listgroup_group);
-    _values = new ArrayList<String>();
+    _values = new ArrayList<E>();
   }
 
   /** Overrideable */
 
   /** The label to display on the item for a given value. */
-  String label_of_value(String value, int i)
-  {
-    return value;
-  }
+  abstract String label_of_value(E value, int i);
 
   /** Called every time the list changes and allows to change the "Add" button
       appearance.
@@ -58,29 +55,34 @@ public abstract class ListGroupPreference extends PreferenceGroup
 
   /** Called when an item is added or modified. Returns [null] to cancel the
       action. */
-  abstract void select(SelectionCallback callback);
+  abstract void select(SelectionCallback<E> callback);
+
+  /** A separate class is used as the same serializer must be used in the
+      static context. See [Serializer] below. */
+  abstract Serializer<E> get_serializer();
 
   /** Load/save utils */
 
   /** Read a value saved by preference from a [SharedPreferences] object.
+      [serializer] must be the same that is returned by [get_serializer()].
       Returns [null] on error. */
-  static List<String> load_from_preferences(String key,
-      SharedPreferences prefs, List<String> def)
+  static <E> List<E> load_from_preferences(String key,
+      SharedPreferences prefs, List<E> def, Serializer<E> serializer)
   {
     String s = prefs.getString(key, null);
-    return (s != null) ? load_from_string(s) : def;
+    return (s != null) ? load_from_string(s, serializer) : def;
   }
 
   /** Decode a list of string previously encoded with [save_to_string]. Returns
       [null] on error. */
-  static List<String> load_from_string(String inp)
+  static <E> List<E> load_from_string(String inp, Serializer<E> serializer)
   {
     try
     {
-      List<String> l = new ArrayList<String>();
+      List<E> l = new ArrayList<E>();
       JSONArray arr = new JSONArray(inp);
       for (int i = 0; i < arr.length(); i++)
-        l.add(arr.getString(i));
+        l.add(serializer.load_item(arr.get(i)));
       return l;
     }
     catch (JSONException e)
@@ -91,29 +93,32 @@ public abstract class ListGroupPreference extends PreferenceGroup
 
   /** Encode a list of string so it can be passed to
       [Preference.persistString()]. Decode with [load_from_string]. */
-  static String save_to_string(List<String> l)
+  static <E> String save_to_string(List<E> items, Serializer<E> serializer)
   {
-    return (new JSONArray(l)).toString();
+    List<Object> serialized_items = new ArrayList<Object>();
+    for (E it : items)
+      serialized_items.add(serializer.save_item(it));
+    return (new JSONArray(serialized_items)).toString();
   }
 
   /** Protected API */
 
   /** Set the values. If [persist] is [true], persist into the store. */
-  void set_values(List<String> vs, boolean persist)
+  void set_values(List<E> vs, boolean persist)
   {
     _values = vs;
     reattach();
     if (persist)
-      persistString(save_to_string(vs));
+      persistString(save_to_string(vs, get_serializer()));
   }
 
-  void add_item(String v)
+  void add_item(E v)
   {
     _values.add(v);
     set_values(_values, true);
   }
 
-  void change_item(int i, String v)
+  void change_item(int i, E v)
   {
     _values.set(i, v);
     set_values(_values, true);
@@ -133,7 +138,7 @@ public abstract class ListGroupPreference extends PreferenceGroup
     String input = (restoreValue) ? getPersistedString(null) : (String)defaultValue;
     if (input != null)
     {
-      List<String> values = load_from_string(input);
+      List<E> values = load_from_string(input, get_serializer());
       if (values != null)
         set_values(values, false);
     }
@@ -156,7 +161,7 @@ public abstract class ListGroupPreference extends PreferenceGroup
     removeAll();
     boolean allow_remove_item = should_allow_remove_item();
     int i = 0;
-    for (String v : _values)
+    for (E v : _values)
     {
       addPreference(this.new Item(getContext(), i, v, allow_remove_item));
       i++;
@@ -168,10 +173,10 @@ public abstract class ListGroupPreference extends PreferenceGroup
 
   class Item extends Preference
   {
-    final String _value;
+    final E _value;
     final int _index;
 
-    public Item(Context ctx, int index, String value, boolean allow_remove)
+    public Item(Context ctx, int index, E value, boolean allow_remove)
     {
       super(ctx);
       _value = value;
@@ -185,8 +190,8 @@ public abstract class ListGroupPreference extends PreferenceGroup
     @Override
     protected void onClick()
     {
-      select(new SelectionCallback() {
-        public void select(String value)
+      select(new SelectionCallback<E>() {
+        public void select(E value)
         {
           change_item(_index, value);
         }
@@ -222,8 +227,8 @@ public abstract class ListGroupPreference extends PreferenceGroup
     @Override
     protected void onClick()
     {
-      select(new SelectionCallback() {
-        public void select(String value)
+      select(new SelectionCallback<E>() {
+        public void select(E value)
         {
           add_item(value);
         }
@@ -231,8 +236,26 @@ public abstract class ListGroupPreference extends PreferenceGroup
     }
   }
 
-  public interface SelectionCallback
+  public interface SelectionCallback<E>
   {
-    public void select(String value);
+    public void select(E value);
+  }
+
+  /** Methods for serializing and deserializing abstract items.
+      [StringSerializer] is an implementation. */
+  public interface Serializer<E>
+  {
+    /** [obj] is an object returned by [save_item()]. */
+    E load_item(Object obj);
+
+    /** Serialize an item into JSON. Might return an object that can be inserted
+        in a [JSONArray]. */
+    Object save_item(E v);
+  }
+
+  public static class StringSerializer implements Serializer<String>
+  {
+    public String load_item(Object obj) { return (String)obj; }
+    public Object save_item(String v) { return v; }
   }
 }
