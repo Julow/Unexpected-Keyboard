@@ -51,6 +51,9 @@ Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {
 1 warnings
 # res/xml/latn_azerty_fr.xml
 0 warnings
+# res/xml/latn_bepo_fr.xml
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
 # res/xml/latn_bone.xml
 Layout includes some ASCII punctuation but not all, missing: $
 Layout redefines the bottom row but some important keys are missing, missing: switch_backward
