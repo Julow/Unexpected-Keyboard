@@ -238,7 +238,9 @@ class KeyModifier
       case '?': return "¿";
       case '|': return "¦";
       case '§': return "¶";
+      case '†': return "‡";
       case '×': return "∙";
+      case ' ': return "nbsp";
       // arrows
       case '↖': return "⇖";
       case '↑': return "⇑";
@@ -355,8 +357,28 @@ class KeyModifier
       case 'ं': return "ॕ";
       case '़': return "ॎ";
       case 'ऽ': return "ॽ";
-      // other
-      case ' ': return "nbsp";
+      // Persian numbers
+      case '۱': return "f1";
+      case '۲': return "f2";
+      case '۳': return "f3";
+      case '۴': return "f4";
+      case '۵': return "f5";
+      case '۶': return "f6";
+      case '۷': return "f7";
+      case '۸': return "f8";
+      case '۹': return "f9";
+      case '۰': return "f10";
+      // Arabic numbers
+      case '١': return "f1";
+      case '٢': return "f2";
+      case '٣': return "f3";
+      case '٤': return "f4";
+      case '٥': return "f5";
+      case '٦': return "f6";
+      case '٧': return "f7";
+      case '٨': return "f8";
+      case '٩': return "f9";
+      case '٠': return "f10";
       default: return null;
     }
   }
@@ -707,13 +729,36 @@ class KeyModifier
           case '8': return '⁸';
           case '9': return '⁹';
           case '0': return '⁰';
-          case 'i': return 'ⁱ';
           case '+': return '⁺';
           case '-': return '⁻';
           case '=': return '⁼';
           case '(': return '⁽';
           case ')': return '⁾';
+          case 'a': return 'ᵃ';
+          case 'b': return 'ᵇ';
+          case 'c': return 'ᶜ';
+          case 'd': return 'ᵈ';
+          case 'e': return 'ᵉ';
+          case 'f': return 'ᶠ';
+          case 'g': return 'ᵍ';
+          case 'h': return 'ʰ';
+          case 'i': return 'ⁱ';
+          case 'j': return 'ʲ';
+          case 'k': return 'ᵏ';
+          case 'l': return 'ˡ';
+          case 'm': return 'ᵐ';
           case 'n': return 'ⁿ';
+          case 'o': return 'ᵒ';
+          case 'p': return 'ᵖ';
+          case 'r': return 'ʳ';
+          case 's': return 'ˢ';
+          case 't': return 'ᵗ';
+          case 'u': return 'ᵘ';
+          case 'v': return 'ᵛ';
+          case 'w': return 'ʷ';
+          case 'x': return 'ˣ';
+          case 'y': return 'ʸ';
+          case 'z': return 'ᶻ';
           default: return c;
         }
       }
@@ -740,10 +785,23 @@ class KeyModifier
           case '=': return '₌';
           case '(': return '₍';
           case ')': return '₎';
-          case 'e': return 'ₑ';
           case 'a': return 'ₐ';
-          case 'x': return 'ₓ';
+          case 'e': return 'ₑ';
+          case 'h': return 'ₕ';
+          case 'i': return 'ᵢ';
+          case 'j': return 'ⱼ';
+          case 'k': return 'ₖ';
+          case 'l': return 'ₗ';
+          case 'm': return 'ₘ';
+          case 'n': return 'ₙ';
           case 'o': return 'ₒ';
+          case 'p': return 'ₚ';
+          case 'r': return 'ᵣ';
+          case 's': return 'ₛ';
+          case 't': return 'ₜ';
+          case 'u': return 'ᵤ';
+          case 'v': return 'ᵥ';
+          case 'x': return 'ₓ';
           default: return c;
         }
       }

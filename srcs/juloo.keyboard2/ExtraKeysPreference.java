@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.CheckBoxPreference;
-import android.preference.PreferenceGroup;
+import android.preference.PreferenceCategory;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -13,8 +13,9 @@ import java.util.Set;
 
 /** This class implements the "extra keys" preference but also defines the
     possible extra keys. */
-public class ExtraKeysPreference extends PreferenceGroup
+public class ExtraKeysPreference extends PreferenceCategory
 {
+  /** Array of the keys that can be selected. */
   public static String[] extra_keys = new String[]
   {
     "alt",
@@ -41,6 +42,10 @@ public class ExtraKeysPreference extends PreferenceGroup
     "€",
     "ß",
     "£",
+    "§",
+    "†",
+    "ª",
+    "º",
     "switch_greekmath",
     "capslock",
     "copy",
@@ -54,6 +59,8 @@ public class ExtraKeysPreference extends PreferenceGroup
     "replaceText",
     "textAssist",
     "autofill",
+    "superscript",
+    "subscript",
   };
 
   /** Whether an extra key is enabled by default. */
@@ -66,6 +73,35 @@ public class ExtraKeysPreference extends PreferenceGroup
       default:
         return false;
     }
+  }
+
+  /** Text that describe a key. Might be null. */
+  static String key_description(Resources res, String name)
+  {
+    int id = 0;
+    switch (name)
+    {
+      case "capslock": id = R.string.key_descr_capslock; break;
+      case "switch_greekmath": id = R.string.key_descr_switch_greekmath; break;
+      case "voice_typing": id = R.string.key_descr_voice_typing; break;
+      case "copy": id = R.string.key_descr_copy; break;
+      case "paste": id = R.string.key_descr_paste; break;
+      case "cut": id = R.string.key_descr_cut; break;
+      case "selectAll": id = R.string.key_descr_selectAll; break;
+      case "shareText": id = R.string.key_descr_shareText; break;
+      case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
+      case "undo": id = R.string.key_descr_undo; break;
+      case "redo": id = R.string.key_descr_redo; break;
+      case "textAssist": id = R.string.key_descr_textAssist; break;
+      case "autofill": id = R.string.key_descr_autofill; break;
+      case "ª": id = R.string.key_descr_ª; break;
+      case "º": id = R.string.key_descr_º; break;
+      case "superscript": id = R.string.key_descr_superscript; break;
+      case "subscript": id = R.string.key_descr_subscript; break;
+    }
+    if (id == 0)
+      return null;
+    return res.getString(id);
   }
 
   /** Get the set of enabled extra keys. */
@@ -81,16 +117,15 @@ public class ExtraKeysPreference extends PreferenceGroup
     return ks;
   }
 
-  boolean _attached; /** Whether it has already been attached. */
+  boolean _attached = false; /** Whether it has already been attached. */
 
   public ExtraKeysPreference(Context context, AttributeSet attrs)
   {
     super(context, attrs);
-    Resources res = context.getResources();
     setOrderingAsAdded(true);
-    setLayoutResource(R.layout.extra_keys_preference);
   }
 
+  @Override
   protected void onAttachedToActivity()
   {
     if (_attached)
@@ -106,17 +141,17 @@ public class ExtraKeysPreference extends PreferenceGroup
     return "extra_key_" + key_name;
   }
 
-  final class ExtraKeyCheckBoxPreference extends CheckBoxPreference
+  static class ExtraKeyCheckBoxPreference extends CheckBoxPreference
   {
     boolean _key_font;
 
-    public ExtraKeyCheckBoxPreference(Context context, String key_name,
+    public ExtraKeyCheckBoxPreference(Context ctx, String key_name,
         boolean default_checked)
     {
-      super(context);
+      super(ctx);
       KeyValue kv = KeyValue.getKeyByName(key_name);
       String title = kv.getString();
-      String descr = KeyValue.getKeyDescription(key_name);
+      String descr = key_description(ctx.getResources(), key_name);
       if (descr != null)
         title += " (" + descr + ")";
       setKey(pref_key_of_key_name(key_name));

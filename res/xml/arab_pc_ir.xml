@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="Persian PC" script="persian">
   <row>
-    <key key0="ض" key2="۱"/>
+    <key key0="ض" key2="۱" key4="esc"/>
     <key key0="ص" key2="۲" key1="~" key3="\@"/>
     <key key0="ث" key2="۳" key1="!" key3="\#"/>
     <key key0="ق" key2="۴" key1="﷼" key3="$"/>
@@ -11,10 +11,10 @@
     <key key0="ه" key2="۸" key3="*"/>
     <key key0="خ" key2="۹" key3="(" key4=")"/>
     <key key0="ح" key2="۰"/>
-    <key key0="ج"/>
+    <key key0="ج" key1="f11_placeholder" key3="f12_placeholder"/>
   </row>
   <row>
-    <key key0="ش"/>
+    <key key0="ش" key2="tab"/>
     <key key0="س"/>
     <key key0="ی" key2="ئ"/>
     <key key0="ب"/>
