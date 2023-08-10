@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Vlastní rozvržení</string>
   <string name="pref_layouts_add">Přidat alternativní rozložení</string>
   <string name="pref_layouts_item">Rozložení %1$d: %2$s</string>
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
   <string name="pref_custom_layout_title">Vlastní rozvržení</string>
   <string name="pref_show_numpad_title">Zobrazit NumPad</string>
   <string name="pref_show_numpad_never">Nikdy</string>

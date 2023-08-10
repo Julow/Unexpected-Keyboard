@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Tùy chỉnh bố cục</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
   <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
   <string name="pref_show_numpad_title">Hiện NumPad</string>
   <string name="pref_show_numpad_never">Không bao giờ</string>

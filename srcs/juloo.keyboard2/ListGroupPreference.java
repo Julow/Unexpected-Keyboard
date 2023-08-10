@@ -48,7 +48,7 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
   /** Called every time the list changes and allows to disable the "Remove"
       buttons on every items. Might be used to enforce a minimum number of
       items. */
-  boolean should_allow_remove_item()
+  boolean should_allow_remove_item(E _value)
   {
     return true;
   }
@@ -170,11 +170,10 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
     if (!_attached)
       return;
     removeAll();
-    boolean allow_remove_item = should_allow_remove_item();
     int i = 0;
     for (E v : _values)
     {
-      addPreference(this.new Item(getContext(), i, v, allow_remove_item));
+      addPreference(this.new Item(getContext(), i, v));
       i++;
     }
     _add_button = on_attach_add_button(_add_button);
@@ -187,14 +186,14 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
     final E _value;
     final int _index;
 
-    public Item(Context ctx, int index, E value, boolean allow_remove)
+    public Item(Context ctx, int index, E value)
     {
       super(ctx);
       _value = value;
       _index = index;
       setPersistent(false);
       setTitle(label_of_value(value, index));
-      if (allow_remove)
+      if (should_allow_remove_item(value))
         setWidgetLayoutResource(R.layout.pref_listgroup_item_widget);
     }
 
@@ -218,9 +217,14 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
           select(new SelectionCallback<E>() {
             public void select(E value)
             {
-              change_item(_index, value);
+              if (value == null)
+                remove_item(_index);
+              else
+                change_item(_index, value);
             }
-          });
+
+            public boolean allow_remove() { return true; }
+          }, _value);
         }
       });
       return v;
@@ -244,6 +248,8 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
         {
           add_item(value);
         }
+
+        public boolean allow_remove() { return false; }
       });
     }
   }
@@ -251,6 +257,10 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
   public interface SelectionCallback<E>
   {
     public void select(E value);
+
+    /** If this method returns [true], [null] might be passed to [select] to
+        remove the item. */
+    public boolean allow_remove();
   }
 
   /** Methods for serializing and deserializing abstract items.

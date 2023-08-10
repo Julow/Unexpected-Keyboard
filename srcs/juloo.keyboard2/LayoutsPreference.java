@@ -122,9 +122,9 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
   }
 
   @Override
-  boolean should_allow_remove_item()
+  boolean should_allow_remove_item(Layout value)
   {
-    return (_values.size() > 1);
+    return (_values.size() > 1 && !(value instanceof CustomLayout));
   }
 
   @Override
@@ -163,7 +163,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
   {
     final EditText input = new EditText(getContext());
     input.setText(initial_text);
-    new AlertDialog.Builder(getContext())
+    AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
       .setView(input)
       .setTitle(R.string.pref_custom_layout_title)
       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -172,8 +172,16 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
           callback.select(new CustomLayout(input.getText().toString()));
         }
       })
-      .setNegativeButton(android.R.string.cancel, null)
-      .show();
+      .setNegativeButton(android.R.string.cancel, null);
+    // Might be true when modifying an existing layout
+    if (callback.allow_remove() && _values.size() > 1)
+      dialog.setNeutralButton(R.string.pref_layouts_remove_custom, new DialogInterface.OnClickListener(){
+        public void onClick(DialogInterface _dialog, int _which)
+        {
+          callback.select(null);
+        }
+      });
+    dialog.show();
   }
 
   /** Called when modifying a layout. Custom layouts behave differently. */

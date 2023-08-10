@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Formato personalizado</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
   <string name="pref_custom_layout_title">Formato personalizado</string>
   <string name="pref_show_numpad_title">Mostrar pad numérico</string>
   <string name="pref_show_numpad_never">Nunca</string>

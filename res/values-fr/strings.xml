@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Disposition personnalisée</string>
   <string name="pref_layouts_add">Ajouter un clavier alternatif</string>
   <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
   <string name="pref_custom_layout_title">Disposition personnalisée</string>
   <string name="pref_show_numpad_title">Afficher le pavé numérique</string>
   <string name="pref_show_numpad_never">Jamais</string>
