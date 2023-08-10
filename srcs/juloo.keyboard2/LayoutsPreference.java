@@ -146,7 +146,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
               callback.select(new SystemLayout());
               break;
             case "custom":
-              select_custom(callback);
+              select_custom(callback, "");
               break;
             default:
               callback.select(new NamedLayout(name));
@@ -157,20 +157,33 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
       .show();
   }
 
-  void select_custom(final SelectionCallback callback)
+  /** Dialog for specifying a custom layout. [initial_text] is the layout
+      description when modifying a layout. */
+  void select_custom(final SelectionCallback callback, String initial_text)
   {
+    final EditText input = new EditText(getContext());
+    input.setText(initial_text);
     new AlertDialog.Builder(getContext())
-      .setView(R.layout.dialog_edit_text)
+      .setView(input)
       .setTitle(R.string.pref_custom_layout_title)
       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-        public void onClick(DialogInterface dialog, int _which)
+        public void onClick(DialogInterface _dialog, int _which)
         {
-          EditText input = (EditText)((AlertDialog)dialog).findViewById(R.id.text);
           callback.select(new CustomLayout(input.getText().toString()));
         }
       })
       .setNegativeButton(android.R.string.cancel, null)
       .show();
+  }
+
+  /** Called when modifying a layout. Custom layouts behave differently. */
+  @Override
+  void select(final SelectionCallback callback, Layout prev_layout)
+  {
+    if (prev_layout instanceof CustomLayout)
+      select_custom(callback, ((CustomLayout)prev_layout).xml);
+    else
+      select(callback);
   }
 
   class LayoutsAddButton extends AddButton

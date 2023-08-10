@@ -53,9 +53,14 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
     return true;
   }
 
-  /** Called when an item is added or modified. Returns [null] to cancel the
-      action. */
+  /** Called when an item is added or modified. */
   abstract void select(SelectionCallback<E> callback);
+
+  /** Called when an item is modified. */
+  void select(SelectionCallback<E> callback, E _old_value)
+  {
+    select(callback);
+  }
 
   /** A separate class is used as the same serializer must be used in the
       static context. See [Serializer] below. */
