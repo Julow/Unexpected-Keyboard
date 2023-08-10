@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Eigenes Layout</string>
   <string name="pref_layouts_add">Alternatives Layout hinzufügen</string>
   <string name="pref_layouts_item">Layout %1$d: %2$s</string>
+  <string name="pref_custom_layout_title">Eigenes Layout</string>
   <string name="pref_show_numpad_title">Ziffernblock anzeigen</string>
   <string name="pref_show_numpad_never">Nie</string>
   <string name="pref_show_numpad_landscape">Nur im Querformat</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">Sehr weit</string>
   <string name="pref_key_horizontal_space">Horizontaler Abstand zwischen den Tasten</string>
   <string name="pref_key_vertical_space">Vertikaler Abstand zwischen den Tasten</string>
-  <string name="pref_category_advanced">Erweitert</string>
-  <string name="pref_custom_layout_title">Eigenes Layout</string>
-  <string name="pref_custom_layout_summary">Bitte Sourcecode ansehen. Diese Option ist nicht zur Verwendung vorgesehen.</string>
   <string name="pref_vibration_e_disabled">Deaktiviert</string>
   <string name="pref_vibration_e_system">System</string>
   <string name="pref_vibration_e_strong">Stark</string>
@@ -101,4 +99,5 @@
   <string name="key_descr_º">Ordinalzeichen</string>
   <string name="key_descr_superscript">Hochgestellt</string>
   <string name="key_descr_subscript">Tiefgestellt</string>
+  <string name="pref_category_advanced">Erweitert</string>
 </resources>

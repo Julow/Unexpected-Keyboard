@@ -14,6 +14,7 @@
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
   <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
   <!-- <string name="pref_show_numpad_never">Never</string> -->
   <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">매우 넓음</string>
   <string name="pref_key_horizontal_space">키보드 양 옆 간격</string>
   <string name="pref_key_vertical_space">키보드 세로 간격</string>
-  <!-- <string name="pref_category_advanced">Advanced</string> -->
-  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
-  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
   <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
   <!-- <string name="pref_vibration_e_system">System</string> -->
   <!-- <string name="pref_vibration_e_strong">Strong</string> -->
@@ -101,4 +99,5 @@
   <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_superscript">Superscript</string> -->
   <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
 </resources>

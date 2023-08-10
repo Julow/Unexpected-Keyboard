@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">自定义布局</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <string name="pref_custom_layout_title">自定义布局</string>
   <string name="pref_show_numpad_title">显示数字小键盘</string>
   <string name="pref_show_numpad_never">从不</string>
   <string name="pref_show_numpad_landscape">只在横屏显示</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">非常长</string>
   <string name="pref_key_horizontal_space">按键的左右边距</string>
   <string name="pref_key_vertical_space">按键的上下边距</string>
-  <string name="pref_category_advanced">高级设置</string>
-  <string name="pref_custom_layout_title">自定义布局</string>
-  <string name="pref_custom_layout_summary">请查看源代码。这个选项不应该在正常情况下使用。</string>
   <string name="pref_vibration_e_disabled">禁用</string>
   <string name="pref_vibration_e_system">使用系统振动强度</string>
   <string name="pref_vibration_e_strong">强</string>
@@ -101,4 +99,5 @@
   <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_superscript">Superscript</string> -->
   <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">高级设置</string>
 </resources>

@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Vlastní rozvržení</string>
   <string name="pref_layouts_add">Přidat alternativní rozložení</string>
   <string name="pref_layouts_item">Rozložení %1$d: %2$s</string>
+  <string name="pref_custom_layout_title">Vlastní rozvržení</string>
   <string name="pref_show_numpad_title">Zobrazit NumPad</string>
   <string name="pref_show_numpad_never">Nikdy</string>
   <string name="pref_show_numpad_landscape">Pouze v režimu na šířku</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">Velmi dlouhá</string>
   <string name="pref_key_horizontal_space">Horizontální mezery mezi klávesami</string>
   <string name="pref_key_vertical_space">Vertikální mezery mezi klávesami</string>
-  <string name="pref_category_advanced">Pokročilé</string>
-  <string name="pref_custom_layout_title">Vlastní rozvržení</string>
-  <string name="pref_custom_layout_summary">Více informací naleznete ve zdrojovém kódu. Tato možnost není určena pro běžné užití.</string>
   <string name="pref_vibration_e_disabled">Deaktivovány</string>
   <string name="pref_vibration_e_system">Dle systému</string>
   <string name="pref_vibration_e_strong">Silné</string>
@@ -101,4 +99,5 @@
   <string name="key_descr_º">Indikátor řadové číslovky</string>
   <string name="key_descr_superscript">Horní index</string>
   <string name="key_descr_subscript">Dolní index</string>
+  <string name="pref_category_advanced">Pokročilé</string>
 </resources>

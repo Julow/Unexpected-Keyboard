@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Tùy chỉnh bố cục</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
   <string name="pref_show_numpad_title">Hiện NumPad</string>
   <string name="pref_show_numpad_never">Không bao giờ</string>
   <string name="pref_show_numpad_landscape">Chỉ trong chế độ phong cảnh</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">Rất xa</string>
   <string name="pref_key_horizontal_space">Khoảng cách giữa các phím theo chiều ngang</string>
   <string name="pref_key_vertical_space">Khoảng cách giữa các phím theo chiều dọc</string>
-  <string name="pref_category_advanced">Nâng cao</string>
-  <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
-  <string name="pref_custom_layout_summary">Hãy xem mã nguồn. Lựa chọn này không có mục đích sử dụng.</string>
   <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
   <!-- <string name="pref_vibration_e_system">System</string> -->
   <!-- <string name="pref_vibration_e_strong">Strong</string> -->
@@ -101,4 +99,5 @@
   <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_superscript">Superscript</string> -->
   <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">Nâng cao</string>
 </resources>

@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Własny układ</string>
   <string name="pref_layouts_add">Dodaj dodatkowy układ</string>
   <string name="pref_layouts_item">Układ %1$d: %2$s</string>
+  <string name="pref_custom_layout_title">Własny układ</string>
   <string name="pref_show_numpad_title">Pokaż klawiaturę numeryczną</string>
   <string name="pref_show_numpad_never">Nigdy</string>
   <string name="pref_show_numpad_landscape">Tylko w orientacji poziomej</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">Bardzo duża</string>
   <string name="pref_key_horizontal_space">Odległość pomiędzy klawiszami w poziomie</string>
   <string name="pref_key_vertical_space">Odległość pomiędzy klawiszami w pionie</string>
-  <string name="pref_category_advanced">Zaawansowane</string>
-  <string name="pref_custom_layout_title">Własny układ</string>
-  <string name="pref_custom_layout_summary">Zobacz kod źródłowy. Ta opcja nie jest przeznaczona do użycia.</string>
   <string name="pref_vibration_e_disabled">Wyłączone</string>
   <string name="pref_vibration_e_system">Systemowe</string>
   <string name="pref_vibration_e_strong">Silne</string>
@@ -101,4 +99,5 @@
   <string name="key_descr_º">Wskaźnik porządkowy (męski)</string>
   <string name="key_descr_superscript">Indeks górny</string>
   <string name="key_descr_subscript">Indeks dolny</string>
+  <string name="pref_category_advanced">Zaawansowane</string>
 </resources>

@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Pielāgots izkārtojums</string>
   <string name="pref_layouts_add">Pievienot aizstājējizkārtojumu</string>
   <string name="pref_layouts_item">Izkārtojums %1$d: %2$s</string>
+  <string name="pref_custom_layout_title">Pielāgots izkārtojums</string>
   <string name="pref_show_numpad_title">Rādīt ciparnīcu</string>
   <string name="pref_show_numpad_never">Nekad</string>
   <string name="pref_show_numpad_landscape">Tikai guleniskajā skatā</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">Ļoti tāls</string>
   <string name="pref_key_horizontal_space">Līmeniskais attālums starp taustiņiem</string>
   <string name="pref_key_vertical_space">Stateniskais attālums starp taustiņiem</string>
-  <string name="pref_category_advanced">Papildu</string>
-  <string name="pref_custom_layout_title">Pielāgots izkārtojums</string>
-  <string name="pref_custom_layout_summary">Skatīt pirmkodu. Šī iespēja nav paredzēta izmantošanai.</string>
   <string name="pref_vibration_e_disabled">Atspējota</string>
   <string name="pref_vibration_e_system">Sistēmas</string>
   <string name="pref_vibration_e_strong">Spēcīga</string>
@@ -103,4 +101,5 @@
   <string name="key_descr_º">Kārtas rādītājs</string>
   <string name="key_descr_superscript">Augšraksts</string>
   <string name="key_descr_subscript">Apakšraksts</string>
+  <string name="pref_category_advanced">Papildu</string>
 </resources>

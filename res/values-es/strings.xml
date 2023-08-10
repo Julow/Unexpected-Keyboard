@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Formato personalizado</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <string name="pref_custom_layout_title">Formato personalizado</string>
   <string name="pref_show_numpad_title">Mostrar pad numérico</string>
   <string name="pref_show_numpad_never">Nunca</string>
   <string name="pref_show_numpad_landscape">Solo en modo paisaje</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">Muy lejana</string>
   <string name="pref_key_horizontal_space">Espaciado horizontal entre las teclas</string>
   <string name="pref_key_vertical_space">Espaciado vertical entre las teclas</string>
-  <string name="pref_category_advanced">Avanzado</string>
-  <string name="pref_custom_layout_title">Formato personalizado</string>
-  <string name="pref_custom_layout_summary">Revisar el código fuente. Esta opción no está pensada para ser usada.</string>
   <string name="pref_vibration_e_disabled">Deshabilitada</string>
   <string name="pref_vibration_e_system">Sistema</string>
   <string name="pref_vibration_e_strong">Fuerte</string>
@@ -101,4 +99,5 @@
   <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_superscript">Superscript</string> -->
   <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">Avanzado</string>
 </resources>

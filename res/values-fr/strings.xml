@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">Disposition personnalisée</string>
   <string name="pref_layouts_add">Ajouter un clavier alternatif</string>
   <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
+  <string name="pref_custom_layout_title">Disposition personnalisée</string>
   <string name="pref_show_numpad_title">Afficher le pavé numérique</string>
   <string name="pref_show_numpad_never">Jamais</string>
   <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">Très longue</string>
   <string name="pref_key_horizontal_space">Espacement horizontal entre les touches</string>
   <string name="pref_key_vertical_space">Espacement vertical entre les touches</string>
-  <string name="pref_category_advanced">Avancé</string>
-  <string name="pref_custom_layout_title">Disposition personnalisée</string>
-  <string name="pref_custom_layout_summary">Cette option n\'est pas faite pour être utilisée.</string>
   <string name="pref_vibration_e_disabled">Désactivé</string>
   <string name="pref_vibration_e_system">Système</string>
   <string name="pref_vibration_e_strong">Fort</string>
@@ -101,4 +99,5 @@
   <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_superscript">Superscript</string> -->
   <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">Avancé</string>
 </resources>

@@ -155,7 +155,7 @@ public class Keyboard2 extends InputMethodService
       {
         String s = subtype.getExtraValueOf("default_layout");
         if (s != null)
-          default_layout = _config.layout_of_string(getResources(), s);
+          default_layout = LayoutsPreference.layout_of_string(getResources(), s);
         refreshAccentsOption(imm, subtype);
       }
     }

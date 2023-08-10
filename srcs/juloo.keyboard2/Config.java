@@ -3,7 +3,6 @@ package juloo.keyboard2;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -28,7 +27,6 @@ final class Config
   // From preferences
   /** [null] represent the [system] layout. */
   public List<KeyboardData> layouts;
-  public KeyboardData custom_layout; // Might be 'null'
   public boolean show_numpad = false;
   // From the 'numpad_layout' option, also apply to the numeric pane.
   public boolean inverse_numpad = false;
@@ -114,11 +112,7 @@ final class Config
     {
       keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
-    List<String> layout_names = LayoutsPreference.load_from_preferences(_prefs);
-    layouts = new ArrayList<KeyboardData>();
-    for (String l : layout_names)
-      layouts.add(layout_of_string(res, l));
-    custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
+    layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
     number_row = _prefs.getBoolean("number_row", false);
     // The baseline for the swipe distance correspond to approximately the
@@ -332,36 +326,6 @@ final class Config
             return R.style.Light;
         }
         return R.style.Dark;
-    }
-  }
-
-  /** Obtained from XML. */
-  static List<String> layout_ids_str = null;
-  static TypedArray layout_ids_res = null;
-
-  /** Might return [null] if the selected layout is "system", "custom" or if
-      the name is not recognized. */
-  public KeyboardData layout_of_string(Resources res, String name)
-  {
-    if (layout_ids_str == null)
-    {
-      layout_ids_str = Arrays.asList(res.getStringArray(R.array.pref_layout_values));
-      layout_ids_res = res.obtainTypedArray(R.array.layout_ids);
-    }
-    int i = layout_ids_str.indexOf(name);
-    if (i >= 0)
-    {
-      int id = layout_ids_res.getResourceId(i, 0);
-      if (id > 0)
-        return KeyboardData.load(res, id);
-      // Fallthrough
-    }
-    switch (name)
-    {
-      case "custom": return custom_layout;
-      case "system":
-      case "none":
-      default: return null;
     }
   }
 

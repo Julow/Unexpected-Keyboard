@@ -14,6 +14,7 @@
   <string name="pref_layout_e_custom">طرح صفارشی</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <string name="pref_custom_layout_title">طرح شخصی</string>
   <string name="pref_show_numpad_title">نمایش پد شماره‌ها</string>
   <string name="pref_show_numpad_never">هرگز</string>
   <string name="pref_show_numpad_landscape">فقط در حالت افقی</string>
@@ -65,9 +66,6 @@
   <string name="pref_swipe_dist_e_very_far">بسیار دور</string>
   <string name="pref_key_horizontal_space">فاصله افقی بین کلیدها</string>
   <string name="pref_key_vertical_space">فاصله عمودی بین کلیدها</string>
-  <string name="pref_category_advanced">پیشرفته</string>
-  <string name="pref_custom_layout_title">طرح شخصی</string>
-  <string name="pref_custom_layout_summary">کد منبع را ببینید. این گزینه قرار نیست استفاده شود.</string>
   <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
   <!-- <string name="pref_vibration_e_system">System</string> -->
   <!-- <string name="pref_vibration_e_strong">Strong</string> -->
@@ -101,4 +99,5 @@
   <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_superscript">Superscript</string> -->
   <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">پیشرفته</string>
 </resources>
