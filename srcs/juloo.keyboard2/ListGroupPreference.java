@@ -97,7 +97,13 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
   {
     List<Object> serialized_items = new ArrayList<Object>();
     for (E it : items)
-      serialized_items.add(serializer.save_item(it));
+    {
+      try
+      {
+        serialized_items.add(serializer.save_item(it));
+      }
+      catch (JSONException e) {}
+    }
     return (new JSONArray(serialized_items)).toString();
   }
 
@@ -246,11 +252,11 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
   public interface Serializer<E>
   {
     /** [obj] is an object returned by [save_item()]. */
-    E load_item(Object obj);
+    E load_item(Object obj) throws JSONException;
 
     /** Serialize an item into JSON. Might return an object that can be inserted
         in a [JSONArray]. */
-    Object save_item(E v);
+    Object save_item(E v) throws JSONException;
   }
 
   public static class StringSerializer implements Serializer<String>
