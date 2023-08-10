@@ -26,4 +26,10 @@ public final class Logs
     _debug_logs.println("swapEnterActionKey: "+conf.swapEnterActionKey);
     _debug_logs.println("actionLabel: "+conf.actionLabel);
   }
+
+  public static void debug(String s)
+  {
+    if (_debug_logs != null)
+      _debug_logs.println(s);
+  }
 }

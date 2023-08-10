@@ -194,17 +194,6 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
     }
 
     @Override
-    protected void onClick()
-    {
-      select(new SelectionCallback<E>() {
-        public void select(E value)
-        {
-          change_item(_index, value);
-        }
-      });
-    }
-
-    @Override
     protected View onCreateView(ViewGroup parent)
     {
       View v = super.onCreateView(parent);
@@ -217,6 +206,18 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
             remove_item(_index);
           }
         });
+      v.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View _v)
+        {
+          select(new SelectionCallback<E>() {
+            public void select(E value)
+            {
+              change_item(_index, value);
+            }
+          });
+        }
+      });
       return v;
     }
   }
