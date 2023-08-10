@@ -48,18 +48,17 @@ public class CustomExtraKeysPreference extends ListGroupPreference<String>
   void select(final SelectionCallback<String> callback)
   {
     new AlertDialog.Builder(getContext())
-      .setView(R.layout.custom_extra_key_add_dialog)
+      .setView(R.layout.dialog_edit_text)
       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface dialog, int which)
         {
-          EditText input = (EditText)((AlertDialog)dialog).findViewById(R.id.key_name);
+          EditText input = (EditText)((AlertDialog)dialog).findViewById(R.id.text);
           final String k = input.getText().toString();
           if (!k.equals(""))
             callback.select(k);
         }
       })
-    .setNegativeButton(android.R.string.cancel, null)
-      .setIcon(android.R.drawable.ic_dialog_alert)
+      .setNegativeButton(android.R.string.cancel, null)
       .show();
   }
 

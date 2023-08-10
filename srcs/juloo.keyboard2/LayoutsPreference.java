@@ -72,13 +72,14 @@ public class LayoutsPreference extends ListGroupPreference<String>
   @Override
   Serializer<String> get_serializer() { return SERIALIZER; }
 
+  @Override
   void select(final SelectionCallback callback)
   {
     ArrayAdapter layouts = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, _layout_display_names);
     new AlertDialog.Builder(getContext())
-      .setView(R.layout.custom_extra_key_add_dialog)
+      .setView(R.layout.dialog_edit_text)
       .setAdapter(layouts, new DialogInterface.OnClickListener(){
-        public void onClick(DialogInterface dialog, int which)
+        public void onClick(DialogInterface _dialog, int which)
         {
           callback.select(_layout_names.get(which));
         }
