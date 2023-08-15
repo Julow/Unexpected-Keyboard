@@ -348,6 +348,7 @@ final class Config
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
       IKeyEventHandler handler)
   {
+    migrate(prefs);
     _globalConfig = new Config(prefs, res, handler);
   }
 
@@ -359,5 +360,46 @@ final class Config
   public static interface IKeyEventHandler
   {
     public void key_up(KeyValue value, Pointers.Modifiers flags);
+  }
+
+  /** Config migrations. */
+
+  private static int CONFIG_VERSION = 1;
+
+  public static void migrate(SharedPreferences prefs)
+  {
+    int saved_version = prefs.getInt("version", 0);
+    Logs.debug_config_migration(saved_version, CONFIG_VERSION);
+    if (saved_version == CONFIG_VERSION)
+      return;
+    SharedPreferences.Editor e = prefs.edit();
+    e.putInt("version", CONFIG_VERSION);
+    // Migrations might run on an empty [prefs] for new installs, in this case
+    // they set the default values of complex options.
+    switch (saved_version) // Fallback switch
+    {
+      case 0:
+        // Primary, secondary and custom layout options are merged into the new
+        // Layouts option. This also sets the default value.
+        List<LayoutsPreference.Layout> l = new ArrayList<LayoutsPreference.Layout>();
+        l.add(migrate_layout(prefs.getString("layout", "system")));
+        String snd_layout = prefs.getString("second_layout", "none");
+        if (snd_layout != null && !snd_layout.equals("none"))
+          l.add(migrate_layout(snd_layout));
+        String custom_layout = prefs.getString("custom_layout", "");
+        if (custom_layout != null && !custom_layout.equals(""))
+          l.add(new LayoutsPreference.CustomLayout(custom_layout));
+        LayoutsPreference.save_to_preferences(e, l);
+      case 1:
+      default: break;
+    }
+    e.commit();
+  }
+
+  private static LayoutsPreference.Layout migrate_layout(String name)
+  {
+    if (name == null || name.equals("system"))
+      return new LayoutsPreference.SystemLayout();
+    return new LayoutsPreference.NamedLayout(name);
   }
 }

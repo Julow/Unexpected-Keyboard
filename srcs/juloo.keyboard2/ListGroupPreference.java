@@ -78,6 +78,12 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
     return (s != null) ? load_from_string(s, serializer) : def;
   }
 
+  /** Save items into the preferences. Does not call [prefs.commit()]. */
+  static <E> void save_to_preferences(String key, SharedPreferences.Editor prefs, List<E> items, Serializer<E> serializer)
+  {
+    prefs.putString(key, save_to_string(items, serializer));
+  }
+
   /** Decode a list of string previously encoded with [save_to_string]. Returns
       [null] on error. */
   static <E> List<E> load_from_string(String inp, Serializer<E> serializer)
@@ -92,6 +98,7 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
     }
     catch (JSONException e)
     {
+      Logs.exn("load_from_string", e);
       return null;
     }
   }
@@ -107,7 +114,10 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
       {
         serialized_items.add(serializer.save_item(it));
       }
-      catch (JSONException e) {}
+      catch (JSONException e)
+      {
+        Logs.exn("save_to_string", e);
+      }
     }
     return (new JSONArray(serialized_items)).toString();
   }

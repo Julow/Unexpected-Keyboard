@@ -93,9 +93,9 @@ public class Keyboard2 extends InputMethodService
     super.onCreate();
     KeyboardData.init(getResources());
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
-    prefs.registerOnSharedPreferenceChangeListener(this);
     _keyeventhandler = new KeyEventHandler(getMainLooper(), this.new Receiver());
     Config.initGlobalConfig(prefs, getResources(), _keyeventhandler);
+    prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();

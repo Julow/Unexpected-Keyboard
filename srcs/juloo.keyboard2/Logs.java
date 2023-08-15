@@ -27,9 +27,25 @@ public final class Logs
     _debug_logs.println("actionLabel: "+conf.actionLabel);
   }
 
+  public static void debug_config_migration(int from_version, int to_version)
+  {
+    debug("Migrating config version from " + from_version + " to " + to_version);
+  }
+
   public static void debug(String s)
   {
     if (_debug_logs != null)
       _debug_logs.println(s);
+  }
+
+  public static void exn(String msg, Exception e)
+  {
+    Log.e(TAG, msg, e);
+  }
+
+  public static void trace()
+  {
+    if (_debug_logs != null)
+      _debug_logs.println(Log.getStackTraceString(new Exception()));
   }
 }

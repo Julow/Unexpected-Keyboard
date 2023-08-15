@@ -75,6 +75,12 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
     return layouts;
   }
 
+  /** Does not call [prefs.commit()]. */
+  public static void save_to_preferences(SharedPreferences.Editor prefs, List<Layout> items)
+  {
+    save_to_preferences(KEY, prefs, items, SERIALIZER);
+  }
+
   public static KeyboardData layout_of_string(Resources res, String name)
   {
     int id = layout_id_of_name(res, name);
