@@ -10,13 +10,12 @@
   <string name="pref_keyboard_opacity">Изменить прозрачность фона</string>
   <string name="pref_key_opacity">Изменить прозрачность клавиш</string>
   <string name="pref_key_activated_opacity">Изменить прозрачность нажатой клавиши</string>
-  <string name="pref_layout_title">Изменить раскладку клавиатуры</string>
   <string name="pref_layout_e_system">Системные настройки</string>
   <string name="pref_layout_e_custom">Пользовательская раскладка</string>
-  <string name="pref_accents_title">Акцент</string>
-  <string name="pref_accents_e_all_installed">Показывать акценты для всех установленных языков</string>
-  <string name="pref_accents_e_selected">Показывать акценты только для выбранного языка</string>
-  <string name="pref_accents_e_none">Скрыть акценты</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <string name="pref_custom_layout_title">Пользовательская раскладка</string>
   <string name="pref_show_numpad_title">Показывать NumPad</string>
   <string name="pref_show_numpad_never">Никогда</string>
   <string name="pref_show_numpad_landscape">Только в ландшафтном режиме</string>
@@ -27,6 +26,8 @@
   <string name="pref_numpad_layout_e_high_first">Старшие цифры сверху</string>
   <string name="pref_numpad_layout_e_low_first">Младшие цифры сверху</string>
   <string name="pref_extra_keys_title">Добавить клавиши на клавиатуру</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Дополнительная раскладка</string>
   <string name="pref_second_layout_none">Нет</string>
   <string name="pref_category_typing">Печать</string>
@@ -43,6 +44,8 @@
   <string name="pref_switch_input_immediate_summary">Поведение клавиши переключения клавиатуры</string>
   <string name="pref_vibrate_title">Вибрация</string>
   <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Стиль</string>
   <string name="pref_margin_bottom_title">Нижняя граница поля</string>
   <string name="pref_keyboard_height_title">Высота клавиатуры</string>
@@ -64,9 +67,6 @@
   <string name="pref_swipe_dist_e_very_far">Очень далеко</string>
   <string name="pref_key_horizontal_space">Горизонтальное расстояние между клавишами</string>
   <string name="pref_key_vertical_space">Расстояние по вертикали между клавишами</string>
-  <string name="pref_category_advanced">Расширенные настройки</string>
-  <string name="pref_custom_layout_title">Пользовательская раскладка</string>
-  <string name="pref_custom_layout_summary">Откройте исходный код. Эта параметр не предназначен для использования.</string>
   <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
   <!-- <string name="pref_vibration_e_system">System</string> -->
   <!-- <string name="pref_vibration_e_strong">Strong</string> -->
@@ -80,6 +80,25 @@
   <string name="key_action_send">Отправить</string>
   <string name="launcher_button_imesettings">Включить клавиатуру</string>
   <string name="launcher_description">Данное приложение является виртуальной клавиатурой. Зайдите в настройки, нажав кнопку внизу и активируйте Unexpected-Keyboard.</string>
-  <string name="launcher_sourcecode">Это бесплатное приложение с открытым исходным кодом. Вы можете изучить код или сообщить об ошибках по ссылке <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
+  <string name="launcher_sourcecode">Это бесплатное приложение с открытым исходным кодом. Вы можете изучить код или сообщить об ошибках по ссылке Github.</string>
   <string name="launcher_tryhere">После активации вы можете попробовать клавиатуру прямо здесь:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">Расширенные настройки</string>
 </resources>

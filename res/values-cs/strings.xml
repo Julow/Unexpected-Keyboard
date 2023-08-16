@@ -10,13 +10,12 @@
   <string name="pref_keyboard_opacity">Upravit průhlednost pozadí klávesnice</string>
   <string name="pref_key_opacity">Upravit průhlednost kláves</string>
   <string name="pref_key_activated_opacity">Upravit průhlednost stisknutých kláves</string>
-  <string name="pref_layout_title">Změnit rozvržení klávesnice</string>
   <string name="pref_layout_e_system">Dle nastavení systému</string>
   <string name="pref_layout_e_custom">Vlastní rozvržení</string>
-  <string name="pref_accents_title">(Univerzální) Diakritická znaménka</string>
-  <string name="pref_accents_e_all_installed">Zobrazovat znaménka pro všechny instalované systémové jazyky</string>
-  <string name="pref_accents_e_selected">Zobrazovat znaménka pouze pro současně zvolený jazyk</string>
-  <string name="pref_accents_e_none">Skrýt (univerzální) diakritická znaménka</string>
+  <string name="pref_layouts_add">Přidat alternativní rozložení</string>
+  <string name="pref_layouts_item">Rozložení %1$d: %2$s</string>
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <string name="pref_custom_layout_title">Vlastní rozvržení</string>
   <string name="pref_show_numpad_title">Zobrazit NumPad</string>
   <string name="pref_show_numpad_never">Nikdy</string>
   <string name="pref_show_numpad_landscape">Pouze v režimu na šířku</string>
@@ -24,9 +23,11 @@
   <string name="pref_number_row_title">Zobrazit řádek s čísly</string>
   <string name="pref_number_row_summary">Přidá řádek s čísly nad klávesnici, pokud je NumPad skrytý</string>
   <string name="pref_numpad_layout">Rozložení NumPadu</string>
-  <string name="pref_numpad_layout_e_high_first">Vyšší číslice jako první</string>
-  <string name="pref_numpad_layout_e_low_first">Nižší číslice jako první</string>
+  <string name="pref_numpad_layout_e_high_first">Vyšší číslice jako první (horní řádek 789)</string>
+  <string name="pref_numpad_layout_e_low_first">Nižší číslice jako první (horní řádek 123)</string>
   <string name="pref_extra_keys_title">Přidat klávesy do klávesnice</string>
+  <string name="pref_extra_keys_custom">Přidat vlastní klávesy</string>
+  <string name="pref_extra_keys_internal">Výbrané klávesy k přidaní do klávesnice</string>
   <string name="pref_second_layout_title">Vedlejší rozvržení</string>
   <string name="pref_second_layout_none">Žádné</string>
   <string name="pref_category_typing">Psaní</string>
@@ -43,6 +44,8 @@
   <string name="pref_switch_input_immediate_summary">Jak bude klávesa pro přepnutí klávesnice reagovat</string>
   <string name="pref_vibrate_title">Vibrace</string>
   <string name="pref_vibrate_summary">Preference intenzity vibrací při stisku klávesy</string>
+  <string name="pref_pin_entry_enabled_title">Rozvržení zadávání PIN kódu</string>
+  <string name="pref_pin_entry_enabled_summary">Při psaní čísel, datumů a telefonních čísel</string>
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Spodní odsazení</string>
   <string name="pref_keyboard_height_title">Výška klávesnice</string>
@@ -64,9 +67,6 @@
   <string name="pref_swipe_dist_e_very_far">Velmi dlouhá</string>
   <string name="pref_key_horizontal_space">Horizontální mezery mezi klávesami</string>
   <string name="pref_key_vertical_space">Vertikální mezery mezi klávesami</string>
-  <string name="pref_category_advanced">Pokročilé</string>
-  <string name="pref_custom_layout_title">Vlastní rozvržení</string>
-  <string name="pref_custom_layout_summary">Více informací naleznete ve zdrojovém kódu. Tato možnost není určena pro běžné užití.</string>
   <string name="pref_vibration_e_disabled">Deaktivovány</string>
   <string name="pref_vibration_e_system">Dle systému</string>
   <string name="pref_vibration_e_strong">Silné</string>
@@ -80,6 +80,25 @@
   <string name="key_action_send">Odeslat</string>
   <string name="launcher_button_imesettings">Aktivovat klávesnici</string>
   <string name="launcher_description">Tato aplikace je pouhou virtuální klávesnicí. Přejděte do systémového nastavení, kliknutím na tlačítko níže a aktivujte ji.</string>
-  <string name="launcher_sourcecode">Toto je volná, open-source aplikace. Její zdrojový kód, či hlášení chyb, naleznete na <a href="https://github.com/Julow/Unexpected-Keyboard/">Githubu</a>.</string>
+  <string name="launcher_sourcecode">Toto je volná, open-source aplikace. Její zdrojový kód, či hlášení chyb, naleznete na Githubu.</string>
   <string name="launcher_tryhere">Po aktivaci můžete klávesnici rovnou vyzkoušet zde:</string>
+  <string name="key_descr_capslock">Caps lock</string>
+  <string name="key_descr_switch_greekmath">Řecké a matematické symboly</string>
+  <string name="key_descr_voice_typing">Hlasové zadávání</string>
+  <string name="key_descr_copy">Kopírovat</string>
+  <string name="key_descr_paste">Vložit</string>
+  <string name="key_descr_cut">Vyjmout</string>
+  <string name="key_descr_selectAll">Označit vše</string>
+  <string name="key_descr_shareText">Sdílet text</string>
+  <string name="key_descr_pasteAsPlainText">Vložit jako prostý text</string>
+  <string name="key_descr_undo">Zpět</string>
+  <string name="key_descr_redo">Znovu</string>
+  <string name="key_descr_replaceText">Nahradit</string>
+  <string name="key_descr_textAssist">Asistovat</string>
+  <string name="key_descr_autofill">Předvyplnit</string>
+  <string name="key_descr_ª">Indikátor řadové číslovky</string>
+  <string name="key_descr_º">Indikátor řadové číslovky</string>
+  <string name="key_descr_superscript">Horní index</string>
+  <string name="key_descr_subscript">Dolní index</string>
+  <string name="pref_category_advanced">Pokročilé</string>
 </resources>

@@ -3,11 +3,11 @@ package juloo.keyboard2;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -25,9 +25,8 @@ final class Config
   public final float sublabelTextSize;
 
   // From preferences
-  public KeyboardData layout; // Or 'null' for the system defaults
-  public KeyboardData second_layout; // Or 'null' for none
-  public KeyboardData custom_layout; // Might be 'null'
+  /** [null] represent the [system] layout. */
+  public List<KeyboardData> layouts;
   public boolean show_numpad = false;
   // From the 'numpad_layout' option, also apply to the numeric pane.
   public boolean inverse_numpad = false;
@@ -48,20 +47,20 @@ final class Config
   public int keyActivatedOpacity; // 0 - 255
   public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
-  public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
+  public boolean pin_entry_enabled;
 
   // Dynamically set
   public boolean shouldOfferSwitchingToNextInputMethod;
-  public boolean shouldOfferSwitchingToSecond;
   public boolean shouldOfferVoiceTyping;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
   public ExtraKeys extra_keys_subtype;
   public Set<KeyValue> extra_keys_param;
+  public List<KeyValue> extra_keys_custom;
 
   public final IKeyEventHandler handler;
   public boolean orientation_landscape = false;
@@ -78,7 +77,6 @@ final class Config
     refresh(res);
     // initialized later
     shouldOfferSwitchingToNextInputMethod = false;
-    shouldOfferSwitchingToSecond = false;
     shouldOfferVoiceTyping = false;
     actionLabel = null;
     actionId = 0;
@@ -114,9 +112,7 @@ final class Config
     {
       keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
-    layout = layout_of_string(res, _prefs.getString("layout", "none"));
-    second_layout = tweak_secondary_layout(layout_of_string(res, _prefs.getString("second_layout", "none")));
-    custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
+    layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
     number_row = _prefs.getBoolean("number_row", false);
     // The baseline for the swipe distance correspond to approximately the
@@ -150,11 +146,12 @@ final class Config
     characterSize =
       _prefs.getFloat("character_size", 1.f)
       * characterSizeScale;
-    accents = Integer.valueOf(_prefs.getString("accents", "1"));
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
-    extra_keys_param = ExtraKeyCheckBoxPreference.get_extra_keys(_prefs);
+    extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
+    extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
+    pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
   }
 
   KeyValue action_key()
@@ -170,6 +167,7 @@ final class Config
    *  - Replace the action key to show the right label
    *  - Swap the enter and action keys
    *  - Add the optional numpad and number row
+   *  - Add the extra keys
    */
   public KeyboardData modify_layout(KeyboardData kw)
   {
@@ -178,9 +176,17 @@ final class Config
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
-    if (extra_keys_subtype != null)
-      extra_keys_subtype.compute(extra_keys, kw.script);
     extra_keys.addAll(extra_keys_param);
+    extra_keys.addAll(extra_keys_custom);
+    if (extra_keys_subtype != null)
+    {
+      Set<KeyValue> present = new HashSet<KeyValue>();
+      kw.getKeys(present);
+      present.addAll(extra_keys_param);
+      present.addAll(extra_keys_custom);
+      extra_keys_subtype.compute(extra_keys,
+          new ExtraKeys.Query(kw.script, present));
+    }
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
       KeyboardData.number_row.getKeys(remove_keys);
@@ -208,8 +214,10 @@ final class Config
               case ACTION:
                 return (swapEnterActionKey && action_key != null) ?
                   KeyValue.getKeyByName("enter") : action_key;
-              case SWITCH_SECOND:
-                return shouldOfferSwitchingToSecond ? key : null;
+              case SWITCH_FORWARD:
+                return (layouts.size() > 1) ? key : null;
+              case SWITCH_BACKWARD:
+                return (layouts.size() > 2) ? key : null;
               case SWITCH_VOICE_TYPING:
                 return shouldOfferVoiceTyping ? key : null;
             }
@@ -281,23 +289,6 @@ final class Config
     });
   }
 
-  /** Modify a layout to turn it into a secondary layout by changing the
-      "switch_second" key. */
-  KeyboardData tweak_secondary_layout(KeyboardData layout)
-  {
-    if (layout == null)
-      return null;
-    return layout.mapKeys(new KeyboardData.MapKeyValues() {
-      public KeyValue apply(KeyValue key, boolean localized)
-      {
-        if (key.getKind() == KeyValue.Kind.Event
-            && key.getEvent() == KeyValue.Event.SWITCH_SECOND)
-          return KeyValue.getKeyByName("switch_second_back");
-        return key;
-      }
-    });
-  }
-
   private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)
   {
     float value;
@@ -338,36 +329,6 @@ final class Config
     }
   }
 
-  /** Obtained from XML. */
-  static List<String> layout_ids_str = null;
-  static TypedArray layout_ids_res = null;
-
-  /** Might return [null] if the selected layout is "system", "custom" or if
-      the name is not recognized. */
-  public KeyboardData layout_of_string(Resources res, String name)
-  {
-    if (layout_ids_str == null)
-    {
-      layout_ids_str = Arrays.asList(res.getStringArray(R.array.pref_layout_values));
-      layout_ids_res = res.obtainTypedArray(R.array.layout_ids);
-    }
-    int i = layout_ids_str.indexOf(name);
-    if (i >= 0)
-    {
-      int id = layout_ids_res.getResourceId(i, 0);
-      if (id > 0)
-        return KeyboardData.load(res, id);
-      // Fallthrough
-    }
-    switch (name)
-    {
-      case "custom": return custom_layout;
-      case "system":
-      case "none":
-      default: return null;
-    }
-  }
-
   char inverse_numpad_char(char c)
   {
     switch (c)
@@ -387,6 +348,7 @@ final class Config
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
       IKeyEventHandler handler)
   {
+    migrate(prefs);
     _globalConfig = new Config(prefs, res, handler);
   }
 
@@ -398,5 +360,46 @@ final class Config
   public static interface IKeyEventHandler
   {
     public void key_up(KeyValue value, Pointers.Modifiers flags);
+  }
+
+  /** Config migrations. */
+
+  private static int CONFIG_VERSION = 1;
+
+  public static void migrate(SharedPreferences prefs)
+  {
+    int saved_version = prefs.getInt("version", 0);
+    Logs.debug_config_migration(saved_version, CONFIG_VERSION);
+    if (saved_version == CONFIG_VERSION)
+      return;
+    SharedPreferences.Editor e = prefs.edit();
+    e.putInt("version", CONFIG_VERSION);
+    // Migrations might run on an empty [prefs] for new installs, in this case
+    // they set the default values of complex options.
+    switch (saved_version) // Fallback switch
+    {
+      case 0:
+        // Primary, secondary and custom layout options are merged into the new
+        // Layouts option. This also sets the default value.
+        List<LayoutsPreference.Layout> l = new ArrayList<LayoutsPreference.Layout>();
+        l.add(migrate_layout(prefs.getString("layout", "system")));
+        String snd_layout = prefs.getString("second_layout", "none");
+        if (snd_layout != null && !snd_layout.equals("none"))
+          l.add(migrate_layout(snd_layout));
+        String custom_layout = prefs.getString("custom_layout", "");
+        if (custom_layout != null && !custom_layout.equals(""))
+          l.add(new LayoutsPreference.CustomLayout(custom_layout));
+        LayoutsPreference.save_to_preferences(e, l);
+      case 1:
+      default: break;
+    }
+    e.commit();
+  }
+
+  private static LayoutsPreference.Layout migrate_layout(String name)
+  {
+    if (name == null || name.equals("system"))
+      return new LayoutsPreference.SystemLayout();
+    return new LayoutsPreference.NamedLayout(name);
   }
 }

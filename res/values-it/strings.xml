@@ -10,13 +10,12 @@
   <!-- <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string> -->
   <!-- <string name="pref_key_opacity">Adjust key opacity</string> -->
   <!-- <string name="pref_key_activated_opacity">Adjust pressed key opacity</string> -->
-  <string name="pref_layout_title">Cambia layout tastiera</string>
   <string name="pref_layout_e_system">Impostazioni di sistema</string>
   <!-- <string name="pref_layout_e_custom">Custom layout</string> -->
-  <string name="pref_accents_title">Accenti</string>
-  <string name="pref_accents_e_all_installed">Mostra accenti per tutte le lingue installate</string>
-  <string name="pref_accents_e_selected">Mostra accenti solo per le lingue selezionate</string>
-  <string name="pref_accents_e_none">Nascondi accenti</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
   <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
   <!-- <string name="pref_show_numpad_never">Never</string> -->
   <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->
@@ -27,6 +26,8 @@
   <!-- <string name="pref_numpad_layout_e_high_first">High digits first</string> -->
   <!-- <string name="pref_numpad_layout_e_low_first">Low digits first</string> -->
   <!-- <string name="pref_extra_keys_title">Add keys to the keyboard</string> -->
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <!-- <string name="pref_second_layout_title">Secondary layout</string> -->
   <string name="pref_second_layout_none">Nessuno</string>
   <string name="pref_category_typing">Digitando</string>
@@ -43,6 +44,8 @@
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">Vibrazione</string>
   <string name="pref_vibrate_summary">Abilita/Disabilita Vibrazione alla pressione dei tasti</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Stile</string>
   <string name="pref_margin_bottom_title">Margine inferiore</string>
   <string name="pref_keyboard_height_title">Altezza tastiera</string>
@@ -64,9 +67,6 @@
   <string name="pref_swipe_dist_e_very_far">Molto distante</string>
   <string name="pref_key_horizontal_space">Spazio orizzontale tra i tasti</string>
   <string name="pref_key_vertical_space">Spazio verticale tra i tasti</string>
-  <!-- <string name="pref_category_advanced">Advanced</string> -->
-  <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
-  <!-- <string name="pref_custom_layout_summary">See the source code. This option is not meant to be used.</string> -->
   <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
   <!-- <string name="pref_vibration_e_system">System</string> -->
   <!-- <string name="pref_vibration_e_strong">Strong</string> -->
@@ -80,6 +80,25 @@
   <string name="key_action_send">Invia</string>
   <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
   <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
-  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
+  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on Github.</string> -->
   <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <!-- <string name="pref_category_advanced">Advanced</string> -->
 </resources>

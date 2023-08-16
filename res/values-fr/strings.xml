@@ -10,13 +10,12 @@
   <string name="pref_keyboard_opacity">Transparence du clavier</string>
   <string name="pref_key_opacity">Transparence des touches</string>
   <string name="pref_key_activated_opacity">Transparence des touches pressées</string>
-  <string name="pref_layout_title">Disposition des touches</string>
   <string name="pref_layout_e_system">Paramètre système</string>
   <string name="pref_layout_e_custom">Disposition personnalisée</string>
-  <string name="pref_accents_title">Accents</string>
-  <string name="pref_accents_e_all_installed">Afficher les accents pour les langues installées</string>
-  <string name="pref_accents_e_selected">Afficher les accents pour la langue sélectionnée</string>
-  <string name="pref_accents_e_none">Cacher les accents</string>
+  <string name="pref_layouts_add">Ajouter un clavier alternatif</string>
+  <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <string name="pref_custom_layout_title">Disposition personnalisée</string>
   <string name="pref_show_numpad_title">Afficher le pavé numérique</string>
   <string name="pref_show_numpad_never">Jamais</string>
   <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
@@ -27,6 +26,8 @@
   <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
   <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>
   <string name="pref_extra_keys_title">Ajouter des touches au clavier</string>
+  <string name="pref_extra_keys_custom">Ajouter des touches personnalisées</string>
+  <string name="pref_extra_keys_internal">Sélectionner les touches à ajouter au clavier</string>
   <string name="pref_second_layout_title">Disposition secondaire</string>
   <string name="pref_second_layout_none">Aucune</string>
   <string name="pref_category_typing">Saisie</string>
@@ -43,6 +44,8 @@
   <string name="pref_switch_input_immediate_summary">Comportement de la touche de changement de clavier</string>
   <string name="pref_vibrate_title">Vibreur</string>
   <string name="pref_vibrate_summary">Vibration a chaque touche</string>
+  <string name="pref_pin_entry_enabled_title">Clavier PIN</string>
+  <string name="pref_pin_entry_enabled_summary">Lors de la saisie de nombres, de dates et de numéros de téléphone</string>
   <string name="pref_category_style">Style</string>
   <string name="pref_margin_bottom_title">Marge du bas</string>
   <string name="pref_keyboard_height_title">Hauteur du clavier</string>
@@ -64,9 +67,6 @@
   <string name="pref_swipe_dist_e_very_far">Très longue</string>
   <string name="pref_key_horizontal_space">Espacement horizontal entre les touches</string>
   <string name="pref_key_vertical_space">Espacement vertical entre les touches</string>
-  <string name="pref_category_advanced">Avancé</string>
-  <string name="pref_custom_layout_title">Disposition personnalisée</string>
-  <string name="pref_custom_layout_summary">Cette option n\'est pas faite pour être utilisée.</string>
   <string name="pref_vibration_e_disabled">Désactivé</string>
   <string name="pref_vibration_e_system">Système</string>
   <string name="pref_vibration_e_strong">Fort</string>
@@ -80,6 +80,25 @@
   <string name="key_action_send">Envoyer</string>
   <string name="launcher_button_imesettings">Activer le clavier</string>
   <string name="launcher_description">Cette application est un clavier virtuel. Activez-le dans les paramètres système en cliquant sur le bouton ci-dessous.</string>
-  <string name="launcher_sourcecode">Cette application est libre et open-source. Lisez le source code et reportez des problèmes sur <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
+  <string name="launcher_sourcecode">Cette application est libre et open-source. Lisez le source code et reportez des problèmes sur Github.</string>
   <string name="launcher_tryhere">Après l\'avoir activé, vous pouvez l\'essayer ici:</string>
+  <string name="key_descr_capslock">Verrouillage majuscules</string>
+  <string name="key_descr_switch_greekmath">Symboles mathématiques</string>
+  <string name="key_descr_voice_typing">Saisie vocale</string>
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">Avancé</string>
 </resources>
