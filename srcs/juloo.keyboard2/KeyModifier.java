@@ -261,6 +261,7 @@ class KeyModifier
       case 'p': return "₱";
       case 'h': return "₴";
       case '€': case '£': return "removed"; // Avoid showing these twice
+      case 'b': case '₿';
       // alternating greek letters
       case 'π': return "ϖ";
       case 'θ': return "ϑ";
