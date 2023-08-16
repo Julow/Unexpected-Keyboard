@@ -97,6 +97,8 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 1 warnings
 # res/xml/latn_qwertz_de.xml
 0 warnings
+# res/xml/latn_qwertz_fr_ch.xml
+0 warnings
 # res/xml/latn_qwertz_hu.xml
 0 warnings
 # res/xml/latn_qwertz_sk.xml
