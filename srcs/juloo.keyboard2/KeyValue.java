@@ -70,6 +70,8 @@ final class KeyValue
     SHARE,
     ASSIST,
     AUTOFILL,
+    CURSOR_LEFT,
+    CURSOR_RIGHT,
   }
 
   public static enum Placeholder
@@ -321,6 +323,7 @@ final class KeyValue
       case "\\@": return makeStringKey("@");
       case "\\\\": return makeStringKey("\\");
 
+      /* Modifiers and dead-keys */
       case "shift": return modifierKey(0xE00A, Modifier.SHIFT, 0);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
@@ -351,6 +354,7 @@ final class KeyValue
       case "fn": return modifierKey("Fn", Modifier.FN, 0);
       case "meta": return modifierKey("Meta", Modifier.META, 0);
 
+      /* Special event keys */
       case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
       case "switch_text": return eventKey("ABC", Event.SWITCH_TEXT, FLAG_SMALLER_FONT);
       case "switch_numeric": return eventKey("123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
@@ -365,6 +369,7 @@ final class KeyValue
       case "capslock": return eventKey(0xE012, Event.CAPS_LOCK, 0);
       case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
 
+      /* Key events */
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
       case "enter": return keyeventKey(0xE00E, KeyEvent.KEYCODE_ENTER, 0);
       case "up": return keyeventKey(0xE005, KeyEvent.KEYCODE_DPAD_UP, 0);
@@ -392,6 +397,7 @@ final class KeyValue
       case "f12": return keyeventKey("F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
       case "tab": return keyeventKey(0xE00F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
 
+      /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
       case "space": return charKey("\r", ' ', FLAG_KEY_FONT | FLAG_SECONDARY);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
@@ -407,10 +413,6 @@ final class KeyValue
       case "b}": return charKey("}", '{', 0);
       case "blt": return charKey("<", '>', 0);
       case "bgt": return charKey(">", '<', 0);
-
-      case "removed": return placeholderKey(Placeholder.REMOVED);
-      case "f11_placeholder": return placeholderKey(Placeholder.F11);
-      case "f12_placeholder": return placeholderKey(Placeholder.F12);
 
       /* hebrew niqqud */
       case "qamats": return charKey("\u05E7\u05B8", '\u05B8', 0); // kamatz
@@ -443,6 +445,7 @@ final class KeyValue
       case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
       case "zwnj": return charKey("zwnj", '\u200C', 0); // zero-width non joiner (prevents unintended ligature)
 
+      /* Editing keys */
       case "copy": return editingKey(0xE030, Editing.COPY);
       case "paste": return editingKey(0xE032, Editing.PASTE);
       case "cut": return editingKey(0xE031, Editing.CUT);
@@ -454,6 +457,15 @@ final class KeyValue
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
       case "autofill": return editingKey("auto", Editing.AUTOFILL);
+      case "cursor_left": return editingKey(0xE008, Editing.CURSOR_LEFT);
+      case "cursor_right": return editingKey(0xE006, Editing.CURSOR_RIGHT);
+
+      /* Placeholder keys */
+      case "removed": return placeholderKey(Placeholder.REMOVED);
+      case "f11_placeholder": return placeholderKey(Placeholder.F11);
+      case "f12_placeholder": return placeholderKey(Placeholder.F12);
+
+      /* Fallback to a string key that types its name */
       default: return makeStringKey(name);
     }
   }

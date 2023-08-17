@@ -3,6 +3,8 @@ package juloo.keyboard2;
 import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.ExtractedText;
+import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 
 class KeyEventHandler implements Config.IKeyEventHandler
@@ -39,33 +41,9 @@ class KeyEventHandler implements Config.IKeyEventHandler
       case Char: send_text(String.valueOf(key.getChar())); break;
       case String: send_text(key.getString()); break;
       case Event: _recv.handle_event_key(key.getEvent()); break;
-      case Keyevent:
-        handleKeyUpWithModifier(key.getKeyevent(), mods);
-        break;
-      case Modifier:
-        break;
-      case Editing:
-        send_context_menu_action(action_of_editing_key(key.getEditing()));
-        break;
-    }
-  }
-
-  static int action_of_editing_key(KeyValue.Editing e)
-  {
-    switch (e)
-    {
-      case COPY: return android.R.id.copy;
-      case PASTE: return android.R.id.paste;
-      case CUT: return android.R.id.cut;
-      case SELECT_ALL: return android.R.id.selectAll;
-      case SHARE: return android.R.id.shareText;
-      case PASTE_PLAIN: return android.R.id.pasteAsPlainText;
-      case UNDO: return android.R.id.undo;
-      case REDO: return android.R.id.redo;
-      case REPLACE: return android.R.id.replaceText;
-      case ASSIST: return android.R.id.textAssist;
-      case AUTOFILL: return android.R.id.autofill;
-      default: return -1; // sad
+      case Keyevent: send_key_down_up(key.getKeyevent(), mods); break;
+      case Modifier: break;
+      case Editing: handle_editing_key(key.getEditing(), mods); break;
     }
   }
 
@@ -108,7 +86,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
   /*
    * Don't set KeyEvent.FLAG_SOFT_KEYBOARD.
    */
-  void handleKeyUpWithModifier(int keyCode, Pointers.Modifiers mods)
+  void send_key_down_up(int keyCode, Pointers.Modifiers mods)
   {
     int metaState = 0;
     for (int i = 0; i < mods.size(); i++)
@@ -145,6 +123,88 @@ class KeyEventHandler implements Config.IKeyEventHandler
     if (conn == null)
       return;
     conn.performContextMenuAction(id);
+  }
+
+  void handle_editing_key(KeyValue.Editing ev, Pointers.Modifiers mods)
+  {
+    switch (ev)
+    {
+      case COPY: send_context_menu_action(android.R.id.copy); break;
+      case PASTE: send_context_menu_action(android.R.id.paste); break;
+      case CUT: send_context_menu_action(android.R.id.cut); break;
+      case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
+      case SHARE: send_context_menu_action(android.R.id.shareText); break;
+      case PASTE_PLAIN: send_context_menu_action(android.R.id.pasteAsPlainText); break;
+      case UNDO: send_context_menu_action(android.R.id.undo); break;
+      case REDO: send_context_menu_action(android.R.id.redo); break;
+      case REPLACE: send_context_menu_action(android.R.id.replaceText); break;
+      case ASSIST: send_context_menu_action(android.R.id.textAssist); break;
+      case AUTOFILL: send_context_menu_action(android.R.id.autofill); break;
+      case CURSOR_LEFT: move_cursor(-1, mods); break;
+      case CURSOR_RIGHT: move_cursor(1, mods); break;
+    }
+  }
+
+  static ExtractedTextRequest _move_cursor_req = null;
+
+  /** Query the cursor position. The extracted text is empty. Returns [null] if
+      the editor doesn't support this operation. */
+  ExtractedText get_cursor_pos(InputConnection conn)
+  {
+    if (_move_cursor_req == null)
+    {
+      _move_cursor_req = new ExtractedTextRequest();
+      _move_cursor_req.hintMaxChars = 0;
+    }
+    return conn.getExtractedText(_move_cursor_req, 0);
+  }
+
+  /** Move the cursor right or left, if possible without sending key events.
+      Unlike arrow keys, the selection is not removed even if shift is not on. */
+  void move_cursor(int d, Pointers.Modifiers mods)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    ExtractedText et = get_cursor_pos(conn);
+    if (et == null) // Editor doesn't support moving the cursor
+    {
+      move_cursor_fallback(d, mods);
+      return;
+    }
+    int sel_start = et.selectionStart;
+    int sel_end = et.selectionEnd;
+    // Continue expanding the selection even if shift is not pressed
+    if (sel_end != sel_start)
+    {
+      sel_end += d;
+      if (sel_end == sel_start) // Avoid making the selection empty
+        sel_end += d;
+    }
+    else
+    {
+      sel_end += d;
+      // Leave 'sel_start' where it is if shift is pressed
+      if (!mods.has(KeyValue.Modifier.SHIFT))
+        sel_start = sel_end;
+    }
+    conn.setSelection(sel_start, sel_end);
+  }
+
+  /** Send arrow keys as a fallback for editors that do not support
+      [getExtractedText] like Termux. */
+  void move_cursor_fallback(int d, Pointers.Modifiers mods)
+  {
+    while (d < 0)
+    {
+      send_key_down_up(KeyEvent.KEYCODE_DPAD_LEFT, mods);
+      d++;
+    }
+    while (d > 0)
+    {
+      send_key_down_up(KeyEvent.KEYCODE_DPAD_RIGHT, mods);
+      d--;
+    }
   }
 
   public static interface IReceiver
