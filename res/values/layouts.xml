@@ -42,6 +42,7 @@
     <item>latn_qwertz_fr_ch</item>
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
+    <item>urdu_phonetic_ur</item>
     <item>custom</item>
   </string-array>
   <string-array name="pref_layout_entries">
@@ -85,6 +86,7 @@
     <item>QWERTZ (Swiss French)</item>
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
+    <item>Urdu Phonetic</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
   <integer-array name="layout_ids">
@@ -128,6 +130,7 @@
     <item>@xml/latn_qwertz_fr_ch</item>
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
+    <item>@xml/urdu_phonetic_ur</item>
     <item>-1</item>
   </integer-array>
 </resources>

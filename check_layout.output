@@ -110,3 +110,8 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 2 warnings
 # res/xml/latn_qwertz.xml
 0 warnings
+# res/xml/urdu_phonetic_ur.xml
+Duplicate keys:  
+Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+3 warnings
