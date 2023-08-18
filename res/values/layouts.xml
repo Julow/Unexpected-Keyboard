@@ -22,6 +22,7 @@
     <item>hebr_1_il</item>
     <item>hebr_2_il</item>
     <item>latn_azerty_fr</item>
+    <item>latn_bepo_fr</item>
     <item>latn_bone</item>
     <item>latn_neo2</item>
     <item>latn_qwerty_br</item>
@@ -38,6 +39,7 @@
     <item>latn_qwertz_cz</item>
     <item>latn_qwertz_cz_multifunctional</item>
     <item>latn_qwertz_de</item>
+    <item>latn_qwertz_fr_ch</item>
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
     <item>urdu_phonetic_ur</item>
@@ -64,6 +66,7 @@
     <item>Hebrew 1</item>
     <item>Hebrew 2</item>
     <item>AZERTY (Français)</item>
+    <item>BEPO (Français)</item>
     <item>Bone</item>
     <item>Neo 2</item>
     <item>QWERTY (Brasileiro)</item>
@@ -80,6 +83,7 @@
     <item>QWERTZ (Czech)</item>
     <item>QWERTZ Multifunctional (Czech)</item>
     <item>QWERTZ (Deutsch)</item>
+    <item>QWERTZ (Swiss French)</item>
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
     <item>Urdu Phonetic</item>
@@ -106,6 +110,7 @@
     <item>@xml/hebr_1_il</item>
     <item>@xml/hebr_2_il</item>
     <item>@xml/latn_azerty_fr</item>
+    <item>@xml/latn_bepo_fr</item>
     <item>@xml/latn_bone</item>
     <item>@xml/latn_neo2</item>
     <item>@xml/latn_qwerty_br</item>
@@ -122,6 +127,7 @@
     <item>@xml/latn_qwertz_cz</item>
     <item>@xml/latn_qwertz_cz_multifunctional</item>
     <item>@xml/latn_qwertz_de</item>
+    <item>@xml/latn_qwertz_fr_ch</item>
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
     <item>@xml/urdu_phonetic_ur</item>

@@ -3,7 +3,6 @@ package juloo.keyboard2;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -28,7 +27,6 @@ final class Config
   // From preferences
   /** [null] represent the [system] layout. */
   public List<KeyboardData> layouts;
-  public KeyboardData custom_layout; // Might be 'null'
   public boolean show_numpad = false;
   // From the 'numpad_layout' option, also apply to the numeric pane.
   public boolean inverse_numpad = false;
@@ -49,7 +47,6 @@ final class Config
   public int keyActivatedOpacity; // 0 - 255
   public boolean double_tap_lock_shift;
   public float characterSize; // Ratio
-  public int accents; // Values are R.values.pref_accents_v_*
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
@@ -115,11 +112,7 @@ final class Config
     {
       keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
     }
-    List<String> layout_names = LayoutsPreference.load_from_preferences(_prefs);
-    layouts = new ArrayList<KeyboardData>();
-    for (String l : layout_names)
-      layouts.add(layout_of_string(res, l));
-    custom_layout = KeyboardData.load_string(_prefs.getString("custom_layout", ""));
+    layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
     number_row = _prefs.getBoolean("number_row", false);
     // The baseline for the swipe distance correspond to approximately the
@@ -153,7 +146,6 @@ final class Config
     characterSize =
       _prefs.getFloat("character_size", 1.f)
       * characterSizeScale;
-    accents = Integer.valueOf(_prefs.getString("accents", "1"));
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
@@ -184,10 +176,17 @@ final class Config
     // first iteration then automatically added.
     final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
-    if (extra_keys_subtype != null)
-      extra_keys_subtype.compute(extra_keys, kw.script);
     extra_keys.addAll(extra_keys_param);
     extra_keys.addAll(extra_keys_custom);
+    if (extra_keys_subtype != null)
+    {
+      Set<KeyValue> present = new HashSet<KeyValue>();
+      kw.getKeys(present);
+      present.addAll(extra_keys_param);
+      present.addAll(extra_keys_custom);
+      extra_keys_subtype.compute(extra_keys,
+          new ExtraKeys.Query(kw.script, present));
+    }
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
       KeyboardData.number_row.getKeys(remove_keys);
@@ -296,7 +295,7 @@ final class Config
     try { value = _prefs.getInt(pref_name, -1); }
     catch (Exception e) { value = _prefs.getFloat(pref_name, -1f); }
     if (value < 0f)
-      return (def);
+      value = def;
     return (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm));
   }
 
@@ -330,36 +329,6 @@ final class Config
     }
   }
 
-  /** Obtained from XML. */
-  static List<String> layout_ids_str = null;
-  static TypedArray layout_ids_res = null;
-
-  /** Might return [null] if the selected layout is "system", "custom" or if
-      the name is not recognized. */
-  public KeyboardData layout_of_string(Resources res, String name)
-  {
-    if (layout_ids_str == null)
-    {
-      layout_ids_str = Arrays.asList(res.getStringArray(R.array.pref_layout_values));
-      layout_ids_res = res.obtainTypedArray(R.array.layout_ids);
-    }
-    int i = layout_ids_str.indexOf(name);
-    if (i >= 0)
-    {
-      int id = layout_ids_res.getResourceId(i, 0);
-      if (id > 0)
-        return KeyboardData.load(res, id);
-      // Fallthrough
-    }
-    switch (name)
-    {
-      case "custom": return custom_layout;
-      case "system":
-      case "none":
-      default: return null;
-    }
-  }
-
   char inverse_numpad_char(char c)
   {
     switch (c)
@@ -379,6 +348,7 @@ final class Config
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
       IKeyEventHandler handler)
   {
+    migrate(prefs);
     _globalConfig = new Config(prefs, res, handler);
   }
 
@@ -390,5 +360,46 @@ final class Config
   public static interface IKeyEventHandler
   {
     public void key_up(KeyValue value, Pointers.Modifiers flags);
+  }
+
+  /** Config migrations. */
+
+  private static int CONFIG_VERSION = 1;
+
+  public static void migrate(SharedPreferences prefs)
+  {
+    int saved_version = prefs.getInt("version", 0);
+    Logs.debug_config_migration(saved_version, CONFIG_VERSION);
+    if (saved_version == CONFIG_VERSION)
+      return;
+    SharedPreferences.Editor e = prefs.edit();
+    e.putInt("version", CONFIG_VERSION);
+    // Migrations might run on an empty [prefs] for new installs, in this case
+    // they set the default values of complex options.
+    switch (saved_version) // Fallback switch
+    {
+      case 0:
+        // Primary, secondary and custom layout options are merged into the new
+        // Layouts option. This also sets the default value.
+        List<LayoutsPreference.Layout> l = new ArrayList<LayoutsPreference.Layout>();
+        l.add(migrate_layout(prefs.getString("layout", "system")));
+        String snd_layout = prefs.getString("second_layout", "none");
+        if (snd_layout != null && !snd_layout.equals("none"))
+          l.add(migrate_layout(snd_layout));
+        String custom_layout = prefs.getString("custom_layout", "");
+        if (custom_layout != null && !custom_layout.equals(""))
+          l.add(new LayoutsPreference.CustomLayout(custom_layout));
+        LayoutsPreference.save_to_preferences(e, l);
+      case 1:
+      default: break;
+    }
+    e.commit();
+  }
+
+  private static LayoutsPreference.Layout migrate_layout(String name)
+  {
+    if (name == null || name.equals("system"))
+      return new LayoutsPreference.SystemLayout();
+    return new LayoutsPreference.NamedLayout(name);
   }
 }

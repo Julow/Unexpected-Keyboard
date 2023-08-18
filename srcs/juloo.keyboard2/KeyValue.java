@@ -70,6 +70,8 @@ final class KeyValue
     SHARE,
     ASSIST,
     AUTOFILL,
+    CURSOR_LEFT,
+    CURSOR_RIGHT,
   }
 
   public static enum Placeholder
@@ -278,10 +280,20 @@ final class KeyValue
     return keyeventKey(String.valueOf((char)symbol), code, flags | FLAG_KEY_FONT);
   }
 
-  private static KeyValue editingKey(String symbol, Editing action)
+  private static KeyValue editingKey(String symbol, Editing action, int flags)
   {
     return new KeyValue(symbol, Kind.Editing, action.ordinal(),
-        FLAG_SPECIAL | FLAG_SECONDARY | FLAG_SMALLER_FONT);
+        flags | FLAG_SPECIAL | FLAG_SECONDARY);
+  }
+
+  private static KeyValue editingKey(String symbol, Editing action)
+  {
+    return editingKey(symbol, action, FLAG_SMALLER_FONT);
+  }
+
+  private static KeyValue editingKey(int symbol, Editing action)
+  {
+    return editingKey(String.valueOf((char)symbol), action, FLAG_KEY_FONT);
   }
 
   /** A key that do nothing but has a unique ID. */
@@ -296,7 +308,7 @@ final class KeyValue
     if (str.length() == 1)
       return new KeyValue(str, Kind.Char, str.charAt(0), 0);
     else
-      return new KeyValue(str, Kind.String, 0, 0);
+      return new KeyValue(str, Kind.String, 0, FLAG_SMALLER_FONT);
   }
 
   public static KeyValue getKeyByName(String name)
@@ -311,28 +323,29 @@ final class KeyValue
       case "\\@": return makeStringKey("@");
       case "\\\\": return makeStringKey("\\");
 
-      case "shift": return modifierKey(0x0A, Modifier.SHIFT, 0);
+      /* Modifiers and dead-keys */
+      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, 0);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
-      case "accent_aigu": return diacritic(0x50, Modifier.AIGU);
-      case "accent_caron": return diacritic(0x51, Modifier.CARON);
-      case "accent_cedille": return diacritic(0x52, Modifier.CEDILLE);
-      case "accent_circonflexe": return diacritic(0x53, Modifier.CIRCONFLEXE);
-      case "accent_grave": return diacritic(0x54, Modifier.GRAVE);
-      case "accent_macron": return diacritic(0x55, Modifier.MACRON);
-      case "accent_ring": return diacritic(0x56, Modifier.RING);
-      case "accent_tilde": return diacritic(0x57, Modifier.TILDE);
-      case "accent_trema": return diacritic(0x58, Modifier.TREMA);
-      case "accent_ogonek": return diacritic(0x59, Modifier.OGONEK);
-      case "accent_dot_above": return diacritic(0x5A, Modifier.DOT_ABOVE);
-      case "accent_double_aigu": return diacritic(0x5B, Modifier.DOUBLE_AIGU);
-      case "accent_slash": return diacritic(0x5C, Modifier.SLASH);
-      case "accent_arrow_right": return diacritic(0x5D, Modifier.ARROW_RIGHT);
-      case "accent_breve": return diacritic(0x5E, Modifier.BREVE);
-      case "accent_bar": return diacritic(0x5F, Modifier.BAR);
-      case "accent_dot_below": return diacritic(0x60, Modifier.DOT_BELOW);
-      case "accent_horn": return diacritic(0x61, Modifier.HORN);
-      case "accent_hook_above": return diacritic(0x62, Modifier.HOOK_ABOVE);
+      case "accent_aigu": return diacritic(0xE050, Modifier.AIGU);
+      case "accent_caron": return diacritic(0xE051, Modifier.CARON);
+      case "accent_cedille": return diacritic(0xE052, Modifier.CEDILLE);
+      case "accent_circonflexe": return diacritic(0xE053, Modifier.CIRCONFLEXE);
+      case "accent_grave": return diacritic(0xE054, Modifier.GRAVE);
+      case "accent_macron": return diacritic(0xE055, Modifier.MACRON);
+      case "accent_ring": return diacritic(0xE056, Modifier.RING);
+      case "accent_tilde": return diacritic(0xE057, Modifier.TILDE);
+      case "accent_trema": return diacritic(0xE058, Modifier.TREMA);
+      case "accent_ogonek": return diacritic(0xE059, Modifier.OGONEK);
+      case "accent_dot_above": return diacritic(0xE05A, Modifier.DOT_ABOVE);
+      case "accent_double_aigu": return diacritic(0xE05B, Modifier.DOUBLE_AIGU);
+      case "accent_slash": return diacritic(0xE05C, Modifier.SLASH);
+      case "accent_arrow_right": return diacritic(0xE05D, Modifier.ARROW_RIGHT);
+      case "accent_breve": return diacritic(0xE05E, Modifier.BREVE);
+      case "accent_bar": return diacritic(0xE05F, Modifier.BAR);
+      case "accent_dot_below": return diacritic(0xE060, Modifier.DOT_BELOW);
+      case "accent_horn": return diacritic(0xE061, Modifier.HORN);
+      case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
@@ -341,32 +354,34 @@ final class KeyValue
       case "fn": return modifierKey("Fn", Modifier.FN, 0);
       case "meta": return modifierKey("Meta", Modifier.META, 0);
 
-      case "config": return eventKey(0x04, Event.CONFIG, FLAG_SMALLER_FONT);
+      /* Special event keys */
+      case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
       case "switch_text": return eventKey("ABC", Event.SWITCH_TEXT, FLAG_SMALLER_FONT);
       case "switch_numeric": return eventKey("123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
-      case "switch_emoji": return eventKey(0x01, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
+      case "switch_emoji": return eventKey(0xE001, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
       case "switch_back_emoji": return eventKey("ABC", Event.SWITCH_BACK_EMOJI, 0);
-      case "switch_forward": return eventKey(0x13, Event.SWITCH_FORWARD, FLAG_SMALLER_FONT);
-      case "switch_backward": return eventKey(0x14, Event.SWITCH_BACKWARD, FLAG_SMALLER_FONT);
+      case "switch_forward": return eventKey(0xE013, Event.SWITCH_FORWARD, FLAG_SMALLER_FONT);
+      case "switch_backward": return eventKey(0xE014, Event.SWITCH_BACKWARD, FLAG_SMALLER_FONT);
       case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
-      case "change_method": return eventKey(0x09, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
-      case "change_method_prev": return eventKey(0x09, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
+      case "change_method": return eventKey(0xE009, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
+      case "change_method_prev": return eventKey(0xE009, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
       case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
-      case "capslock": return eventKey(0x12, Event.CAPS_LOCK, 0);
-      case "voice_typing": return eventKey(0x15, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
+      case "capslock": return eventKey(0xE012, Event.CAPS_LOCK, 0);
+      case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
 
+      /* Key events */
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
-      case "enter": return keyeventKey(0x0E, KeyEvent.KEYCODE_ENTER, 0);
-      case "up": return keyeventKey(0x05, KeyEvent.KEYCODE_DPAD_UP, 0);
-      case "right": return keyeventKey(0x06, KeyEvent.KEYCODE_DPAD_RIGHT, 0);
-      case "down": return keyeventKey(0x07, KeyEvent.KEYCODE_DPAD_DOWN, 0);
-      case "left": return keyeventKey(0x08, KeyEvent.KEYCODE_DPAD_LEFT, 0);
-      case "page_up": return keyeventKey(0x02, KeyEvent.KEYCODE_PAGE_UP, 0);
-      case "page_down": return keyeventKey(0x03, KeyEvent.KEYCODE_PAGE_DOWN, 0);
-      case "home": return keyeventKey(0x0B, KeyEvent.KEYCODE_MOVE_HOME, 0);
-      case "end": return keyeventKey(0x0C, KeyEvent.KEYCODE_MOVE_END, 0);
-      case "backspace": return keyeventKey(0x11, KeyEvent.KEYCODE_DEL, 0);
-      case "delete": return keyeventKey(0x10, KeyEvent.KEYCODE_FORWARD_DEL, 0);
+      case "enter": return keyeventKey(0xE00E, KeyEvent.KEYCODE_ENTER, 0);
+      case "up": return keyeventKey(0xE005, KeyEvent.KEYCODE_DPAD_UP, 0);
+      case "right": return keyeventKey(0xE006, KeyEvent.KEYCODE_DPAD_RIGHT, 0);
+      case "down": return keyeventKey(0xE007, KeyEvent.KEYCODE_DPAD_DOWN, 0);
+      case "left": return keyeventKey(0xE008, KeyEvent.KEYCODE_DPAD_LEFT, 0);
+      case "page_up": return keyeventKey(0xE002, KeyEvent.KEYCODE_PAGE_UP, 0);
+      case "page_down": return keyeventKey(0xE003, KeyEvent.KEYCODE_PAGE_DOWN, 0);
+      case "home": return keyeventKey(0xE00B, KeyEvent.KEYCODE_MOVE_HOME, 0);
+      case "end": return keyeventKey(0xE00C, KeyEvent.KEYCODE_MOVE_END, 0);
+      case "backspace": return keyeventKey(0xE011, KeyEvent.KEYCODE_DEL, 0);
+      case "delete": return keyeventKey(0xE010, KeyEvent.KEYCODE_FORWARD_DEL, 0);
       case "insert": return keyeventKey("Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
       case "f1": return keyeventKey("F1", KeyEvent.KEYCODE_F1, 0);
       case "f2": return keyeventKey("F2", KeyEvent.KEYCODE_F2, 0);
@@ -380,8 +395,9 @@ final class KeyValue
       case "f10": return keyeventKey("F10", KeyEvent.KEYCODE_F10, 0);
       case "f11": return keyeventKey("F11", KeyEvent.KEYCODE_F11, FLAG_SMALLER_FONT);
       case "f12": return keyeventKey("F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
-      case "tab": return keyeventKey(0x0F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
+      case "tab": return keyeventKey(0xE00F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
 
+      /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
       case "space": return charKey("\r", ' ', FLAG_KEY_FONT | FLAG_SECONDARY);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
@@ -397,10 +413,6 @@ final class KeyValue
       case "b}": return charKey("}", '{', 0);
       case "blt": return charKey("<", '>', 0);
       case "bgt": return charKey(">", '<', 0);
-
-      case "removed": return placeholderKey(Placeholder.REMOVED);
-      case "f11_placeholder": return placeholderKey(Placeholder.F11);
-      case "f12_placeholder": return placeholderKey(Placeholder.F12);
 
       /* hebrew niqqud */
       case "qamats": return charKey("\u05E7\u05B8", '\u05B8', 0); // kamatz
@@ -433,39 +445,29 @@ final class KeyValue
       case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
       case "zwnj": return charKey("zwnj", '\u200C', 0); // zero-width non joiner (prevents unintended ligature)
 
-      case "copy": return editingKey("copy", Editing.COPY);
-      case "paste": return editingKey("paste", Editing.PASTE);
-      case "cut": return editingKey("cut", Editing.CUT);
-      case "selectAll": return editingKey("s. all", Editing.SELECT_ALL);
-      case "shareText": return editingKey("share", Editing.SHARE);
-      case "pasteAsPlainText": return editingKey("<paste>", Editing.PASTE_PLAIN);
-      case "undo": return editingKey("undo", Editing.UNDO);
-      case "redo": return editingKey("redo", Editing.REDO);
-      case "replaceText": return editingKey("repl.", Editing.REPLACE);
-      case "textAssist": return editingKey("assist", Editing.ASSIST);
-      case "autofill": return editingKey("auto.", Editing.AUTOFILL);
+      /* Editing keys */
+      case "copy": return editingKey(0xE030, Editing.COPY);
+      case "paste": return editingKey(0xE032, Editing.PASTE);
+      case "cut": return editingKey(0xE031, Editing.CUT);
+      case "selectAll": return editingKey(0xE033, Editing.SELECT_ALL);
+      case "shareText": return editingKey(0xE034, Editing.SHARE);
+      case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
+      case "undo": return editingKey(0xE036, Editing.UNDO);
+      case "redo": return editingKey(0xE037, Editing.REDO);
+      case "replaceText": return editingKey("repl", Editing.REPLACE);
+      case "textAssist": return editingKey(0xE038, Editing.ASSIST);
+      case "autofill": return editingKey("auto", Editing.AUTOFILL);
+      case "cursor_left": return editingKey(0xE008, Editing.CURSOR_LEFT);
+      case "cursor_right": return editingKey(0xE006, Editing.CURSOR_RIGHT);
+
+      /* Placeholder keys */
+      case "removed": return placeholderKey(Placeholder.REMOVED);
+      case "f11_placeholder": return placeholderKey(Placeholder.F11);
+      case "f12_placeholder": return placeholderKey(Placeholder.F12);
+
+      /* Fallback to a string key that types its name */
       default: return makeStringKey(name);
     }
-  }
-
-  static final HashMap<String, String> keys_descr = new HashMap<String, String>();
-
-  /* Some keys have a description attached. Return [null] if otherwise. */
-  public static String getKeyDescription(String name)
-  {
-    return keys_descr.get(name);
-  }
-
-  static void addKeyDescr(String name, String descr)
-  {
-    keys_descr.put(name, descr);
-  }
-
-  static {
-    /* Keys description is shown in the settings. */
-    addKeyDescr("capslock", "Caps lock");
-    addKeyDescr("switch_greekmath", "Greek & math symbols");
-    addKeyDescr("voice_typing", "Voice typing");
   }
 
   // Substitute for [assert], which has no effect on Android.

@@ -14,10 +14,8 @@
   <string name="pref_layout_e_custom">Formato personalizado</string>
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
   <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
-  <string name="pref_accents_title">Acentos</string>
-  <string name="pref_accents_e_all_installed">Mostrar acentos para todos los lenguajes instalados</string>
-  <string name="pref_accents_e_selected">Solo mostrar acentos para el lenguaje seleccionado</string>
-  <string name="pref_accents_e_none">Ocultar acentos</string>
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <string name="pref_custom_layout_title">Formato personalizado</string>
   <string name="pref_show_numpad_title">Mostrar pad numérico</string>
   <string name="pref_show_numpad_never">Nunca</string>
   <string name="pref_show_numpad_landscape">Solo en modo paisaje</string>
@@ -69,9 +67,6 @@
   <string name="pref_swipe_dist_e_very_far">Muy lejana</string>
   <string name="pref_key_horizontal_space">Espaciado horizontal entre las teclas</string>
   <string name="pref_key_vertical_space">Espaciado vertical entre las teclas</string>
-  <string name="pref_category_advanced">Avanzado</string>
-  <string name="pref_custom_layout_title">Formato personalizado</string>
-  <string name="pref_custom_layout_summary">Revisar el código fuente. Esta opción no está pensada para ser usada.</string>
   <string name="pref_vibration_e_disabled">Deshabilitada</string>
   <string name="pref_vibration_e_system">Sistema</string>
   <string name="pref_vibration_e_strong">Fuerte</string>
@@ -85,6 +80,25 @@
   <string name="key_action_send">Enviar</string>
   <string name="launcher_button_imesettings">Habilitar teclado</string>
   <string name="launcher_description">Esta aplicación es un teclado virtual. Apretar el botón de abajo te facilitará habilitarlo.</string>
-  <string name="launcher_sourcecode">Esta es una aplicación gratuita, libre y de fuente abierta. EL código fuente se puede encontrar también para reportar errores en <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string>
+  <string name="launcher_sourcecode">Esta es una aplicación gratuita, libre y de fuente abierta. EL código fuente se puede encontrar también para reportar errores en Github.</string>
   <string name="launcher_tryhere">Tras habilitar, debajo se puede probar el teclado:</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_replaceText">Replace</string> -->
+  <!-- <string name="key_descr_textAssist">Assist</string> -->
+  <!-- <string name="key_descr_autofill">Autofill</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <string name="pref_category_advanced">Avanzado</string>
 </resources>

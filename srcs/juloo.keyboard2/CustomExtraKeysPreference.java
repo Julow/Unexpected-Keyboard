@@ -17,10 +17,12 @@ import org.json.JSONException;
 
 /** Allows to enter custom keys to be added to the keyboard. This shows up at
     the top of the "Add keys to the keyboard" option. */
-public class CustomExtraKeysPreference extends ListGroupPreference
+public class CustomExtraKeysPreference extends ListGroupPreference<String>
 {
   /** This pref stores a list of strings encoded as JSON. */
   static final String KEY = "custom_extra_keys";
+  static final ListGroupPreference.Serializer<String> SERIALIZER =
+    new ListGroupPreference.StringSerializer();
 
   public CustomExtraKeysPreference(Context context, AttributeSet attrs)
   {
@@ -31,7 +33,7 @@ public class CustomExtraKeysPreference extends ListGroupPreference
   public static List<KeyValue> get(SharedPreferences prefs)
   {
     List<KeyValue> kvs = new ArrayList<KeyValue>();
-    List<String> key_names = load_from_preferences(KEY, prefs, null);
+    List<String> key_names = load_from_preferences(KEY, prefs, null, SERIALIZER);
     if (key_names != null)
     {
       for (String key_name : key_names)
@@ -40,22 +42,26 @@ public class CustomExtraKeysPreference extends ListGroupPreference
     return kvs;
   }
 
+  String label_of_value(String value, int i) { return value; }
+
   @Override
-  void select(final SelectionCallback callback)
+  void select(final SelectionCallback<String> callback)
   {
     new AlertDialog.Builder(getContext())
-      .setView(R.layout.custom_extra_key_add_dialog)
+      .setView(R.layout.dialog_edit_text)
       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface dialog, int which)
         {
-          EditText input = (EditText)((AlertDialog)dialog).findViewById(R.id.key_name);
+          EditText input = (EditText)((AlertDialog)dialog).findViewById(R.id.text);
           final String k = input.getText().toString();
           if (!k.equals(""))
             callback.select(k);
         }
       })
-    .setNegativeButton(android.R.string.cancel, null)
-      .setIcon(android.R.drawable.ic_dialog_alert)
+      .setNegativeButton(android.R.string.cancel, null)
       .show();
   }
+
+  @Override
+  Serializer<String> get_serializer() { return SERIALIZER; }
 }

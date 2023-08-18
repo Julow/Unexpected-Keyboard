@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
   <TextView style="@style/paragraph" android:text="@string/launcher_description"/>
   <Button style="@style/paragraph" android:text="@string/launcher_button_imesettings" android:onClick="launch_imesettings" android:layout_width="wrap_content"/>
-  <TextView style="@style/paragraph" android:text="@string/launcher_sourcecode" android:autoLink="web"/>
+  <TextView style="@style/paragraph" android:text="@string/launcher_sourcecode"/>
+  <TextView style="@style/paragraph" android:text="https://github.com/Julow/Unexpected-Keyboard" android:autoLink="web" android:linksClickable="true"/>
   <TextView android:id="@+id/launcher_tryhere_text" style="@style/paragraph" android:text="@string/launcher_tryhere"/>
   <EditText android:id="@+id/launcher_tryhere_area" style="@style/paragraph" android:inputType="text"/>
 </LinearLayout>

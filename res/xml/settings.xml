@@ -2,15 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
   <PreferenceCategory android:title="@string/pref_category_layout">
     <juloo.keyboard2.LayoutsPreference/>
-    <ListPreference android:key="accents" android:title="@string/pref_accents_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_accents_entries" android:entryValues="@array/pref_accents_values"/>
-    <ListPreference android:key="show_numpad" android:title="@string/pref_show_numpad_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_show_numpad_entries" android:entryValues="@array/pref_show_numpad_values"/>
-    <CheckBoxPreference android:key="number_row" android:title="@string/pref_number_row_title" android:summary="@string/pref_number_row_summary" android:defaultValue="false"/>
     <PreferenceScreen android:title="@string/pref_extra_keys_title">
       <PreferenceCategory android:title="@string/pref_extra_keys_custom">
         <juloo.keyboard2.CustomExtraKeysPreference/>
       </PreferenceCategory>
       <juloo.keyboard2.ExtraKeysPreference android:title="@string/pref_extra_keys_internal"/>
     </PreferenceScreen>
+    <CheckBoxPreference android:key="number_row" android:title="@string/pref_number_row_title" android:summary="@string/pref_number_row_summary" android:defaultValue="false"/>
+    <ListPreference android:key="show_numpad" android:title="@string/pref_show_numpad_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_show_numpad_entries" android:entryValues="@array/pref_show_numpad_values"/>
     <ListPreference android:key="numpad_layout" android:title="@string/pref_numpad_layout" android:summary="%s" android:defaultValue="high_first" android:entries="@array/pref_numpad_layout_entries" android:entryValues="@array/pref_numpad_layout_values"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
@@ -46,8 +45,5 @@
     <juloo.common.SlideBarPreference android:key="character_size" android:title="@string/pref_character_size_title" android:summary="@string/pref_character_size_summary" android:defaultValue="1.0" min="0.75" max="1.5"/>
     <juloo.common.IntSlideBarPreference android:key="key_vertical_space" android:title="@string/pref_key_vertical_space" android:summary="%sdp" android:defaultValue="2" min="0" max="8"/>
     <juloo.common.IntSlideBarPreference android:key="key_horizontal_space" android:title="@string/pref_key_horizontal_space" android:summary="%sdp" android:defaultValue="2" min="0" max="8"/>
-  </PreferenceCategory>
-  <PreferenceCategory android:title="@string/pref_category_advanced">
-    <EditTextPreference android:key="custom_layout" android:title="@string/pref_custom_layout_title" android:summary="@string/pref_custom_layout_summary" android:inputType="text|textMultiLine|textLongMessage"/>
   </PreferenceCategory>
 </PreferenceScreen>
