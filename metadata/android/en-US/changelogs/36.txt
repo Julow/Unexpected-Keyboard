@@ -1,0 +1,9 @@
+Allow selecting any number of standard and custom layouts.
+Allow adding custom keys to the keyboard.
+Changed behavior of auto-added keys (often dead-keys).
+New layouts.
+Improved layouts and language support.
+Improved the space bar slider, and many more.
+Updated translations.
+
+Thanks to the contributors: @ChasmSolacer, @ElucGeek, @GoRaN909, @RZHSSNZDH, @Shareef101, @Validbit, @eandersons, @nitsvga, @polyctena, @sdrapha, @syskill
