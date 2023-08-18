@@ -15,7 +15,7 @@
     <key key0="è" key2="ü" key3="!"/>
   </row>
   <row>
-    <key key0="a" key1= "æ" key2="tab"/>
+    <key key0="a" key1="æ" key2="tab"/>
     <key key0="s" key1="`" key3="ß" key4="£"/>
     <key key0="d"/>
     <key key0="f" key1="~"/>
@@ -33,7 +33,7 @@
     <key key0="x"/>
     <key key0="c" key3="ç"/>
     <key key0="v"/>
-    <key key0="b" key1=";" key3="," key4="₿"/>
+    <key key0="b" key1=";" key3=","/>
     <key key0="n" key1=":" key3="."/>
     <key key0="m" key1="_" key3="-"/>
     <key key0="ê" key1="â" key2="î" key3="ô" key4="û"/>
