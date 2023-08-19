@@ -182,11 +182,6 @@ final class KeyValue
     return new KeyValue(String.valueOf(c), Kind.Char, c, getFlags());
   }
 
-  public KeyValue withString(String s)
-  {
-    return new KeyValue(s, Kind.String, 0, getFlags());
-  }
-
   public KeyValue withSymbol(String s)
   {
     return new KeyValue(s, (_code & KIND_BITS), (_code & VALUE_BITS), getFlags());
@@ -302,13 +297,19 @@ final class KeyValue
     return new KeyValue("", Kind.Placeholder, id.ordinal(), 0);
   }
 
-  /** Make a key that types a string. */
   public static KeyValue makeStringKey(String str)
   {
+    return makeStringKey(str, 0);
+  }
+
+  /** Make a key that types a string. A char key is returned for a string of
+      length 1. */
+  public static KeyValue makeStringKey(String str, int flags)
+  {
     if (str.length() == 1)
-      return new KeyValue(str, Kind.Char, str.charAt(0), 0);
+      return new KeyValue(str, Kind.Char, str.charAt(0), flags);
     else
-      return new KeyValue(str, Kind.String, 0, FLAG_SMALLER_FONT);
+      return new KeyValue(str, Kind.String, 0, flags | FLAG_SMALLER_FONT);
   }
 
   public static KeyValue getKeyByName(String name)
