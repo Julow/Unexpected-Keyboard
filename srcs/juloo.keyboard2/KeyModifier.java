@@ -50,7 +50,7 @@ class KeyModifier
       case MACRON: return apply_map_char(k, map_char_macron);
       case OGONEK: return apply_map_char(k, map_char_ogonek);
       case DOT_ABOVE: return apply_map_char(k, map_char_dot_above);
-      case BREVE: return apply_dead_char(k, '\u02D8');
+      case BREVE: return apply_map_char(k, map_char_breve);
       case DOUBLE_AIGU: return apply_map_char(k, map_char_double_aigu);
       case ORDINAL: return apply_map_char(k, map_char_ordinal);
       case SUPERSCRIPT: return apply_map_char(k, map_char_superscript);
@@ -59,7 +59,7 @@ class KeyModifier
       case BOX: return apply_map_char(k, map_char_box);
       case SLASH: return apply_map_char(k, map_char_slash);
       case BAR: return apply_map_char(k, map_char_bar);
-      case ARROW_RIGHT: return apply_combining(k, "\u20D7");
+      case ARROW_RIGHT: return apply_map_char(k, map_char_arrow_right);
       case DOT_BELOW: return apply_map_char(k, map_char_dot_below);
       case HORN: return apply_map_char(k, map_char_horn);
       case HOOK_ABOVE: return apply_map_char(k, map_char_hook_above);
@@ -93,29 +93,6 @@ class KeyModifier
         if (modified == null)
           return k;
         return KeyValue.makeStringKey(modified, k.getFlags());
-      default: return k;
-    }
-  }
-
-  private static KeyValue apply_dead_char(KeyValue k, char dead_char)
-  {
-    switch (k.getKind())
-    {
-      case Char:
-        char kc = k.getChar();
-        char c = (char)KeyCharacterMap.getDeadChar(dead_char, kc);
-        return (c == 0 || kc == c) ? k : k.withChar(c);
-      default: return k;
-    }
-  }
-
-  private static KeyValue apply_combining(KeyValue k, String combining)
-  {
-    switch (k.getKind())
-    {
-      case Char:
-        String s = String.valueOf(k.getChar()) + combining;
-        return KeyValue.makeStringKey(s, k.getFlags());
       default: return k;
     }
   }
@@ -503,7 +480,6 @@ class KeyModifier
       {
         switch (c)
         {
-          // Composite characters: 'j́'
           case 'a': return "á";
           case 'e': return "é";
           case 'i': return "í";
@@ -513,6 +489,9 @@ class KeyModifier
           case 's': return "ś";
           case 'u': return "ú";
           case 'y': return "ý";
+          // Combining diacritic
+          case 'j':
+            return c + "\u0301";
           default: return map_dead_char(c, '\u00B4');
         }
       }
@@ -673,16 +652,33 @@ class KeyModifier
       }
     };
 
+  private static final Map_char map_char_breve =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          default: return map_dead_char(c, '\u02D8');
+        }
+      }
+    };
+
   private static final Map_char map_char_double_aigu =
     new Map_char() {
       public String apply(char c)
       {
         switch (c)
         {
-          // Composite characters: a̋ e̋ i̋ m̋ ӳ
           case 'o': return "ő";
           case 'u': return "ű";
           case ' ': return "˝";
+          // Combining diacritic
+          case 'a':
+          case 'e':
+          case 'i':
+          case 'm':
+          case 'y':
+            return c + "\u030b";
           default: return null;
         }
       }
@@ -820,6 +816,17 @@ class KeyModifier
           case '8': return "↑";
           case '9': return "↗";
           default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_arrow_right =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          default: return c + "\u20D7";
         }
       }
     };
