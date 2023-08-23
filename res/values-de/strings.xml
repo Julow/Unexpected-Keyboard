@@ -81,6 +81,7 @@
   <string name="key_action_search">Suchen</string>
   <string name="key_action_send">Senden</string>
   <string name="launcher_button_imesettings">Tastatur aktivieren</string>
+  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
   <string name="launcher_description">Diese App ist eine virtuelle Tastatur. Tippe auf den Button unten und aktivere Unexpected Keyboard in den Systemeinstellungen.</string>
   <string name="launcher_sourcecode">Dies ist eine freie und quelloffene App. Du findest den Quellcode auf Github. Dort können auch Bugs gemeldet werden.</string>
   <string name="launcher_tryhere">Nach Aktivierung kannst du die Tastatur hier ausprobieren:</string>

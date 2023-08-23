@@ -81,6 +81,7 @@
   <string name="key_action_search">Hledat</string>
   <string name="key_action_send">Odeslat</string>
   <string name="launcher_button_imesettings">Aktivovat klávesnici</string>
+  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
   <string name="launcher_description">Tato aplikace je pouhou virtuální klávesnicí. Přejděte do systémového nastavení, kliknutím na tlačítko níže a aktivujte ji.</string>
   <string name="launcher_sourcecode">Toto je volná, open-source aplikace. Její zdrojový kód, či hlášení chyb, naleznete na Githubu.</string>
   <string name="launcher_tryhere">Po aktivaci můžete klávesnici rovnou vyzkoušet zde:</string>

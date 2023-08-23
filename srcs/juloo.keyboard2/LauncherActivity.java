@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,6 +32,13 @@ public class LauncherActivity extends Activity
   public void launch_imesettings(View _btn)
   {
     startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS));
+  }
+
+  public void launch_imepicker(View v)
+  {
+    InputMethodManager imm =
+      (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+    imm.showInputMethodPicker();
   }
 
   final class Tryhere_OnUnhandledKeyEventListener implements View.OnUnhandledKeyEventListener

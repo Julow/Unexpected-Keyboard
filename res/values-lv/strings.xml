@@ -81,6 +81,7 @@
   <string name="key_action_search">Meklēt</string>
   <string name="key_action_send">Sūtīt</string>
   <string name="launcher_button_imesettings">Iespējot tastatūru</string>
+  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
   <string name="launcher_description">Šī lietotne ir virtuālā tastatūra.
   Ar zemāk esošo pogu var atvērt sistēmas iestatījumus un iespējot Unexpected Keyboard.</string>
   <string name="launcher_sourcecode">Šī ir bezmaksas un atvērtā pirmkoda lietotne.

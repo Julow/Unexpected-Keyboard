@@ -81,6 +81,7 @@
   <string name="key_action_search">Buscar</string>
   <string name="key_action_send">Enviar</string>
   <string name="launcher_button_imesettings">Habilitar teclado</string>
+  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
   <string name="launcher_description">Esta aplicación es un teclado virtual. Presiona el botón de abajo para ir a Ajustes y habilitar Unexpected Keyboard.</string>
   <string name="launcher_sourcecode">Esta es una aplicación gratuita, libre y de código abierto. Puedes encontrar el código fuente o reportar errores en Github.</string>
   <string name="launcher_tryhere">Tras habilitarlo, puedes probar el teclado en este campo:</string>

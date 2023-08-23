@@ -81,6 +81,7 @@
   <string name="key_action_search">جستجو</string>
   <string name="key_action_send">ارسال</string>
   <string name="launcher_button_imesettings">فعال کردن صفحه کلید</string>
+  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
   <string name="launcher_description">این برنامه یک صفحه کلید مجازی است. با کلیک روی گزینه زیر به تنظیمات سامانه بروید و صفحه کلید غیرمنتظره را فعال کنید.</string>
   <string name="launcher_sourcecode">این یک برنامه متن باز و آزاد است. شما می‌توانید کد منبع را در گیتهاب پیدا کرده و نیز باگ‌ها را گزارش کنید.</string>
   <string name="launcher_tryhere">بعد از فعالسازی، صفحه کلید را اینجا امتحان کنید:</string>
