@@ -110,7 +110,7 @@ public class Theme
   static public Typeface getKeyFont(Context context)
   {
     if (_key_font == null)
-      _key_font = Typeface.createFromAsset(context.getAssets(), "special_font.ttf");
+      _key_font = ResourcesCompat.getFont(context, R.font.special_font);
     return _key_font;
   }
 }
