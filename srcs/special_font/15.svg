@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!-- Google's Material Icons "Mic" (modified) -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="-10 0 1010 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-10 0 1010 1000">
    <path fill="currentColor"
 d="M500 583.333q-51.875 0 -88.4375 -36.5625t-36.5625 -88.4375v-250q0 -51.875 36.5625 -88.4375t88.4375 -36.5625t88.4375 36.5625t36.5625 88.4375v250q0 51.875 -36.5625 88.4375t-88.4375 36.5625zM708.333 458.333h83.334q0 109.513 -71.6299 191.209
 q-71.6289 81.6963 -178.37 97.125v128.333h-83.334v-128.333q-106.741 -15.4287 -178.37 -97.125q-71.6299 -81.6963 -71.6299 -191.209h83.334q0 86.25 61.042 147.292q61.041 61.042 147.291 61.042t147.291 -61.042q61.042 -61.042 61.042 -147.292z" />
