@@ -112,8 +112,7 @@ tasks.register('checkKeyboardLayoutXml') {
     }
 }
 
-//TODO implement translation script
-/*tasks.register('generateTranslationTemplates') {
+tasks.register('generateTranslationTemplates') {
     println "Executing python script to generate translation templates"
     new ByteArrayOutputStream().withStream { bos ->
         exec {
@@ -123,7 +122,7 @@ tasks.register('checkKeyboardLayoutXml') {
         }
         println "$bos"
     }
-}*/
+}
 
 tasks.named("clean") {
     dependsOn += "cleanKeyboardFont"
