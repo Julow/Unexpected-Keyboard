@@ -1,0 +1,134 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'juloo.keyboard2'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "juloo.keyboard2"
+        minSdk 14
+        targetSdkVersion 33
+        versionCode 36
+        versionName "1.24.0"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            shrinkResources false
+            applicationIdSuffix ".debug"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    packaging {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    //implementation 'com.google.android.material:material:1.9.0'
+    //implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //implementation 'androidx.preference:preference-ktx:1.2.1'
+}
+
+tasks.named("preBuild") {
+    dependsOn += "buildKeyboardAssets"
+}
+
+tasks.register('buildKeyboardAssets') {
+    dependsOn 'copyKeyboardFont'
+    dependsOn 'buildKeyboardLayoutXml'
+}
+
+tasks.register('buildKeyboardFont') {
+    println "Executing fontforge to build custom font\n"
+    mkdir "$buildDir"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            workingDir "$projectDir/special_font"
+            def svgFiles = workingDir.listFiles().findAll {
+                it.isFile() && it.name.endsWith(".svg")
+            }
+
+            commandLine("fontforge", "-lang=ff", "-script", "build.pe", "$buildDir/special_font.ttf", *svgFiles)
+            standardOutput = bos
+        }
+        println "$bos"
+    }
+}
+
+tasks.register('copyKeyboardFont', Copy) {
+    dependsOn 'buildKeyboardFont'
+    from "$buildDir/special_font.ttf"
+    into "src/main/res/font"
+}
+
+tasks.register('buildKeyboardLayoutXml') {
+    dependsOn 'checkKeyboardLayoutXml'
+    println "Executing python script to generate keyboard layouts"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            workingDir = projectDir
+            commandLine "python", "gen_layouts.py"
+            standardOutput = bos
+        }
+        println "$bos"
+    }
+}
+
+tasks.register('checkKeyboardLayoutXml') {
+    println "Executing python script to check keyboard layouts\n"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            def layouts = new File(projectDir, "src/main/res/xml").listFiles().findAll {
+                it.isFile() && it.name.endsWith(".xml")
+            }
+            workingDir = projectDir
+            commandLine("python", "check_layout.py", *layouts)
+            standardOutput = bos
+        }
+
+        new File(projectDir, "../check_layout.output").write(bos.toString())
+    }
+}
+
+//TODO implement translation script
+/*tasks.register('generateTranslationTemplates') {
+    println "Executing python script to generate translation templates"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            workingDir = projectDir
+            commandLine "python", "sync_translations.py"
+            standardOutput = bos
+        }
+        println "$bos"
+    }
+}*/
+
+tasks.named("clean") {
+    dependsOn += "cleanKeyboardFont"
+}
+
+tasks.register('cleanKeyboardFont') {
+    delete "src/main/res/font/special_font.ttf"
+}
