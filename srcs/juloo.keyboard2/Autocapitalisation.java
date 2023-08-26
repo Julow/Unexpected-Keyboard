@@ -77,6 +77,13 @@ final class Autocapitalisation
     callback(true);
   }
 
+  public void stop()
+  {
+    _should_enable_shift = false;
+    _should_update_caps_mode = false;
+    callback(true);
+  }
+
   public static interface Callback
   {
     public void update_shift_state(boolean should_enable, boolean should_disable);

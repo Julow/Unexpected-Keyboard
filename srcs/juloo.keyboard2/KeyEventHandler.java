@@ -31,6 +31,29 @@ class KeyEventHandler implements Config.IKeyEventHandler
     _autocap.selection_updated(oldSelStart, newSelStart);
   }
 
+  /** A key is being pressed. There will not necessarily be a corresponding
+      [key_up] event. */
+  public void key_down(KeyValue key, boolean isSwipe)
+  {
+    if (key == null)
+      return;
+    switch (key.getKind())
+    {
+      case Modifier:
+        // Stop auto capitalisation when activating a system modifier
+        switch (key.getModifier())
+        {
+          case CTRL:
+          case ALT:
+          case META:
+            _autocap.stop();
+            break;
+        }
+        break;
+      default: break;
+    }
+  }
+
   /** A key has been released. */
   public void key_up(KeyValue key, Pointers.Modifiers mods)
   {

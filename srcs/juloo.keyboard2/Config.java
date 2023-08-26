@@ -359,6 +359,7 @@ final class Config
 
   public static interface IKeyEventHandler
   {
+    public void key_down(KeyValue value, boolean is_swipe);
     public void key_up(KeyValue value, Pointers.Modifiers flags);
   }
 
