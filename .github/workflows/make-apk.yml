@@ -1,4 +1,4 @@
-name: Make Apk CI
+name: Make APKs CI
 
 on:
   workflow_dispatch:
@@ -6,42 +6,35 @@ on:
   pull_request:
 
 jobs:
-  Build-Apk:
+  Build-Apks:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu' # See 'Supported distributions' for available options
-        java-version: '11'
-    - name: Checkout repo
-      uses: actions/checkout@v3
-    - name: Cache debug certificate
-      uses: actions/cache@v3
-      with:
-        path: _build/debug.keystore
-        key: debug-keystore
-    - name: Restore debug keystore from github Secrets 
-      run: |
-        mkdir -p _build
-        cd "_build"
-        # Check if exist and use the secret named DEBUG_KEYSTORE
-        # The contents of the secret can be obtained -
-        #    from the debug.keystore.asc from you local _build folder
-        if [[ ! "${{ secrets.DEBUG_KEYSTORE }}" = "" ]]; then
-            echo "${{ secrets.DEBUG_KEYSTORE }}" > "debug.keystore.asc"
-            if [[ -s "debug.keystore.asc" ]]; then
-                gpg -d --passphrase "debug0" --batch "debug.keystore.asc" > "debug.keystore"
-            fi
-        fi
-    - name: Build
-      run: make
-    - name: Artifact naming
-      run: |
-        artifact="${{github.repository_owner}} ${{github.ref_name}}"
-        artifact="${artifact//\//-}" # replace slashes
-        echo "artifact=${artifact}" >> $GITHUB_ENV
-    - name: Save debug apk
-      uses: actions/upload-artifact@v3
-      with:
-        name: "${{env.artifact}} debug_apk"
-        path: _build/*.apk
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Install FontForge
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install fontforge
+      - name: Build APKs
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assemble
+      - name: Artifact naming
+        run: |
+          artifact="${{github.repository_owner}} ${{github.ref_name}}"
+          artifact="${artifact//\//-}" # replace slashes
+          echo "artifact=${artifact}" >> $GITHUB_ENV
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{env.artifact}} debug_apk"
+          path: app/build/outputs/apk/debug/*.apk
+      - name: Upload unsigned release APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{env.artifact}} unsigned_release_apk"
+          path: app/build/outputs/apk/release/*.apk
