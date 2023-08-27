@@ -1,14 +1,11 @@
 package juloo.keyboard2;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-
-import androidx.core.content.res.ResourcesCompat;
 
 public class Theme
 {
@@ -110,7 +107,7 @@ public class Theme
   static public Typeface getKeyFont(Context context)
   {
     if (_key_font == null)
-      _key_font = ResourcesCompat.getFont(context, R.font.special_font);
+      _key_font = Typeface.createFromAsset(context.getAssets(), "special_font.ttf");
     return _key_font;
   }
 }

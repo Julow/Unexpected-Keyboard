@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -13,19 +12,18 @@ android {
         targetSdkVersion 33
         versionCode 36
         versionName "1.24.0"
-        vectorDrawables {
-            useSupportLibrary true
-        }
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
-            debuggable true
             shrinkResources false
+            debuggable true
             applicationIdSuffix ".debug"
         }
     }
@@ -33,14 +31,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+
 }
 
 tasks.named("preBuild") {
@@ -72,7 +66,7 @@ tasks.register('buildKeyboardFont') {
 tasks.register('copyKeyboardFont', Copy) {
     dependsOn 'buildKeyboardFont'
     from "$buildDir/special_font.ttf"
-    into "src/main/res/font"
+    into "src/main/assets"
 }
 
 tasks.register('buildKeyboardLayoutXml') {
@@ -121,5 +115,5 @@ tasks.named("clean") {
 }
 
 tasks.register('cleanKeyboardFont') {
-    delete "src/main/res/font/special_font.ttf"
+    delete "src/main/assets/special_font.ttf"
 }
