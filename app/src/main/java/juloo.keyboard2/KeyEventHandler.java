@@ -31,6 +31,29 @@ class KeyEventHandler implements Config.IKeyEventHandler
     _autocap.selection_updated(oldSelStart, newSelStart);
   }
 
+  /** A key is being pressed. There will not necessarily be a corresponding
+      [key_up] event. */
+  public void key_down(KeyValue key, boolean isSwipe)
+  {
+    if (key == null)
+      return;
+    switch (key.getKind())
+    {
+      case Modifier:
+        // Stop auto capitalisation when activating a system modifier
+        switch (key.getModifier())
+        {
+          case CTRL:
+          case ALT:
+          case META:
+            _autocap.stop();
+            break;
+        }
+        break;
+      default: break;
+    }
+  }
+
   /** A key has been released. */
   public void key_up(KeyValue key, Pointers.Modifiers mods)
   {
@@ -160,14 +183,20 @@ class KeyEventHandler implements Config.IKeyEventHandler
   }
 
   /** Move the cursor right or left, if possible without sending key events.
-      Unlike arrow keys, the selection is not removed even if shift is not on. */
+      Unlike arrow keys, the selection is not removed even if shift is not on.
+      Falls back to sending arrow keys events if the editor do not support
+      moving the cursor or a modifier other than shift is pressed. */
   void move_cursor(int d, Pointers.Modifiers mods)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
     ExtractedText et = get_cursor_pos(conn);
-    if (et == null) // Editor doesn't support moving the cursor
+    // Fallback to sending key events
+    if (et == null
+        || mods.has(KeyValue.Modifier.CTRL)
+        || mods.has(KeyValue.Modifier.ALT)
+        || mods.has(KeyValue.Modifier.META))
     {
       move_cursor_fallback(d, mods);
       return;
