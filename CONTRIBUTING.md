@@ -133,14 +133,15 @@ and other extra keys to show.
 
 The list of language tags (generally two letters)
 and locales (generally of the form `xx_XX`)
-can be found in this stackoverflow answer: https://stackoverflow.com/a/7989085
+can be found in this [stackoverflow answer](https://stackoverflow.com/a/7989085)
 
-### Updating translation
+### Updating translations
 
 The text used in the app is written in `res/values-<language_tag>/strings.xml`.
 
-The list of language tags can be found in this stackoverflow answer:
-https://stackoverflow.com/a/7989085
+The list of language tags can be found in this
+[stackoverflow answer](https://stackoverflow.com/a/7989085)
+
 The first part before the `_` is used, for example,
 `res/values-fr/strings.xml` for French,
 `res/values-lv/strings.xml` for Latvian.
@@ -151,8 +152,7 @@ Commented-out lines indicate missing translations:
   <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
 ```
 
-They can be translated by removing the `<!--` and `-->` parts and changing the
-text.
+Remove the `<!--` and `-->` parts and change the text.
 
 ### Adding a translation
 
