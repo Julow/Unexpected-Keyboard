@@ -90,9 +90,9 @@ for fname in sys.argv[1:]:
         continue
     layout = parse_layout(fname)
     if layout == None:
-        print("Not a layout file: res/xml/%s" % layout_id)
+        print("Not a layout file: %s" % layout_id)
     else:
-        print("# res/xml/%s" % layout_id)
+        print("# %s" % layout_id)
         warning_count = 0
         check_layout(layout)
         print("%d warnings" % warning_count)
