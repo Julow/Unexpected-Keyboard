@@ -11,6 +11,8 @@ _build
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/.idea/shelf/
+/.idea/workspace.xml
 .DS_Store
 /build
 /captures
