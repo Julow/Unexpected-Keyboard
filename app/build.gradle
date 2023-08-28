@@ -65,12 +65,7 @@ dependencies {
 }
 
 tasks.named("preBuild") {
-    dependsOn += "buildKeyboardAssets"
-}
-
-tasks.register('buildKeyboardAssets') {
-    dependsOn 'copyKeyboardFont'
-    dependsOn 'buildKeyboardLayoutXml'
+    dependsOn += "buildKeyboardLayoutXml"
 }
 
 tasks.register('buildKeyboardFont') {
@@ -88,12 +83,10 @@ tasks.register('buildKeyboardFont') {
         }
         println "$bos"
     }
-}
-
-tasks.register('copyKeyboardFont', Copy) {
-    dependsOn 'buildKeyboardFont'
-    from "$buildDir/special_font.ttf"
-    into "src/main/assets"
+    copy {
+        from "$buildDir/special_font.ttf"
+        into "src/main/assets"
+    }
 }
 
 tasks.register('buildKeyboardLayoutXml') {
@@ -135,14 +128,6 @@ tasks.register('generateTranslationTemplates') {
         }
         println "$bos"
     }
-}
-
-tasks.named("clean") {
-    dependsOn += "cleanKeyboardFont"
-}
-
-tasks.register('cleanKeyboardFont') {
-    delete "src/main/assets/special_font.ttf"
 }
 
 tasks.named("preBuild") {
