@@ -26,6 +26,7 @@
     <item>latn_bone</item>
     <item>latn_neo2</item>
     <item>latn_qwerty_br</item>
+    <item>latn_qwerty_cz</item>
     <item>latn_qwerty_es</item>
     <item>latn_qwerty_hu</item>
     <item>latn_qwerty_lv</item>
@@ -70,6 +71,7 @@
     <item>Bone</item>
     <item>Neo 2</item>
     <item>QWERTY (Brasileiro)</item>
+    <item>QWERTY (Czech)</item>
     <item>QWERTY (Español)</item>
     <item>QWERTY (Magyar)</item>
     <item>QWERTY (Latvian)</item>
@@ -114,6 +116,7 @@
     <item>@xml/latn_bone</item>
     <item>@xml/latn_neo2</item>
     <item>@xml/latn_qwerty_br</item>
+    <item>@xml/latn_qwerty_cz</item>
     <item>@xml/latn_qwerty_es</item>
     <item>@xml/latn_qwerty_hu</item>
     <item>@xml/latn_qwerty_lv</item>
