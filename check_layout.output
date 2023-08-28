@@ -8,28 +8,15 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 2 warnings
 # res/xml/latn_colemak
 0 warnings
-# res/xml/numeric
-Layout includes some ASCII punctuation but not all, missing: &, ?, @, `
-Layout redefines the bottom row but some important keys are missing, missing: change_method, config, switch_backward, switch_emoji, switch_forward, switch_numeric
-Layout doesn't specify a script.
-3 warnings
-Not a layout file: res/xml/method
 # res/xml/latn_qwertz_cz_multifunctional
 Layout includes some ASCII punctuation but not all, missing: `
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-Not a layout file: res/xml/bottom_row
 # res/xml/beng_national
 Layout includes some ASCII punctuation but not all, missing: $
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 Layout doesn't specify a script.
 3 warnings
-# res/xml/numpad
-Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), ,, :, ;, <, >, ?, @, [, \, ], ^, _, `, {, |, }, ~
-Layout doesn't define some important keys, missing: backspace, delete, esc, f11_placeholder, f12_placeholder, tab
-Layout redefines the bottom row but some important keys are missing, missing: action, change_method, config, ctrl, down, enter, fn, left, right, space, switch_backward, switch_emoji, switch_forward, switch_numeric, up
-Layout doesn't specify a script.
-4 warnings
 # res/xml/latn_qwerty_br
 0 warnings
 # res/xml/arab_pc
@@ -37,12 +24,6 @@ Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
 # res/xml/cyrl_jcuken_uk
 0 warnings
-# res/xml/pin
-Layout includes some ASCII punctuation but not all, missing: !, ", $, %, &, ', ;, <, >, ?, @, [, \, ], ^, _, `, {, |, }, ~
-Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
-Layout redefines the bottom row but some important keys are missing, missing: change_method, config, ctrl, fn, switch_backward, switch_emoji, switch_forward
-Layout doesn't specify a script.
-4 warnings
 # res/xml/latn_bepo_fr
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
@@ -64,7 +45,6 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 3 warnings
 # res/xml/cyrl_jcuken_ru
 0 warnings
-Not a layout file: res/xml/settings
 # res/xml/latn_qwerty_no
 0 warnings
 # res/xml/latn_azerty_fr
@@ -111,7 +91,6 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 0 warnings
 # res/xml/latn_qwerty_pl
 0 warnings
-Not a layout file: res/xml/number_row
 # res/xml/grek_qwerty
 Duplicate keys: ;
 1 warnings
@@ -134,11 +113,5 @@ Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {
 0 warnings
 # res/xml/latn_qwerty_es
 0 warnings
-# res/xml/greekmath
-Duplicate keys: ⌀
-Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), *, +, ,, -, /, :, ;, <, >, ?, @, [, \, ], _, `, {, |, }, ~
-Layout redefines the bottom row but some important keys are missing, missing: change_method, config, ctrl, switch_backward, switch_emoji, switch_forward
-Layout doesn't specify a script.
-4 warnings
 # res/xml/latn_dvorak
 0 warnings

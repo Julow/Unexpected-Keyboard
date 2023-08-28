@@ -4,9 +4,9 @@ import sys, os
 warning_count = 0
 
 KNOWN_NOT_LAYOUT = set([
-    "number_row.xml", "numpad.xml", "pin.xml",
-    "bottom_row.xml", "settings.xml", "method.xml",
-    "greekmath.xml", "numeric.xml" ])
+    "number_row", "numpad", "pin",
+    "bottom_row", "settings", "method",
+    "greekmath", "numeric" ])
 
 def warn(msg):
     global warning_count
