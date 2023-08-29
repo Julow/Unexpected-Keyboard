@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Tastatură Unexpected</string>
+  <string name="app_name_release">Tastatură Unexpected</string>
+  <string name="app_name_debug">Tastatură Unexpected (depanare)</string>
   <string name="settings_activity_label">Setări Tastatură Unexpected</string>
   <string name="pref_portrait">În mod portret</string>
   <string name="pref_landscape">În mod panoramă</string>

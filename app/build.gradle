@@ -42,6 +42,7 @@ android {
             shrinkResources true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            resValue "string", "app_name", "@string/app_name_release"
             if (System.env.RELEASE_KEYSTORE) {
                 signingConfig signingConfigs.release
             }
@@ -51,6 +52,7 @@ android {
             shrinkResources false
             debuggable true
             applicationIdSuffix ".debug"
+            resValue "string", "app_name", "@string/app_name_debug"
             signingConfig signingConfigs.debug
         }
     }
