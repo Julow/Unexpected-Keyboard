@@ -27,23 +27,6 @@ jobs:
                   gpg -d --passphrase "debug0" --batch "debug.keystore.asc" > "debug.keystore"
               fi
           fi
-      - name: Restore release keystore from GitHub Secrets
-        env:
-          RELEASE_KEYSTORE_RAW: ${{ secrets.RELEASE_KEYSTORE }} # Used for condition
-          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-        if: env.RELEASE_KEYSTORE_RAW != ''
-        run: |
-          # Check if exist and use the secret named RELEASE_KEYSTORE
-          # The contents of the secret can be obtained -
-          #    from the release.keystore.asc from you local folder
-          if [[ ! "${{ secrets.RELEASE_KEYSTORE }}" = "" ]]; then
-              echo "${{ secrets.RELEASE_KEYSTORE }}" > "release.keystore.asc"
-              if [[ -s "release.keystore.asc" ]]; then
-                  echo "Restoring release keystore from GitHub secrets"
-                  # Passing secrets as arguments is not recommended since they could be observed by using 'ps'
-                  gpg -d --passphrase "$RELEASE_KEYSTORE_PASSWORD" --batch "release.keystore.asc" > "release.keystore"
-              fi
-          fi
       - name: Build debug APK
         uses: gradle/gradle-build-action@v2
         env:
@@ -53,17 +36,6 @@ jobs:
           DEBUG_KEY_PASSWORD: debug0
         with:
           arguments: assembleDebug
-      - name: Build signed release APK
-        env:
-          RELEASE_KEYSTORE_RAW: ${{ secrets.RELEASE_KEYSTORE }} # Used for condition
-          RELEASE_KEYSTORE: "../release.keystore"
-          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
-          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-        if:  ${{ env.RELEASE_KEYSTORE_RAW != '' }}
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: assembleRelease
       - name: Artifact naming
         run: |
           artifact="${{github.repository_owner}} ${{github.ref_name}}"
@@ -74,11 +46,3 @@ jobs:
         with:
           name: "${{env.artifact}} debug_apk"
           path: app/build/outputs/apk/debug/*.apk
-      - name: Upload signed release APK
-        env:
-          RELEASE_KEYSTORE_RAW: ${{ secrets.RELEASE_KEYSTORE }} # Used for condition
-        if:  ${{ env.RELEASE_KEYSTORE_RAW != '' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: "${{env.artifact}} signed_release_apk"
-          path: app/build/outputs/apk/release/*.apk
