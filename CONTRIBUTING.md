@@ -11,8 +11,10 @@ Fortunately, there are not many dependencies:
 - Python 3
 - Android SDK: build tools (minimum `28.0.1`), platform `30`
 
-If you don't use Android Studio, you probably have to inform Gradle about the location of your Android SDK.
-To do this, create the file `local.properties` in the directory of this repository and paste `sdk.dir=<location_of_android_home>` e.g. `sdk.dir=/home/user/Android/Sdk`. Android Studio does this automatically.
+If you don't use Android Studio and your ANDROID_HOME environment variable is __NOT__ set, you have to inform Gradle about the location of your Android SDK:
+Create the file `local.properties` in the directory of this repository and paste `sdk.dir=<location_of_android_home>` e.g. `sdk.dir=/home/user/Android/Sdk`.
+
+If your `ANDROID_HOME` variable is set (output of `echo $ANDROID_HOME` is not empty) or you use Android Studio, you don't have to do anything.
 
 For Nix users, the right environment can be obtained with `nix-shell ./shell.nix`.
 Instructions to install Nix are [here](https://nixos.wiki/wiki/Nix_Installation_Guide).
@@ -39,9 +41,6 @@ gpg -c --armor --pinentry-mode loopback --passphrase debug0 --yes "debug.keystor
 A file will be generated inside the project folder, called `debug.keystore.asc`
 
 You can copy the content of this file, and with that, paste it into a new github secret in your repo settings. The secret must be named `DEBUG_KEYSTORE`.
-
-Release signing with GitHub CI is also available. You also need to save the stringified key in a GitHub secret called `RELEASE_KEYSTORE`. 
-Additionally you have to specify the secrets `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD`. After doing so, the CI action "Make APKs CI" will now additionally build the signed release APK.
 
 ## Debugging on your phone
 
@@ -92,12 +91,12 @@ The layout file must be placed in the `app/src/main/res/xml/` directory and name
 - layout name (eg. the name of a standard)
 - country code (or language code if more adequate)
 
-Then, run `./gradlew buildKeyboardLayoutXml` to add the layout to the app.
+Then, run `./gradlew genLayoutsList` to add the layout to the app.
 
 The last step will update the file `app/src/main/res/values/layouts.xml`, that you should
 not edit directly.
 
-Run `./gradlew checkKeyboardLayoutXml` to check some properties about your layout. This will
+Run `./gradlew lintKeyboardLayouts` to check some properties about your layout. This will
 change the file `check_layout.output`, which you should commit.
 
 #### Adding a programming layout
@@ -141,7 +140,6 @@ can be found in this [stackoverflow answer](https://stackoverflow.com/a/7989085)
 ### Updating translations
 
 The text used in the app is written in `app/src/main/res/values-<language_tag>/strings.xml`.
-An additional file in `app/src/debug/res/values-<language_tag>/strings.xml` defines the translations when using the debug build of the app. This is used to tell both variants apart.
 
 The list of language tags can be found in this
 [stackoverflow answer](https://stackoverflow.com/a/7989085)
@@ -160,16 +158,12 @@ Remove the `<!--` and `-->` parts and change the text.
 
 ### Adding a translation
 
-Please consider the notices about translations of the debug variant of the app in the previous section.
-These files must be created manually! To do so, take a look of the already existing debug translations
-and copy and translate the `app/src/debug/res/values/strings.xml` accordingly.
-
 The `app/src/main/res/values-<language_tag>/strings.xml` file must be created by copying the
 default translation in `app/src/main/res/values/strings.xml`, which contain the structure of
 the file and the English strings.
 
 To check that `strings.xml` is formatted correctly, run
-`./gradlew generateTranslationTemplates`. This will modify your files.
+`./gradlew syncTranslations`. This will modify your files.
 
 The store description is found in `metadata/android/<locale>/`,
 `short_description.txt` and `full_description.txt`.
