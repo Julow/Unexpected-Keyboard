@@ -64,10 +64,6 @@ dependencies {
 
 }
 
-tasks.named("preBuild") {
-    dependsOn += "buildKeyboardLayoutXml"
-}
-
 tasks.register('buildKeyboardFont') {
     println "Executing fontforge to build custom font\n"
     mkdir "$buildDir"
@@ -89,8 +85,7 @@ tasks.register('buildKeyboardFont') {
     }
 }
 
-tasks.register('buildKeyboardLayoutXml') {
-    dependsOn 'checkKeyboardLayoutXml'
+tasks.register('genLayoutsList') {
     println "Executing python script to generate keyboard layouts"
     new ByteArrayOutputStream().withStream { bos ->
         exec {
@@ -102,7 +97,7 @@ tasks.register('buildKeyboardLayoutXml') {
     }
 }
 
-tasks.register('checkKeyboardLayoutXml') {
+tasks.register('lintKeyboardLayouts') {
     println "Executing python script to check keyboard layouts\n"
     new ByteArrayOutputStream().withStream { bos ->
         exec {
@@ -118,7 +113,7 @@ tasks.register('checkKeyboardLayoutXml') {
     }
 }
 
-tasks.register('generateTranslationTemplates') {
+tasks.register('syncTranslations') {
     println "Executing python script to generate translation templates"
     new ByteArrayOutputStream().withStream { bos ->
         exec {
