@@ -96,7 +96,7 @@ Then, run `./gradlew genLayoutsList` to add the layout to the app.
 The last step will update the file `app/src/main/res/values/layouts.xml`, that you should
 not edit directly.
 
-Run `./gradlew lintKeyboardLayouts` to check some properties about your layout. This will
+Run `./gradlew checkKeyboardLayouts` to check some properties about your layout. This will
 change the file `check_layout.output`, which you should commit.
 
 #### Adding a programming layout

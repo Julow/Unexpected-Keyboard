@@ -87,6 +87,11 @@ tasks.register('buildKeyboardFont') {
     }
 }
 
+tasks.withType(Test).configureEach {
+    dependsOn 'genLayoutsList'
+    dependsOn 'checkKeyboardLayouts'
+}
+
 tasks.register('genLayoutsList') {
     println "Executing python script to generate keyboard layouts"
     new ByteArrayOutputStream().withStream { bos ->
@@ -99,7 +104,7 @@ tasks.register('genLayoutsList') {
     }
 }
 
-tasks.register('lintKeyboardLayouts') {
+tasks.register('checkKeyboardLayouts') {
     println "Executing python script to check keyboard layouts\n"
     new ByteArrayOutputStream().withStream { bos ->
         exec {
