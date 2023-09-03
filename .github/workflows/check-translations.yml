@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - working-directory: ./app
-        run: python3 sync_translations.py
+      - run: python3 sync_translations.py
       - name: Check that strings files are uptodate, run python3 sync_translations.py otherwise
         run: git diff --exit-code

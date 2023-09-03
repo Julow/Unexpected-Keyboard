@@ -14,7 +14,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - working-directory: ./app
-        run: python3 gen_layouts.py
+      - run: python3 gen_layouts.py
       - name: Check that the generated layouts.xml is uptodate, run python3 gen_layouts.py otherwise
         run: git diff --exit-code

@@ -30,7 +30,7 @@ jobs:
       - name: Build debug APK
         uses: gradle/gradle-build-action@v2
         env:
-          DEBUG_KEYSTORE: "../debug.keystore"
+          DEBUG_KEYSTORE: "debug.keystore"
           DEBUG_KEYSTORE_PASSWORD: debug0
           DEBUG_KEY_ALIAS: debug
           DEBUG_KEY_PASSWORD: debug0
@@ -45,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "${{env.artifact}} debug_apk"
-          path: app/build/outputs/apk/debug/*.apk
+          path: build/outputs/apk/debug/*.apk

@@ -1,3 +1,167 @@
 plugins {
-    id 'com.android.application' version '8.1.1' apply false
+    id 'com.android.application' version '8.1.1'
+}
+
+android {
+    namespace 'juloo.keyboard2'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "juloo.keyboard2"
+        minSdk 4
+        targetSdkVersion 33
+        versionCode 36
+        versionName "1.24.0"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            resources.srcDirs = ['src/main/resources']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+        }
+        debug {
+            manifest.srcFile 'src/debug/AndroidManifest.xml'
+            java.srcDirs = ['src/debug/java']
+            resources.srcDirs = ['src/debug/resources']
+            res.srcDirs = ['src/debug/res']
+            assets.srcDirs = ['src/debug/assets']
+        }
+    }
+
+    signingConfigs {
+        // Debug builds will always be signed. If no environment variables are set, a default
+        // keystore will be initialized by the task initDebugKeystore and used. This keystore
+        // can be uploaded to GitHub secrets by following CONTRIBUTING.md#Using the local debug.keystore on the Github CI actions
+        // in order to always receive correctly signed debug APKs from the CI.
+        debug {
+            storeFile (System.env.DEBUG_KEYSTORE ? file(System.env.DEBUG_KEYSTORE) : file("debug.keystore"))
+            storePassword (System.env.DEBUG_KEYSTORE_PASSWORD ? "$System.env.DEBUG_KEYSTORE_PASSWORD" : "debug0")
+            keyAlias (System.env.DEBUG_KEY_ALIAS ? "$System.env.DEBUG_KEY_ALIAS" : "debug")
+            keyPassword (System.env.DEBUG_KEY_PASSWORD ? "$System.env.DEBUG_KEY_PASSWORD" : "debug0")
+        }
+        // Release builds will only be signed with a dedicated key if specified. This key has to be
+        // created manually. To be used with GitHub CI, key and environment variables have to be
+        // added as secrets. See file .github/workflows/make-apk.yml for further reference.
+        release {
+            if (System.env.RELEASE_KEYSTORE) {
+                storeFile file(System.env.RELEASE_KEYSTORE)
+                storePassword "$System.env.RELEASE_KEYSTORE_PASSWORD"
+                keyAlias "$System.env.RELEASE_KEY_ALIAS"
+                keyPassword "$System.env.RELEASE_KEY_PASSWORD"
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            resValue "string", "app_name", "@string/app_name_release"
+            if (System.env.RELEASE_KEYSTORE) {
+                signingConfig signingConfigs.release
+            }
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "@string/app_name_debug"
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+
+}
+
+tasks.register('buildKeyboardFont') {
+    println "Executing fontforge to build custom font\n"
+    mkdir "$buildDir"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            workingDir "$projectDir/special_font"
+            def svgFiles = workingDir.listFiles().findAll {
+                it.isFile() && it.name.endsWith(".svg")
+            }
+
+            commandLine("fontforge", "-lang=ff", "-script", "build.pe", "$buildDir/special_font.ttf", *svgFiles)
+            standardOutput = bos
+        }
+        println "$bos"
+    }
+    copy {
+        from "$buildDir/special_font.ttf"
+        into "src/main/assets"
+    }
+}
+
+tasks.withType(Test).configureEach {
+    dependsOn 'genLayoutsList'
+    dependsOn 'checkKeyboardLayouts'
+}
+
+tasks.register('genLayoutsList') {
+    println "Executing python script to generate keyboard layouts"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            workingDir = projectDir
+            commandLine "python", "gen_layouts.py"
+            standardOutput = bos
+        }
+        println "$bos"
+    }
+}
+
+tasks.register('checkKeyboardLayouts') {
+    println "Executing python script to check keyboard layouts\n"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            def layouts = new File(projectDir, "src/main/res/xml").listFiles().findAll {
+                it.isFile() && it.name.endsWith(".xml")
+            }
+            workingDir = projectDir
+            commandLine("python", "check_layout.py", *layouts)
+            standardOutput = bos
+        }
+
+        new File(projectDir, "check_layout.output").write(bos.toString())
+    }
+}
+
+tasks.register('syncTranslations') {
+    println "Executing python script to generate translation templates"
+    new ByteArrayOutputStream().withStream { bos ->
+        exec {
+            workingDir = projectDir
+            commandLine "python", "sync_translations.py"
+            standardOutput = bos
+        }
+        println "$bos"
+    }
+}
+
+tasks.named("preBuild") {
+    dependsOn += "initDebugKeystore"
+}
+
+tasks.register('initDebugKeystore') {
+    if (!file("debug.keystore").exists()) {
+        println "Initializing default debug keystore"
+        exec {
+            // A shell script might be needed if this line requires input from the user
+            commandLine "keytool", "-genkeypair", "-dname", "cn=d, ou=e, o=b, c=ug", "-alias", "debug", "-keypass", "debug0", "-keystore", "debug.keystore", "-keyalg", "rsa", "-storepass", "debug0", "-validity", "10000"
+        }
+    } else {
+        println "No need to initialize new debug keystore"
+    }
 }
