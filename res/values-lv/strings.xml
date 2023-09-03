@@ -95,9 +95,6 @@
   <string name="key_descr_pasteAsPlainText">Ielīmēt kā vienkāršu tekstu</string>
   <string name="key_descr_undo">Atsaukt</string>
   <string name="key_descr_redo">Atatsaukt</string>
-  <string name="key_descr_replaceText">Aizvietot</string>
-  <string name="key_descr_textAssist">Palīgs</string>
-  <string name="key_descr_autofill">Automātiskā aizpilde</string>
   <string name="key_descr_ª">Kārtas rādītājs</string>
   <string name="key_descr_º">Kārtas rādītājs</string>
   <string name="key_descr_superscript">Augšraksts</string>

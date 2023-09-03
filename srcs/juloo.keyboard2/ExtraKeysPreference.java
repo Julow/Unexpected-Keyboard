@@ -56,9 +56,6 @@ public class ExtraKeysPreference extends PreferenceCategory
     "pasteAsPlainText",
     "undo",
     "redo",
-    "replaceText",
-    "textAssist",
-    "autofill",
     "superscript",
     "subscript",
   };
@@ -92,8 +89,6 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
       case "undo": id = R.string.key_descr_undo; break;
       case "redo": id = R.string.key_descr_redo; break;
-      case "textAssist": id = R.string.key_descr_textAssist; break;
-      case "autofill": id = R.string.key_descr_autofill; break;
       case "ª": id = R.string.key_descr_ª; break;
       case "º": id = R.string.key_descr_º; break;
       case "superscript": id = R.string.key_descr_superscript; break;

@@ -60,8 +60,7 @@ def check_layout(layout):
                      "Layout doesn't define some important keys")
     unexpected_keys(keys,
                     ["copy", "paste", "cut", "selectAll", "shareText",
-                     "pasteAsPlainText", "undo", "redo", "replaceText",
-                     "textAssist", "autofill" ],
+                     "pasteAsPlainText", "undo", "redo" ],
                     "Layout contains editing keys")
     unexpected_keys(keys,
                     [ "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",

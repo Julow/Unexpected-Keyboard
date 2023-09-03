@@ -93,9 +93,6 @@
   <string name="key_descr_pasteAsPlainText">Wklej sam tekst</string>
   <string name="key_descr_undo">Cofnij</string>
   <string name="key_descr_redo">Ponów</string>
-  <string name="key_descr_replaceText">Zamień</string>
-  <string name="key_descr_textAssist">Asystent</string>
-  <string name="key_descr_autofill">Autouzupełnianie</string>
   <string name="key_descr_ª">Wskaźnik porządkowy (żeński)</string>
   <string name="key_descr_º">Wskaźnik porządkowy (męski)</string>
   <string name="key_descr_superscript">Indeks górny</string>

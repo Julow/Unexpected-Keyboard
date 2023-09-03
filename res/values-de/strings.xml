@@ -93,9 +93,6 @@
   <string name="key_descr_pasteAsPlainText">Unformatiert einfügen</string>
   <string name="key_descr_undo">Rückgängig</string>
   <string name="key_descr_redo">Wiederholen</string>
-  <string name="key_descr_replaceText">Ersetzen</string>
-  <string name="key_descr_textAssist">Assistieren</string>
-  <string name="key_descr_autofill">Automatische Vervollständigung</string>
   <string name="key_descr_ª">Ordinalzeichen</string>
   <string name="key_descr_º">Ordinalzeichen</string>
   <string name="key_descr_superscript">Hochgestellt</string>

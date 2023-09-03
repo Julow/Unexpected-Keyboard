@@ -93,9 +93,6 @@
   <string name="key_descr_pasteAsPlainText">Colar texto não formatado</string>
   <string name="key_descr_undo">Desfazer</string>
   <string name="key_descr_redo">Refazer</string>
-  <string name="key_descr_replaceText">Substituir</string>
-  <string name="key_descr_textAssist">Assistente</string>
-  <string name="key_descr_autofill">Autopreenchimento</string>
   <string name="key_descr_ª">Indicador Ordinal</string>
   <string name="key_descr_º">Indicador Ordinal</string>
   <string name="key_descr_superscript">Sobrescrito</string>

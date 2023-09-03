@@ -93,9 +93,6 @@
   <string name="key_descr_pasteAsPlainText">Vložit jako prostý text</string>
   <string name="key_descr_undo">Zpět</string>
   <string name="key_descr_redo">Znovu</string>
-  <string name="key_descr_replaceText">Nahradit</string>
-  <string name="key_descr_textAssist">Asistovat</string>
-  <string name="key_descr_autofill">Předvyplnit</string>
   <string name="key_descr_ª">Indikátor řadové číslovky</string>
   <string name="key_descr_º">Indikátor řadové číslovky</string>
   <string name="key_descr_superscript">Horní index</string>

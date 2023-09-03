@@ -455,11 +455,12 @@ final class KeyValue
       case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
       case "undo": return editingKey(0xE036, Editing.UNDO);
       case "redo": return editingKey(0xE037, Editing.REDO);
+      case "cursor_left": return editingKey(0xE008, Editing.CURSOR_LEFT);
+      case "cursor_right": return editingKey(0xE006, Editing.CURSOR_RIGHT);
+      // These keys are not used
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
       case "autofill": return editingKey("auto", Editing.AUTOFILL);
-      case "cursor_left": return editingKey(0xE008, Editing.CURSOR_LEFT);
-      case "cursor_right": return editingKey(0xE006, Editing.CURSOR_RIGHT);
 
       /* Placeholder keys */
       case "removed": return placeholderKey(Placeholder.REMOVED);

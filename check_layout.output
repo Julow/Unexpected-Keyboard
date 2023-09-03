@@ -68,6 +68,9 @@ Layout redefines the bottom row but some important keys are missing, missing: sw
 2 warnings
 # res/xml/latn_qwerty_br.xml
 0 warnings
+# res/xml/latn_qwerty_cz.xml
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
 # res/xml/latn_qwerty_es.xml
 0 warnings
 # res/xml/latn_qwerty_hu.xml
