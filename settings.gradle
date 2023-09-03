@@ -15,4 +15,3 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Unexpected-Keyboard"
-include ':app'
