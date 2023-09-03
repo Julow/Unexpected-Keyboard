@@ -83,6 +83,20 @@ class KeyModifier
     return k;
   }
 
+  public static Map_char modify_numpad_script(String script)
+  {
+    if (script == null)
+      return map_char_none;
+    switch (script)
+    {
+      case "arabic": return map_char_numpad_arabic;
+      case "bengali": return map_char_numpad_bengali;
+      case "devanagari": return map_char_numpad_devanagari;
+      case "persian": return map_char_numpad_persian;
+      default: return map_char_none;
+    }
+  }
+
   private static KeyValue apply_map_char(KeyValue k, Map_char map)
   {
     switch (k.getKind())
@@ -427,12 +441,17 @@ class KeyModifier
     return ks;
   }
 
-  private static abstract class Map_char
+  public static abstract class Map_char
   {
     /** Modify a char or return [null] if the modifier do not apply. Return a
         [String] that can contains combining diacritics. */
     public abstract String apply(char c);
   }
+
+  private static final Map_char map_char_none =
+    new Map_char() {
+      public String apply(char _c) { return null; }
+    };
 
   private static char map_char_shift(char c)
   {
@@ -967,6 +986,90 @@ class KeyModifier
           case 'u': return "ủ";
           case 'ư': return "ử";
           case 'y': return "ỷ";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_arabic =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "٠";
+          case '1': return "١";
+          case '2': return "٢";
+          case '3': return "٣";
+          case '4': return "٤";
+          case '5': return "٥";
+          case '6': return "٦";
+          case '7': return "٧";
+          case '8': return "٨";
+          case '9': return "٩";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_bengali =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "০";
+          case '1': return "১";
+          case '2': return "২";
+          case '3': return "৩";
+          case '4': return "৪";
+          case '5': return "৫";
+          case '6': return "৬";
+          case '7': return "৭";
+          case '8': return "৮";
+          case '9': return "৯";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_devanagari =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "०";
+          case '1': return "१";
+          case '2': return "२";
+          case '3': return "३";
+          case '4': return "४";
+          case '5': return "५";
+          case '6': return "६";
+          case '7': return "७";
+          case '8': return "८";
+          case '9': return "९";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_persian =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "۰";
+          case '1': return "۱";
+          case '2': return "۲";
+          case '3': return "۳";
+          case '4': return "۴";
+          case '5': return "۵";
+          case '6': return "۶";
+          case '7': return "۷";
+          case '8': return "۸";
+          case '9': return "۹";
           default: return null;
         }
       }

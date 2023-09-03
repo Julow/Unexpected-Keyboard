@@ -40,8 +40,8 @@ public class Keyboard2 extends InputMethodService
 
   private Config _config;
 
-  /** Layout currently visible. */
-  KeyboardData current_layout()
+  /** Layout currently visible before it has been modified. */
+  KeyboardData current_layout_unmodified()
   {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
@@ -52,7 +52,13 @@ public class Keyboard2 extends InputMethodService
       layout = _config.layouts.get(_currentTextLayout);
     if (layout == null)
       layout = _localeTextLayout;
-    return _config.modify_layout(layout);
+    return layout;
+  }
+
+  /** Layout currently visible. */
+  KeyboardData current_layout()
+  {
+    return _config.modify_layout(current_layout_unmodified());
   }
 
   void setTextLayout(int l)
@@ -84,7 +90,9 @@ public class Keyboard2 extends InputMethodService
   /** Load a layout that contains a numpad (eg. the pin entry). */
   KeyboardData loadNumpad(int layout_id)
   {
-    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id));
+    String current_script = current_layout_unmodified().script;
+    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id),
+        current_script);
   }
 
   @Override

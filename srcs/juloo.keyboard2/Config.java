@@ -242,7 +242,7 @@ final class Config
       }
     });
     if (show_numpad)
-      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad));
+      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad, kw.script));
     if (number_row)
       kw = kw.addNumberRow();
     if (extra_keys.size() > 0)
@@ -253,9 +253,10 @@ final class Config
   /**
    * Handle the numpad layout.
    */
-  public KeyboardData modify_numpad(KeyboardData kw)
+  public KeyboardData modify_numpad(KeyboardData kw, String script)
   {
     final KeyValue action_key = action_key();
+    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(script);
     return kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -277,11 +278,15 @@ final class Config
             }
             break;
           case Char:
-            char a = key.getChar(), b = a;
+            char prev_c = key.getChar();
+            char c = prev_c;
             if (inverse_numpad)
-              b = inverse_numpad_char(a);
-            if (a != b)
-              return key.withChar(b);
+              c = inverse_numpad_char(c);
+            String modified = map_digit.apply(c);
+            if (modified != null) // Was modified by script
+              return key.withSymbol(modified);
+            if (prev_c != c) // Was inverted
+              return key.withChar(c);
             break;
         }
         return key;
