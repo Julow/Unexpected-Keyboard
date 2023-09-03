@@ -242,7 +242,7 @@ final class Config
       }
     });
     if (show_numpad)
-      kw = kw.addNumPad();
+      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad));
     if (number_row)
       kw = kw.addNumberRow();
     if (extra_keys.size() > 0)

@@ -54,7 +54,7 @@ class KeyboardData
     return new KeyboardData(rows, keysWidth, modmap, script);
   }
 
-  public KeyboardData addNumPad()
+  public KeyboardData addNumPad(KeyboardData num_pad)
   {
     ArrayList<Row> extendedRows = new ArrayList<Row>();
     Iterator<Row> iterNumPadRows = num_pad.rows.iterator();
