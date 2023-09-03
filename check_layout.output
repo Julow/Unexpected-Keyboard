@@ -2,6 +2,9 @@
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
+# res/xml/arab_pc.xml
+Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
+1 warnings
 # res/xml/arab_pc_ckb.xml
 Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
 1 warnings
@@ -9,9 +12,6 @@ Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :
 Duplicate keys: (, )
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
 2 warnings
-# res/xml/arab_pc.xml
-Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
-1 warnings
 # res/xml/beng_national.xml
 Layout includes some ASCII punctuation but not all, missing: $
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
@@ -94,13 +94,15 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # res/xml/latn_qwerty_vi.xml
 Layout includes some ASCII punctuation but not all, missing: \
 1 warnings
+# res/xml/latn_qwertz.xml
+0 warnings
+# res/xml/latn_qwertz_cz.xml
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
 # res/xml/latn_qwertz_cz_multifunctional.xml
 Layout includes some ASCII punctuation but not all, missing: `
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# res/xml/latn_qwertz_cz.xml
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
 # res/xml/latn_qwertz_de.xml
 0 warnings
 # res/xml/latn_qwertz_fr_ch.xml
@@ -111,8 +113,6 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 Layout includes some ASCII punctuation but not all, missing: \, `
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# res/xml/latn_qwertz.xml
-0 warnings
 # res/xml/urdu_phonetic_ur.xml
 Duplicate keys:  
 Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~

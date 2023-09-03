@@ -83,7 +83,7 @@ def check_layout(layout):
     if root.get("script") == None:
         warn("Layout doesn't specify a script.")
 
-for fname in sys.argv[1:]:
+for fname in sorted(sys.argv[1:]):
     if fname in KNOWN_NOT_LAYOUT:
         continue
     layout = parse_layout(fname)
