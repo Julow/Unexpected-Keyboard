@@ -25,7 +25,7 @@ Building the debug apk:
 ./gradlew assembleDebug
 ```
 
-If the build succeeds, the debug apk is located in `app/build/outputs/apk/debug/app-debug.apk`.
+If the build succeeds, the debug apk is located in `build/outputs/apk/debug/app-debug.apk`.
 
 ## Using the local debug.keystore on the Github CI actions
 
@@ -79,21 +79,21 @@ adb uninstall juloo.keyboard2.debug
 
 ### Adding a layout
 
-Layouts are defined in XML, see `app/src/main/res/xml/latn_qwerty_us.xml`.
+Layouts are defined in XML, see `src/main/res/xml/latn_qwerty_us.xml`.
 An online tool for editing layout files written by @Lixquid is available
 [here](https://unexpected-keyboard-layout-editor.lixquid.com/).
 
 Makes sure to specify the `name` attribute like in `latn_qwerty_us.xml`,
 otherwise the layout won't be added to the app.
 
-The layout file must be placed in the `app/src/main/res/xml/` directory and named according to:
+The layout file must be placed in the `src/main/res/xml/` directory and named according to:
 - script (`latn` for latin, etc..)
 - layout name (eg. the name of a standard)
 - country code (or language code if more adequate)
 
 Then, run `./gradlew genLayoutsList` to add the layout to the app.
 
-The last step will update the file `app/src/main/res/values/layouts.xml`, that you should
+The last step will update the file `src/main/res/values/layouts.xml`, that you should
 not edit directly.
 
 Run `./gradlew checkKeyboardLayouts` to check some properties about your layout. This will
@@ -108,7 +108,7 @@ See for example, Dvorak, added in https://github.com/Julow/Unexpected-Keyboard/p
 
 It's best to leave free spots on the layout for language-specific symbols that
 are added automatically when necessary.
-These symbols are defined in `app/src/main/res/xml/method.xml` (`extra_keys`).
+These symbols are defined in `src/main/res/xml/method.xml` (`extra_keys`).
 
 It's possible to place extra keys with the `loc` prefix. These keys are
 normally hidden unless they are needed.
@@ -127,7 +127,7 @@ passwords) and dead-keys.
 
 ### Adding support for a language
 
-Supported locales are defined in `app/src/main/res/xml/method.xml`.
+Supported locales are defined in `src/main/res/xml/method.xml`.
 
 The attributes `languageTag` and `imeSubtypeLocale` define a locale, the
 attribute `imeSubtypeExtraValue` defines the default layout and the dead-keys
@@ -139,14 +139,14 @@ can be found in this [stackoverflow answer](https://stackoverflow.com/a/7989085)
 
 ### Updating translations
 
-The text used in the app is written in `app/src/main/res/values-<language_tag>/strings.xml`.
+The text used in the app is written in `src/main/res/values-<language_tag>/strings.xml`.
 
 The list of language tags can be found in this
 [stackoverflow answer](https://stackoverflow.com/a/7989085)
 
 The first part before the `_` is used, for example,
-`app/src/main/res/values-fr/strings.xml` for French,
-`app/src/main/res/values-lv/strings.xml` for Latvian.
+`src/main/res/values-fr/strings.xml` for French,
+`src/main/res/values-lv/strings.xml` for Latvian.
 
 Commented-out lines indicate missing translations:
 
@@ -158,8 +158,8 @@ Remove the `<!--` and `-->` parts and change the text.
 
 ### Adding a translation
 
-The `app/src/main/res/values-<language_tag>/strings.xml` file must be created by copying the
-default translation in `app/src/main/res/values/strings.xml`, which contain the structure of
+The `src/main/res/values-<language_tag>/strings.xml` file must be created by copying the
+default translation in `src/main/res/values/strings.xml`, which contain the structure of
 the file and the English strings.
 
 To check that `strings.xml` is formatted correctly, run
@@ -179,7 +179,7 @@ https://github.com/Julow/Unexpected-Keyboard/issues/373
 
 ### Adding key combinations
 
-Key combinations are defined in `app/src/main/java/juloo.keyboard2/KeyModifier.java`.
+Key combinations are defined in `src/main/java/juloo.keyboard2/KeyModifier.java`.
 For example, keys modified by the `Fn` key are defined in method
 `apply_fn_char`.
 
