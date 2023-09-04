@@ -1,6 +1,7 @@
 *.keystore
 *.keystore.asc
-_build
+/_build
+/build
 /*-keystore.conf
 *.iml
 .gradle
@@ -12,11 +13,7 @@ _build
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 /.idea/shelf/
-/.idea/workspace.xml
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
-
