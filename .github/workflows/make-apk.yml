@@ -1,4 +1,4 @@
-name: Make APKs CI
+name: Make Apk CI
 
 on:
   workflow_dispatch:
