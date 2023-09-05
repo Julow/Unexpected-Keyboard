@@ -16,18 +16,10 @@ android {
 
     sourceSets {
         main {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-            java.srcDirs = ['src/main/java']
-            resources.srcDirs = ['src/main/resources']
-            res.srcDirs = ['src/main/res']
-            assets.srcDirs = ['src/main/assets']
-        }
-        debug {
-            manifest.srcFile 'src/debug/AndroidManifest.xml'
-            java.srcDirs = ['src/debug/java']
-            resources.srcDirs = ['src/debug/resources']
-            res.srcDirs = ['src/debug/res']
-            assets.srcDirs = ['src/debug/assets']
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['srcs']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
         }
     }
 
@@ -102,7 +94,7 @@ tasks.register('buildKeyboardFont') {
     }
     copy {
         from "$buildDir/special_font.ttf"
-        into "src/main/assets"
+        into "assets"
     }
 }
 
@@ -127,7 +119,7 @@ tasks.register('checkKeyboardLayouts') {
     println "Executing python script to check keyboard layouts\n"
     new ByteArrayOutputStream().withStream { bos ->
         exec {
-            def layouts = new File(projectDir, "src/main/res/xml").listFiles().findAll {
+            def layouts = new File(projectDir, "res/xml").listFiles().findAll {
                 it.isFile() && it.name.endsWith(".xml")
             }
             workingDir = projectDir

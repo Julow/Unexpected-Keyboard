@@ -66,6 +66,6 @@ def generate_arrays(out, layouts):
     XML.indent(root)
     XML.ElementTree(element=root).write(out, encoding="unicode", xml_declaration=True)
 
-layouts = sort_layouts(read_layouts(glob.glob("src/main/res/xml/*.xml")))
-with open("src/main/res/values/layouts.xml", "w") as out:
+layouts = sort_layouts(read_layouts(glob.glob("res/xml/*.xml")))
+with open("res/values/layouts.xml", "w") as out:
     generate_arrays(out, layouts)

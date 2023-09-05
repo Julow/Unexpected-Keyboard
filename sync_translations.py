@@ -38,9 +38,9 @@ def sync(baseline, strings):
             (key, base_string, True)
             for key, base_string in baseline.items() ]
 
-baseline = parse_strings_file("src/main/res/values/strings.xml")
+baseline = parse_strings_file("res/values/strings.xml")
 
-for strings_file in glob.glob("src/main/res/values-*/strings.xml"):
+for strings_file in glob.glob("res/values-*/strings.xml"):
     strings = sync(baseline, dict(parse_strings_file(strings_file)))
     with open(strings_file, "w", encoding="utf-8") as out:
         write_updated_strings(out, strings)
