@@ -162,7 +162,5 @@ tasks.register('initDebugKeystore') {
             // A shell script might be needed if this line requires input from the user
             commandLine "keytool", "-genkeypair", "-dname", "cn=d, ou=e, o=b, c=ug", "-alias", "debug", "-keypass", "debug0", "-keystore", "debug.keystore", "-keyalg", "rsa", "-storepass", "debug0", "-validity", "10000"
         }
-    } else {
-        println "No need to initialize new debug keystore"
     }
 }
