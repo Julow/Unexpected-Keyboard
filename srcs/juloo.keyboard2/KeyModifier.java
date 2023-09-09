@@ -122,7 +122,8 @@ class KeyModifier
           c = Character.toUpperCase(kc);
         return (kc == c) ? k : k.withChar(c);
       case String:
-        return KeyValue.makeStringKey(k.getString().toUpperCase(), k.getFlags());
+        String s = Utils.capitalize_string(k.getString());
+        return KeyValue.makeStringKey(s, k.getFlags());
       default: return k;
     }
   }
