@@ -28,6 +28,8 @@ Building the debug apk:
 ./gradlew assembleDebug
 ```
 
+Nix users can call gradle directly: `gradle assembleDebug`.
+
 If the build succeeds, the debug apk is located in `build/outputs/apk/debug/app-debug.apk`.
 
 ## Debugging on your phone

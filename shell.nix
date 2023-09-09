@@ -1,19 +1,33 @@
 { pkgs ? import <nixpkgs> {
-    config.android_sdk.accept_license = true;
-    config.allowUnfree = true;
-  } }:
+  config.android_sdk.accept_license = true;
+  config.allowUnfree = true;
+} }:
 
 let
-  jdk = pkgs.openjdk8;
+  jdk = pkgs.openjdk17;
+  build_tools_version = "33.0.1";
 
   android = pkgs.androidenv.composeAndroidPackages {
-    buildToolsVersions = [ "30.0.3" ];
-    platformVersions = [ "30" ];
+    buildToolsVersions = [ build_tools_version ];
+    platformVersions = [ "33" ];
     abiVersions = [ "armeabi-v7a" ];
   };
 
-in
-pkgs.mkShell {
-  buildInputs = [ pkgs.findutils jdk android.androidsdk pkgs.fontforge ];
-  ANDROID_HOME = "${android.androidsdk}/libexec/android-sdk";
+  ANDROID_SDK_ROOT = "${android.androidsdk}/libexec/android-sdk";
+
+  # Without this option, aapt2 fails to run with a permissions error.
+  gradle_wrapped = pkgs.runCommandLocal "gradle-wrapped" {
+    nativeBuildInputs = with pkgs; [ makeBinaryWrapper ];
+  } ''
+    mkdir -p $out/bin
+    ln -s ${pkgs.gradle}/bin/gradle $out/bin/gradle
+    wrapProgram $out/bin/gradle \
+    --add-flags "-Dorg.gradle.project.android.aapt2FromMavenOverride=${ANDROID_SDK_ROOT}/build-tools/${build_tools_version}/aapt2"
+  '';
+
+in pkgs.mkShell {
+  buildInputs =
+    [ pkgs.findutils pkgs.fontforge jdk android.androidsdk gradle_wrapped ];
+  JAVA_HOME = jdk.home;
+  inherit ANDROID_SDK_ROOT;
 }
