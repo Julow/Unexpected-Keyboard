@@ -25,6 +25,8 @@ class KeyboardData
   public final Modmap modmap;
   /** Might be null. */
   public final String script;
+  /** Position of every keys on the layout, see [getKeys()]. */
+  private Map<KeyValue, KeyPos> _key_pos = null;
 
   public KeyboardData mapKeys(MapKey f)
   {
@@ -87,19 +89,22 @@ class KeyboardData
 
   public Key findKeyWithValue(KeyValue kv)
   {
-    for (Row r : rows)
-    {
-      Key k = r.findKeyWithValue(kv);
-      if (k != null)
-        return k;
-    }
-    return null;
+    KeyPos pos = getKeys().get(kv);
+    if (pos == null || pos.row >= rows.size())
+      return null;
+    return rows.get(pos.row).get_key_at_pos(pos);
   }
 
-  public void getKeys(Set<KeyValue> dst)
+  /** This is computed once and cached. */
+  public Map<KeyValue, KeyPos> getKeys()
   {
-    for (Row r : rows)
-      r.getKeys(dst);
+    if (_key_pos == null)
+    {
+      _key_pos = new HashMap<KeyValue, KeyPos>();
+      for (int r = 0; r < rows.size(); r++)
+        rows.get(r).getKeys(_key_pos, r);
+    }
+    return _key_pos;
   }
 
   private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
@@ -258,10 +263,17 @@ class KeyboardData
       return new Row(keys, h, shift);
     }
 
-    public void getKeys(Set<KeyValue> dst)
+    public void getKeys(Map<KeyValue, KeyPos> dst, int row)
     {
-      for (Key k : keys)
-        k.getKeys(dst);
+      for (int c = 0; c < keys.size(); c++)
+        keys.get(c).getKeys(dst, row, c);
+    }
+
+    public Map<KeyValue, KeyPos> getKeys(int row)
+    {
+      Map<KeyValue, KeyPos> dst = new HashMap<KeyValue, KeyPos>();
+      getKeys(dst, row);
+      return dst;
     }
 
     public Row mapKeys(MapKey f)
@@ -281,12 +293,11 @@ class KeyboardData
       });
     }
 
-    public Key findKeyWithValue(KeyValue kv)
+    public Key get_key_at_pos(KeyPos pos)
     {
-      for (Key k : keys)
-        if (k.hasValue(kv))
-          return k;
-      return null;
+      if (pos.col >= keys.size())
+        return null;
+      return keys.get(pos.col);
     }
   }
 
@@ -384,11 +395,11 @@ class KeyboardData
       return new Key(keys, keysflags, width * s, shift, slider, indication);
     }
 
-    public void getKeys(Set<KeyValue> dst)
+    public void getKeys(Map<KeyValue, KeyPos> dst, int row, int col)
     {
       for (int i = 0; i < keys.length; i++)
         if (keys[i] != null)
-          dst.add(keys[i]);
+          dst.put(keys[i], new KeyPos(row, col, i));
     }
 
     public KeyValue getKeyValue(int i)
@@ -461,6 +472,21 @@ class KeyboardData
       while (parser.next() != XmlPullParser.END_TAG)
         continue;
       dst.put(a, b);
+    }
+  }
+
+  /** Position of a key on the layout. */
+  public final static class KeyPos
+  {
+    public final int row;
+    public final int col;
+    public final int dir;
+
+    public KeyPos(int r, int c, int d)
+    {
+      row = r;
+      col = c;
+      dir = d;
     }
   }
 

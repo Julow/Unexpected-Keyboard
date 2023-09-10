@@ -181,7 +181,7 @@ final class Config
     if (extra_keys_subtype != null)
     {
       Set<KeyValue> present = new HashSet<KeyValue>();
-      kw.getKeys(present);
+      present.addAll(kw.getKeys().keySet());
       present.addAll(extra_keys_param);
       present.addAll(extra_keys_custom);
       extra_keys_subtype.compute(extra_keys,
@@ -189,7 +189,7 @@ final class Config
     }
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
-      KeyboardData.number_row.getKeys(remove_keys);
+      remove_keys.addAll(KeyboardData.number_row.getKeys(0).keySet());
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {

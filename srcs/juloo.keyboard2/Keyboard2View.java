@@ -19,6 +19,9 @@ public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
 {
   private KeyboardData _keyboard;
+
+  /** The key holding the shift key is used to set shift state from
+      autocapitalisation. */
   private KeyValue _shift_kv;
   private KeyboardData.Key _shift_key;
 
