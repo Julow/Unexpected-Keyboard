@@ -8,7 +8,8 @@ import android.preference.PreferenceCategory;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /** This class implements the "extra keys" preference but also defines the
@@ -100,14 +101,15 @@ public class ExtraKeysPreference extends PreferenceCategory
   }
 
   /** Get the set of enabled extra keys. */
-  public static Set<KeyValue> get_extra_keys(SharedPreferences prefs)
+  public static Map<KeyValue, KeyboardData.PreferredPos> get_extra_keys(SharedPreferences prefs)
   {
-    HashSet<KeyValue> ks = new HashSet<KeyValue>();
+    Map<KeyValue, KeyboardData.PreferredPos> ks =
+      new HashMap<KeyValue, KeyboardData.PreferredPos>();
     for (String key_name : extra_keys)
     {
       if (prefs.getBoolean(pref_key_of_key_name(key_name),
             default_checked(key_name)))
-        ks.add(KeyValue.getKeyByName(key_name));
+        ks.put(KeyValue.getKeyByName(key_name), KeyboardData.PreferredPos.DEFAULT);
     }
     return ks;
   }

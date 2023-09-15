@@ -22,7 +22,7 @@ class ExtraKeys
 
   /** Add the keys that should be added to the keyboard into [dst]. Keys
       already added to [dst] might have an impact, see [ExtraKey.compute].  */
-  public void compute(Set<KeyValue> dst, Query q)
+  public void compute(Map<KeyValue, KeyboardData.PreferredPos> dst, Query q)
   {
     for (ExtraKey k : _ks)
       k.compute(dst, q);
@@ -72,7 +72,7 @@ class ExtraKeys
     }
 
     /** Whether the key should be added to the keyboard. */
-    public void compute(Set<KeyValue> dst, Query q)
+    public void compute(Map<KeyValue, KeyboardData.PreferredPos> dst, Query q)
     {
       // Add the alternative if it's the only one. The list of alternatives is
       // enforced to be complete by the merging step. The same [kv] will not
@@ -80,11 +80,14 @@ class ExtraKeys
       // alternatives.
       // Selecting the dead key in the "Add key to the keyboard" option would
       // disable this behavior for a key.
-      boolean use_alternative = (alternatives.size() == 1 && !dst.contains(kv));
+      boolean use_alternative = (alternatives.size() == 1 && !dst.containsKey(kv));
       if
         ((q.script == null || script == null || q.script.equals(script))
         && (alternatives.size() == 0 || !q.present.containsAll(alternatives)))
-        dst.add(use_alternative ? alternatives.get(0) : kv);
+      {
+        KeyValue kv_ = use_alternative ? alternatives.get(0) : kv;
+        dst.put(kv_, KeyboardData.PreferredPos.DEFAULT);
+      }
     }
 
     /** Return a new key from two. [kv] are expected to be equal. [script] is

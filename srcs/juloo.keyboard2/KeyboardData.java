@@ -36,24 +36,66 @@ class KeyboardData
     return new KeyboardData(rows_, keysWidth, modmap, script);
   }
 
-  /** Add keys from the given iterator into the keyboard. Extra keys are added
-   * on the empty key4 corner of the second row, from right to left. If there's
-   * not enough room, key3 of the second row is tried then key2 and key1 of the
-   * third row. */
-  public KeyboardData addExtraKeys(Iterator<KeyValue> k)
+  /** Add keys from the given iterator into the keyboard. Preferred position is
+      specified via [PreferredPos]. */
+  public KeyboardData addExtraKeys(Iterator<Map.Entry<KeyValue, PreferredPos>> extra_keys)
   {
+    /* Keys that couldn't be placed at their preferred position. */
+    ArrayList<KeyValue> unplaced_keys = new ArrayList<KeyValue>();
     ArrayList<Row> rows = new ArrayList<Row>(this.rows);
-    addExtraKeys_to_row(rows, k, 1, 4);
-    addExtraKeys_to_row(rows, k, 1, 3);
-    addExtraKeys_to_row(rows, k, 2, 2);
-    addExtraKeys_to_row(rows, k, 2, 1);
-    if (k.hasNext())
+    while (extra_keys.hasNext())
     {
-      for (int r = 0; r < rows.size(); r++)
-        for (int c = 1; c <= 4; c++)
-          addExtraKeys_to_row(rows, k, r, c);
+      Map.Entry<KeyValue, PreferredPos> kp = extra_keys.next();
+      if (!add_key_to_preferred_pos(rows, kp.getKey(), kp.getValue()))
+        unplaced_keys.add(kp.getKey());
     }
+    for (KeyValue kv : unplaced_keys)
+      add_key_to_preferred_pos(rows, kv, PreferredPos.ANYWHERE);
     return new KeyboardData(rows, keysWidth, modmap, script);
+  }
+
+  /** Place a key on the keyboard according to its preferred position. Mutates
+      [rows]. Returns [false] if it couldn't be placed. */
+  boolean add_key_to_preferred_pos(List<Row> rows, KeyValue kv, PreferredPos pos)
+  {
+    for (KeyPos p : pos.positions)
+      if (add_key_to_pos(rows, kv, p))
+        return true;
+    return false;
+  }
+
+  /** Place a key on the keyboard. A value of [-1] in one of the coordinate
+      means that the key can be placed anywhere in that coordinate, see
+      [PreferredPos]. Mutates [rows]. Returns [false] if it couldn't be placed.
+      */
+  boolean add_key_to_pos(List<Row> rows, KeyValue kv, KeyPos p)
+  {
+    int i_row = p.row;
+    int i_row_end = p.row;
+    if (p.row == -1) { i_row = 0; i_row_end = rows.size() - 1; }
+    for (; i_row <= i_row_end; i_row++)
+    {
+      Row row = rows.get(i_row);
+      int i_col = p.col;
+      int i_col_end = p.col;
+      if (p.col == -1) { i_col = 0; i_col_end = row.keys.size() - 1; }
+      for (; i_col <= i_col_end; i_col++)
+      {
+        Key col = row.keys.get(i_col);
+        int i_dir = p.dir;
+        int i_dir_end = p.dir;
+        if (p.dir == -1) { i_dir = 1; i_dir_end = 4; }
+        for (; i_dir <= i_dir_end; i_dir++)
+        {
+          if (col.getKeyValue(i_dir) == null)
+          {
+            row.keys.set(i_col, col.withKeyValue(i_dir, kv));
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 
   public KeyboardData addNumPad(KeyboardData num_pad)
@@ -105,20 +147,6 @@ class KeyboardData
         rows.get(r).getKeys(_key_pos, r);
     }
     return _key_pos;
-  }
-
-  private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
-  {
-    if (!extra_keys.hasNext() || row_i >= rows.size())
-      return;
-    rows.set(row_i, rows.get(row_i).mapKeys(new MapKey(){
-      public Key apply(Key k) {
-        if (k.getKeyValue(d) == null && extra_keys.hasNext())
-          return k.withKeyValue(d, extra_keys.next());
-        else
-          return k;
-      }
-    }));
   }
 
   public static Row bottom_row;
@@ -261,6 +289,11 @@ class KeyboardData
       while (expect_tag(parser, "key"))
         keys.add(Key.parse(parser));
       return new Row(keys, h, shift);
+    }
+
+    public Row copy()
+    {
+      return new Row(new ArrayList<Key>(keys), height, shift);
     }
 
     public void getKeys(Map<KeyValue, KeyPos> dst, int row)
@@ -487,6 +520,36 @@ class KeyboardData
       row = r;
       col = c;
       dir = d;
+    }
+  }
+
+  /** See [addExtraKeys()]. */
+  public final static class PreferredPos
+  {
+    public static final PreferredPos DEFAULT;
+    public static final PreferredPos ANYWHERE;
+
+    /** Array of positions to try in order. The special value [-1] as [row],
+        [col] or [dir] means that the field is unspecified. Every possible
+        values are tried for unspecified fields. Unspecified fields are
+        searched in this order: [dir], [col], [row]. */
+    public KeyPos[] positions = ANYWHERE_POSITIONS;
+
+    public PreferredPos() {}
+
+    static final KeyPos[] ANYWHERE_POSITIONS =
+      new KeyPos[]{ new KeyPos(-1, -1, -1) };
+
+    static
+    {
+      DEFAULT = new PreferredPos();
+      DEFAULT.positions = new KeyPos[]{
+        new KeyPos(1, -1, 4),
+        new KeyPos(1, -1, 3),
+        new KeyPos(2, -1, 2),
+        new KeyPos(2, -1, 1)
+      };
+      ANYWHERE = new PreferredPos();
     }
   }
 
