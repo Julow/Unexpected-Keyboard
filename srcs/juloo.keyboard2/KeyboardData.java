@@ -58,6 +58,13 @@ class KeyboardData
       [rows]. Returns [false] if it couldn't be placed. */
   boolean add_key_to_preferred_pos(List<Row> rows, KeyValue kv, PreferredPos pos)
   {
+    if (pos.next_to != null)
+    {
+      KeyPos next_to_pos = getKeys().get(pos.next_to);
+      if (next_to_pos != null
+          && add_key_to_pos(rows, kv, next_to_pos.with_dir(-1)))
+        return true;
+    }
     for (KeyPos p : pos.positions)
       if (add_key_to_pos(rows, kv, p))
         return true;
@@ -521,6 +528,11 @@ class KeyboardData
       col = c;
       dir = d;
     }
+
+    public KeyPos with_dir(int d)
+    {
+      return new KeyPos(row, col, d);
+    }
   }
 
   /** See [addExtraKeys()]. */
@@ -529,6 +541,10 @@ class KeyboardData
     public static final PreferredPos DEFAULT;
     public static final PreferredPos ANYWHERE;
 
+    /** Prefer the free position on the same keyboard key as the specified key.
+        Considered before [positions]. Might be [null]. */
+    public KeyValue next_to = null;
+
     /** Array of positions to try in order. The special value [-1] as [row],
         [col] or [dir] means that the field is unspecified. Every possible
         values are tried for unspecified fields. Unspecified fields are
@@ -536,6 +552,12 @@ class KeyboardData
     public KeyPos[] positions = ANYWHERE_POSITIONS;
 
     public PreferredPos() {}
+
+    public PreferredPos(PreferredPos src)
+    {
+      next_to = src.next_to;
+      positions = src.positions;
+    }
 
     static final KeyPos[] ANYWHERE_POSITIONS =
       new KeyPos[]{ new KeyPos(-1, -1, -1) };

@@ -63,12 +63,15 @@ class ExtraKeys
     /** The key will not be added to layout that already contain all the
         alternatives. */
     final List<KeyValue> alternatives;
+    /** The key next to which to add. Might be [null]. */
+    final KeyValue next_to;
 
-    ExtraKey(KeyValue kv_, String script_, List<KeyValue> alts_)
+    ExtraKey(KeyValue kv_, String script_, List<KeyValue> alts_, KeyValue next_to_)
     {
       kv = kv_;
       script = script_;
       alternatives = alts_;
+      next_to = next_to_;
     }
 
     /** Whether the key should be added to the keyboard. */
@@ -86,7 +89,13 @@ class ExtraKeys
         && (alternatives.size() == 0 || !q.present.containsAll(alternatives)))
       {
         KeyValue kv_ = use_alternative ? alternatives.get(0) : kv;
-        dst.put(kv_, KeyboardData.PreferredPos.DEFAULT);
+        KeyboardData.PreferredPos pos = KeyboardData.PreferredPos.DEFAULT;
+        if (next_to != null)
+        {
+          pos = new KeyboardData.PreferredPos(pos);
+          pos.next_to = next_to;
+        }
+        dst.put(kv_, pos);
       }
     }
 
@@ -95,23 +104,33 @@ class ExtraKeys
         */
     public ExtraKey merge_with(ExtraKey k2)
     {
-      String script_ =
-        (script != null && k2.script != null && script.equals(k2.script))
-        ? script : null;
+      String script_ = one_or_none(script, k2.script);
       List<KeyValue> alts = new ArrayList<KeyValue>(alternatives);
+      KeyValue next_to_ = one_or_none(next_to, k2.next_to);
       alts.addAll(k2.alternatives);
-      return new ExtraKey(kv, script_, alts);
+      return new ExtraKey(kv, script_, alts, next_to_);
     }
 
-    /** Extra keys are of the form "key name" or "key name:alt 1:alt 2". */
+    /** If one of [a] or [b] is null, return the other. If [a] and [b] are
+        equal, return [a]. Otherwise, return null. */
+    <E> E one_or_none(E a, E b)
+    {
+      return (a == null) ? b : (b == null || a.equals(b)) ? a : null;
+    }
+
+    /** Extra keys are of the form "key name" or "key name:alt1:alt2@next_to". */
     public static ExtraKey parse(String str, String script)
     {
-      String[] strs = str.split(":");
-      KeyValue kv = KeyValue.getKeyByName(strs[0]);
-      KeyValue[] alts = new KeyValue[strs.length-1];
-      for (int i = 1; i < strs.length; i++)
-        alts[i-1] = KeyValue.getKeyByName(strs[i]);
-      return new ExtraKey(kv, script, Arrays.asList(alts));
+      String[] split_on_at = str.split("@", 2);
+      String[] key_names = split_on_at[0].split(":");
+      KeyValue kv = KeyValue.getKeyByName(key_names[0]);
+      KeyValue[] alts = new KeyValue[key_names.length-1];
+      for (int i = 1; i < key_names.length; i++)
+        alts[i-1] = KeyValue.getKeyByName(key_names[i]);
+      KeyValue next_to = null;
+      if (split_on_at.length > 1)
+        next_to = KeyValue.getKeyByName(split_on_at[1]);
+      return new ExtraKey(kv, script, Arrays.asList(alts), next_to);
     }
   }
 
