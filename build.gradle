@@ -100,6 +100,7 @@ tasks.register('buildKeyboardFont') {
 tasks.withType(Test).configureEach {
     dependsOn 'genLayoutsList'
     dependsOn 'checkKeyboardLayouts'
+    dependsOn 'syncTranslations'
 }
 
 tasks.register('genLayoutsList') {
