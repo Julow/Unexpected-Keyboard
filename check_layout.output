@@ -1,119 +1,119 @@
-# res/xml/arab_alt.xml
+# arab_alt
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# res/xml/arab_pc.xml
+# arab_pc
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
-# res/xml/arab_pc_ckb.xml
+# arab_pc_ckb
 Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
 1 warnings
-# res/xml/arab_pc_ir.xml
+# arab_pc_ir
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
 1 warnings
-# res/xml/armenian_ph_am.xml
+# armenian_ph_am
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
-# res/xml/beng_national.xml
+# beng_national
 Layout includes some ASCII punctuation but not all, missing: $
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# res/xml/beng_provat.xml
+# beng_provat
 Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# res/xml/cyrl_jcuken_ru.xml
+# cyrl_jcuken_ru
 0 warnings
-# res/xml/cyrl_jcuken_uk.xml
+# cyrl_jcuken_uk
 0 warnings
-# res/xml/cyrl_ueishsht.xml
+# cyrl_ueishsht
 0 warnings
-# res/xml/cyrl_yaverti.xml
+# cyrl_yaverti
 Layout includes some ASCII punctuation but not all, missing: ~
 1 warnings
-# res/xml/deva_alt.xml
+# deva_alt
 Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
 Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
 2 warnings
-# res/xml/deva_inscript.xml
+# deva_inscript
 Duplicate keys: , ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 3 warnings
-# res/xml/grek_qwerty.xml
+# grek_qwerty
 Duplicate keys: ;
 1 warnings
-# res/xml/hang_dubeolsik_kr.xml
+# hang_dubeolsik_kr
 0 warnings
-# res/xml/hebr_1_il.xml
+# hebr_1_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 1 warnings
-# res/xml/hebr_2_il.xml
+# hebr_2_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 1 warnings
-# res/xml/latn_azerty_fr.xml
+# latn_azerty_fr
 0 warnings
-# res/xml/latn_bepo_fr.xml
+# latn_bepo_fr
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
-# res/xml/latn_bone.xml
+# latn_bone
 Layout includes some ASCII punctuation but not all, missing: $
 Layout redefines the bottom row but some important keys are missing, missing: switch_backward
 2 warnings
-# res/xml/latn_colemak.xml
+# latn_colemak
 0 warnings
-# res/xml/latn_dvorak.xml
+# latn_dvorak
 0 warnings
-# res/xml/latn_neo2.xml
+# latn_neo2
 0 warnings
-# res/xml/latn_qwerty_br.xml
+# latn_qwerty_br
 0 warnings
-# res/xml/latn_qwerty_cz.xml
+# latn_qwerty_cz
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
-# res/xml/latn_qwerty_es.xml
+# latn_qwerty_es
 0 warnings
-# res/xml/latn_qwerty_hu.xml
+# latn_qwerty_hu
 0 warnings
-# res/xml/latn_qwerty_lv.xml
+# latn_qwerty_lv
 0 warnings
-# res/xml/latn_qwerty_no.xml
+# latn_qwerty_no
 0 warnings
-# res/xml/latn_qwerty_pl.xml
+# latn_qwerty_pl
 0 warnings
-# res/xml/latn_qwerty_ro.xml
+# latn_qwerty_ro
 0 warnings
-# res/xml/latn_qwerty_se.xml
+# latn_qwerty_se
 Duplicate keys: !, ', ,, -, ., ?
 1 warnings
-# res/xml/latn_qwerty_tr.xml
+# latn_qwerty_tr
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
-# res/xml/latn_qwerty_us.xml
+# latn_qwerty_us
 0 warnings
-# res/xml/latn_qwerty_vi.xml
+# latn_qwerty_vi
 Layout includes some ASCII punctuation but not all, missing: \
 1 warnings
-# res/xml/latn_qwertz.xml
+# latn_qwertz
 0 warnings
-# res/xml/latn_qwertz_cz.xml
+# latn_qwertz_cz
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
-# res/xml/latn_qwertz_cz_multifunctional.xml
+# latn_qwertz_cz_multifunctional
 Layout includes some ASCII punctuation but not all, missing: `
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# res/xml/latn_qwertz_de.xml
+# latn_qwertz_de
 0 warnings
-# res/xml/latn_qwertz_fr_ch.xml
+# latn_qwertz_fr_ch
 0 warnings
-# res/xml/latn_qwertz_hu.xml
+# latn_qwertz_hu
 0 warnings
-# res/xml/latn_qwertz_sk.xml
+# latn_qwertz_sk
 Layout includes some ASCII punctuation but not all, missing: \, `
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# res/xml/urdu_phonetic_ur.xml
+# urdu_phonetic_ur
 Duplicate keys:  
 Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
