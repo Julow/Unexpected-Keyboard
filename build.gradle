@@ -79,17 +79,12 @@ dependencies {
 tasks.register('buildKeyboardFont') {
     println "\nBuilding assets/special_font.ttf"
     mkdir "$buildDir"
-    new ByteArrayOutputStream().withStream { bos ->
-        exec {
-            workingDir "$projectDir/special_font"
-            def svgFiles = workingDir.listFiles().findAll {
-                it.isFile() && it.name.endsWith(".svg")
-            }
-
-            commandLine("fontforge", "-lang=ff", "-script", "build.pe", "$buildDir/special_font.ttf", *svgFiles)
-            standardOutput = bos
+    exec {
+        workingDir "$projectDir/special_font"
+        def svgFiles = workingDir.listFiles().findAll {
+            it.isFile() && it.name.endsWith(".svg")
         }
-        println "$bos"
+        commandLine("fontforge", "-lang=ff", "-script", "build.pe", "$buildDir/special_font.ttf", *svgFiles)
     }
     copy {
         from "$buildDir/special_font.ttf"
@@ -105,13 +100,9 @@ tasks.withType(Test).configureEach {
 
 tasks.register('genLayoutsList') {
     println "\nGenerating res/values/layouts.xml"
-    new ByteArrayOutputStream().withStream { bos ->
-        exec {
-            workingDir = projectDir
-            commandLine "python", "gen_layouts.py"
-            standardOutput = bos
-        }
-        println "$bos"
+    exec {
+        workingDir = projectDir
+        commandLine "python", "gen_layouts.py"
     }
 }
 
@@ -133,13 +124,9 @@ tasks.register('checkKeyboardLayouts') {
 
 tasks.register('syncTranslations') {
     println "\nUpdating translations"
-    new ByteArrayOutputStream().withStream { bos ->
-        exec {
-            workingDir = projectDir
-            commandLine "python", "sync_translations.py"
-            standardOutput = bos
-        }
-        println "$bos"
+    exec {
+        workingDir = projectDir
+        commandLine "python", "sync_translations.py"
     }
 }
 
