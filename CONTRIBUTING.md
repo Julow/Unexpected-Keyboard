@@ -63,7 +63,10 @@ be installed at the same time.
 `./gradlew installDebug` can fail with the following error message:
 
 ```
-Failure [INSTALL_FAILED_UPDATE_INCOMPATIBLE: Package juloo.keyboard2.debug signatures do not match previously installed version; ignoring!]
+FAILURE: Build failed with an exception.
+* What went wrong:
+Execution failed for task ':installDebug'.
+> java.util.concurrent.ExecutionException: com.android.builder.testing.api.DeviceException: com.android.ddmlib.InstallException: INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package juloo.keyboard2.debug signatures do not match newer version; ignoring!
 ```
 
 The application can't be "updated" because the temporary certificate has been
