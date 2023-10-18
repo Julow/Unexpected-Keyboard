@@ -26,6 +26,8 @@ Layout doesn't specify a script.
 0 warnings
 # res/xml/cyrl_jcuken_uk.xml
 0 warnings
+# res/xml/cyrl_ueishsht.xml
+0 warnings
 # res/xml/cyrl_yaverti.xml
 Layout includes some ASCII punctuation but not all, missing: ~
 1 warnings
