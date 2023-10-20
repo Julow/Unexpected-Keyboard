@@ -47,6 +47,10 @@ public class ExtraKeysPreference extends PreferenceCategory
     "†",
     "ª",
     "º",
+    "page_up",
+    "page_down",
+    "home",
+    "end",
     "switch_greekmath",
     "capslock",
     "copy",
@@ -94,6 +98,10 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "º": id = R.string.key_descr_º; break;
       case "superscript": id = R.string.key_descr_superscript; break;
       case "subscript": id = R.string.key_descr_subscript; break;
+      case "page_up": id = R.string.key_descr_page_up; break;
+      case "page_down": id = R.string.key_descr_page_down; break;
+      case "home": id = R.string.key_descr_home; break;
+      case "end": id = R.string.key_descr_end; break;
     }
     if (id == 0)
       return null;

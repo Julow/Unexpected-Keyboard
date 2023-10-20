@@ -151,6 +151,10 @@ class KeyModifier
       case KeyEvent.KEYCODE_DPAD_RIGHT: return "end";
       case KeyEvent.KEYCODE_ESCAPE: return "insert";
       case KeyEvent.KEYCODE_TAB: return "\\t";
+      case KeyEvent.KEYCODE_PAGE_UP:
+      case KeyEvent.KEYCODE_PAGE_DOWN:
+      case KeyEvent.KEYCODE_MOVE_HOME:
+      case KeyEvent.KEYCODE_MOVE_END: return "removed";
       default: return null;
     }
   }
