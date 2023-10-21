@@ -242,9 +242,10 @@ class KeyModifier
       case 'r': return "₹";
       case 'y': return "¥";
       case 'c': return "¢";
-      case 'p': return "₱";
+      case 'p': return "₽";
+      case 'b': return "₱";
       case 'h': return "₴";
-      case 'b': return "₿";
+      case 'z': return "₿";
       case '€': case '£': return "removed"; // Avoid showing these twice
       // alternating greek letters
       case 'π': return "ϖ";
