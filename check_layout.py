@@ -6,7 +6,8 @@ warning_count = 0
 KNOWN_NOT_LAYOUT = set([
     "res/xml/number_row.xml", "res/xml/numpad.xml", "res/xml/pin.xml",
     "res/xml/bottom_row.xml", "res/xml/settings.xml", "res/xml/method.xml",
-    "res/xml/greekmath.xml", "res/xml/numeric.xml" ])
+    "res/xml/greekmath.xml", "res/xml/numeric.xml",
+    "res/xml/emoji_bottom_row.xml" ])
 
 def warn(msg):
     global warning_count
