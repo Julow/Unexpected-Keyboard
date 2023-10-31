@@ -1,0 +1,1 @@
+Android için hafif ve güvenlik odaklı bir sanal klavye uygulaması.

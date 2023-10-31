@@ -1,0 +1,6 @@
+Bu uygulama özünde tuşların kenarlarından kaydırarak daha fazla karakter yazabilmek amacıyla geliştirildi.
+
+Bu uygulama aslında Termux kullanıcıları için geliştirildi.
+Artık gündelik kullanım için de uygun.
+
+Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz.
