@@ -172,7 +172,7 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     startKeyRepeat(ptr);
-    _handler.onPointerDown(false);
+    _handler.onPointerDown(value, false);
   }
 
   static final int[] DIRECTION_TO_INDEX = new int[]{
@@ -263,7 +263,7 @@ public final class Pointers implements Handler.Callback
         {
           startSliding(ptr, dy);
         }
-        _handler.onPointerDown(true);
+        _handler.onPointerDown(newValue, true);
       }
     }
   }
@@ -383,7 +383,7 @@ public final class Pointers implements Handler.Callback
     {
       ptr.value = kv;
       ptr.flags = kv.getFlags();
-      _handler.onPointerDown(true);
+      _handler.onPointerDown(kv, true);
       return true;
     }
     // Stop repeating: Special keys
@@ -522,8 +522,9 @@ public final class Pointers implements Handler.Callback
     public KeyValue modifyKey(KeyValue k, Modifiers flags);
 
     /** A key is pressed. [getModifiers()] is uptodate. Might be called after a
-        press or a swipe to a different value. */
-    public void onPointerDown(boolean isSwipe);
+        press or a swipe to a different value. Down events are not paired with
+        up events. */
+    public void onPointerDown(KeyValue k, boolean isSwipe);
 
     /** Key is released. [k] is the key that was returned by
         [modifySelectedKey] or [modifySelectedKey]. */

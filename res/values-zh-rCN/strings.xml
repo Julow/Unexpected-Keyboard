@@ -10,13 +10,12 @@
   <string name="pref_keyboard_opacity">调整键盘背景透明度</string>
   <string name="pref_key_opacity">调整按键透明度</string>
   <string name="pref_key_activated_opacity">调整按下的按键的透明度</string>
-  <string name="pref_layout_title">改变键盘布局</string>
   <string name="pref_layout_e_system">系统设置</string>
   <string name="pref_layout_e_custom">自定义布局</string>
-  <string name="pref_accents_title">声调</string>
-  <string name="pref_accents_e_all_installed">显示所有安装的语言的声调符号</string>
-  <string name="pref_accents_e_selected">只显示选择的语言的声调符号</string>
-  <string name="pref_accents_e_none">隐藏声调符号</string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <string name="pref_custom_layout_title">自定义布局</string>
   <string name="pref_show_numpad_title">显示数字小键盘</string>
   <string name="pref_show_numpad_never">从不</string>
   <string name="pref_show_numpad_landscape">只在横屏显示</string>
@@ -27,6 +26,8 @@
   <string name="pref_numpad_layout_e_high_first">大数字在上方</string>
   <string name="pref_numpad_layout_e_low_first">小数字在上方</string>
   <string name="pref_extra_keys_title">选择要显示的按键</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">第二键盘布局</string>
   <string name="pref_second_layout_none">无</string>
   <string name="pref_category_typing">输入</string>
@@ -43,6 +44,8 @@
   <string name="pref_switch_input_immediate_summary">切换键盘按钮的行为</string>
   <string name="pref_vibrate_title">振动</string>
   <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">样式</string>
   <string name="pref_margin_bottom_title">键盘下边距</string>
   <string name="pref_keyboard_height_title">键盘高度</string>
@@ -64,9 +67,6 @@
   <string name="pref_swipe_dist_e_very_far">非常长</string>
   <string name="pref_key_horizontal_space">按键的左右边距</string>
   <string name="pref_key_vertical_space">按键的上下边距</string>
-  <string name="pref_category_advanced">高级设置</string>
-  <string name="pref_custom_layout_title">自定义布局</string>
-  <string name="pref_custom_layout_summary">请查看源代码。这个选项不应该在正常情况下使用。</string>
   <string name="pref_vibration_e_disabled">禁用</string>
   <string name="pref_vibration_e_system">使用系统振动强度</string>
   <string name="pref_vibration_e_strong">强</string>
@@ -80,6 +80,26 @@
   <string name="key_action_send">发送</string>
   <string name="launcher_button_imesettings">启用键盘</string>
   <string name="launcher_description">这是一个虚拟键盘软件。点击按钮进入系统设置，然后启用 Unexpected-Keyboard 即可使用。</string>
-  <string name="launcher_sourcecode">这是一个免费且开源的软件。你可以在 <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a> 上找到源代码或者反馈 bug。</string>
+  <string name="launcher_sourcecode">这是一个免费且开源的软件。你可以在 Github 上找到源代码或者反馈 bug。</string>
   <string name="launcher_tryhere">启用键盘后，可以在这里测试效果：</string>
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <!-- <string name="key_descr_page_up">Page Up</string> -->
+  <!-- <string name="key_descr_page_down">Page Down</string> -->
+  <!-- <string name="key_descr_home">Home</string> -->
+  <!-- <string name="key_descr_end">End</string> -->
+  <string name="pref_category_advanced">高级设置</string>
 </resources>

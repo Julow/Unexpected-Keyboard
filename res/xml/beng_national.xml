@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard name="বাংলা (জাতীয়)">
+<keyboard name="বাংলা (জাতীয়)" script="bengali">
   <row>
     <key key0="ঙ" key2="ং" key3="esc" key4="১"/>
     <key key0="য" key2="য়" key3="¶" key4="২"/>

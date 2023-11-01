@@ -133,16 +133,32 @@ and other extra keys to show.
 
 The list of language tags (generally two letters)
 and locales (generally of the form `xx_XX`)
-can be found in this stackoverflow answer: https://stackoverflow.com/a/7989085
+can be found in this [stackoverflow answer](https://stackoverflow.com/a/7989085)
 
-### Translations
+### Updating translations
 
-Translations are always welcome !
+The text used in the app is written in `res/values-<language_tag>/strings.xml`.
 
-See for example: 1723288 (Latvian), baf867a (French).
-The app can be translated by writing `res/values-<language code>/strings.xml`
-(for example `values-fr`, `values-lv`), based on the default:
-`res/values/strings.xml` (English).
+The list of language tags can be found in this
+[stackoverflow answer](https://stackoverflow.com/a/7989085)
+
+The first part before the `_` is used, for example,
+`res/values-fr/strings.xml` for French,
+`res/values-lv/strings.xml` for Latvian.
+
+Commented-out lines indicate missing translations:
+
+```xml
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+```
+
+Remove the `<!--` and `-->` parts and change the text.
+
+### Adding a translation
+
+The `res/values-<language_tag>/strings.xml` file must be created by copying the
+default translation in `res/values/strings.xml`, which contain the structure of
+the file and the English strings.
 
 To check that `strings.xml` is formatted correctly, run
 `python sync_translations.py`. This will modify your files.
@@ -152,7 +168,7 @@ The store description is found in `metadata/android/<locale>/`,
 The short description must not exceed 80 characters.
 Translating changelogs is not useful.
 
-The app name might be partially translated, the "unexpected" word should remain
+The app name might be partially translated, the "Unexpected" word should remain
 untranslated.
 
 As translations need to be updated regularly, you can subscribe to this issue

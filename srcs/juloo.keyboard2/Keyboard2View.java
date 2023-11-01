@@ -19,6 +19,9 @@ public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
 {
   private KeyboardData _keyboard;
+
+  /** The key holding the shift key is used to set shift state from
+      autocapitalisation. */
   private KeyValue _shift_kv;
   private KeyboardData.Key _shift_key;
 
@@ -113,7 +116,7 @@ public class Keyboard2View extends View
     }
     else
     {
-      if ((flags & KeyValue.FLAG_FAKE_PTR) != 0)
+      if ((flags & KeyValue.FLAG_FAKE_PTR) == 0)
         return; // Don't remove locked pointers
       _pointers.remove_fake_pointer(_shift_kv, _shift_key);
     }
@@ -134,8 +137,9 @@ public class Keyboard2View extends View
     return KeyModifier.modify(k, mods);
   }
 
-  public void onPointerDown(boolean isSwipe)
+  public void onPointerDown(KeyValue k, boolean isSwipe)
   {
+    _config.handler.key_down(k, isSwipe);
     invalidate();
     vibrate();
   }
@@ -407,7 +411,12 @@ public class Keyboard2View extends View
       x += keyW / 2f;
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
-    canvas.drawText(kv.getString(), x, y, p);
+    String label = kv.getString();
+    int label_len = label.length();
+    // Limit the label of string keys to 3 characters
+    if (label_len > 3 && kv.getKind() == KeyValue.Kind.String)
+      label_len = 3;
+    canvas.drawText(label, 0, label_len, x, y, p);
   }
 
   private void drawIndication(Canvas canvas, String indication, float x,

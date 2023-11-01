@@ -1,11 +1,12 @@
 # The special font is used for the symbols of some keys. It is built from SVG
 # files, one for each glyph.
 New()
+Reencode("unicode")
 
 # Imports glyphs, first argument is file name for the generated font
 i = 2
 while (i < $argc)
-  Select(Strtol($argv[i]:t:r, 16))
+  Select(Strtol($argv[i]:t:r, 16) + 0xE000)
   Import($argv[i], 0, 0, 4.0, 0.1)
   AutoWidth(150)
   i++

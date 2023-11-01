@@ -1,1 +1,1 @@
-Un teclado virtual ligero para desarrolladores.
+Un teclado virtual ligero para Android consciente de su privacidad.

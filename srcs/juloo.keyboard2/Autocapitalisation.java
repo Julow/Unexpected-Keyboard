@@ -49,7 +49,8 @@ final class Autocapitalisation
     }
     _enabled = true;
     _should_enable_shift = (info.initialCapsMode != 0);
-    _callback.update_shift_state(_should_enable_shift, true);
+    _should_update_caps_mode = started_should_update_state(info.inputType);
+    callback_now(true);
   }
 
   public void typed(CharSequence c)
@@ -75,6 +76,13 @@ final class Autocapitalisation
         break;
     }
     callback(true);
+  }
+
+  public void stop()
+  {
+    _should_enable_shift = false;
+    _should_update_caps_mode = false;
+    callback_now(true);
   }
 
   public static interface Callback
@@ -112,12 +120,23 @@ final class Autocapitalisation
     }
   };
 
-  void callback(final boolean might_disable)
+  /** Update the shift state if [_should_update_caps_mode] is true, then call
+      [_callback.update_shift_state]. This is done after a short delay to wait
+      for the editor to handle the events, as this might be called before the
+      corresponding event is sent. */
+  void callback(boolean might_disable)
   {
     _should_disable_shift = might_disable;
     // The callback must be delayed because [getCursorCapsMode] would sometimes
     // be called before the editor finished handling the previous event.
     _handler.postDelayed(delayed_callback, 1);
+  }
+
+  /** Like [callback] but runs immediately. */
+  void callback_now(boolean might_disable)
+  {
+    _should_disable_shift = might_disable;
+    delayed_callback.run();
   }
 
   void type_one_char(char c)
@@ -134,6 +153,28 @@ final class Autocapitalisation
     switch (c)
     {
       case ' ':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /** Whether the caps state should be updated when input starts. [inputType]
+      is the field from the editor info object. */
+  boolean started_should_update_state(int inputType)
+  {
+    int class_ = inputType & InputType.TYPE_MASK_CLASS;
+    int variation = inputType & InputType.TYPE_MASK_VARIATION;
+    if (class_ != InputType.TYPE_CLASS_TEXT)
+      return false;
+    switch (variation)
+    {
+      case InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE:
+      case InputType.TYPE_TEXT_VARIATION_NORMAL:
+      case InputType.TYPE_TEXT_VARIATION_PERSON_NAME:
+      case InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE:
+      case InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT:
+      case InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT:
         return true;
       default:
         return false;

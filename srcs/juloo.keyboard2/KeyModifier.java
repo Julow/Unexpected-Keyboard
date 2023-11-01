@@ -39,18 +39,18 @@ class KeyModifier
       case META: return turn_into_keyevent(k);
       case FN: return apply_fn(k);
       case SHIFT: return apply_shift(k);
-      case GRAVE: return apply_map_or_dead_char(k, map_char_grave, '\u02CB');
-      case AIGU: return apply_map_or_dead_char(k, map_char_aigu, '\u00B4');
-      case CIRCONFLEXE: return apply_map_or_dead_char(k, map_char_circonflexe, '\u02C6');
-      case TILDE: return apply_map_or_dead_char(k, map_char_tilde, '\u02DC');
-      case CEDILLE: return apply_map_or_dead_char(k, map_char_cedille, '\u00B8');
-      case TREMA: return apply_map_or_dead_char(k, map_char_trema, '\u00A8');
-      case CARON: return apply_map_or_dead_char(k, map_char_caron, '\u02C7');
-      case RING: return apply_map_or_dead_char(k, map_char_ring, '\u02DA');
-      case MACRON: return apply_map_or_dead_char(k, map_char_macron, '\u00AF');
-      case OGONEK: return apply_map_or_dead_char(k, map_char_ogonek, '\u02DB');
-      case DOT_ABOVE: return apply_map_or_dead_char(k, map_char_dot_above, '\u02D9');
-      case BREVE: return apply_dead_char(k, '\u02D8');
+      case GRAVE: return apply_map_char(k, map_char_grave);
+      case AIGU: return apply_map_char(k, map_char_aigu);
+      case CIRCONFLEXE: return apply_map_char(k, map_char_circonflexe);
+      case TILDE: return apply_map_char(k, map_char_tilde);
+      case CEDILLE: return apply_map_char(k, map_char_cedille);
+      case TREMA: return apply_map_char(k, map_char_trema);
+      case CARON: return apply_map_char(k, map_char_caron);
+      case RING: return apply_map_char(k, map_char_ring);
+      case MACRON: return apply_map_char(k, map_char_macron);
+      case OGONEK: return apply_map_char(k, map_char_ogonek);
+      case DOT_ABOVE: return apply_map_char(k, map_char_dot_above);
+      case BREVE: return apply_map_char(k, map_char_breve);
       case DOUBLE_AIGU: return apply_map_char(k, map_char_double_aigu);
       case ORDINAL: return apply_map_char(k, map_char_ordinal);
       case SUPERSCRIPT: return apply_map_char(k, map_char_superscript);
@@ -59,7 +59,7 @@ class KeyModifier
       case BOX: return apply_map_char(k, map_char_box);
       case SLASH: return apply_map_char(k, map_char_slash);
       case BAR: return apply_map_char(k, map_char_bar);
-      case ARROW_RIGHT: return apply_combining(k, "\u20D7");
+      case ARROW_RIGHT: return apply_map_char(k, map_char_arrow_right);
       case DOT_BELOW: return apply_map_char(k, map_char_dot_below);
       case HORN: return apply_map_char(k, map_char_horn);
       case HOOK_ABOVE: return apply_map_char(k, map_char_hook_above);
@@ -83,51 +83,30 @@ class KeyModifier
     return k;
   }
 
+  public static Map_char modify_numpad_script(String script)
+  {
+    if (script == null)
+      return map_char_none;
+    switch (script)
+    {
+      case "arabic": return map_char_numpad_arabic;
+      case "bengali": return map_char_numpad_bengali;
+      case "devanagari": return map_char_numpad_devanagari;
+      case "persian": return map_char_numpad_persian;
+      default: return map_char_none;
+    }
+  }
+
   private static KeyValue apply_map_char(KeyValue k, Map_char map)
   {
     switch (k.getKind())
     {
       case Char:
         char kc = k.getChar();
-        char c = map.apply(kc);
-        return (kc == c) ? k : k.withChar(c);
-      default: return k;
-    }
-  }
-
-  private static KeyValue apply_dead_char(KeyValue k, char dead_char)
-  {
-    switch (k.getKind())
-    {
-      case Char:
-        char kc = k.getChar();
-        char c = (char)KeyCharacterMap.getDeadChar(dead_char, kc);
-        return (c == 0 || kc == c) ? k : k.withChar(c);
-      default: return k;
-    }
-  }
-
-  /** Apply a [Map_char] or fallback to [apply_dead_char]. */
-  private static KeyValue apply_map_or_dead_char(KeyValue k, Map_char map, char dead_char)
-  {
-    switch (k.getKind())
-    {
-      case Char:
-        char kc = k.getChar();
-        char c = map.apply(kc);
-        if (kc == c)
-          return apply_dead_char(k, dead_char);
-        return k.withChar(c);
-      default: return k;
-    }
-  }
-
-  private static KeyValue apply_combining(KeyValue k, String combining)
-  {
-    switch (k.getKind())
-    {
-      case Char:
-        return k.withString(String.valueOf(k.getChar()) + combining);
+        String modified = map.apply(kc);
+        if (modified == null)
+          return k;
+        return KeyValue.makeStringKey(modified, k.getFlags());
       default: return k;
     }
   }
@@ -143,7 +122,8 @@ class KeyModifier
           c = Character.toUpperCase(kc);
         return (kc == c) ? k : k.withChar(c);
       case String:
-        return k.withString(k.getString().toUpperCase());
+        String s = Utils.capitalize_string(k.getString());
+        return KeyValue.makeStringKey(s, k.getFlags());
       default: return k;
     }
   }
@@ -171,6 +151,10 @@ class KeyModifier
       case KeyEvent.KEYCODE_DPAD_RIGHT: return "end";
       case KeyEvent.KEYCODE_ESCAPE: return "insert";
       case KeyEvent.KEYCODE_TAB: return "\\t";
+      case KeyEvent.KEYCODE_PAGE_UP:
+      case KeyEvent.KEYCODE_PAGE_DOWN:
+      case KeyEvent.KEYCODE_MOVE_HOME:
+      case KeyEvent.KEYCODE_MOVE_END: return "removed";
       default: return null;
     }
   }
@@ -238,7 +222,9 @@ class KeyModifier
       case '?': return "¿";
       case '|': return "¦";
       case '§': return "¶";
+      case '†': return "‡";
       case '×': return "∙";
+      case ' ': return "nbsp";
       // arrows
       case '↖': return "⇖";
       case '↑': return "⇑";
@@ -256,8 +242,10 @@ class KeyModifier
       case 'r': return "₹";
       case 'y': return "¥";
       case 'c': return "¢";
-      case 'p': return "₱";
+      case 'p': return "₽";
+      case 'b': return "₱";
       case 'h': return "₴";
+      case 'z': return "₿";
       case '€': case '£': return "removed"; // Avoid showing these twice
       // alternating greek letters
       case 'π': return "ϖ";
@@ -355,8 +343,28 @@ class KeyModifier
       case 'ं': return "ॕ";
       case '़': return "ॎ";
       case 'ऽ': return "ॽ";
-      // other
-      case ' ': return "nbsp";
+      // Persian numbers
+      case '۱': return "f1";
+      case '۲': return "f2";
+      case '۳': return "f3";
+      case '۴': return "f4";
+      case '۵': return "f5";
+      case '۶': return "f6";
+      case '۷': return "f7";
+      case '۸': return "f8";
+      case '۹': return "f9";
+      case '۰': return "f10";
+      // Arabic numbers
+      case '١': return "f1";
+      case '٢': return "f2";
+      case '٣': return "f3";
+      case '٤': return "f4";
+      case '٥': return "f5";
+      case '٦': return "f6";
+      case '٧': return "f7";
+      case '٨': return "f8";
+      case '٩': return "f9";
+      case '٠': return "f10";
       default: return null;
     }
   }
@@ -439,10 +447,17 @@ class KeyModifier
     return ks;
   }
 
-  private static abstract class Map_char
+  public static abstract class Map_char
   {
-    public abstract char apply(char c);
+    /** Modify a char or return [null] if the modifier do not apply. Return a
+        [String] that can contains combining diacritics. */
+    public abstract String apply(char c);
   }
+
+  private static final Map_char map_char_none =
+    new Map_char() {
+      public String apply(char _c) { return null; }
+    };
 
   private static char map_char_shift(char c)
   {
@@ -477,434 +492,592 @@ class KeyModifier
     }
   }
 
+  /** Return [null] if the dead char do not apply. */
+  private static String map_dead_char(char c, char dead_char)
+  {
+    char modified = (char)KeyCharacterMap.getDeadChar(dead_char, c);
+    return (modified == 0 || modified == c) ? null : String.valueOf(modified);
+  }
+
   private static final Map_char map_char_aigu =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          // Composite characters: 'j́'
-          case 'a': return 'á';
-          case 'e': return 'é';
-          case 'i': return 'í';
-          case 'l': return 'ĺ';
-          case 'o': return 'ó';
-          case 'r': return 'ŕ';
-          case 's': return 'ś';
-          case 'u': return 'ú';
-          case 'y': return 'ý';
-          default: return c;
+          case 'a': return "á";
+          case 'e': return "é";
+          case 'i': return "í";
+          case 'l': return "ĺ";
+          case 'o': return "ó";
+          case 'r': return "ŕ";
+          case 's': return "ś";
+          case 'u': return "ú";
+          case 'y': return "ý";
+          // Combining diacritic
+          case 'j':
+            return c + "\u0301";
+          default: return map_dead_char(c, '\u00B4');
         }
       }
     };
 
   private static final Map_char map_char_caron =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'c': return 'č';
-          case 'd': return 'ď';
-          case 'e': return 'ě';
-          case 'l': return 'ľ';
-          case 'n': return 'ň';
-          case 'r': return 'ř';
-          case 's': return 'š';
-          case 't': return 'ť';
-          case 'z': return 'ž';
-          default: return c;
+          case 'c': return "č";
+          case 'd': return "ď";
+          case 'e': return "ě";
+          case 'l': return "ľ";
+          case 'n': return "ň";
+          case 'r': return "ř";
+          case 's': return "š";
+          case 't': return "ť";
+          case 'z': return "ž";
+          default: return map_dead_char(c, '\u02C7');
         }
       }
     };
 
   private static final Map_char map_char_cedille =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'c': return 'ç';
-          case 's': return 'ş';
-          case 'g': return 'ģ';
-          default: return c;
+          case 'c': return "ç";
+          case 's': return "ş";
+          case 'g': return "ģ";
+          default: return map_dead_char(c, '\u00B8');
         }
       }
     };
 
   private static final Map_char map_char_circonflexe =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'â';
-          case 'e': return 'ê';
-          case 'i': return 'î';
-          case 'o': return 'ô';
-          case 'u': return 'û';
-          default: return c;
+          case 'a': return "â";
+          case 'e': return "ê";
+          case 'i': return "î";
+          case 'o': return "ô";
+          case 'u': return "û";
+          default: return map_dead_char(c, '\u02C6');
         }
       }
     };
 
   private static final Map_char map_char_dot_above =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'ė': return 'ė';
-          default: return c;
+          case 'ė': return "ė";
+          default: return map_dead_char(c, '\u02D9');
         }
       }
     };
 
   private static final Map_char map_char_grave =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'à';
-          case 'e': return 'è';
-          case 'i': return 'ì';
-          case 'o': return 'ò';
-          case 'u': return 'ù';
-          default: return c;
+          case 'a': return "à";
+          case 'e': return "è";
+          case 'i': return "ì";
+          case 'o': return "ò";
+          case 'u': return "ù";
+          default: return map_dead_char(c, '\u02CB');
         }
       }
     };
 
   private static final Map_char map_char_macron =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'ā';
-          case 'e': return 'ē';
-          case 'i': return 'ī';
-          case 'u': return 'ū';
-          default: return c;
+          case 'a': return "ā";
+          case 'e': return "ē";
+          case 'i': return "ī";
+          case 'u': return "ū";
+          default: return map_dead_char(c, '\u00AF');
         }
       }
     };
 
   private static final Map_char map_char_ogonek =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'ą';
-          case 'e': return 'ę';
-          case 'i': return 'į';
-          case 'k': return 'ķ';
-          case 'l': return 'ļ';
-          case 'n': return 'ņ';
-          case 'u': return 'ų';
-          default: return c;
+          case 'a': return "ą";
+          case 'e': return "ę";
+          case 'i': return "į";
+          case 'k': return "ķ";
+          case 'l': return "ļ";
+          case 'n': return "ņ";
+          case 'u': return "ų";
+          default: return map_dead_char(c, '\u02DB');
         }
       }
     };
 
   private static final Map_char map_char_ring =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'å';
-          case 'u': return 'ů';
-          default: return c;
+          case 'a': return "å";
+          case 'u': return "ů";
+          default: return map_dead_char(c, '\u02DA');
         }
       }
     };
 
   private static final Map_char map_char_tilde =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'ã';
-          case 'o': return 'õ';
-          case 'n': return 'ñ';
-          default: return c;
+          case 'a': return "ã";
+          case 'o': return "õ";
+          case 'n': return "ñ";
+          default: return map_dead_char(c, '\u02DC');
         }
       }
     };
 
   private static final Map_char map_char_trema =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'ä';
-          case 'e': return 'ë';
-          case 'i': return 'ï';
-          case 'o': return 'ö';
-          case 'u': return 'ü';
-          case 'y': return 'ÿ';
-          default: return c;
+          case 'a': return "ä";
+          case 'e': return "ë";
+          case 'i': return "ï";
+          case 'o': return "ö";
+          case 'u': return "ü";
+          case 'y': return "ÿ";
+          default: return map_dead_char(c, '\u00A8');
+        }
+      }
+    };
+
+  private static final Map_char map_char_breve =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          default: return map_dead_char(c, '\u02D8');
         }
       }
     };
 
   private static final Map_char map_char_double_aigu =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          // Composite characters: a̋ e̋ i̋ m̋ ӳ
-          case 'o': return 'ő';
-          case 'u': return 'ű';
-          case ' ': return '˝';
-          default: return c;
+          case 'o': return "ő";
+          case 'u': return "ű";
+          case ' ': return "˝";
+          // Combining diacritic
+          case 'a':
+          case 'e':
+          case 'i':
+          case 'm':
+          case 'y':
+            return c + "\u030b";
+          default: return null;
         }
       }
     };
 
   private static final Map_char map_char_ordinal =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'ª';
-          case 'o': return 'º';
-          case '1': return 'ª';
-          case '2': return 'º';
-          case '3': return 'ⁿ';
-          case '4': return 'ᵈ';
-          case '5': return 'ᵉ';
-          case '6': return 'ʳ';
-          case '7': return 'ˢ';
-          case '8': return 'ᵗ';
-          case '9': return 'ʰ';
-          case '*': return '°';
-          default: return c;
+          case 'a': return "ª";
+          case 'o': return "º";
+          case '1': return "ª";
+          case '2': return "º";
+          case '3': return "ⁿ";
+          case '4': return "ᵈ";
+          case '5': return "ᵉ";
+          case '6': return "ʳ";
+          case '7': return "ˢ";
+          case '8': return "ᵗ";
+          case '9': return "ʰ";
+          case '*': return "°";
+          default: return null;
         }
       }
     };
 
   private static final Map_char map_char_superscript =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case '1': return '¹';
-          case '2': return '²';
-          case '3': return '³';
-          case '4': return '⁴';
-          case '5': return '⁵';
-          case '6': return '⁶';
-          case '7': return '⁷';
-          case '8': return '⁸';
-          case '9': return '⁹';
-          case '0': return '⁰';
-          case 'i': return 'ⁱ';
-          case '+': return '⁺';
-          case '-': return '⁻';
-          case '=': return '⁼';
-          case '(': return '⁽';
-          case ')': return '⁾';
-          case 'n': return 'ⁿ';
-          default: return c;
+          case '1': return "¹";
+          case '2': return "²";
+          case '3': return "³";
+          case '4': return "⁴";
+          case '5': return "⁵";
+          case '6': return "⁶";
+          case '7': return "⁷";
+          case '8': return "⁸";
+          case '9': return "⁹";
+          case '0': return "⁰";
+          case '+': return "⁺";
+          case '-': return "⁻";
+          case '=': return "⁼";
+          case '(': return "⁽";
+          case ')': return "⁾";
+          case 'a': return "ᵃ";
+          case 'b': return "ᵇ";
+          case 'c': return "ᶜ";
+          case 'd': return "ᵈ";
+          case 'e': return "ᵉ";
+          case 'f': return "ᶠ";
+          case 'g': return "ᵍ";
+          case 'h': return "ʰ";
+          case 'i': return "ⁱ";
+          case 'j': return "ʲ";
+          case 'k': return "ᵏ";
+          case 'l': return "ˡ";
+          case 'm': return "ᵐ";
+          case 'n': return "ⁿ";
+          case 'o': return "ᵒ";
+          case 'p': return "ᵖ";
+          case 'r': return "ʳ";
+          case 's': return "ˢ";
+          case 't': return "ᵗ";
+          case 'u': return "ᵘ";
+          case 'v': return "ᵛ";
+          case 'w': return "ʷ";
+          case 'x': return "ˣ";
+          case 'y': return "ʸ";
+          case 'z': return "ᶻ";
+          default: return null;
         }
       }
     };
 
   private static final Map_char map_char_subscript =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case '1': return '₁';
-          case '2': return '₂';
-          case '3': return '₃';
-          case '4': return '₄';
-          case '5': return '₅';
-          case '6': return '₆';
-          case '7': return '₇';
-          case '8': return '₈';
-          case '9': return '₉';
-          case '0': return '₀';
-          case '+': return '₊';
-          case '-': return '₋';
-          case '=': return '₌';
-          case '(': return '₍';
-          case ')': return '₎';
-          case 'e': return 'ₑ';
-          case 'a': return 'ₐ';
-          case 'x': return 'ₓ';
-          case 'o': return 'ₒ';
-          default: return c;
+          case '1': return "₁";
+          case '2': return "₂";
+          case '3': return "₃";
+          case '4': return "₄";
+          case '5': return "₅";
+          case '6': return "₆";
+          case '7': return "₇";
+          case '8': return "₈";
+          case '9': return "₉";
+          case '0': return "₀";
+          case '+': return "₊";
+          case '-': return "₋";
+          case '=': return "₌";
+          case '(': return "₍";
+          case ')': return "₎";
+          case 'a': return "ₐ";
+          case 'e': return "ₑ";
+          case 'h': return "ₕ";
+          case 'i': return "ᵢ";
+          case 'j': return "ⱼ";
+          case 'k': return "ₖ";
+          case 'l': return "ₗ";
+          case 'm': return "ₘ";
+          case 'n': return "ₙ";
+          case 'o': return "ₒ";
+          case 'p': return "ₚ";
+          case 'r': return "ᵣ";
+          case 's': return "ₛ";
+          case 't': return "ₜ";
+          case 'u': return "ᵤ";
+          case 'v': return "ᵥ";
+          case 'x': return "ₓ";
+          default: return null;
         }
       }
     };
 
   private static final Map_char map_char_arrows =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case '1': return '↙';
-          case '2': return '↓';
-          case '3': return '↘';
-          case '4': return '←';
-          case '6': return '→';
-          case '7': return '↖';
-          case '8': return '↑';
-          case '9': return '↗';
-          default: return c;
+          case '1': return "↙";
+          case '2': return "↓";
+          case '3': return "↘";
+          case '4': return "←";
+          case '6': return "→";
+          case '7': return "↖";
+          case '8': return "↑";
+          case '9': return "↗";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_arrow_right =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          default: return c + "\u20D7";
         }
       }
     };
 
   private static final Map_char map_char_box =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case '1': return '└';
-          case '2': return '┴';
-          case '3': return '┘';
-          case '4': return '├';
-          case '5': return '┼';
-          case '6': return '┤';
-          case '7': return '┌';
-          case '8': return '┬';
-          case '9': return '┐';
-          case '0': return '─';
-          case '.': return '│';
-          default: return c;
+          case '1': return "└";
+          case '2': return "┴";
+          case '3': return "┘";
+          case '4': return "├";
+          case '5': return "┼";
+          case '6': return "┤";
+          case '7': return "┌";
+          case '8': return "┬";
+          case '9': return "┐";
+          case '0': return "─";
+          case '.': return "│";
+          default: return null;
         }
       }
     };
 
   private static final Map_char map_char_slash =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'a': return 'ⱥ';
-          case 'b': return '␢';
-          case 'c': return 'ȼ';
-          case 'e': return 'ɇ';
-          case 'g': return 'ꞡ';
-          case 'k': return 'ꝃ';
-          case 'l': return 'ł';
-          case 'n': return 'ꞥ';
-          case 'o': return 'ø';
-          case 'r': return 'ꞧ';
-          case 's': return 'ꞩ';
-          case 't': return 'ⱦ';
-          default: return c;
+          case 'a': return "ⱥ";
+          case 'b': return "␢";
+          case 'c': return "ȼ";
+          case 'e': return "ɇ";
+          case 'g': return "ꞡ";
+          case 'k': return "ꝃ";
+          case 'l': return "ł";
+          case 'n': return "ꞥ";
+          case 'o': return "ø";
+          case 'r': return "ꞧ";
+          case 's': return "ꞩ";
+          case 't': return "ⱦ";
+          default: return null;
         }
       }
     };
 
   private static final Map_char map_char_bar =
     new Map_char() {
-      public char apply(char c)
+      public String apply(char c)
       {
         switch (c)
         {
-          case 'b': return 'ƀ';
-          case 'c': return 'ꞓ';
-          case 'd': return 'đ';
-          case 'g': return 'ǥ';
-          case 'i': return 'ɨ';
-          case 'j': return 'ɉ';
-          case 'k': return 'ꝁ';
-          case 'l': return 'ƚ';
-          case 'o': return 'ɵ';
-          case 'p': return 'ᵽ';
-          case 'q': return 'ꝗ';
-          case 'r': return 'ɍ';
-          case 't': return 'ŧ';
-          case 'u': return 'ʉ';
-          case 'y': return 'ɏ';
-          case 'z': return 'ƶ';
-          default: return c;
+          case 'b': return "ƀ";
+          case 'c': return "ꞓ";
+          case 'd': return "đ";
+          case 'g': return "ǥ";
+          case 'i': return "ɨ";
+          case 'j': return "ɉ";
+          case 'k': return "ꝁ";
+          case 'l': return "ƚ";
+          case 'o': return "ɵ";
+          case 'p': return "ᵽ";
+          case 'q': return "ꝗ";
+          case 'r': return "ɍ";
+          case 't': return "ŧ";
+          case 'u': return "ʉ";
+          case 'y': return "ɏ";
+          case 'z': return "ƶ";
+          default: return null;
         }
       }
     };
 
   private static final Map_char map_char_dot_below =
-          new Map_char() {
-            public char apply(char c)
-            {
-              switch (c)
-              {
-                case 'a': return 'ạ';
-                case 'ă': return 'ặ';
-                case 'â': return 'ậ';
-                case 'e': return 'ẹ';
-                case 'ê': return 'ệ';
-                case 'i': return 'ị';
-                case 'o': return 'ọ';
-                case 'ô': return 'ộ';
-                case 'ơ': return 'ợ';
-                case 'u': return 'ụ';
-                case 'ư': return 'ự';
-                case 'y': return 'ỵ';
-                default: return c;
-              }
-            }
-          };
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return "ạ";
+          case 'ă': return "ặ";
+          case 'â': return "ậ";
+          case 'e': return "ẹ";
+          case 'ê': return "ệ";
+          case 'i': return "ị";
+          case 'o': return "ọ";
+          case 'ô': return "ộ";
+          case 'ơ': return "ợ";
+          case 'u': return "ụ";
+          case 'ư': return "ự";
+          case 'y': return "ỵ";
+          default: return null;
+        }
+      }
+    };
+
   private static final Map_char map_char_horn =
-          new Map_char() {
-            public char apply(char c)
-            {
-              switch (c)
-              {
-                case 'o': return 'ơ';
-                case 'ó': return 'ớ';
-                case 'ò': return 'ờ';
-                case 'ỏ': return 'ở';
-                case 'õ': return 'ỡ';
-                case 'ọ': return 'ợ';
-                case 'u': return 'ư';
-                case 'ú': return 'ứ';
-                case 'ù': return 'ừ';
-                case 'ủ': return 'ử';
-                case 'ũ': return 'ữ';
-                case 'ụ': return 'ự';
-                default: return c;
-              }
-            }
-          };
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case 'o': return "ơ";
+          case 'ó': return "ớ";
+          case 'ò': return "ờ";
+          case 'ỏ': return "ở";
+          case 'õ': return "ỡ";
+          case 'ọ': return "ợ";
+          case 'u': return "ư";
+          case 'ú': return "ứ";
+          case 'ù': return "ừ";
+          case 'ủ': return "ử";
+          case 'ũ': return "ữ";
+          case 'ụ': return "ự";
+          default: return null;
+        }
+      }
+    };
 
   private static final Map_char map_char_hook_above =
-          new Map_char() {
-            public char apply(char c)
-            {
-              switch (c)
-              {
-                case 'a': return 'ả';
-                case 'ă': return 'ẳ';
-                case 'â': return 'ẩ';
-                case 'e': return 'ẻ';
-                case 'ê': return 'ể';
-                case 'i': return 'ỉ';
-                case 'o': return 'ỏ';
-                case 'ô': return 'ổ';
-                case 'ơ': return 'ở';
-                case 'u': return 'ủ';
-                case 'ư': return 'ử';
-                case 'y': return 'ỷ';
-                default: return c;
-              }
-            }
-          };
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case 'a': return "ả";
+          case 'ă': return "ẳ";
+          case 'â': return "ẩ";
+          case 'e': return "ẻ";
+          case 'ê': return "ể";
+          case 'i': return "ỉ";
+          case 'o': return "ỏ";
+          case 'ô': return "ổ";
+          case 'ơ': return "ở";
+          case 'u': return "ủ";
+          case 'ư': return "ử";
+          case 'y': return "ỷ";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_arabic =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "٠";
+          case '1': return "١";
+          case '2': return "٢";
+          case '3': return "٣";
+          case '4': return "٤";
+          case '5': return "٥";
+          case '6': return "٦";
+          case '7': return "٧";
+          case '8': return "٨";
+          case '9': return "٩";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_bengali =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "০";
+          case '1': return "১";
+          case '2': return "২";
+          case '3': return "৩";
+          case '4': return "৪";
+          case '5': return "৫";
+          case '6': return "৬";
+          case '7': return "৭";
+          case '8': return "৮";
+          case '9': return "৯";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_devanagari =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "०";
+          case '1': return "१";
+          case '2': return "२";
+          case '3': return "३";
+          case '4': return "४";
+          case '5': return "५";
+          case '6': return "६";
+          case '7': return "७";
+          case '8': return "८";
+          case '9': return "९";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_persian =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "۰";
+          case '1': return "۱";
+          case '2': return "۲";
+          case '3': return "۳";
+          case '4': return "۴";
+          case '5': return "۵";
+          case '6': return "۶";
+          case '7': return "۷";
+          case '8': return "۸";
+          case '9': return "۹";
+          default: return null;
+        }
+      }
+    };
 }

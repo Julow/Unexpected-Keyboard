@@ -10,15 +10,12 @@
   <string name="pref_keyboard_opacity">Tùy chỉnh độ trong suốt của bàn phím</string>
   <string name="pref_key_opacity">Tùy chỉnh độ trong suốt của phím</string>
   <string name="pref_key_activated_opacity">Tùy chỉnh độ trong suốt của phím khi nhấn</string>
-  <string name="pref_layout_title">Thay đổi bố cục bàn phím</string>
   <string name="pref_layout_e_system">Hệ thống</string>
   <string name="pref_layout_e_custom">Tùy chỉnh bố cục</string>
-  <string name="pref_accents_title">Dấu phụ</string>
-  <string name="pref_accents_e_all_installed">Hiển thị cho các ngôn ngữ đã cài đặt</string>
-  <string name="pref_accents_e_selected">Chỉ hiển thị cho các ngôn ngữ đã chọn</string>
-  <string name="pref_accents_e_none">
-    Ẩn dấu phụ
-  </string>
+  <!-- <string name="pref_layouts_add">Add an alternate layout</string> -->
+  <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
+  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
   <string name="pref_show_numpad_title">Hiện NumPad</string>
   <string name="pref_show_numpad_never">Không bao giờ</string>
   <string name="pref_show_numpad_landscape">Chỉ trong chế độ phong cảnh</string>
@@ -29,6 +26,8 @@
   <string name="pref_numpad_layout_e_high_first">Số lớn nhất trước</string>
   <string name="pref_numpad_layout_e_low_first">Số nhỏ nhất trước</string>
   <string name="pref_extra_keys_title">Thêm phím vào bàn phím</string>
+  <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
+  <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
   <string name="pref_second_layout_title">Bố cục phụ</string>
   <string name="pref_second_layout_none">Không</string>
   <string name="pref_category_typing">Gõ</string>
@@ -45,6 +44,8 @@
   <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
   <string name="pref_vibrate_title">Sự rung</string>
   <string name="pref_vibrate_summary">Bật/tắt rung khi nhấn</string>
+  <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
+  <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Kiểu cách</string>
   <string name="pref_margin_bottom_title">Căn lề dưới</string>
   <string name="pref_keyboard_height_title">Chiều cao bàn phím</string>
@@ -66,9 +67,6 @@
   <string name="pref_swipe_dist_e_very_far">Rất xa</string>
   <string name="pref_key_horizontal_space">Khoảng cách giữa các phím theo chiều ngang</string>
   <string name="pref_key_vertical_space">Khoảng cách giữa các phím theo chiều dọc</string>
-  <string name="pref_category_advanced">Nâng cao</string>
-  <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
-  <string name="pref_custom_layout_summary">Hãy xem mã nguồn. Lựa chọn này không có mục đích sử dụng.</string>
   <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
   <!-- <string name="pref_vibration_e_system">System</string> -->
   <!-- <string name="pref_vibration_e_strong">Strong</string> -->
@@ -82,6 +80,26 @@
   <string name="key_action_send">Gửi</string>
   <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
   <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
-  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on <a href="https://github.com/Julow/Unexpected-Keyboard/">Github</a>.</string> -->
+  <!-- <string name="launcher_sourcecode">This is an free and open source application. You can find the source code or report bugs on Github.</string> -->
   <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
+  <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
+  <!-- <string name="key_descr_copy">Copy</string> -->
+  <!-- <string name="key_descr_paste">Paste</string> -->
+  <!-- <string name="key_descr_cut">Cut</string> -->
+  <!-- <string name="key_descr_selectAll">Select all</string> -->
+  <!-- <string name="key_descr_shareText">Share text</string> -->
+  <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
+  <!-- <string name="key_descr_undo">Undo</string> -->
+  <!-- <string name="key_descr_redo">Redo</string> -->
+  <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
+  <!-- <string name="key_descr_superscript">Superscript</string> -->
+  <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <!-- <string name="key_descr_page_up">Page Up</string> -->
+  <!-- <string name="key_descr_page_down">Page Down</string> -->
+  <!-- <string name="key_descr_home">Home</string> -->
+  <!-- <string name="key_descr_end">End</string> -->
+  <string name="pref_category_advanced">Nâng cao</string>
 </resources>
