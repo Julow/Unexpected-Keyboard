@@ -324,6 +324,8 @@ final class Config
       case "dark": return R.style.Dark;
       case "white": return R.style.White;
       case "epaper": return R.style.ePaper;
+      case "desert": return R.style.Desert;
+      case "jungle": return R.style.Jungle;
       default:
       case "system":
         if (Build.VERSION.SDK_INT >= 8)
