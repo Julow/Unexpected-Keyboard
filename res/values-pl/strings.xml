@@ -60,6 +60,8 @@
   <string name="pref_theme_e_altblack">Alternatywny Czarny</string>
   <string name="pref_theme_e_white">Biały</string>
   <string name="pref_theme_e_epaper">e-paper</string>
+  <!-- <string name="pref_theme_e_desert">Desert</string> -->
+  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
   <string name="pref_swipe_dist_e_very_short">Bardzo mała</string>
   <string name="pref_swipe_dist_e_short">Mała</string>
   <string name="pref_swipe_dist_e_default">Normalna</string>

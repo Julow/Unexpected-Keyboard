@@ -60,6 +60,8 @@
   <string name="pref_theme_e_altblack">سیاه مشابه</string>
   <string name="pref_theme_e_white">سفید</string>
   <string name="pref_theme_e_epaper">ای-پیپر</string>
+  <!-- <string name="pref_theme_e_desert">Desert</string> -->
+  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
   <string name="pref_swipe_dist_e_very_short">بسیار کوتاه</string>
   <string name="pref_swipe_dist_e_short">کوتاه</string>
   <string name="pref_swipe_dist_e_default">عادی</string>

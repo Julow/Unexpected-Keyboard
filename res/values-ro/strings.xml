@@ -60,6 +60,8 @@
   <string name="pref_theme_e_altblack">Negru Alternativ</string>
   <string name="pref_theme_e_white">Albă</string>
   <string name="pref_theme_e_epaper">ePaper</string>
+  <!-- <string name="pref_theme_e_desert">Desert</string> -->
+  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
   <string name="pref_swipe_dist_e_very_short">Foarte apropiată</string>
   <string name="pref_swipe_dist_e_short">Apropiată</string>
   <string name="pref_swipe_dist_e_default">Normală</string>

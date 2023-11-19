@@ -60,6 +60,8 @@
   <string name="pref_theme_e_altblack">Alternatif Siyah</string>
   <string name="pref_theme_e_white">Beyaz</string>
   <string name="pref_theme_e_epaper">E-Kağıt</string>
+  <!-- <string name="pref_theme_e_desert">Desert</string> -->
+  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
   <string name="pref_swipe_dist_e_very_short">Çok kısa</string>
   <string name="pref_swipe_dist_e_short">Kısa</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
