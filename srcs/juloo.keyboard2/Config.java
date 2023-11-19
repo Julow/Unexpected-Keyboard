@@ -66,7 +66,10 @@ final class Config
 
   public final IKeyEventHandler handler;
   public boolean orientation_landscape = false;
-  public int current_layout; // Index in 'layouts' of the currently used layout
+  /** Index in 'layouts' of the currently used layout. See
+      [get_current_layout()] and [set_current_layout()]. */
+  int current_layout_portrait;
+  int current_layout_landscape;
 
   private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h)
   {
@@ -155,14 +158,25 @@ final class Config
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
     pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
-    current_layout = _prefs.getInt("current_layout", 0);
+    current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
+    current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
+  }
+
+  public int get_current_layout()
+  {
+    return (orientation_landscape)
+      ? current_layout_landscape : current_layout_portrait;
   }
 
   public void set_current_layout(int l)
   {
-    current_layout = l;
+    if (orientation_landscape)
+      current_layout_landscape = l;
+    else
+      current_layout_portrait = l;
     SharedPreferences.Editor e = _prefs.edit();
-    e.putInt("current_layout", l);
+    e.putInt("current_layout_portrait", current_layout_portrait);
+    e.putInt("current_layout_landscape", current_layout_landscape);
     e.apply();
   }
 

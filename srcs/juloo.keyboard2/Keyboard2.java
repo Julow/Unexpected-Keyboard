@@ -44,7 +44,7 @@ public class Keyboard2 extends InputMethodService
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
     KeyboardData layout = null;
-    int layout_i = _config.current_layout;
+    int layout_i = _config.get_current_layout();
     if (layout_i >= _config.layouts.size())
       layout_i = 0;
     if (layout_i < _config.layouts.size())
@@ -62,8 +62,6 @@ public class Keyboard2 extends InputMethodService
 
   void setTextLayout(int l)
   {
-    if (l == _config.current_layout)
-      return;
     _config.set_current_layout(l);
     _currentSpecialLayout = null;
     _keyboardView.setKeyboard(current_layout());
@@ -72,7 +70,7 @@ public class Keyboard2 extends InputMethodService
   void incrTextLayout(int delta)
   {
     int s = _config.layouts.size();
-    setTextLayout((_config.current_layout + delta + s) % s);
+    setTextLayout((_config.get_current_layout() + delta + s) % s);
   }
 
   void setSpecialLayout(KeyboardData l)
