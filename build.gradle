@@ -82,7 +82,7 @@ tasks.register('buildKeyboardFont') {
   println "\nBuilding assets/special_font.ttf"
   mkdir "$buildDir"
   exec {
-    workingDir "$projectDir/special_font"
+    workingDir "$projectDir/srcs/special_font"
     def svgFiles = workingDir.listFiles().findAll {
       it.isFile() && it.name.endsWith(".svg")
     }
