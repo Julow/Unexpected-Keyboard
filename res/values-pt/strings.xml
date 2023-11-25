@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" product="debug">Teclado Unexpected</string>
-  <string name="app_name" product="default">Teclado Unexpected</string>
+  <string name="app_name_release">Teclado Unexpected</string>
+  <string name="app_name_debug">Teclado Unexpected</string>
   <string name="settings_activity_label">Configurações</string>
   <string name="pref_portrait">No modo retrato</string>
   <string name="pref_landscape">No modo paisagem</string>

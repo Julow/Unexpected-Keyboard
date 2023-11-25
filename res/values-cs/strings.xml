@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" product="debug">Klávesnice Unexpected (pro ladění)</string>
-  <string name="app_name" product="default">Klávesnice Unexpected</string>
+  <string name="app_name_release">Klávesnice Unexpected</string>
+  <string name="app_name_debug">Klávesnice Unexpected (pro ladění)</string>
   <string name="settings_activity_label">Nastavení Klávesnice Unexpected</string>
   <string name="pref_portrait">V režimu na výšku</string>
   <string name="pref_landscape">V režimu na šířku</string>

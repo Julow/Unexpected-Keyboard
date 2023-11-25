@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" product="debug">صفحه کلید غیرمنتظره</string>
-  <string name="app_name" product="default">صفحه کلید غیرمنتظره</string>
+  <string name="app_name_release">صفحه کلید غیرمنتظره</string>
+  <string name="app_name_debug">صفحه کلید غیرمنتظره</string>
   <string name="settings_activity_label">تنظیمات صفحه کلید غیرمنتظره</string>
   <string name="pref_portrait">در حالت عمودی</string>
   <string name="pref_landscape">در حالت افقی</string>

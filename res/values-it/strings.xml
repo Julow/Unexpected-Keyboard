@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" product="debug">Unexpected Keyboard (debug)</string>
-  <string name="app_name" product="default">Unexpected Keyboard</string>
+  <string name="app_name_release">Unexpected Keyboard</string>
+  <string name="app_name_debug">Unexpected Keyboard (debug)</string>
   <string name="settings_activity_label">Impostazioni di Unexpected Keyboard</string>
   <!-- <string name="pref_portrait">In portrait mode</string> -->
   <!-- <string name="pref_landscape">In landscape mode</string> -->
