@@ -137,4 +137,42 @@
     <item name="emoji_button_bg">#ffffff</item>
     <item name="emoji_color">#000000</item>
   </style>
+  <style name="Desert" parent="@style/BaseTheme">
+    <item name="android:isLightTheme">true</item>
+    <item name="colorKeyboard">#ffe0b2</item>
+    <item name="colorKey">#fff3e0</item>
+    <item name="colorKeyActivated">#ffcc80</item>
+    <item name="colorLabel">#000000</item>
+    <item name="colorLabelActivated">#ffffff</item>
+    <item name="colorLabelLocked">#e65100</item>
+    <item name="secondaryLightOffset">0.1</item>
+    <item name="colorSubLabel">#333333</item>
+    <item name="keyBorderWidth">0.0dip</item>
+    <item name="keyBorderWidthActivated">0.0dip</item>
+    <item name="keyBorderColorLeft">#000000</item>
+    <item name="keyBorderColorTop">#000000</item>
+    <item name="keyBorderColorRight">#000000</item>
+    <item name="keyBorderColorBottom">#000000</item>
+    <item name="emoji_button_bg">?colorKeyActivated</item>
+    <item name="emoji_color">#000000</item>
+  </style>
+  <style name="Jungle" parent="@style/BaseTheme">
+    <item name="android:isLightTheme">true</item>
+    <item name="colorKeyboard">#4db6ac</item>
+    <item name="colorKey">#e0f2f1</item>
+    <item name="colorKeyActivated">#00695c</item>
+    <item name="colorLabel">#000000</item>
+    <item name="colorLabelActivated">#ffffff</item>
+    <item name="colorLabelLocked">#64ffda</item>
+    <item name="secondaryLightOffset">0.0</item>
+    <item name="colorSubLabel">#004d40</item>
+    <item name="keyBorderWidth">0.0dip</item>
+    <item name="keyBorderWidthActivated">0.0dip</item>
+    <item name="keyBorderColorLeft">#00f0f0f0</item>
+    <item name="keyBorderColorTop">#00f0f0f0</item>
+    <item name="keyBorderColorRight">#00eeeeee</item>
+    <item name="keyBorderColorBottom">#00eeeeee</item>
+    <item name="emoji_button_bg">?colorKeyActivated</item>
+    <item name="emoji_color">#000000</item>
+  </style>
 </resources>

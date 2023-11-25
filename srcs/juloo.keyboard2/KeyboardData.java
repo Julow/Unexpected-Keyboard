@@ -25,6 +25,8 @@ class KeyboardData
   public final Modmap modmap;
   /** Might be null. */
   public final String script;
+  /** Position of every keys on the layout, see [getKeys()]. */
+  private Map<KeyValue, KeyPos> _key_pos = null;
 
   public KeyboardData mapKeys(MapKey f)
   {
@@ -34,27 +36,76 @@ class KeyboardData
     return new KeyboardData(rows_, keysWidth, modmap, script);
   }
 
-  /** Add keys from the given iterator into the keyboard. Extra keys are added
-   * on the empty key4 corner of the second row, from right to left. If there's
-   * not enough room, key3 of the second row is tried then key2 and key1 of the
-   * third row. */
-  public KeyboardData addExtraKeys(Iterator<KeyValue> k)
+  /** Add keys from the given iterator into the keyboard. Preferred position is
+      specified via [PreferredPos]. */
+  public KeyboardData addExtraKeys(Iterator<Map.Entry<KeyValue, PreferredPos>> extra_keys)
   {
+    /* Keys that couldn't be placed at their preferred position. */
+    ArrayList<KeyValue> unplaced_keys = new ArrayList<KeyValue>();
     ArrayList<Row> rows = new ArrayList<Row>(this.rows);
-    addExtraKeys_to_row(rows, k, 1, 4);
-    addExtraKeys_to_row(rows, k, 1, 3);
-    addExtraKeys_to_row(rows, k, 2, 2);
-    addExtraKeys_to_row(rows, k, 2, 1);
-    if (k.hasNext())
+    while (extra_keys.hasNext())
     {
-      for (int r = 0; r < rows.size(); r++)
-        for (int c = 1; c <= 4; c++)
-          addExtraKeys_to_row(rows, k, r, c);
+      Map.Entry<KeyValue, PreferredPos> kp = extra_keys.next();
+      if (!add_key_to_preferred_pos(rows, kp.getKey(), kp.getValue()))
+        unplaced_keys.add(kp.getKey());
     }
+    for (KeyValue kv : unplaced_keys)
+      add_key_to_preferred_pos(rows, kv, PreferredPos.ANYWHERE);
     return new KeyboardData(rows, keysWidth, modmap, script);
   }
 
-  public KeyboardData addNumPad()
+  /** Place a key on the keyboard according to its preferred position. Mutates
+      [rows]. Returns [false] if it couldn't be placed. */
+  boolean add_key_to_preferred_pos(List<Row> rows, KeyValue kv, PreferredPos pos)
+  {
+    if (pos.next_to != null)
+    {
+      KeyPos next_to_pos = getKeys().get(pos.next_to);
+      if (next_to_pos != null
+          && add_key_to_pos(rows, kv, next_to_pos.with_dir(-1)))
+        return true;
+    }
+    for (KeyPos p : pos.positions)
+      if (add_key_to_pos(rows, kv, p))
+        return true;
+    return false;
+  }
+
+  /** Place a key on the keyboard. A value of [-1] in one of the coordinate
+      means that the key can be placed anywhere in that coordinate, see
+      [PreferredPos]. Mutates [rows]. Returns [false] if it couldn't be placed.
+      */
+  boolean add_key_to_pos(List<Row> rows, KeyValue kv, KeyPos p)
+  {
+    int i_row = p.row;
+    int i_row_end = p.row;
+    if (p.row == -1) { i_row = 0; i_row_end = rows.size() - 1; }
+    for (; i_row <= i_row_end; i_row++)
+    {
+      Row row = rows.get(i_row);
+      int i_col = p.col;
+      int i_col_end = p.col;
+      if (p.col == -1) { i_col = 0; i_col_end = row.keys.size() - 1; }
+      for (; i_col <= i_col_end; i_col++)
+      {
+        Key col = row.keys.get(i_col);
+        int i_dir = p.dir;
+        int i_dir_end = p.dir;
+        if (p.dir == -1) { i_dir = 1; i_dir_end = 4; }
+        for (; i_dir <= i_dir_end; i_dir++)
+        {
+          if (col.getKeyValue(i_dir) == null)
+          {
+            row.keys.set(i_col, col.withKeyValue(i_dir, kv));
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  public KeyboardData addNumPad(KeyboardData num_pad)
   {
     ArrayList<Row> extendedRows = new ArrayList<Row>();
     Iterator<Row> iterNumPadRows = num_pad.rows.iterator();
@@ -87,33 +138,22 @@ class KeyboardData
 
   public Key findKeyWithValue(KeyValue kv)
   {
-    for (Row r : rows)
+    KeyPos pos = getKeys().get(kv);
+    if (pos == null || pos.row >= rows.size())
+      return null;
+    return rows.get(pos.row).get_key_at_pos(pos);
+  }
+
+  /** This is computed once and cached. */
+  public Map<KeyValue, KeyPos> getKeys()
+  {
+    if (_key_pos == null)
     {
-      Key k = r.findKeyWithValue(kv);
-      if (k != null)
-        return k;
+      _key_pos = new HashMap<KeyValue, KeyPos>();
+      for (int r = 0; r < rows.size(); r++)
+        rows.get(r).getKeys(_key_pos, r);
     }
-    return null;
-  }
-
-  public void getKeys(Set<KeyValue> dst)
-  {
-    for (Row r : rows)
-      r.getKeys(dst);
-  }
-
-  private static void addExtraKeys_to_row(ArrayList<Row> rows, final Iterator<KeyValue> extra_keys, int row_i, final int d)
-  {
-    if (!extra_keys.hasNext() || row_i >= rows.size())
-      return;
-    rows.set(row_i, rows.get(row_i).mapKeys(new MapKey(){
-      public Key apply(Key k) {
-        if (k.getKeyValue(d) == null && extra_keys.hasNext())
-          return k.withKeyValue(d, extra_keys.next());
-        else
-          return k;
-      }
-    }));
+    return _key_pos;
   }
 
   public static Row bottom_row;
@@ -258,10 +298,22 @@ class KeyboardData
       return new Row(keys, h, shift);
     }
 
-    public void getKeys(Set<KeyValue> dst)
+    public Row copy()
     {
-      for (Key k : keys)
-        k.getKeys(dst);
+      return new Row(new ArrayList<Key>(keys), height, shift);
+    }
+
+    public void getKeys(Map<KeyValue, KeyPos> dst, int row)
+    {
+      for (int c = 0; c < keys.size(); c++)
+        keys.get(c).getKeys(dst, row, c);
+    }
+
+    public Map<KeyValue, KeyPos> getKeys(int row)
+    {
+      Map<KeyValue, KeyPos> dst = new HashMap<KeyValue, KeyPos>();
+      getKeys(dst, row);
+      return dst;
     }
 
     public Row mapKeys(MapKey f)
@@ -281,12 +333,11 @@ class KeyboardData
       });
     }
 
-    public Key findKeyWithValue(KeyValue kv)
+    public Key get_key_at_pos(KeyPos pos)
     {
-      for (Key k : keys)
-        if (k.hasValue(kv))
-          return k;
-      return null;
+      if (pos.col >= keys.size())
+        return null;
+      return keys.get(pos.col);
     }
   }
 
@@ -384,11 +435,11 @@ class KeyboardData
       return new Key(keys, keysflags, width * s, shift, slider, indication);
     }
 
-    public void getKeys(Set<KeyValue> dst)
+    public void getKeys(Map<KeyValue, KeyPos> dst, int row, int col)
     {
       for (int i = 0; i < keys.length; i++)
         if (keys[i] != null)
-          dst.add(keys[i]);
+          dst.put(keys[i], new KeyPos(row, col, i));
     }
 
     public KeyValue getKeyValue(int i)
@@ -461,6 +512,66 @@ class KeyboardData
       while (parser.next() != XmlPullParser.END_TAG)
         continue;
       dst.put(a, b);
+    }
+  }
+
+  /** Position of a key on the layout. */
+  public final static class KeyPos
+  {
+    public final int row;
+    public final int col;
+    public final int dir;
+
+    public KeyPos(int r, int c, int d)
+    {
+      row = r;
+      col = c;
+      dir = d;
+    }
+
+    public KeyPos with_dir(int d)
+    {
+      return new KeyPos(row, col, d);
+    }
+  }
+
+  /** See [addExtraKeys()]. */
+  public final static class PreferredPos
+  {
+    public static final PreferredPos DEFAULT;
+    public static final PreferredPos ANYWHERE;
+
+    /** Prefer the free position on the same keyboard key as the specified key.
+        Considered before [positions]. Might be [null]. */
+    public KeyValue next_to = null;
+
+    /** Array of positions to try in order. The special value [-1] as [row],
+        [col] or [dir] means that the field is unspecified. Every possible
+        values are tried for unspecified fields. Unspecified fields are
+        searched in this order: [dir], [col], [row]. */
+    public KeyPos[] positions = ANYWHERE_POSITIONS;
+
+    public PreferredPos() {}
+
+    public PreferredPos(PreferredPos src)
+    {
+      next_to = src.next_to;
+      positions = src.positions;
+    }
+
+    static final KeyPos[] ANYWHERE_POSITIONS =
+      new KeyPos[]{ new KeyPos(-1, -1, -1) };
+
+    static
+    {
+      DEFAULT = new PreferredPos();
+      DEFAULT.positions = new KeyPos[]{
+        new KeyPos(1, -1, 4),
+        new KeyPos(1, -1, 3),
+        new KeyPos(2, -1, 2),
+        new KeyPos(2, -1, 1)
+      };
+      ANYWHERE = new PreferredPos();
     }
   }
 

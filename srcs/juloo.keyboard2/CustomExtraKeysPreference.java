@@ -10,8 +10,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -30,14 +31,15 @@ public class CustomExtraKeysPreference extends ListGroupPreference<String>
     setKey(KEY);
   }
 
-  public static List<KeyValue> get(SharedPreferences prefs)
+  public static Map<KeyValue, KeyboardData.PreferredPos> get(SharedPreferences prefs)
   {
-    List<KeyValue> kvs = new ArrayList<KeyValue>();
+    Map<KeyValue, KeyboardData.PreferredPos> kvs =
+      new HashMap<KeyValue, KeyboardData.PreferredPos>();
     List<String> key_names = load_from_preferences(KEY, prefs, null, SERIALIZER);
     if (key_names != null)
     {
       for (String key_name : key_names)
-        kvs.add(KeyValue.makeStringKey(key_name));
+        kvs.put(KeyValue.makeStringKey(key_name), KeyboardData.PreferredPos.DEFAULT);
     }
     return kvs;
   }

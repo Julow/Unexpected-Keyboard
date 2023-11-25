@@ -60,6 +60,8 @@
   <!-- <string name="pref_theme_e_altblack">Alternative Black</string> -->
   <!-- <string name="pref_theme_e_white">White</string> -->
   <!-- <string name="pref_theme_e_epaper">ePaper</string> -->
+  <!-- <string name="pref_theme_e_desert">Desert</string> -->
+  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
   <string name="pref_swipe_dist_e_very_short">매우 짧음</string>
   <string name="pref_swipe_dist_e_short">짧음</string>
   <string name="pref_swipe_dist_e_default">보통</string>
@@ -93,12 +95,13 @@
   <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
   <!-- <string name="key_descr_undo">Undo</string> -->
   <!-- <string name="key_descr_redo">Redo</string> -->
-  <!-- <string name="key_descr_replaceText">Replace</string> -->
-  <!-- <string name="key_descr_textAssist">Assist</string> -->
-  <!-- <string name="key_descr_autofill">Autofill</string> -->
   <!-- <string name="key_descr_ª">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_º">Ordinal Indicator</string> -->
   <!-- <string name="key_descr_superscript">Superscript</string> -->
   <!-- <string name="key_descr_subscript">Subscript</string> -->
+  <!-- <string name="key_descr_page_up">Page Up</string> -->
+  <!-- <string name="key_descr_page_down">Page Down</string> -->
+  <!-- <string name="key_descr_home">Home</string> -->
+  <!-- <string name="key_descr_end">End</string> -->
   <!-- <string name="pref_category_advanced">Advanced</string> -->
 </resources>

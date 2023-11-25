@@ -9,8 +9,10 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 final class Config
@@ -59,11 +61,15 @@ final class Config
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
   public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
   public ExtraKeys extra_keys_subtype;
-  public Set<KeyValue> extra_keys_param;
-  public List<KeyValue> extra_keys_custom;
+  public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
+  public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
 
   public final IKeyEventHandler handler;
   public boolean orientation_landscape = false;
+  /** Index in 'layouts' of the currently used layout. See
+      [get_current_layout()] and [set_current_layout()]. */
+  int current_layout_portrait;
+  int current_layout_landscape;
 
   private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h)
   {
@@ -152,6 +158,26 @@ final class Config
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
     pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
+    current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
+    current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
+  }
+
+  public int get_current_layout()
+  {
+    return (orientation_landscape)
+      ? current_layout_landscape : current_layout_portrait;
+  }
+
+  public void set_current_layout(int l)
+  {
+    if (orientation_landscape)
+      current_layout_landscape = l;
+    else
+      current_layout_portrait = l;
+    SharedPreferences.Editor e = _prefs.edit();
+    e.putInt("current_layout_portrait", current_layout_portrait);
+    e.putInt("current_layout_landscape", current_layout_landscape);
+    e.apply();
   }
 
   KeyValue action_key()
@@ -174,26 +200,26 @@ final class Config
     final KeyValue action_key = action_key();
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
-    final Set<KeyValue> extra_keys = new HashSet<KeyValue>();
+    final Map<KeyValue, KeyboardData.PreferredPos> extra_keys = new HashMap<KeyValue, KeyboardData.PreferredPos>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
-    extra_keys.addAll(extra_keys_param);
-    extra_keys.addAll(extra_keys_custom);
+    extra_keys.putAll(extra_keys_param);
+    extra_keys.putAll(extra_keys_custom);
     if (extra_keys_subtype != null)
     {
       Set<KeyValue> present = new HashSet<KeyValue>();
-      kw.getKeys(present);
-      present.addAll(extra_keys_param);
-      present.addAll(extra_keys_custom);
+      present.addAll(kw.getKeys().keySet());
+      present.addAll(extra_keys_param.keySet());
+      present.addAll(extra_keys_custom.keySet());
       extra_keys_subtype.compute(extra_keys,
           new ExtraKeys.Query(kw.script, present));
     }
     boolean number_row = this.number_row && !show_numpad;
     if (number_row)
-      KeyboardData.number_row.getKeys(remove_keys);
+      remove_keys.addAll(KeyboardData.number_row.getKeys(0).keySet());
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
-        boolean is_extra_key = extra_keys.contains(key);
+        boolean is_extra_key = extra_keys.containsKey(key);
         if (is_extra_key)
           extra_keys.remove(key);
         if (localized && !is_extra_key)
@@ -242,20 +268,21 @@ final class Config
       }
     });
     if (show_numpad)
-      kw = kw.addNumPad();
+      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad, kw.script));
     if (number_row)
       kw = kw.addNumberRow();
     if (extra_keys.size() > 0)
-      kw = kw.addExtraKeys(extra_keys.iterator());
+      kw = kw.addExtraKeys(extra_keys.entrySet().iterator());
     return kw;
   }
 
   /**
    * Handle the numpad layout.
    */
-  public KeyboardData modify_numpad(KeyboardData kw)
+  public KeyboardData modify_numpad(KeyboardData kw, String script)
   {
     final KeyValue action_key = action_key();
+    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(script);
     return kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -277,11 +304,15 @@ final class Config
             }
             break;
           case Char:
-            char a = key.getChar(), b = a;
+            char prev_c = key.getChar();
+            char c = prev_c;
             if (inverse_numpad)
-              b = inverse_numpad_char(a);
-            if (a != b)
-              return key.withChar(b);
+              c = inverse_numpad_char(c);
+            String modified = map_digit.apply(c);
+            if (modified != null) // Was modified by script
+              return key.withSymbol(modified);
+            if (prev_c != c) // Was inverted
+              return key.withChar(c);
             break;
         }
         return key;
@@ -317,6 +348,8 @@ final class Config
       case "dark": return R.style.Dark;
       case "white": return R.style.White;
       case "epaper": return R.style.ePaper;
+      case "desert": return R.style.Desert;
+      case "jungle": return R.style.Jungle;
       default:
       case "system":
         if (Build.VERSION.SDK_INT >= 8)

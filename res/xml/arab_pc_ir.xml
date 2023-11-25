@@ -21,8 +21,8 @@
     <key key0="ل"/>
     <key key0="ا" key1="آ" key4="ء" key2="-" key3="_"/>
     <key key0="ت" key1="&#x200C;" key2="+"/>
-    <key key0="ن" key1="("/>
-    <key key0="م" key1=")"/>
+    <key key0="ن"/>
+    <key key0="م"/>
     <key key0="ک"/>
     <key key0="گ"/>
   </row>

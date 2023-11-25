@@ -8,7 +8,8 @@ import android.preference.PreferenceCategory;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /** This class implements the "extra keys" preference but also defines the
@@ -46,6 +47,10 @@ public class ExtraKeysPreference extends PreferenceCategory
     "†",
     "ª",
     "º",
+    "page_up",
+    "page_down",
+    "home",
+    "end",
     "switch_greekmath",
     "capslock",
     "copy",
@@ -56,9 +61,6 @@ public class ExtraKeysPreference extends PreferenceCategory
     "pasteAsPlainText",
     "undo",
     "redo",
-    "replaceText",
-    "textAssist",
-    "autofill",
     "superscript",
     "subscript",
   };
@@ -92,12 +94,14 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
       case "undo": id = R.string.key_descr_undo; break;
       case "redo": id = R.string.key_descr_redo; break;
-      case "textAssist": id = R.string.key_descr_textAssist; break;
-      case "autofill": id = R.string.key_descr_autofill; break;
       case "ª": id = R.string.key_descr_ª; break;
       case "º": id = R.string.key_descr_º; break;
       case "superscript": id = R.string.key_descr_superscript; break;
       case "subscript": id = R.string.key_descr_subscript; break;
+      case "page_up": id = R.string.key_descr_page_up; break;
+      case "page_down": id = R.string.key_descr_page_down; break;
+      case "home": id = R.string.key_descr_home; break;
+      case "end": id = R.string.key_descr_end; break;
     }
     if (id == 0)
       return null;
@@ -105,14 +109,15 @@ public class ExtraKeysPreference extends PreferenceCategory
   }
 
   /** Get the set of enabled extra keys. */
-  public static Set<KeyValue> get_extra_keys(SharedPreferences prefs)
+  public static Map<KeyValue, KeyboardData.PreferredPos> get_extra_keys(SharedPreferences prefs)
   {
-    HashSet<KeyValue> ks = new HashSet<KeyValue>();
+    Map<KeyValue, KeyboardData.PreferredPos> ks =
+      new HashMap<KeyValue, KeyboardData.PreferredPos>();
     for (String key_name : extra_keys)
     {
       if (prefs.getBoolean(pref_key_of_key_name(key_name),
             default_checked(key_name)))
-        ks.add(KeyValue.getKeyByName(key_name));
+        ks.put(KeyValue.getKeyByName(key_name), KeyboardData.PreferredPos.DEFAULT);
     }
     return ks;
   }

@@ -1,117 +1,120 @@
-# hang_dubeolsik_kr
-0 warnings
-# latn_qwerty_hu
-0 warnings
-# deva_alt
-Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, @, [, \, ], ^, _, `, {, |, }, ~
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
-# latn_colemak
-0 warnings
-# latn_qwertz_cz_multifunctional
-Layout includes some ASCII punctuation but not all, missing: `
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
-# beng_national
-Layout includes some ASCII punctuation but not all, missing: $
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-Layout doesn't specify a script.
-3 warnings
-# latn_qwerty_br
-0 warnings
-# arab_pc
-Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
-1 warnings
-# cyrl_jcuken_uk
-0 warnings
-# latn_bepo_fr
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
-# latn_qwerty_us
-0 warnings
-# latn_bone
-Layout includes some ASCII punctuation but not all, missing: $
-Layout redefines the bottom row but some important keys are missing, missing: switch_backward
-2 warnings
-# latn_qwertz
-0 warnings
-# latn_qwerty_se
-Duplicate keys: !, ', ,, -, ., ?
-1 warnings
-# urdu_phonetic_ur
-Duplicate keys:  
-Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-3 warnings
-# cyrl_jcuken_ru
-0 warnings
-# latn_qwerty_no
-0 warnings
-# latn_azerty_fr
-0 warnings
-# cyrl_yaverti
-Layout includes some ASCII punctuation but not all, missing: ~
-1 warnings
-# latn_qwertz_fr_ch
-0 warnings
-# beng_provat
-Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-Layout doesn't specify a script.
-3 warnings
-# latn_qwerty_vi
-Layout includes some ASCII punctuation but not all, missing: \
-1 warnings
-# arab_pc_ir
-Duplicate keys: (, )
-Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
-2 warnings
 # arab_alt
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
+# arab_pc
+Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
+1 warnings
 # arab_pc_ckb
 Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
 1 warnings
-# latn_qwertz_hu
-0 warnings
-# latn_qwerty_tr
+# arab_pc_ir
+Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
+1 warnings
+# armenian_ph_am
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
-# latn_qwertz_de
-0 warnings
-# latn_qwertz_sk
-Layout includes some ASCII punctuation but not all, missing: \, `
+# beng_national
+Layout includes some ASCII punctuation but not all, missing: $
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
-# latn_qwertz_cz
+# beng_provat
+Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
-# latn_qwerty_lv
+2 warnings
+# cyrl_jcuken_ru
 0 warnings
-# latn_qwerty_pl
+# cyrl_jcuken_uk
 0 warnings
-# grek_qwerty
-Duplicate keys: ;
+# cyrl_ueishsht
+0 warnings
+# cyrl_yaverti
+Layout includes some ASCII punctuation but not all, missing: ~
 1 warnings
+# deva_alt
+Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
+Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
+2 warnings
 # deva_inscript
 Duplicate keys: , ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 3 warnings
-# latn_neo2
-Duplicate keys: -
-Layout redefines the bottom row but some important keys are missing, missing: switch_forward
-2 warnings
+# grek_qwerty
+Duplicate keys: ;
+1 warnings
+# hang_dubeolsik_kr
+0 warnings
 # hebr_1_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 1 warnings
 # hebr_2_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 1 warnings
-# latn_qwerty_ro
+# latn_azerty_fr
 0 warnings
-# latn_qwerty_es
+# latn_bepo_fr
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
+# latn_bone
+Layout includes some ASCII punctuation but not all, missing: $
+Layout redefines the bottom row but some important keys are missing, missing: switch_backward
+2 warnings
+# latn_colemak
 0 warnings
 # latn_dvorak
 0 warnings
+# latn_neo2
+0 warnings
+# latn_qwerty_br
+0 warnings
+# latn_qwerty_cz
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
+# latn_qwerty_es
+0 warnings
+# latn_qwerty_hu
+0 warnings
+# latn_qwerty_lv
+0 warnings
+# latn_qwerty_no
+0 warnings
+# latn_qwerty_pl
+0 warnings
+# latn_qwerty_ro
+0 warnings
+# latn_qwerty_se
+Duplicate keys: !, ', ,, -, ., ?
+1 warnings
+# latn_qwerty_tr
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
+# latn_qwerty_us
+0 warnings
+# latn_qwerty_vi
+Layout includes some ASCII punctuation but not all, missing: \
+1 warnings
+# latn_qwertz
+0 warnings
+# latn_qwertz_cz
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
+# latn_qwertz_cz_multifunctional
+Layout includes some ASCII punctuation but not all, missing: `
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+2 warnings
+# latn_qwertz_de
+0 warnings
+# latn_qwertz_fr_ch
+0 warnings
+# latn_qwertz_hu
+0 warnings
+# latn_qwertz_sk
+Layout includes some ASCII punctuation but not all, missing: \, `
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+2 warnings
+# urdu_phonetic_ur
+Duplicate keys:  
+Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+3 warnings

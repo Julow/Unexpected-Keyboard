@@ -29,37 +29,40 @@ public class Keyboard2 extends InputMethodService
 {
   private Keyboard2View _keyboardView;
   private KeyEventHandler _keyeventhandler;
-  // If not 'null', the layout to use instead of [_currentTextLayout].
+  /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
-  /** Current layout index in [Config.layouts]. */
-  private int _currentTextLayout;
-  // Layout associated with the currently selected locale. Not 'null'.
+  /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
   public int actionId; // Action performed by the Action key.
 
   private Config _config;
 
-  /** Layout currently visible. */
-  KeyboardData current_layout()
+  /** Layout currently visible before it has been modified. */
+  KeyboardData current_layout_unmodified()
   {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
     KeyboardData layout = null;
-    if (_currentTextLayout >= _config.layouts.size())
-      _currentTextLayout = 0;
-    if (_currentTextLayout < _config.layouts.size())
-      layout = _config.layouts.get(_currentTextLayout);
+    int layout_i = _config.get_current_layout();
+    if (layout_i >= _config.layouts.size())
+      layout_i = 0;
+    if (layout_i < _config.layouts.size())
+      layout = _config.layouts.get(layout_i);
     if (layout == null)
       layout = _localeTextLayout;
-    return _config.modify_layout(layout);
+    return layout;
+  }
+
+  /** Layout currently visible. */
+  KeyboardData current_layout()
+  {
+    return _config.modify_layout(current_layout_unmodified());
   }
 
   void setTextLayout(int l)
   {
-    if (l == _currentTextLayout)
-      return;
-    _currentTextLayout = l;
+    _config.set_current_layout(l);
     _currentSpecialLayout = null;
     _keyboardView.setKeyboard(current_layout());
   }
@@ -67,7 +70,7 @@ public class Keyboard2 extends InputMethodService
   void incrTextLayout(int delta)
   {
     int s = _config.layouts.size();
-    setTextLayout((_currentTextLayout + delta + s) % s);
+    setTextLayout((_config.get_current_layout() + delta + s) % s);
   }
 
   void setSpecialLayout(KeyboardData l)
@@ -84,7 +87,9 @@ public class Keyboard2 extends InputMethodService
   /** Load a layout that contains a numpad (eg. the pin entry). */
   KeyboardData loadNumpad(int layout_id)
   {
-    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id));
+    String current_script = current_layout_unmodified().script;
+    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id),
+        current_script);
   }
 
   @Override

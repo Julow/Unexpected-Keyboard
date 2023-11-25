@@ -60,6 +60,8 @@
   <string name="pref_theme_e_altblack">Černý (alternativní)</string>
   <string name="pref_theme_e_white">Bílý</string>
   <string name="pref_theme_e_epaper">ePapír</string>
+  <!-- <string name="pref_theme_e_desert">Desert</string> -->
+  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
   <string name="pref_swipe_dist_e_very_short">Velmi krátká</string>
   <string name="pref_swipe_dist_e_short">Krátká</string>
   <string name="pref_swipe_dist_e_default">Běžná</string>
@@ -93,12 +95,13 @@
   <string name="key_descr_pasteAsPlainText">Vložit jako prostý text</string>
   <string name="key_descr_undo">Zpět</string>
   <string name="key_descr_redo">Znovu</string>
-  <string name="key_descr_replaceText">Nahradit</string>
-  <string name="key_descr_textAssist">Asistovat</string>
-  <string name="key_descr_autofill">Předvyplnit</string>
   <string name="key_descr_ª">Indikátor řadové číslovky</string>
   <string name="key_descr_º">Indikátor řadové číslovky</string>
   <string name="key_descr_superscript">Horní index</string>
   <string name="key_descr_subscript">Dolní index</string>
+  <!-- <string name="key_descr_page_up">Page Up</string> -->
+  <!-- <string name="key_descr_page_down">Page Down</string> -->
+  <!-- <string name="key_descr_home">Home</string> -->
+  <!-- <string name="key_descr_end">End</string> -->
   <string name="pref_category_advanced">Pokročilé</string>
 </resources>

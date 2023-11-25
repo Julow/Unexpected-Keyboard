@@ -10,10 +10,12 @@
     <item>arab_pc</item>
     <item>arab_pc_ckb</item>
     <item>arab_pc_ir</item>
+    <item>armenian_ph_am</item>
     <item>beng_national</item>
     <item>beng_provat</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
+    <item>cyrl_ueishsht</item>
     <item>cyrl_yaverti</item>
     <item>deva_alt</item>
     <item>deva_inscript</item>
@@ -26,6 +28,7 @@
     <item>latn_bone</item>
     <item>latn_neo2</item>
     <item>latn_qwerty_br</item>
+    <item>latn_qwerty_cz</item>
     <item>latn_qwerty_es</item>
     <item>latn_qwerty_hu</item>
     <item>latn_qwerty_lv</item>
@@ -54,10 +57,12 @@
     <item>Arabic PC</item>
     <item>Kurdish (کوردی)</item>
     <item>Persian PC</item>
+    <item>Armenian</item>
     <item>বাংলা (জাতীয়)</item>
     <item>বাংলা (প্রভাত)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>ЙЦУКЕН (Українська)</item>
+    <item>УЕИШЩ (Български, БДС)</item>
     <item>ЯВЕРТЪ</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
@@ -70,6 +75,7 @@
     <item>Bone</item>
     <item>Neo 2</item>
     <item>QWERTY (Brasileiro)</item>
+    <item>QWERTY (Czech)</item>
     <item>QWERTY (Español)</item>
     <item>QWERTY (Magyar)</item>
     <item>QWERTY (Latvian)</item>
@@ -98,10 +104,12 @@
     <item>@xml/arab_pc</item>
     <item>@xml/arab_pc_ckb</item>
     <item>@xml/arab_pc_ir</item>
+    <item>@xml/armenian_ph_am</item>
     <item>@xml/beng_national</item>
     <item>@xml/beng_provat</item>
     <item>@xml/cyrl_jcuken_ru</item>
     <item>@xml/cyrl_jcuken_uk</item>
+    <item>@xml/cyrl_ueishsht</item>
     <item>@xml/cyrl_yaverti</item>
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
@@ -114,6 +122,7 @@
     <item>@xml/latn_bone</item>
     <item>@xml/latn_neo2</item>
     <item>@xml/latn_qwerty_br</item>
+    <item>@xml/latn_qwerty_cz</item>
     <item>@xml/latn_qwerty_es</item>
     <item>@xml/latn_qwerty_hu</item>
     <item>@xml/latn_qwerty_lv</item>

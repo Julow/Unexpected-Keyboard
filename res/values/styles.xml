@@ -8,15 +8,6 @@
     <item name="android:textColor">?attr/emoji_key_text</item>
     <item name="android:textSize">18dp</item>
   </style>
-  <style name="emojiKeyButton">
-    <item name="android:layout_width">0px</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_weight">1</item>
-    <item name="android:padding">0px</item>
-    <item name="android:background">?attr/emoji_key_bg</item>
-    <item name="android:textColor">?attr/emoji_key_text</item>
-    <item name="android:textSize">18dp</item>
-  </style>
   <style name="emojiGridButton">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">fill_parent</item>
