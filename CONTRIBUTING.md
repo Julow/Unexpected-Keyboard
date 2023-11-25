@@ -4,20 +4,23 @@ Thanks for contributing :)
 
 ## Building the app
 
-The application uses Gradle and can be used with Android Studio, but using Android Studio is not required and the project can be build and operated by just using Gradle.
-
-Fortunately, there are not many dependencies:
+The application uses Gradle and can be used with Android Studio, but using
+Android Studio is not required. The build dependencies are:
 - OpenJDK 17
-- Python 3
 - Android SDK: build tools (minimum `28.0.1`), platform `30`
 
-If you don't use Android Studio and your ANDROID_HOME environment variable is __NOT__ set, you have to inform Gradle about the location of your Android SDK:
-Create the file `local.properties` in the directory of this repository and paste `sdk.dir=<location_of_android_home>` e.g. `sdk.dir=/home/user/Android/Sdk`.
+Python 3 is required to update generated files but not to build the app.
 
-If your `ANDROID_HOME` variable is set (output of `echo $ANDROID_HOME` is not empty) or you use Android Studio, you don't have to do anything.
+For Android Studio users, no more setup is needed.
 
 For Nix users, the right environment can be obtained with `nix-shell ./shell.nix`.
 Instructions to install Nix are [here](https://nixos.wiki/wiki/Nix_Installation_Guide).
+
+If you don't use Android Studio or Nix, you have to inform Gradle about the
+location of your Android SDK by either:
+- Setting the `ANDROID_HOME` environment variable to point to the android sdk or
+- Creating the file `local.properties` and writing
+  `sdk.dir=<location_of_android_home>` into it.
 
 Building the debug apk:
 
@@ -27,28 +30,14 @@ Building the debug apk:
 
 If the build succeeds, the debug apk is located in `build/outputs/apk/debug/app-debug.apk`.
 
-## Using the local debug.keystore on the Github CI actions
-
-It's possible to save the local debug.keystore into a github secret, so the same keystore is utilized to build the debug apk in the CI github actions.
-Doing this, they wil have the same signature, thus the debug apk can be updated without having to uninstall it first.
-
-After you successfully run `./gradlew asssembleDebug`, (thus a debug.keystore exists) you can use this second command to generate a base64 stringified version of it.
-
-```sh
-gpg -c --armor --pinentry-mode loopback --passphrase debug0 --yes "debug.keystore"
-```
-
-A file will be generated inside the project folder, called `debug.keystore.asc`
-
-You can copy the content of this file, and with that, paste it into a new github secret in your repo settings. The secret must be named `DEBUG_KEYSTORE`.
-
 ## Debugging on your phone
 
 First [Enable adb debugging on your device](https://developer.android.com/studio/command-line/adb#Enabling).
-Then connect your phone to your computer using an USB cable or wireless
+Then connect your phone to your computer using an USB cable or via wireless
 debugging.
 
-(If you use Android Studio, this process will be automatic and you don't have to follow this guide anymore)
+If you use Android Studio, this process will be automatic and you don't have to
+follow this guide anymore.
 
 And finally, install the application with:
 ```sh
@@ -78,6 +67,21 @@ adb uninstall juloo.keyboard2.debug
 ./gradlew installDebug
 ```
 
+## Specifying a debug signing certificate on Github Actions
+
+It's possible to specify the signing certificate that the automated build
+should use.
+After you successfully run `./gradlew asssembleDebug`, (thus a debug.keystore
+exists) you can use this second command to generate a base64 stringified
+version of it:
+
+```sh
+gpg -c --armor --pinentry-mode loopback --passphrase debug0 --yes "debug.keystore"
+```
+
+This will create the file `debug.keystore.asc`, paste its content into a new
+Github secret named `DEBUG_KEYSTORE`.
+
 ## Guidelines
 
 ### Adding a layout
@@ -99,8 +103,9 @@ Then, run `./gradlew genLayoutsList` to add the layout to the app.
 The last step will update the file `res/values/layouts.xml`, that you should
 not edit directly.
 
-Run `./gradlew checkKeyboardLayouts` to check some properties about your layout. This will
-change the file `check_layout.output`, which you should commit.
+Run `./gradlew checkKeyboardLayouts` to check some properties about your
+layout. This will change the file `check_layout.output`, which you should
+commit.
 
 #### Adding a programming layout
 
