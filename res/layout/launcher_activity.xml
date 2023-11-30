@@ -6,4 +6,5 @@
   <TextView style="@style/paragraph" android:text="https://github.com/Julow/Unexpected-Keyboard" android:autoLink="web" android:linksClickable="true"/>
   <TextView android:id="@+id/launcher_tryhere_text" style="@style/paragraph" android:text="@string/launcher_tryhere"/>
   <EditText android:id="@+id/launcher_tryhere_area" style="@style/paragraph" android:inputType="text"/>
+  <Button style="@style/paragraph" android:text="Show Persistent Keyboard" android:onClick="startOverlayService" android:layout_width="wrap_content"/>
 </LinearLayout>

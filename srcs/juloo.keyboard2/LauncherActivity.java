@@ -2,6 +2,8 @@ package juloo.keyboard2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -9,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LauncherActivity extends Activity
 {
@@ -26,6 +29,39 @@ public class LauncherActivity extends Activity
     if (VERSION.SDK_INT > 28)
       _tryhere_area.addOnUnhandledKeyEventListener(
           this.new Tryhere_OnUnhandledKeyEventListener());
+
+  }
+
+  private static final int REQUEST_CODE_OVERLAY_PERMISSION = 1601;
+  private void requestOverlayPermission() {
+    // Request the permission using an Intent
+    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+    startActivityForResult(intent, REQUEST_CODE_OVERLAY_PERMISSION);
+  }
+
+  public void startOverlayService(View _btn) {
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+      // If not, request the permission
+      requestOverlayPermission();
+    } else {
+      startService(new Intent(this, OverlayService.class));
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    //handle response for overlay permission request
+    if (requestCode == REQUEST_CODE_OVERLAY_PERMISSION) {
+      // Check if the permission was granted
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(this)) {
+        Toast.makeText(this, "Overlay permissions are granted. You can now launch persistent keyboards.", Toast.LENGTH_SHORT).show();
+      } else {
+        Toast.makeText(this, "Overlay permissions are required for launching persistent keyboard.", Toast.LENGTH_SHORT).show();
+      }
+    }
   }
 
   public void launch_imesettings(View _btn)
