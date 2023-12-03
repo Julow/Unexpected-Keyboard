@@ -35,7 +35,7 @@ public class LauncherActivity extends Activity
   private static final int REQUEST_CODE_OVERLAY_PERMISSION = 1601;
   private void requestOverlayPermission() {
     // Request the permission using an Intent
-    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.fromParts("package", getPackageName(), ""));
     startActivityForResult(intent, REQUEST_CODE_OVERLAY_PERMISSION);
   }
 
@@ -58,6 +58,7 @@ public class LauncherActivity extends Activity
       // Check if the permission was granted
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(this)) {
         Toast.makeText(this, "Overlay permissions are granted. You can now launch persistent keyboards.", Toast.LENGTH_SHORT).show();
+        startService(new Intent(this, OverlayService.class));
       } else {
         Toast.makeText(this, "Overlay permissions are required for launching persistent keyboard.", Toast.LENGTH_SHORT).show();
       }

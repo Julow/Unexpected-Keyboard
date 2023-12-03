@@ -4,7 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,31 +40,46 @@ public class OverlayService extends Service {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                 ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
                 : WindowManager.LayoutParams.TYPE_PHONE,
-        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
         PixelFormat.TRANSLUCENT);
 
         //setup the temporary button that the user can use to launch the soft keyboard
         overlayView = LayoutInflater.from(this).inflate(R.layout.overlay_button, null);
         layoutParams.gravity =  Gravity.TOP | Gravity.START;
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        overlayView.requestFocus();
         windowManager.addView(overlayView, layoutParams);
 
         //handle the show keyboard button
         overlayView.findViewById(R.id.invokeKeyboardButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //force the keyboard to display. this approach is confirmed to work on API 33.
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
-                //we must dismiss the UI to prevent it from interfering with key input
+                // Get the existing LayoutParams
+                WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) overlayView.getLayoutParams();
+                layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+                windowManager.updateViewLayout(overlayView, layoutParams);
+
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        stopSelf();
+
+                        overlayView.requestFocus();
+                        //force the keyboard to display, if possible
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) overlayView.getLayoutParams();
+                                layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                                windowManager.updateViewLayout(overlayView, layoutParams);
+                            }
+                        });
+
                     }
                 }, 200);
+
             }
         });
 
