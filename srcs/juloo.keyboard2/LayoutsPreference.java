@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -167,27 +166,18 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
       description when modifying a layout. */
   void select_custom(final SelectionCallback callback, String initial_text)
   {
-    final EditText input = new EditText(getContext());
-    input.setText(initial_text);
-    AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
-      .setView(input)
-      .setTitle(R.string.pref_custom_layout_title)
-      .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-        public void onClick(DialogInterface _dialog, int _which)
+    boolean allow_remove = callback.allow_remove() && _values.size() > 1;
+    CustomLayoutEditDialog.show(getContext(), initial_text, allow_remove,
+        new CustomLayoutEditDialog.Callback()
         {
-          callback.select(new CustomLayout(input.getText().toString()));
-        }
-      })
-      .setNegativeButton(android.R.string.cancel, null);
-    // Might be true when modifying an existing layout
-    if (callback.allow_remove() && _values.size() > 1)
-      dialog.setNeutralButton(R.string.pref_layouts_remove_custom, new DialogInterface.OnClickListener(){
-        public void onClick(DialogInterface _dialog, int _which)
-        {
-          callback.select(null);
-        }
-      });
-    dialog.show();
+          public void select(String text)
+          {
+            if (text == null)
+              callback.select(null);
+            else
+              callback.select(new CustomLayout(text));
+          }
+        });
   }
 
   /** Called when modifying a layout. Custom layouts behave differently. */
