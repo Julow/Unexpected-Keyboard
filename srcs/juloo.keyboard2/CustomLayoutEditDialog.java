@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.text.InputType;
 import android.text.Layout;
 import android.widget.EditText;
@@ -37,6 +38,14 @@ public class CustomLayoutEditDialog
           callback.select(null);
         }
       });
+    input.set_on_text_change(new LayoutEntryEditText.OnChangeListener()
+    {
+      public void on_change()
+      {
+        String error = callback.validate(input.getText().toString());
+        input.setError(error);
+      }
+    });
     dialog.show();
   }
 
@@ -45,6 +54,11 @@ public class CustomLayoutEditDialog
     /** The entered text when the user clicks "OK", [null] when the user
         cancels editing. */
     public void select(String text);
+
+    /** Return a human readable error string if the [text] contains an error.
+        Return [null] otherwise. The error string will be displayed atop the
+        input box. This method is called everytime the text changes. */
+    public String validate(String text);
   }
 
   /** An editable text view that shows line numbers. */
@@ -52,6 +66,19 @@ public class CustomLayoutEditDialog
   {
     /** Used to draw line numbers. */
     Paint _ln_paint;
+    OnChangeListener _on_change_listener = null;
+
+    /** Delay validation to when user stops typing for a second. */
+    Handler _on_change_throttler;
+    Runnable _on_change_delayed = new Runnable()
+    {
+      public void run()
+      {
+        OnChangeListener l = LayoutEntryEditText.this._on_change_listener;
+        if (l != null)
+          l.on_change();
+      }
+    };
 
     public LayoutEntryEditText(Context ctx)
     {
@@ -61,6 +88,12 @@ public class CustomLayoutEditDialog
       setHorizontallyScrolling(true);
       setInputType(InputType.TYPE_CLASS_TEXT
           | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+      _on_change_throttler = new Handler(ctx.getMainLooper());
+    }
+
+    public void set_on_text_change(OnChangeListener l)
+    {
+      _on_change_listener = l;
     }
 
     @Override
@@ -85,6 +118,21 @@ public class CustomLayoutEditDialog
         if (baseline >= clip_bounds.bottom)
           break;
       }
+    }
+
+    @Override
+    protected void onTextChanged(CharSequence text, int _start, int _lengthBefore, int _lengthAfter)
+    {
+      if (_on_change_throttler != null)
+      {
+        _on_change_throttler.removeCallbacks(_on_change_delayed);
+        _on_change_throttler.postDelayed(_on_change_delayed, 1000);
+      }
+    }
+
+    public static interface OnChangeListener
+    {
+      public void on_change();
     }
   }
 }

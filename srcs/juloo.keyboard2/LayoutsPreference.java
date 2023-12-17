@@ -177,6 +177,19 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
             else
               callback.select(new CustomLayout(text));
           }
+
+          public String validate(String text)
+          {
+            try
+            {
+              KeyboardData.load_string_exn(text);
+              return null; // Validation passed
+            }
+            catch (Exception e)
+            {
+              return e.getMessage();
+            }
+          }
         });
   }
 

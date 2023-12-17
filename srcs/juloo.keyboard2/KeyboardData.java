@@ -201,14 +201,21 @@ class KeyboardData
   {
     try
     {
-      XmlPullParser parser = Xml.newPullParser();
-      parser.setInput(new StringReader(src));
-      return parse_keyboard(parser);
+      return load_string_exn(src);
     }
     catch (Exception e)
     {
       return null;
     }
+  }
+
+  /** Like [load_string] but throws an exception on error and do not return
+      [null]. */
+  public static KeyboardData load_string_exn(String src) throws Exception
+  {
+    XmlPullParser parser = Xml.newPullParser();
+    parser.setInput(new StringReader(src));
+    return parse_keyboard(parser);
   }
 
   private static KeyboardData parse_keyboard(XmlPullParser parser) throws Exception
