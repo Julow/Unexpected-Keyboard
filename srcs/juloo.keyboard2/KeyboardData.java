@@ -221,7 +221,7 @@ class KeyboardData
   private static KeyboardData parse_keyboard(XmlPullParser parser) throws Exception
   {
     if (!expect_tag(parser, "keyboard"))
-      throw new Exception("Empty layout file");
+      throw error(parser, "Expected tag <keyboard>");
     boolean add_bottom_row = attribute_bool(parser, "bottom_row", true);
     float specified_kw = attribute_float(parser, "width", 0f);
     String script = parser.getAttributeValue(null, "script");
@@ -238,7 +238,7 @@ class KeyboardData
           modmap = Modmap.parse(parser);
           break;
         default:
-          throw new Exception("Unknown tag: " + parser.getName());
+          throw error(parser, "Expecting tag <row>, got <" + parser.getName() + ">");
       }
     }
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
@@ -258,7 +258,7 @@ class KeyboardData
   private static Row parse_row(XmlPullParser parser) throws Exception
   {
     if (!expect_tag(parser, "row"))
-      throw new Exception("Failed to parse row");
+      throw error(parser, "Expected tag <row>");
     return Row.parse(parser);
   }
 
@@ -604,7 +604,8 @@ class KeyboardData
     if (!next_tag(parser))
       return false;
     if (!parser.getName().equals(name))
-      throw new Exception("Unknown tag: " + parser.getName());
+      throw error(parser, "Expecting tag <" + name + ">, got <" +
+          parser.getName() + ">");
     return true;
   }
 
@@ -622,5 +623,11 @@ class KeyboardData
     if (val == null)
       return default_val;
     return Float.parseFloat(val);
+  }
+
+  /** Construct a parsing error. */
+  private static Exception error(XmlPullParser parser, String message)
+  {
+    return new Exception(message + " " + parser.getPositionDescription());
   }
 }
