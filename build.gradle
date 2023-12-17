@@ -18,7 +18,7 @@ android {
     main {
       manifest.srcFile 'AndroidManifest.xml'
       java.srcDirs = ['srcs']
-      res.srcDirs = ['res']
+      res.srcDirs = ['res', 'build/generated-resources']
       assets.srcDirs = ['assets']
     }
   }
@@ -134,6 +134,7 @@ tasks.register('syncTranslations') {
 
 tasks.named("preBuild") {
   dependsOn += "initDebugKeystore"
+  dependsOn += "copyRawQwertyUS"
 }
 
 tasks.register('initDebugKeystore') {
@@ -143,5 +144,14 @@ tasks.register('initDebugKeystore') {
       // A shell script might be needed if this line requires input from the user
       commandLine "keytool", "-genkeypair", "-dname", "cn=d, ou=e, o=b, c=ug", "-alias", "debug", "-keypass", "debug0", "-keystore", "debug.keystore", "-keyalg", "rsa", "-storepass", "debug0", "-validity", "10000"
     }
+  }
+}
+
+// latn_qwerty_us is used as a raw resource by the custom layout option.
+tasks.register('copyRawQwertyUS')
+{
+  copy {
+    from "res/xml/latn_qwerty_us.xml"
+    into "build/generated-resources/raw"
   }
 }

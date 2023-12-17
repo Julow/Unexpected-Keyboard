@@ -151,7 +151,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
               callback.select(new SystemLayout());
               break;
             case "custom":
-              select_custom(callback, "");
+              select_custom(callback, read_initial_custom_layout());
               break;
             default:
               callback.select(new NamedLayout(name));
@@ -201,6 +201,22 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
       select_custom(callback, ((CustomLayout)prev_layout).xml);
     else
       select(callback);
+  }
+
+  /** The initial text for the custom layout entry box. The qwerty_us layout is
+      a good default and contains a bit of documentation. */
+  String read_initial_custom_layout()
+  {
+    try
+    {
+      Resources res = getContext().getResources();
+      byte[] raw = res.openRawResource(R.raw.latn_qwerty_us).readAllBytes();
+      return new String(raw, "UTF-8");
+    }
+    catch (Exception _e)
+    {
+      return "";
+    }
   }
 
   class LayoutsAddButton extends AddButton
