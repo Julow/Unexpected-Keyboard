@@ -60,8 +60,8 @@
   <string name="pref_theme_e_altblack">Alternatif Siyah</string>
   <string name="pref_theme_e_white">Beyaz</string>
   <string name="pref_theme_e_epaper">E-Kağıt</string>
-  <!-- <string name="pref_theme_e_desert">Desert</string> -->
-  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
+  <string name="pref_theme_e_desert">Çöl</string>
+  <string name="pref_theme_e_jungle">Orman</string>
   <string name="pref_swipe_dist_e_very_short">Çok kısa</string>
   <string name="pref_swipe_dist_e_short">Kısa</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
@@ -81,7 +81,7 @@
   <string name="key_action_search">Ara</string>
   <string name="key_action_send">Gönder</string>
   <string name="launcher_button_imesettings">Ayarlarda aktif et</string>
-  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
+  <string name="launcher_button_imepicker">Klavye Seç</string>
   <string name="launcher_description">Bu uygulama bir sanal klavye uygulamasıdır. Aşağıdaki butona basarak sistem ayarlarında etkinleştiriniz.</string>
   <string name="launcher_sourcecode">Bu uygulama ücretsiz ve açık kaynaklıdır. Kaynak koduna erişmek veya bir hata raporlamak için GitHub</string>
   <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>
