@@ -14,8 +14,8 @@
   <string name="pref_layout_e_custom">Vlastní rozvržení</string>
   <string name="pref_layouts_add">Přidat alternativní rozložení</string>
   <string name="pref_layouts_item">Rozložení %1$d: %2$s</string>
-  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
-  <string name="pref_custom_layout_title">Vlastní rozvržení</string>
+  <string name="pref_layouts_remove_custom">Odebrat rozložení</string>
+  <string name="pref_custom_layout_title">Vlastní rozložení</string>
   <string name="pref_show_numpad_title">Zobrazit NumPad</string>
   <string name="pref_show_numpad_never">Nikdy</string>
   <string name="pref_show_numpad_landscape">Pouze v režimu na šířku</string>
@@ -36,7 +36,7 @@
   <string name="pref_long_timeout_title">Časová prodleva opakování znaků</string>
   <string name="pref_long_interval_title">Interval opakování znaků</string>
   <string name="pref_lock_double_tap_title">Dvojklik pro aktivaci Capslock(u)</string>
-  <string name="pref_lock_double_tap_summary">Dvojklik namísto držení modifikačních kláves po nějakou dobu</string>
+  <string name="pref_lock_double_tap_summary">Umožňuje zamknout Shift dvojklikem, namísto podržení</string>
   <string name="pref_category_behavior">Chování</string>
   <string name="pref_autocapitalisation_title">Automatická kapitalizace</string>
   <string name="pref_autocapitalisation_summary">Stiskne Shift na začátku věty</string>
@@ -45,7 +45,7 @@
   <string name="pref_vibrate_title">Vibrace</string>
   <string name="pref_vibrate_summary">Preference intenzity vibrací při stisku klávesy</string>
   <string name="pref_pin_entry_enabled_title">Rozvržení zadávání PIN kódu</string>
-  <string name="pref_pin_entry_enabled_summary">Při psaní čísel, datumů a telefonních čísel</string>
+  <string name="pref_pin_entry_enabled_summary">Automaticky při psaní čísel, datumů a telefonních čísel</string>
   <string name="pref_category_style">Styl</string>
   <string name="pref_margin_bottom_title">Spodní odsazení</string>
   <string name="pref_keyboard_height_title">Výška klávesnice</string>
@@ -60,8 +60,8 @@
   <string name="pref_theme_e_altblack">Černý (alternativní)</string>
   <string name="pref_theme_e_white">Bílý</string>
   <string name="pref_theme_e_epaper">ePapír</string>
-  <!-- <string name="pref_theme_e_desert">Desert</string> -->
-  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
+  <string name="pref_theme_e_desert">Poušťě</string>
+  <string name="pref_theme_e_jungle">Džungle</string>
   <string name="pref_swipe_dist_e_very_short">Velmi krátká</string>
   <string name="pref_swipe_dist_e_short">Krátká</string>
   <string name="pref_swipe_dist_e_default">Běžná</string>
@@ -81,7 +81,7 @@
   <string name="key_action_search">Hledat</string>
   <string name="key_action_send">Odeslat</string>
   <string name="launcher_button_imesettings">Aktivovat klávesnici</string>
-  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
+  <string name="launcher_button_imepicker">Vybrat klávesnici</string>
   <string name="launcher_description">Tato aplikace je pouhou virtuální klávesnicí. Přejděte do systémového nastavení, kliknutím na tlačítko níže a aktivujte ji.</string>
   <string name="launcher_sourcecode">Toto je volná, open-source aplikace. Její zdrojový kód, či hlášení chyb, naleznete na Githubu.</string>
   <string name="launcher_tryhere">Po aktivaci můžete klávesnici rovnou vyzkoušet zde:</string>
@@ -100,9 +100,9 @@
   <string name="key_descr_º">Indikátor řadové číslovky</string>
   <string name="key_descr_superscript">Horní index</string>
   <string name="key_descr_subscript">Dolní index</string>
-  <!-- <string name="key_descr_page_up">Page Up</string> -->
-  <!-- <string name="key_descr_page_down">Page Down</string> -->
-  <!-- <string name="key_descr_home">Home</string> -->
-  <!-- <string name="key_descr_end">End</string> -->
+  <string name="key_descr_page_up">Page Up</string>
+  <string name="key_descr_page_down">Page Down</string>
+  <string name="key_descr_home">Home</string>
+  <string name="key_descr_end">End</string>
   <string name="pref_category_advanced">Pokročilé</string>
 </resources>
