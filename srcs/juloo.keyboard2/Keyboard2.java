@@ -57,6 +57,8 @@ public class Keyboard2 extends InputMethodService
   /** Layout currently visible. */
   KeyboardData current_layout()
   {
+    if (_currentSpecialLayout != null)
+      return _currentSpecialLayout;
     return _config.modify_layout(current_layout_unmodified());
   }
 
