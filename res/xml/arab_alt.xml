@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<keyboard name="Arabic Alt" script="arabic">
+<keyboard name="Arabic Alt" script="arabic" numpad_script="hindu-arabic">
   <row>
     <key key0="ض" key2="١" key3="`" key4="esc"/>
     <key key0="ص" key2="٢" key3="\@"/>

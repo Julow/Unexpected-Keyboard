@@ -8,6 +8,9 @@ Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 # arab_pc_ckb
 Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
 1 warnings
+# arab_pc_hindu
+Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
+1 warnings
 # arab_pc_ir
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
 1 warnings

@@ -89,7 +89,7 @@ class KeyModifier
       return map_char_none;
     switch (numpad_script)
     {
-      case "arabic": return map_char_numpad_arabic;
+      case "hindu-arabic": return map_char_numpad_hindu;
       case "bengali": return map_char_numpad_bengali;
       case "devanagari": return map_char_numpad_devanagari;
       case "persian": return map_char_numpad_persian;
@@ -997,7 +997,7 @@ class KeyModifier
       }
     };
 
-  private static final Map_char map_char_numpad_arabic =
+  private static final Map_char map_char_numpad_hindu =
     new Map_char() {
       public String apply(char c)
       {
