@@ -25,6 +25,8 @@ class KeyboardData
   public final Modmap modmap;
   /** Might be null. */
   public final String script;
+  /** Might be different from [script]. Might be null. */
+  public final String numpad_script;
   /** Position of every keys on the layout, see [getKeys()]. */
   private Map<KeyValue, KeyPos> _key_pos = null;
 
@@ -33,7 +35,7 @@ class KeyboardData
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(rows_, keysWidth, modmap, script);
+    return new KeyboardData(this, rows_);
   }
 
   /** Add keys from the given iterator into the keyboard. Preferred position is
@@ -51,7 +53,7 @@ class KeyboardData
     }
     for (KeyValue kv : unplaced_keys)
       add_key_to_preferred_pos(rows, kv, PreferredPos.ANYWHERE);
-    return new KeyboardData(rows, keysWidth, modmap, script);
+    return new KeyboardData(this, rows);
   }
 
   /** Place a key on the keyboard according to its preferred position. Mutates
@@ -125,15 +127,14 @@ class KeyboardData
       }
       extendedRows.add(new Row(keys, row.height, row.shift));
     }
-    return new
-      KeyboardData(extendedRows, compute_max_width(extendedRows), modmap, script);
+    return new KeyboardData(this, extendedRows);
   }
 
   public KeyboardData addNumberRow()
   {
     ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
     rows_.add(0, number_row.updateWidth(keysWidth));
-    return new KeyboardData(rows_, keysWidth, modmap, script);
+    return new KeyboardData(this, rows_);
   }
 
   public Key findKeyWithValue(KeyValue kv)
@@ -225,6 +226,9 @@ class KeyboardData
     boolean add_bottom_row = attribute_bool(parser, "bottom_row", true);
     float specified_kw = attribute_float(parser, "width", 0f);
     String script = parser.getAttributeValue(null, "script");
+    String numpad_script = parser.getAttributeValue(null, "numpad_script");
+    if (numpad_script == null)
+      numpad_script = script;
     ArrayList<Row> rows = new ArrayList<Row>();
     Modmap modmap = null;
     while (next_tag(parser))
@@ -244,7 +248,7 @@ class KeyboardData
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
     if (add_bottom_row)
       rows.add(bottom_row.updateWidth(kw));
-    return new KeyboardData(rows, kw, modmap, script);
+    return new KeyboardData(rows, kw, modmap, script, numpad_script);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -262,7 +266,7 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc)
+  protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc, String npsc)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -270,8 +274,15 @@ class KeyboardData
     rows = rows_;
     modmap = mm;
     script = sc;
+    numpad_script = npsc;
     keysWidth = kw;
     keysHeight = kh;
+  }
+
+  /** Copies the fields of an other keyboard, with rows changed. */
+  protected KeyboardData(KeyboardData src, List<Row> rows)
+  {
+    this(rows, compute_max_width(rows), src.modmap, src.script, src.numpad_script);
   }
 
   public static class Row

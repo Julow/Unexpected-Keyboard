@@ -268,7 +268,7 @@ final class Config
       }
     });
     if (show_numpad)
-      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad, kw.script));
+      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad, kw));
     if (number_row)
       kw = kw.addNumberRow();
     if (extra_keys.size() > 0)
@@ -276,13 +276,12 @@ final class Config
     return kw;
   }
 
-  /**
-   * Handle the numpad layout.
-   */
-  public KeyboardData modify_numpad(KeyboardData kw, String script)
+  /** Handle the numpad layout. The [main_kw] is used to adapt the numpad to
+      the main layout's script. */
+  public KeyboardData modify_numpad(KeyboardData kw, KeyboardData main_kw)
   {
     final KeyValue action_key = action_key();
-    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(script);
+    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
     return kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {

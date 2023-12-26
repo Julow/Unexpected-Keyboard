@@ -89,9 +89,8 @@ public class Keyboard2 extends InputMethodService
   /** Load a layout that contains a numpad (eg. the pin entry). */
   KeyboardData loadNumpad(int layout_id)
   {
-    String current_script = current_layout_unmodified().script;
     return _config.modify_numpad(KeyboardData.load(getResources(), layout_id),
-        current_script);
+        current_layout_unmodified());
   }
 
   @Override

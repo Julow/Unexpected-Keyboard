@@ -83,11 +83,11 @@ class KeyModifier
     return k;
   }
 
-  public static Map_char modify_numpad_script(String script)
+  public static Map_char modify_numpad_script(String numpad_script)
   {
-    if (script == null)
+    if (numpad_script == null)
       return map_char_none;
-    switch (script)
+    switch (numpad_script)
     {
       case "arabic": return map_char_numpad_arabic;
       case "bengali": return map_char_numpad_bengali;
