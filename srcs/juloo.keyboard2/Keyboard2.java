@@ -151,7 +151,7 @@ public class Keyboard2 extends InputMethodService
       _config.shouldOfferSwitchingToNextInputMethod = true;
     else
       _config.shouldOfferSwitchingToNextInputMethod = shouldOfferSwitchingToNextInputMethod();
-    _config.shouldOfferVoiceTyping = (get_voice_typing_im(imm) != null);
+    _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
     _config.extra_keys_subtype = null;
     if (VERSION.SDK_INT >= 12)
@@ -222,20 +222,6 @@ public class Keyboard2 extends InputMethodService
       _emojiPane = null;
     }
     _keyboardView.reset();
-  }
-
-  /** Returns the id and subtype of the voice typing IM. Returns [null] if none
-      is installed or if the feature is unsupported. */
-  SimpleEntry<String, InputMethodSubtype> get_voice_typing_im(InputMethodManager imm)
-  {
-    if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
-      return null;
-    for (InputMethodInfo im : imm.getEnabledInputMethodList())
-      for (InputMethodSubtype imst : imm.getEnabledInputMethodSubtypeList(im, true))
-        // Switch to the first IM that has a subtype of this mode
-        if (imst.getMode().equals("voice"))
-          return new SimpleEntry(im.getId(), imst);
-    return null;
   }
 
   private KeyboardData refresh_special_layout(EditorInfo info)
@@ -433,14 +419,9 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_VOICE_TYPING:
-          SimpleEntry<String, InputMethodSubtype> im = get_voice_typing_im(get_imm());
-          if (im == null)
-            return;
-          // Best-effort. Good enough for triggering Google's voice typing.
-          if (VERSION.SDK_INT < 28)
-            switchInputMethod(im.getKey());
-          else
-            switchInputMethod(im.getKey(), im.getValue());
+          if (!VoiceImeSwitcher.switch_to_voice_ime(Keyboard2.this, get_imm(),
+                Config.globalPrefs()))
+            _config.shouldOfferVoiceTyping = false;
           break;
       }
     }

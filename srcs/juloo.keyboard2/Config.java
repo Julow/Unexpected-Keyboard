@@ -389,6 +389,11 @@ final class Config
     return _globalConfig;
   }
 
+  public static SharedPreferences globalPrefs()
+  {
+    return _globalConfig._prefs;
+  }
+
   public static interface IKeyEventHandler
   {
     public void key_down(KeyValue value, boolean is_swipe);
