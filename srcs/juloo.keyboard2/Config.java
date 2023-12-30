@@ -245,6 +245,7 @@ final class Config
               case SWITCH_BACKWARD:
                 return (layouts.size() > 2) ? key : null;
               case SWITCH_VOICE_TYPING:
+              case SWITCH_VOICE_TYPING_CHOOSER:
                 return shouldOfferVoiceTyping ? key : null;
             }
             break;

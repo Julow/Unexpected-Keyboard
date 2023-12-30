@@ -43,6 +43,16 @@ class VoiceImeSwitcher
     return true;
   }
 
+  public static boolean choose_voice_ime(InputMethodService ims,
+      InputMethodManager imm, SharedPreferences prefs)
+  {
+    if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
+      return false;
+    List<IME> imes = get_voice_ime_list(imm);
+    choose_voice_ime_and_update_prefs(ims, prefs, imes);
+    return true;
+  }
+
   /** Show the voice IME chooser popup and switch to the selected IME.
       Preferences are updated so that future calls to [switch_to_voice_ime]
       switch to the newly selected IME. */

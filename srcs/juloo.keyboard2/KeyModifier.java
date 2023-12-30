@@ -77,6 +77,8 @@ class KeyModifier
         {
           case CHANGE_METHOD_PREV:
             return KeyValue.getKeyByName("change_method");
+          case SWITCH_VOICE_TYPING:
+            return KeyValue.getKeyByName("voice_typing_chooser");
         }
         break;
     }

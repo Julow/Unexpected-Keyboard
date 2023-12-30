@@ -20,6 +20,7 @@ final class KeyValue
     SWITCH_GREEKMATH,
     CAPS_LOCK,
     SWITCH_VOICE_TYPING,
+    SWITCH_VOICE_TYPING_CHOOSER,
   }
 
   // Must be evaluated in the reverse order of their values.
@@ -369,6 +370,7 @@ final class KeyValue
       case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
       case "capslock": return eventKey(0xE012, Event.CAPS_LOCK, 0);
       case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
+      case "voice_typing_chooser": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING_CHOOSER, FLAG_SMALLER_FONT);
 
       /* Key events */
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);

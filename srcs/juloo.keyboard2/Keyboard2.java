@@ -423,6 +423,11 @@ public class Keyboard2 extends InputMethodService
                 Config.globalPrefs()))
             _config.shouldOfferVoiceTyping = false;
           break;
+
+        case SWITCH_VOICE_TYPING_CHOOSER:
+          VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
+              Config.globalPrefs());
+          break;
       }
     }
 
