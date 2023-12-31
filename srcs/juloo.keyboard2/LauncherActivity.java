@@ -2,6 +2,9 @@ package juloo.keyboard2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -10,10 +13,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 public class LauncherActivity extends Activity
 {
   /** Text is replaced when receiving key events. */
+  VideoView _intro_video;
   TextView _tryhere_text;
   EditText _tryhere_area;
 
@@ -22,11 +27,13 @@ public class LauncherActivity extends Activity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.launcher_activity);
+    _intro_video = (VideoView)findViewById(R.id.launcher_intro_video);
     _tryhere_text = (TextView)findViewById(R.id.launcher_tryhere_text);
     _tryhere_area = (EditText)findViewById(R.id.launcher_tryhere_area);
     if (VERSION.SDK_INT > 28)
       _tryhere_area.addOnUnhandledKeyEventListener(
           this.new Tryhere_OnUnhandledKeyEventListener());
+    setup_intro_video(_intro_video);
   }
 
   public void launch_imesettings(View _btn)
@@ -39,6 +46,22 @@ public class LauncherActivity extends Activity
     InputMethodManager imm =
       (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
     imm.showInputMethodPicker();
+  }
+
+  static void setup_intro_video(VideoView v)
+  {
+    if (VERSION.SDK_INT >= 26)
+      v.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
+    v.setVideoURI(Uri.parse("android.resource://" +
+          v.getContext().getPackageName() + "/" + R.raw.intro_video));
+    v.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
+        {
+          @Override
+          public void onPrepared(MediaPlayer mp) {
+            mp.setLooping(true);
+          }
+        });
+    v.start();
   }
 
   final class Tryhere_OnUnhandledKeyEventListener implements View.OnUnhandledKeyEventListener
