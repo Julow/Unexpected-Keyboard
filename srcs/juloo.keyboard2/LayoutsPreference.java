@@ -210,8 +210,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
     try
     {
       Resources res = getContext().getResources();
-      byte[] raw = res.openRawResource(R.raw.latn_qwerty_us).readAllBytes();
-      return new String(raw, "UTF-8");
+      return Utils.read_all_utf8(res.openRawResource(R.raw.latn_qwerty_us));
     }
     catch (Exception _e)
     {

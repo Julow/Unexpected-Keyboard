@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.os.IBinder;
 import android.view.Window;
 import android.view.WindowManager;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 class Utils
 {
@@ -26,5 +28,17 @@ class Utils
     win.setAttributes(lp);
     win.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
     dialog.show();
+  }
+
+  public static String read_all_utf8(InputStream inp) throws Exception
+  {
+    InputStreamReader reader = new InputStreamReader(inp, "UTF-8");
+    StringBuilder out = new StringBuilder();
+    int buff_length = 8000;
+    char[] buff = new char[buff_length];
+    int l;
+    while ((l = reader.read(buff, 0, buff_length)) != -1)
+      out.append(buff, 0, l);
+    return out.toString();
   }
 }
