@@ -48,7 +48,7 @@ public class LauncherActivity extends Activity
     imm.showInputMethodPicker();
   }
 
-  static void setup_intro_video(VideoView v)
+  static void setup_intro_video(final VideoView v)
   {
     if (VERSION.SDK_INT >= 26)
       v.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
@@ -57,8 +57,19 @@ public class LauncherActivity extends Activity
     v.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
         {
           @Override
-          public void onPrepared(MediaPlayer mp) {
+          public void onPrepared(MediaPlayer mp)
+          {
             mp.setLooping(true);
+          }
+        });
+    v.setOnErrorListener(new MediaPlayer.OnErrorListener()
+        {
+          @Override
+          public boolean onError(MediaPlayer mp, int what, int extra)
+          {
+            v.stopPlayback();
+            v.setVisibility(View.GONE);
+            return true;
           }
         });
     v.start();
