@@ -34,15 +34,12 @@ android {
       keyAlias(System.env.DEBUG_KEY_ALIAS ? "$System.env.DEBUG_KEY_ALIAS" : "debug")
       keyPassword(System.env.DEBUG_KEY_PASSWORD ? "$System.env.DEBUG_KEY_PASSWORD" : "debug0")
     }
-    // Release builds will only be signed with a dedicated key if specified. This key has to be
-    // created manually.
+
     release {
-      if (System.env.RELEASE_KEYSTORE) {
-        storeFile file(System.env.RELEASE_KEYSTORE)
-        storePassword "$System.env.RELEASE_KEYSTORE_PASSWORD"
-        keyAlias "$System.env.RELEASE_KEY_ALIAS"
-        keyPassword "$System.env.RELEASE_KEY_PASSWORD"
-      }
+      storeFile file(System.env.RELEASE_KEYSTORE)
+      storePassword "$System.env.RELEASE_KEYSTORE_PASSWORD"
+      keyAlias "$System.env.RELEASE_KEY_ALIAS"
+      keyPassword "$System.env.RELEASE_KEY_PASSWORD"
     }
   }
 
@@ -53,10 +50,9 @@ android {
       debuggable false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
       resValue "string", "app_name", "@string/app_name_release"
-      if (System.env.RELEASE_KEYSTORE) {
-        signingConfig signingConfigs.release
-      }
+      signingConfig signingConfigs.release
     }
+
     debug {
       minifyEnabled false
       shrinkResources false
