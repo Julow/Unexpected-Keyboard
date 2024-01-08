@@ -8,32 +8,24 @@ import android.view.View;
 
 public final class VibratorCompat
 {
-  public static void vibrate(View v, VibrationBehavior b)
+  public static void vibrate(View v, Config config)
   {
-    switch (b)
+    if (config.vibrate_custom)
     {
-      case DISABLED:
-        break;
-      case SYSTEM:
-        if (VERSION.SDK_INT >= 8)
-          v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP,
-              HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
-        break;
-      case STRONG:
-        vibrator_vibrate(v, 90);
-        break;
-      case MEDIUM:
-        vibrator_vibrate(v, 45);
-        break;
-      case LIGHT:
-        vibrator_vibrate(v, 20);
-        break;
+      if (config.vibrate_duration > 0)
+        vibrator_vibrate(v, config.vibrate_duration);
+    }
+    else
+    {
+      if (VERSION.SDK_INT >= 8)
+        v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP,
+            HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
     }
   }
 
   /** Use the older [Vibrator] when the newer API is not available or the user
       wants more control. */
-  static void vibrator_vibrate(View v, int duration)
+  static void vibrator_vibrate(View v, long duration)
   {
     try
     {
@@ -52,30 +44,5 @@ public final class VibratorCompat
         (Vibrator)v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
     }
     return vibrator_service;
-  }
-
-  public static enum VibrationBehavior
-  {
-    DISABLED,
-    SYSTEM,
-    STRONG,
-    MEDIUM,
-    LIGHT;
-
-    VibrationBehavior() {}
-
-    /** Defaults [SYSTEM] for unrecognized strings. */
-    public static VibrationBehavior of_string(String s)
-    {
-      switch (s)
-      {
-        case "disabled": return DISABLED;
-        case "system": return SYSTEM;
-        case "strong": return STRONG;
-        case "medium": return MEDIUM;
-        case "light": return LIGHT;
-        default: return SYSTEM;
-      }
-    }
   }
 }

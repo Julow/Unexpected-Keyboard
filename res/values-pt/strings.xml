@@ -42,8 +42,8 @@
   <string name="pref_autocapitalisation_summary">Aciona o shift no início de cada frase</string>
   <string name="pref_switch_input_immediate_title">Alternar para o último teclado usado</string>
   <string name="pref_switch_input_immediate_summary">Comportamento da tecla de troca de teclado</string>
-  <string name="pref_vibrate_title">Vibração</string>
-  <string name="pref_vibrate_summary">Ativar/desativar vibração ao digitar</string>
+  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
+  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
   <string name="pref_pin_entry_enabled_title">Layout PIN</string>
   <string name="pref_pin_entry_enabled_summary">Quando digitando números, datas ou números de telefone</string>
   <string name="pref_category_style">Estilo</string>
@@ -69,11 +69,6 @@
   <string name="pref_swipe_dist_e_very_far">Muito longo</string>
   <string name="pref_key_horizontal_space">Distância horizontal entre teclas</string>
   <string name="pref_key_vertical_space">Distância vertical entre teclas</string>
-  <string name="pref_vibration_e_disabled">Desabilitado</string>
-  <string name="pref_vibration_e_system">Sistema</string>
-  <string name="pref_vibration_e_strong">Intenso</string>
-  <string name="pref_vibration_e_medium">Médio</string>
-  <string name="pref_vibration_e_light">Suave</string>
   <string name="key_action_next">Próximo</string>
   <string name="key_action_done">Pronto</string>
   <string name="key_action_go">Ir</string>

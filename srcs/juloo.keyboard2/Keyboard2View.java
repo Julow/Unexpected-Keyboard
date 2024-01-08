@@ -234,7 +234,7 @@ public class Keyboard2View extends View
 
   private void vibrate()
   {
-    VibratorCompat.vibrate(this, _config.vibration_behavior);
+    VibratorCompat.vibrate(this, _config);
   }
 
   @Override
