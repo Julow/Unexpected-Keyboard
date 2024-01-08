@@ -68,6 +68,13 @@ android {
     }
   }
 
+  // Name outputs after the application ID.
+  android.applicationVariants.all { variant ->
+    variant.outputs.all {
+      outputFileName = "${applicationId}.apk"
+    }
+  }
+
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_7
     targetCompatibility JavaVersion.VERSION_1_7
