@@ -36,10 +36,12 @@ android {
     }
 
     release {
-      storeFile file(System.env.RELEASE_KEYSTORE)
-      storePassword "$System.env.RELEASE_KEYSTORE_PASSWORD"
-      keyAlias "$System.env.RELEASE_KEY_ALIAS"
-      keyPassword "$System.env.RELEASE_KEY_PASSWORD"
+      if (System.env.RELEASE_KEYSTORE) {
+        storeFile file(System.env.RELEASE_KEYSTORE)
+        storePassword "$System.env.RELEASE_KEYSTORE_PASSWORD"
+        keyAlias "$System.env.RELEASE_KEY_ALIAS"
+        keyPassword "$System.env.RELEASE_KEY_PASSWORD"
+      }
     }
   }
 
