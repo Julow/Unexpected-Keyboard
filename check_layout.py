@@ -66,6 +66,7 @@ def check_layout(layout):
                     [ "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
                      "f10", "f11", "f12" ],
                     "Layout contains function keys")
+    unexpected_keys(keys, [""], "Layout contains empty strings")
 
     bottom_row_keys = [
             "ctrl", "fn", "switch_numeric", "change_method", "switch_emoji",

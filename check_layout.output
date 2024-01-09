@@ -39,7 +39,7 @@ Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, )
 Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
 2 warnings
 # deva_inscript
-Duplicate keys: , ।
+Duplicate keys: ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 3 warnings
@@ -95,8 +95,7 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # latn_qwerty_us
 0 warnings
 # latn_qwerty_vi
-Layout includes some ASCII punctuation but not all, missing: \
-1 warnings
+0 warnings
 # latn_qwertz
 0 warnings
 # latn_qwertz_cz
@@ -113,7 +112,7 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # latn_qwertz_hu
 0 warnings
 # latn_qwertz_sk
-Layout includes some ASCII punctuation but not all, missing: \, `
+Layout includes some ASCII punctuation but not all, missing: `
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
 # urdu_phonetic_ur
