@@ -27,6 +27,8 @@ class KeyboardData
   public final String script;
   /** Might be different from [script]. Might be null. */
   public final String numpad_script;
+  /** The [name] attribute. Might be null.  */
+  public final String name;
   /** Position of every keys on the layout, see [getKeys()]. */
   private Map<KeyValue, KeyPos> _key_pos = null;
 
@@ -229,6 +231,7 @@ class KeyboardData
     String numpad_script = parser.getAttributeValue(null, "numpad_script");
     if (numpad_script == null)
       numpad_script = script;
+    String name = parser.getAttributeValue(null, "name");
     ArrayList<Row> rows = new ArrayList<Row>();
     Modmap modmap = null;
     while (next_tag(parser))
@@ -248,7 +251,7 @@ class KeyboardData
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
     if (add_bottom_row)
       rows.add(bottom_row.updateWidth(kw));
-    return new KeyboardData(rows, kw, modmap, script, numpad_script);
+    return new KeyboardData(rows, kw, modmap, script, numpad_script, name);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -266,7 +269,8 @@ class KeyboardData
     return Row.parse(parser);
   }
 
-  protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc, String npsc)
+  protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc,
+      String npsc, String name_)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -275,6 +279,7 @@ class KeyboardData
     modmap = mm;
     script = sc;
     numpad_script = npsc;
+    name = name_;
     keysWidth = kw;
     keysHeight = kh;
   }
@@ -282,7 +287,8 @@ class KeyboardData
   /** Copies the fields of an other keyboard, with rows changed. */
   protected KeyboardData(KeyboardData src, List<Row> rows)
   {
-    this(rows, compute_max_width(rows), src.modmap, src.script, src.numpad_script);
+    this(rows, compute_max_width(rows), src.modmap, src.script,
+        src.numpad_script, src.name);
   }
 
   public static class Row

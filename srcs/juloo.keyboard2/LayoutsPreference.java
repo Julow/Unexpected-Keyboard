@@ -67,7 +67,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
       if (l instanceof NamedLayout)
         layouts.add(layout_of_string(res, ((NamedLayout)l).name));
       else if (l instanceof CustomLayout)
-        layouts.add(KeyboardData.load_string(((CustomLayout)l).xml));
+        layouts.add(((CustomLayout)l).parsed);
       else // instanceof SystemLayout
         layouts.add(null);
     }
@@ -106,7 +106,15 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
       return value_i < 0 ? lname : _layout_display_names[value_i];
     }
     else if (l instanceof CustomLayout)
-      return getContext().getString(R.string.pref_layout_e_custom);
+    {
+      // Use the layout's name if possible
+      CustomLayout cl = (CustomLayout)l;
+      if (cl.parsed != null && cl.parsed.name != null
+          && !cl.parsed.name.equals(""))
+        return cl.parsed.name;
+      else
+        return getContext().getString(R.string.pref_layout_e_custom);
+    }
     else // instanceof SystemLayout
       return getContext().getString(R.string.pref_layout_e_system);
   }
@@ -175,7 +183,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
             if (text == null)
               callback.select(null);
             else
-              callback.select(new CustomLayout(text));
+              callback.select(CustomLayout.parse(text));
           }
 
           public String validate(String text)
@@ -247,7 +255,16 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
   static final class CustomLayout implements Layout
   {
     public final String xml;
-    public CustomLayout(String c) { xml = c; }
+    /** Might be null. */
+    public final KeyboardData parsed;
+    public CustomLayout(String xml_, KeyboardData k) { xml = xml_; parsed = k; }
+    public static CustomLayout parse(String xml)
+    {
+      KeyboardData parsed = null;
+      try { parsed = KeyboardData.load_string_exn(xml); }
+      catch (Exception e) {}
+      return new CustomLayout(xml, parsed);
+    }
   }
 
   /** Named layouts are serialized to strings and custom layouts to JSON
@@ -266,7 +283,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
       JSONObject obj_ = (JSONObject)obj;
       switch (obj_.getString("kind"))
       {
-        case "custom": return new CustomLayout(obj_.getString("xml"));
+        case "custom": return CustomLayout.parse(obj_.getString("xml"));
         case "system": default: return new SystemLayout();
       }
     }

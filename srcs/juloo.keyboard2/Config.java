@@ -430,7 +430,7 @@ final class Config
           l.add(migrate_layout(snd_layout));
         String custom_layout = prefs.getString("custom_layout", "");
         if (custom_layout != null && !custom_layout.equals(""))
-          l.add(new LayoutsPreference.CustomLayout(custom_layout));
+          l.add(LayoutsPreference.CustomLayout.parse(custom_layout));
         LayoutsPreference.save_to_preferences(e, l);
       case 1:
       default: break;
