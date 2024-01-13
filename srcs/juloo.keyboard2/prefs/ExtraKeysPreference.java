@@ -24,6 +24,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "meta",
     "compose",
     "voice_typing",
+    "switch_clipboard",
     "accent_aigu",
     "accent_grave",
     "accent_double_aigu",

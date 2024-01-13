@@ -115,4 +115,5 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="key_descr_page_down">Aşağı</string>
   <string name="key_descr_home">BAŞ(Sol yön tuşu)</string>
   <string name="key_descr_end">SON(Sağ yön tuşu)</string>
+  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
 </resources>

@@ -115,4 +115,5 @@
   <string name="key_descr_page_down">下一页</string>
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
+  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
 </resources>

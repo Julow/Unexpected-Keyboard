@@ -115,4 +115,5 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="key_descr_page_down">Page suivante</string>
   <string name="key_descr_home">Début</string>
   <string name="key_descr_end">Fin</string>
+  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
 </resources>

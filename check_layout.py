@@ -6,7 +6,8 @@ warning_count = 0
 KNOWN_NOT_LAYOUT = set([
     "number_row", "numpad", "pin",
     "bottom_row", "settings", "method",
-    "greekmath", "numeric", "emoji_bottom_row" ])
+    "greekmath", "numeric", "emoji_bottom_row",
+    "clipboard_bottom_row" ])
 
 def warn(msg):
     global warning_count

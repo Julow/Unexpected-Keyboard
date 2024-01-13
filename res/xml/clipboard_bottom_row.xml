@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The bottom row used in the clipboard history pane. -->
+<keyboard bottom_row="false">
+  <row height="0.95">
+    <key key0="switch_back_emoji"/>
+    <key shift="4" key0="backspace"/>
+    <key key0="enter"/>
+  </row>
+</keyboard>

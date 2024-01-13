@@ -115,4 +115,5 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="key_descr_page_down">Bild ab</string>
   <string name="key_descr_home">Pos1</string>
   <string name="key_descr_end">Ende</string>
+  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
 </resources>

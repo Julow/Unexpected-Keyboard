@@ -1,0 +1,78 @@
+package juloo.keyboard2;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public final class ClipboardHistoryView extends ListView
+  implements ClipboardHistoryService.OnClipboardHistoryChange
+{
+  List<String> _history;
+  ClipboardEntriesAdapter _adapter;
+
+  public ClipboardHistoryView(Context ctx, AttributeSet attrs)
+  {
+    super(ctx, attrs);
+    _history = Collections.EMPTY_LIST;
+    _adapter = this.new ClipboardEntriesAdapter();
+    ClipboardHistoryService service = ClipboardHistoryService.get_service(ctx);
+    if (service != null)
+    {
+      service.set_on_clipboard_history_change(this);
+      _history = service.get_history();
+    }
+    setAdapter(_adapter);
+  }
+
+  @Override
+  public void on_clipboard_history_change(List<String> history)
+  {
+    _history = history;
+    _adapter.notifyDataSetChanged();
+    invalidate();
+  }
+
+  @Override
+  protected void onAttachedToWindow()
+  {
+    super.onAttachedToWindow();
+    _adapter.notifyDataSetChanged();
+  }
+
+  class ClipboardEntriesAdapter extends BaseAdapter
+  {
+    public ClipboardEntriesAdapter() {}
+
+    @Override
+    public int getCount()
+    {
+      return _history.size();
+    }
+
+    public Object getItem(int pos)
+    {
+      return _history.get(pos);
+    }
+
+    public long getItemId(int pos)
+    {
+      return _history.get(pos).hashCode();
+    }
+
+    @Override
+    public View getView(int pos, View v, ViewGroup _parent)
+    {
+      if (v == null)
+        v = View.inflate(getContext(), R.layout.clipboard_pane_entry, null);
+      ((TextView)v.findViewById(android.R.id.text1)).setText(_history.get(pos));
+      return v;
+    }
+  }
+}
