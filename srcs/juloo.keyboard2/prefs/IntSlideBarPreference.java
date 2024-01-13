@@ -1,4 +1,4 @@
-package juloo.common;
+package juloo.keyboard2.prefs;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -14,8 +14,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import juloo.keyboard2.prefs.CustomExtraKeysPreference;
+import juloo.keyboard2.prefs.ExtraKeysPreference;
+import juloo.keyboard2.prefs.LayoutsPreference;
 
-final class Config
+public final class Config
 {
   private final SharedPreferences _prefs;
 

@@ -4,7 +4,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
-class KeyModifier
+public final class KeyModifier
 {
   /** Cache key is KeyValue's name */
   private static HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>> _cache =

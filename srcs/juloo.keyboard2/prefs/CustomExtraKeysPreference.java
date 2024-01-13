@@ -1,4 +1,4 @@
-package juloo.keyboard2;
+package juloo.keyboard2.prefs;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import juloo.keyboard2.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 

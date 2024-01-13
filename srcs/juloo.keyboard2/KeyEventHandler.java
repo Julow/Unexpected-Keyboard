@@ -7,7 +7,7 @@ import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 
-class KeyEventHandler implements Config.IKeyEventHandler
+public final class KeyEventHandler implements Config.IKeyEventHandler
 {
   IReceiver _recv;
   Autocapitalisation _autocap;

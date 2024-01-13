@@ -1,4 +1,4 @@
-package juloo.keyboard2;
+package juloo.keyboard2.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import juloo.keyboard2.*;
 
 /** This class implements the "extra keys" preference but also defines the
     possible extra keys. */

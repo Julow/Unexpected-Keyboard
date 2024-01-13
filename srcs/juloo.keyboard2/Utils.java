@@ -7,7 +7,7 @@ import android.view.WindowManager;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-class Utils
+public final class Utils
 {
   /** Turn the first letter of a string uppercase. */
   public static String capitalize_string(String s)

@@ -1,4 +1,4 @@
-package juloo.keyboard2;
+package juloo.keyboard2.prefs;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import juloo.keyboard2.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -237,22 +238,22 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
 
   /** A layout selected by the user. The only implementations are
       [NamedLayout], [SystemLayout] and [CustomLayout]. */
-  interface Layout {}
+  public interface Layout {}
 
-  static final class SystemLayout implements Layout
+  public static final class SystemLayout implements Layout
   {
     public SystemLayout() {}
   }
 
   /** The name of a layout defined in [res/xml]. */
-  static final class NamedLayout implements Layout
+  public static final class NamedLayout implements Layout
   {
     public final String name;
     public NamedLayout(String n) { name = n; }
   }
 
   /** The XML description of a custom layout. */
-  static final class CustomLayout implements Layout
+  public static final class CustomLayout implements Layout
   {
     public final String xml;
     /** Might be null. */
@@ -269,7 +270,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
 
   /** Named layouts are serialized to strings and custom layouts to JSON
       objects with a [kind] field. */
-  static class Serializer implements ListGroupPreference.Serializer<Layout>
+  public static class Serializer implements ListGroupPreference.Serializer<Layout>
   {
     public Layout load_item(Object obj) throws JSONException
     {

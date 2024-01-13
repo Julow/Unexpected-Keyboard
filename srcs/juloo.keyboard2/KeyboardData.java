@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.function.Function;
 import org.xmlpull.v1.XmlPullParser;
 
-class KeyboardData
+public final class KeyboardData
 {
   public final List<Row> rows;
   /** Total width of the keyboard. */

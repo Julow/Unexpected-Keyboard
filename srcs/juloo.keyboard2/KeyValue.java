@@ -3,7 +3,7 @@ package juloo.keyboard2;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
-final class KeyValue
+public final class KeyValue
 {
   public static enum Event
   {
