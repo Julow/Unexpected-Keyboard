@@ -54,7 +54,12 @@ public class Keyboard2View extends View
     _pointers = new Pointers(this, _config);
     refresh_navigation_bar(context);
     setOnTouchListener(this);
-    reset();
+    int layout_id = (attrs == null) ? 0 :
+      attrs.getAttributeResourceValue(null, "layout", 0);
+    if (layout_id == 0)
+      reset();
+    else
+      setKeyboard(KeyboardData.load(getResources(), layout_id));
   }
 
   private Window getParentWindow(Context context)
