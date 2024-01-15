@@ -394,7 +394,7 @@ public class Keyboard2 extends InputMethodService
           if (VERSION.SDK_INT < 28)
             get_imm().switchToLastInputMethod(getConnectionToken());
           else
-            switchToPreviousInputMethod();
+            switchToNextInputMethod(false);
           break;
 
         case ACTION:
