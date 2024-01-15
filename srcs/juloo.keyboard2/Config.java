@@ -61,7 +61,6 @@ public final class Config
   public boolean pin_entry_enabled;
 
   // Dynamically set
-  public boolean shouldOfferSwitchingToNextInputMethod;
   public boolean shouldOfferVoiceTyping;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
@@ -88,7 +87,6 @@ public final class Config
     // from prefs
     refresh(res);
     // initialized later
-    shouldOfferSwitchingToNextInputMethod = false;
     shouldOfferVoiceTyping = false;
     actionLabel = null;
     actionId = 0;
@@ -238,8 +236,6 @@ public final class Config
             switch (key.getEvent())
             {
               case CHANGE_METHOD_PICKER:
-                if (!shouldOfferSwitchingToNextInputMethod)
-                  return null;
                 if (switch_input_immediate)
                   return KeyValue.getKeyByName("change_method_prev");
                 return key;

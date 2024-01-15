@@ -136,8 +136,6 @@ public class Keyboard2 extends InputMethodService
     for (InputMethodSubtype s : enabled_subtypes)
       extra_keys.add(extra_keys_of_subtype(s));
     _config.extra_keys_subtype = ExtraKeys.merge(extra_keys);
-    if (enabled_subtypes.size() > 1)
-      _config.shouldOfferSwitchingToNextInputMethod = true;
   }
 
   InputMethodManager get_imm()
@@ -148,10 +146,6 @@ public class Keyboard2 extends InputMethodService
   private void refreshSubtypeImm()
   {
     InputMethodManager imm = get_imm();
-    if (VERSION.SDK_INT < 28)
-      _config.shouldOfferSwitchingToNextInputMethod = true;
-    else
-      _config.shouldOfferSwitchingToNextInputMethod = shouldOfferSwitchingToNextInputMethod();
     _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
     _config.extra_keys_subtype = null;
