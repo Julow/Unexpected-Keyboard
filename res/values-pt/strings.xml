@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">Após ativar, experimente aqui:</string>
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Grego &amp; símbolos matemáticos</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Digitação por voz</string>
   <string name="key_descr_copy">Copiar</string>
   <string name="key_descr_paste">Colar</string>

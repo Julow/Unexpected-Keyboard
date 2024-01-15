@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">Tras habilitarlo, puedes probar el teclado en este campo:</string>
   <string name="key_descr_capslock">Bloq Mayús</string>
   <string name="key_descr_switch_greekmath">Símb. griegos y matemáticos</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Dictado por voz</string>
   <string name="key_descr_copy">Copiar</string>
   <string name="key_descr_paste">Pegar</string>

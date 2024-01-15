@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">Nach Aktivierung kannst du die Tastatur hier ausprobieren:</string>
   <string name="key_descr_capslock">Feststelltaste</string>
   <string name="key_descr_switch_greekmath">Griechische &amp; mathematische Symbole</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Spracheingabe</string>
   <string name="key_descr_copy">Kopieren</string>
   <string name="key_descr_paste">Einfügen</string>

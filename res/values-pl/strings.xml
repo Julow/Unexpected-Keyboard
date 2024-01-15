@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">Po jej włączeniu, możesz wypróbować klawiaturę tutaj:</string>
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Symbole greckie i matematyczne</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Pisanie głosowe</string>
   <string name="key_descr_copy">Kopiuj</string>
   <string name="key_descr_paste">Wklej</string>

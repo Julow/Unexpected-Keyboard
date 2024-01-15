@@ -53,6 +53,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "home",
     "end",
     "switch_greekmath",
+    "change_method",
     "capslock",
     "copy",
     "paste",
@@ -72,6 +73,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     switch (name)
     {
       case "voice_typing":
+      case "change_method":
         return true;
       default:
         return false;
@@ -86,6 +88,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       case "capslock": id = R.string.key_descr_capslock; break;
       case "switch_greekmath": id = R.string.key_descr_switch_greekmath; break;
+      case "change_method": id = R.string.key_descr_change_method; break;
       case "voice_typing": id = R.string.key_descr_voice_typing; break;
       case "copy": id = R.string.key_descr_copy; break;
       case "paste": id = R.string.key_descr_paste; break;

@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>
   <string name="key_descr_capslock">CapsLock</string>
   <string name="key_descr_switch_greekmath">Greek &amp; math sembolleri</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Sesle yazma</string>
   <string name="key_descr_copy">Kopyala</string>
   <string name="key_descr_paste">Yapıştır</string>

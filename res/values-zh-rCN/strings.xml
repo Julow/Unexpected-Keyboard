@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">启用键盘后，可以在这里测试效果：</string>
   <!-- <string name="key_descr_capslock">Caps lock</string> -->
   <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
   <!-- <string name="key_descr_copy">Copy</string> -->
   <!-- <string name="key_descr_paste">Paste</string> -->

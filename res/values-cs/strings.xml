@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">Po aktivaci můžete klávesnici rovnou vyzkoušet zde:</string>
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Řecké a matematické symboly</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Hlasové zadávání</string>
   <string name="key_descr_copy">Kopírovat</string>
   <string name="key_descr_paste">Vložit</string>

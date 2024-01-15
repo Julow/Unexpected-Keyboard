@@ -82,6 +82,7 @@
   <string name="launcher_tryhere">Après l\'avoir activé, vous pouvez l\'essayer ici:</string>
   <string name="key_descr_capslock">Verrouillage majuscules</string>
   <string name="key_descr_switch_greekmath">Symboles mathématiques</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Saisie vocale</string>
   <string name="key_descr_copy">Copier</string>
   <string name="key_descr_paste">Coller</string>

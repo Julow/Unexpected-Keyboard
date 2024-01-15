@@ -84,6 +84,7 @@
   <string name="launcher_tryhere">Pēc iespējošanas šeit var izmēģināt tastatūru:</string>
   <string name="key_descr_capslock">Burtslēgs</string>
   <string name="key_descr_switch_greekmath">Grieķu un matemātikas rakstzīmes</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Rakstīšana ar balsi</string>
   <string name="key_descr_copy">Ievietot starpliktuvē</string>
   <string name="key_descr_paste">Ielīmēt</string>
