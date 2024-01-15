@@ -237,7 +237,7 @@ public final class Config
           case Event:
             switch (key.getEvent())
             {
-              case CHANGE_METHOD:
+              case CHANGE_METHOD_PICKER:
                 if (!shouldOfferSwitchingToNextInputMethod)
                   return null;
                 if (switch_input_immediate)

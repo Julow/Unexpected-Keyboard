@@ -386,11 +386,11 @@ public class Keyboard2 extends InputMethodService
           setInputView(_keyboardView);
           break;
 
-        case CHANGE_METHOD:
+        case CHANGE_METHOD_PICKER:
           get_imm().showInputMethodPicker();
           break;
 
-        case CHANGE_METHOD_PREV:
+        case CHANGE_METHOD_AUTO:
           if (VERSION.SDK_INT < 28)
             get_imm().switchToLastInputMethod(getConnectionToken());
           else

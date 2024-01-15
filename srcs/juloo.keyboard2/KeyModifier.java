@@ -75,7 +75,7 @@ public final class KeyModifier
       case Event:
         switch (k.getEvent())
         {
-          case CHANGE_METHOD_PREV:
+          case CHANGE_METHOD_AUTO:
             return KeyValue.getKeyByName("change_method");
           case SWITCH_VOICE_TYPING:
             return KeyValue.getKeyByName("voice_typing_chooser");
