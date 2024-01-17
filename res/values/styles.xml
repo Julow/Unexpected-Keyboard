@@ -22,4 +22,21 @@
     <item name="android:layout_marginHorizontal">16dp</item>
     <item name="android:layout_gravity">center</item>
   </style>
+<style name="appTheme" parent="@android:style/Theme.Material.Light">
+			<item name="android:textStyle">bold</item>
+			<item name="android:colorAccent">#ff2424ff</item>
+			<item name="android:colorBackground">#ffeeeeff</item>
+			<item name="android:colorPrimary">#ffddddff</item>
+			<item name="android:colorPrimaryDark">#ffddddff</item>
+			<item name="android:colorSecondary">#ffddddff</item>
+		</style>
+		<style name="appTheme.Night" parent="@android:style/Theme.Material">
+				<item name="android:textStyle">bold</item>
+				<item name="android:colorAccent">#ff2626ff</item>
+				<item name="android:colorBackground">#ff000000</item>
+				<item name="android:colorPrimary">#ff101010</item>
+				<item name="android:colorPrimaryDark">#ff101010</item>
+				<item name="android:colorSecondary">#ff101010</item>
+				
+		</style>
 </resources>
