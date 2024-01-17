@@ -25,6 +25,7 @@ public class LauncherActivity extends Activity
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
+    
     super.onCreate(savedInstanceState);
     setContentView(R.layout.launcher_activity);
     _intro_video = (VideoView)findViewById(R.id.launcher_intro_video);

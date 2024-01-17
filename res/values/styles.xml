@@ -22,4 +22,5 @@
     <item name="android:layout_marginHorizontal">16dp</item>
     <item name="android:layout_gravity">center</item>
   </style>
+  <style name="appTheme" parent="@android:style/Theme.DeviceDefault.DayNight"/>
 </resources>

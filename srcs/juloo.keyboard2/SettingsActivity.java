@@ -12,7 +12,6 @@ public class SettingsActivity extends PreferenceActivity
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
-    detectSystemTheme();
     super.onCreate(savedInstanceState);
     // The preferences can't be read when in direct-boot mode. Avoid crashing
     // and don't allow changing the settings.
@@ -24,18 +23,6 @@ public class SettingsActivity extends PreferenceActivity
     }
     catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
-  }
-
-  /** The default theme is [Theme.DeviceDefault], which is dark. Detect if the
-      system is using light theme. */
-  void detectSystemTheme()
-  {
-    if (Build.VERSION.SDK_INT >= 14)
-    {
-      int ui_mode = getResources().getConfiguration().uiMode;
-      if ((ui_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
-        setTheme(android.R.style.Theme_DeviceDefault_Light);
-    }
   }
 
   void fallbackEncrypted()
