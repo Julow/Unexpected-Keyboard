@@ -333,21 +333,18 @@ public class Keyboard2View extends View
   void drawKeyFrame(Canvas canvas, float x, float y, float keyW, float keyH,
       boolean isKeyDown)
   {
-   	float r = _theme.keyBorderRadius;
-								if ( _config.borderConfig )
-										{
-												r = _config.borderRadius;
-										}
-								float w = isKeyDown ? _theme.keyBorderWidthActivated : _theme.keyBorderWidth;
-								float w2 = _theme.keyBorderWidth / 2.f;
-								
-								if ( _config.borderConfig )
-										{
-												w = isKeyDown ? _theme.keyBorderWidthActivated : _config.borderLineSize;
-												w2 = _config.borderLineSize / 2.f;	
-										}
-       _tmpRect.set ( x + w2, y + w2, x + keyW - w2, y + keyH - w2 );   
-        canvas.drawRoundRect(_tmpRect, r, r,
+    float r = _theme.keyBorderRadius;
+    if (_config.borderConfig)
+      r = _config.borderRadius;
+    float w = isKeyDown ? _theme.keyBorderWidthActivated : _theme.keyBorderWidth;
+    float w2 = _theme.keyBorderWidth / 2.f;
+    if ( _config.borderConfig )
+    {
+      w = isKeyDown ? _theme.keyBorderWidthActivated : _config.borderLineSize;
+      w2 = _config.borderLineSize / 2.f;	
+    }
+    _tmpRect.set ( x + w2, y + w2, x + keyW - w2, y + keyH - w2 );   
+    canvas.drawRoundRect(_tmpRect, r, r,
         isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
     if (w > 0.f)
     {
@@ -366,11 +363,9 @@ public class Keyboard2View extends View
       float clipb, int color)
   {
     Paint p = _theme.keyBorderPaint;
-		float r = _theme.keyBorderRadius;
-								if ( _config.borderConfig )
-										{
-												r = _config.borderRadius;
-										}
+    float r = _theme.keyBorderRadius;
+    if (_config.borderConfig)
+      r = _config.borderRadius;
     canvas.save();
     canvas.clipRect(clipl, clipt, clipr, clipb);
     p.setColor(color);

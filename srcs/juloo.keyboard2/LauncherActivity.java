@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -99,23 +100,21 @@ public class LauncherActivity extends Activity
     }
   }
 
-
-void detectSystemTheme ( )
-						{
-								if ( Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT <= 20 )
-										{
-												int ui_mode = getResources ( ).getConfiguration ( ).uiMode;
-												if ( ( ui_mode & Configuration.UI_MODE_NIGHT_NO ) != 0 )
-														setTheme ( android.R.style.Theme_DeviceDefault_Light );
-										}
-
-								if ( Build.VERSION.SDK_INT >= 21 )
-										{
-												int ui_mode = getResources ( ).getConfiguration ( ).uiMode;
-												if ( ( ui_mode & Configuration.UI_MODE_NIGHT_NO ) != 0 )
-														{setTheme ( R.style.appTheme );}
-												else
-														{setTheme ( R.style.appTheme_Night );}
-										}
-						}
+  void detectSystemTheme ( )
+  {
+    if (VERSION.SDK_INT >= 14 && VERSION.SDK_INT <= 20)
+    {
+      int ui_mode = getResources().getConfiguration().uiMode;
+      if ((ui_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
+        setTheme(android.R.style.Theme_DeviceDefault_Light);
+    }
+    if (VERSION.SDK_INT >= 21)
+    {
+      int ui_mode = getResources().getConfiguration().uiMode;
+      if ((ui_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
+        setTheme(R.style.appTheme);
+      else
+        setTheme(R.style.appTheme_Night);
+    }
+  }
 }
