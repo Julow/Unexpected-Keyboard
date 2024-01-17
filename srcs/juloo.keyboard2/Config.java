@@ -51,6 +51,8 @@ public final class Config
   public float keyHorizontalInterval;
   public int labelBrightness; // 0 - 255
   public int keyboardOpacity; // 0 - 255
+  public int borderRadius; // 0 - 15
+  public int borderLineSize; // 0 - 5
   public int keyOpacity; // 0 - 255
   public int keyActivatedOpacity; // 0 - 255
   public boolean double_tap_lock_shift;
@@ -59,6 +61,7 @@ public final class Config
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
   public boolean pin_entry_enabled;
+  public boolean borderConfig;
 
   // Dynamically set
   public boolean shouldOfferVoiceTyping;
@@ -147,6 +150,10 @@ public final class Config
     keyboardOpacity = _prefs.getInt("keyboard_opacity", 100) * 255 / 100;
     keyOpacity = _prefs.getInt("key_opacity", 100) * 255 / 100;
     keyActivatedOpacity = _prefs.getInt("key_activated_opacity", 100) * 255 / 100;
+  	// keyboard border settings
+		borderConfig = _prefs.getBoolean("border_config", false);
+		borderRadius = _prefs.getInt("border_radius", 0);
+		borderLineSize = _prefs.getInt("border_line_size", 0);     
     // Do not substract keyVerticalInterval from keyHeight because this is done
     // during rendered.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
