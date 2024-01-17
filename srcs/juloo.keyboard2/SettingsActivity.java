@@ -36,7 +36,16 @@ public class SettingsActivity extends PreferenceActivity
       if ((ui_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
         setTheme(android.R.style.Theme_DeviceDefault_Light);
     }
-  }
+ 
+if ( Build.VERSION.SDK_INT >= 21 )
+										{
+												int ui_mode = getResources ( ).getConfiguration ( ).uiMode;
+												if ( ( ui_mode & Configuration.UI_MODE_NIGHT_NO ) != 0 )
+														{setTheme ( R.style.appTheme );}
+												else
+														{setTheme ( R.style.appTheme_Night );}
+										}
+						}
 
   void fallbackEncrypted()
   {
