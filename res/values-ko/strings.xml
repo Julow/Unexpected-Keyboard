@@ -69,6 +69,11 @@
   <string name="pref_swipe_dist_e_very_far">매우 넓음</string>
   <string name="pref_key_horizontal_space">키보드 양 옆 간격</string>
   <string name="pref_key_vertical_space">키보드 세로 간격</string>
+  <!-- <string name="pref_border_config_summary">Customize the Border Width, and the Corners Radius of the keys</string> -->
+  <!-- <string name="pref_border_options_disabled">Disabled</string> -->
+  <!-- <string name="pref_border_config">Customize the keys</string> -->
+  <!-- <string name="pref_border_width">Border Width</string> -->
+  <!-- <string name="pref_corners_radius">Corner radius</string> -->
   <string name="key_action_next">다음</string>
   <string name="key_action_done">확인</string>
   <string name="key_action_go">Go</string>
