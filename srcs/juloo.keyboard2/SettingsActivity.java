@@ -12,7 +12,7 @@ public class SettingsActivity extends PreferenceActivity
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
-    detectSystemTheme();
+ 
     super.onCreate(savedInstanceState);
     // The preferences can't be read when in direct-boot mode. Avoid crashing
     // and don't allow changing the settings.
