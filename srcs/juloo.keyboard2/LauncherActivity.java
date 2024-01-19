@@ -26,7 +26,7 @@ public class LauncherActivity extends Activity
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
-    detectSystemTheme();
+    
     super.onCreate(savedInstanceState);
     setContentView(R.layout.launcher_activity);
     _intro_video = (VideoView)findViewById(R.id.launcher_intro_video);
@@ -97,24 +97,6 @@ public class LauncherActivity extends Activity
       s.append(kc.replaceFirst("^KEYCODE_", ""));
       _tryhere_text.setText(s.toString());
       return true;
-    }
-  }
-
-  void detectSystemTheme ( )
-  {
-    if (VERSION.SDK_INT >= 14 && VERSION.SDK_INT <= 20)
-    {
-      int ui_mode = getResources().getConfiguration().uiMode;
-      if ((ui_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
-        setTheme(android.R.style.Theme_DeviceDefault_Light);
-    }
-    if (VERSION.SDK_INT >= 21)
-    {
-      int ui_mode = getResources().getConfiguration().uiMode;
-      if ((ui_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
-        setTheme(R.style.appTheme);
-      else
-        setTheme(R.style.appTheme_Night);
     }
   }
 }
