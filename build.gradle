@@ -115,17 +115,13 @@ tasks.register('genLayoutsList') {
 
 tasks.register('checkKeyboardLayouts') {
   println "\nChecking layouts"
-  new ByteArrayOutputStream().withStream { bos ->
-    exec {
-      def layouts = new File(projectDir, "res/xml").listFiles().findAll {
-          it.isFile() && it.name.endsWith(".xml")
-      }
-      workingDir = projectDir
-      commandLine("python", "check_layout.py", *layouts)
-      standardOutput = bos
+  exec {
+    def layouts = new File(projectDir, "srcs/layouts").listFiles().findAll {
+      it.name.endsWith(".xml")
     }
-
-    new File(projectDir, "check_layout.output").write(bos.toString())
+    workingDir = projectDir
+    commandLine("python", "check_layout.py", *layouts)
+    standardOutput = new FileOutputStream("${projectDir}/check_layout.output")
   }
 }
 
@@ -140,6 +136,7 @@ tasks.register('syncTranslations') {
 tasks.named("preBuild") {
   dependsOn += "initDebugKeystore"
   dependsOn += "copyRawQwertyUS"
+  dependsOn += "copyLayoutDefinitions"
 }
 
 tasks.register('initDebugKeystore') {
@@ -156,7 +153,15 @@ tasks.register('initDebugKeystore') {
 tasks.register('copyRawQwertyUS')
 {
   copy {
-    from "res/xml/latn_qwerty_us.xml"
+    from "srcs/layouts/latn_qwerty_us.xml"
     into "build/generated-resources/raw"
+  }
+}
+
+tasks.register('copyLayoutDefinitions')
+{
+  copy {
+    from "srcs/layouts"
+    into "build/generated-resources/xml"
   }
 }

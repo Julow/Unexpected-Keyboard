@@ -88,14 +88,15 @@ Github secret named `DEBUG_KEYSTORE`.
 
 ### Adding a layout
 
-Layouts are defined in XML, see `res/xml/latn_qwerty_us.xml`.
+Layouts are defined in XML, see `srcs/layouts/latn_qwerty_us.xml`.
 An online tool for editing layout files written by @Lixquid is available
 [here](https://unexpected-keyboard-layout-editor.lixquid.com/).
 
 Makes sure to specify the `name` attribute like in `latn_qwerty_us.xml`,
 otherwise the layout won't be added to the app.
 
-The layout file must be placed in the `res/xml/` directory and named according to:
+The layout file must be placed in the `srcs/layouts` directory and named
+according to:
 - script (`latn` for latin, etc..)
 - layout name (eg. the name of a standard)
 - country code (or language code if more adequate)

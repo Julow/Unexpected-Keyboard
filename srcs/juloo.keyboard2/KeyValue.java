@@ -317,9 +317,9 @@ public final class KeyValue
   {
     switch (name)
     {
-      /* These symbols have special meaning when in `res/xml` and are escaped in
-         standard layouts. The backslash is not stripped when parsed from the
-         custom layout option. */
+      /* These symbols have special meaning when in `srcs/layouts` and are
+         escaped in standard layouts. The backslash is not stripped when parsed
+         from the custom layout option. */
       case "\\?": return makeStringKey("?");
       case "\\#": return makeStringKey("#");
       case "\\@": return makeStringKey("@");
