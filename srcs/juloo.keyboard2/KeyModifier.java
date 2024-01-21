@@ -518,6 +518,8 @@ public final class KeyModifier
           case 'y': return "ý";
           // Combining diacritic
           case 'j':
+          // Russian vowels
+          case 'у': case 'е': case 'а': case 'о': case 'и':
             return c + "\u0301";
           default: return map_dead_char(c, '\u00B4');
         }
