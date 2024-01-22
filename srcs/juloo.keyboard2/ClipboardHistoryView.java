@@ -15,6 +15,7 @@ public final class ClipboardHistoryView extends ListView
   implements ClipboardHistoryService.OnClipboardHistoryChange
 {
   List<String> _history;
+  ClipboardHistoryService _service;
   ClipboardEntriesAdapter _adapter;
 
   public ClipboardHistoryView(Context ctx, AttributeSet attrs)
@@ -22,13 +23,23 @@ public final class ClipboardHistoryView extends ListView
     super(ctx, attrs);
     _history = Collections.EMPTY_LIST;
     _adapter = this.new ClipboardEntriesAdapter();
-    ClipboardHistoryService service = ClipboardHistoryService.get_service(ctx);
-    if (service != null)
+    _service = ClipboardHistoryService.get_service(ctx);
+    if (_service != null)
     {
-      service.set_on_clipboard_history_change(this);
-      _history = service.get_history();
+      _service.set_on_clipboard_history_change(this);
+      _history = _service.get_history();
     }
     setAdapter(_adapter);
+  }
+
+  /** The history entry at index [pos] is removed from the history and added to
+      the list of pinned clipboards. */
+  public void pin_entry(int pos)
+  {
+    ClipboardPinView v = (ClipboardPinView)((ViewGroup)getParent().getParent()).findViewById(R.id.clipboard_pin_view);
+    String clip = _history.get(pos);
+    v.add_entry(clip);
+    _service.remove_history_entry(clip);
   }
 
   @Override
@@ -51,27 +62,25 @@ public final class ClipboardHistoryView extends ListView
     public ClipboardEntriesAdapter() {}
 
     @Override
-    public int getCount()
-    {
-      return _history.size();
-    }
-
-    public Object getItem(int pos)
-    {
-      return _history.get(pos);
-    }
-
-    public long getItemId(int pos)
-    {
-      return _history.get(pos).hashCode();
-    }
+    public int getCount() { return _history.size(); }
+    @Override
+    public Object getItem(int pos) { return _history.get(pos); }
+    @Override
+    public long getItemId(int pos) { return _history.get(pos).hashCode(); }
 
     @Override
-    public View getView(int pos, View v, ViewGroup _parent)
+    public View getView(final int pos, View v, ViewGroup _parent)
     {
       if (v == null)
-        v = View.inflate(getContext(), R.layout.clipboard_pane_entry, null);
-      ((TextView)v.findViewById(android.R.id.text1)).setText(_history.get(pos));
+        v = View.inflate(getContext(), R.layout.clipboard_history_entry, null);
+      ((TextView)v.findViewById(R.id.clipboard_entry_text))
+        .setText(_history.get(pos));
+      v.findViewById(R.id.clipboard_entry_addpin).setOnClickListener(
+          new View.OnClickListener()
+          {
+            @Override
+            public void onClick(View v) { pin_entry(pos); }
+          });
       return v;
     }
   }

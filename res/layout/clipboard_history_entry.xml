@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+  <TextView android:id="@+id/clipboard_entry_text" style="@style/clipboardEntry"/>
+  <View android:id="@+id/clipboard_entry_addpin" style="@style/clipboardEntryButton" android:background="@android:drawable/ic_menu_add"/>
+</LinearLayout>

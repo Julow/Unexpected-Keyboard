@@ -116,4 +116,5 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <!-- <string name="key_descr_home">Home</string> -->
   <!-- <string name="key_descr_end">End</string> -->
   <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
+  <!-- <string name="clipboard_pin_heading">Pinned</string> -->
 </resources>

@@ -18,6 +18,9 @@
   </style>
   <!-- Clipboard pane -->
   <style name="clipboardEntry">
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginHorizontal">14dp</item>
     <item name="android:layout_marginVertical">14dp</item>
     <item name="android:textSize">16dp</item>
@@ -30,6 +33,13 @@
     <item name="android:textSize">14dp</item>
     <item name="android:fontWeight">700</item>
     <item name="android:textColor">?attr/colorSubLabel</item>
+  </style>
+  <style name="clipboardEntryButton">
+    <item name="android:layout_gravity">top</item>
+    <item name="android:layout_width">24dp</item>
+    <item name="android:layout_height">24dp</item>
+    <item name="android:layout_marginVertical">14dp</item>
+    <item name="android:layout_marginRight">6dp</item>
   </style>
   <!-- Launcher activity -->
   <style name="paragraph">

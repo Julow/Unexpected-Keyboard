@@ -46,6 +46,28 @@ public final class ClipboardHistoryService
 
   public List<String> get_history() { return _history; }
 
+  /** This will call [on_clipboard_history_change]. */
+  public void remove_history_entry(String clip)
+  {
+    int last_pos = _history.size() - 1;
+    for (int pos = last_pos; pos >= 0; pos--)
+    {
+      if (!_history.get(pos).equals(clip))
+        continue;
+      // Removing the current clipboard, clear the system clipboard.
+      if (pos == last_pos)
+      {
+        if (VERSION.SDK_INT >= 28)
+          _cm.clearPrimaryClip();
+        else
+          _cm.setText("");
+      }
+      _history.remove(pos);
+      if (_listener != null)
+        _listener.on_clipboard_history_change(_history);
+    }
+  }
+
   /** Add clipboard entries to the history, skipping consecutive duplicates and
       empty strings. */
   public void add_clip(String clip)
