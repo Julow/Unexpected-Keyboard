@@ -125,7 +125,6 @@ public class Keyboard2View extends View
         return; // Don't remove locked pointers
       _pointers.remove_fake_pointer(_shift_kv, _shift_key);
     }
-    invalidate();
   }
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
@@ -144,6 +143,7 @@ public class Keyboard2View extends View
 
   public void onPointerDown(KeyValue k, boolean isSwipe)
   {
+    updateFlags();
     _config.handler.key_down(k, isSwipe);
     invalidate();
     vibrate();
@@ -151,17 +151,22 @@ public class Keyboard2View extends View
 
   public void onPointerUp(KeyValue k, Pointers.Modifiers mods)
   {
+    // [key_up] must be called before [updateFlags]. The latter might disable
+    // flags.
     _config.handler.key_up(k, mods);
+    updateFlags();
     invalidate();
   }
 
   public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
   {
     _config.handler.key_up(k, mods);
+    updateFlags();
   }
 
   public void onPointerFlagsChanged(boolean shouldVibrate)
   {
+    updateFlags();
     invalidate();
     if (shouldVibrate)
       vibrate();
@@ -170,6 +175,7 @@ public class Keyboard2View extends View
   private void updateFlags()
   {
     _mods = _pointers.getModifiers();
+    _config.handler.mods_changed(_mods);
   }
 
   @Override
@@ -287,7 +293,6 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
-    updateFlags();
     // Set keyboard background opacity
     getBackground().setAlpha(_config.keyboardOpacity);
     // Set keys opacity
