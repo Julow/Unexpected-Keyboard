@@ -299,16 +299,20 @@ public class Keyboard2View extends View
     _theme.keyBgPaint.setAlpha(_config.keyOpacity);
     _theme.keyDownBgPaint.setAlpha(_config.keyActivatedOpacity);
     _theme.keyBorderPaint.setAlpha(_config.keyOpacity);
-    float y = _config.marginTop + _config.keyVerticalInterval / 2;
+    float key_vertical_margin = _config.key_vertical_margin * _config.keyHeight;
+    float key_horizontal_margin = _config.key_horizontal_margin * _keyWidth;
+    // Add half of the key margin on the left and on the top as it's then added
+    // on the right and on the bottom of every keys.
+    float y = _config.marginTop + key_vertical_margin / 2;
     for (KeyboardData.Row row : _keyboard.rows)
     {
       y += row.shift * _config.keyHeight;
-      float x = _config.horizontal_margin + _config.keyHorizontalInterval / 2;
-      float keyH = row.height * _config.keyHeight - _config.keyVerticalInterval;
+      float x = _config.horizontal_margin + key_horizontal_margin / 2;
+      float keyH = row.height * _config.keyHeight - key_vertical_margin;
       for (KeyboardData.Key k : row.keys)
       {
         x += k.shift * _keyWidth;
-        float keyW = _keyWidth * k.width - _config.keyHorizontalInterval;
+        float keyW = _keyWidth * k.width - key_horizontal_margin;
         boolean isKeyDown = _pointers.isKeyDown(k);
         drawKeyFrame(canvas, x, y, keyW, keyH, isKeyDown);
         if (k.keys[0] != null)
