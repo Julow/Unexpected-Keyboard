@@ -15,9 +15,9 @@
     <key key0="q" key3="&amp;" key4="ğ"/>
   </row>
   <row>
-    <key shift="0.5" key0="á" key2="`" key4="a"/>
+    <key key0="á" key2="`" key4="a"/>
     <key key0="s" key2="~"/>
-    <key key0="d" key1="{" key4="loc "/>
+    <key key0="d" key1="{"/>
     <key key0="f" key2="}"/>
     <key key0="g" key2="-" key8="_"/>
     <key key0="h" key2="=" key3="+"/>
