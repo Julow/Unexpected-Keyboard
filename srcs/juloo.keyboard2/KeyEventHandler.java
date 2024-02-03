@@ -1,6 +1,7 @@
 package juloo.keyboard2;
 
 import android.os.Looper;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
@@ -18,7 +19,10 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
   /** Consistent with [_mods]. This is a mutable state rather than computed
       from [_mods] to ensure that the meta state is correct while up and down
       events are sent for the modifier keys. */
-  int _meta_state;
+  int _meta_state = 0;
+  /** Whether to force sending arrow keys to move the cursor when
+      [setSelection] could be used instead. */
+  boolean _move_cursor_force_fallback = false;
 
   public KeyEventHandler(Looper looper, IReceiver recv)
   {
@@ -32,6 +36,12 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
   public void started(EditorInfo info)
   {
     _autocap.started(info, _recv.getCurrentInputConnection());
+    // Workaround a bug in Acode, which answers to [getExtractedText] but do
+    // not react to [setSelection] while returning [true].
+    // Note: Using & to workaround a bug in Acode, which sets several
+    // variations at once.
+    _move_cursor_force_fallback = (info.inputType & InputType.TYPE_MASK_VARIATION &
+      InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0;
   }
 
   /** Selection has been updated. */
@@ -232,7 +242,8 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
       return;
     ExtractedText et = get_cursor_pos(conn);
     // Fallback to sending key events
-    if (et == null
+    if (_move_cursor_force_fallback
+        || et == null
         || _mods.has(KeyValue.Modifier.CTRL)
         || _mods.has(KeyValue.Modifier.ALT)
         || _mods.has(KeyValue.Modifier.META))
@@ -256,7 +267,8 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
       if (!_mods.has(KeyValue.Modifier.SHIFT))
         sel_start = sel_end;
     }
-    conn.setSelection(sel_start, sel_end);
+    if (!conn.setSelection(sel_start, sel_end))
+      move_cursor_fallback(d);
   }
 
   /** Send arrow keys as a fallback for editors that do not support
