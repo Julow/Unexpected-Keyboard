@@ -2,6 +2,10 @@
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
+# arab_hamvaj_tly
+Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], _, `, {, |, }
+Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder
+2 warnings
 # arab_pc
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
