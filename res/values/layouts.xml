@@ -7,6 +7,7 @@
     <item>latn_colemak</item>
     <item>latn_dvorak</item>
     <item>arab_alt</item>
+    <item>arab_hamvaj_tly</item>
     <item>arab_pc</item>
     <item>arab_pc_ckb</item>
     <item>arab_pc_hindu</item>
@@ -56,6 +57,7 @@
     <item>Colemak</item>
     <item>Dvorak</item>
     <item>Arabic Alt</item>
+    <item>Talysh (تالشی همواج)</item>
     <item>Arabic PC</item>
     <item>Kurdish (کوردی)</item>
     <item>Arabic PC (Hindu numerals)</item>
@@ -105,6 +107,7 @@
     <item>@xml/latn_colemak</item>
     <item>@xml/latn_dvorak</item>
     <item>@xml/arab_alt</item>
+    <item>@xml/arab_hamvaj_tly</item>
     <item>@xml/arab_pc</item>
     <item>@xml/arab_pc_ckb</item>
     <item>@xml/arab_pc_hindu</item>
