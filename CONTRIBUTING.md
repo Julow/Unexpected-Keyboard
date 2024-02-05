@@ -174,15 +174,13 @@ default translation in `res/values/strings.xml`, which contain the structure of
 the file and the English strings.
 
 To check that `strings.xml` is formatted correctly, run
-`./gradlew syncTranslations`. This will modify your files.
+`python sync_translations.py`. This will modify your files.
 
-The store description is found in `metadata/android/<locale>/`,
-`short_description.txt` and `full_description.txt`.
-The short description must not exceed 80 characters.
+Store descriptions in `metedata/` are updated automatically.
 Translating changelogs is not useful.
 
 The app name might be partially translated, the "Unexpected" word should remain
-untranslated.
+untranslated if possible.
 
 As translations need to be updated regularly, you can subscribe to this issue
 to receive a notification when an update is needed:

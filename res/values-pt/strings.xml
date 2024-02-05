@@ -2,6 +2,25 @@
 <resources>
   <string name="app_name_release">Teclado Unexpected</string>
   <string name="app_name_debug">Teclado Unexpected</string>
+  <string name="short_description">Um teclado virtual leve para desenvolvedores.</string>
+  <string name="store_description">"Um teclado virtual para aparelhos Android. Os recursos principais são facilidade de digitar todos os caracteres ASCII deslizando o dedo, teclas "mortas" para acentos e teclas modificadoras e a presença de teclas especiais (tab, esc, setas, etc..).
+
+O teclado mostra até 4 caracteres extras nos cantos de cada tecla. Esses caracteres são digitáveis com o deslizar do dedo na tecla.
+
+Alguns dos recursos interessantes:
+
+- Todos caracteres e teclas especiais que também estão disponíveis num teclado de PC. Perfeito para usar com aplicativos como Termux.
+
+- Incluindo Tab, Esc, as setas e teclas de função, e também Ctrl e Alt!
+
+- Caracteres acentuados são digitáveis usando teclas "mortas". Primeiro ative o acento e depois digite a letra.
+
+- Muito leve e rápido. Ocupa 500x menos espaço que o teclado da Google e 15x menos espaço que o teclado padrão. Sem propaganda, sem rastreio.
+
+- Vários layouts: QWERTY, QWERTZ, AZERTY. Temas: Branco, Escuro, Preto OLED. E muitas outras opções.
+
+Como qualquer outro teclado virtual, tem de ser ativado nas configurações de sistema. Abra as configurações e vá para:
+Sistema &gt; Idioma e entrada &gt; Teclado virtual &gt; Gerenciar teclados virtuais."</string>
   <string name="settings_activity_label">Configurações</string>
   <string name="pref_portrait">No modo retrato</string>
   <string name="pref_landscape">No modo paisagem</string>

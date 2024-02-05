@@ -2,6 +2,13 @@
 <resources>
   <string name="app_name_release">Unexpected Keyboard</string>
   <string name="app_name_debug">Unexpected Keyboard (debug)</string>
+  <!-- <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string> -->
+  <!-- <string name="store_description">"The main feature is that you can type more characters by swiping the keys towards the corners.
+
+This application was originally designed for programmers using Termux.
+Now perfect for everyday use.
+
+This application contains no ads, doesn't make any network requests and is Open Source."</string> -->
   <string name="settings_activity_label">Unexpected Keyboard 设置</string>
   <string name="pref_portrait">在竖屏模式下</string>
   <string name="pref_landscape">在横屏模式下</string>
