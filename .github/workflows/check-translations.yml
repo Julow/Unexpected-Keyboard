@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - run: python3 sync_translations.py
     - name: Check that strings files are uptodate, run python3 sync_translations.py otherwise
       run: git diff --exit-code
