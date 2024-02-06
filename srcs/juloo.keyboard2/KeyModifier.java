@@ -520,6 +520,7 @@ public final class KeyModifier
           case 'j':
           // Russian vowels
           case 'у': case 'е': case 'а': case 'о': case 'и':
+          case 'ы': case 'э': case 'ю': case 'я':
             return c + "\u0301";
           default: return map_dead_char(c, '\u00B4');
         }
