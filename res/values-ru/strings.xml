@@ -2,6 +2,13 @@
 <resources>
   <string name="app_name_release">Unexpected Keyboard</string>
   <string name="app_name_debug">Unexpected Keyboard (отладка)</string>
+  <string name="short_description">Легкая клавиатура для пользователей, заботящихся о конфиденциальности.</string>
+  <string name="store_description">"Главная особенность клавиатуры - это возможность легко напечатать любой ASCII символ за счет свайпов в углы клавиш.
+
+Приложение изначально было разработано для использования Termux.
+На данный момент, оно также удобно в повседневном использовании.
+
+Приложение не содержит рекламы, не осуществляет никаких запросов в сеть и имеет открытый исходный код."</string>
   <string name="settings_activity_label">Unexpected Keyboard Настройки</string>
   <string name="pref_portrait">В портретном режиме</string>
   <string name="pref_landscape">В ландшафтном режиме</string>
@@ -42,8 +49,8 @@
   <string name="pref_autocapitalisation_summary">Автонажатие Shift в начале каждого предложения</string>
   <string name="pref_switch_input_immediate_title">Переключаться к последней используемой клавиатуре</string>
   <string name="pref_switch_input_immediate_summary">Поведение клавиши переключения клавиатуры</string>
-  <string name="pref_vibrate_title">Вибрация</string>
-  <string name="pref_vibrate_summary">Включение/выключение вибрации при нажатии клавиши</string>
+  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
+  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
   <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
   <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">Стиль</string>
@@ -69,11 +76,6 @@
   <string name="pref_swipe_dist_e_very_far">Очень далеко</string>
   <string name="pref_key_horizontal_space">Горизонтальное расстояние между клавишами</string>
   <string name="pref_key_vertical_space">Расстояние по вертикали между клавишами</string>
-  <!-- <string name="pref_vibration_e_disabled">Disabled</string> -->
-  <!-- <string name="pref_vibration_e_system">System</string> -->
-  <!-- <string name="pref_vibration_e_strong">Strong</string> -->
-  <!-- <string name="pref_vibration_e_medium">Medium</string> -->
-  <!-- <string name="pref_vibration_e_light">Light</string> -->
   <string name="key_action_next">Далее</string>
   <string name="key_action_done">Ввод</string>
   <string name="key_action_go">Go</string>
@@ -87,6 +89,7 @@
   <string name="launcher_tryhere">После активации вы можете попробовать клавиатуру прямо здесь:</string>
   <!-- <string name="key_descr_capslock">Caps lock</string> -->
   <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
   <!-- <string name="key_descr_copy">Copy</string> -->
   <!-- <string name="key_descr_paste">Paste</string> -->

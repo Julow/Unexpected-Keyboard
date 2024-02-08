@@ -14,8 +14,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import juloo.keyboard2.prefs.CustomExtraKeysPreference;
+import juloo.keyboard2.prefs.ExtraKeysPreference;
+import juloo.keyboard2.prefs.LayoutsPreference;
 
-final class Config
+public final class Config
 {
   private final SharedPreferences _prefs;
 
@@ -35,14 +38,17 @@ final class Config
   public boolean number_row;
   public float swipe_dist_px;
   public float slide_step_px;
-  public VibratorCompat.VibrationBehavior vibration_behavior;
+  // Let the system handle vibration when false.
+  public boolean vibrate_custom;
+  // Control the vibration if [vibrate_custom] is true.
+  public long vibrate_duration;
   public long longPressTimeout;
   public long longPressInterval;
   public float margin_bottom;
   public float keyHeight;
   public float horizontal_margin;
-  public float keyVerticalInterval;
-  public float keyHorizontalInterval;
+  public float key_vertical_margin;
+  public float key_horizontal_margin;
   public int labelBrightness; // 0 - 255
   public int keyboardOpacity; // 0 - 255
   public int keyOpacity; // 0 - 255
@@ -55,7 +61,6 @@ final class Config
   public boolean pin_entry_enabled;
 
   // Dynamically set
-  public boolean shouldOfferSwitchingToNextInputMethod;
   public boolean shouldOfferVoiceTyping;
   public String actionLabel; // Might be 'null'
   public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
@@ -82,7 +87,6 @@ final class Config
     // from prefs
     refresh(res);
     // initialized later
-    shouldOfferSwitchingToNextInputMethod = false;
     shouldOfferVoiceTyping = false;
     actionLabel = null;
     actionId = 0;
@@ -101,8 +105,6 @@ final class Config
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
-    // Scale some dimensions depending on orientation
-    float horizontalIntervalScale = 1.f;
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
@@ -111,7 +113,6 @@ final class Config
       if ("landscape".equals(show_numpad_s))
         show_numpad = true;
       keyboardHeightPercent = _prefs.getInt("keyboard_height_landscape", 50);
-      horizontalIntervalScale = 2.f;
       characterSizeScale = 1.25f;
     }
     else
@@ -130,21 +131,21 @@ final class Config
     float swipe_dist_value = Float.valueOf(_prefs.getString("swipe_dist", "15"));
     swipe_dist_px = swipe_dist_value / 25.f * swipe_scaling;
     slide_step_px = swipe_dist_px / 4.f;
-    vibration_behavior =
-      VibratorCompat.VibrationBehavior.of_string(_prefs.getString("vibration_behavior", "system"));
+    vibrate_custom = _prefs.getBoolean("vibrate_custom", false);
+    vibrate_duration = _prefs.getInt("vibrate_duration", 20);
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
     margin_bottom = get_dip_pref_oriented(dm, "margin_bottom", 7, 3);
-    keyVerticalInterval = get_dip_pref(dm, "key_vertical_space", 2);
-    keyHorizontalInterval = get_dip_pref(dm, "key_horizontal_space", 2) * horizontalIntervalScale;
+    key_vertical_margin = get_dip_pref(dm, "key_vertical_margin", 1.5f) / 100;
+    key_horizontal_margin = get_dip_pref(dm, "key_horizontal_margin", 2) / 100;
     // Label brightness is used as the alpha channel
     labelBrightness = _prefs.getInt("label_brightness", 100) * 255 / 100;
     // Keyboard opacity
     keyboardOpacity = _prefs.getInt("keyboard_opacity", 100) * 255 / 100;
     keyOpacity = _prefs.getInt("key_opacity", 100) * 255 / 100;
     keyActivatedOpacity = _prefs.getInt("key_activated_opacity", 100) * 255 / 100;
-    // Do not substract keyVerticalInterval from keyHeight because this is done
-    // during rendered.
+    // Do not substract key_vertical_margin from keyHeight because this is done
+    // during rendering.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
@@ -231,9 +232,7 @@ final class Config
           case Event:
             switch (key.getEvent())
             {
-              case CHANGE_METHOD:
-                if (!shouldOfferSwitchingToNextInputMethod)
-                  return null;
+              case CHANGE_METHOD_PICKER:
                 if (switch_input_immediate)
                   return KeyValue.getKeyByName("change_method_prev");
                 return key;
@@ -245,6 +244,7 @@ final class Config
               case SWITCH_BACKWARD:
                 return (layouts.size() > 2) ? key : null;
               case SWITCH_VOICE_TYPING:
+              case SWITCH_VOICE_TYPING_CHOOSER:
                 return shouldOfferVoiceTyping ? key : null;
             }
             break;
@@ -268,7 +268,7 @@ final class Config
       }
     });
     if (show_numpad)
-      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad, kw.script));
+      kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad, kw));
     if (number_row)
       kw = kw.addNumberRow();
     if (extra_keys.size() > 0)
@@ -276,13 +276,12 @@ final class Config
     return kw;
   }
 
-  /**
-   * Handle the numpad layout.
-   */
-  public KeyboardData modify_numpad(KeyboardData kw, String script)
+  /** Handle the numpad layout. The [main_kw] is used to adapt the numpad to
+      the main layout's script. */
+  public KeyboardData modify_numpad(KeyboardData kw, KeyboardData main_kw)
   {
     final KeyValue action_key = action_key();
-    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(script);
+    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
     return kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -390,10 +389,16 @@ final class Config
     return _globalConfig;
   }
 
+  public static SharedPreferences globalPrefs()
+  {
+    return _globalConfig._prefs;
+  }
+
   public static interface IKeyEventHandler
   {
     public void key_down(KeyValue value, boolean is_swipe);
-    public void key_up(KeyValue value, Pointers.Modifiers flags);
+    public void key_up(KeyValue value, Pointers.Modifiers mods);
+    public void mods_changed(Pointers.Modifiers mods);
   }
 
   /** Config migrations. */
@@ -422,7 +427,7 @@ final class Config
           l.add(migrate_layout(snd_layout));
         String custom_layout = prefs.getString("custom_layout", "");
         if (custom_layout != null && !custom_layout.equals(""))
-          l.add(new LayoutsPreference.CustomLayout(custom_layout));
+          l.add(LayoutsPreference.CustomLayout.parse(custom_layout));
         LayoutsPreference.save_to_preferences(e, l);
       case 1:
       default: break;

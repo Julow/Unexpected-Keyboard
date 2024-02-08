@@ -8,7 +8,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
-final class Autocapitalisation
+public final class Autocapitalisation
 {
   boolean _enabled = false;
   boolean _should_enable_shift = false;

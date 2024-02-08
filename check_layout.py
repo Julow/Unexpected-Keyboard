@@ -34,6 +34,15 @@ def unexpected_keys(keys, symbols, msg):
     if len(unexpected) > 0:
         warn("%s, unexpected: %s" % (msg, key_list_str(unexpected)))
 
+# Write to [keys] and [dup].
+def parse_row_from_et(row, keys, dup):
+    for key in row:
+        for attr in key.keys():
+            if attr.startswith("key"):
+                k = key.get(attr).removeprefix("\\")
+                if k in keys: dup.add(k)
+                keys.add(k)
+
 def parse_layout(fname):
     keys = set()
     dup = set()
@@ -41,12 +50,16 @@ def parse_layout(fname):
     if root.tag != "keyboard":
         return None
     for row in root:
-        for key in row:
-            for attr in key.keys():
-                if attr.startswith("key"):
-                    k = key.get(attr).removeprefix("\\")
-                    if k in keys: dup.add(k)
-                    keys.add(k)
+        parse_row_from_et(row, keys, dup)
+    return root, keys, dup
+
+def parse_row(fname):
+    keys = set()
+    dup = set()
+    root = ET.parse(fname).getroot()
+    if root.tag != "row":
+        return None
+    parse_row_from_et(root, keys, dup)
     return root, keys, dup
 
 def check_layout(layout):
@@ -66,12 +79,11 @@ def check_layout(layout):
                     [ "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
                      "f10", "f11", "f12" ],
                     "Layout contains function keys")
+    unexpected_keys(keys, [""], "Layout contains empty strings")
+    unexpected_keys(keys, ["loc"], "Special keyword cannot be a symbol")
+    unexpected_keys(keys, filter(lambda k: k.strip()!=k, keys), "Some keys contain whitespaces")
 
-    bottom_row_keys = [
-            "ctrl", "fn", "switch_numeric", "change_method", "switch_emoji",
-            "config", "switch_forward", "switch_backward", "enter", "action",
-            "left", "up", "right", "down", "space"
-            ]
+    _, bottom_row_keys, _ = parse_row("res/xml/bottom_row.xml")
 
     if root.get("bottom_row") == "false":
         missing_required(keys, bottom_row_keys,

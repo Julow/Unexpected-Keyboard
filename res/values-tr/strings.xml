@@ -2,6 +2,13 @@
 <resources>
   <string name="app_name_release">Unexpected Keyboard</string>
   <string name="app_name_debug">Unexpected Keyboard (debug)</string>
+  <string name="short_description">Android için hafif ve güvenlik odaklı bir sanal klavye uygulaması.</string>
+  <string name="store_description">"Bu uygulama özünde tuşların kenarlarından kaydırarak daha fazla karakter yazabilmek amacıyla geliştirildi.
+
+Bu uygulama aslında Termux kullanıcıları için geliştirildi.
+Artık gündelik kullanım için de uygun.
+
+Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</string>
   <string name="settings_activity_label">Unexpected Keyboard Ayarları</string>
   <string name="pref_portrait">Portre modunda</string>
   <string name="pref_landscape">Manzara modunda</string>
@@ -42,8 +49,8 @@
   <string name="pref_autocapitalisation_summary">Noktadan sonra ve her cümlenin başında büyük harf yapar</string>
   <string name="pref_switch_input_immediate_title">Son kullanılan klavyeye geç</string>
   <string name="pref_switch_input_immediate_summary">Klavye değistirme tuşunun davranışını belirler</string>
-  <string name="pref_vibrate_title">Titreşim</string>
-  <string name="pref_vibrate_summary">Tuşlara basılınca titremeyi aç/kapat</string>
+  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
+  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
   <string name="pref_pin_entry_enabled_title">NumPad</string>
   <string name="pref_pin_entry_enabled_summary">Sayıları, tarihleri ve telefon numaralarını yazarken</string>
   <string name="pref_category_style">Tarz</string>
@@ -69,11 +76,6 @@
   <string name="pref_swipe_dist_e_very_far">Çok uzun</string>
   <string name="pref_key_horizontal_space">Tuşlar arasındaki yatay boşluk</string>
   <string name="pref_key_vertical_space">Tuşlar arasındaki dikey boşluk</string>
-  <string name="pref_vibration_e_disabled">Aktif değil</string>
-  <string name="pref_vibration_e_system">Sistem</string>
-  <string name="pref_vibration_e_strong">Şiddetli</string>
-  <string name="pref_vibration_e_medium">Orta</string>
-  <string name="pref_vibration_e_light">Hafif</string>
   <string name="key_action_next">Sonraki</string>
   <string name="key_action_done">Tamam</string>
   <string name="key_action_go">ileri</string>
@@ -87,6 +89,7 @@
   <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>
   <string name="key_descr_capslock">CapsLock</string>
   <string name="key_descr_switch_greekmath">Greek &amp; math sembolleri</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Sesle yazma</string>
   <string name="key_descr_copy">Kopyala</string>
   <string name="key_descr_paste">Yapıştır</string>

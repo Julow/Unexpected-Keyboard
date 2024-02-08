@@ -2,6 +2,13 @@
 <resources>
   <string name="app_name_release">Unexpected Keyboard</string>
   <string name="app_name_debug">Unexpected Keyboard (debug)</string>
+  <!-- <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string> -->
+  <!-- <string name="store_description">"The main feature is that you can type more characters by swiping the keys towards the corners.
+
+This application was originally designed for programmers using Termux.
+Now perfect for everyday use.
+
+This application contains no ads, doesn't make any network requests and is Open Source."</string> -->
   <string name="settings_activity_label">Unexpected Keyboard 设置</string>
   <string name="pref_portrait">在竖屏模式下</string>
   <string name="pref_landscape">在横屏模式下</string>
@@ -42,8 +49,8 @@
   <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
   <string name="pref_switch_input_immediate_title">切换到最近使用的键盘</string>
   <string name="pref_switch_input_immediate_summary">切换键盘按钮的行为</string>
-  <string name="pref_vibrate_title">振动</string>
-  <string name="pref_vibrate_summary">启用或者禁用按下按键时振动</string>
+  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
+  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
   <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
   <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
   <string name="pref_category_style">样式</string>
@@ -69,11 +76,6 @@
   <string name="pref_swipe_dist_e_very_far">非常长</string>
   <string name="pref_key_horizontal_space">按键的左右边距</string>
   <string name="pref_key_vertical_space">按键的上下边距</string>
-  <string name="pref_vibration_e_disabled">禁用</string>
-  <string name="pref_vibration_e_system">使用系统振动强度</string>
-  <string name="pref_vibration_e_strong">强</string>
-  <string name="pref_vibration_e_medium">中</string>
-  <string name="pref_vibration_e_light">弱</string>
   <string name="key_action_next">下一项</string>
   <string name="key_action_done">完成</string>
   <string name="key_action_go">前往</string>
@@ -87,6 +89,7 @@
   <string name="launcher_tryhere">启用键盘后，可以在这里测试效果：</string>
   <!-- <string name="key_descr_capslock">Caps lock</string> -->
   <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <!-- <string name="key_descr_voice_typing">Voice typing</string> -->
   <!-- <string name="key_descr_copy">Copy</string> -->
   <!-- <string name="key_descr_paste">Paste</string> -->

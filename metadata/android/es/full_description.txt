@@ -1,0 +1,6 @@
+La característica principal es que hay acceso a más caractéres deslizando hacia las esquinas de las teclas.
+
+Esta aplicación fue originalmente diseñada para programadores que usaran Termux.
+Ahora es perfecta para uso cotidiano.
+
+La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y es de Fuente Abierta.

@@ -10,8 +10,8 @@ android {
     applicationId "juloo.keyboard2"
     minSdk 4
     targetSdkVersion 33
-    versionCode 36
-    versionName "1.24.0"
+    versionCode 38
+    versionName "1.26.0"
   }
 
   sourceSets {
@@ -34,8 +34,7 @@ android {
       keyAlias(System.env.DEBUG_KEY_ALIAS ? "$System.env.DEBUG_KEY_ALIAS" : "debug")
       keyPassword(System.env.DEBUG_KEY_PASSWORD ? "$System.env.DEBUG_KEY_PASSWORD" : "debug0")
     }
-    // Release builds will only be signed with a dedicated key if specified. This key has to be
-    // created manually.
+
     release {
       if (System.env.RELEASE_KEYSTORE) {
         storeFile file(System.env.RELEASE_KEYSTORE)
@@ -53,10 +52,9 @@ android {
       debuggable false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
       resValue "string", "app_name", "@string/app_name_release"
-      if (System.env.RELEASE_KEYSTORE) {
-        signingConfig signingConfigs.release
-      }
+      signingConfig signingConfigs.release
     }
+
     debug {
       minifyEnabled false
       shrinkResources false
@@ -65,6 +63,13 @@ android {
       resValue "string", "app_name", "@string/app_name_debug"
       resValue "bool", "debug_logs", "true"
       signingConfig signingConfigs.debug
+    }
+  }
+
+  // Name outputs after the application ID.
+  android.applicationVariants.all { variant ->
+    variant.outputs.all {
+      outputFileName = "${applicationId}.apk"
     }
   }
 
@@ -110,17 +115,13 @@ tasks.register('genLayoutsList') {
 
 tasks.register('checkKeyboardLayouts') {
   println "\nChecking layouts"
-  new ByteArrayOutputStream().withStream { bos ->
-    exec {
-      def layouts = new File(projectDir, "res/xml").listFiles().findAll {
-          it.isFile() && it.name.endsWith(".xml")
-      }
-      workingDir = projectDir
-      commandLine("python", "check_layout.py", *layouts)
-      standardOutput = bos
+  exec {
+    def layouts = new File(projectDir, "srcs/layouts").listFiles().findAll {
+      it.name.endsWith(".xml")
     }
-
-    new File(projectDir, "check_layout.output").write(bos.toString())
+    workingDir = projectDir
+    commandLine("python", "check_layout.py", *layouts)
+    standardOutput = new FileOutputStream("${projectDir}/check_layout.output")
   }
 }
 
@@ -135,6 +136,7 @@ tasks.register('syncTranslations') {
 tasks.named("preBuild") {
   dependsOn += "initDebugKeystore"
   dependsOn += "copyRawQwertyUS"
+  dependsOn += "copyLayoutDefinitions"
 }
 
 tasks.register('initDebugKeystore') {
@@ -151,7 +153,15 @@ tasks.register('initDebugKeystore') {
 tasks.register('copyRawQwertyUS')
 {
   copy {
-    from "res/xml/latn_qwerty_us.xml"
+    from "srcs/layouts/latn_qwerty_us.xml"
     into "build/generated-resources/raw"
+  }
+}
+
+tasks.register('copyLayoutDefinitions')
+{
+  copy {
+    from "srcs/layouts"
+    into "build/generated-resources/xml"
   }
 }

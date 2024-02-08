@@ -3,7 +3,7 @@ package juloo.keyboard2;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
-final class KeyValue
+public final class KeyValue
 {
   public static enum Event
   {
@@ -12,14 +12,15 @@ final class KeyValue
     SWITCH_NUMERIC,
     SWITCH_EMOJI,
     SWITCH_BACK_EMOJI,
-    CHANGE_METHOD,
-    CHANGE_METHOD_PREV,
+    CHANGE_METHOD_PICKER,
+    CHANGE_METHOD_AUTO,
     ACTION,
     SWITCH_FORWARD,
     SWITCH_BACKWARD,
     SWITCH_GREEKMATH,
     CAPS_LOCK,
     SWITCH_VOICE_TYPING,
+    SWITCH_VOICE_TYPING_CHOOSER,
   }
 
   // Must be evaluated in the reverse order of their values.
@@ -316,9 +317,9 @@ final class KeyValue
   {
     switch (name)
     {
-      /* These symbols have special meaning when in `res/xml` and are escaped in
-         standard layouts. The backslash is not stripped when parsed from the
-         custom layout option. */
+      /* These symbols have special meaning when in `srcs/layouts` and are
+         escaped in standard layouts. The backslash is not stripped when parsed
+         from the custom layout option. */
       case "\\?": return makeStringKey("?");
       case "\\#": return makeStringKey("#");
       case "\\@": return makeStringKey("@");
@@ -364,11 +365,12 @@ final class KeyValue
       case "switch_forward": return eventKey(0xE013, Event.SWITCH_FORWARD, FLAG_SMALLER_FONT);
       case "switch_backward": return eventKey(0xE014, Event.SWITCH_BACKWARD, FLAG_SMALLER_FONT);
       case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
-      case "change_method": return eventKey(0xE009, Event.CHANGE_METHOD, FLAG_SMALLER_FONT);
-      case "change_method_prev": return eventKey(0xE009, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
+      case "change_method": return eventKey(0xE009, Event.CHANGE_METHOD_PICKER, FLAG_SMALLER_FONT);
+      case "change_method_prev": return eventKey(0xE009, Event.CHANGE_METHOD_AUTO, FLAG_SMALLER_FONT);
       case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
       case "capslock": return eventKey(0xE012, Event.CAPS_LOCK, 0);
       case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
+      case "voice_typing_chooser": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING_CHOOSER, FLAG_SMALLER_FONT);
 
       /* Key events */
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);

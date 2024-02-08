@@ -7,8 +7,10 @@
     <item>latn_colemak</item>
     <item>latn_dvorak</item>
     <item>arab_alt</item>
+    <item>arab_hamvaj_tly</item>
     <item>arab_pc</item>
     <item>arab_pc_ckb</item>
+    <item>arab_pc_hindu</item>
     <item>arab_pc_ir</item>
     <item>armenian_ph_am</item>
     <item>beng_national</item>
@@ -36,6 +38,7 @@
     <item>latn_qwerty_pl</item>
     <item>latn_qwerty_ro</item>
     <item>latn_qwerty_se</item>
+    <item>latn_qwerty_tly</item>
     <item>latn_qwerty_tr</item>
     <item>latn_qwerty_vi</item>
     <item>latn_qwertz</item>
@@ -54,8 +57,10 @@
     <item>Colemak</item>
     <item>Dvorak</item>
     <item>Arabic Alt</item>
+    <item>Talysh (تالشی همواج)</item>
     <item>Arabic PC</item>
     <item>Kurdish (کوردی)</item>
+    <item>Arabic PC (Hindu numerals)</item>
     <item>Persian PC</item>
     <item>Armenian</item>
     <item>বাংলা (জাতীয়)</item>
@@ -83,6 +88,7 @@
     <item>QWERTY (Polski)</item>
     <item>QWERTY (Română)</item>
     <item>QWERTY (Swedish)</item>
+    <item>QWERTY (Talysh New Latin)</item>
     <item>QWERTY (Türkçe)</item>
     <item>QWERTY (Vietnamese)</item>
     <item>QWERTZ</item>
@@ -101,8 +107,10 @@
     <item>@xml/latn_colemak</item>
     <item>@xml/latn_dvorak</item>
     <item>@xml/arab_alt</item>
+    <item>@xml/arab_hamvaj_tly</item>
     <item>@xml/arab_pc</item>
     <item>@xml/arab_pc_ckb</item>
+    <item>@xml/arab_pc_hindu</item>
     <item>@xml/arab_pc_ir</item>
     <item>@xml/armenian_ph_am</item>
     <item>@xml/beng_national</item>
@@ -130,6 +138,7 @@
     <item>@xml/latn_qwerty_pl</item>
     <item>@xml/latn_qwerty_ro</item>
     <item>@xml/latn_qwerty_se</item>
+    <item>@xml/latn_qwerty_tly</item>
     <item>@xml/latn_qwerty_tr</item>
     <item>@xml/latn_qwerty_vi</item>
     <item>@xml/latn_qwertz</item>

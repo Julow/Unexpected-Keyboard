@@ -4,7 +4,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
-class KeyModifier
+public final class KeyModifier
 {
   /** Cache key is KeyValue's name */
   private static HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>> _cache =
@@ -75,21 +75,23 @@ class KeyModifier
       case Event:
         switch (k.getEvent())
         {
-          case CHANGE_METHOD_PREV:
+          case CHANGE_METHOD_AUTO:
             return KeyValue.getKeyByName("change_method");
+          case SWITCH_VOICE_TYPING:
+            return KeyValue.getKeyByName("voice_typing_chooser");
         }
         break;
     }
     return k;
   }
 
-  public static Map_char modify_numpad_script(String script)
+  public static Map_char modify_numpad_script(String numpad_script)
   {
-    if (script == null)
+    if (numpad_script == null)
       return map_char_none;
-    switch (script)
+    switch (numpad_script)
     {
-      case "arabic": return map_char_numpad_arabic;
+      case "hindu-arabic": return map_char_numpad_hindu;
       case "bengali": return map_char_numpad_bengali;
       case "devanagari": return map_char_numpad_devanagari;
       case "persian": return map_char_numpad_persian;
@@ -516,6 +518,9 @@ class KeyModifier
           case 'y': return "ý";
           // Combining diacritic
           case 'j':
+          // Russian vowels
+          case 'у': case 'е': case 'а': case 'о': case 'и':
+          case 'ы': case 'э': case 'ю': case 'я':
             return c + "\u0301";
           default: return map_dead_char(c, '\u00B4');
         }
@@ -997,7 +1002,7 @@ class KeyModifier
       }
     };
 
-  private static final Map_char map_char_numpad_arabic =
+  private static final Map_char map_char_numpad_hindu =
     new Map_char() {
       public String apply(char c)
       {

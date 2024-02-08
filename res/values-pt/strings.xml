@@ -2,6 +2,25 @@
 <resources>
   <string name="app_name_release">Teclado Unexpected</string>
   <string name="app_name_debug">Teclado Unexpected</string>
+  <string name="short_description">Um teclado virtual leve para desenvolvedores.</string>
+  <string name="store_description">"Um teclado virtual para aparelhos Android. Os recursos principais são facilidade de digitar todos os caracteres ASCII deslizando o dedo, teclas "mortas" para acentos e teclas modificadoras e a presença de teclas especiais (tab, esc, setas, etc..).
+
+O teclado mostra até 4 caracteres extras nos cantos de cada tecla. Esses caracteres são digitáveis com o deslizar do dedo na tecla.
+
+Alguns dos recursos interessantes:
+
+- Todos caracteres e teclas especiais que também estão disponíveis num teclado de PC. Perfeito para usar com aplicativos como Termux.
+
+- Incluindo Tab, Esc, as setas e teclas de função, e também Ctrl e Alt!
+
+- Caracteres acentuados são digitáveis usando teclas "mortas". Primeiro ative o acento e depois digite a letra.
+
+- Muito leve e rápido. Ocupa 500x menos espaço que o teclado da Google e 15x menos espaço que o teclado padrão. Sem propaganda, sem rastreio.
+
+- Vários layouts: QWERTY, QWERTZ, AZERTY. Temas: Branco, Escuro, Preto OLED. E muitas outras opções.
+
+Como qualquer outro teclado virtual, tem de ser ativado nas configurações de sistema. Abra as configurações e vá para:
+Sistema &gt; Idioma e entrada &gt; Teclado virtual &gt; Gerenciar teclados virtuais."</string>
   <string name="settings_activity_label">Configurações</string>
   <string name="pref_portrait">No modo retrato</string>
   <string name="pref_landscape">No modo paisagem</string>
@@ -14,7 +33,7 @@
   <string name="pref_layout_e_custom">Layout personalizado</string>
   <string name="pref_layouts_add">Adicione um layout alternativo</string>
   <string name="pref_layouts_item">Layout %1$d: %2$s</string>
-  <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
+  <string name="pref_layouts_remove_custom">Remover layout</string>
   <string name="pref_custom_layout_title">Layout personalizado</string>
   <string name="pref_show_numpad_title">Mostrar Teclado Numérico</string>
   <string name="pref_show_numpad_never">Nunca</string>
@@ -42,8 +61,8 @@
   <string name="pref_autocapitalisation_summary">Aciona o shift no início de cada frase</string>
   <string name="pref_switch_input_immediate_title">Alternar para o último teclado usado</string>
   <string name="pref_switch_input_immediate_summary">Comportamento da tecla de troca de teclado</string>
-  <string name="pref_vibrate_title">Vibração</string>
-  <string name="pref_vibrate_summary">Ativar/desativar vibração ao digitar</string>
+  <string name="pref_vibrate_custom">Vibração personalizada</string>
+  <string name="pref_vibrate_duration_title">Intensidade da vibração</string>
   <string name="pref_pin_entry_enabled_title">Layout PIN</string>
   <string name="pref_pin_entry_enabled_summary">Quando digitando números, datas ou números de telefone</string>
   <string name="pref_category_style">Estilo</string>
@@ -60,20 +79,15 @@
   <string name="pref_theme_e_altblack">Preto Alternativo</string>
   <string name="pref_theme_e_white">Branco</string>
   <string name="pref_theme_e_epaper">Papel Eletrônico</string>
-  <!-- <string name="pref_theme_e_desert">Desert</string> -->
-  <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
-  <string name="pref_swipe_dist_e_very_short">Muito curto</string>
+  <string name="pref_theme_e_desert">Deserto</string>
+  <string name="pref_theme_e_jungle">Selva</string>
+  <string name="pref_swipe_dist_e_very_short">Bem curto</string>
   <string name="pref_swipe_dist_e_short">Curto</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
   <string name="pref_swipe_dist_e_far">Longo</string>
-  <string name="pref_swipe_dist_e_very_far">Muito longo</string>
+  <string name="pref_swipe_dist_e_very_far">Bem longo</string>
   <string name="pref_key_horizontal_space">Distância horizontal entre teclas</string>
   <string name="pref_key_vertical_space">Distância vertical entre teclas</string>
-  <string name="pref_vibration_e_disabled">Desabilitado</string>
-  <string name="pref_vibration_e_system">Sistema</string>
-  <string name="pref_vibration_e_strong">Intenso</string>
-  <string name="pref_vibration_e_medium">Médio</string>
-  <string name="pref_vibration_e_light">Suave</string>
   <string name="key_action_next">Próximo</string>
   <string name="key_action_done">Pronto</string>
   <string name="key_action_go">Ir</string>
@@ -81,16 +95,17 @@
   <string name="key_action_search">Buscar</string>
   <string name="key_action_send">Enviar</string>
   <string name="launcher_button_imesettings">Ativar teclado</string>
-  <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
+  <string name="launcher_button_imepicker">Selecionar teclado</string>
   <string name="launcher_description">Este app é um teclado virtual. Vá para as configurações do sistema clicando no botão abaixo e ative o Teclado Unexpected.</string>
   <string name="launcher_sourcecode">Este app é gratuito é de código aberto. Você pode consultar o código ou fazer sugestões em Github.</string>
   <string name="launcher_tryhere">Após ativar, experimente aqui:</string>
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Grego &amp; símbolos matemáticos</string>
+  <string name="key_descr_change_method">Trocar de teclado</string>
   <string name="key_descr_voice_typing">Digitação por voz</string>
   <string name="key_descr_copy">Copiar</string>
   <string name="key_descr_paste">Colar</string>
-  <string name="key_descr_cut">Cortar</string>
+  <string name="key_descr_cut">Recortar</string>
   <string name="key_descr_selectAll">Selecionar tudo</string>
   <string name="key_descr_shareText">Compartilhar texto</string>
   <string name="key_descr_pasteAsPlainText">Colar texto não formatado</string>

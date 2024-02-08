@@ -2,6 +2,13 @@
 <resources>
   <string name="app_name_release">Unexpected Keyboard</string>
   <string name="app_name_debug">Unexpected Keyboard (debug)</string>
+  <string name="short_description">Clavier virtuel léger et respectueux de la vie privée pour Android.</string>
+  <string name="store_description">"La fonctionnalité principale est l'accès rapide à plus de caractères en balayant les touches vers les coins.
+
+Cette application a été conçue à l'origine pour les programmeurs utilisant Termux.
+Elle est maintenant parfaite pour une utilisation quotidienne.
+
+Cette application ne contient pas de publicité, n'accède pas au réseau et est Open Source."</string>
   <string name="settings_activity_label">Unexpected Keyboard Paramètres</string>
   <string name="pref_portrait">En mode portrait</string>
   <string name="pref_landscape">En mode landscape</string>
@@ -42,8 +49,8 @@
   <string name="pref_autocapitalisation_summary">Activer Shift au début des phrases</string>
   <string name="pref_switch_input_immediate_title">Changer vers le clavier utilisé en dernier</string>
   <string name="pref_switch_input_immediate_summary">Comportement de la touche de changement de clavier</string>
-  <string name="pref_vibrate_title">Vibreur</string>
-  <string name="pref_vibrate_summary">Vibration a chaque touche</string>
+  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
+  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
   <string name="pref_pin_entry_enabled_title">Clavier PIN</string>
   <string name="pref_pin_entry_enabled_summary">Lors de la saisie de nombres, de dates et de numéros de téléphone</string>
   <string name="pref_category_style">Style</string>
@@ -69,11 +76,6 @@
   <string name="pref_swipe_dist_e_very_far">Très longue</string>
   <string name="pref_key_horizontal_space">Espacement horizontal entre les touches</string>
   <string name="pref_key_vertical_space">Espacement vertical entre les touches</string>
-  <string name="pref_vibration_e_disabled">Désactivé</string>
-  <string name="pref_vibration_e_system">Système</string>
-  <string name="pref_vibration_e_strong">Fort</string>
-  <string name="pref_vibration_e_medium">Moyen</string>
-  <string name="pref_vibration_e_light">Léger</string>
   <string name="key_action_next">Suiv.</string>
   <string name="key_action_done">Fin</string>
   <string name="key_action_go">Aller</string>
@@ -87,6 +89,7 @@
   <string name="launcher_tryhere">Après l\'avoir activé, vous pouvez l\'essayer ici:</string>
   <string name="key_descr_capslock">Verrouillage majuscules</string>
   <string name="key_descr_switch_greekmath">Symboles mathématiques</string>
+  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Saisie vocale</string>
   <string name="key_descr_copy">Copier</string>
   <string name="key_descr_paste">Coller</string>

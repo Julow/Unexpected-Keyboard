@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="http://schemas.android.com/apk/res/android" android:settingsActivity="juloo.keyboard2.SettingsActivity" android:supportsSwitchingToNextInputMethod="true">
-  <subtype android:label="%s" android:languageTag="ar" android:imeSubtypeLocale="ar" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=arabic,default_layout=arab_ibm"/>
+  <subtype android:label="%s" android:languageTag="ar" android:imeSubtypeLocale="ar" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=arabic,default_layout=arab_pc_hindu"/>
+  <subtype android:label="%s" android:languageTag="ar" android:imeSubtypeLocale="ar_TN" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=arabic,default_layout=arab_pc"/>
   <subtype android:label="%s" android:languageTag="ay" android:imeSubtypeLocale="ay_AM" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=armenian,default_layout=armenian_ph_am"/>
   <subtype android:label="%s" android:languageTag="be" android:imeSubtypeLocale="be_BY" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=cyrillic,default_layout=cyrl_jcuken_ru,extra_keys=ґ|є|і|ї|ў"/>
   <subtype android:label="%s" android:languageTag="bg" android:imeSubtypeLocale="bg_BG" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=cyrillic,default_layout=cyrl_ueishsht,extra_keys=€"/>
@@ -33,6 +34,8 @@
   <subtype android:label="%s" android:languageTag="sk" android:imeSubtypeLocale="sk_SK" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwertz_sk,extra_keys=accent_caron:ě:ř:ž:š:č:ň:ď:ľ:ť|accent_ring:ů|accent_circonflexe:ô|accent_trema:ä:ü:ö|accent_aigu:á:é:í:ó:ú:ŕ:ś:ĺ:ý"/>
   <subtype android:label="%s" android:languageTag="sv" android:imeSubtypeLocale="sv_SE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_se,extra_keys=accent_aigu:á|accent_trema:ä:ö|accent_ring:å|€"/>
   <subtype android:label="%s" android:languageTag="tr" android:imeSubtypeLocale="tr_TR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_tr,extra_keys=accent_cedille:ç:ş|accent_trema:ö:ü|accent_circonflexe:â:î:û|₺|ı|ğ"/>
+  <subtype android:label="%s" android:languageTag="tly" android:imeSubtypeLocale="tly_AZ" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_tly,extra_keys=á|ú|â|ê|ı|š|ž"/>
+  <subtype android:label="%s" android:languageTag="tly" android:imeSubtypeLocale="tly_IR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=arab_hamvaj_tly"/>
   <subtype android:label="%s" android:languageTag="uk" android:imeSubtypeLocale="uk_UA" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=cyrillic,default_layout=cyrl_jcuken_uk,extra_keys=ґ|є|і|ї|₴"/>
   <subtype android:label="%s" android:languageTag="vi" android:imeSubtypeLocale="vi_VN" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_vi"/>
 </input-method>

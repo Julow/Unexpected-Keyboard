@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import juloo.keyboard2.prefs.LayoutsPreference;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -89,9 +90,8 @@ public class Keyboard2 extends InputMethodService
   /** Load a layout that contains a numpad (eg. the pin entry). */
   KeyboardData loadNumpad(int layout_id)
   {
-    String current_script = current_layout_unmodified().script;
     return _config.modify_numpad(KeyboardData.load(getResources(), layout_id),
-        current_script);
+        current_layout_unmodified());
   }
 
   @Override
@@ -136,8 +136,6 @@ public class Keyboard2 extends InputMethodService
     for (InputMethodSubtype s : enabled_subtypes)
       extra_keys.add(extra_keys_of_subtype(s));
     _config.extra_keys_subtype = ExtraKeys.merge(extra_keys);
-    if (enabled_subtypes.size() > 1)
-      _config.shouldOfferSwitchingToNextInputMethod = true;
   }
 
   InputMethodManager get_imm()
@@ -148,11 +146,7 @@ public class Keyboard2 extends InputMethodService
   private void refreshSubtypeImm()
   {
     InputMethodManager imm = get_imm();
-    if (VERSION.SDK_INT < 28)
-      _config.shouldOfferSwitchingToNextInputMethod = true;
-    else
-      _config.shouldOfferSwitchingToNextInputMethod = shouldOfferSwitchingToNextInputMethod();
-    _config.shouldOfferVoiceTyping = (get_voice_typing_im(imm) != null);
+    _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
     _config.extra_keys_subtype = null;
     if (VERSION.SDK_INT >= 12)
@@ -223,20 +217,6 @@ public class Keyboard2 extends InputMethodService
       _emojiPane = null;
     }
     _keyboardView.reset();
-  }
-
-  /** Returns the id and subtype of the voice typing IM. Returns [null] if none
-      is installed or if the feature is unsupported. */
-  SimpleEntry<String, InputMethodSubtype> get_voice_typing_im(InputMethodManager imm)
-  {
-    if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
-      return null;
-    for (InputMethodInfo im : imm.getEnabledInputMethodList())
-      for (InputMethodSubtype imst : imm.getEnabledInputMethodSubtypeList(im, true))
-        // Switch to the first IM that has a subtype of this mode
-        if (imst.getMode().equals("voice"))
-          return new SimpleEntry(im.getId(), imst);
-    return null;
   }
 
   private KeyboardData refresh_special_layout(EditorInfo info)
@@ -400,15 +380,15 @@ public class Keyboard2 extends InputMethodService
           setInputView(_keyboardView);
           break;
 
-        case CHANGE_METHOD:
+        case CHANGE_METHOD_PICKER:
           get_imm().showInputMethodPicker();
           break;
 
-        case CHANGE_METHOD_PREV:
+        case CHANGE_METHOD_AUTO:
           if (VERSION.SDK_INT < 28)
             get_imm().switchToLastInputMethod(getConnectionToken());
           else
-            switchToPreviousInputMethod();
+            switchToNextInputMethod(false);
           break;
 
         case ACTION:
@@ -434,14 +414,14 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_VOICE_TYPING:
-          SimpleEntry<String, InputMethodSubtype> im = get_voice_typing_im(get_imm());
-          if (im == null)
-            return;
-          // Best-effort. Good enough for triggering Google's voice typing.
-          if (VERSION.SDK_INT < 28)
-            switchInputMethod(im.getKey());
-          else
-            switchInputMethod(im.getKey(), im.getValue());
+          if (!VoiceImeSwitcher.switch_to_voice_ime(Keyboard2.this, get_imm(),
+                Config.globalPrefs()))
+            _config.shouldOfferVoiceTyping = false;
+          break;
+
+        case SWITCH_VOICE_TYPING_CHOOSER:
+          VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
+              Config.globalPrefs());
           break;
       }
     }

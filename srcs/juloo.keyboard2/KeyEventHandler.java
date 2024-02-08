@@ -1,28 +1,47 @@
 package juloo.keyboard2;
 
 import android.os.Looper;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
+import java.util.Iterator;
 
-class KeyEventHandler implements Config.IKeyEventHandler
+public final class KeyEventHandler implements Config.IKeyEventHandler
 {
   IReceiver _recv;
   Autocapitalisation _autocap;
+  /** State of the system modifiers. It is updated whether a modifier is down
+      or up and a corresponding key event is sent. */
+  Pointers.Modifiers _mods;
+  /** Consistent with [_mods]. This is a mutable state rather than computed
+      from [_mods] to ensure that the meta state is correct while up and down
+      events are sent for the modifier keys. */
+  int _meta_state = 0;
+  /** Whether to force sending arrow keys to move the cursor when
+      [setSelection] could be used instead. */
+  boolean _move_cursor_force_fallback = false;
 
   public KeyEventHandler(Looper looper, IReceiver recv)
   {
     _recv = recv;
     _autocap = new Autocapitalisation(looper,
         this.new Autocapitalisation_callback());
+    _mods = Pointers.Modifiers.EMPTY;
   }
 
   /** Editing just started. */
   public void started(EditorInfo info)
   {
     _autocap.started(info, _recv.getCurrentInputConnection());
+    // Workaround a bug in Acode, which answers to [getExtractedText] but do
+    // not react to [setSelection] while returning [true].
+    // Note: Using & to workaround a bug in Acode, which sets several
+    // variations at once.
+    _move_cursor_force_fallback = (info.inputType & InputType.TYPE_MASK_VARIATION &
+      InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0;
   }
 
   /** Selection has been updated. */
@@ -33,6 +52,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
 
   /** A key is being pressed. There will not necessarily be a corresponding
       [key_up] event. */
+  @Override
   public void key_down(KeyValue key, boolean isSwipe)
   {
     if (key == null)
@@ -55,19 +75,44 @@ class KeyEventHandler implements Config.IKeyEventHandler
   }
 
   /** A key has been released. */
+  @Override
   public void key_up(KeyValue key, Pointers.Modifiers mods)
   {
     if (key == null)
       return;
+    Pointers.Modifiers old_mods = _mods;
+    update_meta_state(mods);
     switch (key.getKind())
     {
       case Char: send_text(String.valueOf(key.getChar())); break;
       case String: send_text(key.getString()); break;
       case Event: _recv.handle_event_key(key.getEvent()); break;
-      case Keyevent: send_key_down_up(key.getKeyevent(), mods); break;
+      case Keyevent: send_key_down_up(key.getKeyevent()); break;
       case Modifier: break;
-      case Editing: handle_editing_key(key.getEditing(), mods); break;
+      case Editing: handle_editing_key(key.getEditing()); break;
     }
+    update_meta_state(old_mods);
+  }
+
+  @Override
+  public void mods_changed(Pointers.Modifiers mods)
+  {
+    update_meta_state(mods);
+  }
+
+  /** Update [_mods] to be consistent with the [mods], sending key events if
+      needed. */
+  void update_meta_state(Pointers.Modifiers mods)
+  {
+    // Released modifiers
+    Iterator<KeyValue.Modifier> it = _mods.diff(mods);
+    while (it.hasNext())
+      sendMetaKeyForModifier(it.next(), false);
+    // Activated modifiers
+    it = mods.diff(_mods);
+    while (it.hasNext())
+      sendMetaKeyForModifier(it.next(), true);
+    _mods = mods;
   }
 
   // private void handleDelKey(int before, int after)
@@ -80,54 +125,58 @@ class KeyEventHandler implements Config.IKeyEventHandler
   //  getCurrentInputConnection().deleteSurroundingText(before, after);
   // }
 
-  int sendMetaKey(int eventCode, int metaFlags, int metaState, boolean down)
+  void sendMetaKey(int eventCode, int meta_flags, boolean down)
   {
-    int action;
-    int updatedMetaState;
-    if (down) { action = KeyEvent.ACTION_DOWN; updatedMetaState = metaState | metaFlags; }
-    else { action = KeyEvent.ACTION_UP; updatedMetaState = metaState & ~metaFlags; }
-    send_keyevent(action, eventCode, metaState);
-    return updatedMetaState;
+    if (down)
+    {
+      _meta_state = _meta_state | meta_flags;
+      send_keyevent(KeyEvent.ACTION_DOWN, eventCode);
+    }
+    else
+    {
+      send_keyevent(KeyEvent.ACTION_UP, eventCode);
+      _meta_state = _meta_state & ~meta_flags;
+    }
   }
 
-  int sendMetaKeyForModifier(KeyValue.Modifier mod, int metaState, boolean down)
+  void sendMetaKeyForModifier(KeyValue.Modifier mod, boolean down)
   {
     switch (mod)
     {
       case CTRL:
-        return sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, metaState, down);
+        sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, down);
+        break;
       case ALT:
-        return sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, metaState, down);
+        sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, down);
+        break;
       case SHIFT:
-        return sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, metaState, down);
+        sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, down);
+        break;
       case META:
-        return sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, metaState, down);
-      default: return metaState;
+        sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, down);
+        break;
+      default:
+        break;
     }
   }
 
   /*
    * Don't set KeyEvent.FLAG_SOFT_KEYBOARD.
    */
-  void send_key_down_up(int keyCode, Pointers.Modifiers mods)
+  void send_key_down_up(int keyCode)
   {
-    int metaState = 0;
-    for (int i = 0; i < mods.size(); i++)
-      metaState = sendMetaKeyForModifier(mods.get(i), metaState, true);
-    send_keyevent(KeyEvent.ACTION_DOWN, keyCode, metaState);
-    send_keyevent(KeyEvent.ACTION_UP, keyCode, metaState);
-    for (int i = mods.size() - 1; i >= 0; i--)
-      metaState = sendMetaKeyForModifier(mods.get(i), metaState, false);
+    send_keyevent(KeyEvent.ACTION_DOWN, keyCode);
+    send_keyevent(KeyEvent.ACTION_UP, keyCode);
   }
 
-  void send_keyevent(int eventAction, int eventCode, int meta)
+  void send_keyevent(int eventAction, int eventCode)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
-    conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, meta));
+    conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, _meta_state));
     if (eventAction == KeyEvent.ACTION_UP)
-      _autocap.event_sent(eventCode, meta);
+      _autocap.event_sent(eventCode, _meta_state);
   }
 
   void send_text(CharSequence text)
@@ -148,7 +197,7 @@ class KeyEventHandler implements Config.IKeyEventHandler
     conn.performContextMenuAction(id);
   }
 
-  void handle_editing_key(KeyValue.Editing ev, Pointers.Modifiers mods)
+  void handle_editing_key(KeyValue.Editing ev)
   {
     switch (ev)
     {
@@ -163,8 +212,8 @@ class KeyEventHandler implements Config.IKeyEventHandler
       case REPLACE: send_context_menu_action(android.R.id.replaceText); break;
       case ASSIST: send_context_menu_action(android.R.id.textAssist); break;
       case AUTOFILL: send_context_menu_action(android.R.id.autofill); break;
-      case CURSOR_LEFT: move_cursor(-1, mods); break;
-      case CURSOR_RIGHT: move_cursor(1, mods); break;
+      case CURSOR_LEFT: move_cursor(-1); break;
+      case CURSOR_RIGHT: move_cursor(1); break;
     }
   }
 
@@ -186,19 +235,20 @@ class KeyEventHandler implements Config.IKeyEventHandler
       Unlike arrow keys, the selection is not removed even if shift is not on.
       Falls back to sending arrow keys events if the editor do not support
       moving the cursor or a modifier other than shift is pressed. */
-  void move_cursor(int d, Pointers.Modifiers mods)
+  void move_cursor(int d)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
     ExtractedText et = get_cursor_pos(conn);
     // Fallback to sending key events
-    if (et == null
-        || mods.has(KeyValue.Modifier.CTRL)
-        || mods.has(KeyValue.Modifier.ALT)
-        || mods.has(KeyValue.Modifier.META))
+    if (_move_cursor_force_fallback
+        || et == null
+        || _mods.has(KeyValue.Modifier.CTRL)
+        || _mods.has(KeyValue.Modifier.ALT)
+        || _mods.has(KeyValue.Modifier.META))
     {
-      move_cursor_fallback(d, mods);
+      move_cursor_fallback(d);
       return;
     }
     int sel_start = et.selectionStart;
@@ -214,24 +264,25 @@ class KeyEventHandler implements Config.IKeyEventHandler
     {
       sel_end += d;
       // Leave 'sel_start' where it is if shift is pressed
-      if (!mods.has(KeyValue.Modifier.SHIFT))
+      if (!_mods.has(KeyValue.Modifier.SHIFT))
         sel_start = sel_end;
     }
-    conn.setSelection(sel_start, sel_end);
+    if (!conn.setSelection(sel_start, sel_end))
+      move_cursor_fallback(d);
   }
 
   /** Send arrow keys as a fallback for editors that do not support
       [getExtractedText] like Termux. */
-  void move_cursor_fallback(int d, Pointers.Modifiers mods)
+  void move_cursor_fallback(int d)
   {
     while (d < 0)
     {
-      send_key_down_up(KeyEvent.KEYCODE_DPAD_LEFT, mods);
+      send_key_down_up(KeyEvent.KEYCODE_DPAD_LEFT);
       d++;
     }
     while (d > 0)
     {
-      send_key_down_up(KeyEvent.KEYCODE_DPAD_RIGHT, mods);
+      send_key_down_up(KeyEvent.KEYCODE_DPAD_RIGHT);
       d--;
     }
   }

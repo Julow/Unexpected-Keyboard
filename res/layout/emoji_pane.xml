@@ -3,6 +3,6 @@
   <juloo.keyboard2.EmojiGroupButtonsBar android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
   <juloo.keyboard2.EmojiGridView android:id="@+id/emoji_grid" android:layout_width="fill_parent" android:layout_height="@dimen/emoji_grid_height" android:orientation="vertical" android:numColumns="auto_fit" android:columnWidth="45sp" android:background="?attr/colorKeyboard"/>
   <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
-    <juloo.keyboard2.EmojiBottomRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:background="?attr/emoji_key_bg"/>
+    <juloo.keyboard2.Keyboard2View layout="@xml/emoji_bottom_row" android:layout_width="fill_parent" android:layout_height="wrap_content" android:background="?attr/emoji_key_bg"/>
   </LinearLayout>
 </LinearLayout>
