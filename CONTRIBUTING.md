@@ -176,7 +176,7 @@ the file and the English strings.
 To check that `strings.xml` is formatted correctly, run
 `python sync_translations.py`. This will modify your files.
 
-Store descriptions in `metedata/` are updated automatically.
+Store descriptions in `metadata/` are updated automatically.
 Translating changelogs is not useful.
 
 The app name might be partially translated, the "Unexpected" word should remain
