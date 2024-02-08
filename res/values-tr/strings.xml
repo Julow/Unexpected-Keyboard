@@ -49,8 +49,8 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="pref_autocapitalisation_summary">Noktadan sonra ve her cümlenin başında büyük harf yapar</string>
   <string name="pref_switch_input_immediate_title">Son kullanılan klavyeye geç</string>
   <string name="pref_switch_input_immediate_summary">Klavye değistirme tuşunun davranışını belirler</string>
-  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
-  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
+  <string name="pref_vibrate_custom">Özel titreşim</string>
+  <string name="pref_vibrate_duration_title">Titreşim yoğunluğu</string>
   <string name="pref_pin_entry_enabled_title">NumPad</string>
   <string name="pref_pin_entry_enabled_summary">Sayıları, tarihleri ve telefon numaralarını yazarken</string>
   <string name="pref_category_style">Tarz</string>
@@ -89,7 +89,7 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>
   <string name="key_descr_capslock">CapsLock</string>
   <string name="key_descr_switch_greekmath">Greek &amp; math sembolleri</string>
-  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
+  <string name="key_descr_change_method">Klavye değiştir</string>
   <string name="key_descr_voice_typing">Sesle yazma</string>
   <string name="key_descr_copy">Kopyala</string>
   <string name="key_descr_paste">Yapıştır</string>
