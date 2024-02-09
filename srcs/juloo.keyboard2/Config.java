@@ -47,8 +47,8 @@ public final class Config
   public float margin_bottom;
   public float keyHeight;
   public float horizontal_margin;
-  public float keyVerticalInterval;
-  public float keyHorizontalInterval;
+  public float key_vertical_margin;
+  public float key_horizontal_margin;
   public int labelBrightness; // 0 - 255
   public int keyboardOpacity; // 0 - 255
   public int borderRadius; // 0 - 15
@@ -108,8 +108,6 @@ public final class Config
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
-    // Scale some dimensions depending on orientation
-    float horizontalIntervalScale = 1.f;
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
@@ -118,7 +116,6 @@ public final class Config
       if ("landscape".equals(show_numpad_s))
         show_numpad = true;
       keyboardHeightPercent = _prefs.getInt("keyboard_height_landscape", 50);
-      horizontalIntervalScale = 2.f;
       characterSizeScale = 1.25f;
     }
     else
@@ -142,8 +139,8 @@ public final class Config
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
     margin_bottom = get_dip_pref_oriented(dm, "margin_bottom", 7, 3);
-    keyVerticalInterval = get_dip_pref(dm, "key_vertical_space", 2);
-    keyHorizontalInterval = get_dip_pref(dm, "key_horizontal_space", 2) * horizontalIntervalScale;
+    key_vertical_margin = get_dip_pref(dm, "key_vertical_margin", 1.5f) / 100;
+    key_horizontal_margin = get_dip_pref(dm, "key_horizontal_margin", 2) / 100;
     // Label brightness is used as the alpha channel
     labelBrightness = _prefs.getInt("label_brightness", 100) * 255 / 100;
     // Keyboard opacity
@@ -154,8 +151,8 @@ public final class Config
 		borderConfig = _prefs.getBoolean("border_config", false);
 		borderRadius = _prefs.getInt("border_radius", 0);
 		borderLineSize = _prefs.getInt("border_line_size", 0);     
-    // Do not substract keyVerticalInterval from keyHeight because this is done
-    // during rendered.
+    // Do not substract key_Vertical_margin from keyHeight because this is done
+    // during rendering.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
@@ -407,7 +404,8 @@ public final class Config
   public static interface IKeyEventHandler
   {
     public void key_down(KeyValue value, boolean is_swipe);
-    public void key_up(KeyValue value, Pointers.Modifiers flags);
+    public void key_up(KeyValue value, Pointers.Modifiers mods);
+    public void mods_changed(Pointers.Modifiers mods);
   }
 
   /** Config migrations. */

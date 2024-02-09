@@ -2,6 +2,10 @@
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
+# arab_hamvaj_tly
+Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], _, `, {, |, }
+Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder
+2 warnings
 # arab_pc
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
@@ -64,7 +68,8 @@ Layout includes some ASCII punctuation but not all, missing: $
 Layout redefines the bottom row but some important keys are missing, missing: cursor_left, cursor_right, loc end, loc home, loc page_down, loc page_up, loc switch_greekmath, loc voice_typing, switch_backward
 2 warnings
 # latn_colemak
-0 warnings
+Some keys contain whitespaces, unexpected:  ́
+1 warnings
 # latn_dvorak
 0 warnings
 # latn_neo2
@@ -90,6 +95,10 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # latn_qwerty_se
 Duplicate keys: !, ', ,, -, ., ?
 1 warnings
+# latn_qwerty_tly
+Duplicate keys: a, c, g, j, q
+Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
+2 warnings
 # latn_qwerty_tr
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 1 warnings
@@ -120,4 +129,5 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 Duplicate keys:  
 Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-3 warnings
+Some keys contain whitespaces, unexpected:  
+4 warnings

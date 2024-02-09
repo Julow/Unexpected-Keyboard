@@ -245,7 +245,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
     public SystemLayout() {}
   }
 
-  /** The name of a layout defined in [res/xml]. */
+  /** The name of a layout defined in [srcs/layouts]. */
   public static final class NamedLayout implements Layout
   {
     public final String name;

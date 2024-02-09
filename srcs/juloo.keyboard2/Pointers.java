@@ -2,8 +2,10 @@ package juloo.keyboard2;
 
 import android.os.Handler;
 import android.os.Message;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Manage pointers (fingers) on the screen and long presses.
@@ -95,6 +97,7 @@ public final class Pointers implements Handler.Callback
     if (locked)
       ptr.flags |= KeyValue.FLAG_LOCKED;
     _ptrs.add(ptr);
+    _handler.onPointerFlagsChanged(false);
   }
 
   public void remove_fake_pointer(KeyValue kv, KeyboardData.Key key)
@@ -102,6 +105,7 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = getLatched(key, kv);
     if (ptr != null && (ptr.flags & KeyValue.FLAG_FAKE_PTR) != 0)
       removePtr(ptr);
+    _handler.onPointerFlagsChanged(false);
   }
 
   // Receiving events
@@ -483,6 +487,12 @@ public final class Pointers implements Handler.Callback
       return (Arrays.binarySearch(_mods, 0, _size, m) >= 0);
     }
 
+    /** Returns the activated modifiers that are not in [m2]. */
+    public Iterator<KeyValue.Modifier> diff(Modifiers m2)
+    {
+      return new ModifiersDiffIterator(this, m2);
+    }
+
     @Override
     public int hashCode() { return Arrays.hashCode(_mods); }
     @Override
@@ -513,6 +523,60 @@ public final class Pointers implements Handler.Callback
         size = j;
       }
       return new Modifiers(mods, size);
+    }
+
+    /** Returns modifiers that are in [m1_] but not in [m2_]. */
+    static final class ModifiersDiffIterator
+        implements Iterator<KeyValue.Modifier>
+    {
+      Modifiers m1;
+      int i1 = 0;
+      Modifiers m2;
+      int i2 = 0;
+
+      public ModifiersDiffIterator(Modifiers m1_, Modifiers m2_)
+      {
+        m1 = m1_;
+        m2 = m2_;
+        advance();
+      }
+
+      public boolean hasNext()
+      {
+        return i1 < m1._size;
+      }
+
+      public KeyValue.Modifier next()
+      {
+        if (i1 >= m1._size)
+          throw new NoSuchElementException();
+        KeyValue.Modifier m = m1._mods[i1];
+        i1++;
+        advance();
+        return m;
+      }
+
+      /** Advance to the next element if [i1] is not a valid element. The end
+          is reached when [i1 = m1.size()].  */
+      void advance()
+      {
+        while (i1 < m1.size())
+        {
+          KeyValue.Modifier m = m1._mods[i1];
+          while (true)
+          {
+            if (i2 >= m2._size)
+              return;
+            int d = m.compareTo(m2._mods[i2]);
+            if (d < 0)
+              return;
+            i2++;
+            if (d == 0)
+              break;
+          }
+          i1++;
+        }
+      }
     }
   }
 

@@ -12,7 +12,6 @@ public class SettingsActivity extends PreferenceActivity
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
- 
     super.onCreate(savedInstanceState);
     // The preferences can't be read when in direct-boot mode. Avoid crashing
     // and don't allow changing the settings.
@@ -25,8 +24,6 @@ public class SettingsActivity extends PreferenceActivity
     catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
   }
-
-  
 
   void fallbackEncrypted()
   {

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Generates the list of layouts in res/values/layouts.xml from the layout files
-# in res/xml. Every layouts must have a 'name' attribute to be listed.
+# in srcs/layouts. Every layouts must have a 'name' attribute to be listed.
 
 import itertools as it
 import sys, os, glob
@@ -10,11 +10,6 @@ import xml.etree.ElementTree as XML
 # Layouts first in the list (these are the programming layouts). Other layouts
 # are sorted alphabetically.
 FIRST_LAYOUTS = [ "latn_qwerty_us", "latn_colemak", "latn_dvorak" ]
-
-# File names that are known not to be layouts. Avoid warning about them.
-KNOWN_NOT_LAYOUT = set([
-    "number_row", "numpad", "pin", "bottom_row", "settings", "method",
-    "greekmath", "numeric" ])
 
 # Read a layout from a file. Returns [None] if [fname] is not a layout.
 def read_layout(fname):
@@ -28,9 +23,7 @@ def read_layouts(files):
     for layout_file in files:
         layout_id, _ = os.path.splitext(os.path.basename(layout_file))
         layout = read_layout(layout_file)
-        if layout_id in KNOWN_NOT_LAYOUT:
-            continue
-        elif layout == None:
+        if layout == None:
             print("Not a layout file: %s" % layout_file)
         elif layout["name"] == None:
             print("Layout doesn't have a name: %s" % layout_id)
@@ -66,6 +59,6 @@ def generate_arrays(out, layouts):
     XML.indent(root)
     XML.ElementTree(element=root).write(out, encoding="unicode", xml_declaration=True)
 
-layouts = sort_layouts(read_layouts(glob.glob("res/xml/*.xml")))
+layouts = sort_layouts(read_layouts(glob.glob("srcs/layouts/*.xml")))
 with open("res/values/layouts.xml", "w") as out:
     generate_arrays(out, layouts)

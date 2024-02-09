@@ -21,4 +21,11 @@
   </application>
   <uses-permission android:name="android.permission.VIBRATE"/>
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+  <!-- To query enabled input methods for voice IME detection -->
+  <queries>
+    <intent>
+      <action android:name="android.view.InputMethod" />
+    </intent>
+  </queries>
 </manifest>

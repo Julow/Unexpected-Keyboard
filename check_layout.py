@@ -80,6 +80,8 @@ def check_layout(layout):
                      "f10", "f11", "f12" ],
                     "Layout contains function keys")
     unexpected_keys(keys, [""], "Layout contains empty strings")
+    unexpected_keys(keys, ["loc"], "Special keyword cannot be a symbol")
+    unexpected_keys(keys, filter(lambda k: k.strip()!=k, keys), "Some keys contain whitespaces")
 
     _, bottom_row_keys, _ = parse_row("res/xml/bottom_row.xml")
 

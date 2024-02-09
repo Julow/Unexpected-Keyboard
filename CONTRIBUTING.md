@@ -88,14 +88,15 @@ Github secret named `DEBUG_KEYSTORE`.
 
 ### Adding a layout
 
-Layouts are defined in XML, see `res/xml/latn_qwerty_us.xml`.
+Layouts are defined in XML, see `srcs/layouts/latn_qwerty_us.xml`.
 An online tool for editing layout files written by @Lixquid is available
 [here](https://unexpected-keyboard-layout-editor.lixquid.com/).
 
 Makes sure to specify the `name` attribute like in `latn_qwerty_us.xml`,
 otherwise the layout won't be added to the app.
 
-The layout file must be placed in the `res/xml/` directory and named according to:
+The layout file must be placed in the `srcs/layouts` directory and named
+according to:
 - script (`latn` for latin, etc..)
 - layout name (eg. the name of a standard)
 - country code (or language code if more adequate)
@@ -173,15 +174,13 @@ default translation in `res/values/strings.xml`, which contain the structure of
 the file and the English strings.
 
 To check that `strings.xml` is formatted correctly, run
-`./gradlew syncTranslations`. This will modify your files.
+`python sync_translations.py`. This will modify your files.
 
-The store description is found in `metadata/android/<locale>/`,
-`short_description.txt` and `full_description.txt`.
-The short description must not exceed 80 characters.
+Store descriptions in `metedata/` are updated automatically.
 Translating changelogs is not useful.
 
 The app name might be partially translated, the "Unexpected" word should remain
-untranslated.
+untranslated if possible.
 
 As translations need to be updated regularly, you can subscribe to this issue
 to receive a notification when an update is needed:
