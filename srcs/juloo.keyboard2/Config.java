@@ -51,8 +51,8 @@ public final class Config
   public float key_horizontal_margin;
   public int labelBrightness; // 0 - 255
   public int keyboardOpacity; // 0 - 255
-  public float borderRadius; // 0 - 1
-  public float borderLineSize; // dp
+  public float customBorderRadius; // 0 - 1
+  public float customBorderLineWidth; // dp
   public int keyOpacity; // 0 - 255
   public int keyActivatedOpacity; // 0 - 255
   public boolean double_tap_lock_shift;
@@ -149,8 +149,8 @@ public final class Config
     keyActivatedOpacity = _prefs.getInt("key_activated_opacity", 100) * 255 / 100;
     // keyboard border settings
     borderConfig = _prefs.getBoolean("border_config", false);
-    borderRadius = _prefs.getInt("border_radius", 0) / 100.f;
-    borderLineSize = get_dip_pref(dm, "border_line_size", 0);
+    customBorderRadius = _prefs.getInt("custom_border_radius", 0) / 100.f;
+    customBorderLineWidth = get_dip_pref(dm, "custom_border_line_width", 0);
     // Do not substract key_Vertical_margin from keyHeight because this is done
     // during rendering.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;

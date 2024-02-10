@@ -344,8 +344,8 @@ public class Keyboard2View extends View
   {
     float r = _theme.keyBorderRadius;
     if (_config.borderConfig)
-      r = _config.borderRadius * _keyWidth;
-    float w = (_config.borderConfig) ? _config.borderLineSize : _theme.keyBorderWidth;
+      r = _config.customBorderRadius * _keyWidth;
+    float w = (_config.borderConfig) ? _config.customBorderLineWidth : _theme.keyBorderWidth;
     float padding = w / 2.f;
     if (isKeyDown)
       w = _theme.keyBorderWidthActivated;
@@ -371,7 +371,7 @@ public class Keyboard2View extends View
     Paint p = _theme.keyBorderPaint;
     float r = _theme.keyBorderRadius;
     if (_config.borderConfig)
-      r = _config.borderRadius * _keyWidth;
+      r = _config.customBorderRadius * _keyWidth;
     canvas.save();
     canvas.clipRect(clipl, clipt, clipr, clipb);
     p.setColor(color);
