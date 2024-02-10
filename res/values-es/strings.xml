@@ -77,7 +77,6 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_key_horizontal_space">Espaciado horizontal entre las teclas</string>
   <string name="pref_key_vertical_space">Espaciado vertical entre las teclas</string>
   <!-- <string name="pref_border_config_summary">Customize the Border Width, and the Corners Radius of the keys</string> -->
-  <!-- <string name="pref_border_options_disabled">Disabled</string> -->
   <!-- <string name="pref_border_config_title">Customize the keys</string> -->
   <!-- <string name="pref_border_width_title">Border Width</string> -->
   <!-- <string name="pref_corners_radius_title">Corner radius</string> -->

@@ -47,7 +47,7 @@
     <juloo.keyboard2.prefs.SlideBarPreference android:key="key_vertical_margin" android:title="@string/pref_key_vertical_space" android:summary="%s%%" android:defaultValue="1.5" min="0" max="5"/>
     <juloo.keyboard2.prefs.SlideBarPreference android:key="key_horizontal_margin" android:title="@string/pref_key_horizontal_space" android:summary="%s%%" android:defaultValue="2" min="0" max="5"/>
     <CheckBoxPreference android:key="border_config" android:title="@string/pref_border_config_title" android:summary="@string/pref_border_config_summary" android:defaultValue="false"/>
-    <juloo.keyboard2.prefs.IntSlideBarPreference android:key="border_radius" android:title="@string/pref_corners_radius_title" android:summary="%sdp" android:summaryOff="@string/pref_border_options_disabled" android:defaultValue="0" min="0" max="15" android:dependency="border_config"/>
-    <juloo.keyboard2.prefs.IntSlideBarPreference android:key="border_line_size" android:title="@string/pref_border_width_title" android:summaryOff="@string/pref_border_options_disabled" android:summary="%sdp" android:defaultValue="0" min="0" max="5" android:dependency="border_config"/>
+    <juloo.keyboard2.prefs.IntSlideBarPreference android:key="border_radius" android:title="@string/pref_corners_radius_title" android:summary="%sdp" android:defaultValue="0" min="0" max="15" android:dependency="border_config"/>
+    <juloo.keyboard2.prefs.IntSlideBarPreference android:key="border_line_size" android:title="@string/pref_border_width_title" android:summary="%sdp" android:defaultValue="0" min="0" max="5" android:dependency="border_config"/>
   </PreferenceCategory>
 </PreferenceScreen>
