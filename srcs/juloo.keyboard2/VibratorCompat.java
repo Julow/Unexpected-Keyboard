@@ -1,7 +1,6 @@
 package juloo.keyboard2;
 
 import android.content.Context;
-import android.os.Build.VERSION;
 import android.os.Vibrator;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
@@ -17,9 +16,8 @@ public final class VibratorCompat
     }
     else
     {
-      if (VERSION.SDK_INT >= 8)
-        v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP,
-            HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+      v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP,
+          HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
     }
   }
 

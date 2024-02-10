@@ -27,8 +27,6 @@ class VoiceImeSwitcher
   public static boolean switch_to_voice_ime(InputMethodService ims,
       InputMethodManager imm, SharedPreferences prefs)
   {
-    if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
-      return false;
     List<IME> imes = get_voice_ime_list(imm);
     String last_used = prefs.getString(PREF_LAST_USED, null);
     String last_known_imes = prefs.getString(PREF_KNOWN_IMES, null);
@@ -46,8 +44,6 @@ class VoiceImeSwitcher
   public static boolean choose_voice_ime(InputMethodService ims,
       InputMethodManager imm, SharedPreferences prefs)
   {
-    if (VERSION.SDK_INT < 11) // Due to InputMethodSubtype
-      return false;
     List<IME> imes = get_voice_ime_list(imm);
     choose_voice_ime_and_update_prefs(ims, prefs, imes);
     return true;

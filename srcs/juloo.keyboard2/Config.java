@@ -3,7 +3,6 @@ package juloo.keyboard2;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -358,12 +357,9 @@ public final class Config
       case "jungle": return R.style.Jungle;
       default:
       case "system":
-        if (Build.VERSION.SDK_INT >= 8)
-        {
-          int night_mode = res.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-          if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
-            return R.style.Light;
-        }
+        int night_mode = res.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
+          return R.style.Light;
         return R.style.Dark;
     }
   }
