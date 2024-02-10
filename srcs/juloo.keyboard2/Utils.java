@@ -6,6 +6,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Locale;
 
 public final class Utils
 {
@@ -16,7 +17,7 @@ public final class Utils
       return s;
     // Make sure not to cut a code point in half
     int i = s.offsetByCodePoints(0, 1);
-    return s.substring(0, i).toUpperCase() + s.substring(i);
+    return s.substring(0, i).toUpperCase(Locale.getDefault()) + s.substring(i);
   }
 
   /** Like [dialog.show()] but properly configure layout params when called

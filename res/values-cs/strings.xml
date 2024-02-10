@@ -47,8 +47,6 @@ Nezapomeňte... Jako každá virtuální klávesnice, i tato musí být aktivov�
   <string name="pref_extra_keys_title">Přidat klávesy do klávesnice</string>
   <string name="pref_extra_keys_custom">Přidat vlastní klávesy</string>
   <string name="pref_extra_keys_internal">Výbrané klávesy k přidaní do klávesnice</string>
-  <string name="pref_second_layout_title">Vedlejší rozvržení</string>
-  <string name="pref_second_layout_none">Žádné</string>
   <string name="pref_category_typing">Psaní</string>
   <string name="pref_swipe_dist_title">Vzdálenost posunutí prstem</string>
   <string name="pref_swipe_dist_summary">Jak daleko je třeba posunout prst pro zadání znaku/znaménka v rohu klávey (%s)</string>
@@ -102,6 +100,7 @@ Nezapomeňte... Jako každá virtuální klávesnice, i tato musí být aktivov�
   <string name="launcher_description">Tato aplikace je pouhou virtuální klávesnicí. Přejděte do systémového nastavení, kliknutím na tlačítko níže a aktivujte ji.</string>
   <string name="launcher_sourcecode">Toto je volná, open-source aplikace. Její zdrojový kód, či hlášení chyb, naleznete na Githubu.</string>
   <string name="launcher_tryhere">Po aktivaci můžete klávesnici rovnou vyzkoušet zde:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Řecké a matematické symboly</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
@@ -122,5 +121,4 @@ Nezapomeňte... Jako každá virtuální klávesnice, i tato musí být aktivov�
   <string name="key_descr_page_down">Page Down</string>
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
-  <string name="pref_category_advanced">Pokročilé</string>
 </resources>

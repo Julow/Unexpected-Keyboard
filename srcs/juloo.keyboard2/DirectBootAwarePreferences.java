@@ -59,7 +59,7 @@ public final class DirectBootAwarePreferences
       // Device is locked, migrate later.
       return;
     }
-    prefs.edit().putBoolean("need_migration", false).commit();
+    prefs.edit().putBoolean("need_migration", false).apply();
     copy_shared_preferences(prefs, protected_prefs);
   }
 
@@ -83,6 +83,6 @@ public final class DirectBootAwarePreferences
       else if (v instanceof Set)
         e.putStringSet(k, (Set<String>)v);
     }
-    e.commit();
+    e.apply();
   }
 }

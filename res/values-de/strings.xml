@@ -35,8 +35,6 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="pref_extra_keys_title">Zusätzliche Zeichen zur Tastatur hinzufügen</string>
   <string name="pref_extra_keys_custom">Benutzerdefinierte Tasten hinzufügen</string>
   <string name="pref_extra_keys_internal">Tasten auswählen, die der Tastatur hinzugefügt werden sollen</string>
-  <string name="pref_second_layout_title">Zweites Layout</string>
-  <string name="pref_second_layout_none">Keines</string>
   <string name="pref_category_typing">Tippen</string>
   <string name="pref_swipe_dist_title">Länge der Wischgeste</string>
   <string name="pref_swipe_dist_summary">Abstand der Zeichen in den Ecken der Tasten (%s)</string>
@@ -90,6 +88,7 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="launcher_description">Diese App ist eine virtuelle Tastatur. Tippe auf den Button unten und aktivere Unexpected Keyboard in den Systemeinstellungen.</string>
   <string name="launcher_sourcecode">Dies ist eine freie und quelloffene App. Du findest den Quellcode auf Github. Dort können auch Bugs gemeldet werden.</string>
   <string name="launcher_tryhere">Nach Aktivierung kannst du die Tastatur hier ausprobieren:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Feststelltaste</string>
   <string name="key_descr_switch_greekmath">Griechische &amp; mathematische Symbole</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
@@ -110,5 +109,4 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="key_descr_page_down">Bild ab</string>
   <string name="key_descr_home">Pos1</string>
   <string name="key_descr_end">Ende</string>
-  <string name="pref_category_advanced">Erweitert</string>
 </resources>

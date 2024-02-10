@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import android.annotation.SuppressLint;
 import android.os.Looper;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -197,6 +198,7 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
     conn.performContextMenuAction(id);
   }
 
+  @SuppressLint("InlinedApi")
   void handle_editing_key(KeyValue.Editing ev)
   {
     switch (ev)

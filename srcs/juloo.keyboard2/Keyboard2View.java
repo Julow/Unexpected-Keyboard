@@ -77,12 +77,14 @@ public class Keyboard2View extends View
       return;
     // The intermediate Window is a [Dialog].
     Window w = getParentWindow(context);
+    w.setNavigationBarColor(_theme.colorNavBar);
+    if (VERSION.SDK_INT < 26)
+      return;
     int uiFlags = getSystemUiVisibility();
     if (_theme.isLightNavBar)
       uiFlags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
     else
       uiFlags &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-    w.setNavigationBarColor(_theme.colorNavBar);
     setSystemUiVisibility(uiFlags);
   }
 

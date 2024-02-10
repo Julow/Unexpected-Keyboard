@@ -35,8 +35,6 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <string name="pref_extra_keys_title">Adaugă taste pe tastatură</string>
   <!-- <string name="pref_extra_keys_custom">Add custom keys</string> -->
   <!-- <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string> -->
-  <string name="pref_second_layout_title">Aranjament secundar</string>
-  <string name="pref_second_layout_none">Nimic</string>
   <string name="pref_category_typing">Tipărire</string>
   <string name="pref_swipe_dist_title">Distanța de glisare</string>
   <string name="pref_swipe_dist_summary">Distanța dintre caracterele din colțurile tastelor (%s)</string>
@@ -90,6 +88,7 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <string name="launcher_description">Această aplicație este o tastatură virtuală. Accesați setările sistemului făcând clic pe butonul de mai jos și activați tastatura Unexpected.</string>
   <string name="launcher_sourcecode">Aceasta este o aplicație gratuită și open source. Puteți găsi codul sursă sau raporta erori folosind link-ul Github.</string>
   <string name="launcher_tryhere">După activare, puteți să încercați tastatura aici:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <!-- <string name="key_descr_capslock">Caps lock</string> -->
   <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
@@ -110,5 +109,4 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <!-- <string name="key_descr_page_down">Page Down</string> -->
   <!-- <string name="key_descr_home">Home</string> -->
   <!-- <string name="key_descr_end">End</string> -->
-  <string name="pref_category_advanced">Setări avansate</string>
 </resources>

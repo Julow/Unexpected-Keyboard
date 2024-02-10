@@ -35,8 +35,6 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="pref_extra_keys_title">Pievienot tastatūrai taustiņus</string>
   <string name="pref_extra_keys_custom">Pievienot pielāgotus taustiņus</string>
   <string name="pref_extra_keys_internal">Atlasīt taustiņus, ko pievienot tastatūrai</string>
-  <string name="pref_second_layout_title">Otrējais izkārtojums</string>
-  <string name="pref_second_layout_none">Neviens</string>
   <string name="pref_category_typing">Rakstīšana</string>
   <string name="pref_swipe_dist_title">Pavilkšanas attālums</string>
   <string name="pref_swipe_dist_summary">Taustiņu stūros esošo rakstzīmju attālums (%s)</string>
@@ -92,6 +90,7 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="launcher_sourcecode">Šī ir bezmaksas un atvērtā pirmkoda lietotne.
     GitHub var atrast pirmkodu un ziņot par nepilnībām.</string>
   <string name="launcher_tryhere">Pēc iespējošanas šeit var izmēģināt tastatūru:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Burtslēgs</string>
   <string name="key_descr_switch_greekmath">Grieķu un matemātikas rakstzīmes</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
@@ -112,5 +111,4 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="key_descr_page_down">Lejupšķirt</string>
   <string name="key_descr_home">Sākums</string>
   <string name="key_descr_end">Beigas</string>
-  <string name="pref_category_advanced">Papildu</string>
 </resources>

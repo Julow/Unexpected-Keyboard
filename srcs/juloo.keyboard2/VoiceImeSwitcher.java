@@ -65,7 +65,7 @@ class VoiceImeSwitcher
           prefs.edit()
             .putString(PREF_LAST_USED, selected.get_id())
             .putString(PREF_KNOWN_IMES, serialize_ime_ids(imes))
-            .commit();
+            .apply();
           switch_input_method(ims, selected);
         }
       })

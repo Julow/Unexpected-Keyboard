@@ -47,8 +47,6 @@ Sistema &gt; Idioma e entrada &gt; Teclado virtual &gt; Gerenciar teclados virtu
   <string name="pref_extra_keys_title">Adicionar teclas ao teclado</string>
   <string name="pref_extra_keys_custom">Adicionar teclas customizadas</string>
   <string name="pref_extra_keys_internal">Selecione teclas para serem adicionadas ao teclado</string>
-  <string name="pref_second_layout_title">Layout secundário</string>
-  <string name="pref_second_layout_none">Nenhum</string>
   <string name="pref_category_typing">Digitação</string>
   <string name="pref_swipe_dist_title">Distância a deslizar</string>
   <string name="pref_swipe_dist_summary">Distância até acionar os cantos das teclas (%s)</string>
@@ -102,6 +100,7 @@ Sistema &gt; Idioma e entrada &gt; Teclado virtual &gt; Gerenciar teclados virtu
   <string name="launcher_description">Este app é um teclado virtual. Vá para as configurações do sistema clicando no botão abaixo e ative o Teclado Unexpected.</string>
   <string name="launcher_sourcecode">Este app é gratuito é de código aberto. Você pode consultar o código ou fazer sugestões em Github.</string>
   <string name="launcher_tryhere">Após ativar, experimente aqui:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Grego &amp; símbolos matemáticos</string>
   <string name="key_descr_change_method">Trocar de teclado</string>
@@ -122,5 +121,4 @@ Sistema &gt; Idioma e entrada &gt; Teclado virtual &gt; Gerenciar teclados virtu
   <!-- <string name="key_descr_page_down">Page Down</string> -->
   <!-- <string name="key_descr_home">Home</string> -->
   <!-- <string name="key_descr_end">End</string> -->
-  <string name="pref_category_advanced">Avançado</string>
 </resources>

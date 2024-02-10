@@ -435,7 +435,7 @@ public final class Config
       case 1:
       default: break;
     }
-    e.commit();
+    e.apply();
   }
 
   private static LayoutsPreference.Layout migrate_layout(String name)

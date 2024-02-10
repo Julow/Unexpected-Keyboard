@@ -35,8 +35,6 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="pref_extra_keys_title">Dodaj klawisze do klawiatury</string>
   <string name="pref_extra_keys_custom">Dodaj niestandardowe klawisze</string>
   <string name="pref_extra_keys_internal">Wybierz klawisze, które chcesz dodać do klawiatury</string>
-  <string name="pref_second_layout_title">Drugi układ</string>
-  <string name="pref_second_layout_none">Żaden</string>
   <string name="pref_category_typing">Pisanie</string>
   <string name="pref_swipe_dist_title">Odległość przesuwania</string>
   <string name="pref_swipe_dist_summary">Odległość znaków od rogów klawiszy (%s)</string>
@@ -90,6 +88,7 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="launcher_description">Ta aplikacja jest klawiaturą ekranową. Naciśnij poniższy przycisk, aby przejść do ustawień systemu i włącz Unexpected-Keyboard.</string>
   <string name="launcher_sourcecode">Jest to darmowa aplikacja o otwartym kodzie źródłowym. Możesz zobaczyć kod źródłowy oraz zgłosić błedy na Githubie.</string>
   <string name="launcher_tryhere">Po jej włączeniu, możesz wypróbować klawiaturę tutaj:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Caps lock</string>
   <string name="key_descr_switch_greekmath">Symbole greckie i matematyczne</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
@@ -110,5 +109,4 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="key_descr_page_down">Page Down</string>
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
-  <string name="pref_category_advanced">Zaawansowane</string>
 </resources>

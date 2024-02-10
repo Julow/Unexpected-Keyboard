@@ -35,8 +35,6 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_extra_keys_title">Agregar teclas</string>
   <string name="pref_extra_keys_custom">Agregar teclas personalizadas</string>
   <string name="pref_extra_keys_internal">Selecciona teclas para agregar al teclado</string>
-  <string name="pref_second_layout_title">Formato secundario</string>
-  <string name="pref_second_layout_none">Ninguno</string>
   <string name="pref_category_typing">Escritura</string>
   <string name="pref_swipe_dist_title">Distancia de deslizamiento</string>
   <string name="pref_swipe_dist_summary">Distancia de caracteres en las esquinas de las teclas (%s)</string>
@@ -90,6 +88,7 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="launcher_description">Esta aplicación es un teclado virtual. Presiona el botón de abajo para ir a Ajustes y habilitar Unexpected Keyboard.</string>
   <string name="launcher_sourcecode">Esta es una aplicación gratuita, libre y de código abierto. Puedes encontrar el código fuente o reportar errores en GitHub.</string>
   <string name="launcher_tryhere">Tras habilitarlo, puedes probar el teclado en este campo:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Bloq Mayús</string>
   <string name="key_descr_switch_greekmath">Símb. griegos y matemáticos</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
@@ -110,5 +109,4 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="key_descr_page_down">Re Pág</string>
   <string name="key_descr_home">Inicio</string>
   <string name="key_descr_end">Fin</string>
-  <string name="pref_category_advanced">Avanzado</string>
 </resources>

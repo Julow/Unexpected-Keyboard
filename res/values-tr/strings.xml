@@ -35,8 +35,6 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="pref_extra_keys_title">Tuş ekle</string>
   <string name="pref_extra_keys_custom">Özel tuş ekle</string>
   <string name="pref_extra_keys_internal">Klavyeye eklenecek tuşları seçin</string>
-  <string name="pref_second_layout_title">İklncil tuş düzeni</string>
-  <string name="pref_second_layout_none">Hiçbiri</string>
   <string name="pref_category_typing">Yazma</string>
   <string name="pref_swipe_dist_title">Kaydırma mesafesi</string>
   <string name="pref_swipe_dist_summary">Tuşların köşelerinden kaydırma mesafesi (%s)</string>
@@ -90,6 +88,7 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="launcher_description">Bu uygulama bir sanal klavye uygulamasıdır. Aşağıdaki butona basarak sistem ayarlarında etkinleştiriniz.</string>
   <string name="launcher_sourcecode">Bu uygulama ücretsiz ve açık kaynaklıdır. Kaynak koduna erişmek veya bir hata raporlamak için GitHub</string>
   <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>
+  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">CapsLock</string>
   <string name="key_descr_switch_greekmath">Greek &amp; math sembolleri</string>
   <string name="key_descr_change_method">Klavye değiştir</string>
@@ -110,5 +109,4 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="key_descr_page_down">Aşağı</string>
   <string name="key_descr_home">BAŞ(Sol yön tuşu)</string>
   <string name="key_descr_end">SON(Sağ yön tuşu)</string>
-  <string name="pref_category_advanced">Gelişmiş</string>
 </resources>
