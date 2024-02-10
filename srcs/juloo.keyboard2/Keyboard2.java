@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -118,6 +119,7 @@ public class Keyboard2 extends InputMethodService
     return Arrays.asList();
   }
 
+  @TargetApi(12)
   private ExtraKeys extra_keys_of_subtype(InputMethodSubtype subtype)
   {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
@@ -127,6 +129,7 @@ public class Keyboard2 extends InputMethodService
     return ExtraKeys.EMPTY;
   }
 
+  @TargetApi(12)
   private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
   {
     List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);

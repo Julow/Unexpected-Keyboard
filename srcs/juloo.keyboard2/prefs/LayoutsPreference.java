@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -149,7 +150,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
   {
     ArrayAdapter layouts = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, _layout_display_names);
     new AlertDialog.Builder(getContext())
-      .setView(R.layout.dialog_edit_text)
+      .setView(View.inflate(getContext(), R.layout.dialog_edit_text, null))
       .setAdapter(layouts, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface _dialog, int which)
         {

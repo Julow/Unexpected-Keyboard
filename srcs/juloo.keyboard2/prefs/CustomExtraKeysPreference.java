@@ -51,7 +51,7 @@ public class CustomExtraKeysPreference extends ListGroupPreference<String>
   void select(final SelectionCallback<String> callback)
   {
     new AlertDialog.Builder(getContext())
-      .setView(R.layout.dialog_edit_text)
+      .setView(View.inflate(getContext(), R.layout.dialog_edit_text, null))
       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface dialog, int which)
         {

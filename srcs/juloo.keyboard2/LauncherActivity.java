@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -31,7 +32,7 @@ public class LauncherActivity extends Activity
     _intro_video = (VideoView)findViewById(R.id.launcher_intro_video);
     _tryhere_text = (TextView)findViewById(R.id.launcher_tryhere_text);
     _tryhere_area = (EditText)findViewById(R.id.launcher_tryhere_area);
-    if (VERSION.SDK_INT > 28)
+    if (VERSION.SDK_INT >= 28)
       _tryhere_area.addOnUnhandledKeyEventListener(
           this.new Tryhere_OnUnhandledKeyEventListener());
     setup_intro_video(_intro_video);
@@ -76,6 +77,7 @@ public class LauncherActivity extends Activity
     v.start();
   }
 
+  @TargetApi(28)
   final class Tryhere_OnUnhandledKeyEventListener implements View.OnUnhandledKeyEventListener
   {
     public boolean onUnhandledKeyEvent(View v, KeyEvent ev)
