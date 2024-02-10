@@ -345,14 +345,11 @@ public class Keyboard2View extends View
     float r = _theme.keyBorderRadius;
     if (_config.borderConfig)
       r = _config.borderRadius * _keyWidth;
-    float w = isKeyDown ? _theme.keyBorderWidthActivated : _theme.keyBorderWidth;
-    float w2 = _theme.keyBorderWidth / 2.f;
-    if ( _config.borderConfig )
-    {
-      w = isKeyDown ? _theme.keyBorderWidthActivated : _config.borderLineSize;
-      w2 = _config.borderLineSize / 2.f;	
-    }
-    _tmpRect.set ( x + w2, y + w2, x + keyW - w2, y + keyH - w2 );   
+    float w = (_config.borderConfig) ? _config.borderLineSize : _theme.keyBorderWidth;
+    float padding = w / 2.f;
+    if (isKeyDown)
+      w = _theme.keyBorderWidthActivated;
+    _tmpRect.set(x + padding, y + padding, x + keyW - padding, y + keyH - padding);
     canvas.drawRoundRect(_tmpRect, r, r,
         isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
     if (w > 0.f)
