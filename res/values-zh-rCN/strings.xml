@@ -76,6 +76,9 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_swipe_dist_e_very_far">非常长</string>
   <string name="pref_key_horizontal_space">按键的左右边距</string>
   <string name="pref_key_vertical_space">按键的上下边距</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">下一项</string>
   <string name="key_action_done">完成</string>
   <string name="key_action_go">前往</string>

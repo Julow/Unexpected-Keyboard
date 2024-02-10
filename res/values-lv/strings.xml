@@ -76,6 +76,9 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="pref_swipe_dist_e_very_far">Ļoti tāls</string>
   <string name="pref_key_horizontal_space">Līmeniskais attālums starp taustiņiem</string>
   <string name="pref_key_vertical_space">Stateniskais attālums starp taustiņiem</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Nākamais</string>
   <string name="key_action_done">Darīts</string>
   <string name="key_action_go">Aiziet</string>

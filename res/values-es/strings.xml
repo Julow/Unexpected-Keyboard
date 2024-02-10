@@ -76,6 +76,9 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_swipe_dist_e_very_far">Muy larga</string>
   <string name="pref_key_horizontal_space">Espaciado horizontal entre las teclas</string>
   <string name="pref_key_vertical_space">Espaciado vertical entre las teclas</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Siguiente</string>
   <string name="key_action_done">Hecho</string>
   <string name="key_action_go">Ir</string>

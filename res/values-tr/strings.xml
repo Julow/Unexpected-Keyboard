@@ -76,6 +76,9 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="pref_swipe_dist_e_very_far">Çok uzun</string>
   <string name="pref_key_horizontal_space">Tuşlar arasındaki yatay boşluk</string>
   <string name="pref_key_vertical_space">Tuşlar arasındaki dikey boşluk</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Sonraki</string>
   <string name="key_action_done">Tamam</string>
   <string name="key_action_go">ileri</string>

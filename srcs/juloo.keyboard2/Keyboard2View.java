@@ -343,9 +343,13 @@ public class Keyboard2View extends View
       boolean isKeyDown)
   {
     float r = _theme.keyBorderRadius;
-    float w = isKeyDown ? _theme.keyBorderWidthActivated : _theme.keyBorderWidth;
-    float w2 = _theme.keyBorderWidth / 2.f;
-    _tmpRect.set(x + w2, y + w2, x + keyW - w2, y + keyH - w2);
+    if (_config.borderConfig)
+      r = _config.customBorderRadius * _keyWidth;
+    float w = (_config.borderConfig) ? _config.customBorderLineWidth : _theme.keyBorderWidth;
+    float padding = w / 2.f;
+    if (isKeyDown)
+      w = _theme.keyBorderWidthActivated;
+    _tmpRect.set(x + padding, y + padding, x + keyW - padding, y + keyH - padding);
     canvas.drawRoundRect(_tmpRect, r, r,
         isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
     if (w > 0.f)
@@ -353,8 +357,8 @@ public class Keyboard2View extends View
       _theme.keyBorderPaint.setStrokeWidth(w);
       float overlap = r - r * 0.85f + w; // sin(45°)
       drawBorder(canvas, x, y, x + overlap, y + keyH, _theme.keyBorderColorLeft);
-      drawBorder(canvas, x, y, x + keyW, y + overlap, _theme.keyBorderColorTop);
       drawBorder(canvas, x + keyW - overlap, y, x + keyW, y + keyH, _theme.keyBorderColorRight);
+      drawBorder(canvas, x, y, x + keyW, y + overlap, _theme.keyBorderColorTop);
       drawBorder(canvas, x, y + keyH - overlap, x + keyW, y + keyH, _theme.keyBorderColorBottom);
     }
   }
@@ -366,6 +370,8 @@ public class Keyboard2View extends View
   {
     Paint p = _theme.keyBorderPaint;
     float r = _theme.keyBorderRadius;
+    if (_config.borderConfig)
+      r = _config.customBorderRadius * _keyWidth;
     canvas.save();
     canvas.clipRect(clipl, clipt, clipr, clipb);
     p.setColor(color);

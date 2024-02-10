@@ -76,6 +76,9 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <string name="pref_swipe_dist_e_very_far">Foarte depărtată</string>
   <string name="pref_key_horizontal_space">Distanța orizontală dintre taste</string>
   <string name="pref_key_vertical_space">Distanța verticală dintre taste</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Următor</string>
   <string name="key_action_done">Gata</string>
   <string name="key_action_go">Go</string>

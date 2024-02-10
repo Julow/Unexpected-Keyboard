@@ -88,6 +88,9 @@ Nezapomeňte... Jako každá virtuální klávesnice, i tato musí být aktivov�
   <string name="pref_swipe_dist_e_very_far">Velmi dlouhá</string>
   <string name="pref_key_horizontal_space">Horizontální mezery mezi klávesami</string>
   <string name="pref_key_vertical_space">Vertikální mezery mezi klávesami</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Další</string>
   <string name="key_action_done">Dokončit</string>
   <string name="key_action_go">Spustit</string>

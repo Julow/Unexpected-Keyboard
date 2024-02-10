@@ -76,6 +76,9 @@
   <string name="pref_swipe_dist_e_very_far">Очень далеко</string>
   <string name="pref_key_horizontal_space">Горизонтальное расстояние между клавишами</string>
   <string name="pref_key_vertical_space">Расстояние по вертикали между клавишами</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Далее</string>
   <string name="key_action_done">Ввод</string>
   <string name="key_action_go">Go</string>

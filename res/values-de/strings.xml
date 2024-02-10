@@ -76,6 +76,9 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="pref_swipe_dist_e_very_far">Sehr weit</string>
   <string name="pref_key_horizontal_space">Horizontaler Abstand zwischen den Tasten</string>
   <string name="pref_key_vertical_space">Vertikaler Abstand zwischen den Tasten</string>
+  <!-- <string name="pref_border_config_title">Customize borders</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Nächstes</string>
   <string name="key_action_done">Fertig</string>
   <string name="key_action_go">Los</string>
