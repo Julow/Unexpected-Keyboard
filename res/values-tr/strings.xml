@@ -78,9 +78,9 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="pref_key_vertical_space">Tuşlar arasındaki dikey boşluk</string>
   <!-- <string name="pref_border_config_summary">Customize the Border Width, and the Corners Radius of the keys</string> -->
   <!-- <string name="pref_border_options_disabled">Disabled</string> -->
-  <!-- <string name="pref_border_config">Customize the keys</string> -->
-  <!-- <string name="pref_border_width">Border Width</string> -->
-  <!-- <string name="pref_corners_radius">Corner radius</string> -->
+  <!-- <string name="pref_border_config_title">Customize the keys</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Sonraki</string>
   <string name="key_action_done">Tamam</string>
   <string name="key_action_go">ileri</string>

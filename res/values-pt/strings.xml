@@ -90,9 +90,9 @@ Sistema &gt; Idioma e entrada &gt; Teclado virtual &gt; Gerenciar teclados virtu
   <string name="pref_key_vertical_space">Distância vertical entre teclas</string>
   <!-- <string name="pref_border_config_summary">Customize the Border Width, and the Corners Radius of the keys</string> -->
   <!-- <string name="pref_border_options_disabled">Disabled</string> -->
-  <!-- <string name="pref_border_config">Customize the keys</string> -->
-  <!-- <string name="pref_border_width">Border Width</string> -->
-  <!-- <string name="pref_corners_radius">Corner radius</string> -->
+  <!-- <string name="pref_border_config_title">Customize the keys</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Próximo</string>
   <string name="key_action_done">Pronto</string>
   <string name="key_action_go">Ir</string>

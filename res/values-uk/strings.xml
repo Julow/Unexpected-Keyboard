@@ -76,6 +76,11 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_swipe_dist_e_very_far">Дуже далека</string>
   <string name="pref_key_horizontal_space">Горизонтальна відстань між клавішами</string>
   <string name="pref_key_vertical_space">Вертикальна відстань між клавішами</string>
+  <!-- <string name="pref_border_config_summary">Customize the Border Width, and the Corners Radius of the keys</string> -->
+  <!-- <string name="pref_border_options_disabled">Disabled</string> -->
+  <!-- <string name="pref_border_config_title">Customize the keys</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Далі</string>
   <string name="key_action_done">Готово</string>
   <string name="key_action_go">Іти</string>

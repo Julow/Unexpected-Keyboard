@@ -78,9 +78,9 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <string name="pref_key_vertical_space">Distanța verticală dintre taste</string>
   <!-- <string name="pref_border_config_summary">Customize the Border Width, and the Corners Radius of the keys</string> -->
   <!-- <string name="pref_border_options_disabled">Disabled</string> -->
-  <!-- <string name="pref_border_config">Customize the keys</string> -->
-  <!-- <string name="pref_border_width">Border Width</string> -->
-  <!-- <string name="pref_corners_radius">Corner radius</string> -->
+  <!-- <string name="pref_border_config_title">Customize the keys</string> -->
+  <!-- <string name="pref_border_width_title">Border Width</string> -->
+  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
   <string name="key_action_next">Următor</string>
   <string name="key_action_done">Gata</string>
   <string name="key_action_go">Go</string>
