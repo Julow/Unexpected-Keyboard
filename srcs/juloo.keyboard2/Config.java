@@ -51,7 +51,7 @@ public final class Config
   public float key_horizontal_margin;
   public int labelBrightness; // 0 - 255
   public int keyboardOpacity; // 0 - 255
-  public int borderRadius; // 0 - 15
+  public float borderRadius; // 0 - 1
   public int borderLineSize; // 0 - 5
   public int keyOpacity; // 0 - 255
   public int keyActivatedOpacity; // 0 - 255
@@ -149,7 +149,7 @@ public final class Config
     keyActivatedOpacity = _prefs.getInt("key_activated_opacity", 100) * 255 / 100;
   	// keyboard border settings
 		borderConfig = _prefs.getBoolean("border_config", false);
-		borderRadius = _prefs.getInt("border_radius", 0);
+		borderRadius = _prefs.getInt("border_radius", 0) / 100.f;
 		borderLineSize = _prefs.getInt("border_line_size", 0);     
     // Do not substract key_Vertical_margin from keyHeight because this is done
     // during rendering.
