@@ -151,7 +151,7 @@ public final class Config
     borderConfig = _prefs.getBoolean("border_config", false);
     customBorderRadius = _prefs.getInt("custom_border_radius", 0) / 100.f;
     customBorderLineWidth = get_dip_pref(dm, "custom_border_line_width", 0);
-    // Do not substract key_Vertical_margin from keyHeight because this is done
+    // Do not substract key_vertical_margin from keyHeight because this is done
     // during rendering.
     keyHeight = dm.heightPixels * keyboardHeightPercent / 100 / 4;
     horizontal_margin =
