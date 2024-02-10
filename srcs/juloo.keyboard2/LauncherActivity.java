@@ -2,7 +2,6 @@ package juloo.keyboard2;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
