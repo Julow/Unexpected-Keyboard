@@ -357,8 +357,8 @@ public class Keyboard2View extends View
       _theme.keyBorderPaint.setStrokeWidth(w);
       float overlap = r - r * 0.85f + w; // sin(45°)
       drawBorder(canvas, x, y, x + overlap, y + keyH, _theme.keyBorderColorLeft);
-      drawBorder(canvas, x, y, x + keyW, y + overlap, _theme.keyBorderColorTop);
       drawBorder(canvas, x + keyW - overlap, y, x + keyW, y + keyH, _theme.keyBorderColorRight);
+      drawBorder(canvas, x, y, x + keyW, y + overlap, _theme.keyBorderColorTop);
       drawBorder(canvas, x, y + keyH - overlap, x + keyW, y + keyH, _theme.keyBorderColorBottom);
     }
   }
