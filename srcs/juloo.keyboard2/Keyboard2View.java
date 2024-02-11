@@ -25,6 +25,10 @@ public class Keyboard2View extends View
   private KeyValue _shift_kv;
   private KeyboardData.Key _shift_key;
 
+  /** Used to add fake pointers. */
+  private KeyValue _compose_kv;
+  private KeyboardData.Key _compose_key;
+
   private Pointers _pointers;
 
   private Pointers.Modifiers _mods;
@@ -98,6 +102,8 @@ public class Keyboard2View extends View
       _shift_kv = _shift_kv.withFlags(_shift_kv.getFlags() | KeyValue.FLAG_LOCK);
       _shift_key = _keyboard.findKeyWithValue(_shift_kv);
     }
+    _compose_kv = KeyValue.getKeyByName("compose");
+    _compose_key = _keyboard.findKeyWithValue(_compose_kv);
     reset();
   }
 
@@ -109,24 +115,36 @@ public class Keyboard2View extends View
     invalidate();
   }
 
-  /** Called by auto-capitalisation. */
-  public void set_shift_state(boolean state, boolean lock)
+  void set_fake_ptr_latched(KeyboardData.Key key, KeyValue kv, boolean latched,
+      boolean lock)
   {
-    if (_keyboard == null || _shift_key == null)
+    if (_keyboard == null || key == null)
       return;
-    int flags = _pointers.getKeyFlags(_shift_key, _shift_kv);
-    if (state)
+    int flags = _pointers.getKeyFlags(key, kv);
+    if (latched)
     {
       if (flags != -1 && !lock)
         return; // Don't replace an existing pointer
-      _pointers.add_fake_pointer(_shift_kv, _shift_key, lock);
+      _pointers.add_fake_pointer(kv, key, lock);
     }
     else
     {
       if ((flags & KeyValue.FLAG_FAKE_PTR) == 0)
         return; // Don't remove locked pointers
-      _pointers.remove_fake_pointer(_shift_kv, _shift_key);
+      _pointers.remove_fake_pointer(kv, key);
     }
+  }
+
+  /** Called by auto-capitalisation. */
+  public void set_shift_state(boolean latched, boolean lock)
+  {
+    set_fake_ptr_latched(_shift_key, _shift_kv, latched, lock);
+  }
+
+  /** Called from [KeyEventHandler]. */
+  public void set_compose_pending(boolean pending)
+  {
+    set_fake_ptr_latched(_compose_key, _compose_kv, pending, false);
   }
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)

@@ -26,6 +26,7 @@ public final class KeyValue
   // Must be evaluated in the reverse order of their values.
   public static enum Modifier
   {
+    COMPOSE_PENDING,
     SHIFT,
     CTRL,
     ALT,
@@ -88,7 +89,8 @@ public final class KeyValue
 
   public static enum Kind
   {
-    Char, String, Keyevent, Event, Modifier, Editing, Placeholder
+    Char, String, Keyevent, Event, Modifier, Editing, Placeholder,
+    Compose_pending
   }
 
   // Behavior flags.
@@ -172,9 +174,16 @@ public final class KeyValue
     return Editing.values()[(_code & VALUE_BITS)];
   }
 
+  /** Defined only when [getKind() == Kind.Placeholder]. */
   public Placeholder getPlaceholder()
   {
     return Placeholder.values()[(_code & VALUE_BITS)];
+  }
+
+  /** Defined only when [getKind() == Kind.Compose_pending]. */
+  public int getPendingCompose()
+  {
+    return (_code & VALUE_BITS);
   }
 
   /* Update the char and the symbol. */
@@ -301,6 +310,17 @@ public final class KeyValue
   public static KeyValue makeStringKey(String str)
   {
     return makeStringKey(str, 0);
+  }
+
+  public static KeyValue makeCharKey(char c)
+  {
+    return new KeyValue(String.valueOf(c), Kind.Char, c, 0);
+  }
+
+  public static KeyValue makeComposePending(String symbol, int state, int flags)
+  {
+    return new KeyValue(symbol, Kind.Compose_pending, state,
+        flags | FLAG_SPECIAL);
   }
 
   /** Make a key that types a string. A char key is returned for a string of
@@ -463,6 +483,9 @@ public final class KeyValue
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
       case "autofill": return editingKey("auto", Editing.AUTOFILL);
+
+      /* The compose key */
+      case "compose": return modifierKey("comp", Modifier.COMPOSE_PENDING, FLAG_SECONDARY);
 
       /* Placeholder keys */
       case "removed": return placeholderKey(Placeholder.REMOVED);
