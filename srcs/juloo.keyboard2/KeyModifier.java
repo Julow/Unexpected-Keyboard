@@ -10,6 +10,10 @@ public final class KeyModifier
   private static HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>> _cache =
     new HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>>();
 
+  /** The current compose state. Whether a compose is pending is signaled by
+      the [COMPOSE_PENDING] modifier. */
+  static int _compose_pending = -1;
+
   /** Modify a key according to modifiers. */
   public static KeyValue modify(KeyValue k, Pointers.Modifiers mods)
   {
@@ -27,7 +31,11 @@ public final class KeyModifier
       ks.put(mods, r);
     }
     /* Keys with an empty string are placeholder keys. */
-    return (r.getString().length() == 0) ? null : r;
+    if (r.getString().length() == 0)
+      return null;
+    if (mods.has(KeyValue.Modifier.COMPOSE_PENDING))
+      r = ComposeKey.apply(_compose_pending, r);
+    return r;
   }
 
   public static KeyValue modify(KeyValue k, KeyValue.Modifier mod)
@@ -97,6 +105,11 @@ public final class KeyModifier
       case "persian": return map_char_numpad_persian;
       default: return map_char_none;
     }
+  }
+
+  public static void set_compose_pending(int state)
+  {
+    _compose_pending = state;
   }
 
   private static KeyValue apply_map_char(KeyValue k, Map_char map)

@@ -440,6 +440,11 @@ public class Keyboard2 extends InputMethodService
       _keyboardView.set_shift_state(state, lock);
     }
 
+    public void set_compose_pending(boolean pending)
+    {
+      _keyboardView.set_compose_pending(pending);
+    }
+
     public InputConnection getCurrentInputConnection()
     {
       return Keyboard2.this.getCurrentInputConnection();

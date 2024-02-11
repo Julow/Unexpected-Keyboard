@@ -69,6 +69,9 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
           case META:
             _autocap.stop();
             break;
+          case COMPOSE_PENDING:
+            KeyModifier.set_compose_pending(0);
+            break;
         }
         break;
       default: break;
@@ -91,6 +94,10 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
       case Keyevent: send_key_down_up(key.getKeyevent()); break;
       case Modifier: break;
       case Editing: handle_editing_key(key.getEditing()); break;
+      case Compose_pending:
+        KeyModifier.set_compose_pending(key.getPendingCompose());
+        _recv.set_compose_pending(true);
+        break;
     }
     update_meta_state(old_mods);
   }
@@ -293,6 +300,7 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
   {
     public void handle_event_key(KeyValue.Event ev);
     public void set_shift_state(boolean state, boolean lock);
+    public void set_compose_pending(boolean pending);
     public InputConnection getCurrentInputConnection();
   }
 
