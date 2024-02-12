@@ -485,7 +485,7 @@ public final class KeyValue
       case "autofill": return editingKey("auto", Editing.AUTOFILL);
 
       /* The compose key */
-      case "compose": return modifierKey("comp", Modifier.COMPOSE_PENDING, FLAG_SECONDARY);
+      case "compose": return modifierKey(0xE016, Modifier.COMPOSE_PENDING, FLAG_SECONDARY | FLAG_SMALLER_FONT);
 
       /* Placeholder keys */
       case "removed": return placeholderKey(Placeholder.REMOVED);
