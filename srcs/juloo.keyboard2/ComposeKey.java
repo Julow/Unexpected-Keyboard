@@ -28,7 +28,7 @@ public final class ComposeKey
   static KeyValue apply(int state, char c)
   {
     char[] states = ComposeKeyData.states;
-    short[] edges = ComposeKeyData.edges;
+    char[] edges = ComposeKeyData.edges;
     int length = edges[state];
     int next = Arrays.binarySearch(states, state + 1, state + length, c);
     if (next < 0)
@@ -42,8 +42,8 @@ public final class ComposeKey
 
   /** The [states] array represents the different states and their transition.
       A state occupies one or several cells of the array:
-      - The first cell is the result of the conpose sequence if the state is of
-        size 1, [0] otherwise.
+      - The first cell is the result of the compose sequence if the state is of
+        size 1, unspecified otherwise.
       - The remaining cells are the transitions, sorted alphabetically.
 
       The [edges] array represents the transition state corresponding to each
