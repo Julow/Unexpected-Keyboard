@@ -10,15 +10,22 @@ public final class ComposeKey
   {
     switch (kv.getKind())
     {
-      case Char: return apply(state, kv.getChar());
+      case Char:
+        KeyValue res = apply(state, kv.getChar());
+        // Dim characters not part of any sequence instead of removing them.
+        if (res == null)
+          return kv.withFlags(kv.getFlags() | KeyValue.FLAG_SECONDARY);
+        return res;
       /* These keys must not be removed. */
-      case Event: return kv;
-      case Modifier: return kv;
+      case Event:
+      case Modifier:
+        return kv;
       /* These keys cannot be part of sequences. */
-      case String: return null;
-      case Keyevent: return null;
-      case Editing: return null;
-      case Placeholder: return null;
+      case String:
+      case Keyevent:
+      case Editing:
+      case Placeholder:
+        return kv.withFlags(kv.getFlags() | KeyValue.FLAG_SECONDARY);
       case Compose_pending: return null;
     }
     return null;
