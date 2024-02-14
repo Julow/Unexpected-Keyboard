@@ -88,10 +88,16 @@ public class Keyboard2 extends InputMethodService
     return KeyboardData.load(getResources(), layout_id);
   }
 
-  /** Load a layout that contains a numpad (eg. the pin entry). */
+  /** Load a layout that contains a numpad. */
   KeyboardData loadNumpad(int layout_id)
   {
     return _config.modify_numpad(KeyboardData.load(getResources(), layout_id),
+        current_layout_unmodified());
+  }
+
+  KeyboardData loadPinentry(int layout_id)
+  {
+    return _config.modify_pinentry(KeyboardData.load(getResources(), layout_id),
         current_layout_unmodified());
   }
 
@@ -230,7 +236,7 @@ public class Keyboard2 extends InputMethodService
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
         if (_config.pin_entry_enabled)
-          return loadNumpad(R.xml.pin);
+          return loadPinentry(R.xml.pin);
         else
           return loadNumpad(R.xml.numeric);
       default:

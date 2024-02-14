@@ -325,6 +325,27 @@ public final class Config
     });
   }
 
+  /** Modify the pin entry layout. [main_kw] is used to map the digits into the
+      same script. */
+  public KeyboardData modify_pinentry(KeyboardData kw, KeyboardData main_kw)
+  {
+    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
+    return kw.mapKeys(new KeyboardData.MapKeyValues() {
+      public KeyValue apply(KeyValue key, boolean localized)
+      {
+        switch (key.getKind())
+        {
+          case Char:
+            String modified = map_digit.apply(key.getChar());
+            if (modified != null)
+              return key.withSymbol(modified);
+            break;
+        }
+        return key;
+      }
+    });
+  }
+
   private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)
   {
     float value;
