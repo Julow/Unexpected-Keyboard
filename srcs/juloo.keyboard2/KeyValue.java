@@ -93,28 +93,36 @@ public final class KeyValue
     Compose_pending
   }
 
+  private static final int FLAGS_OFFSET = 19;
+  private static final int KIND_OFFSET = 28;
+
   // Behavior flags.
-  public static final int FLAG_LATCH = (1 << 20);
-  public static final int FLAG_LOCK = (1 << 21);
+  public static final int FLAG_LATCH = (1 << FLAGS_OFFSET << 0);
+  public static final int FLAG_LOCK = (1 << FLAGS_OFFSET << 1);
   // Special keys are not repeated and don't clear latched modifiers.
-  public static final int FLAG_SPECIAL = (1 << 22);
-  // Free flag: (1 << 23);
+  public static final int FLAG_SPECIAL = (1 << FLAGS_OFFSET << 2);
+  // Free flag: (1 << FLAGS_OFFSET << 3);
   // Rendering flags.
-  public static final int FLAG_KEY_FONT = (1 << 24); // special font file
-  public static final int FLAG_SMALLER_FONT = (1 << 25); // 25% smaller symbols
-  public static final int FLAG_SECONDARY = (1 << 26); // dimmer
+  public static final int FLAG_KEY_FONT = (1 << FLAGS_OFFSET << 4); // special font file
+  public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5); // 25% smaller symbols
+  public static final int FLAG_SECONDARY = (1 << FLAGS_OFFSET << 6); // dimmer
   // Used by [Pointers].
-  public static final int FLAG_LOCKED = (1 << 28);
-  public static final int FLAG_FAKE_PTR = (1 << 29);
+  public static final int FLAG_LOCKED = (1 << FLAGS_OFFSET << 7);
+  public static final int FLAG_FAKE_PTR = (1 << FLAGS_OFFSET << 8);
 
   // Ranges for the different components
-  private static final int FLAGS_BITS = (0b111111111 << 20); // 9 bits wide
-  private static final int KIND_BITS = (0b111 << 29); // 3 bits wide
+  private static final int FLAGS_BITS =
+    FLAG_LATCH | FLAG_LOCK | FLAG_SPECIAL | FLAG_KEY_FONT | FLAG_SMALLER_FONT |
+    FLAG_SECONDARY | FLAG_LOCKED | FLAG_FAKE_PTR;
+  private static final int KIND_BITS = (0b1111 << KIND_OFFSET); // 4 bits wide
   private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
+
   static
   {
     check((FLAGS_BITS & KIND_BITS) == 0); // No overlap
     check((FLAGS_BITS | KIND_BITS | VALUE_BITS) == ~0); // No holes
+    // No kind is out of range
+    check((((Kind.values().length - 1) << KIND_OFFSET) & ~KIND_BITS) == 0);
   }
 
   private final String _symbol;
@@ -124,7 +132,7 @@ public final class KeyValue
 
   public Kind getKind()
   {
-    return Kind.values()[(_code & KIND_BITS) >>> 29];
+    return Kind.values()[(_code & KIND_BITS) >>> KIND_OFFSET];
   }
 
   public int getFlags()
@@ -229,16 +237,13 @@ public final class KeyValue
 
   public KeyValue(String s, int kind, int value, int flags)
   {
-    check((kind & ~KIND_BITS) == 0);
-    check((flags & ~FLAGS_BITS) == 0);
-    check((value & ~VALUE_BITS) == 0);
     _symbol = s;
-    _code = kind | flags | value;
+    _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
   }
 
   public KeyValue(String s, Kind k, int v, int f)
   {
-    this(s, (k.ordinal() << 29), v, f);
+    this(s, (k.ordinal() << KIND_OFFSET), v, f);
   }
 
   private static KeyValue charKey(String symbol, char c, int flags)
