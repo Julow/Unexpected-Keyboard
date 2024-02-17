@@ -14,7 +14,7 @@ public final class ComposeKey
         KeyValue res = apply(state, kv.getChar());
         // Dim characters not part of any sequence instead of removing them.
         if (res == null)
-          return kv.withFlags(kv.getFlags() | KeyValue.FLAG_SECONDARY);
+          return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
         return res;
       /* These keys must not be removed. */
       case Event:
@@ -25,7 +25,7 @@ public final class ComposeKey
       case Keyevent:
       case Editing:
       case Placeholder:
-        return kv.withFlags(kv.getFlags() | KeyValue.FLAG_SECONDARY);
+        return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
       case Compose_pending: return null;
     }
     return null;

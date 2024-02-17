@@ -166,7 +166,7 @@ public class ExtraKeysPreference extends PreferenceCategory
       setKey(pref_key_of_key_name(key_name));
       setDefaultValue(default_checked);
       setTitle(title);
-      _key_font = kv.hasFlags(KeyValue.FLAG_KEY_FONT);
+      _key_font = kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
     }
 
     @Override

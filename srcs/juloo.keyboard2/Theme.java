@@ -17,6 +17,7 @@ public class Theme
   public final int labelColor;
   public final int subLabelColor;
   public final int secondaryLabelColor;
+  public final int greyedLabelColor;
 
   public final float keyBorderRadius;
   public final float keyBorderWidth;
@@ -50,6 +51,8 @@ public class Theme
     subLabelColor = s.getColor(R.styleable.keyboard_colorSubLabel, 0);
     secondaryLabelColor = adjustLight(labelColor,
         s.getFloat(R.styleable.keyboard_secondaryDimming, 0.25f));
+    greyedLabelColor = adjustLight(labelColor,
+        s.getFloat(R.styleable.keyboard_greyedDimming, 0.5f));
     keyBorderRadius = s.getDimension(R.styleable.keyboard_keyBorderRadius, 0);
     keyBorderWidth = s.getDimension(R.styleable.keyboard_keyBorderWidth, 0);
     keyBorderWidthActivated = s.getDimension(R.styleable.keyboard_keyBorderWidthActivated, 0);

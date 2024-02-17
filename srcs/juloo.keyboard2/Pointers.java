@@ -391,7 +391,7 @@ public final class Pointers implements Handler.Callback
       return true;
     }
     // Stop repeating: Special keys
-    if (kv.hasFlags(KeyValue.FLAG_SPECIAL))
+    if (kv.hasFlagsAny(KeyValue.FLAG_SPECIAL))
       return false;
     _handler.onPointerHold(kv, ptr.modifiers);
     return true;

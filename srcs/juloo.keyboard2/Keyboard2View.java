@@ -411,8 +411,12 @@ public class Keyboard2View extends View
         return _theme.activatedColor;
       }
     }
-    if (k.hasFlags(KeyValue.FLAG_SECONDARY))
+    if (k.hasFlagsAny(KeyValue.FLAG_SECONDARY | KeyValue.FLAG_GREYED))
+    {
+      if (k.hasFlagsAny(KeyValue.FLAG_GREYED))
+        return _theme.greyedLabelColor;
       return _theme.secondaryLabelColor;
+    }
     return sublabel ? _theme.subLabelColor : _theme.labelColor;
   }
 
@@ -422,7 +426,7 @@ public class Keyboard2View extends View
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
-    Paint p = _theme.labelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT));
+    Paint p = _theme.labelPaint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT));
     p.setColor(labelColor(kv, isKeyDown, false));
     p.setAlpha(_config.labelBrightness);
     p.setTextSize(textSize);
@@ -438,7 +442,7 @@ public class Keyboard2View extends View
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
-    Paint p = _theme.subLabelPaint(kv.hasFlags(KeyValue.FLAG_KEY_FONT), a);
+    Paint p = _theme.subLabelPaint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), a);
     p.setColor(labelColor(kv, isKeyDown, true));
     p.setAlpha(_config.labelBrightness);
     p.setTextSize(textSize);
@@ -472,7 +476,7 @@ public class Keyboard2View extends View
 
   private float scaleTextSize(KeyValue k, float rel_size, float keyH)
   {
-    float smaller_font = k.hasFlags(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
+    float smaller_font = k.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
     return keyH * rel_size * smaller_font * _config.characterSize;
   }
 }

@@ -101,7 +101,9 @@ public final class KeyValue
   public static final int FLAG_LOCK = (1 << FLAGS_OFFSET << 1);
   // Special keys are not repeated and don't clear latched modifiers.
   public static final int FLAG_SPECIAL = (1 << FLAGS_OFFSET << 2);
-  // Free flag: (1 << FLAGS_OFFSET << 3);
+  // Whether the symbol should be greyed out. For example, keys that are not
+  // part of the pending compose sequence.
+  public static final int FLAG_GREYED = (1 << FLAGS_OFFSET << 3);
   // Rendering flags.
   public static final int FLAG_KEY_FONT = (1 << FLAGS_OFFSET << 4); // special font file
   public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5); // 25% smaller symbols
@@ -112,8 +114,8 @@ public final class KeyValue
 
   // Ranges for the different components
   private static final int FLAGS_BITS =
-    FLAG_LATCH | FLAG_LOCK | FLAG_SPECIAL | FLAG_KEY_FONT | FLAG_SMALLER_FONT |
-    FLAG_SECONDARY | FLAG_LOCKED | FLAG_FAKE_PTR;
+    FLAG_LATCH | FLAG_LOCK | FLAG_SPECIAL | FLAG_GREYED | FLAG_KEY_FONT |
+    FLAG_SMALLER_FONT | FLAG_SECONDARY | FLAG_LOCKED | FLAG_FAKE_PTR;
   private static final int KIND_BITS = (0b1111 << KIND_OFFSET); // 4 bits wide
   private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
 
@@ -140,9 +142,9 @@ public final class KeyValue
     return (_code & FLAGS_BITS);
   }
 
-  public boolean hasFlags(int has)
+  public boolean hasFlagsAny(int has)
   {
-    return ((_code & has) == has);
+    return ((_code & has) != 0);
   }
 
   /** The string to render on the keyboard.
