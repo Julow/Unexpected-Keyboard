@@ -12,6 +12,7 @@
     <attr name="colorLabelActivated" format="color"/>
     <attr name="colorLabelLocked" format="color"/>
     <attr name="secondaryDimming" format="float"/>
+    <attr name="greyedDimming" format="float"/>
     <!-- Corner labels -->
     <attr name="colorSubLabel" format="color"/>
     <!-- Borders -->
@@ -39,6 +40,7 @@
     <item name="keyBorderWidth">0dp</item>
     <item name="keyBorderWidthActivated">0dp</item>
     <item name="secondaryDimming">0.25</item>
+    <item name="greyedDimming">0.5</item>
     <item name="emoji_key_bg" type="color">?attr/emoji_button_bg</item>
     <item name="emoji_key_text" type="color">?attr/colorLabel</item>
   </style>
