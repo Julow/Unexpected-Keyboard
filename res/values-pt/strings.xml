@@ -102,6 +102,7 @@ Sistema &gt; Idioma e entrada &gt; Teclado virtual &gt; Gerenciar teclados virtu
   <string name="launcher_tryhere">Após ativar, experimente aqui:</string>
   <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Caps lock</string>
+  <!-- <string name="key_descr_compose">Compose</string> -->
   <string name="key_descr_switch_greekmath">Grego &amp; símbolos matemáticos</string>
   <string name="key_descr_change_method">Trocar de teclado</string>
   <string name="key_descr_voice_typing">Digitação por voz</string>

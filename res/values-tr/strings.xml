@@ -90,6 +90,7 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>
   <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">CapsLock</string>
+  <!-- <string name="key_descr_compose">Compose</string> -->
   <string name="key_descr_switch_greekmath">Greek &amp; math sembolleri</string>
   <string name="key_descr_change_method">Klavye değiştir</string>
   <string name="key_descr_voice_typing">Sesle yazma</string>

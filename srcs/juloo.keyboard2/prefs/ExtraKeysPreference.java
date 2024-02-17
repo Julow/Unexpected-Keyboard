@@ -22,6 +22,7 @@ public class ExtraKeysPreference extends PreferenceCategory
   {
     "alt",
     "meta",
+    "compose",
     "voice_typing",
     "accent_aigu",
     "accent_grave",
@@ -74,6 +75,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       case "voice_typing":
       case "change_method":
+      case "compose":
         return true;
       default:
         return false;
@@ -87,25 +89,26 @@ public class ExtraKeysPreference extends PreferenceCategory
     switch (name)
     {
       case "capslock": id = R.string.key_descr_capslock; break;
-      case "switch_greekmath": id = R.string.key_descr_switch_greekmath; break;
       case "change_method": id = R.string.key_descr_change_method; break;
-      case "voice_typing": id = R.string.key_descr_voice_typing; break;
+      case "compose": id = R.string.key_descr_compose; break;
       case "copy": id = R.string.key_descr_copy; break;
-      case "paste": id = R.string.key_descr_paste; break;
       case "cut": id = R.string.key_descr_cut; break;
+      case "end": id = R.string.key_descr_end; break;
+      case "home": id = R.string.key_descr_home; break;
+      case "page_down": id = R.string.key_descr_page_down; break;
+      case "page_up": id = R.string.key_descr_page_up; break;
+      case "paste": id = R.string.key_descr_paste; break;
+      case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
+      case "redo": id = R.string.key_descr_redo; break;
       case "selectAll": id = R.string.key_descr_selectAll; break;
       case "shareText": id = R.string.key_descr_shareText; break;
-      case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
+      case "subscript": id = R.string.key_descr_subscript; break;
+      case "superscript": id = R.string.key_descr_superscript; break;
+      case "switch_greekmath": id = R.string.key_descr_switch_greekmath; break;
       case "undo": id = R.string.key_descr_undo; break;
-      case "redo": id = R.string.key_descr_redo; break;
+      case "voice_typing": id = R.string.key_descr_voice_typing; break;
       case "ª": id = R.string.key_descr_ª; break;
       case "º": id = R.string.key_descr_º; break;
-      case "superscript": id = R.string.key_descr_superscript; break;
-      case "subscript": id = R.string.key_descr_subscript; break;
-      case "page_up": id = R.string.key_descr_page_up; break;
-      case "page_down": id = R.string.key_descr_page_down; break;
-      case "home": id = R.string.key_descr_home; break;
-      case "end": id = R.string.key_descr_end; break;
     }
     if (id == 0)
       return null;
