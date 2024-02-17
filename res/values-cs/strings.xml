@@ -102,6 +102,7 @@ Nezapomeňte... Jako každá virtuální klávesnice, i tato musí být aktivov�
   <string name="launcher_tryhere">Po aktivaci můžete klávesnici rovnou vyzkoušet zde:</string>
   <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Caps lock</string>
+  <!-- <string name="key_descr_compose">Compose</string> -->
   <string name="key_descr_switch_greekmath">Řecké a matematické symboly</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Hlasové zadávání</string>

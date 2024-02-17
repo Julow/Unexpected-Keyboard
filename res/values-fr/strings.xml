@@ -90,6 +90,7 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="launcher_tryhere">Après l\'avoir activé, vous pouvez l\'essayer ici:</string>
   <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Verrouillage majuscules</string>
+  <!-- <string name="key_descr_compose">Compose</string> -->
   <string name="key_descr_switch_greekmath">Symboles mathématiques</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Saisie vocale</string>

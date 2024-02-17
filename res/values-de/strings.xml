@@ -90,6 +90,7 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="launcher_tryhere">Nach Aktivierung kannst du die Tastatur hier ausprobieren:</string>
   <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Feststelltaste</string>
+  <!-- <string name="key_descr_compose">Compose</string> -->
   <string name="key_descr_switch_greekmath">Griechische &amp; mathematische Symbole</string>
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <string name="key_descr_voice_typing">Spracheingabe</string>

@@ -102,6 +102,7 @@
   <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->
   <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <!-- <string name="key_descr_capslock">Caps lock</string> -->
+  <!-- <string name="key_descr_compose">Compose</string> -->
   <!-- <string name="key_descr_switch_greekmath">Greek &amp; math symbols</string> -->
   <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
   <!-- <string name="key_descr_voice_typing">Voice typing</string> -->

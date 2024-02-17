@@ -90,6 +90,7 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="launcher_tryhere">Після ввімкнення ви можете спробувати клавіатуру тут:</string>
   <!-- <string name="launcher_tryhere_hint">Try here</string> -->
   <string name="key_descr_capslock">Caps lock</string>
+  <!-- <string name="key_descr_compose">Compose</string> -->
   <string name="key_descr_switch_greekmath">Грецькі та математичні символи</string>
   <string name="key_descr_change_method">Переключити клавіатуру</string>
   <string name="key_descr_voice_typing">Голосове введення</string>
