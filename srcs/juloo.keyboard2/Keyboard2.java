@@ -418,10 +418,6 @@ public class Keyboard2 extends InputMethodService
           setSpecialLayout(loadNumpad(R.xml.greekmath));
           break;
 
-        case CAPS_LOCK:
-          set_shift_state(true, true);
-          break;
-
         case SWITCH_VOICE_TYPING:
           if (!VoiceImeSwitcher.switch_to_voice_ime(Keyboard2.this, get_imm(),
                 Config.globalPrefs()))
@@ -435,9 +431,9 @@ public class Keyboard2 extends InputMethodService
       }
     }
 
-    public void set_shift_state(boolean state, boolean lock)
+    public void set_shift_state(boolean state)
     {
-      _keyboardView.set_shift_state(state, lock);
+      _keyboardView.set_shift_state(state);
     }
 
     public InputConnection getCurrentInputConnection()

@@ -292,7 +292,7 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
   public static interface IReceiver
   {
     public void handle_event_key(KeyValue.Event ev);
-    public void set_shift_state(boolean state, boolean lock);
+    public void set_shift_state(boolean state);
     public InputConnection getCurrentInputConnection();
   }
 
@@ -302,9 +302,9 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
     public void update_shift_state(boolean should_enable, boolean should_disable)
     {
       if (should_enable)
-        _recv.set_shift_state(true, false);
+        _recv.set_shift_state(true);
       else if (should_disable)
-        _recv.set_shift_state(false, false);
+        _recv.set_shift_state(false);
     }
   }
 }

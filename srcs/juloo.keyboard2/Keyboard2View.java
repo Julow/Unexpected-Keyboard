@@ -110,16 +110,16 @@ public class Keyboard2View extends View
   }
 
   /** Called by auto-capitalisation. */
-  public void set_shift_state(boolean state, boolean lock)
+  public void set_shift_state(boolean state)
   {
     if (_keyboard == null || _shift_key == null)
       return;
     int flags = _pointers.getKeyFlags(_shift_key, _shift_kv);
     if (state)
     {
-      if (flags != -1 && !lock)
+      if (flags != -1)
         return; // Don't replace an existing pointer
-      _pointers.add_fake_pointer(_shift_kv, _shift_key, lock);
+      _pointers.add_fake_pointer(_shift_kv, _shift_key, false);
     }
     else
     {
