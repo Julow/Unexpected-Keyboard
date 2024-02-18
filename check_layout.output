@@ -65,7 +65,7 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 1 warnings
 # latn_bone
 Layout includes some ASCII punctuation but not all, missing: $
-Layout redefines the bottom row but some important keys are missing, missing: compose, cursor_left, cursor_right, loc end, loc home, loc page_down, loc page_up, loc switch_greekmath, loc voice_typing, switch_backward
+Layout redefines the bottom row but some important keys are missing, missing: cursor_left, cursor_right, loc compose, loc end, loc home, loc page_down, loc page_up, loc switch_greekmath, loc voice_typing, switch_backward
 2 warnings
 # latn_colemak
 Some keys contain whitespaces, unexpected:  ́
@@ -73,8 +73,7 @@ Some keys contain whitespaces, unexpected:  ́
 # latn_dvorak
 0 warnings
 # latn_neo2
-Layout redefines the bottom row but some important keys are missing, missing: compose, loc end, loc home, loc page_down, loc page_up
-1 warnings
+0 warnings
 # latn_qwerty_br
 0 warnings
 # latn_qwerty_cz
