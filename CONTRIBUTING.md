@@ -110,6 +110,10 @@ Run `./gradlew checkKeyboardLayouts` to check some properties about your
 layout. This will change the file `check_layout.output`, which you should
 commit.
 
+Layouts are CC0 licensed by default. If you do not want your layout to be
+released into the public domain, add a copyright notice at the top of the file
+and a mention in `srcs/layouts/LICENSE`.
+
 #### Adding a programming layout
 
 A programming layout must contain all ASCII characters.
