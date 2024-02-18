@@ -503,6 +503,31 @@ public final class KeyModifier
          has the inconvenient of swapping i and ı on the keyboard. */
       case 'ı': return 'İ';
       case '₹': return '₨';
+      // Gujarati alternate characters
+      case 'અ': return 'આ';
+      case 'ઇ': return 'ઈ';
+      case 'િ': return 'ી';
+      case 'ઉ': return 'ઊ';
+      case 'ુ': return 'ૂ';
+      case 'એ': return 'ઐ';
+      case 'ે': return 'ૈ';
+      case 'ઓ': return 'ઔ';
+      case 'ો': return 'ૌ';
+      case 'ક': return 'ખ';
+      case 'ગ': return 'ઘ';
+      case 'ચ': return 'છ';
+      case 'જ': return 'ઝ';
+      case 'ટ': return 'ઠ';
+      case 'ડ': return 'ઢ';
+      case 'ન': return 'ણ';
+      case 'ત': return 'થ';
+      case 'દ': return 'ધ';
+      case 'પ': return 'ફ';
+      case 'બ': return 'ભ';
+      case 'મ': return 'ં';
+      case 'લ': return 'ળ';
+      case 'સ': return 'શ';
+      case 'હ': return 'ઃ';
       default: return c;
     }
   }
