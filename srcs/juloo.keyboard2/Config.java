@@ -209,6 +209,9 @@ public final class Config
     // first iteration then automatically added.
     final Map<KeyValue, KeyboardData.PreferredPos> extra_keys = new HashMap<KeyValue, KeyboardData.PreferredPos>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
+    // Make sure the config key is accessible to avoid being locked in a custom
+    // layout.
+    extra_keys.put(KeyValue.getKeyByName("config"), KeyboardData.PreferredPos.ANYWHERE);
     extra_keys.putAll(extra_keys_param);
     extra_keys.putAll(extra_keys_custom);
     if (extra_keys_subtype != null)
