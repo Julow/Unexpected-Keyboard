@@ -223,9 +223,11 @@ public final class Config
       extra_keys_subtype.compute(extra_keys,
           new ExtraKeys.Query(kw.script, present));
     }
-    boolean number_row = this.number_row && !show_numpad;
-    if (number_row)
-      remove_keys.addAll(KeyboardData.number_row.getKeys(0).keySet());
+    KeyboardData.Row number_row = null;
+    if (this.number_row && !show_numpad)
+      number_row = modify_number_row(KeyboardData.number_row, kw);
+    if (number_row != null)
+      remove_keys.addAll(number_row.getKeys(0).keySet());
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -278,8 +280,8 @@ public final class Config
     });
     if (show_numpad)
       kw = kw.addNumPad(modify_numpad(KeyboardData.num_pad, kw));
-    if (number_row)
-      kw = kw.addNumberRow();
+    if (number_row != null)
+      kw = kw.addTopRow(number_row);
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.entrySet().iterator());
     return kw;
@@ -328,12 +330,10 @@ public final class Config
     });
   }
 
-  /** Modify the pin entry layout. [main_kw] is used to map the digits into the
-      same script. */
-  public KeyboardData modify_pinentry(KeyboardData kw, KeyboardData main_kw)
+  static KeyboardData.MapKeyValues numpad_script_map(String numpad_script)
   {
-    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
-    return kw.mapKeys(new KeyboardData.MapKeyValues() {
+    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(numpad_script);
+    return new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
         switch (key.getKind())
@@ -346,7 +346,21 @@ public final class Config
         }
         return key;
       }
-    });
+    };
+  }
+
+  /** Modify the pin entry layout. [main_kw] is used to map the digits into the
+      same script. */
+  public KeyboardData modify_pinentry(KeyboardData kw, KeyboardData main_kw)
+  {
+    return kw.mapKeys(numpad_script_map(main_kw.numpad_script));
+  }
+
+  /** Modify the number row according to [main_kw]'s script. */
+  public KeyboardData.Row modify_number_row(KeyboardData.Row row,
+      KeyboardData main_kw)
+  {
+    return row.mapKeys(numpad_script_map(main_kw.numpad_script));
   }
 
   private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)

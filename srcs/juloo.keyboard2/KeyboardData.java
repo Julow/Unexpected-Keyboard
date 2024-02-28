@@ -132,10 +132,10 @@ public final class KeyboardData
     return new KeyboardData(this, extendedRows);
   }
 
-  public KeyboardData addNumberRow()
+  public KeyboardData addTopRow(Row row)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
-    rows_.add(0, number_row.updateWidth(keysWidth));
+    rows_.add(0, row.updateWidth(keysWidth));
     return new KeyboardData(this, rows_);
   }
 
