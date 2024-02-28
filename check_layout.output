@@ -50,6 +50,10 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # grek_qwerty
 Duplicate keys: ;
 1 warnings
+# guj_phonetic_in
+Duplicate keys: +, -, =, _, `, ટ, ડ
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+2 warnings
 # hang_dubeolsik_kr
 0 warnings
 # hebr_1_il
