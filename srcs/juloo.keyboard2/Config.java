@@ -318,7 +318,7 @@ public final class Config
               c = inverse_numpad_char(c);
             String modified = map_digit.apply(c);
             if (modified != null) // Was modified by script
-              return key.withSymbol(modified);
+              return KeyValue.makeStringKey(modified);
             if (prev_c != c) // Was inverted
               return key.withChar(c);
             break;
@@ -341,7 +341,7 @@ public final class Config
           case Char:
             String modified = map_digit.apply(key.getChar());
             if (modified != null)
-              return key.withSymbol(modified);
+              return KeyValue.makeStringKey(modified);
             break;
         }
         return key;
