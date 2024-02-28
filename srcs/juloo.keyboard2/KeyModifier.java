@@ -103,6 +103,7 @@ public final class KeyModifier
       case "bengali": return map_char_numpad_bengali;
       case "devanagari": return map_char_numpad_devanagari;
       case "persian": return map_char_numpad_persian;
+      case "gujarati": return map_char_numpad_gujarati;
       default: return map_char_none;
     }
   }
@@ -1119,6 +1120,27 @@ public final class KeyModifier
           case '7': return "۷";
           case '8': return "۸";
           case '9': return "۹";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_gujarati =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "૦";
+          case '1': return "૧";
+          case '2': return "૨";
+          case '3': return "૩";
+          case '4': return "૪";
+          case '5': return "૫";
+          case '6': return "૬";
+          case '7': return "૭";
+          case '8': return "૮";
+          case '9': return "૯";
           default: return null;
         }
       }
