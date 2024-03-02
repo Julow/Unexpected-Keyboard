@@ -1,4 +1,4 @@
-import textwrap, sys, re, string
+import textwrap, sys, re, string, json
 
 # Names not defined in Compose.pre
 xkb_char_extra_names = {
@@ -89,25 +89,42 @@ def parse_sequences_file_xkb(fname):
                 seqs.append(s)
         return seqs
 
+# Parse from a json file containing a dictionary sequence → result string.
+def parse_sequences_file_json(fname):
+    with open(fname, "r") as inp:
+        seqs = json.load(inp)
+    return list(seqs.items())
+
 # Format of the sequences file is determined by its extension
 def parse_sequences_file(fname):
     if fname.endswith(".pre"):
         return parse_sequences_file_xkb(fname)
+    if fname.endswith(".json"):
+        return parse_sequences_file_json(fname)
     raise Exception(fname + ": Unsupported format")
 
 # Turn a list of sequences into a trie.
 def add_sequences_to_trie(seqs, trie):
-    for seq, result in seqs:
+    def add_seq_to_trie(t_, seq, result):
         t_ = trie
         i = 0
         while i < len(seq) - 1:
             c = seq[i]
             if c not in t_:
                 t_[c] = {}
+            if isinstance(t_[c], str):
+                global dropped_sequences
+                dropped_sequences += 1
+                print("Sequence collide: '%s = %s' '%s = %s'" % (
+                    seq[:i+1], t_[c], seq, result),
+                      file=sys.stderr)
+                return
             t_ = t_[c]
             i += 1
         c = seq[i]
         t_[c] = result
+    for seq, result in seqs:
+        add_seq_to_trie(trie, seq, result)
 
 # Compile the trie into a state machine.
 def make_automata(tree_root):
@@ -155,9 +172,11 @@ def gen_java(machine):
             "\"": "\\\"",
             "\\": "\\\\",
             "\n": "\\n",
+            "\r": "\\r",
             ord("\""): "\\\"",
             ord("\\"): "\\\\",
             ord("\n"): "\\n",
+            ord("\r"): "\\r",
             }
     def char_repr(c):
         if c in chars_map:
