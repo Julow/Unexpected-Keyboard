@@ -96,6 +96,9 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # latn_qwerty_se
 Duplicate keys: !, ', ,, -, ., ?
 1 warnings
+# latn_qwerty_sk
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
 # latn_qwerty_tly
 Duplicate keys: a, c, j, q
 Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
