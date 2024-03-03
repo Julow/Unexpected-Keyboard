@@ -6,6 +6,27 @@ import glob, os
 # - Remove obsolete strings
 # - Sort in the same order as the baseline
 # The baseline is 'values/strings.xml', which is english.
+# Sync store title and descriptions to the 'metadata/' directory.
+
+VALUE_DIR_TO_METADATA = {
+        "cs": "cs-CZ",
+        "de": "de-DE",
+        "en": "en-US",
+        "es": "es-ES",
+        "fa": "fa-IR",
+        "fr": "fr-FR",
+        "it": "it-IT",
+        "ko": "ko-KR",
+        "lv": "lv",
+        "pl": "pl-PL",
+        "pt": "pt-BR",
+        "ro": "ro",
+        "ru": "ru-RU",
+        "tr": "tr-TR",
+        "uk": "uk",
+        "vi": "vi",
+        "zh-rCN": "zh-CN",
+        }
 
 # Dict of strings. Key is the pair string name and product field (often None).
 def parse_strings_file(file):
@@ -38,8 +59,11 @@ def sync(baseline, strings):
             (key, base_string, True)
             for key, base_string in baseline.items() ]
 
-def sync_metadata(locale, strings):
-    meta_dir = "metadata/android/" + locale
+def sync_metadata(value_dir, strings):
+    locale = os.path.basename(value_dir).removeprefix("values-")
+    if not locale in VALUE_DIR_TO_METADATA:
+        raise Exception("Locale '%s' not known, please add it into sync_translations.py" % locale)
+    meta_dir = "metadata/android/" + VALUE_DIR_TO_METADATA[locale]
     def sync_meta_file(fname, string_name):
         if string_name in strings:
             string = strings[string_name]
@@ -62,8 +86,7 @@ for value_dir in glob.glob("res/values-*"):
         synced_strings = sync(baseline, local_strings)
         with open(strings_file, "w", encoding="utf-8") as out:
             write_updated_strings(out, synced_strings)
-        locale = os.path.basename(value_dir).removeprefix("values-")
-        sync_metadata(locale, local_strings)
+        sync_metadata(value_dir, local_strings)
         print_status(strings_file, synced_strings)
 
 sync_metadata("en", baseline)
