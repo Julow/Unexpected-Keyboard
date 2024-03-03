@@ -1,0 +1,6 @@
+New layouts: QWERTY (Slovak), Gujarati phonetic
+Add Linux Compose key to type a variety of characters using known combinations.
+Fixed localized numpad and number row.
+Many improvements and bug fixes.
+
+Huge thanks to the contributors: @Yogesh-B, @ChasmSolacer, @matthiakl, @Sestowner, @RyanGibb, @BogdanLata, @RetrogisusDEV, @V6lhost, @ErrrorMaxx, @sdrapha, @vedamanavi
