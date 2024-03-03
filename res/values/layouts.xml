@@ -22,6 +22,7 @@
     <item>deva_alt</item>
     <item>deva_inscript</item>
     <item>grek_qwerty</item>
+    <item>guj_phonetic_in</item>
     <item>hang_dubeolsik_kr</item>
     <item>hebr_1_il</item>
     <item>hebr_2_il</item>
@@ -74,6 +75,7 @@
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
     <item>QWERTY (Greek)</item>
+    <item>ગુજરાતી ફોનેટિક - Gujarati Phonetic</item>
     <item>두벌식 (Korean)</item>
     <item>Hebrew 1</item>
     <item>Hebrew 2</item>
@@ -126,6 +128,7 @@
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
     <item>@xml/grek_qwerty</item>
+    <item>@xml/guj_phonetic_in</item>
     <item>@xml/hang_dubeolsik_kr</item>
     <item>@xml/hebr_1_il</item>
     <item>@xml/hebr_2_il</item>

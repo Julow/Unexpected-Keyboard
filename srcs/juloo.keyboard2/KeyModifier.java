@@ -103,6 +103,7 @@ public final class KeyModifier
       case "bengali": return map_char_numpad_bengali;
       case "devanagari": return map_char_numpad_devanagari;
       case "persian": return map_char_numpad_persian;
+      case "gujarati": return map_char_numpad_gujarati;
       default: return map_char_none;
     }
   }
@@ -503,6 +504,31 @@ public final class KeyModifier
          has the inconvenient of swapping i and ı on the keyboard. */
       case 'ı': return 'İ';
       case '₹': return '₨';
+      // Gujarati alternate characters
+      case 'અ': return 'આ';
+      case 'ઇ': return 'ઈ';
+      case 'િ': return 'ી';
+      case 'ઉ': return 'ઊ';
+      case 'ુ': return 'ૂ';
+      case 'એ': return 'ઐ';
+      case 'ે': return 'ૈ';
+      case 'ઓ': return 'ઔ';
+      case 'ો': return 'ૌ';
+      case 'ક': return 'ખ';
+      case 'ગ': return 'ઘ';
+      case 'ચ': return 'છ';
+      case 'જ': return 'ઝ';
+      case 'ટ': return 'ઠ';
+      case 'ડ': return 'ઢ';
+      case 'ન': return 'ણ';
+      case 'ત': return 'થ';
+      case 'દ': return 'ધ';
+      case 'પ': return 'ફ';
+      case 'બ': return 'ભ';
+      case 'મ': return 'ં';
+      case 'લ': return 'ળ';
+      case 'સ': return 'શ';
+      case 'હ': return 'ઃ';
       default: return c;
     }
   }
@@ -1094,6 +1120,27 @@ public final class KeyModifier
           case '7': return "۷";
           case '8': return "۸";
           case '9': return "۹";
+          default: return null;
+        }
+      }
+    };
+
+  private static final Map_char map_char_numpad_gujarati =
+    new Map_char() {
+      public String apply(char c)
+      {
+        switch (c)
+        {
+          case '0': return "૦";
+          case '1': return "૧";
+          case '2': return "૨";
+          case '3': return "૩";
+          case '4': return "૪";
+          case '5': return "૫";
+          case '6': return "૬";
+          case '7': return "૭";
+          case '8': return "૮";
+          case '9': return "૯";
           default: return null;
         }
       }
