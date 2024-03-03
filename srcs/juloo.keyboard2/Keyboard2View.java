@@ -120,19 +120,7 @@ public class Keyboard2View extends View
   {
     if (_keyboard == null || key == null)
       return;
-    int flags = _pointers.getKeyFlags(key, kv);
-    if (latched)
-    {
-      if (flags != -1 && !lock)
-        return; // Don't replace an existing pointer
-      _pointers.add_fake_pointer(kv, key, lock);
-    }
-    else
-    {
-      if ((flags & KeyValue.FLAG_FAKE_PTR) == 0)
-        return; // Don't remove locked pointers
-      _pointers.remove_fake_pointer(kv, key);
-    }
+    _pointers.set_fake_pointer_state(key, kv, latched, lock);
   }
 
   /** Called by auto-capitalisation. */

@@ -85,13 +85,10 @@ public final class Pointers implements Handler.Callback
     return ptr.flags;
   }
 
-  /** Fake pointers are latched and not lockable. */
-  public void add_fake_pointer(KeyValue kv, KeyboardData.Key key, boolean locked)
+  /** The key must not be already latched . */
+  void add_fake_pointer(KeyboardData.Key key, KeyValue kv, boolean locked)
   {
-    Pointer ptr = getLatched(key, kv);
-    if (ptr != null)
-      removePtr(ptr); // Already latched, replace pointer.
-    ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
+    Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
     ptr.flags &= ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK);
     ptr.flags |= KeyValue.FLAG_FAKE_PTR;
     if (locked)
@@ -100,12 +97,39 @@ public final class Pointers implements Handler.Callback
     _handler.onPointerFlagsChanged(false);
   }
 
-  public void remove_fake_pointer(KeyValue kv, KeyboardData.Key key)
+  /** Set whether a key is latched or locked by adding a "fake" pointer, a
+      pointer that is not due to user interaction.
+      This is used by auto-capitalisation.
+
+      When [lock] is true, [latched] control whether the modifier is locked or disabled.
+      When [lock] is false, an existing locked pointer is not affected. */
+  public void set_fake_pointer_state(KeyboardData.Key key, KeyValue kv,
+      boolean latched, boolean lock)
   {
     Pointer ptr = getLatched(key, kv);
-    if (ptr != null && (ptr.flags & KeyValue.FLAG_FAKE_PTR) != 0)
+    if (ptr == null)
+    {
+      // No existing pointer, latch the key.
+      if (latched)
+        add_fake_pointer(key, kv, lock);
+    }
+    else if ((ptr.flags & KeyValue.FLAG_FAKE_PTR) != 0)
+    {} // Key already latched but not by a fake ptr, do nothing.
+    else if (lock)
+    {
+      // Acting on locked modifiers, replace the pointer each time.
       removePtr(ptr);
-    _handler.onPointerFlagsChanged(false);
+      if (latched)
+        add_fake_pointer(key, kv, lock);
+    }
+    else if ((ptr.flags & KeyValue.FLAG_LOCKED) != 0)
+    {} // Existing ptr is locked but [lock] is false, do not continue.
+    else if (!latched)
+    {
+      // Key is latched by a fake ptr. Unlatch if requested.
+      removePtr(ptr);
+      _handler.onPointerFlagsChanged(false);
+    }
   }
 
   // Receiving events
