@@ -47,8 +47,8 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="pref_autocapitalisation_summary">Piespiest Shift teikuma sākumā</string>
   <string name="pref_switch_input_immediate_title">Pārslēgties uz pēdējo izmantoto tastatūru</string>
   <string name="pref_switch_input_immediate_summary">Tastatūras pārslēgšanas taustiņa uzvedība</string>
-  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
-  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
+  <string name="pref_vibrate_custom">Pielāgota trīcēšana</string>
+  <string name="pref_vibrate_duration_title">Trīcēšanas stiprums</string>
   <string name="pref_pin_entry_enabled_title">Piespraust ievadīšanas izkārtojumu</string>
   <string name="pref_pin_entry_enabled_summary">Kad ievada skaitļus, datumus un tālruņa numurus</string>
   <string name="pref_category_style">Izskata pielāgojumi</string>
@@ -74,9 +74,9 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="pref_swipe_dist_e_very_far">Ļoti tāls</string>
   <string name="pref_key_horizontal_space">Līmeniskais attālums starp taustiņiem</string>
   <string name="pref_key_vertical_space">Stateniskais attālums starp taustiņiem</string>
-  <!-- <string name="pref_border_config_title">Customize borders</string> -->
-  <!-- <string name="pref_border_width_title">Border Width</string> -->
-  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
+  <string name="pref_border_config_title">Pielāgot apmales</string>
+  <string name="pref_border_width_title">Apmales platums</string>
+  <string name="pref_corners_radius_title">Stūru rādiuss</string>
   <string name="key_action_next">Nākamais</string>
   <string name="key_action_done">Darīts</string>
   <string name="key_action_go">Aiziet</string>
@@ -90,11 +90,11 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="launcher_sourcecode">Šī ir bezmaksas un atvērtā pirmkoda lietotne.
     GitHub var atrast pirmkodu un ziņot par nepilnībām.</string>
   <string name="launcher_tryhere">Pēc iespējošanas šeit var izmēģināt tastatūru:</string>
-  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
+  <string name="launcher_tryhere_hint">Izmēģināt šeit</string>
   <string name="key_descr_capslock">Burtslēgs</string>
-  <!-- <string name="key_descr_compose">Compose</string> -->
+  <string name="key_descr_compose">Izveidot</string>
   <string name="key_descr_switch_greekmath">Grieķu un matemātikas rakstzīmes</string>
-  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
+  <string name="key_descr_change_method">Pārslēgt tastatūru</string>
   <string name="key_descr_voice_typing">Rakstīšana ar balsi</string>
   <string name="key_descr_copy">Ievietot starpliktuvē</string>
   <string name="key_descr_paste">Ielīmēt</string>
