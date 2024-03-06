@@ -3,12 +3,12 @@
   <string name="app_name_release">Klávesnice Unexpected</string>
   <string name="app_name_debug">Klávesnice Unexpected (pro ladění)</string>
   <string name="short_description">Nenáročná virtuální klávesnice pro vývojáře.</string>
-  <!-- <string name="store_description">"The main feature is that you can type more characters by swiping the keys towards the corners.
+  <string name="store_description">"Hlavní funkcí je možnost psát více znaků posunutím kláves směrem k rohům.
 
-This application was originally designed for programmers using Termux.
-Now perfect for everyday use.
+Tato aplikace byla původně navržena pro programátory používající Termux.
+Nyní je ideální pro každodenní použití.
 
-This application contains no ads, doesn't make any network requests and is Open Source."</string> -->
+Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je Open Source."</string>
   <string name="settings_activity_label">Nastavení Klávesnice Unexpected</string>
   <string name="pref_portrait">V režimu na výšku</string>
   <string name="pref_landscape">V režimu na šířku</string>
@@ -47,8 +47,8 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_autocapitalisation_summary">Stiskne Shift na začátku věty</string>
   <string name="pref_switch_input_immediate_title">Přepnout na posledně užívanou klávesnici</string>
   <string name="pref_switch_input_immediate_summary">Jak bude klávesa pro přepnutí klávesnice reagovat</string>
-  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
-  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
+  <string name="pref_vibrate_custom">Vlastní vibrace</string>
+  <string name="pref_vibrate_duration_title">Síla vibrace</string>
   <string name="pref_pin_entry_enabled_title">Rozvržení zadávání PIN kódu</string>
   <string name="pref_pin_entry_enabled_summary">Automaticky při psaní čísel, datumů a telefonních čísel</string>
   <string name="pref_category_style">Styl</string>
@@ -74,9 +74,9 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_swipe_dist_e_very_far">Velmi dlouhá</string>
   <string name="pref_key_horizontal_space">Horizontální mezery mezi klávesami</string>
   <string name="pref_key_vertical_space">Vertikální mezery mezi klávesami</string>
-  <!-- <string name="pref_border_config_title">Customize borders</string> -->
-  <!-- <string name="pref_border_width_title">Border Width</string> -->
-  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
+  <string name="pref_border_config_title">Přizpůsobit okraje</string>
+  <string name="pref_border_width_title">Šířka okraje</string>
+  <string name="pref_corners_radius_title">Poloměr okraje</string>
   <string name="key_action_next">Další</string>
   <string name="key_action_done">Dokončit</string>
   <string name="key_action_go">Spustit</string>
@@ -88,11 +88,11 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="launcher_description">Tato aplikace je pouhou virtuální klávesnicí. Přejděte do systémového nastavení, kliknutím na tlačítko níže a aktivujte ji.</string>
   <string name="launcher_sourcecode">Toto je volná, open-source aplikace. Její zdrojový kód, či hlášení chyb, naleznete na Githubu.</string>
   <string name="launcher_tryhere">Po aktivaci můžete klávesnici rovnou vyzkoušet zde:</string>
-  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
+  <string name="launcher_tryhere_hint">Zkoušejte zde</string>
   <string name="key_descr_capslock">Caps lock</string>
-  <!-- <string name="key_descr_compose">Compose</string> -->
+  <string name="key_descr_compose">Compose</string> -->
   <string name="key_descr_switch_greekmath">Řecké a matematické symboly</string>
-  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
+  <string name="key_descr_change_method">Přepnout klávesnici</string>
   <string name="key_descr_voice_typing">Hlasové zadávání</string>
   <string name="key_descr_copy">Kopírovat</string>
   <string name="key_descr_paste">Vložit</string>
