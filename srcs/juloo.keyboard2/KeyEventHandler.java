@@ -14,6 +14,7 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
 {
   IReceiver _recv;
   Autocapitalisation _autocap;
+  Autonormalization _autonorm;
   /** State of the system modifiers. It is updated whether a modifier is down
       or up and a corresponding key event is sent. */
   Pointers.Modifiers _mods;
@@ -30,13 +31,16 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
     _recv = recv;
     _autocap = new Autocapitalisation(looper,
         this.new Autocapitalisation_callback());
+    _autonorm = new Autonormalization();
     _mods = Pointers.Modifiers.EMPTY;
   }
 
   /** Editing just started. */
   public void started(EditorInfo info)
   {
-    _autocap.started(info, _recv.getCurrentInputConnection());
+    InputConnection ic = _recv.getCurrentInputConnection();
+    _autocap.started(info, ic);
+    _autonorm.started(info, ic);
     // Workaround a bug in Acode, which answers to [getExtractedText] but do
     // not react to [setSelection] while returning [true].
     // Note: Using & to workaround a bug in Acode, which sets several
@@ -86,6 +90,8 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
       return;
     Pointers.Modifiers old_mods = _mods;
     update_meta_state(mods);
+    // Handles sending text
+    _autonorm.key_up(key);
     switch (key.getKind())
     {
       case Char: send_text(String.valueOf(key.getChar())); break;
@@ -192,7 +198,8 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
-    conn.commitText(text, 1);
+    if (!_autonorm.typed(text))
+      conn.commitText(text, 1);
     _autocap.typed(text);
   }
 
