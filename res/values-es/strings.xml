@@ -90,7 +90,10 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="launcher_tryhere">Tras habilitarlo, puedes probar el teclado en este campo:</string>
   <string name="launcher_tryhere_hint">Intentar aquí</string>
   <string name="key_descr_capslock">Bloq Mayús</string>
-  <string name="key_descr_compose">Componer</string>  <string name="key_descr_switch_greekmath">Símb. griegos y matemáticos</string>  <string name="key_descr_change_method">Cambiar teclado</string>  <string name="key_descr_voice_typing">Dictado por voz</string>
+  <string name="key_descr_compose">Componer</string>
+  <string name="key_descr_switch_greekmath">Símb. griegos y matemáticos</string>
+  <string name="key_descr_change_method">Cambiar teclado</string>
+  <string name="key_descr_voice_typing">Dictado por voz</string>
   <string name="key_descr_copy">Copiar</string>
   <string name="key_descr_paste">Pegar</string>
   <string name="key_descr_cut">Cortar</string>
