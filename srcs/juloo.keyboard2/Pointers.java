@@ -18,6 +18,7 @@ public final class Pointers implements Handler.Callback
   public static final int FLAG_P_FAKE = (1 << 2);
   public static final int FLAG_P_LOCKABLE = (1 << 3);
   public static final int FLAG_P_LOCKED = (1 << 4);
+  public static final int FLAG_P_SLIDING = (1 << 5);
 
   private Handler _keyrepeat_handler;
   private ArrayList<Pointer> _ptrs = new ArrayList<Pointer>();
@@ -131,7 +132,7 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = getPtr(pointerId);
     if (ptr == null)
       return;
-    if (ptr.sliding)
+    if (ptr.hasFlagsAny(FLAG_P_SLIDING))
     {
       clearLatched();
       onTouchUp_sliding(ptr);
@@ -247,7 +248,7 @@ public final class Pointers implements Handler.Callback
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
 
-    if (ptr.sliding)
+    if (ptr.hasFlagsAny(FLAG_P_SLIDING))
     {
       onTouchMove_sliding(ptr, dx);
       return;
@@ -344,7 +345,7 @@ public final class Pointers implements Handler.Callback
   boolean isSliding()
   {
     for (Pointer ptr : _ptrs)
-      if (ptr.sliding)
+      if (ptr.hasFlagsAny(FLAG_P_SLIDING))
         return true;
     return false;
   }
@@ -419,7 +420,7 @@ public final class Pointers implements Handler.Callback
   void startSliding(Pointer ptr, float initial_dy)
   {
     stopKeyRepeat(ptr);
-    ptr.sliding = true;
+    ptr.flags |= FLAG_P_SLIDING;
     ptr.sliding_count = (int)(initial_dy / _config.slide_step_px);
   }
 
@@ -475,8 +476,6 @@ public final class Pointers implements Handler.Callback
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
-    /** Whether the pointer is "sliding" laterally on a key. */
-    public boolean sliding;
     /** Number of event already caused by sliding. */
     public int sliding_count;
 
@@ -491,7 +490,6 @@ public final class Pointers implements Handler.Callback
       modifiers = m;
       flags = (v == null) ? 0 : pointer_flags_of_kv(v);
       timeoutWhat = -1;
-      sliding = false;
       sliding_count = 0;
     }
 
