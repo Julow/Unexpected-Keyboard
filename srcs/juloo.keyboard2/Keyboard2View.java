@@ -394,7 +394,7 @@ public class Keyboard2View extends View
       int flags = _pointers.getKeyFlags(k);
       if (flags != -1)
       {
-        if ((flags & KeyValue.FLAG_LOCKED) != 0)
+        if ((flags & Pointers.FLAG_P_LOCKED) != 0)
           return _theme.lockedColor;
         return _theme.activatedColor;
       }

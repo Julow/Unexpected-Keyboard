@@ -98,6 +98,7 @@ public final class KeyValue
 
   // Behavior flags.
   public static final int FLAG_LATCH = (1 << FLAGS_OFFSET << 0);
+  // Key can be locked by typing twice
   public static final int FLAG_LOCK = (1 << FLAGS_OFFSET << 1);
   // Special keys are not repeated and don't clear latched modifiers.
   public static final int FLAG_SPECIAL = (1 << FLAGS_OFFSET << 2);
@@ -109,13 +110,13 @@ public final class KeyValue
   public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5); // 25% smaller symbols
   public static final int FLAG_SECONDARY = (1 << FLAGS_OFFSET << 6); // dimmer
   // Used by [Pointers].
-  public static final int FLAG_LOCKED = (1 << FLAGS_OFFSET << 7);
-  public static final int FLAG_FAKE_PTR = (1 << FLAGS_OFFSET << 8);
+  // Free: (1 << FLAGS_OFFSET << 7)
+  // Free: (1 << FLAGS_OFFSET << 8)
 
   // Ranges for the different components
   private static final int FLAGS_BITS =
     FLAG_LATCH | FLAG_LOCK | FLAG_SPECIAL | FLAG_GREYED | FLAG_KEY_FONT |
-    FLAG_SMALLER_FONT | FLAG_SECONDARY | FLAG_LOCKED | FLAG_FAKE_PTR;
+    FLAG_SMALLER_FONT | FLAG_SECONDARY;
   private static final int KIND_BITS = (0b1111 << KIND_OFFSET); // 4 bits wide
   private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
 

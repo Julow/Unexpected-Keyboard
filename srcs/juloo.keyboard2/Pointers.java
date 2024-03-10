@@ -13,6 +13,12 @@ import java.util.NoSuchElementException;
  */
 public final class Pointers implements Handler.Callback
 {
+  public static final int FLAG_P_LATCHABLE = 1;
+  public static final int FLAG_P_LATCHED = (1 << 1);
+  public static final int FLAG_P_FAKE = (1 << 2);
+  public static final int FLAG_P_LOCKABLE = (1 << 3);
+  public static final int FLAG_P_LOCKED = (1 << 4);
+
   private Handler _keyrepeat_handler;
   private ArrayList<Pointer> _ptrs = new ArrayList<Pointer>();
   private IPointerEventHandler _handler;
@@ -42,7 +48,7 @@ public final class Pointers implements Handler.Callback
       Pointer p = _ptrs.get(i);
       if (p.value != null && p.value.getKind() == KeyValue.Kind.Modifier
           && !(skip_latched && p.pointerId == -1
-            && (p.flags & KeyValue.FLAG_LOCKED) == 0))
+            && (p.flags & FLAG_P_LOCKED) == 0))
         mods[n_mods++] = p.value.getModifier();
     }
     return Modifiers.ofArray(mods, n_mods);
@@ -63,13 +69,7 @@ public final class Pointers implements Handler.Callback
     return false;
   }
 
-  /**
-   * These flags can be different:
-   *  FLAG_LOCK   Removed when the key is locked
-   *  FLAG_LOCKED Added when the key is locked
-   *  FLAG_LATCH  Removed when the key is latched (released but not consumed yet)
-   * Returns [-1] if not found.
-   */
+  /** See [FLAG_P_*] flags. Returns [-1] if the key is not pressed. */
   public int getKeyFlags(KeyValue kv)
   {
     for (Pointer p : _ptrs)
@@ -78,21 +78,13 @@ public final class Pointers implements Handler.Callback
     return -1;
   }
 
-  public int getKeyFlags(KeyboardData.Key key, KeyValue kv)
-  {
-    Pointer ptr = getLatched(key, kv);
-    if (ptr == null) return -1;
-    return ptr.flags;
-  }
-
   /** The key must not be already latched . */
   void add_fake_pointer(KeyboardData.Key key, KeyValue kv, boolean locked)
   {
     Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags &= ~(KeyValue.FLAG_LATCH | KeyValue.FLAG_LOCK);
-    ptr.flags |= KeyValue.FLAG_FAKE_PTR;
+    ptr.flags = FLAG_P_FAKE;
     if (locked)
-      ptr.flags |= KeyValue.FLAG_LOCKED;
+      ptr.flags |= FLAG_P_LOCKED;
     _ptrs.add(ptr);
     _handler.onPointerFlagsChanged(false);
   }
@@ -113,7 +105,7 @@ public final class Pointers implements Handler.Callback
       if (latched)
         add_fake_pointer(key, kv, lock);
     }
-    else if ((ptr.flags & KeyValue.FLAG_FAKE_PTR) != 0)
+    else if ((ptr.flags & FLAG_P_FAKE) != 0)
     {} // Key already latched but not by a fake ptr, do nothing.
     else if (lock)
     {
@@ -122,7 +114,7 @@ public final class Pointers implements Handler.Callback
       if (latched)
         add_fake_pointer(key, kv, lock);
     }
-    else if ((ptr.flags & KeyValue.FLAG_LOCKED) != 0)
+    else if ((ptr.flags & FLAG_P_LOCKED) != 0)
     {} // Existing ptr is locked but [lock] is false, do not continue.
     else if (!latched)
     {
@@ -150,7 +142,7 @@ public final class Pointers implements Handler.Callback
     if (latched != null) // Already latched
     {
       removePtr(ptr); // Remove dupplicate
-      if ((latched.flags & KeyValue.FLAG_LOCK) != 0) // Toggle lockable key
+      if ((latched.flags & FLAG_P_LOCKABLE) != 0) // Toggle lockable key
         lockPointer(latched, false);
       else // Otherwise, unlatch
       {
@@ -158,9 +150,9 @@ public final class Pointers implements Handler.Callback
         _handler.onPointerUp(ptr.value, ptr.modifiers);
       }
     }
-    else if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
+    else if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
     {
-      ptr.flags &= ~KeyValue.FLAG_LATCH;
+      // ptr.flags &= ~FLAG_P_LATCHABLE;
       ptr.pointerId = -1; // Latch
       _handler.onPointerFlagsChanged(false);
     }
@@ -182,7 +174,8 @@ public final class Pointers implements Handler.Callback
   private boolean isOtherPointerDown()
   {
     for (Pointer p : _ptrs)
-      if (p.pointerId != -1 && (p.flags & KeyValue.FLAG_SPECIAL) == 0)
+      if (p.pointerId != -1 &&
+          (p.value == null || !p.value.hasFlagsAny(KeyValue.FLAG_SPECIAL)))
         return true;
     return false;
   }
@@ -283,7 +276,7 @@ public final class Pointers implements Handler.Callback
       if (newValue != null && !newValue.equals(ptr.value))
       {
         ptr.value = newValue;
-        ptr.flags = newValue.getFlags();
+        ptr.flags = pointer_flags_of_kv(newValue);
         // Sliding mode is entered when key5 or key6 is down on a slider key.
         if (ptr.key.slider &&
             (newValue.equals(ptr.key.getKeyValue(5))
@@ -332,18 +325,18 @@ public final class Pointers implements Handler.Callback
     {
       Pointer ptr = _ptrs.get(i);
       // Latched and not locked, remove
-      if (ptr.pointerId == -1 && (ptr.flags & KeyValue.FLAG_LOCKED) == 0)
+      if (ptr.pointerId == -1 && (ptr.flags & FLAG_P_LOCKED) == 0)
         _ptrs.remove(i);
       // Not latched but pressed, don't latch once released and stop long press.
-      else if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
-        ptr.flags &= ~KeyValue.FLAG_LATCH;
+      else if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
+        ptr.flags &= ~FLAG_P_LATCHABLE;
     }
   }
 
   /** Make a pointer into the locked state. */
   private void lockPointer(Pointer ptr, boolean shouldVibrate)
   {
-    ptr.flags = (ptr.flags & ~KeyValue.FLAG_LOCK) | KeyValue.FLAG_LOCKED;
+    ptr.flags = (ptr.flags & ~FLAG_P_LOCKABLE) | FLAG_P_LOCKED;
     _handler.onPointerFlagsChanged(shouldVibrate);
   }
 
@@ -398,7 +391,7 @@ public final class Pointers implements Handler.Callback
   private boolean handleKeyRepeat(Pointer ptr)
   {
     // Long press toggle lock on modifiers
-    if ((ptr.flags & KeyValue.FLAG_LATCH) != 0)
+    if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
     {
       lockPointer(ptr, true);
       return false;
@@ -410,7 +403,6 @@ public final class Pointers implements Handler.Callback
     if (!kv.equals(ptr.value))
     {
       ptr.value = kv;
-      ptr.flags = kv.getFlags();
       _handler.onPointerDown(kv, true);
       return true;
     }
@@ -453,6 +445,17 @@ public final class Pointers implements Handler.Callback
       _handler.onPointerHold(newValue, ptr.modifiers);
   }
 
+  /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
+  static int pointer_flags_of_kv(KeyValue kv)
+  {
+    int flags = 0;
+    if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
+      flags |= FLAG_P_LATCHABLE;
+    if (kv.hasFlagsAny(KeyValue.FLAG_LOCK))
+      flags |= FLAG_P_LOCKABLE;
+    return flags;
+  }
+
   private static final class Pointer
   {
     /** -1 when latched. */
@@ -467,7 +470,7 @@ public final class Pointers implements Handler.Callback
     public float downY;
     /** Modifier flags at the time the key was pressed. */
     public Modifiers modifiers;
-    /** Flags of the value. Latch, lock and locked flags are updated. */
+    /** See [FLAG_P_*] flags. */
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
@@ -485,7 +488,7 @@ public final class Pointers implements Handler.Callback
       downX = x;
       downY = y;
       modifiers = m;
-      flags = (v == null) ? 0 : v.getFlags();
+      flags = (v == null) ? 0 : pointer_flags_of_kv(v);
       timeoutWhat = -1;
       sliding = false;
       sliding_count = 0;
@@ -607,7 +610,7 @@ public final class Pointers implements Handler.Callback
   public interface IPointerEventHandler
   {
     /** Key can be modified or removed by returning [null]. */
-    public KeyValue modifyKey(KeyValue k, Modifiers flags);
+    public KeyValue modifyKey(KeyValue k, Modifiers mods);
 
     /** A key is pressed. [getModifiers()] is uptodate. Might be called after a
         press or a swipe to a different value. Down events are not paired with
@@ -616,12 +619,12 @@ public final class Pointers implements Handler.Callback
 
     /** Key is released. [k] is the key that was returned by
         [modifySelectedKey] or [modifySelectedKey]. */
-    public void onPointerUp(KeyValue k, Modifiers flags);
+    public void onPointerUp(KeyValue k, Modifiers mods);
 
     /** Flags changed because latched or locked keys or cancelled pointers. */
     public void onPointerFlagsChanged(boolean shouldVibrate);
 
     /** Key is repeating. */
-    public void onPointerHold(KeyValue k, Modifiers flags);
+    public void onPointerHold(KeyValue k, Modifiers mods);
   }
 }
