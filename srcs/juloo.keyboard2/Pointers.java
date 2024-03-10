@@ -47,7 +47,7 @@ public final class Pointers implements Handler.Callback
     {
       Pointer p = _ptrs.get(i);
       if (p.value != null && p.value.getKind() == KeyValue.Kind.Modifier
-          && !(skip_latched && p.pointerId == -1
+          && !(skip_latched && p.hasFlagsAny(FLAG_P_LATCHED)
             && (p.flags & FLAG_P_LOCKED) == 0))
         mods[n_mods++] = p.value.getModifier();
     }
@@ -82,7 +82,7 @@ public final class Pointers implements Handler.Callback
   void add_fake_pointer(KeyboardData.Key key, KeyValue kv, boolean locked)
   {
     Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags = FLAG_P_FAKE;
+    ptr.flags = FLAG_P_FAKE | FLAG_P_LATCHED;
     if (locked)
       ptr.flags |= FLAG_P_LOCKED;
     _ptrs.add(ptr);
@@ -152,8 +152,8 @@ public final class Pointers implements Handler.Callback
     }
     else if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
     {
-      // ptr.flags &= ~FLAG_P_LATCHABLE;
-      ptr.pointerId = -1; // Latch
+      ptr.flags |= FLAG_P_LATCHED;
+      ptr.pointerId = -1;
       _handler.onPointerFlagsChanged(false);
     }
     else
@@ -174,7 +174,7 @@ public final class Pointers implements Handler.Callback
   private boolean isOtherPointerDown()
   {
     for (Pointer p : _ptrs)
-      if (p.pointerId != -1 &&
+      if (!p.hasFlagsAny(FLAG_P_LATCHED) &&
           (p.value == null || !p.value.hasFlagsAny(KeyValue.FLAG_SPECIAL)))
         return true;
     return false;
@@ -314,7 +314,8 @@ public final class Pointers implements Handler.Callback
     if (v == null)
       return null;
     for (Pointer p : _ptrs)
-      if (p.key == k && p.pointerId == -1 && p.value != null && p.value.equals(v))
+      if (p.key == k && p.hasFlagsAny(FLAG_P_LATCHED)
+          && p.value != null && p.value.equals(v))
         return p;
     return null;
   }
@@ -325,7 +326,7 @@ public final class Pointers implements Handler.Callback
     {
       Pointer ptr = _ptrs.get(i);
       // Latched and not locked, remove
-      if (ptr.pointerId == -1 && (ptr.flags & FLAG_P_LOCKED) == 0)
+      if (ptr.hasFlagsAny(FLAG_P_LATCHED) && (ptr.flags & FLAG_P_LOCKED) == 0)
         _ptrs.remove(i);
       // Not latched but pressed, don't latch once released and stop long press.
       else if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
@@ -397,7 +398,7 @@ public final class Pointers implements Handler.Callback
       return false;
     }
     // Stop repeating: Latched key, no key
-    if (ptr.pointerId == -1 || ptr.value == null)
+    if (ptr.hasFlagsAny(FLAG_P_LATCHED) || ptr.value == null)
       return false;
     KeyValue kv = KeyModifier.modify_long_press(ptr.value);
     if (!kv.equals(ptr.value))
@@ -492,6 +493,11 @@ public final class Pointers implements Handler.Callback
       timeoutWhat = -1;
       sliding = false;
       sliding_count = 0;
+    }
+
+    public boolean hasFlagsAny(int has)
+    {
+      return ((flags & has) != 0);
     }
   }
 
