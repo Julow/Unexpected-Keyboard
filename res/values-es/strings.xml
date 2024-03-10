@@ -47,8 +47,8 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_autocapitalisation_summary">Presionar Mayús al principio de una oración</string>
   <string name="pref_switch_input_immediate_title">Cambiar al último teclado usado</string>
   <string name="pref_switch_input_immediate_summary">Comportamiento de la tecla para cambiar diseño</string>
-  <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
-  <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
+  <string name="pref_vibrate_custom">Vibración personalizada</string>
+  <string name="pref_vibrate_duration_title">Intensidad de vibración</string>
   <string name="pref_pin_entry_enabled_title">Diseño de introducción de PIN</string>
   <string name="pref_pin_entry_enabled_summary">Para escribir cifras, fechas y números telefónicos</string>
   <string name="pref_category_style">Estilo</string>
@@ -72,11 +72,11 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_swipe_dist_e_default">Normal</string>
   <string name="pref_swipe_dist_e_far">Larga</string>
   <string name="pref_swipe_dist_e_very_far">Muy larga</string>
-  <string name="pref_key_horizontal_space">Espaciado horizontal entre las teclas</string>
-  <string name="pref_key_vertical_space">Espaciado vertical entre las teclas</string>
-  <!-- <string name="pref_border_config_title">Customize borders</string> -->
-  <!-- <string name="pref_border_width_title">Border Width</string> -->
-  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
+  <string name="pref_key_horizontal_space">Espacio horizontal entre las teclas</string>
+  <string name="pref_key_vertical_space">Espacio vertical entre las teclas</string>
+  <string name="pref_border_config_title">Bordes personalizados</string>
+  <string name="pref_border_width_title">Ancho de bordes</string>
+  <string name="pref_corners_radius_title">Radio de rincones</string>
   <string name="key_action_next">Siguiente</string>
   <string name="key_action_done">Hecho</string>
   <string name="key_action_go">Ir</string>
@@ -88,12 +88,9 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="launcher_description">Esta aplicación es un teclado virtual. Presiona el botón de abajo para ir a Ajustes y habilitar Unexpected Keyboard.</string>
   <string name="launcher_sourcecode">Esta es una aplicación gratuita, libre y de código abierto. Puedes encontrar el código fuente o reportar errores en GitHub.</string>
   <string name="launcher_tryhere">Tras habilitarlo, puedes probar el teclado en este campo:</string>
-  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
+  <string name="launcher_tryhere_hint">Intentar aquí</string>
   <string name="key_descr_capslock">Bloq Mayús</string>
-  <!-- <string name="key_descr_compose">Compose</string> -->
-  <string name="key_descr_switch_greekmath">Símb. griegos y matemáticos</string>
-  <!-- <string name="key_descr_change_method">Switch keyboard</string> -->
-  <string name="key_descr_voice_typing">Dictado por voz</string>
+  <string name="key_descr_compose">Componer</string>  <string name="key_descr_switch_greekmath">Símb. griegos y matemáticos</string>  <string name="key_descr_change_method">Cambiar teclado</string>  <string name="key_descr_voice_typing">Dictado por voz</string>
   <string name="key_descr_copy">Copiar</string>
   <string name="key_descr_paste">Pegar</string>
   <string name="key_descr_cut">Cortar</string>
