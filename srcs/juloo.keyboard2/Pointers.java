@@ -490,34 +490,60 @@ public final class Pointers implements Handler.Callback
 
   public final class Sliding
   {
+    /** Accumulated distance since last event. */
+    float d = 0.f;
+    /** The slider speed changes depending on the pointer speed. */
+    float speed = 1.f;
     /** Coordinate of the last move. */
     float last_x;
+    /** [System.currentTimeMillis()] at the time of the last move. */
+    long last_move_ms;
 
     public Sliding(float x)
     {
       last_x = x;
+      last_move_ms = System.currentTimeMillis();
     }
+
+    static final float SPEED_SMOOTHING = 0.7f;
+    /** Avoid absurdly large values. */
+    static final float SPEED_MAX = 2.f;
 
     public void onTouchMove(Pointer ptr, float x)
     {
-      int d = (int)((x - last_x) / _config.slide_step_px);
-      if (d == 0)
-        return;
-      last_x = x;
-      int key_index = (d < 0) ? 5 : 6;
-      KeyValue newValue = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
-      ptr.value = newValue;
-      if (newValue != null)
-        _handler.onPointerHold(newValue, ptr.modifiers);
+      d += (x - last_x) * speed / _config.slide_step_px;
+      update_speed(x);
+      while (d <= -1.f || d >= 1.f)
+      {
+        int key_index = (d < 0) ? 5 : 6;
+        d += (d < 0) ? 1f : -1f;
+        KeyValue newValue = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
+        ptr.value = newValue;
+        if (newValue != null)
+          _handler.onPointerHold(newValue, ptr.modifiers);
+      }
     }
 
     /** Handle a sliding pointer going up. Latched modifiers are not
-      cleared to allow easy adjustments to the cursors. The pointer is
-      cancelled. */
+        cleared to allow easy adjustments to the cursors. The pointer is
+        cancelled. */
     public void onTouchUp(Pointer ptr)
     {
       removePtr(ptr);
       _handler.onPointerFlagsChanged(false);
+    }
+
+    /** [speed] is computed from the elapsed time and distance traveled
+        between two move events. Exponential smoothing is used to smooth out
+        the noise. Sets [last_move_ms] and [last_x]. */
+    void update_speed(float x)
+    {
+      long now = System.currentTimeMillis();
+      float instant_speed = Math.min(SPEED_MAX,
+          Math.abs(x - last_x) / (float)(now - last_move_ms) + 1.f);
+      speed = speed + (instant_speed - speed) * SPEED_SMOOTHING;
+      last_move_ms = now;
+      last_x = x;
     }
   }
 
