@@ -139,7 +139,7 @@ public final class Pointers implements Handler.Callback
     if (ptr.hasFlagsAny(FLAG_P_SLIDING))
     {
       clearLatched();
-      onTouchUp_sliding(ptr);
+      ptr.sliding.onTouchUp(ptr);
       return;
     }
     stopKeyRepeat(ptr);
@@ -248,18 +248,17 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = getPtr(pointerId);
     if (ptr == null)
       return;
+    if (ptr.hasFlagsAny(FLAG_P_SLIDING))
+    {
+      ptr.sliding.onTouchMove(ptr, x);
+      return;
+    }
 
     // The position in a IME windows is clampled to view.
     // For a better up swipe behaviour, set the y position to a negative value when clamped.
     if (y == 0.0) y = -400;
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
-
-    if (ptr.hasFlagsAny(FLAG_P_SLIDING))
-    {
-      onTouchMove_sliding(ptr, dx);
-      return;
-    }
 
     float dist = Math.abs(dx) + Math.abs(dy);
     Integer direction;
@@ -290,7 +289,7 @@ public final class Pointers implements Handler.Callback
             (newValue.equals(ptr.key.getKeyValue(5))
              || newValue.equals(ptr.key.getKeyValue(6))))
         {
-          startSliding(ptr, dy);
+          startSliding(ptr, x);
         }
         _handler.onPointerDown(newValue, true);
       }
@@ -425,34 +424,11 @@ public final class Pointers implements Handler.Callback
 
   // Sliding
 
-  void startSliding(Pointer ptr, float initial_dy)
+  void startSliding(Pointer ptr, float x)
   {
     stopKeyRepeat(ptr);
     ptr.flags |= FLAG_P_SLIDING;
-    ptr.sliding_count = (int)(initial_dy / _config.slide_step_px);
-  }
-
-  /** Handle a sliding pointer going up. Latched modifiers are not cleared to
-      allow easy adjustments to the cursors. The pointer is cancelled. */
-  void onTouchUp_sliding(Pointer ptr)
-  {
-    removePtr(ptr);
-    _handler.onPointerFlagsChanged(false);
-  }
-
-  /** Handle move events for sliding pointers. [dx] is distance travelled from
-      [downX]. */
-  void onTouchMove_sliding(Pointer ptr, float dx)
-  {
-    int count = (int)(dx / _config.slide_step_px);
-    if (count == ptr.sliding_count)
-      return;
-    int key_index = (count < ptr.sliding_count) ? 5 : 6;
-    KeyValue newValue = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
-    ptr.sliding_count = count;
-    ptr.value = newValue;
-    if (newValue != null)
-      _handler.onPointerHold(newValue, ptr.modifiers);
+    ptr.sliding = new Sliding(x);
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
@@ -489,8 +465,8 @@ public final class Pointers implements Handler.Callback
     public int flags;
     /** Identify timeout messages. */
     public int timeoutWhat;
-    /** Number of event already caused by sliding. */
-    public int sliding_count;
+    /** [null] when not in sliding mode. */
+    public Sliding sliding;
 
     public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m)
     {
@@ -503,12 +479,45 @@ public final class Pointers implements Handler.Callback
       modifiers = m;
       flags = (v == null) ? 0 : pointer_flags_of_kv(v);
       timeoutWhat = -1;
-      sliding_count = 0;
+      sliding = null;
     }
 
     public boolean hasFlagsAny(int has)
     {
       return ((flags & has) != 0);
+    }
+  }
+
+  public final class Sliding
+  {
+    /** Coordinate of the last move. */
+    float last_x;
+
+    public Sliding(float x)
+    {
+      last_x = x;
+    }
+
+    public void onTouchMove(Pointer ptr, float x)
+    {
+      int d = (int)((x - last_x) / _config.slide_step_px);
+      if (d == 0)
+        return;
+      last_x = x;
+      int key_index = (d < 0) ? 5 : 6;
+      KeyValue newValue = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
+      ptr.value = newValue;
+      if (newValue != null)
+        _handler.onPointerHold(newValue, ptr.modifiers);
+    }
+
+    /** Handle a sliding pointer going up. Latched modifiers are not
+      cleared to allow easy adjustments to the cursors. The pointer is
+      cancelled. */
+    public void onTouchUp(Pointer ptr)
+    {
+      removePtr(ptr);
+      _handler.onPointerFlagsChanged(false);
     }
   }
 
