@@ -98,6 +98,7 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
         KeyModifier.set_compose_pending(key.getPendingCompose());
         _recv.set_compose_pending(true);
         break;
+      case Cursor_move: move_cursor(key.getCursorMove()); break;
     }
     update_meta_state(old_mods);
   }
@@ -221,8 +222,6 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
       case REPLACE: send_context_menu_action(android.R.id.replaceText); break;
       case ASSIST: send_context_menu_action(android.R.id.textAssist); break;
       case AUTOFILL: send_context_menu_action(android.R.id.autofill); break;
-      case CURSOR_LEFT: move_cursor(-1); break;
-      case CURSOR_RIGHT: move_cursor(1); break;
     }
   }
 
