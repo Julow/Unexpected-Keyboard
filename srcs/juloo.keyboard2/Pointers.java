@@ -513,14 +513,14 @@ public final class Pointers implements Handler.Callback
     {
       d += (x - last_x) * speed / _config.slide_step_px;
       update_speed(x);
-      while (d <= -1.f || d >= 1.f)
+      // Send an event when [abs(d)] exceeds [1].
+      int d_ = (int)d;
+      if (d_ != 0)
       {
-        int key_index = (d < 0) ? 5 : 6;
-        d += (d < 0) ? 1f : -1f;
-        KeyValue newValue = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
-        ptr.value = newValue;
-        if (newValue != null)
-          _handler.onPointerHold(newValue, ptr.modifiers);
+        d -= d_;
+        int key_index = (d_ < 0) ? 5 : 6;
+        ptr.value = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
+        send_key(ptr, Math.abs(d_));
       }
     }
 
@@ -531,6 +531,32 @@ public final class Pointers implements Handler.Callback
     {
       removePtr(ptr);
       _handler.onPointerFlagsChanged(false);
+    }
+
+    /** Send the pressed key [n] times. */
+    void send_key(Pointer ptr, int n)
+    {
+      if (ptr.value == null)
+        return;
+      // Avoid looping if possible to avoid lag while sliding fast
+      KeyValue multiplied = multiply_key(ptr.value, n);
+      if (multiplied != null)
+        _handler.onPointerHold(multiplied, ptr.modifiers);
+      else
+        for (int i = 0; i < n; i++)
+          _handler.onPointerHold(ptr.value, ptr.modifiers);
+    }
+
+    /** Return a key performing the same action as [kv] but [n] times. Returns
+        [null] if [kv] cannot be multiplied. */
+    KeyValue multiply_key(KeyValue kv, int n)
+    {
+      switch (kv.getKind())
+      {
+        case Cursor_move:
+          return KeyValue.cursorMoveKey(kv.getCursorMove() * n);
+      }
+      return null;
     }
 
     /** [speed] is computed from the elapsed time and distance traveled
