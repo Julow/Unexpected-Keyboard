@@ -82,7 +82,7 @@ public final class KeyboardData
   boolean add_key_to_pos(List<Row> rows, KeyValue kv, KeyPos p)
   {
     int i_row = p.row;
-    int i_row_end = p.row;
+    int i_row_end = Math.min(p.row, rows.size());
     if (p.row == -1) { i_row = 0; i_row_end = rows.size() - 1; }
     for (; i_row <= i_row_end; i_row++)
     {
