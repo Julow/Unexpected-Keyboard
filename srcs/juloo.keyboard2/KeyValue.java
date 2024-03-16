@@ -71,8 +71,6 @@ public final class KeyValue implements Comparable<KeyValue>
     SHARE,
     ASSIST,
     AUTOFILL,
-    CURSOR_LEFT,
-    CURSOR_RIGHT,
   }
 
   public static enum Placeholder
@@ -89,7 +87,8 @@ public final class KeyValue implements Comparable<KeyValue>
   public static enum Kind
   {
     Char, String, Keyevent, Event, Compose_pending, Modifier, Editing,
-    Placeholder
+    Placeholder,
+    Cursor_move // Value is encoded as a 16-bit integer
   }
 
   private static final int FLAGS_OFFSET = 19;
@@ -194,6 +193,12 @@ public final class KeyValue implements Comparable<KeyValue>
   public int getPendingCompose()
   {
     return (_code & VALUE_BITS);
+  }
+
+  /** Defined only when [getKind() == Kind.Cursor_move]. */
+  public short getCursorMove()
+  {
+    return (short)(_code & VALUE_BITS);
   }
 
   /* Update the char and the symbol. */
@@ -323,6 +328,16 @@ public final class KeyValue implements Comparable<KeyValue>
   private static KeyValue editingKey(int symbol, Editing action)
   {
     return editingKey(String.valueOf((char)symbol), action, FLAG_KEY_FONT);
+  }
+
+  /** A key that moves the cursor [d] times to the right. If [d] is negative,
+      it moves the cursor [abs(d)] times to the left. */
+  public static KeyValue cursorMoveKey(int d)
+  {
+    int symbol = (d < 0) ? 0xE008 : 0xE006;
+    return new KeyValue(String.valueOf((char)symbol), Kind.Cursor_move,
+        ((short)d) & 0xFFFF,
+        FLAG_SPECIAL | FLAG_SECONDARY | FLAG_KEY_FONT);
   }
 
   /** A key that do nothing but has a unique ID. */
@@ -507,8 +522,8 @@ public final class KeyValue implements Comparable<KeyValue>
       case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
       case "undo": return editingKey(0xE036, Editing.UNDO);
       case "redo": return editingKey(0xE037, Editing.REDO);
-      case "cursor_left": return editingKey(0xE008, Editing.CURSOR_LEFT);
-      case "cursor_right": return editingKey(0xE006, Editing.CURSOR_RIGHT);
+      case "cursor_left": return cursorMoveKey(-1);
+      case "cursor_right": return cursorMoveKey(1);
       // These keys are not used
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
