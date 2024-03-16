@@ -6,7 +6,7 @@ import glob, os
 # - Remove obsolete strings
 # - Sort in the same order as the baseline
 # The baseline is 'values/strings.xml', which is english.
-# Sync store title and descriptions to the 'metadata/' directory.
+# Sync store title and descriptions to the metadata directory.
 
 VALUE_DIR_TO_METADATA = {
         "cs": "cs-CZ",
@@ -65,7 +65,7 @@ def sync_metadata(value_dir, strings):
     locale = os.path.basename(value_dir).removeprefix("values-")
     if not locale in VALUE_DIR_TO_METADATA:
         raise Exception("Locale '%s' not known, please add it into sync_translations.py" % locale)
-    meta_dir = "metadata/android/" + VALUE_DIR_TO_METADATA[locale]
+    meta_dir = "fastlane/metadata/android/" + VALUE_DIR_TO_METADATA[locale]
     def sync_meta_file(fname, string_name):
         if string_name in strings:
             string = strings[string_name]

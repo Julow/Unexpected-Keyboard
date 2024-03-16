@@ -180,7 +180,7 @@ the file and the English strings.
 To check that `strings.xml` is formatted correctly, run
 `python sync_translations.py`. This will modify your files.
 
-Store descriptions in `metadata/` are updated automatically.
+Store descriptions in `fastlane/metadata/android/` are updated automatically.
 Translating changelogs is not useful.
 
 The app name might be partially translated, the "Unexpected" word should remain
