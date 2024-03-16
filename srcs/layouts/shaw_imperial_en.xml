@@ -14,7 +14,7 @@
     <key key0="𐑔" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
   <row>
-    <key shift="0.5" key0="𐑭" key1="tab" key2="𐑸" key3="`"/>
+    <key key0="𐑭" key1="tab" key2="𐑸" key3="`"/>
     <key key0="𐑷" key2="𐑹"/>
     <key key0="𐑵" key2="𐑿"/>
     <key key0="𐑱" key2="𐑺"/>
@@ -38,7 +38,7 @@
     <key key0="𐑕"/>
   </row>
   <row>
-    <key shift="0.5" key0="𐑲"/>
+    <key key0="𐑲"/>
     <key key0="𐑴"/>
     <key key0="𐑰"/>
     <key key0="𐑚" key2="&lt;" key3="."/>
