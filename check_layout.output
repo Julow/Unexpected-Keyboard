@@ -133,6 +133,8 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 Layout includes some ASCII punctuation but not all, missing: `
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
+# shaw_imperial_en
+0 warnings
 # urdu_phonetic_ur
 Duplicate keys:  
 Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
