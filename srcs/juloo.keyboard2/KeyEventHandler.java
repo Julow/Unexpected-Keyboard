@@ -250,12 +250,11 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
     if (conn == null)
       return;
     ExtractedText et = get_cursor_pos(conn);
+    int system_mods =
+      KeyEvent.META_CTRL_ON | KeyEvent.META_ALT_ON | KeyEvent.META_META_ON;
     // Fallback to sending key events
-    if (_move_cursor_force_fallback
-        || et == null
-        || _mods.has(KeyValue.Modifier.CTRL)
-        || _mods.has(KeyValue.Modifier.ALT)
-        || _mods.has(KeyValue.Modifier.META))
+    if (_move_cursor_force_fallback || et == null
+        || (_meta_state & system_mods) != 0)
     {
       move_cursor_fallback(d);
       return;
@@ -273,7 +272,7 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
     {
       sel_end += d;
       // Leave 'sel_start' where it is if shift is pressed
-      if (!_mods.has(KeyValue.Modifier.SHIFT))
+      if ((_meta_state & KeyEvent.META_SHIFT_ON) == 0)
         sel_start = sel_end;
     }
     if (!conn.setSelection(sel_start, sel_end))
