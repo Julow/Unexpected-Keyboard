@@ -38,6 +38,16 @@ public final class KeyModifier
     return r;
   }
 
+  public static KeyValue modify(KeyValue k, KeyValue mod)
+  {
+    switch (mod.getKind())
+    {
+      case Modifier:
+        return modify(k, mod.getModifier());
+    }
+    return k;
+  }
+
   public static KeyValue modify(KeyValue k, KeyValue.Modifier mod)
   {
     switch (mod)

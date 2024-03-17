@@ -3,7 +3,7 @@ package juloo.keyboard2;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
-public final class KeyValue
+public final class KeyValue implements Comparable<KeyValue>
 {
   public static enum Event
   {
@@ -222,6 +222,18 @@ public final class KeyValue
   public boolean equals(Object obj)
   {
     return sameKey((KeyValue)obj);
+  }
+
+  public int compareTo(KeyValue snd)
+  {
+    // Compare the kind and value first, then the flags.
+    int d = (_code & ~FLAGS_BITS) - (snd._code & ~FLAGS_BITS);
+    if (d != 0)
+      return d;
+    d = _code - snd._code;
+    if (d != 0)
+      return d;
+    return _symbol.compareTo(snd._symbol);
   }
 
   /** Type-safe alternative to [equals]. */

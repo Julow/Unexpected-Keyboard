@@ -42,15 +42,15 @@ public final class Pointers implements Handler.Callback
   private Modifiers getModifiers(boolean skip_latched)
   {
     int n_ptrs = _ptrs.size();
-    KeyValue.Modifier[] mods = new KeyValue.Modifier[n_ptrs];
+    KeyValue[] mods = new KeyValue[n_ptrs];
     int n_mods = 0;
     for (int i = 0; i < n_ptrs; i++)
     {
       Pointer p = _ptrs.get(i);
-      if (p.value != null && p.value.getKind() == KeyValue.Kind.Modifier
+      if (p.value != null
           && !(skip_latched && p.hasFlagsAny(FLAG_P_LATCHED)
             && (p.flags & FLAG_P_LOCKED) == 0))
-        mods[n_mods++] = p.value.getModifier();
+        mods[n_mods++] = p.value;
     }
     return Modifiers.ofArray(mods, n_mods);
   }
@@ -503,23 +503,33 @@ public final class Pointers implements Handler.Callback
       Sorted in the order they should be evaluated. */
   public static final class Modifiers
   {
-    private final KeyValue.Modifier[] _mods;
+    private final KeyValue[] _mods;
     private final int _size;
 
-    private Modifiers(KeyValue.Modifier[] m, int s)
+    private Modifiers(KeyValue[] m, int s)
     {
       _mods = m; _size = s;
     }
 
-    public KeyValue.Modifier get(int i) { return _mods[_size - 1 - i]; }
+    public KeyValue get(int i) { return _mods[_size - 1 - i]; }
     public int size() { return _size; }
     public boolean has(KeyValue.Modifier m)
     {
-      return (Arrays.binarySearch(_mods, 0, _size, m) >= 0);
+      for (int i = 0; i < _size; i++)
+      {
+        KeyValue kv = _mods[i];
+        switch (kv.getKind())
+        {
+          case Modifier:
+            if (kv.getModifier().equals(m))
+              return true;
+        }
+      }
+      return false;
     }
 
     /** Returns the activated modifiers that are not in [m2]. */
-    public Iterator<KeyValue.Modifier> diff(Modifiers m2)
+    public Iterator<KeyValue> diff(Modifiers m2)
     {
       return new ModifiersDiffIterator(this, m2);
     }
@@ -533,9 +543,9 @@ public final class Pointers implements Handler.Callback
     }
 
     public static final Modifiers EMPTY =
-      new Modifiers(new KeyValue.Modifier[0], 0);
+      new Modifiers(new KeyValue[0], 0);
 
-    protected static Modifiers ofArray(KeyValue.Modifier[] mods, int size)
+    protected static Modifiers ofArray(KeyValue[] mods, int size)
     {
       // Sort and remove duplicates and nulls.
       if (size > 1)
@@ -544,7 +554,7 @@ public final class Pointers implements Handler.Callback
         int j = 0;
         for (int i = 0; i < size; i++)
         {
-          KeyValue.Modifier m = mods[i];
+          KeyValue m = mods[i];
           if (m != null && (i + 1 >= size || m != mods[i + 1]))
           {
             mods[j] = m;
@@ -558,7 +568,7 @@ public final class Pointers implements Handler.Callback
 
     /** Returns modifiers that are in [m1_] but not in [m2_]. */
     static final class ModifiersDiffIterator
-        implements Iterator<KeyValue.Modifier>
+        implements Iterator<KeyValue>
     {
       Modifiers m1;
       int i1 = 0;
@@ -577,11 +587,11 @@ public final class Pointers implements Handler.Callback
         return i1 < m1._size;
       }
 
-      public KeyValue.Modifier next()
+      public KeyValue next()
       {
         if (i1 >= m1._size)
           throw new NoSuchElementException();
-        KeyValue.Modifier m = m1._mods[i1];
+        KeyValue m = m1._mods[i1];
         i1++;
         advance();
         return m;
@@ -593,7 +603,7 @@ public final class Pointers implements Handler.Callback
       {
         while (i1 < m1.size())
         {
-          KeyValue.Modifier m = m1._mods[i1];
+          KeyValue m = m1._mods[i1];
           while (true)
           {
             if (i2 >= m2._size)

@@ -113,7 +113,7 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
   void update_meta_state(Pointers.Modifiers mods)
   {
     // Released modifiers
-    Iterator<KeyValue.Modifier> it = _mods.diff(mods);
+    Iterator<KeyValue> it = _mods.diff(mods);
     while (it.hasNext())
       sendMetaKeyForModifier(it.next(), false);
     // Activated modifiers
@@ -147,23 +147,28 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
     }
   }
 
-  void sendMetaKeyForModifier(KeyValue.Modifier mod, boolean down)
+  void sendMetaKeyForModifier(KeyValue kv, boolean down)
   {
-    switch (mod)
+    switch (kv.getKind())
     {
-      case CTRL:
-        sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, down);
-        break;
-      case ALT:
-        sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, down);
-        break;
-      case SHIFT:
-        sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, down);
-        break;
-      case META:
-        sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, down);
-        break;
-      default:
+      case Modifier:
+        switch (kv.getModifier())
+        {
+          case CTRL:
+            sendMetaKey(KeyEvent.KEYCODE_CTRL_LEFT, KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_ON, down);
+            break;
+          case ALT:
+            sendMetaKey(KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_ON, down);
+            break;
+          case SHIFT:
+            sendMetaKey(KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON, down);
+            break;
+          case META:
+            sendMetaKey(KeyEvent.KEYCODE_META_LEFT, KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_ON, down);
+            break;
+          default:
+            break;
+        }
         break;
     }
   }
