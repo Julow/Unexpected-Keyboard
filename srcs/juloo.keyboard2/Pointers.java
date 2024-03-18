@@ -19,6 +19,10 @@ public final class Pointers implements Handler.Callback
   public static final int FLAG_P_LOCKABLE = (1 << 3);
   public static final int FLAG_P_LOCKED = (1 << 4);
   public static final int FLAG_P_SLIDING = (1 << 5);
+  /** Clear latched (only if also FLAG_P_LATCHABLE set). */
+  public static final int FLAG_P_CLEAR_LATCHED = (1 << 6);
+  /** Can't be locked, even when long pressing. */
+  public static final int FLAG_P_CANT_LOCK = (1 << 7);
 
   private Handler _keyrepeat_handler;
   private ArrayList<Pointer> _ptrs = new ArrayList<Pointer>();
@@ -153,6 +157,9 @@ public final class Pointers implements Handler.Callback
     }
     else if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
     {
+      // Latchable but non-special keys must clear latched.
+      if ((ptr.flags & FLAG_P_CLEAR_LATCHED) != 0)
+        clearLatched();
       ptr.flags |= FLAG_P_LATCHED;
       ptr.pointerId = -1;
       _handler.onPointerFlagsChanged(false);
@@ -395,7 +402,8 @@ public final class Pointers implements Handler.Callback
     // Long press toggle lock on modifiers
     if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
     {
-      lockPointer(ptr, true);
+      if (!ptr.hasFlagsAny(FLAG_P_CANT_LOCK))
+        lockPointer(ptr, true);
       return false;
     }
     // Stop repeating: Latched key, no key
@@ -452,7 +460,12 @@ public final class Pointers implements Handler.Callback
   {
     int flags = 0;
     if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
+    {
+      // Non-special latchable key must clear modifiers and can't be locked
+      if (!kv.hasFlagsAny(KeyValue.FLAG_SPECIAL))
+        flags |= FLAG_P_CLEAR_LATCHED | FLAG_P_CANT_LOCK;
       flags |= FLAG_P_LATCHABLE;
+    }
     if (kv.hasFlagsAny(KeyValue.FLAG_LOCK))
       flags |= FLAG_P_LOCKABLE;
     return flags;

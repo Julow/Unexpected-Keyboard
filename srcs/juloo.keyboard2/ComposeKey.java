@@ -4,31 +4,26 @@ import java.util.Arrays;
 
 public final class ComposeKey
 {
-  /** Apply the pending compose sequence to [kv]. Returns [null] if [kv] is not
-      part of the pending sequence. */
+  /** Apply the pending compose sequence to [kv]. */
   public static KeyValue apply(int state, KeyValue kv)
   {
     switch (kv.getKind())
     {
       case Char:
         KeyValue res = apply(state, kv.getChar());
-        // Dim characters not part of any sequence instead of removing them.
+        // Grey-out characters not part of any sequence.
         if (res == null)
           return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
         return res;
-      /* These keys must not be removed. */
+      /* These keys are not greyed. */
       case Event:
       case Modifier:
+      case Compose_pending:
         return kv;
-      /* These keys cannot be part of sequences. */
-      case String:
-      case Keyevent:
-      case Editing:
-      case Placeholder:
+      /* Other keys cannot be part of sequences. */
+      default:
         return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
-      case Compose_pending: return null;
     }
-    return null;
   }
 
   /** Apply the pending compose sequence to char [c]. */

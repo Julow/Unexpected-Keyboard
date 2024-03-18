@@ -69,9 +69,6 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
           case META:
             _autocap.stop();
             break;
-          case COMPOSE_PENDING:
-            KeyModifier.set_compose_pending(0);
-            break;
         }
         break;
       default: break;
@@ -95,7 +92,6 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
       case Modifier: break;
       case Editing: handle_editing_key(key.getEditing()); break;
       case Compose_pending:
-        KeyModifier.set_compose_pending(key.getPendingCompose());
         _recv.set_compose_pending(true);
         break;
     }
