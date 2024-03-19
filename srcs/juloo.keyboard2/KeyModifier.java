@@ -41,6 +41,8 @@ public final class KeyModifier
       case Compose_pending:
         return ComposeKey.apply(mod.getPendingCompose(), k);
       case Hangul_initial:
+        if (k.equals(mod)) // Allow typing the initial in letter form
+          return KeyValue.makeStringKey(k.getString(), KeyValue.FLAG_GREYED);
         return combine_hangul_initial(k, mod.getHangulPrecomposed());
       case Hangul_medial:
         return combine_hangul_medial(k, mod.getHangulPrecomposed());
@@ -1154,42 +1156,48 @@ public final class KeyModifier
   /** Compose the precomposed initial with the medial [kv]. */
   private static KeyValue combine_hangul_initial(KeyValue kv, int precomposed)
   {
-    int medial_idx;
     switch (kv.getKind())
     {
       case Char:
-        switch (kv.getChar())
-        {
-          // Vowels
-          case 'ㅏ': medial_idx = 0; break;
-          case 'ㅐ': medial_idx = 1; break;
-          case 'ㅑ': medial_idx = 2; break;
-          case 'ㅒ': medial_idx = 3; break;
-          case 'ㅓ': medial_idx = 4; break;
-          case 'ㅔ': medial_idx = 5; break;
-          case 'ㅕ': medial_idx = 6; break;
-          case 'ㅖ': medial_idx = 7; break;
-          case 'ㅗ': medial_idx = 8; break;
-          case 'ㅘ': medial_idx = 9; break;
-          case 'ㅙ': medial_idx = 10; break;
-          case 'ㅚ': medial_idx = 11; break;
-          case 'ㅛ': medial_idx = 12; break;
-          case 'ㅜ': medial_idx = 13; break;
-          case 'ㅝ': medial_idx = 14; break;
-          case 'ㅞ': medial_idx = 15; break;
-          case 'ㅟ': medial_idx = 16; break;
-          case 'ㅠ': medial_idx = 17; break;
-          case 'ㅡ': medial_idx = 18; break;
-          case 'ㅢ': medial_idx = 19; break;
-          case 'ㅣ': medial_idx = 20; break;
-          // Grey-out uncomposable characters
-          default: return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
-        }
-        break;
+        return combine_hangul_initial(kv, kv.getChar(), precomposed);
       case Hangul_initial:
-        // Grey-out the other consonant and allow to type them in letter form
-        return KeyValue.makeStringKey(kv.getString(), KeyValue.FLAG_GREYED);
-      default: return kv;
+        // No initials are expected to compose, grey out
+        return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
+      default:
+        return kv;
+    }
+  }
+
+  private static KeyValue combine_hangul_initial(KeyValue kv, char medial,
+      int precomposed)
+  {
+    int medial_idx;
+    switch (medial)
+    {
+      // Vowels
+      case 'ㅏ': medial_idx = 0; break;
+      case 'ㅐ': medial_idx = 1; break;
+      case 'ㅑ': medial_idx = 2; break;
+      case 'ㅒ': medial_idx = 3; break;
+      case 'ㅓ': medial_idx = 4; break;
+      case 'ㅔ': medial_idx = 5; break;
+      case 'ㅕ': medial_idx = 6; break;
+      case 'ㅖ': medial_idx = 7; break;
+      case 'ㅗ': medial_idx = 8; break;
+      case 'ㅘ': medial_idx = 9; break;
+      case 'ㅙ': medial_idx = 10; break;
+      case 'ㅚ': medial_idx = 11; break;
+      case 'ㅛ': medial_idx = 12; break;
+      case 'ㅜ': medial_idx = 13; break;
+      case 'ㅝ': medial_idx = 14; break;
+      case 'ㅞ': medial_idx = 15; break;
+      case 'ㅟ': medial_idx = 16; break;
+      case 'ㅠ': medial_idx = 17; break;
+      case 'ㅡ': medial_idx = 18; break;
+      case 'ㅢ': medial_idx = 19; break;
+      case 'ㅣ': medial_idx = 20; break;
+      // Grey-out uncomposable characters
+      default: return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
     }
     return KeyValue.makeHangulMedial(precomposed, medial_idx);
   }
@@ -1197,54 +1205,54 @@ public final class KeyModifier
   /** Combine the precomposed medial with the final [kv]. */
   private static KeyValue combine_hangul_medial(KeyValue kv, int precomposed)
   {
-    int final_idx;
     switch (kv.getKind())
     {
       case Char:
-        switch (kv.getChar())
-        {
-          case ' ': final_idx = 0; break;
-          case 'ㄳ': final_idx = 3; break;
-          case 'ㄵ': final_idx = 5; break;
-          case 'ㄶ': final_idx = 6; break;
-          case 'ㄺ': final_idx = 9; break;
-          case 'ㄻ': final_idx = 10; break;
-          case 'ㄼ': final_idx = 11; break;
-          case 'ㄽ': final_idx = 12; break;
-          case 'ㄾ': final_idx = 13; break;
-          case 'ㄿ': final_idx = 14; break;
-          case 'ㅀ': final_idx = 15; break;
-          case 'ㅄ': final_idx = 18; break;
-          // Grey-out uncomposable characters
-          default: return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
-        }
-        break;
+        return combine_hangul_medial(kv, kv.getChar(), precomposed);
       case Hangul_initial:
-        // Finals that are also initial have this kind.
-        switch (kv.getString())
-        {
-          // Final consonant
-          case "ㄱ": final_idx = 1; break;
-          case "ㄲ": final_idx = 2; break;
-          case "ㄴ": final_idx = 4; break;
-          case "ㄷ": final_idx = 7; break;
-          case "ㄹ": final_idx = 8; break;
-          case "ㅁ": final_idx = 16; break;
-          case "ㅂ": final_idx = 17; break;
-          case "ㅅ": final_idx = 19; break;
-          case "ㅆ": final_idx = 20; break;
-          case "ㅇ": final_idx = 21; break;
-          case "ㅈ": final_idx = 22; break;
-          case "ㅊ": final_idx = 23; break;
-          case "ㅋ": final_idx = 24; break;
-          case "ㅌ": final_idx = 25; break;
-          case "ㅍ": final_idx = 26; break;
-          case "ㅎ": final_idx = 27; break;
-          // Grey-out uncomposable characters
-          default: return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
-        }
-        break;
-      default: return kv;
+        // Finals that can also be initials have this kind.
+        return combine_hangul_medial(kv, kv.getString().charAt(0), precomposed);
+      default:
+        return kv;
+    }
+  }
+
+  private static KeyValue combine_hangul_medial(KeyValue kv, char c,
+      int precomposed)
+  {
+    int final_idx;
+    switch (c)
+    {
+      case ' ': final_idx = 0; break;
+      case 'ㄱ': final_idx = 1; break;
+      case 'ㄲ': final_idx = 2; break;
+      case 'ㄳ': final_idx = 3; break;
+      case 'ㄴ': final_idx = 4; break;
+      case 'ㄵ': final_idx = 5; break;
+      case 'ㄶ': final_idx = 6; break;
+      case 'ㄷ': final_idx = 7; break;
+      case 'ㄹ': final_idx = 8; break;
+      case 'ㄺ': final_idx = 9; break;
+      case 'ㄻ': final_idx = 10; break;
+      case 'ㄼ': final_idx = 11; break;
+      case 'ㄽ': final_idx = 12; break;
+      case 'ㄾ': final_idx = 13; break;
+      case 'ㄿ': final_idx = 14; break;
+      case 'ㅀ': final_idx = 15; break;
+      case 'ㅁ': final_idx = 16; break;
+      case 'ㅂ': final_idx = 17; break;
+      case 'ㅄ': final_idx = 18; break;
+      case 'ㅅ': final_idx = 19; break;
+      case 'ㅆ': final_idx = 20; break;
+      case 'ㅇ': final_idx = 21; break;
+      case 'ㅈ': final_idx = 22; break;
+      case 'ㅊ': final_idx = 23; break;
+      case 'ㅋ': final_idx = 24; break;
+      case 'ㅌ': final_idx = 25; break;
+      case 'ㅍ': final_idx = 26; break;
+      case 'ㅎ': final_idx = 27; break;
+      // Grey-out uncomposable characters
+      default: return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
     }
     return KeyValue.makeHangulFinal(precomposed, final_idx);
   }
