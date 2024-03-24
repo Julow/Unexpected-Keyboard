@@ -60,7 +60,7 @@ def sync(baseline, strings):
             for key, base_string in baseline.items() ]
 
 def sync_metadata(value_dir, strings):
-    if "short_description" not in strings:
+    if ("short_description", None) not in strings:
         return # Short description is mandatory, do nothing without it.
     locale = os.path.basename(value_dir).removeprefix("values-")
     if not locale in VALUE_DIR_TO_METADATA:
