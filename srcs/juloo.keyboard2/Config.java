@@ -385,14 +385,57 @@ public final class Config
   {
     switch (theme_name)
     {
-      case "light": return R.style.Light;
-      case "black": return R.style.Black;
+      // THEMES_SWITCH_CASE_START
+      case "alabasterdark": return R.style.AlabasterDark;
       case "altblack": return R.style.AltBlack;
+      case "argonaut": return R.style.Argonaut;
+      case "atomonedark": return R.style.AtomOneDark;
+      case "ayumirage": return R.style.AyuMirage;
+      case "black": return R.style.Black;
+      case "breeze": return R.style.Breeze;
+      case "breezedark": return R.style.BreezeDark;
+      case "citylights": return R.style.CityLights;
+      case "cobalt2": return R.style.Cobalt2;
+      case "cyberpunkneon": return R.style.CyberpunkNeon;
+      case "darcula": return R.style.Darcula;
       case "dark": return R.style.Dark;
-      case "white": return R.style.White;
-      case "epaper": return R.style.ePaper;
       case "desert": return R.style.Desert;
+      case "dracula": return R.style.Dracula;
+      case "epaper": return R.style.ePaper;
+      case "everforestdark": return R.style.EverforestDark;
+      case "falcon": return R.style.Falcon;
+      case "githubdark": return R.style.GitHubDark;
+      case "gruvbox": return R.style.Gruvbox;
+      case "horizondark": return R.style.HorizonDark;
+      case "iris": return R.style.Iris;
+      case "iterm": return R.style.iTerm;
       case "jungle": return R.style.Jungle;
+      case "light": return R.style.Light;
+      case "lowcontrast": return R.style.LowContrast;
+      case "materialdark": return R.style.MaterialDark;
+      case "materialtheme": return R.style.MaterialTheme;
+      case "monokai": return R.style.Monokai;
+      case "nord": return R.style.Nord;
+      case "nordfrost": return R.style.NordFrost;
+      case "ocean": return R.style.Ocean;
+      case "omni": return R.style.Omni;
+      case "onedarkpro": return R.style.OneDarkPro;
+      case "palenight": return R.style.Palenight;
+      case "panda": return R.style.Panda;
+      case "rainbow": return R.style.Rainbow;
+      case "remedydark": return R.style.RemedyDark;
+      case "snazzy": return R.style.Snazzy;
+      case "solarized": return R.style.Solarized;
+      case "solarizedlight": return R.style.SolarizedLight;
+      case "space": return R.style.Space;
+      case "sunset": return R.style.Sunset;
+      case "synthwave84": return R.style.SynthWave84;
+      case "tokyonight": return R.style.TokyoNight;
+      case "tomorrownightbright": return R.style.TomorrowNightBright;
+      case "ubuntu": return R.style.Ubuntu;
+      case "white": return R.style.White;
+      case "wombat": return R.style.Wombat;
+      // THEMES_SWITCH_CASE_END
       default:
       case "system":
         int night_mode = res.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;

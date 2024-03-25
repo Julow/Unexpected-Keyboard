@@ -20,25 +20,111 @@
   </string-array>
   <string-array name="pref_theme_entries">
     <item>@string/pref_theme_e_system</item>
-    <item>@string/pref_theme_e_dark</item>
-    <item>@string/pref_theme_e_light</item>
-    <item>@string/pref_theme_e_black</item>
+    <!-- THEMES_ENTRIES_ARRAY_START -->
+    <item>@string/pref_theme_e_alabasterdark</item>
     <item>@string/pref_theme_e_altblack</item>
-    <item>@string/pref_theme_e_white</item>
-    <item>@string/pref_theme_e_epaper</item>
+    <item>@string/pref_theme_e_argonaut</item>
+    <item>@string/pref_theme_e_atomonedark</item>
+    <item>@string/pref_theme_e_ayumirage</item>
+    <item>@string/pref_theme_e_black</item>
+    <item>@string/pref_theme_e_breeze</item>
+    <item>@string/pref_theme_e_breezedark</item>
+    <item>@string/pref_theme_e_citylights</item>
+    <item>@string/pref_theme_e_cobalt2</item>
+    <item>@string/pref_theme_e_cyberpunkneon</item>
+    <item>@string/pref_theme_e_darcula</item>
+    <item>@string/pref_theme_e_dark</item>
     <item>@string/pref_theme_e_desert</item>
+    <item>@string/pref_theme_e_dracula</item>
+    <item>@string/pref_theme_e_epaper</item>
+    <item>@string/pref_theme_e_everforestdark</item>
+    <item>@string/pref_theme_e_falcon</item>
+    <item>@string/pref_theme_e_githubdark</item>
+    <item>@string/pref_theme_e_gruvbox</item>
+    <item>@string/pref_theme_e_horizondark</item>
+    <item>@string/pref_theme_e_iris</item>
+    <item>@string/pref_theme_e_iterm</item>
     <item>@string/pref_theme_e_jungle</item>
+    <item>@string/pref_theme_e_light</item>
+    <item>@string/pref_theme_e_lowcontrast</item>
+    <item>@string/pref_theme_e_materialdark</item>
+    <item>@string/pref_theme_e_materialtheme</item>
+    <item>@string/pref_theme_e_monokai</item>
+    <item>@string/pref_theme_e_nord</item>
+    <item>@string/pref_theme_e_nordfrost</item>
+    <item>@string/pref_theme_e_ocean</item>
+    <item>@string/pref_theme_e_omni</item>
+    <item>@string/pref_theme_e_onedarkpro</item>
+    <item>@string/pref_theme_e_palenight</item>
+    <item>@string/pref_theme_e_panda</item>
+    <item>@string/pref_theme_e_rainbow</item>
+    <item>@string/pref_theme_e_remedydark</item>
+    <item>@string/pref_theme_e_snazzy</item>
+    <item>@string/pref_theme_e_solarized</item>
+    <item>@string/pref_theme_e_solarizedlight</item>
+    <item>@string/pref_theme_e_space</item>
+    <item>@string/pref_theme_e_sunset</item>
+    <item>@string/pref_theme_e_synthwave84</item>
+    <item>@string/pref_theme_e_tokyonight</item>
+    <item>@string/pref_theme_e_tomorrownightbright</item>
+    <item>@string/pref_theme_e_ubuntu</item>
+    <item>@string/pref_theme_e_white</item>
+    <item>@string/pref_theme_e_wombat</item>
+    <!-- THEMES_ENTRIES_ARRAY_END -->
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
-    <item>dark</item>
-    <item>light</item>
-    <item>black</item>
+    <!-- THEMES_VALUES_ARRAY_START -->
+    <item>alabasterdark</item>
     <item>altblack</item>
-    <item>white</item>
-    <item>epaper</item>
+    <item>argonaut</item>
+    <item>atomonedark</item>
+    <item>ayumirage</item>
+    <item>black</item>
+    <item>breeze</item>
+    <item>breezedark</item>
+    <item>citylights</item>
+    <item>cobalt2</item>
+    <item>cyberpunkneon</item>
+    <item>darcula</item>
+    <item>dark</item>
     <item>desert</item>
+    <item>dracula</item>
+    <item>epaper</item>
+    <item>everforestdark</item>
+    <item>falcon</item>
+    <item>githubdark</item>
+    <item>gruvbox</item>
+    <item>horizondark</item>
+    <item>iris</item>
+    <item>iterm</item>
     <item>jungle</item>
+    <item>light</item>
+    <item>lowcontrast</item>
+    <item>materialdark</item>
+    <item>materialtheme</item>
+    <item>monokai</item>
+    <item>nord</item>
+    <item>nordfrost</item>
+    <item>ocean</item>
+    <item>omni</item>
+    <item>onedarkpro</item>
+    <item>palenight</item>
+    <item>panda</item>
+    <item>rainbow</item>
+    <item>remedydark</item>
+    <item>snazzy</item>
+    <item>solarized</item>
+    <item>solarizedlight</item>
+    <item>space</item>
+    <item>sunset</item>
+    <item>synthwave84</item>
+    <item>tokyonight</item>
+    <item>tomorrownightbright</item>
+    <item>ubuntu</item>
+    <item>white</item>
+    <item>wombat</item>
+    <!-- THEMES_VALUES_ARRAY_END -->
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
