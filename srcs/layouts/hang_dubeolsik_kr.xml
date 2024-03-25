@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="두벌식 (Korean)" script="hangul">
+  <modmap>
+    <!-- The hangul character don't have shifted variants, this is specific to
+         the layout. -->
+    <shift a="ㅂ" b="ㅃ"/>
+    <shift a="ㅈ" b="ㅉ"/>
+    <shift a="ㄷ" b="ㄸ"/>
+    <shift a="ㄱ" b="ㄲ"/>
+    <shift a="ㅅ" b="ㅆ"/>
+    <shift a="ㅐ" b="ㅒ"/>
+    <shift a="ㅔ" b="ㅖ"/>
+  </modmap>
   <row>
     <key key0="ㅂ" key2="1" key4="esc"/>
     <key key0="ㅈ" key1="~" key2="2" key3="\@"/>

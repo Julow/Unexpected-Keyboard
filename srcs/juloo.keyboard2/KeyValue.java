@@ -89,7 +89,7 @@ public final class KeyValue implements Comparable<KeyValue>
   public static enum Kind
   {
     Char, String, Keyevent, Event, Compose_pending, Modifier, Editing,
-    Placeholder
+    Placeholder, Hangul_initial, Hangul_medial
   }
 
   private static final int FLAGS_OFFSET = 19;
@@ -192,6 +192,13 @@ public final class KeyValue implements Comparable<KeyValue>
 
   /** Defined only when [getKind() == Kind.Compose_pending]. */
   public int getPendingCompose()
+  {
+    return (_code & VALUE_BITS);
+  }
+
+  /** Defined only when [getKind()] is [Kind.Hangul_initial] or
+      [Kind.Hangul_medial]. */
+  public int getHangulPrecomposed()
   {
     return (_code & VALUE_BITS);
   }
@@ -346,6 +353,25 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     return makeComposePending(String.valueOf((char)symbol), state,
         flags | FLAG_KEY_FONT);
+  }
+
+  public static KeyValue makeHangulInitial(String symbol, int initial_idx)
+  {
+    return new KeyValue(symbol, Kind.Hangul_initial, initial_idx * 588 + 44032,
+        FLAG_LATCH);
+  }
+
+  public static KeyValue makeHangulMedial(int precomposed, int medial_idx)
+  {
+    precomposed += medial_idx * 28;
+    return new KeyValue(String.valueOf((char)precomposed), Kind.Hangul_medial,
+        precomposed, FLAG_LATCH);
+  }
+
+  public static KeyValue makeHangulFinal(int precomposed, int final_idx)
+  {
+    precomposed += final_idx;
+    return KeyValue.makeCharKey((char)precomposed);
   }
 
   /** Make a key that types a string. A char key is returned for a string of
@@ -516,6 +542,27 @@ public final class KeyValue implements Comparable<KeyValue>
       case "removed": return placeholderKey(Placeholder.REMOVED);
       case "f11_placeholder": return placeholderKey(Placeholder.F11);
       case "f12_placeholder": return placeholderKey(Placeholder.F12);
+
+      // Korean Hangul
+      case "ㄱ": return makeHangulInitial("ㄱ", 0);
+      case "ㄲ": return makeHangulInitial("ㄲ", 1);
+      case "ㄴ": return makeHangulInitial("ㄴ", 2);
+      case "ㄷ": return makeHangulInitial("ㄷ", 3);
+      case "ㄸ": return makeHangulInitial("ㄸ", 4);
+      case "ㄹ": return makeHangulInitial("ㄹ", 5);
+      case "ㅁ": return makeHangulInitial("ㅁ", 6);
+      case "ㅂ": return makeHangulInitial("ㅂ", 7);
+      case "ㅃ": return makeHangulInitial("ㅃ", 8);
+      case "ㅅ": return makeHangulInitial("ㅅ", 9);
+      case "ㅆ": return makeHangulInitial("ㅆ", 10);
+      case "ㅇ": return makeHangulInitial("ㅇ", 11);
+      case "ㅈ": return makeHangulInitial("ㅈ", 12);
+      case "ㅉ": return makeHangulInitial("ㅉ", 13);
+      case "ㅊ": return makeHangulInitial("ㅊ", 14);
+      case "ㅋ": return makeHangulInitial("ㅋ", 15);
+      case "ㅌ": return makeHangulInitial("ㅌ", 16);
+      case "ㅍ": return makeHangulInitial("ㅍ", 17);
+      case "ㅎ": return makeHangulInitial("ㅎ", 18);
 
       /* Fallback to a string key that types its name */
       default: return makeStringKey(name);
