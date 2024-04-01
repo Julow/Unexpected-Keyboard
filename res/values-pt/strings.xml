@@ -3,12 +3,12 @@
   <string name="app_name_release">Teclado Unexpected</string>
   <string name="app_name_debug">Teclado Unexpected</string>
   <string name="short_description">Um teclado virtual leve para desenvolvedores.</string>
-  <!-- <string name="store_description">"The main feature is that you can type more characters by swiping the keys towards the corners.
+  <string name="store_description">"A principal característica é que você pode digitar mais caracteres deslizando as teclas para os cantos.
 
-This application was originally designed for programmers using Termux.
-Now perfect for everyday use.
+O app foi criado originalmente para desenvolvedores que usam Termux.
+Agora aperfeiçoado para o uso diário.
 
-This application contains no ads, doesn't make any network requests and is Open Source."</string> -->
+Este aplicativo não contém anúncios, não faz nenhuma solicitação de rede e é Open Source."</string>
   <string name="settings_activity_label">Configurações</string>
   <string name="pref_portrait">No modo retrato</string>
   <string name="pref_landscape">No modo paisagem</string>
@@ -74,9 +74,9 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_swipe_dist_e_very_far">Bem longo</string>
   <string name="pref_key_horizontal_space">Distância horizontal entre teclas</string>
   <string name="pref_key_vertical_space">Distância vertical entre teclas</string>
-  <!-- <string name="pref_border_config_title">Customize borders</string> -->
-  <!-- <string name="pref_border_width_title">Border Width</string> -->
-  <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
+  <string name="pref_border_config_title">Personalizar bordas</string>
+  <string name="pref_border_width_title">Largura de borda</string>
+  <string name="pref_corners_radius_title">Arredondamento de canto</string>
   <string name="key_action_next">Próximo</string>
   <string name="key_action_done">Pronto</string>
   <string name="key_action_go">Ir</string>
@@ -88,10 +88,10 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="launcher_description">Este app é um teclado virtual. Vá para as configurações do sistema clicando no botão abaixo e ative o Teclado Unexpected.</string>
   <string name="launcher_sourcecode">Este app é gratuito é de código aberto. Você pode consultar o código ou fazer sugestões em Github.</string>
   <string name="launcher_tryhere">Após ativar, experimente aqui:</string>
-  <!-- <string name="launcher_tryhere_hint">Try here</string> -->
+  <string name="launcher_tryhere_hint">Experimente aqui</string>
   <string name="key_descr_capslock">Caps lock</string>
-  <!-- <string name="key_descr_compose">Compose</string> -->
-  <string name="key_descr_switch_greekmath">Grego &amp; símbolos matemáticos</string>
+  <string name="key_descr_compose">Compor</string>
+  <string name="key_descr_switch_greekmath">Grego e símbolos matemáticos</string>
   <string name="key_descr_change_method">Trocar de teclado</string>
   <string name="key_descr_voice_typing">Digitação por voz</string>
   <string name="key_descr_copy">Copiar</string>
@@ -106,8 +106,8 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="key_descr_º">Indicador Ordinal</string>
   <string name="key_descr_superscript">Sobrescrito</string>
   <string name="key_descr_subscript">Subscrito</string>
-  <!-- <string name="key_descr_page_up">Page Up</string> -->
-  <!-- <string name="key_descr_page_down">Page Down</string> -->
-  <!-- <string name="key_descr_home">Home</string> -->
-  <!-- <string name="key_descr_end">End</string> -->
+  <string name="key_descr_page_up">Page Up</string>
+  <string name="key_descr_page_down">Page Down</string>
+  <string name="key_descr_home">Home</string>
+  <string name="key_descr_end">End</string>
 </resources>
