@@ -88,8 +88,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public static enum Kind
   {
-    Char, String, Keyevent, Event, Compose_pending, Modifier, Editing,
-    Placeholder, Hangul_initial, Hangul_medial
+    Char, String, Keyevent, Event, Compose_pending, Hangul_initial,
+    Hangul_medial, Modifier, Editing, Placeholder
   }
 
   private static final int FLAGS_OFFSET = 19;
