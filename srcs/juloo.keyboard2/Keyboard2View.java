@@ -104,6 +104,7 @@ public class Keyboard2View extends View
     }
     _compose_kv = KeyValue.getKeyByName("compose");
     _compose_key = _keyboard.findKeyWithValue(_compose_kv);
+    KeyModifier.set_modmap(_keyboard.modmap);
     reset();
   }
 
@@ -137,15 +138,6 @@ public class Keyboard2View extends View
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
   {
-    if (_keyboard.modmap != null)
-    {
-      if (mods.has(KeyValue.Modifier.SHIFT))
-      {
-        KeyValue km = _keyboard.modmap.shift.get(k);
-        if (km != null)
-          return km;
-      }
-    }
     return KeyModifier.modify(k, mods);
   }
 

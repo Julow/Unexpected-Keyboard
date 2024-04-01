@@ -10,6 +10,11 @@ public final class KeyModifier
   private static HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>> _cache =
     new HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>>();
 
+  /** The optional modmap takes priority over modifiers usual behaviors. Set to
+      [null] to disable. */
+  private static KeyboardData.Modmap _modmap = null;
+  public static void set_modmap(KeyboardData.Modmap mm) { _modmap = mm; }
+
   /** Modify a key according to modifiers. */
   public static KeyValue modify(KeyValue k, Pointers.Modifiers mods)
   {
@@ -130,6 +135,12 @@ public final class KeyModifier
 
   private static KeyValue apply_shift(KeyValue k)
   {
+    if (_modmap != null)
+    {
+      KeyValue mapped = _modmap.shift.get(k);
+      if (mapped != null)
+        return mapped;
+    }
     switch (k.getKind())
     {
       case Char:
