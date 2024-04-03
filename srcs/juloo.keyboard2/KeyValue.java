@@ -265,6 +265,11 @@ public final class KeyValue implements Comparable<KeyValue>
     return new KeyValue(symbol, Kind.Char, c, flags);
   }
 
+  private static KeyValue charKey(int symbol, char c, int flags)
+  {
+    return charKey(String.valueOf((char)symbol), c, flags);
+  }
+
   private static KeyValue modifierKey(String symbol, Modifier m, int flags)
   {
     if (symbol.length() > 1)
@@ -447,7 +452,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
       /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
-      case "space": return charKey("\r", ' ', FLAG_KEY_FONT | FLAG_SECONDARY);
+      case "space": return charKey(0xE00D, ' ', FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_GREYED);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
 
       /* bidi */
