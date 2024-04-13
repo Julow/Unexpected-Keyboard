@@ -19,7 +19,7 @@ public class EmojiGroupButtonsBar extends LinearLayout
     super(context, attrs);
     Emoji.init(context.getResources());
     add_group(EmojiGridView.GROUP_LAST_USE, "\uD83D\uDD59");
-    for (int i = 0; i < Emoji.num_groups; i++)
+    for (int i = 0; i < Emoji.getNumGroups(); i++)
     {
       Emoji first = Emoji.getEmojisByGroup(i)[0];
       add_group(i, first.kv().getString());

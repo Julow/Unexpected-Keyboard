@@ -7,26 +7,15 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Emoji
 {
-  private final String _name;
   private final KeyValue _kv;
-  private final String _desc;
 
-  private static HashMap<String, Emoji> emojis_by_name = new HashMap<String, Emoji>();
-
-  protected Emoji(String name, String bytecode, String desc)
+  protected Emoji(String bytecode)
   {
-    _name = name;
-    _kv = new KeyValue(bytecode, KeyValue.Kind.String, 0, 0);
-    _desc = desc;
-    emojis_by_name.put(name, this);
-  }
-
-  public String name()
-  {
-    return _name;
+    this._kv = new KeyValue(bytecode, KeyValue.Kind.String, 0, 0);
   }
 
   public KeyValue kv()
@@ -34,54 +23,758 @@ public class Emoji
     return _kv;
   }
 
-  public String getDescription()
-  {
-    return (_desc);
-  }
 
-  public static int num_groups = 0;
+  private final static List<Emoji> _all = new ArrayList<>();
+  private final static List<List<Emoji>> _groups = new ArrayList<>();
+  private final static HashMap<String, Emoji> _stringMap = new HashMap<>();
 
-  private static Emoji[][] emojis_by_group = new Emoji[][]{};
-
-  public static Emoji getEmojiByName(String name)
-  {
-    return emojis_by_name.get(name);
-  }
-
-  public static Emoji[] getEmojisByGroup(int group_id)
-  {
-    return (emojis_by_group[group_id]);
-  }
-
-  /* Read the list of emojis from a raw file. Will initialize only once. */
   public static void init(Resources res)
   {
-    if (num_groups > 0)
+    if (!_all.isEmpty())
       return;
+
     try
     {
-      ArrayList<Emoji[]> groups = new ArrayList<Emoji[]>();
       InputStream inputStream = res.openRawResource(R.raw.emojis);
       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
       String line;
-      while (true)
+
+      // Read emoji
+      while ((line = reader.readLine()) != null)
       {
-        line = reader.readLine();
-        if (line == null)
-          break;
-        int group_len = Integer.parseInt(line);
-        Emoji[] grp = new Emoji[group_len];
-        for (int i = 0; i < group_len; i++)
-        {
-          line = reader.readLine();
-          String[] f = line.split(" ", 3);
-          grp[i] = new Emoji(f[0], f[1], f[2]);
-        }
-        groups.add(grp);
+        Emoji e = new Emoji(line);
+        _all.add(e);
+        _stringMap.put(line, e);
       }
-      num_groups = groups.size();
-      emojis_by_group = groups.toArray(new Emoji[0][]);
+
+      // Read group indices
+      if ((line = reader.readLine()) != null)
+      {
+        String[] tokens = line.split(" ");
+        for (int i = 0; i < tokens.length-1; i++)
+          _groups.add(_all.subList(Integer.parseInt(tokens[i]), Integer.parseInt(tokens[i+1])));
+      }
     }
     catch (IOException e) {}
+  }
+
+  public static int getNumGroups()
+  {
+    return _groups.size();
+  }
+
+  public static Emoji[] getEmojisByGroup(int groupIndex)
+  {
+    return _groups.get(groupIndex).toArray(new Emoji[0]);
+  }
+
+  public static Emoji getEmojiByString(String value)
+  {
+    return _stringMap.get(value);
+  }
+
+  public static String mapOldNameToValue(String name)
+  {
+    if (name.matches(":(u[a-zA-Z0-9]{4,5})+:"))
+    {
+      StringBuilder sb = new StringBuilder();
+      for (String code : name.replace(":", "").split("u"))
+        if (!code.isEmpty())
+          for (char c : Character.toChars(Integer.decode(code)))
+            sb.append(c);
+      return sb.toString();
+    }
+
+    switch (name)
+    {
+      case ":grinning:": return "😀";
+      case ":smiley:": return "😃";
+      case ":smile:": return "😄";
+      case ":grin:": return "😁";
+      case ":satisfied:": return "😆";
+      case ":sweat_smile:": return "😅";
+      case ":joy:": return "😂";
+      case ":wink:": return "😉";
+      case ":blush:": return "😊";
+      case ":innocent:": return "😇";
+      case ":heart_eyes:": return "😍";
+      case ":kissing_heart:": return "😘";
+      case ":kissing:": return "😗";
+      case ":kissing_closed_eyes:": return "😚";
+      case ":kissing_smiling_eyes:": return "😙";
+      case ":yum:": return "😋";
+      case ":stuck_out_tongue:": return "😛";
+      case ":stuck_out_tongue_winking_eye:": return "😜";
+      case ":stuck_out_tongue_closed_eyes:": return "😝";
+      case ":neutral_face:": return "😐";
+      case ":expressionless:": return "😑";
+      case ":no_mouth:": return "😶";
+      case ":smirk:": return "😏";
+      case ":unamused:": return "😒";
+      case ":grimacing:": return "😬";
+      case ":relieved:": return "😌";
+      case ":pensive:": return "😔";
+      case ":sleepy:": return "😪";
+      case ":sleeping:": return "😴";
+      case ":mask:": return "😷";
+      case ":dizzy_face:": return "😵";
+      case ":sunglasses:": return "😎";
+      case ":confused:": return "😕";
+      case ":worried:": return "😟";
+      case ":open_mouth:": return "😮";
+      case ":hushed:": return "😯";
+      case ":astonished:": return "😲";
+      case ":flushed:": return "😳";
+      case ":frowning:": return "😦";
+      case ":anguished:": return "😧";
+      case ":fearful:": return "😨";
+      case ":cold_sweat:": return "😰";
+      case ":disappointed_relieved:": return "😥";
+      case ":cry:": return "😢";
+      case ":sob:": return "😭";
+      case ":scream:": return "😱";
+      case ":confounded:": return "😖";
+      case ":persevere:": return "😣";
+      case ":disappointed:": return "😞";
+      case ":sweat:": return "😓";
+      case ":weary:": return "😩";
+      case ":tired_face:": return "😫";
+      case ":triumph:": return "😤";
+      case ":rage:": return "😡";
+      case ":angry:": return "😠";
+      case ":smiling_imp:": return "😈";
+      case ":imp:": return "👿";
+      case ":skull:": return "💀";
+      case ":shit:": return "💩";
+      case ":japanese_ogre:": return "👹";
+      case ":japanese_goblin:": return "👺";
+      case ":ghost:": return "👻";
+      case ":alien:": return "👽";
+      case ":space_invader:": return "👾";
+      case ":smiley_cat:": return "😺";
+      case ":smile_cat:": return "😸";
+      case ":joy_cat:": return "😹";
+      case ":heart_eyes_cat:": return "😻";
+      case ":smirk_cat:": return "😼";
+      case ":kissing_cat:": return "😽";
+      case ":scream_cat:": return "🙀";
+      case ":crying_cat_face:": return "😿";
+      case ":pouting_cat:": return "😾";
+      case ":see_no_evil:": return "🙈";
+      case ":hear_no_evil:": return "🙉";
+      case ":speak_no_evil:": return "🙊";
+      case ":kiss:": return "💋";
+      case ":love_letter:": return "💌";
+      case ":cupid:": return "💘";
+      case ":gift_heart:": return "💝";
+      case ":sparkling_heart:": return "💖";
+      case ":heartpulse:": return "💗";
+      case ":heartbeat:": return "💓";
+      case ":revolving_hearts:": return "💞";
+      case ":two_hearts:": return "💕";
+      case ":heart_decoration:": return "💟";
+      case ":broken_heart:": return "💔";
+      case ":yellow_heart:": return "💛";
+      case ":green_heart:": return "💚";
+      case ":blue_heart:": return "💙";
+      case ":purple_heart:": return "💜";
+      case ":100:": return "💯";
+      case ":anger:": return "💢";
+      case ":collision:": return "💥";
+      case ":dizzy:": return "💫";
+      case ":sweat_drops:": return "💦";
+      case ":dash:": return "💨";
+      case ":bomb:": return "💣";
+      case ":speech_balloon:": return "💬";
+      case ":thought_balloon:": return "💭";
+      case ":zzz:": return "💤";
+      case ":wave:": return "👋";
+      case ":ok_hand:": return "👌";
+      case ":point_left:": return "👈";
+      case ":point_right:": return "👉";
+      case ":point_up_2:": return "👆";
+      case ":point_down:": return "👇";
+      case ":thumbsup:": return "👍";
+      case ":thumbsdown:": return "👎";
+      case ":punch:": return "👊";
+      case ":clap:": return "👏";
+      case ":raised_hands:": return "🙌";
+      case ":open_hands:": return "👐";
+      case ":pray:": return "🙏";
+      case ":nail_care:": return "💅";
+      case ":muscle:": return "💪";
+      case ":ear:": return "👂";
+      case ":nose:": return "👃";
+      case ":eyes:": return "👀";
+      case ":tongue:": return "👅";
+      case ":lips:": return "👄";
+      case ":baby:": return "👶";
+      case ":boy:": return "👦";
+      case ":girl:": return "👧";
+      case ":person_with_blond_hair:": return "👱";
+      case ":man:": return "👨";
+      case ":woman:": return "👩";
+      case ":older_man:": return "👴";
+      case ":older_woman:": return "👵";
+      case ":person_frowning:": return "🙍";
+      case ":person_with_pouting_face:": return "🙎";
+      case ":no_good:": return "🙅";
+      case ":ok_woman:": return "🙆";
+      case ":information_desk_person:": return "💁";
+      case ":raising_hand:": return "🙋";
+      case ":bow:": return "🙇";
+      case ":cop:": return "👮";
+      case ":guardsman:": return "💂";
+      case ":construction_worker:": return "👷";
+      case ":princess:": return "👸";
+      case ":man_with_turban:": return "👳";
+      case ":man_with_gua_pi_mao:": return "👲";
+      case ":bride_with_veil:": return "👰";
+      case ":angel:": return "👼";
+      case ":santa:": return "🎅";
+      case ":massage:": return "💆";
+      case ":haircut:": return "💇";
+      case ":walking:": return "🚶";
+      case ":running:": return "🏃";
+      case ":dancer:": return "💃";
+      case ":dancers:": return "👯";
+      case ":horse_racing:": return "🏇";
+      case ":snowboarder:": return "🏂";
+      case ":surfer:": return "🏄";
+      case ":rowboat:": return "🚣";
+      case ":swimmer:": return "🏊";
+      case ":bicyclist:": return "🚴";
+      case ":mountain_bicyclist:": return "🚵";
+      case ":bath:": return "🛀";
+      case ":two_women_holding_hands:": return "👭";
+      case ":couple:": return "👫";
+      case ":two_men_holding_hands:": return "👬";
+      case ":couplekiss:": return "💏";
+      case ":couple_with_heart:": return "💑";
+      case ":family:": return "👪";
+      case ":bust_in_silhouette:": return "👤";
+      case ":busts_in_silhouette:": return "👥";
+      case ":footprints:": return "👣";
+      case ":monkey_face:": return "🐵";
+      case ":monkey:": return "🐒";
+      case ":dog:": return "🐶";
+      case ":dog2:": return "🐕";
+      case ":poodle:": return "🐩";
+      case ":wolf:": return "🐺";
+      case ":cat:": return "🐱";
+      case ":cat2:": return "🐈";
+      case ":tiger:": return "🐯";
+      case ":tiger2:": return "🐅";
+      case ":leopard:": return "🐆";
+      case ":horse:": return "🐴";
+      case ":racehorse:": return "🐎";
+      case ":cow:": return "🐮";
+      case ":ox:": return "🐂";
+      case ":water_buffalo:": return "🐃";
+      case ":cow2:": return "🐄";
+      case ":pig:": return "🐷";
+      case ":pig2:": return "🐖";
+      case ":boar:": return "🐗";
+      case ":pig_nose:": return "🐽";
+      case ":ram:": return "🐏";
+      case ":sheep:": return "🐑";
+      case ":goat:": return "🐐";
+      case ":dromedary_camel:": return "🐪";
+      case ":camel:": return "🐫";
+      case ":elephant:": return "🐘";
+      case ":mouse:": return "🐭";
+      case ":mouse2:": return "🐁";
+      case ":rat:": return "🐀";
+      case ":hamster:": return "🐹";
+      case ":rabbit:": return "🐰";
+      case ":rabbit2:": return "🐇";
+      case ":bear:": return "🐻";
+      case ":koala:": return "🐨";
+      case ":panda_face:": return "🐼";
+      case ":paw_prints:": return "🐾";
+      case ":chicken:": return "🐔";
+      case ":rooster:": return "🐓";
+      case ":hatching_chick:": return "🐣";
+      case ":baby_chick:": return "🐤";
+      case ":hatched_chick:": return "🐥";
+      case ":bird:": return "🐦";
+      case ":penguin:": return "🐧";
+      case ":frog:": return "🐸";
+      case ":crocodile:": return "🐊";
+      case ":turtle:": return "🐢";
+      case ":snake:": return "🐍";
+      case ":dragon_face:": return "🐲";
+      case ":dragon:": return "🐉";
+      case ":whale:": return "🐳";
+      case ":whale2:": return "🐋";
+      case ":flipper:": return "🐬";
+      case ":fish:": return "🐟";
+      case ":tropical_fish:": return "🐠";
+      case ":blowfish:": return "🐡";
+      case ":octopus:": return "🐙";
+      case ":shell:": return "🐚";
+      case ":snail:": return "🐌";
+      case ":bug:": return "🐛";
+      case ":ant:": return "🐜";
+      case ":honeybee:": return "🐝";
+      case ":beetle:": return "🐞";
+      case ":bouquet:": return "💐";
+      case ":cherry_blossom:": return "🌸";
+      case ":white_flower:": return "💮";
+      case ":rose:": return "🌹";
+      case ":hibiscus:": return "🌺";
+      case ":sunflower:": return "🌻";
+      case ":blossom:": return "🌼";
+      case ":tulip:": return "🌷";
+      case ":seedling:": return "🌱";
+      case ":evergreen_tree:": return "🌲";
+      case ":deciduous_tree:": return "🌳";
+      case ":palm_tree:": return "🌴";
+      case ":cactus:": return "🌵";
+      case ":ear_of_rice:": return "🌾";
+      case ":herb:": return "🌿";
+      case ":four_leaf_clover:": return "🍀";
+      case ":maple_leaf:": return "🍁";
+      case ":fallen_leaf:": return "🍂";
+      case ":leaves:": return "🍃";
+      case ":grapes:": return "🍇";
+      case ":melon:": return "🍈";
+      case ":watermelon:": return "🍉";
+      case ":tangerine:": return "🍊";
+      case ":lemon:": return "🍋";
+      case ":banana:": return "🍌";
+      case ":pineapple:": return "🍍";
+      case ":apple:": return "🍎";
+      case ":green_apple:": return "🍏";
+      case ":pear:": return "🍐";
+      case ":peach:": return "🍑";
+      case ":cherries:": return "🍒";
+      case ":strawberry:": return "🍓";
+      case ":tomato:": return "🍅";
+      case ":eggplant:": return "🍆";
+      case ":corn:": return "🌽";
+      case ":mushroom:": return "🍄";
+      case ":chestnut:": return "🌰";
+      case ":bread:": return "🍞";
+      case ":meat_on_bone:": return "🍖";
+      case ":poultry_leg:": return "🍗";
+      case ":hamburger:": return "🍔";
+      case ":fries:": return "🍟";
+      case ":pizza:": return "🍕";
+      case ":egg:": return "🍳";
+      case ":stew:": return "🍲";
+      case ":bento:": return "🍱";
+      case ":rice_cracker:": return "🍘";
+      case ":rice_ball:": return "🍙";
+      case ":rice:": return "🍚";
+      case ":curry:": return "🍛";
+      case ":ramen:": return "🍜";
+      case ":spaghetti:": return "🍝";
+      case ":sweet_potato:": return "🍠";
+      case ":oden:": return "🍢";
+      case ":sushi:": return "🍣";
+      case ":fried_shrimp:": return "🍤";
+      case ":fish_cake:": return "🍥";
+      case ":dango:": return "🍡";
+      case ":icecream:": return "🍦";
+      case ":shaved_ice:": return "🍧";
+      case ":ice_cream:": return "🍨";
+      case ":doughnut:": return "🍩";
+      case ":cookie:": return "🍪";
+      case ":birthday:": return "🎂";
+      case ":cake:": return "🍰";
+      case ":chocolate_bar:": return "🍫";
+      case ":candy:": return "🍬";
+      case ":lollipop:": return "🍭";
+      case ":custard:": return "🍮";
+      case ":honey_pot:": return "🍯";
+      case ":baby_bottle:": return "🍼";
+      case ":tea:": return "🍵";
+      case ":sake:": return "🍶";
+      case ":wine_glass:": return "🍷";
+      case ":cocktail:": return "🍸";
+      case ":tropical_drink:": return "🍹";
+      case ":beer:": return "🍺";
+      case ":beers:": return "🍻";
+      case ":fork_and_knife:": return "🍴";
+      case ":hocho:": return "🔪";
+      case ":earth_africa:": return "🌍";
+      case ":earth_americas:": return "🌎";
+      case ":earth_asia:": return "🌏";
+      case ":globe_with_meridians:": return "🌐";
+      case ":japan:": return "🗾";
+      case ":volcano:": return "🌋";
+      case ":mount_fuji:": return "🗻";
+      case ":house:": return "🏠";
+      case ":house_with_garden:": return "🏡";
+      case ":office:": return "🏢";
+      case ":post_office:": return "🏣";
+      case ":european_post_office:": return "🏤";
+      case ":hospital:": return "🏥";
+      case ":bank:": return "🏦";
+      case ":hotel:": return "🏨";
+      case ":love_hotel:": return "🏩";
+      case ":convenience_store:": return "🏪";
+      case ":school:": return "🏫";
+      case ":department_store:": return "🏬";
+      case ":factory:": return "🏭";
+      case ":japanese_castle:": return "🏯";
+      case ":european_castle:": return "🏰";
+      case ":wedding:": return "💒";
+      case ":tokyo_tower:": return "🗼";
+      case ":statue_of_liberty:": return "🗽";
+      case ":foggy:": return "🌁";
+      case ":stars:": return "🌃";
+      case ":sunrise_over_mountains:": return "🌄";
+      case ":sunrise:": return "🌅";
+      case ":city_sunset:": return "🌆";
+      case ":city_sunrise:": return "🌇";
+      case ":bridge_at_night:": return "🌉";
+      case ":carousel_horse:": return "🎠";
+      case ":ferris_wheel:": return "🎡";
+      case ":roller_coaster:": return "🎢";
+      case ":barber:": return "💈";
+      case ":circus_tent:": return "🎪";
+      case ":steam_locomotive:": return "🚂";
+      case ":train:": return "🚃";
+      case ":bullettrain_side:": return "🚄";
+      case ":bullettrain_front:": return "🚅";
+      case ":train2:": return "🚆";
+      case ":metro:": return "🚇";
+      case ":light_rail:": return "🚈";
+      case ":station:": return "🚉";
+      case ":tram:": return "🚊";
+      case ":monorail:": return "🚝";
+      case ":mountain_railway:": return "🚞";
+      case ":bus:": return "🚌";
+      case ":oncoming_bus:": return "🚍";
+      case ":trolleybus:": return "🚎";
+      case ":minibus:": return "🚐";
+      case ":ambulance:": return "🚑";
+      case ":fire_engine:": return "🚒";
+      case ":police_car:": return "🚓";
+      case ":oncoming_police_car:": return "🚔";
+      case ":taxi:": return "🚕";
+      case ":oncoming_taxi:": return "🚖";
+      case ":red_car:": return "🚗";
+      case ":oncoming_automobile:": return "🚘";
+      case ":blue_car:": return "🚙";
+      case ":truck:": return "🚚";
+      case ":articulated_lorry:": return "🚛";
+      case ":tractor:": return "🚜";
+      case ":bike:": return "🚲";
+      case ":busstop:": return "🚏";
+      case ":rotating_light:": return "🚨";
+      case ":traffic_light:": return "🚥";
+      case ":vertical_traffic_light:": return "🚦";
+      case ":construction:": return "🚧";
+      case ":speedboat:": return "🚤";
+      case ":ship:": return "🚢";
+      case ":seat:": return "💺";
+      case ":helicopter:": return "🚁";
+      case ":suspension_railway:": return "🚟";
+      case ":mountain_cableway:": return "🚠";
+      case ":aerial_tramway:": return "🚡";
+      case ":rocket:": return "🚀";
+      case ":clock12:": return "🕛";
+      case ":clock1230:": return "🕧";
+      case ":clock1:": return "🕐";
+      case ":clock130:": return "🕜";
+      case ":clock2:": return "🕑";
+      case ":clock230:": return "🕝";
+      case ":clock3:": return "🕒";
+      case ":clock330:": return "🕞";
+      case ":clock4:": return "🕓";
+      case ":clock430:": return "🕟";
+      case ":clock5:": return "🕔";
+      case ":clock530:": return "🕠";
+      case ":clock6:": return "🕕";
+      case ":clock630:": return "🕡";
+      case ":clock7:": return "🕖";
+      case ":clock730:": return "🕢";
+      case ":clock8:": return "🕗";
+      case ":clock830:": return "🕣";
+      case ":clock9:": return "🕘";
+      case ":clock930:": return "🕤";
+      case ":clock10:": return "🕙";
+      case ":clock1030:": return "🕥";
+      case ":clock11:": return "🕚";
+      case ":clock1130:": return "🕦";
+      case ":new_moon:": return "🌑";
+      case ":waxing_crescent_moon:": return "🌒";
+      case ":first_quarter_moon:": return "🌓";
+      case ":waxing_gibbous_moon:": return "🌔";
+      case ":full_moon:": return "🌕";
+      case ":waning_gibbous_moon:": return "🌖";
+      case ":last_quarter_moon:": return "🌗";
+      case ":waning_crescent_moon:": return "🌘";
+      case ":crescent_moon:": return "🌙";
+      case ":new_moon_with_face:": return "🌚";
+      case ":first_quarter_moon_with_face:": return "🌛";
+      case ":last_quarter_moon_with_face:": return "🌜";
+      case ":full_moon_with_face:": return "🌝";
+      case ":sun_with_face:": return "🌞";
+      case ":star2:": return "🌟";
+      case ":milky_way:": return "🌌";
+      case ":cyclone:": return "🌀";
+      case ":rainbow:": return "🌈";
+      case ":closed_umbrella:": return "🌂";
+      case ":fire:": return "🔥";
+      case ":droplet:": return "💧";
+      case ":ocean:": return "🌊";
+      case ":jack_o_lantern:": return "🎃";
+      case ":christmas_tree:": return "🎄";
+      case ":fireworks:": return "🎆";
+      case ":sparkler:": return "🎇";
+      case ":balloon:": return "🎈";
+      case ":tada:": return "🎉";
+      case ":confetti_ball:": return "🎊";
+      case ":tanabata_tree:": return "🎋";
+      case ":bamboo:": return "🎍";
+      case ":dolls:": return "🎎";
+      case ":flags:": return "🎏";
+      case ":wind_chime:": return "🎐";
+      case ":rice_scene:": return "🎑";
+      case ":ribbon:": return "🎀";
+      case ":gift:": return "🎁";
+      case ":ticket:": return "🎫";
+      case ":trophy:": return "🏆";
+      case ":basketball:": return "🏀";
+      case ":football:": return "🏈";
+      case ":rugby_football:": return "🏉";
+      case ":tennis:": return "🎾";
+      case ":bowling:": return "🎳";
+      case ":fishing_pole_and_fish:": return "🎣";
+      case ":running_shirt_with_sash:": return "🎽";
+      case ":ski:": return "🎿";
+      case ":dart:": return "🎯";
+      case ":8ball:": return "🎱";
+      case ":crystal_ball:": return "🔮";
+      case ":video_game:": return "🎮";
+      case ":slot_machine:": return "🎰";
+      case ":game_die:": return "🎲";
+      case ":black_joker:": return "🃏";
+      case ":mahjong:": return "🀄";
+      case ":flower_playing_cards:": return "🎴";
+      case ":performing_arts:": return "🎭";
+      case ":art:": return "🎨";
+      case ":eyeglasses:": return "👓";
+      case ":necktie:": return "👔";
+      case ":tshirt:": return "👕";
+      case ":jeans:": return "👖";
+      case ":dress:": return "👗";
+      case ":kimono:": return "👘";
+      case ":bikini:": return "👙";
+      case ":womans_clothes:": return "👚";
+      case ":purse:": return "👛";
+      case ":handbag:": return "👜";
+      case ":pouch:": return "👝";
+      case ":school_satchel:": return "🎒";
+      case ":shoe:": return "👞";
+      case ":athletic_shoe:": return "👟";
+      case ":high_heel:": return "👠";
+      case ":sandal:": return "👡";
+      case ":boot:": return "👢";
+      case ":crown:": return "👑";
+      case ":womans_hat:": return "👒";
+      case ":tophat:": return "🎩";
+      case ":mortar_board:": return "🎓";
+      case ":lipstick:": return "💄";
+      case ":ring:": return "💍";
+      case ":gem:": return "💎";
+      case ":mute:": return "🔇";
+      case ":sound:": return "🔉";
+      case ":speaker:": return "🔊";
+      case ":loudspeaker:": return "📢";
+      case ":mega:": return "📣";
+      case ":postal_horn:": return "📯";
+      case ":bell:": return "🔔";
+      case ":no_bell:": return "🔕";
+      case ":musical_score:": return "🎼";
+      case ":musical_note:": return "🎵";
+      case ":notes:": return "🎶";
+      case ":microphone:": return "🎤";
+      case ":headphones:": return "🎧";
+      case ":radio:": return "📻";
+      case ":saxophone:": return "🎷";
+      case ":guitar:": return "🎸";
+      case ":musical_keyboard:": return "🎹";
+      case ":trumpet:": return "🎺";
+      case ":violin:": return "🎻";
+      case ":iphone:": return "📱";
+      case ":calling:": return "📲";
+      case ":telephone_receiver:": return "📞";
+      case ":pager:": return "📟";
+      case ":fax:": return "📠";
+      case ":battery:": return "🔋";
+      case ":electric_plug:": return "🔌";
+      case ":computer:": return "💻";
+      case ":minidisc:": return "💽";
+      case ":floppy_disk:": return "💾";
+      case ":cd:": return "💿";
+      case ":dvd:": return "📀";
+      case ":movie_camera:": return "🎥";
+      case ":clapper:": return "🎬";
+      case ":tv:": return "📺";
+      case ":camera:": return "📷";
+      case ":video_camera:": return "📹";
+      case ":vhs:": return "📼";
+      case ":mag:": return "🔍";
+      case ":mag_right:": return "🔎";
+      case ":bulb:": return "💡";
+      case ":flashlight:": return "🔦";
+      case ":lantern:": return "🏮";
+      case ":notebook_with_decorative_cover:": return "📔";
+      case ":closed_book:": return "📕";
+      case ":open_book:": return "📖";
+      case ":green_book:": return "📗";
+      case ":blue_book:": return "📘";
+      case ":orange_book:": return "📙";
+      case ":books:": return "📚";
+      case ":notebook:": return "📓";
+      case ":ledger:": return "📒";
+      case ":page_with_curl:": return "📃";
+      case ":scroll:": return "📜";
+      case ":page_facing_up:": return "📄";
+      case ":newspaper:": return "📰";
+      case ":bookmark_tabs:": return "📑";
+      case ":bookmark:": return "🔖";
+      case ":moneybag:": return "💰";
+      case ":yen:": return "💴";
+      case ":dollar:": return "💵";
+      case ":euro:": return "💶";
+      case ":pound:": return "💷";
+      case ":money_with_wings:": return "💸";
+      case ":credit_card:": return "💳";
+      case ":chart:": return "💹";
+      case ":e-mail:": return "📧";
+      case ":incoming_envelope:": return "📨";
+      case ":envelope_with_arrow:": return "📩";
+      case ":outbox_tray:": return "📤";
+      case ":inbox_tray:": return "📥";
+      case ":package:": return "📦";
+      case ":mailbox:": return "📫";
+      case ":mailbox_closed:": return "📪";
+      case ":mailbox_with_mail:": return "📬";
+      case ":mailbox_with_no_mail:": return "📭";
+      case ":postbox:": return "📮";
+      case ":pencil:": return "📝";
+      case ":briefcase:": return "💼";
+      case ":file_folder:": return "📁";
+      case ":open_file_folder:": return "📂";
+      case ":date:": return "📅";
+      case ":calendar:": return "📆";
+      case ":card_index:": return "📇";
+      case ":chart_with_upwards_trend:": return "📈";
+      case ":chart_with_downwards_trend:": return "📉";
+      case ":bar_chart:": return "📊";
+      case ":clipboard:": return "📋";
+      case ":pushpin:": return "📌";
+      case ":round_pushpin:": return "📍";
+      case ":paperclip:": return "📎";
+      case ":straight_ruler:": return "📏";
+      case ":triangular_ruler:": return "📐";
+      case ":lock:": return "🔒";
+      case ":lock_with_ink_pen:": return "🔏";
+      case ":closed_lock_with_key:": return "🔐";
+      case ":key:": return "🔑";
+      case ":hammer:": return "🔨";
+      case ":gun:": return "🔫";
+      case ":wrench:": return "🔧";
+      case ":nut_and_bolt:": return "🔩";
+      case ":link:": return "🔗";
+      case ":microscope:": return "🔬";
+      case ":telescope:": return "🔭";
+      case ":satellite:": return "📡";
+      case ":syringe:": return "💉";
+      case ":pill:": return "💊";
+      case ":door:": return "🚪";
+      case ":toilet:": return "🚽";
+      case ":shower:": return "🚿";
+      case ":bathtub:": return "🛁";
+      case ":smoking:": return "🚬";
+      case ":moyai:": return "🗿";
+      case ":atm:": return "🏧";
+      case ":put_litter_in_its_place:": return "🚮";
+      case ":potable_water:": return "🚰";
+      case ":mens:": return "🚹";
+      case ":womens:": return "🚺";
+      case ":restroom:": return "🚻";
+      case ":baby_symbol:": return "🚼";
+      case ":wc:": return "🚾";
+      case ":passport_control:": return "🛂";
+      case ":customs:": return "🛃";
+      case ":baggage_claim:": return "🛄";
+      case ":left_luggage:": return "🛅";
+      case ":children_crossing:": return "🚸";
+      case ":no_entry_sign:": return "🚫";
+      case ":no_bicycles:": return "🚳";
+      case ":no_smoking:": return "🚭";
+      case ":do_not_litter:": return "🚯";
+      case ":non-potable_water:": return "🚱";
+      case ":no_pedestrians:": return "🚷";
+      case ":no_mobile_phones:": return "📵";
+      case ":underage:": return "🔞";
+      case ":arrows_clockwise:": return "🔃";
+      case ":arrows_counterclockwise:": return "🔄";
+      case ":back:": return "🔙";
+      case ":end:": return "🔚";
+      case ":on:": return "🔛";
+      case ":soon:": return "🔜";
+      case ":top:": return "🔝";
+      case ":six_pointed_star:": return "🔯";
+      case ":twisted_rightwards_arrows:": return "🔀";
+      case ":repeat:": return "🔁";
+      case ":repeat_one:": return "🔂";
+      case ":arrow_up_small:": return "🔼";
+      case ":arrow_down_small:": return "🔽";
+      case ":cinema:": return "🎦";
+      case ":low_brightness:": return "🔅";
+      case ":high_brightness:": return "🔆";
+      case ":signal_strength:": return "📶";
+      case ":vibration_mode:": return "📳";
+      case ":mobile_phone_off:": return "📴";
+      case ":currency_exchange:": return "💱";
+      case ":heavy_dollar_sign:": return "💲";
+      case ":trident:": return "🔱";
+      case ":name_badge:": return "📛";
+      case ":beginner:": return "🔰";
+      case ":keycap_ten:": return "🔟";
+      case ":capital_abcd:": return "🔠";
+      case ":abcd:": return "🔡";
+      case ":1234:": return "🔢";
+      case ":symbols:": return "🔣";
+      case ":abc:": return "🔤";
+      case ":ab:": return "🆎";
+      case ":cl:": return "🆑";
+      case ":cool:": return "🆒";
+      case ":free:": return "🆓";
+      case ":id:": return "🆔";
+      case ":new:": return "🆕";
+      case ":ng:": return "🆖";
+      case ":ok:": return "🆗";
+      case ":sos:": return "🆘";
+      case ":up:": return "🆙";
+      case ":vs:": return "🆚";
+      case ":koko:": return "🈁";
+      case ":ideograph_advantage:": return "🉐";
+      case ":accept:": return "🉑";
+      case ":red_circle:": return "🔴";
+      case ":large_blue_circle:": return "🔵";
+      case ":large_orange_diamond:": return "🔶";
+      case ":large_blue_diamond:": return "🔷";
+      case ":small_orange_diamond:": return "🔸";
+      case ":small_blue_diamond:": return "🔹";
+      case ":small_red_triangle:": return "🔺";
+      case ":small_red_triangle_down:": return "🔻";
+      case ":diamond_shape_with_a_dot_inside:": return "💠";
+      case ":radio_button:": return "🔘";
+      case ":white_square_button:": return "🔳";
+      case ":black_square_button:": return "🔲";
+      case ":checkered_flag:": return "🏁";
+      case ":triangular_flag_on_post:": return "🚩";
+      case ":crossed_flags:": return "🎌";
+      default: return null;
+    }
   }
 }
