@@ -113,16 +113,17 @@ public class EmojiGridView extends GridView
 
   private void migrateOldPrefs()
   {
+    final String MIGRATION_CHECK_KEY = "MIGRATION_COMPLETE";
+
     SharedPreferences prefs;
     try { prefs = emojiSharedPreferences(); }
     catch (Exception e) { return; }
 
     Set<String> lastUsed = prefs.getStringSet(LAST_USE_PREF, null);
-    if (lastUsed != null)
+    if (lastUsed != null && !prefs.getBoolean(MIGRATION_CHECK_KEY, false))
     {
       SharedPreferences.Editor edit = prefs.edit();
       edit.clear();
-      edit.apply();
 
       Set<String> lastUsedNew = new HashSet<>();
       for (String entry : lastUsed)
@@ -131,6 +132,8 @@ public class EmojiGridView extends GridView
         lastUsedNew.add(Integer.parseInt(data[0]) + "-" + Emoji.mapOldNameToValue(data[1]));
       }
       edit.putStringSet(LAST_USE_PREF, lastUsedNew);
+
+      edit.putBoolean(MIGRATION_CHECK_KEY, true);
       edit.apply();
     }
   }

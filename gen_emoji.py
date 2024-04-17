@@ -31,8 +31,8 @@ with open(EMOJIS_PATH, 'w', encoding='UTF-8') as emojis:
     for e in emoji_list:
         emojis.write(f'{e}\n')
     emojis.write('\n')
-    
-    for g in group_indices:
-        emojis.write(f'{g}\n')
+
+    emojis.write(' '.join([str(g) for g in group_indices]))
+    emojis.write('\n')
 
 print(f'Parsed {len(emoji_list)} emojis in {len(group_indices)}')

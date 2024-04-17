@@ -39,8 +39,8 @@ public class Emoji
       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
       String line;
 
-      // Read emoji
-      while ((line = reader.readLine()) != null)
+      // Read emoji (until empty line)
+      while (!(line = reader.readLine()).isEmpty())
       {
         Emoji e = new Emoji(line);
         _all.add(e);
@@ -55,7 +55,7 @@ public class Emoji
           _groups.add(_all.subList(Integer.parseInt(tokens[i]), Integer.parseInt(tokens[i+1])));
       }
     }
-    catch (IOException e) {}
+    catch (IOException e) { Logs.exn("Emoji.init() failed", e); }
   }
 
   public static int getNumGroups()
@@ -73,15 +73,23 @@ public class Emoji
     return _stringMap.get(value);
   }
 
-  public static String mapOldNameToValue(String name)
+  public static String mapOldNameToValue(String name) throws IllegalArgumentException
   {
-    if (name.matches(":(u[a-zA-Z0-9]{4,5})+:"))
+    if (name.matches(":(u[a-fA-F0-9]{4,5})+:"))
     {
       StringBuilder sb = new StringBuilder();
-      for (String code : name.replace(":", "").split("u"))
-        if (!code.isEmpty())
-          for (char c : Character.toChars(Integer.decode(code)))
-            sb.append(c);
+
+      for (String code : name.replace(":", "").substring(1).split("u"))
+      {
+        try
+        {
+          sb.append(Character.toChars(Integer.decode("0X" + code)));
+        }
+        catch (IllegalArgumentException e)
+        {
+          throw new IllegalArgumentException("Failed to parse codepoint '" + code + "' in name '" + name + "'", e);
+        }
+      }
       return sb.toString();
     }
 
@@ -774,7 +782,7 @@ public class Emoji
       case ":checkered_flag:": return "🏁";
       case ":triangular_flag_on_post:": return "🚩";
       case ":crossed_flags:": return "🎌";
-      default: return null;
     }
+    throw new IllegalArgumentException("'" + name + "' is not a valid name");
   }
 }
