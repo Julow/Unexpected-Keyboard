@@ -10,10 +10,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EmojiGridView extends GridView
@@ -23,7 +25,7 @@ public class EmojiGridView extends GridView
 
   private static final String LAST_USE_PREF = "emoji_last_use";
 
-  private Emoji[] _emojiArray;
+  private List<Emoji> _emojiArray;
   private HashMap<Emoji, Integer> _lastUsed;
 
   /*
@@ -49,26 +51,23 @@ public class EmojiGridView extends GridView
   public void onItemClick(AdapterView<?> parent, View v, int pos, long id)
   {
     Config config = Config.globalConfig();
-    Integer used = _lastUsed.get(_emojiArray[pos]);
-    _lastUsed.put(_emojiArray[pos], (used == null) ? 1 : used.intValue() + 1);
-    config.handler.key_up(_emojiArray[pos].kv(), Pointers.Modifiers.EMPTY);
+    Integer used = _lastUsed.get(_emojiArray.get(pos));
+    _lastUsed.put(_emojiArray.get(pos), (used == null) ? 1 : used.intValue() + 1);
+    config.handler.key_up(_emojiArray.get(pos).kv(), Pointers.Modifiers.EMPTY);
     saveLastUsed(); // TODO: opti
   }
 
-  private Emoji[] getLastEmojis()
+  private List<Emoji> getLastEmojis()
   {
-    final HashMap<Emoji, Integer> map = _lastUsed;
-    Emoji[] array = new Emoji[map.size()];
-
-    map.keySet().toArray(array);
-    Arrays.sort(array, 0, array.length, new Comparator<Emoji>()
+    List<Emoji> list = new ArrayList<>(_lastUsed.keySet());
+    Collections.sort(list, new Comparator<Emoji>()
         {
           public int compare(Emoji a, Emoji b)
           {
-            return (map.get(b).intValue() - map.get(a).intValue());
+            return _lastUsed.get(b) - _lastUsed.get(a);
           }
         });
-    return (array);
+    return list;
   }
 
   private void saveLastUsed()
@@ -155,9 +154,9 @@ public class EmojiGridView extends GridView
   {
     Context _button_context;
 
-    Emoji[] _emojiArray;
+    List<Emoji> _emojiArray;
 
-    public EmojiViewAdpater(Context context, Emoji[] emojiArray)
+    public EmojiViewAdpater(Context context, List<Emoji> emojiArray)
     {
       _button_context = new ContextThemeWrapper(context, R.style.emojiGridButton);
       _emojiArray = emojiArray;
@@ -167,12 +166,12 @@ public class EmojiGridView extends GridView
     {
       if (_emojiArray == null)
         return (0);
-      return (_emojiArray.length);
+      return (_emojiArray.size());
     }
 
     public Object getItem(int pos)
     {
-      return (_emojiArray[pos]);
+      return (_emojiArray.get(pos));
     }
 
     public long getItemId(int pos)
@@ -186,7 +185,7 @@ public class EmojiGridView extends GridView
 
       if (view == null)
         view = new EmojiView(_button_context);
-      view.setEmoji(_emojiArray[pos]);
+      view.setEmoji(_emojiArray.get(pos));
       return view;
     }
   }

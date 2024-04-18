@@ -21,7 +21,7 @@ public class EmojiGroupButtonsBar extends LinearLayout
     add_group(EmojiGridView.GROUP_LAST_USE, "\uD83D\uDD59");
     for (int i = 0; i < Emoji.getNumGroups(); i++)
     {
-      Emoji first = Emoji.getEmojisByGroup(i)[0];
+      Emoji first = Emoji.getEmojisByGroup(i).get(0);
       add_group(i, first.kv().getString());
     }
   }

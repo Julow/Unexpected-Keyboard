@@ -63,9 +63,9 @@ public class Emoji
     return _groups.size();
   }
 
-  public static Emoji[] getEmojisByGroup(int groupIndex)
+  public static List<Emoji> getEmojisByGroup(int groupIndex)
   {
-    return _groups.get(groupIndex).toArray(new Emoji[0]);
+    return _groups.get(groupIndex);
   }
 
   public static Emoji getEmojiByString(String value)
