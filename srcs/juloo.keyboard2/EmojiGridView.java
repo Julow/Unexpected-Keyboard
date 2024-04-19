@@ -128,7 +128,11 @@ public class EmojiGridView extends GridView
       for (String entry : lastUsed)
       {
         String[] data = entry.split("-", 2);
-        lastUsedNew.add(Integer.parseInt(data[0]) + "-" + Emoji.mapOldNameToValue(data[1]));
+        try
+        {
+          lastUsedNew.add(Integer.parseInt(data[0]) + "-" + Emoji.mapOldNameToValue(data[1]));
+        }
+        catch (IllegalArgumentException ignored) {}
       }
       edit.putStringSet(LAST_USE_PREF, lastUsedNew);
 
