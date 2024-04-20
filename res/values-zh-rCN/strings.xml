@@ -40,8 +40,8 @@
   <string name="pref_swipe_dist_summary">输入按键四角的符号需要滑动的距离 (%s)</string>
   <string name="pref_long_timeout_title">长按到开始重复输入的时间</string>
   <string name="pref_long_interval_title">长按后每次重复输入的时间间隔</string>
-  <string name="pref_lock_double_tap_title">双击Shift键锁定大写</string>
-  <string name="pref_lock_double_tap_summary">任何时候都可以长按修改键以锁定</string>
+  <string name="pref_lock_double_tap_title">双击 Shift 键锁定大写</string>
+  <string name="pref_lock_double_tap_summary">任何时候长按修饰键均可将其锁定</string>
   <string name="pref_category_behavior">行为</string>
   <string name="pref_autocapitalisation_title">句首自动大写</string>
   <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
@@ -49,7 +49,7 @@
   <string name="pref_switch_input_immediate_summary">切换键盘按钮的行为</string>
   <string name="pref_vibrate_custom">自定义振动</string>
   <string name="pref_vibrate_duration_title">振动强度</string>
-  <string name="pref_pin_entry_enabled_title">数字密码输入布局</string>
+  <string name="pref_pin_entry_enabled_title">数字输入布局</string>
   <string name="pref_pin_entry_enabled_summary">输入数字、日期与电话号码时</string>
   <string name="pref_category_style">样式</string>
   <string name="pref_margin_bottom_title">键盘下边距</string>
