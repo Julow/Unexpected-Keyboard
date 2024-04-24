@@ -559,14 +559,19 @@ public final class KeyModifier
         switch (c)
         {
           case 'a': return "á";
+          case 'c': return "ć";
           case 'e': return "é";
           case 'i': return "í";
           case 'l': return "ĺ";
+          case 'ń': return "ń";
           case 'o': return "ó";
           case 'r': return "ŕ";
           case 's': return "ś";
           case 'u': return "ú";
           case 'y': return "ý";
+          case 'z': return "ź";
+          // used in Pinyin
+          case 'ü': return "̈́ǘ"
           // Combining diacritic
           case 'j':
           // Russian vowels
@@ -584,15 +589,21 @@ public final class KeyModifier
       {
         switch (c)
         {
+          case 'a': return "ǎ";
           case 'c': return "č";
           case 'd': return "ď";
           case 'e': return "ě";
+          case 'i': return "ǐ";
           case 'l': return "ľ";
           case 'n': return "ň";
+          case 'o': return "ǒ";
           case 'r': return "ř";
           case 's': return "š";
           case 't': return "ť";
+          case 'u': return "ǔ";
           case 'z': return "ž";
+          // used in Pinyin
+          case 'ü': return "ǚ";
           default: return map_dead_char(c, '\u02C7');
         }
       }
@@ -605,8 +616,16 @@ public final class KeyModifier
         switch (c)
         {
           case 'c': return "ç";
-          case 's': return "ş";
+          case 'd': return "ḑ";
+          case 'e': return "ȩ";
           case 'g': return "ģ";
+          case 'h': return "ḩ";
+          case 'k': return "ķ";
+          case 'l': return "ļ";
+          case 'n': return "ņ";
+          case 'r': return "ŗ";
+          case 's': return "ş";
+          case 't': return "ţ";
           default: return map_dead_char(c, '\u00B8');
         }
       }
@@ -619,10 +638,16 @@ public final class KeyModifier
         switch (c)
         {
           case 'a': return "â";
+          case 'c': return "ĉ";
           case 'e': return "ê";
+          case 'g': return "ĝ";
+          case 'h': return "ĥ";
           case 'i': return "î";
+          case 'j': return "ĵ";
           case 'o': return "ô";
+          case 'ŝ': return "ŝ";
           case 'u': return "û";
+          case 'z': return "ẑ";
           default: return map_dead_char(c, '\u02C6');
         }
       }
@@ -634,7 +659,26 @@ public final class KeyModifier
       {
         switch (c)
         {
-          case 'ė': return "ė";
+          case 'a': return "ȧ";
+          case 'b': return "ḃ";
+          case 'c': return "ċ";
+          case 'd': return "ḋ";
+          case 'e': return "ė";
+          case 'f': return "ḟ";
+          case 'g': return "ġ";
+          case 'h': return "ḣ";
+          // Turkish ı / İ is handled elsewhere
+          case 'm': return "ṁ";
+          case 'n': return "ṅ";
+          case 'o': return "ȯ";
+          case 'p': return "ṗ";
+          case 'r': return "ṙ";
+          case 's': return "ṡ";
+          case 't': return "ṫ";
+          case 'w': return "ẇ";
+          case 'x': return "ẋ";
+          case 'y': return "ẏ";
+          case 'z': return "ż";
           default: return map_dead_char(c, '\u02D9');
         }
       }
@@ -651,6 +695,8 @@ public final class KeyModifier
           case 'i': return "ì";
           case 'o': return "ò";
           case 'u': return "ù";
+          // used in Pinyin
+          case 'ü': return "ǜ"
           default: return map_dead_char(c, '\u02CB');
         }
       }
@@ -665,7 +711,10 @@ public final class KeyModifier
           case 'a': return "ā";
           case 'e': return "ē";
           case 'i': return "ī";
+          case 'o': return "ō";
           case 'u': return "ū";
+          // used in Pinyin
+          case 'ü': return "ǖ";
           default: return map_dead_char(c, '\u00AF');
         }
       }
@@ -683,6 +732,7 @@ public final class KeyModifier
           case 'k': return "ķ";
           case 'l': return "ļ";
           case 'n': return "ņ";
+          case 'o': return "ǫ";
           case 'u': return "ų";
           default: return map_dead_char(c, '\u02DB');
         }
@@ -709,8 +759,17 @@ public final class KeyModifier
         switch (c)
         {
           case 'a': return "ã";
-          case 'o': return "õ";
+          case 'e': return "ẽ";
+          case 'i': return "ĩ";
           case 'n': return "ñ";
+          case 'o': return "õ";
+          case 'u': return "ũ";
+          // Vietnamese
+          case 'ă': return "ẵ";
+          case 'â': return "ẫ";
+          case 'ê': return "ễ";
+          case 'ơ': return "ỡ";
+          case 'ư': return "ữ";
           default: return map_dead_char(c, '\u02DC');
         }
       }
@@ -888,14 +947,17 @@ public final class KeyModifier
       {
         switch (c)
         {
+          case '0': return "↔";
           case '1': return "↙";
           case '2': return "↓";
           case '3': return "↘";
           case '4': return "←";
+          case '5': return "↕";
           case '6': return "→";
           case '7': return "↖";
           case '8': return "↑";
           case '9': return "↗";
+          case '.': return "↵";
           default: return null;
         }
       }
@@ -1053,6 +1115,8 @@ public final class KeyModifier
       }
     };
 
+  // Used with Arabic despite the name; called "Hindi numerals" in Arabic
+  // map_char_numpad_devanagari is used in Hindi
   private static final Map_char map_char_numpad_hindu =
     new Map_char() {
       public String apply(char c)
