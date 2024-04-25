@@ -571,7 +571,7 @@ public final class KeyModifier
           case 'y': return "ý";
           case 'z': return "ź";
           // used in Pinyin
-          case 'ü': return "̈́ǘ"
+          case 'ü': return "̈́ǘ";
           // Combining diacritic
           case 'j':
           // Russian vowels
@@ -696,7 +696,7 @@ public final class KeyModifier
           case 'o': return "ò";
           case 'u': return "ù";
           // used in Pinyin
-          case 'ü': return "ǜ"
+          case 'ü': return "ǜ";
           default: return map_dead_char(c, '\u02CB');
         }
       }
