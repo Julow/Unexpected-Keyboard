@@ -571,7 +571,7 @@ public final class KeyModifier
           case 'y': return "ý";
           case 'z': return "ź";
           // used in Pinyin
-          case 'ü': return "̈́ǘ";
+          case 'ü': return "ǘ";
           // Combining diacritic
           case 'j':
           // Russian vowels
