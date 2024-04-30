@@ -85,6 +85,7 @@ Bây giờ đã hoàn hảo cho việc sử dụng hàng ngày.
   <string name="key_action_send">Gửi</string>
   <!-- <string name="launcher_button_imesettings">Enable keyboard</string> -->
   <!-- <string name="launcher_button_imepicker">Select keyboard</string> -->
+  <!-- <string name="launcher_button_settings_activity">Keyboard settings</string>  -->
   <!-- <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string> -->
   <!-- <string name="launcher_sourcecode">This is a free and open source application. You can find the source code or report bugs on GitHub.</string> -->
   <!-- <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string> -->

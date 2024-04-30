@@ -50,6 +50,13 @@ public class LauncherActivity extends Activity
     imm.showInputMethodPicker();
   }
 
+  public void launch_settings_activity(View v)
+  {
+    Intent intent = new Intent(LauncherActivity.this, SettingsActivity.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
+  }
+
   static void setup_intro_video(final VideoView v)
   {
     if (VERSION.SDK_INT >= 26)

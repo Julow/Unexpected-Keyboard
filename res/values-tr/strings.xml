@@ -85,6 +85,7 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="key_action_send">Gönder</string>
   <string name="launcher_button_imesettings">Ayarlarda aktif et</string>
   <string name="launcher_button_imepicker">Klavye Seç</string>
+  <!-- <string name="launcher_button_settings_activity">Keyboard settings</string>  -->
   <string name="launcher_description">Bu uygulama bir sanal klavye uygulamasıdır. Aşağıdaki butona basarak sistem ayarlarında etkinleştiriniz.</string>
   <string name="launcher_sourcecode">Bu uygulama ücretsiz ve açık kaynaklıdır. Kaynak koduna erişmek veya bir hata raporlamak için GitHub</string>
   <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>

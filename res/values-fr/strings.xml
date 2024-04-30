@@ -85,6 +85,7 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="key_action_send">Envoyer</string>
   <string name="launcher_button_imesettings">Activer le clavier</string>
   <string name="launcher_button_imepicker">Selectionner le keyboard</string>
+  <!-- <string name="launcher_button_settings_activity">Keyboard settings</string>  -->
   <string name="launcher_description">Cette application est un clavier virtuel. Activez-le dans les paramètres système en cliquant sur le bouton ci-dessous.</string>
   <string name="launcher_sourcecode">Cette application est libre et open-source. Lisez le source code et reportez des problèmes sur Github.</string>
   <string name="launcher_tryhere">Après l\'avoir activé, vous pouvez l\'essayer ici:</string>

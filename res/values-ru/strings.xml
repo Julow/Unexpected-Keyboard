@@ -85,6 +85,7 @@
   <string name="key_action_send">Отправить</string>
   <string name="launcher_button_imesettings">Включение клавиатуры</string>
   <string name="launcher_button_imepicker">Выбор клавиатуры</string>
+  <!-- <string name="launcher_button_settings_activity">Keyboard settings</string>  -->
   <string name="launcher_description">Данное приложение является виртуальной клавиатурой. Зайдите в настройки, нажав кнопку внизу, и активируйте Unexpected Keyboard.</string>
   <string name="launcher_sourcecode">Это бесплатное приложение с открытым исходным кодом. Вы можете изучить код или сообщить об ошибках по ссылке GitHub.</string>
   <string name="launcher_tryhere">После активации вы сможете попробовать клавиатуру прямо здесь:</string>

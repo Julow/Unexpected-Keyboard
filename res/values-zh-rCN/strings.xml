@@ -85,6 +85,7 @@
   <string name="key_action_send">发送</string>
   <string name="launcher_button_imesettings">启用键盘</string>
   <string name="launcher_button_imepicker">选择键盘</string>
+  <!-- <string name="launcher_button_settings_activity">Keyboard settings</string>  -->
   <string name="launcher_description">这是一个虚拟键盘软件。点击按钮进入系统设置，然后启用 Unexpected-Keyboard 即可使用。</string>
   <string name="launcher_sourcecode">这是一个免费且开源的软件。你可以在 GitHub 上找到源代码或反馈问题。</string>
   <string name="launcher_tryhere">启用键盘后，可以在这里测试效果：</string>

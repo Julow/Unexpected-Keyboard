@@ -85,6 +85,7 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="key_action_send">Wyślij</string>
   <string name="launcher_button_imesettings">Włącz klawiaturę</string>
   <string name="launcher_button_imepicker">Wybierz klawiaturę</string>
+  <!-- <string name="launcher_button_settings_activity">Keyboard settings</string>  -->
   <string name="launcher_description">Ta aplikacja jest klawiaturą ekranową. Naciśnij poniższy przycisk, aby przejść do ustawień systemu i włącz Unexpected-Keyboard.</string>
   <string name="launcher_sourcecode">Jest to darmowa aplikacja o otwartym kodzie źródłowym. Możesz zobaczyć kod źródłowy oraz zgłosić błedy na Githubie.</string>
   <string name="launcher_tryhere">Po jej włączeniu, możesz wypróbować klawiaturę tutaj:</string>
