@@ -158,6 +158,12 @@ public final class KeyModifier
 
   private static KeyValue apply_fn(KeyValue k)
   {
+    if (_modmap != null)
+    {
+      KeyValue mapped = _modmap.fn.get(k);
+      if (mapped != null)
+        return mapped;
+    }
     String name = null;
     switch (k.getKind())
     {
