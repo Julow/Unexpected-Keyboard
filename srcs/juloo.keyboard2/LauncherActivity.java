@@ -10,6 +10,8 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -37,7 +39,21 @@ public class LauncherActivity extends Activity
           this.new Tryhere_OnUnhandledKeyEventListener());
     setup_intro_video(_intro_video);
   }
+  @Override
+  public final boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.launcher_menu, menu);
+    return true;
+  }
 
+  @Override
+  public final boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.btnLaunchSettingsActivity) {
+      Intent intent = new Intent(LauncherActivity.this, SettingsActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
+    }
+    return super.onOptionsItemSelected(item);
+  }
   public void launch_imesettings(View _btn)
   {
     startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS));

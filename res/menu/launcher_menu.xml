@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LauncherActivity">
+
+    <item
+        android:id="@+id/btnLaunchSettingsActivity"
+        android:title=""
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:showAsAction="always" />
+</menu>
