@@ -117,6 +117,19 @@ public final class KeyModifier
     return k;
   }
 
+  public static KeyValue modify_round_trip(KeyValue k)
+  {
+    return apply_fn(k);
+  }
+
+  public static KeyValue modify_circle(KeyValue k, boolean clockwise)
+  {
+    if (clockwise)
+      return apply_shift(k);
+    else
+      return apply_fn(k);
+  }
+
   public static Map_char modify_numpad_script(String numpad_script)
   {
     if (numpad_script == null)
@@ -139,11 +152,10 @@ public final class KeyModifier
       case Char:
         char kc = k.getChar();
         String modified = map.apply(kc);
-        if (modified == null)
-          return k;
-        return KeyValue.makeStringKey(modified, k.getFlags());
-      default: return k;
+        if (modified != null)
+          return KeyValue.makeStringKey(modified, k.getFlags());
     }
+    return k;
   }
 
   private static KeyValue apply_shift(KeyValue k)

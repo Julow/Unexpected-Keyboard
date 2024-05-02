@@ -143,6 +143,13 @@ public final class Pointers implements Handler.Callback
       return;
     }
     stopKeyRepeat(ptr);
+    KeyValue ptr_value = ptr.value;
+    if (ptr.gesture != null && ptr.gesture.is_in_progress())
+    {
+      // A gesture was in progress
+      ptr.gesture.pointer_up();
+      ptr_value = ptr.gesture.modify_key(ptr.value, ptr.key);
+    }
     Pointer latched = getLatched(ptr);
     if (latched != null) // Already latched
     {
@@ -152,7 +159,7 @@ public final class Pointers implements Handler.Callback
       else // Otherwise, unlatch
       {
         removePtr(latched);
-        _handler.onPointerUp(ptr.value, ptr.modifiers);
+        _handler.onPointerUp(ptr_value, ptr.modifiers);
       }
     }
     else if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
@@ -168,7 +175,7 @@ public final class Pointers implements Handler.Callback
     {
       clearLatched();
       removePtr(ptr);
-      _handler.onPointerUp(ptr.value, ptr.modifiers);
+      _handler.onPointerUp(ptr_value, ptr.modifiers);
     }
   }
 
@@ -217,18 +224,15 @@ public final class Pointers implements Handler.Callback
     return k.keys[DIRECTION_TO_INDEX[direction]];
   }
 
-  /*
-   * Get the KeyValue at the given direction. In case of swipe (direction !=
-   * null), get the nearest KeyValue that is not key0.
-   * Take care of applying [_handler.onPointerSwipe] to the selected key, this
-   * must be done at the same time to be sure to treat removed keys correctly.
-   * Return [null] if no key could be found in the given direction or if the
-   * selected key didn't change.
+  /**
+   * Get the key nearest to [direction] that is not key0. Take care
+   * of applying [_handler.modifyKey] to the selected key in the same
+   * operation to be sure to treat removed keys correctly.
+   * Return [null] if no key could be found in the given direction or
+   * if the selected key didn't change.
    */
-  private KeyValue getNearestKeyAtDirection(Pointer ptr, Integer direction)
+  private KeyValue getNearestKeyAtDirection(Pointer ptr, int direction)
   {
-    if (direction == null)
-      return _handler.modifyKey(ptr.key.keys[0], ptr.modifiers);
     KeyValue k;
     // [i] is [0, -1, 1, -2, 2, ...]
     for (int i = 0; i > -4; i = (~i>>31) - i)
@@ -261,37 +265,59 @@ public final class Pointers implements Handler.Callback
     float dy = y - ptr.downY;
 
     float dist = Math.abs(dx) + Math.abs(dy);
-    Integer direction;
     if (dist < _config.swipe_dist_px)
     {
-      direction = null;
+      // Pointer is still on the center.
+      if (ptr.gesture == null || !ptr.gesture.is_in_progress())
+        return;
+      // Gesture ended
+      ptr.gesture.moved_to_center();
+      ptr.value = ptr.gesture.modify_key(ptr.value, ptr.key);
+      ptr.flags = pointer_flags_of_kv(ptr.value);
+
     }
     else
-    {
+    { // Pointer is on a quadrant.
       // See [getKeyAtDirection()] for the meaning. The starting point on the
       // circle is the top direction.
       double a = Math.atan2(dy, dx) + Math.PI;
       // a is between 0 and 2pi, 0 is pointing to the left
       // add 12 to align 0 to the top
-      direction = ((int)(a * 8 / Math.PI) + 12) % 16;
-    }
+      int direction = ((int)(a * 8 / Math.PI) + 12) % 16;
+      if (ptr.gesture == null)
+      { // Gesture starts
 
-    if (direction != ptr.selected_direction)
-    {
-      ptr.selected_direction = direction;
-      KeyValue newValue = getNearestKeyAtDirection(ptr, direction);
-      if (newValue != null && !newValue.equals(ptr.value))
-      {
-        ptr.value = newValue;
-        ptr.flags = pointer_flags_of_kv(newValue);
-        // Sliding mode is entered when key5 or key6 is down on a slider key.
-        if (ptr.key.slider &&
-            (newValue.equals(ptr.key.getKeyValue(5))
-             || newValue.equals(ptr.key.getKeyValue(6))))
-        {
-          startSliding(ptr, x);
+        ptr.gesture = new Gesture(direction);
+        KeyValue new_value = getNearestKeyAtDirection(ptr, direction);
+        if (new_value != null)
+        { // Pointer is swiping into a side key.
+
+          ptr.value = new_value;
+          ptr.flags = pointer_flags_of_kv(new_value);
+          // Sliding mode is entered when key5 or key6 is down on a slider key.
+          if (ptr.key.slider &&
+              (new_value.equals(ptr.key.getKeyValue(5))
+               || new_value.equals(ptr.key.getKeyValue(6))))
+          {
+            startSliding(ptr, x);
+          }
+          _handler.onPointerDown(new_value, true);
         }
-        _handler.onPointerDown(newValue, true);
+
+      }
+      else if (ptr.gesture.changed_direction(direction))
+      { // Gesture changed state
+        if (!ptr.gesture.is_in_progress())
+        { // Gesture ended
+          stopKeyRepeat(ptr);
+          _handler.onPointerFlagsChanged(true);
+        }
+        else
+        {
+          ptr.value = ptr.gesture.modify_key(ptr.value, ptr.key);
+          restartKeyRepeat(ptr);
+          ptr.flags = 0; // Special behaviors are ignored during a gesture.
+        }
       }
     }
   }
@@ -395,6 +421,12 @@ public final class Pointers implements Handler.Callback
     }
   }
 
+  private void restartKeyRepeat(Pointer ptr)
+  {
+    stopKeyRepeat(ptr);
+    startKeyRepeat(ptr);
+  }
+
   /** A pointer is repeating. Returns [true] if repeat should continue. */
   private boolean handleKeyRepeat(Pointer ptr)
   {
@@ -447,14 +479,16 @@ public final class Pointers implements Handler.Callback
     return flags;
   }
 
+  // Pointers
+
   private static final class Pointer
   {
     /** -1 when latched. */
     public int pointerId;
     /** The Key pressed by this Pointer */
     public final KeyboardData.Key key;
-    /** Current direction. [null] means not swiping. */
-    public Integer selected_direction;
+    /** Gesture state, see [Gesture]. [null] means the pointer has not moved out of the center region. */
+    public Gesture gesture;
     /** Selected value with [modifiers] applied. */
     public KeyValue value;
     public float downX;
@@ -472,7 +506,7 @@ public final class Pointers implements Handler.Callback
     {
       pointerId = p;
       key = k;
-      selected_direction = null;
+      gesture = null;
       value = v;
       downX = x;
       downY = y;
