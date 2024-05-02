@@ -13,7 +13,14 @@ public final class KeyModifier
   /** The optional modmap takes priority over modifiers usual behaviors. Set to
       [null] to disable. */
   private static KeyboardData.Modmap _modmap = null;
-  public static void set_modmap(KeyboardData.Modmap mm) { _modmap = mm; }
+  public static void set_modmap(KeyboardData.Modmap mm)
+  {
+    // Clear the cache when switching to or from a layout that contain a modmap
+    // as the cache would otherwise override the modmap.
+    if (_modmap != null || mm != null)
+      _cache.clear();
+    _modmap = mm;
+  }
 
   /** Modify a key according to modifiers. */
   public static KeyValue modify(KeyValue k, Pointers.Modifiers mods)
