@@ -268,11 +268,8 @@ public class Keyboard2View extends View
     if (VERSION.SDK_INT >= 29)
     {
       // Disable the back-gesture on the keyboard area
-      Rect keyboard_area = new Rect(
-          left + (int)_config.horizontal_margin,
-          top + (int)_config.marginTop,
-          right - (int)_config.horizontal_margin,
-          bottom - (int)_config.margin_bottom);
+      Rect keyboard_area = new Rect(left,
+          top + (int)_config.marginTop, right, bottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
   }
