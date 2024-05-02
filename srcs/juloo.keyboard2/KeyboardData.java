@@ -515,18 +515,35 @@ public final class KeyboardData
   public static class Modmap
   {
     public final Map<KeyValue, KeyValue> shift;
+    public final Map<KeyValue, KeyValue> fn;
 
-    public Modmap(Map<KeyValue, KeyValue> s)
+    public Modmap(Map<KeyValue, KeyValue> s, Map<KeyValue, KeyValue> f)
     {
       shift = s;
+      fn = f;
     }
 
     public static Modmap parse(XmlPullParser parser) throws Exception
     {
       HashMap<KeyValue, KeyValue> shift = new HashMap<KeyValue, KeyValue>();
-      while (expect_tag(parser, "shift"))
-        parse_mapping(parser, shift);
-      return new Modmap(shift);
+      HashMap<KeyValue, KeyValue> fn = new HashMap<KeyValue, KeyValue>();
+
+      while (next_tag(parser))
+      {
+        switch (parser.getName())
+        {
+          case "shift":
+            parse_mapping(parser, shift);
+            break;
+          case "fn":
+            parse_mapping(parser, fn);
+            break;
+          default:
+            throw error(parser, "Expecting tag <shift> or <fn>, got <" + parser.getName() + ">");
+        }
+      }
+
+      return new Modmap(shift, fn);
     }
 
     private static void parse_mapping(XmlPullParser parser, Map<KeyValue, KeyValue> dst) throws Exception
