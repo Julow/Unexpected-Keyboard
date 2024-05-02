@@ -507,7 +507,7 @@ public final class Pointers implements Handler.Callback
 
     static final float SPEED_SMOOTHING = 0.7f;
     /** Avoid absurdly large values. */
-    static final float SPEED_MAX = 2.f;
+    static final float SPEED_MAX = 4.f;
 
     public void onTouchMove(Pointer ptr, float x)
     {
