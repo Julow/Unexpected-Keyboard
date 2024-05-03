@@ -5,6 +5,6 @@
     <item
         android:id="@+id/btnLaunchSettingsActivity"
         android:title=""
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:icon="@drawable/cog_outline"
         android:showAsAction="always" />
 </menu>
