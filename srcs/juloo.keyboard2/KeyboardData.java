@@ -430,6 +430,7 @@ public final class KeyboardData
       KeyValue[] ks = new KeyValue[9];
       int keysflags = 0;
       keysflags |= parse_key_attr(parser, "key0", ks, 0);
+      /* key1-key8 define swipe gestures (diagram above) */
       keysflags |= parse_key_attr(parser, "key1", ks, 1);
       keysflags |= parse_key_attr(parser, "key2", ks, 2);
       keysflags |= parse_key_attr(parser, "key3", ks, 3);
@@ -438,6 +439,15 @@ public final class KeyboardData
       keysflags |= parse_key_attr(parser, "key6", ks, 6);
       keysflags |= parse_key_attr(parser, "key7", ks, 7);
       keysflags |= parse_key_attr(parser, "key8", ks, 8);
+      /* Compass-point synonyms for swipe gestures */
+      keysflags |= parse_key_attr(parser, "nw", ks, 1);
+      keysflags |= parse_key_attr(parser, "ne", ks, 2);
+      keysflags |= parse_key_attr(parser, "sw", ks, 3);
+      keysflags |= parse_key_attr(parser, "se", ks, 4);
+      keysflags |= parse_key_attr(parser, "w", ks, 5);
+      keysflags |= parse_key_attr(parser, "e", ks, 6);
+      keysflags |= parse_key_attr(parser, "n", ks, 7);
+      keysflags |= parse_key_attr(parser, "s", ks, 8);
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       boolean slider = attribute_bool(parser, "slider", false);
