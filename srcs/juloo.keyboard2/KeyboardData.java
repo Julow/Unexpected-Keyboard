@@ -399,17 +399,25 @@ public final class KeyboardData
       indication = i;
     }
 
-    /** Write the parsed key into [ks] at [index]. Doesn't write if the
-        attribute is not present. Return flags that can be aggregated into the
+    /** Write the parsed key into [ks] at [index]. attr1 is the keyword; attr2 is
+        the synonym, if any. Doesn't write if the
+        attribute is not present. Returns flags that can be aggregated into the
         value for [keysflags]. */
-    static int parse_key_attr(XmlPullParser parser, String attr, KeyValue[] ks,
+    static int parse_key_attr(XmlPullParser parser, String attr1, String attr2, KeyValue[] ks,
         int index)
         throws Exception
     {
-      String name = parser.getAttributeValue(null, attr);
-      int flags = 0;
-      if (name == null)
+      String name1 = parser.getAttributeValue(null, attr1);
+      String name2 = parser.getAttributeValue(null, attr2);
+      if (name1 == null && name2 == null)
         return 0;
+      String name = name1;
+      if (name2 != null)
+      {
+        if (name1 != null && name1 != name2) { /* Error, contradictory swipe spec */ };
+        name = name2;
+      }
+      int flags = 0;
       String name_loc = stripPrefix(name, "loc ");
       if (name_loc != null)
       {
@@ -429,25 +437,17 @@ public final class KeyboardData
     {
       KeyValue[] ks = new KeyValue[9];
       int keysflags = 0;
-      keysflags |= parse_key_attr(parser, "key0", ks, 0);
-      /* key1-key8 define swipe gestures (diagram above) */
-      keysflags |= parse_key_attr(parser, "key1", ks, 1);
-      keysflags |= parse_key_attr(parser, "key2", ks, 2);
-      keysflags |= parse_key_attr(parser, "key3", ks, 3);
-      keysflags |= parse_key_attr(parser, "key4", ks, 4);
-      keysflags |= parse_key_attr(parser, "key5", ks, 5);
-      keysflags |= parse_key_attr(parser, "key6", ks, 6);
-      keysflags |= parse_key_attr(parser, "key7", ks, 7);
-      keysflags |= parse_key_attr(parser, "key8", ks, 8);
-      /* Compass-point synonyms for swipe gestures */
-      keysflags |= parse_key_attr(parser, "nw", ks, 1);
-      keysflags |= parse_key_attr(parser, "ne", ks, 2);
-      keysflags |= parse_key_attr(parser, "sw", ks, 3);
-      keysflags |= parse_key_attr(parser, "se", ks, 4);
-      keysflags |= parse_key_attr(parser, "w", ks, 5);
-      keysflags |= parse_key_attr(parser, "e", ks, 6);
-      keysflags |= parse_key_attr(parser, "n", ks, 7);
-      keysflags |= parse_key_attr(parser, "s", ks, 8);
+      keysflags |= parse_key_attr(parser, "key0", "",   ks, 0);
+      /* Swipe gestures (key1-key8 diagram above) */
+      keysflags |= parse_key_attr(parser, "key1", "nw", ks, 1);
+      keysflags |= parse_key_attr(parser, "key2", "ne", ks, 2);
+      keysflags |= parse_key_attr(parser, "key3", "sw", ks, 3);
+      keysflags |= parse_key_attr(parser, "key4", "se", ks, 4);
+      keysflags |= parse_key_attr(parser, "key5", "w",  ks, 5);
+      keysflags |= parse_key_attr(parser, "key6", "e",  ks, 6);
+      keysflags |= parse_key_attr(parser, "key7", "n",  ks, 7);
+      keysflags |= parse_key_attr(parser, "key8", "s",  ks, 8);
+      /* Other key attributes */
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       boolean slider = attribute_bool(parser, "slider", false);
