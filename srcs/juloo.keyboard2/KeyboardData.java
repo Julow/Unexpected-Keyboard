@@ -399,32 +399,37 @@ public final class KeyboardData
       indication = i;
     }
 
-    /** Write the parsed key into [ks] at [index]. attr1 is the keyword; attr2 is
-        the synonym, if any. Doesn't write if the
-        attribute is not present. Returns flags that can be aggregated into the
-        value for [keysflags]. */
-    static int parse_key_attr(XmlPullParser parser, String attr1, String attr2, KeyValue[] ks,
+    /** Read a key value attribute that have a synonym. Having both synonyms
+        present at the same time is an error.
+        Returns [null] if the attributes are not present. */
+    static String get_key_attr(XmlPullParser parser, String syn1, String syn2)
+        throws Exception
+    {
+      String name1 = parser.getAttributeValue(null, syn1);
+      String name2 = parser.getAttributeValue(null, syn2);
+      if (name1 != null && name2 != null)
+        throw error(parser,
+            "'"+syn1+"' and '"+syn2+"' are synonyms and cannot be passed at the same time.");
+      return (name1 == null) ? name2 : name1;
+    }
+
+    /** Parse the key description [key_attr] and write into [ks] at [index].
+        Returns flags that can be aggregated into the value for [keysflags].
+        [key_attr] can be [null] for convenience. */
+    static int parse_key_attr(XmlPullParser parser, String key_val, KeyValue[] ks,
         int index)
         throws Exception
     {
-      String name1 = parser.getAttributeValue(null, attr1);
-      String name2 = parser.getAttributeValue(null, attr2);
-      if (name1 == null && name2 == null)
+      if (key_val == null)
         return 0;
-      String name = name1;
-      if (name2 != null)
-      {
-        if (name1 != null && name1 != name2) { /* Error, contradictory swipe spec */ };
-        name = name2;
-      }
       int flags = 0;
-      String name_loc = stripPrefix(name, "loc ");
+      String name_loc = stripPrefix(key_val, "loc ");
       if (name_loc != null)
       {
         flags |= F_LOC;
-        name = name_loc;
+        key_val = name_loc;
       }
-      ks[index] = KeyValue.getKeyByName(name);
+      ks[index] = KeyValue.getKeyByName(key_val);
       return (flags << index);
     }
 
@@ -437,16 +442,16 @@ public final class KeyboardData
     {
       KeyValue[] ks = new KeyValue[9];
       int keysflags = 0;
-      keysflags |= parse_key_attr(parser, "key0", "",   ks, 0);
-      /* Swipe gestures (key1-key8 diagram above) */
-      keysflags |= parse_key_attr(parser, "key1", "nw", ks, 1);
-      keysflags |= parse_key_attr(parser, "key2", "ne", ks, 2);
-      keysflags |= parse_key_attr(parser, "key3", "sw", ks, 3);
-      keysflags |= parse_key_attr(parser, "key4", "se", ks, 4);
-      keysflags |= parse_key_attr(parser, "key5", "w",  ks, 5);
-      keysflags |= parse_key_attr(parser, "key6", "e",  ks, 6);
-      keysflags |= parse_key_attr(parser, "key7", "n",  ks, 7);
-      keysflags |= parse_key_attr(parser, "key8", "s",  ks, 8);
+      keysflags |= parse_key_attr(parser, parser.getAttributeValue(null, "key0"), ks, 0);
+      /* Swipe gestures (key1-key8 diagram above), with compass-point synonyms. */
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key1", "nw"), ks, 1);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key2", "ne"), ks, 2);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key3", "sw"), ks, 3);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key4", "se"), ks, 4);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key5", "w"), ks, 5);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key6", "e"), ks, 6);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key7", "n"), ks, 7);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key8", "s"), ks, 8);
       /* Other key attributes */
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
