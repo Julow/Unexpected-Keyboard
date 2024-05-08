@@ -103,6 +103,14 @@ tasks.register('buildKeyboardFont') {
   }
 }
 
+tasks.register('genEmojis') {
+  println "\nGenerating res/raw/emojis.txt"
+  exec {
+    workingDir = projectDir
+    commandLine "python", "gen_emoji.py"
+  }
+}
+
 tasks.withType(Test).configureEach {
   dependsOn 'genLayoutsList'
   dependsOn 'checkKeyboardLayouts'
