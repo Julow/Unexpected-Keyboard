@@ -14,7 +14,7 @@ Python 3 is required to update generated files but not to build the app.
 For Android Studio users, no more setup is needed.
 
 For Nix users, the right environment can be obtained with `nix-shell ./shell.nix`.
-Instructions to install Nix are [here](https://nixos.wiki/wiki/Nix_Installation_Guide).
+Instructions to install Nix are [here](https://wiki.nixos.org/wiki/Nix_Installation_Guide).
 
 If you don't use Android Studio or Nix, you have to inform Gradle about the
 location of your Android SDK by either:
