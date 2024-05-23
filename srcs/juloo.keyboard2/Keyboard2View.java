@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Canvas;
+import android.graphics.Insets;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -13,6 +14,9 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowManager;
+import android.view.WindowMetrics;
 import java.util.Arrays;
 
 public class Keyboard2View extends View
@@ -256,6 +260,17 @@ public class Keyboard2View extends View
     int height =
       (int)(_config.keyHeight * _keyboard.keysHeight
           + _config.marginTop + _config.margin_bottom);
+    // Compatibility with display cutouts and navigation on the right
+    if (VERSION.SDK_INT >= 30)
+    {
+      WindowMetrics metrics =
+        ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
+        .getCurrentWindowMetrics();
+      Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(
+          WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars()
+          | WindowInsets.Type.displayCutout());
+      width = metrics.getBounds().width() - insets.right - insets.left;
+    }
     setMeasuredDimension(width, height);
     _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;
   }
