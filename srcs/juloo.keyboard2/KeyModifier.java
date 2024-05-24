@@ -117,17 +117,13 @@ public final class KeyModifier
     return k;
   }
 
-  public static KeyValue modify_round_trip(KeyValue k)
+  /** Modify a key affected by a round-trip or a clockwise circle gesture. */
+  public static KeyValue modify_gesture(KeyValue k)
   {
-    return apply_fn(k);
-  }
-
-  public static KeyValue modify_circle(KeyValue k, boolean clockwise)
-  {
-    if (clockwise)
-      return apply_shift(k);
-    else
+    KeyValue shifted = apply_shift(k);
+    if (shifted == null || shifted.equals(k))
       return apply_fn(k);
+    return shifted;
   }
 
   public static Map_char modify_numpad_script(String numpad_script)

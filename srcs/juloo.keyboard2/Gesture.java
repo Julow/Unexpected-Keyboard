@@ -43,13 +43,14 @@ public final class Gesture
       case Ended_swipe:
         return selected_val;
       case Ended_center:
-        return KeyModifier.modify_round_trip(selected_val);
+        return KeyModifier.modify_gesture(selected_val);
       case Rotating_clockwise:
       case Ended_clockwise:
-        return KeyModifier.modify_circle(key.keys[0], true);
+        return KeyModifier.modify_gesture(key.keys[0]);
       case Rotating_anticlockwise:
       case Ended_anticlockwise:
-        return KeyModifier.modify_circle(key.keys[0], false);
+        // Unimplemented for now.
+        return key.keys[0];
     }
     return null; // Unreachable
   }
