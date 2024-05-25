@@ -61,6 +61,8 @@ For example, to make the `I` key behave as in Turkish:
 
 There can be as many of these tags inside `<modmap>` as needed.
 
+Shift and Fn modmaps also affect the clockwise circle and the roundtrip gestures.
+
 ### Row
 
 The `<row>` tag encloses one row on the keyboard. It requires no properties, and supports the following:
@@ -94,6 +96,7 @@ The following properties are optionally supported:
 * `shift`: How much empty space to add to the left of this key. Defaults to `0` and accepts a non-negative floating point value.
 * `indication`: An extra label to show under the main label, intended to be used as a legend for 2A typing (e.g. `<key key0="2" indication="ABC" />`). Caution: if you have `key8` defined, it overlaps!
 * `slider`: If set to `true`, the keys `w` and `e` are sent repeatedly when the key is being slid on. Intended to be used on the space bar, and in fact used on the default space bar.
+* `anticircle`: The key value to send when doing an anti-clockwise circle gesture on the key. The clockwise circle and round-trip gestures are not configurable that way.
 
 ## Possible key values
 
