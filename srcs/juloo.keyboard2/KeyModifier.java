@@ -33,7 +33,6 @@ public final class KeyModifier
     if (r == null)
     {
       r = k;
-      /* Order: Fn, Shift, accents */
       for (int i = 0; i < n_mods; i++)
         r = modify(r, mods.get(i));
       ks.put(mods, r);
@@ -70,6 +69,7 @@ public final class KeyModifier
       case ALT:
       case META: return turn_into_keyevent(k);
       case FN: return apply_fn(k);
+      case GESTURE: return apply_gesture(k);
       case SHIFT: return apply_shift(k);
       case GRAVE: return apply_map_char(k, map_char_grave);
       case AIGU: return apply_map_char(k, map_char_aigu);
@@ -115,15 +115,6 @@ public final class KeyModifier
         break;
     }
     return k;
-  }
-
-  /** Modify a key affected by a round-trip or a clockwise circle gesture. */
-  public static KeyValue modify_gesture(KeyValue k)
-  {
-    KeyValue shifted = apply_shift(k);
-    if (shifted == null || shifted.equals(k))
-      return apply_fn(k);
-    return shifted;
   }
 
   public static Map_char modify_numpad_script(String numpad_script)
@@ -488,6 +479,15 @@ public final class KeyModifier
       default: return k;
     }
     return k.withKeyevent(e);
+  }
+
+  /** Modify a key affected by a round-trip or a clockwise circle gesture. */
+  private static KeyValue apply_gesture(KeyValue k)
+  {
+    KeyValue shifted = apply_shift(k);
+    if (shifted == null || shifted.equals(k))
+      return apply_fn(k);
+    return shifted;
   }
 
   /* Lookup the cache entry for a key. Create it needed. */

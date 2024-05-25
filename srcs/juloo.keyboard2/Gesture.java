@@ -26,33 +26,41 @@ public final class Gesture
     Ended_anticlockwise
   }
 
+  enum Name
+  {
+    None,
+    Swipe,
+    Roundtrip,
+    Circle,
+    Anticircle
+  }
+
   /** Angle to travel before a rotation gesture starts. A threshold too low
       would be too easy to reach while doing back and forth gestures, as the
       quadrants are very small. In the same unit as [current_dir] */
   static final int ROTATION_THRESHOLD = 2;
 
-  /** Modify the key depending on the current gesture. Return [null] if the
-      gesture is invalid or if [KeyModifier] returned [null]. */
-  public KeyValue modify_key(KeyValue selected_val, KeyboardData.Key key)
+  /** Return the currently recognized gesture. Return [null] if no gesture is
+      recognized. Might change everytime [changed_direction] return [true]. */
+  public Name get_gesture()
   {
     switch (state)
     {
       case Cancelled:
-        return null;
+        return Name.None;
       case Swiped:
       case Ended_swipe:
-        return selected_val;
+        return Name.Swipe;
       case Ended_center:
-        return KeyModifier.modify_gesture(selected_val);
+        return Name.Roundtrip;
       case Rotating_clockwise:
       case Ended_clockwise:
-        return KeyModifier.modify_gesture(key.keys[0]);
+        return Name.Circle;
       case Rotating_anticlockwise:
       case Ended_anticlockwise:
-        // Unimplemented for now.
-        return key.keys[0];
+          return Name.Anticircle;
     }
-    return null; // Unreachable
+    return Name.None; // Unreachable
   }
 
   public boolean is_in_progress()
@@ -67,7 +75,10 @@ public final class Gesture
     return false;
   }
 
-  /** The pointer changed direction. Return [true] if the gesture changed state. */
+  public int current_direction() { return current_dir; }
+
+  /** The pointer changed direction. Return [true] if the gesture changed
+      state and [get_gesture] return a different value. */
   public boolean changed_direction(int direction)
   {
     int d = dir_diff(current_dir, direction);
@@ -94,16 +105,19 @@ public final class Gesture
     return false;
   }
 
-  public void moved_to_center()
+  /** Return [true] if [get_gesture] will return a different value. */
+  public boolean moved_to_center()
   {
     switch (state)
     {
-      case Swiped: state = State.Ended_center; break;
-      case Rotating_clockwise: state = State.Ended_clockwise; break;
-      case Rotating_anticlockwise: state = State.Ended_anticlockwise; break;
+      case Swiped: state = State.Ended_center; return true;
+      case Rotating_clockwise: state = State.Ended_clockwise; return false;
+      case Rotating_anticlockwise: state = State.Ended_anticlockwise; return false;
     }
+    return false;
   }
 
+  /** Will not change the gesture state. */
   public void pointer_up()
   {
     switch (state)

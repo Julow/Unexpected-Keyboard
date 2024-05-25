@@ -148,7 +148,6 @@ public final class Pointers implements Handler.Callback
     {
       // A gesture was in progress
       ptr.gesture.pointer_up();
-      ptr_value = ptr.gesture.modify_key(ptr.value, ptr.key);
     }
     Pointer latched = getLatched(ptr);
     if (latched != null) // Already latched
@@ -272,8 +271,8 @@ public final class Pointers implements Handler.Callback
         return;
       // Gesture ended
       ptr.gesture.moved_to_center();
-      ptr.value = ptr.gesture.modify_key(ptr.value, ptr.key);
-      ptr.flags = pointer_flags_of_kv(ptr.value);
+      ptr.value = apply_gesture(ptr, ptr.gesture.get_gesture());
+      ptr.flags = 0;
 
     }
     else
@@ -314,7 +313,7 @@ public final class Pointers implements Handler.Callback
         }
         else
         {
-          ptr.value = ptr.gesture.modify_key(ptr.value, ptr.key);
+          ptr.value = apply_gesture(ptr, ptr.gesture.get_gesture());
           restartKeyRepeat(ptr);
           ptr.flags = 0; // Special behaviors are ignored during a gesture.
         }
@@ -479,6 +478,41 @@ public final class Pointers implements Handler.Callback
     return flags;
   }
 
+  // Gestures
+
+  /** Apply a gesture to the current key. */
+  KeyValue apply_gesture(Pointer ptr, Gesture.Name gesture)
+  {
+    switch (gesture)
+    {
+      case None:
+        return ptr.value;
+      case Swipe:
+        return ptr.value;
+      case Roundtrip:
+        return
+          modify_key_with_extra_modifier(
+              ptr,
+              getNearestKeyAtDirection(ptr, ptr.gesture.current_direction()),
+              KeyValue.Modifier.GESTURE);
+      case Circle:
+        return
+          modify_key_with_extra_modifier(ptr, ptr.key.keys[0],
+              KeyValue.Modifier.GESTURE);
+      case Anticircle:
+        return _handler.modifyKey(ptr.key.keys[0], ptr.modifiers);
+    }
+    return ptr.value; // Unreachable
+  }
+
+  KeyValue modify_key_with_extra_modifier(Pointer ptr, KeyValue kv,
+      KeyValue.Modifier extra_mod)
+  {
+    return
+      _handler.modifyKey(kv,
+        ptr.modifiers.with_extra_mod(KeyValue.makeInternalModifier(extra_mod)));
+  }
+
   // Pointers
 
   private static final class Pointer
@@ -634,6 +668,14 @@ public final class Pointers implements Handler.Callback
         }
       }
       return false;
+    }
+
+    /** Return a copy of this object with an extra modifier added. */
+    public Modifiers with_extra_mod(KeyValue m)
+    {
+      KeyValue[] newmods = Arrays.copyOf(_mods, _size + 1);
+      newmods[_size] = m;
+      return ofArray(newmods, newmods.length);
     }
 
     /** Returns the activated modifiers that are not in [m2]. */
