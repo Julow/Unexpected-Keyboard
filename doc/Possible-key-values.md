@@ -34,19 +34,18 @@ Value       | Meaning
 
 **Special keys**
 These keys are sent to apps, which are free to ignore them. The keyboard do not perform editing in response to these keys.
-            |
-:---------- | :------
-`esc`       | `enter`
-`up`        | `right`
-`down`      | `left`
-`page_up`   | `page_down`
-`home`      | `end`
-`backspace` | `delete`
-`insert`    | `f1`-`f12`
-`tab`       | `copy`
-`paste`     | `cut`
-`selectAll` | `pasteAsPlainText`
-`undo`      | `redo`
+
+`esc`, `enter`,
+`up`, `right`,
+`down`, `left`,
+`page_up`, `page_down`,
+`home`, `end`,
+`backspace`, `delete`,
+`insert`, `f1`-`f12`,
+`tab`, `copy`,
+`paste`, `cut`,
+`selectAll`, `pasteAsPlainText`,
+`undo`, `redo`
 
 **Whitespace**
 Value   | Meaning
@@ -92,26 +91,27 @@ Value                | Meaning
 `box`                | Turns `1`-`9`, `0`, and `.` into single-line, thin box-drawing characters.
 
 **Bidirectional**
+Value   | Meaning
+:------ | :------
 `lrm`   | Left-to-right mark.
 `rlm`   | Right-to-left mark.
 `b(`, `b)`, `b[`, `b]`, `b{`, `b}`, `blt`, `bgt` | Sends the bracket characters, but with mirrored key legends for right-to-left languages. (`blt` and `bgt` print `<` and `>` respectively.)
 
 **Hebrew**
 Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
-                      |
-:-------------------- | :------
-`qamats`              | `patah`
-`sheva`               | `dagesh`
-`hiriq`               | `segol`
-`tsere`               | `holam`
-`qubuts`              | `hataf_patah`
-`hataf_qamats`        | `hataf_segol`
-`shindot`             | `shindot_placeholder`
-`sindot`              | `sindot_placeholder`
-`geresh`              | `gershayim`
-`maqaf`               | `rafe`
-`ole`                 | `ole_placeholder`
-`meteg`               | `meteg_placeholder`
+
+`qamats`, `patah`,
+`sheva`, `dagesh`,
+`hiriq`, `segol`,
+`tsere`, `holam`,
+`qubuts`, `hataf_patah`,
+`hataf_qamats`, `hataf_segol`,
+`shindot`, `shindot_placeholder`,
+`sindot`, `sindot_placeholder`,
+`geresh`, `gershayim`,
+`maqaf`, `rafe`,
+`ole`, `ole_placeholder`,
+`meteg`, `meteg_placeholder`
 
 **Unexpected Keyboard specific**
 Value                  | Meaning
@@ -133,13 +133,11 @@ Value                  | Meaning
 
 **Unused**
 These keys are known to do nothing.
-              |
-:------------ | :------
-`replaceText` | `textAssist`
-`autofill`    | `removed`
+
+`replaceText`, `textAssist`,
+`autofill`, `removed`
 
 **Placeholders**
 These keys are normally hidden unless the Fn modifier is activated.
-                  |
-:---------------- | :------
+
 `f11_placeholder` | `f12_placeholder`
