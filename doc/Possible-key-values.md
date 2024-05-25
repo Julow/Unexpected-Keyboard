@@ -1,46 +1,46 @@
 This is an exhaustive list of special values accepted for the `key0` through `key8` or `nw` through `se` attributes on a key. Any string that does not exactly match these will be printed verbatim.
 
 **Escape codes**
-Value | Meaning
+Value | Escape code for
 :---- | :------
-`\?`  | Escape code for `?` (question mark).
-`\#`  | Escape code for `#` (number sign).
-`\@`  | Escape code for `@` (at mark).
-`\n`  | Escape code for newline. This has inconsistent compatibility (sometimes acts as the Enter key, sometimes inserts a literal line-break character, even into text areas where it doesn’t belong). What you really want is probably `enter` or `action`.
-`\\`  | Escape code for `\` (backslash).
+`\?`  | `?`
+`\#`  | `#`
+`\@`  | `@`
+`\n`  | Newline. This has inconsistent compatibility (sometimes acts as the Enter key, sometimes inserts a literal line-break character, even into text areas where it doesn’t belong). What you really want is probably `enter` or `action`.
+`\\`  | `\`
 
 XML escape codes also work, including:
 
-Value    | Meaning
+Value    | Escape code for
 :------- | :------
-`&amp;`  | Escape code for `&` (ampersand).
-`&lt;`   | Escape code for `<` (less-than sign).
-`&gt;`   | Escape code for `>` (greater-than sign).
-`&quot;` | Escape code for `"` (straight double quote).
+`&amp;`  | `&`
+`&lt;`   | `<`
+`&gt;`   | `>`
+`&quot;` | `"`
 
 **Virtual keys**
 Value       | Meaning
 :---------- | :------
-`shift`     | Shift key.
-`ctrl`      | Control key.
-`alt`       | Alt key.
-`meta`      | Meta key. Equivalent to the Windows key.
-`capslock`  | Caps lock key.
-`esc`       | Escape key.
-`enter`     | Enter key. Known as Return on Mac OS.
-`up`        | Cursor up key.
-`right`     | Cursor right key.
-`down`      | Cursor down key.
-`left`      | Cursor left key.
-`page_up`   | Page up key.
-`page_down` | Page down key.
-`home`      | Home key.
-`end`       | End key.
-`backspace` | Backspace key.
-`delete`    | Delete key.
-`insert`    | Insert key.
+`shift`     |
+`ctrl`      |
+`alt`       |
+`meta`      | Equivalent to the Windows key.
+`capslock`  | Actives and locks Shift
+`esc`       |
+`enter`     |
+`up`        |
+`right`     |
+`down`      |
+`left`      |
+`page_up`   |
+`page_down` |
+`home`      |
+`end`       |
+`backspace` |
+`delete`    |
+`insert`    |
 `f1`-`f12`  | The function keys from F1 to F12. F13 throught F24 are not supported, because no Android apps actually use those.
-`tab`       | Tab key.
+`tab`       |
 
 **Whitespace and bidirectional text**
 Value   | Meaning
@@ -95,34 +95,32 @@ Value                | Meaning
 `box`                | Turns `1`-`9`, `0`, and `.` into single-line, thin box-drawing characters.
 `fn`                 | Activates Fn mode, which assigns letters and symbols to special characters. e.g. `fn` `!` = `¡`
 
-***TODO: I don't know Hebrew, so I can't describe these.***
-
 **Hebrew**
 Value                 | Meaning
 :-------------------- | :------
-`qamats`              | Kamatz.
-`patah`               | Patach.
-`sheva`               | Sheva
-`dagesh`              | Dagesh or mapiq.
-`hiriq`               | Hiriq.
-`segol`               | Segol.
-`tsere`               | Tsere.
-`holam`               | Holam.
-`qubuts`              | Kubuts.
-`hataf_patah`         | Reduced patach.
-`hataf_qamats`        | Reduced kamatz.
-`hataf_segol`         | Reduced segol.
-`shindot`             | Shin dot.
+`qamats`              | Kamatz
+`patah`               |
+`sheva`               |
+`dagesh`              | Mapiq
+`hiriq`               |
+`segol`               |
+`tsere`               |
+`holam`               |
+`qubuts`              | Kubuts
+`hataf_patah`         | Reduced patach
+`hataf_qamats`        | Reduced kamatz
+`hataf_segol`         | Reduced segol
+`shindot`             |
 `shindot_placeholder` | Shin dot placeholder. ***TODO: What does "placeholder" mean here?*
-`sindot`              | Sin dot.
+`sindot`              |
 `sindot_placeholder`  | Sin dot placeholder.
-`geresh`              | Geresh.
-`gershayim`           | Gershayim.
-`maqaf`               | Maqaf.
-`rafe`                | Rafe.
-`ole`                 | Ole.
+`geresh`              |
+`gershayim`           |
+`maqaf`               |
+`rafe`                |
+`ole`                 |
 `ole_placeholder`     | Ole placeholder.
-`meteg`               | Meteg, siluq, or sof-pasuq.
+`meteg`               | Siluq or sof-pasuq.
 `meteg_placeholder`   | Meteg placeholder.
 
 **Ligature control**
