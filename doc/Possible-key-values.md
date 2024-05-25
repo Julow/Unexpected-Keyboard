@@ -97,32 +97,21 @@ Value                | Meaning
 `b(`, `b)`, `b[`, `b]`, `b{`, `b}`, `blt`, `bgt` | Sends the bracket characters, but with mirrored key legends for right-to-left languages. (`blt` and `bgt` print `<` and `>` respectively.)
 
 **Hebrew**
-Value                 | Meaning
+Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
+                      |
 :-------------------- | :------
-`qamats`              | Kamatz
-`patah`               |
-`sheva`               |
-`dagesh`              | Mapiq
-`hiriq`               |
-`segol`               |
-`tsere`               |
-`holam`               |
-`qubuts`              | Kubuts
-`hataf_patah`         | Reduced patach
-`hataf_qamats`        | Reduced kamatz
-`hataf_segol`         | Reduced segol
-`shindot`             |
-`shindot_placeholder` | Shin dot placeholder. ***TODO: What does "placeholder" mean here?*
-`sindot`              |
-`sindot_placeholder`  | Sin dot placeholder.
-`geresh`              |
-`gershayim`           |
-`maqaf`               |
-`rafe`                |
-`ole`                 |
-`ole_placeholder`     | Ole placeholder.
-`meteg`               | Siluq or sof-pasuq.
-`meteg_placeholder`   | Meteg placeholder.
+`qamats`              | `patah`
+`sheva`               | `dagesh`
+`hiriq`               | `segol`
+`tsere`               | `holam`
+`qubuts`              | `hataf_patah`
+`hataf_qamats`        | `hataf_segol`
+`shindot`             | `shindot_placeholder`
+`sindot`              | `sindot_placeholder`
+`geresh`              | `gershayim`
+`maqaf`               | `rafe`
+`ole`                 | `ole_placeholder`
+`meteg`               | `meteg_placeholder`
 
 **Unexpected Keyboard specific**
 Value                  | Meaning
