@@ -55,7 +55,8 @@ Duplicate keys: ટ, ડ
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
 # hang_dubeolsik_kr
-0 warnings
+Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
+1 warnings
 # hebr_1_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 1 warnings
