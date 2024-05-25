@@ -1,48 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="두벌식 (Korean)" script="hangul">
-  <modmap>
-    <!-- The hangul character don't have shifted variants, this is specific to
-         the layout. -->
-    <shift a="ㅂ" b="ㅃ"/>
-    <shift a="ㅈ" b="ㅉ"/>
-    <shift a="ㄷ" b="ㄸ"/>
-    <shift a="ㄱ" b="ㄲ"/>
-    <shift a="ㅅ" b="ㅆ"/>
-    <shift a="ㅐ" b="ㅒ"/>
-    <shift a="ㅔ" b="ㅖ"/>
-  </modmap>
   <row>
-    <key key0="ㅂ" key2="1" key4="esc"/>
-    <key key0="ㅈ" key1="~" key2="2" key3="\@"/>
-    <key key0="ㄷ" key1="!" key2="3" key3="\#"/>
-    <key key0="ㄱ" key2="4" key3="$"/>
-    <key key0="ㅅ" key2="5" key3="%"/>
-    <key key0="ㅛ" key2="6" key3="^"/>
-    <key key0="ㅕ" key2="7" key3="&amp;"/>
-    <key key0="ㅑ" key2="8" key3="*"/>
-    <key key0="ㅐ" key2="9" key3="(" key4=")"/>
-    <key key0="ㅔ" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
+    <key key0="ㅂ" key2="1" key3="ㅄ" key4="ㅃ"/>
+    <key key0="ㅈ" key1="~" key2="2" key3="ㄵ" key4="ㅉ"/>
+    <key key0="ㄷ" key1="!" key2="3" key4="ㄸ"/>
+    <key key0="ㄱ" key1="\@" key2="4" key3="ㄺ" key4="ㄲ"/>
+    <key key0="ㅅ" key1="\#" key2="5" key3="ㄳ" key4="ㅆ"/>
+    <key key0="ㅛ" key1="$" key2="6"/>
+    <key key0="ㅕ" key1="%" key2="7" key3="ㅖ"/>
+    <key key0="ㅑ" key1="^" key2="8"/>
+    <key key0="ㅐ" key1="&amp;" key2="9" key3="ㅒ"/>
+    <key key0="ㅔ" key1="*" key2="0" key3="ㅙ"/>
   </row>
   <row>
-    <key shift="0.5" key0="ㅁ" key1="tab" key2="`"/>
-    <key key0="ㄴ"/>
-    <key key0="ㅇ"/>
-    <key key0="ㄹ"/>
-    <key key0="ㅎ" key2="-" key3="_"/>
-    <key key0="ㅗ" key2="=" key3="+"/>
-    <key key0="ㅓ" key4="}" key3="{"/>
-    <key key0="ㅏ" key3="[" key4="]"/>
+    <key shift="0.5" key0="ㅁ" key2="`"/>
+    <key key0="ㄴ" key3="ㄼ"/>
+    <key key0="ㅇ" key3="ㄻ"/>
+    <key key0="ㄹ" key1="-" key2="_" key3="ㄽ"/>
+    <key key0="ㅎ" key1="=" key2="+" key3="ㅀ" key4="ㄶ"/>
+    <key key0="ㅗ" key1="{" key2="}" key3="ㅚ"/>
+    <key key0="ㅓ" key1="[" key2="]" key3="ㅘ"/>
+    <key key0="ㅏ" key1="(" key2=")"/>
     <key key0="ㅣ" key2="|" key3="\\"/>
   </row>
   <row>
     <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="ㅋ"/>
-    <key key0="ㅌ"/>
-    <key key0="ㅊ" key2="&lt;" key3="."/>
-    <key key0="ㅍ" key2="&gt;" key3=","/>
-    <key key0="ㅠ" key2="\?" key3="/"/>
-    <key key0="ㅜ" key2=":" key3=";"/>
-    <key key0="ㅡ" key2="&quot;" key3="'"/>
+    <key key0="ㅌ" key1="ㄾ" key3="&lt;" key4="&gt;"/>
+    <key key0="ㅊ" key3="."/>
+    <key key0="ㅍ" key1="ㄿ" key3=","/>
+    <key key0="ㅠ" key1="ㅞ" key2="ㅝ" key3="/" key4="\?"/>
+    <key key0="ㅜ" key2="ㅟ" key3=";" key4=":"/>
+    <key key0="ㅡ" key2="ㅢ" key3="'" key4="&quot;"/>
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
 </keyboard>
