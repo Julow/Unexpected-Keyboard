@@ -34,30 +34,19 @@ Value       | Meaning
 
 **Special keys**
 These keys are sent to apps, which are free to ignore them. The keyboard do not perform editing in response to these keys.
-Value              | Meaning
-:----------------- | :------
-`esc`              |
-`enter`            |
-`up`               |
-`right`            |
-`down`             |
-`left`             |
-`page_up`          |
-`page_down`        |
-`home`             |
-`end`              |
-`backspace`        |
-`delete`           |
-`insert`           |
-`f1`-`f12`         | The function keys from F1 to F12. F13 throught F24 are not supported, because no Android apps actually use those.
-`tab`              |
-`copy`             |
-`paste`            |
-`cut`              |
-`selectAll`        |
-`pasteAsPlainText` |
-`undo`             |
-`redo`             |
+            |
+:---------- | :------
+`esc`       | `enter`
+`up`        | `right`
+`down`      | `left`
+`page_up`   | `page_down`
+`home`      | `end`
+`backspace` | `delete`
+`insert`    | `f1`-`f12`
+`tab`       | `copy`
+`paste`     | `cut`
+`selectAll` | `pasteAsPlainText`
+`undo`      | `redo`
 
 **Whitespace**
 Value   | Meaning
@@ -154,15 +143,14 @@ Value                  | Meaning
 `shareText`            | Emit a share Intent for the selected text. **Oddity:** This is in CamelCase.
 
 **Unused**
-Value         | Meaning
+These keys are known to do nothing.
+              |
 :------------ | :------
-`replaceText` | This is in the code, but marked as "not used".
-`textAssist`  | This is in the code, but marked as "not used".
-`autofill`    | This is in the code, but marked as "not used".
+`replaceText` | `textAssist`
+`autofill`    | `removed`
 
 **Placeholders**
-Value             | Meaning
+These keys are normally hidden unless the Fn modifier is activated.
+                  |
 :---------------- | :------
-`removed`         | ***TODO: What does this do?***
-`f11_placeholder` | ***TODO: What does this do?***
-`f12_placeholder` | ***TODO: What does this do?***
+`f11_placeholder` | `f12_placeholder`
