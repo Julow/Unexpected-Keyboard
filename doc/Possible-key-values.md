@@ -6,7 +6,8 @@ Value | Escape code for
 `\?`  | `?`
 `\#`  | `#`
 `\@`  | `@`
-`\n`  | Newline. This has inconsistent compatibility (sometimes acts as the Enter key, sometimes inserts a literal line-break character, even into text areas where it doesn’t belong). What you really want is probably `enter` or `action`.
+`\n`  | Literal newline character. This is different from `enter` and `action` in certain apps.
+`\t`  | Literal tab character. This is different from `tab` in certain apps.
 `\\`  | `\`
 
 XML escape codes also work, including:
@@ -42,15 +43,13 @@ Value       | Meaning
 `f1`-`f12`  | The function keys from F1 to F12. F13 throught F24 are not supported, because no Android apps actually use those.
 `tab`       |
 
-**Whitespace and bidirectional text**
+**Whitespace**
 Value   | Meaning
 :------ | :------
-`\\t`   | Literal tab character. This may yield different behavior from `tab` in certain text-editor apps.
 `space` | Space bar.
 `nbsp`  | No-break space. Note: To input the narrow no-break space recommended for French, use `\u202F`.
-`lrm`   | Left-to-right mark.
-`rlm`   | Right-to-left mark.
-`b(`, `b)`, `b[`, `b]`, `b{`, `b}`, `blt`, `bgt` | Sends the bracket characters, but with mirrored key legends for right-to-left languages. (`blt` and `bgt` print `<` and `>` respectively.)
+`zwj`   | Zero-width joiner.
+`zwnj`  | Zero-width non-joiner.
 
 **Virtual shortcuts**
 Value              | Meaning
@@ -95,6 +94,11 @@ Value                | Meaning
 `box`                | Turns `1`-`9`, `0`, and `.` into single-line, thin box-drawing characters.
 `fn`                 | Activates Fn mode, which assigns letters and symbols to special characters. e.g. `fn` `!` = `¡`
 
+**Bidirectional**
+`lrm`   | Left-to-right mark.
+`rlm`   | Right-to-left mark.
+`b(`, `b)`, `b[`, `b]`, `b{`, `b}`, `blt`, `bgt` | Sends the bracket characters, but with mirrored key legends for right-to-left languages. (`blt` and `bgt` print `<` and `>` respectively.)
+
 **Hebrew**
 Value                 | Meaning
 :-------------------- | :------
@@ -122,12 +126,6 @@ Value                 | Meaning
 `ole_placeholder`     | Ole placeholder.
 `meteg`               | Siluq or sof-pasuq.
 `meteg_placeholder`   | Meteg placeholder.
-
-**Ligature control**
-Value  | Meaning
-:----- | :------
-`zwj`  | Zero-width joiner.
-`zwnj` | Zero-width non-joiner.
 
 **Unexpected Keyboard specific**
 Value                  | Meaning
