@@ -19,29 +19,43 @@ Value    | Escape code for
 `&gt;`   | `>`
 `&quot;` | `"`
 
-**Virtual keys**
+**Modifiers**
 Value       | Meaning
 :---------- | :------
 `shift`     |
 `ctrl`      |
 `alt`       |
 `meta`      | Equivalent to the Windows key.
+`fn`        | Activates Fn mode, which assigns letters and symbols to special characters. e.g. `fn` `!` = `¡`
+`compose`   | Compose key. Enables composing characters using Linux-like shortcuts; e.g. `Compose` `A` `single quote` types `Á` (A with acute accent).
 `capslock`  | Actives and locks Shift
-`esc`       |
-`enter`     |
-`up`        |
-`right`     |
-`down`      |
-`left`      |
-`page_up`   |
-`page_down` |
-`home`      |
-`end`       |
-`backspace` |
-`delete`    |
-`insert`    |
-`f1`-`f12`  | The function keys from F1 to F12. F13 throught F24 are not supported, because no Android apps actually use those.
-`tab`       |
+
+**Special keys**
+These keys are sent to apps, which are free to ignore them. The keyboard do not perform editing in response to these keys.
+Value              | Meaning
+:----------------- | :------
+`esc`              |
+`enter`            |
+`up`               |
+`right`            |
+`down`             |
+`left`             |
+`page_up`          |
+`page_down`        |
+`home`             |
+`end`              |
+`backspace`        |
+`delete`           |
+`insert`           |
+`f1`-`f12`         | The function keys from F1 to F12. F13 throught F24 are not supported, because no Android apps actually use those.
+`tab`              |
+`copy`             |
+`paste`            |
+`cut`              |
+`selectAll`        |
+`pasteAsPlainText` |
+`undo`             |
+`redo`             |
 
 **Whitespace**
 Value   | Meaning
@@ -51,23 +65,16 @@ Value   | Meaning
 `zwj`   | Zero-width joiner.
 `zwnj`  | Zero-width non-joiner.
 
-**Virtual shortcuts**
+**Keyboard editing actions**
+These keys perform editing on the text without sending keys that the app can interpret differently or ignore.
 Value              | Meaning
 :----------------- | :------
-`copy`             | Copy. Equivalent to Ctrl+C.
-`paste`            | Paste. Equivalent to Ctrl+V.
-`cut`              | Cut. Equivalent to Ctrl+X.
-`selectAll`        | Select all. Equivalent to Ctrl+A. **Oddity:** This is in CamelCase.
-`pasteAsPlainText` | Paste as plain text. Equivalent to Ctrl+Shift+V. ***TODO: Verify if this is true.*** **Oddity:** This is in CamelCase.
-`undo`             | Undo. Equivalent to Ctrl+Z.
-`redo`             | Redo. Equivalent to Ctrl+Shift+Z. ***TODO: Or is it Ctrl+Y?***
 `cursor_left`      | Moves the cursor position to the left directly, without sending a `left` key event.
 `cursor_right`     | Moves the cursor position to the right directly, without sending a `right` key event.
 
-**Diacritics**
+**Other modifiers and diacritics**
 Value                | Meaning
 :------------------- | :------
-`compose`            | Compose key. Enables composing characters using Linux-like shortcuts; e.g. `Compose` `A` `single quote` types `Á` (A with acute accent).
 `accent_aigu`        | Acute accent. `á`
 `accent_caron`       | Háček. `č`
 `accent_cedille`     | Cedilla. `ç`
@@ -92,7 +99,6 @@ Value                | Meaning
 `ordinal`            | Turns `a` and `o` into `ª` and `º`.
 `arrows`             | Turns `1`-`4` and `6`-`9` into arrows.
 `box`                | Turns `1`-`9`, `0`, and `.` into single-line, thin box-drawing characters.
-`fn`                 | Activates Fn mode, which assigns letters and symbols to special characters. e.g. `fn` `!` = `¡`
 
 **Bidirectional**
 `lrm`   | Left-to-right mark.
