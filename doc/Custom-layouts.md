@@ -1,10 +1,12 @@
+# Custom layouts
+
 Unexpected Keyboard allows custom layouts to be defined, loaded, and used in the app. These layouts are defined in XML.
 
-# Existing keyboard layouts
+## Existing keyboard layouts
 
 The XML data files for the keyboard layouts that come with the app can be seen [in `/srcs/layouts`](https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts).
 
-# Structure
+## Structure
 
 A complete keyboard file with a single row containing a single Turkish "i" key is provided below:
 
@@ -32,11 +34,11 @@ An XML tag can have attributes, defined using an equals sign and a pair of ASCII
 
 If you do not like XML, you can also use [this third-party GUI editor](https://unexpected-keyboard-layout-editor.lixquid.com/) to create or edit a keyboard layout.
 
-## XML declaration
+### XML declaration
 
 Every keyboard XML starts with `<?xml version="1.0" encoding="utf-8"?>`.
 
-## Keyboard metadata
+### Keyboard metadata
 
 The `<keyboard>` tag encloses the whole keyboard. The following properties may be used:
 
@@ -45,7 +47,7 @@ The `<keyboard>` tag encloses the whole keyboard. The following properties may b
 * `script`: The (main) writing system that it supports. Possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. Defaults to `latin`.
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. Defaults to the same as `script`.
 
-## Modmap
+### Modmap
 
 The `<modmap>` tag encloses custom mappings for the Shift and Fn key’s behavior.
 
@@ -59,7 +61,7 @@ For example, to make the `I` key behave as in Turkish:
 
 There can be as many of these tags inside `<modmap>` as needed.
 
-## Row
+### Row
 
 The `<row>` tag encloses one row on the keyboard. It requires no properties, and supports the following:
 
@@ -67,7 +69,7 @@ The `<row>` tag encloses one row on the keyboard. It requires no properties, and
 
 The total height of the keyboard is defined in Settings as a percentage of the total height of the screen, which can be different between portrait and landscape. The height of a row is relative to the other ones, and are scaled to keep the height of the keyboard constant.
 
-## Key
+### Key
 
 The `<key />` tag defines a key on the keyboard. It requires at least one of the following properties:
 
@@ -93,7 +95,7 @@ The following properties are optionally supported:
 * `indication`: An extra label to show under the main label, intended to be used as a legend for 2A typing (e.g. `<key key0="2" indication="ABC" />`). Caution: if you have `key8` defined, it overlaps!
 * `slider`: If set to `true`, the keys `w` and `e` are sent repeatedly when the key is being slid on. Intended to be used on the space bar, and in fact used on the default space bar.
 
-# Possible key values
+## Possible key values
 
 `key0` and `nw` through `se` (`key1` through `key8`) take arbitrary strings of characters, and if they don't match any of the special values, it is printed verbatim. (This is intended behavior.)
 
@@ -103,6 +105,6 @@ Special values for the keys are documented in [this page](Possible-key-values).
 
 Keys prefixed with `loc ` do not appear by default, and are only visible when they are enabled through the "Add keys to keyboard" option in the settings menu, or the language installed on the device is detected to require it.
 
-# Portrait vs. landscape
+## Portrait vs. landscape
 
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. That is to say, you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.

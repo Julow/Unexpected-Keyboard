@@ -1,6 +1,8 @@
+# Key values
+
 This is an exhaustive list of special values accepted for the `key0` through `key8` or `nw` through `se` attributes on a key. Any string that does not exactly match these will be printed verbatim.
 
-**Escape codes**
+## Escape codes
 Value | Escape code for
 :---- | :------
 `\?`  | `?`
@@ -19,7 +21,7 @@ Value    | Escape code for
 `&gt;`   | `>`
 `&quot;` | `"`
 
-**Modifiers**
+## Modifiers
 System modifiers are sent to the app, which is free to do whatever they want in response.
 The other modifiers only exist within the keyboard.
 Value       | Meaning
@@ -32,7 +34,7 @@ Value       | Meaning
 `compose`   | Compose key. Enables composing characters using Linux-like shortcuts; e.g. `Compose` `A` `single quote` types `Á` (A with acute accent).
 `capslock`  | Actives and locks Shift
 
-**Special keys**
+## Special keys
 These keys are sent to apps, which are free to ignore them. The keyboard do not perform editing in response to these keys.
 
 `esc`, `enter`,
@@ -47,7 +49,7 @@ These keys are sent to apps, which are free to ignore them. The keyboard do not 
 `selectAll`, `pasteAsPlainText`,
 `undo`, `redo`
 
-**Whitespace**
+## Whitespace
 Value   | Meaning
 :------ | :------
 `space` | Space bar.
@@ -55,14 +57,14 @@ Value   | Meaning
 `zwj`   | Zero-width joiner.
 `zwnj`  | Zero-width non-joiner.
 
-**Keyboard editing actions**
+## Keyboard editing actions
 These keys perform editing on the text without sending keys that the app can interpret differently or ignore.
 Value              | Meaning
 :----------------- | :------
 `cursor_left`      | Moves the cursor position to the left directly, without sending a `left` key event.
 `cursor_right`     | Moves the cursor position to the right directly, without sending a `right` key event.
 
-**Other modifiers and diacritics**
+## Other modifiers and diacritics
 Value                | Meaning
 :------------------- | :------
 `accent_aigu`        | Acute accent. `á`
@@ -90,14 +92,14 @@ Value                | Meaning
 `arrows`             | Turns `1`-`4` and `6`-`9` into arrows.
 `box`                | Turns `1`-`9`, `0`, and `.` into single-line, thin box-drawing characters.
 
-**Bidirectional**
+## Bidirectional
 Value   | Meaning
 :------ | :------
 `lrm`   | Left-to-right mark.
 `rlm`   | Right-to-left mark.
 `b(`, `b)`, `b[`, `b]`, `b{`, `b}`, `blt`, `bgt` | Sends the bracket characters, but with mirrored key legends for right-to-left languages. (`blt` and `bgt` print `<` and `>` respectively.)
 
-**Hebrew**
+## Hebrew
 Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
 
 `qamats`, `patah`,
@@ -113,7 +115,7 @@ Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
 `ole`, `ole_placeholder`,
 `meteg`, `meteg_placeholder`
 
-**Unexpected Keyboard specific**
+## Unexpected Keyboard specific
 Value                  | Meaning
 :--------------------- | :------
 `config`               | Gear icon; opens Unexpected Keyboard settings.
@@ -131,13 +133,13 @@ Value                  | Meaning
 `voice_typing_chooser` | Shows a menu where you can choose which voice typing provider to use, then begins voice typing when you make a selection.
 `shareText`            | Emit a share Intent for the selected text. **Oddity:** This is in CamelCase.
 
-**Unused**
+## Unused
 These keys are known to do nothing.
 
 `replaceText`, `textAssist`,
 `autofill`, `removed`
 
-**Placeholders**
+## Placeholders
 These keys are normally hidden unless the Fn modifier is activated.
 
 `f11_placeholder` | `f12_placeholder`
