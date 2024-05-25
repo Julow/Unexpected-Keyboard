@@ -47,7 +47,7 @@ The `<keyboard>` tag encloses the whole keyboard. The following properties may b
 
 ## Modmap
 
-The `<modmap>` tag encloses custom mappings for the Shift and Fn key’s behavior. It supports one tag: `<shift />`.
+The `<modmap>` tag encloses custom mappings for the Shift and Fn key’s behavior.
 
 Each entry contains two mandatory properties: `a` for the base character before the modifier is applied, and `b` for the modified character.
 
@@ -89,9 +89,9 @@ key3 | key8 | key4
 The following properties are optionally supported:
 
 * `width`: The width of the key relative to the normal width. Defaults to `1` and accepts a positive floating point value.
-* `offset`: How much empty space to add to the left of this key. Defaults to `0` and accepts a non-negative floating point value. ***TODO: Find out if negative values are actually ignored***
+* `shift`: How much empty space to add to the left of this key. Defaults to `0` and accepts a non-negative floating point value.
 * `indication`: An extra label to show under the main label, intended to be used as a legend for 2A typing (e.g. `<key key0="2" indication="ABC" />`). Caution: if you have `key8` defined, it overlaps!
-* `slider`: If set to `true`, the cursor moves left and right when the key is pressed down and slid left and right before the key repeat kicks in. Intended to be used on the space bar, and in fact used on the default space bar.
+* `slider`: If set to `true`, the keys `w` and `e` are sent repeatedly when the key is being slid on. Intended to be used on the space bar, and in fact used on the default space bar.
 
 # Possible key values
 
