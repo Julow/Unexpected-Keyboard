@@ -124,8 +124,8 @@ Value                  | Meaning
 `switch_forward`       | Change the keyboard layout, as long as Unexpected Keyboard has multiple keyboard layouts enabled in the settings.
 `switch_backward`      | Change the keyboard layout to the previous one in the list.
 `switch_greekmath`     | Switch to the Greek & Math Symbols layer.
-`change_method`        | Switch from Unexpected Keyboard to the next input method in the list.
-`change_method_prev`   | Switch from Unexpected Keyboard to the previous input method in the list.
+`change_method`        | Open the input method picker dialog.
+`change_method_prev`   | Switch to the previously used input method.
 `action`               | Performs a special context-sensitive operation related to the Enter key. For example, in the Twitter (X) app, `enter` adds a new line, while `action` posts.
 `voice_typing`         | Begin voice typing.
 `voice_typing_chooser` | Shows a menu where you can choose which voice typing provider to use, then begins voice typing when you make a selection.
