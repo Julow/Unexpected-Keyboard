@@ -322,10 +322,7 @@ public class Keyboard2View extends View
           if (k.keys[i] != null)
             drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown);
         }
-        if (k.indication != null)
-        {
-          drawIndication(canvas, k.indication, keyW / 2f + x, y, keyH);
-        }
+        drawIndication(canvas, k, x, y, keyW, keyH);
         x += _keyWidth * k.width;
       }
       y += row.height * _config.keyHeight;
@@ -443,15 +440,33 @@ public class Keyboard2View extends View
     canvas.drawText(label, 0, label_len, x, y, p);
   }
 
-  private void drawIndication(Canvas canvas, String indication, float x,
-      float y, float keyH)
+  private void drawIndication(Canvas canvas, KeyboardData.Key k, float x,
+      float y, float keyW, float keyH)
   {
-    float textSize = keyH * _config.sublabelTextSize * _config.characterSize;
-    Paint p = _theme.indicationPaint();
+    boolean special_font = false;
+    String indic;
+    float text_size;
+    if (k.indication != null)
+    {
+      indic = k.indication;
+      text_size = keyH * _config.sublabelTextSize * _config.characterSize;
+    }
+    else if (k.anticircle != null)
+    {
+      indic = k.anticircle.getString();
+      special_font = k.anticircle.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
+      text_size = scaleTextSize(k.anticircle, _config.sublabelTextSize, keyH);
+    }
+    else
+    {
+      return;
+    }
+    Paint p = _theme.indicationPaint(special_font);
     p.setColor(_theme.subLabelColor);
-    p.setTextSize(textSize);
-    canvas.drawText(indication, x,
-        (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
+    p.setTextSize(text_size);
+    // Limit indication length to 3 characters
+    canvas.drawText(indic, 0, Math.min(indic.length(), 3),
+        x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
   private float scaleTextSize(KeyValue k, float rel_size, float keyH)
