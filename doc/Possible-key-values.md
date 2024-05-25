@@ -53,7 +53,8 @@ These keys are sent to apps, which are free to ignore them. The keyboard do not 
 Value   | Meaning
 :------ | :------
 `space` | Space bar.
-`nbsp`  | No-break space. Note: To input the narrow no-break space recommended for French, use `\u202F`.
+`nbsp`  | Non-breaking space.
+`nnbsp` | Narrow non-breaking space.
 `zwj`   | Zero-width joiner.
 `zwnj`  | Zero-width non-joiner.
 

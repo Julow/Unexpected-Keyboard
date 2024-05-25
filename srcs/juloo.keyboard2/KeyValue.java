@@ -503,6 +503,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "\\n": return charKey("\\n", '\n', 0); // Send the newline character
       case "space": return charKey(0xE00D, ' ', FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_GREYED);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
+      case "nnbsp": return charKey("\u2423", '\u202F', FLAG_SMALLER_FONT);
 
       /* bidi */
       case "lrm": return charKey("↱", '\u200e', 0); // Send left-to-right mark
