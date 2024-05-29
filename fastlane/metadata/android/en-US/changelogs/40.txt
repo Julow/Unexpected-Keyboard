@@ -1,0 +1,11 @@
+MessagEase and Thumb-Key inspired gestures with the anti-clockwise circle being
+completely configurable.
+
+Updated emojis.
+Improved Hangul (Korean) support.
+Added Danish support.
+Improved spacebar slider.
+Updated translations.
+Various improvements and fixes to the app and layouts.
+
+Many thanks to the contributors: @alotbsol555 @bkmgit @Cheesebaron @CloneWith @eandersons @JapanYoshi @Julow @la-ninpre @m15a @marciozomb13 @polyctena @solokot @Spike-from-NH @tmqCypher @Validbit
