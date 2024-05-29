@@ -500,7 +500,7 @@ public final class Pointers implements Handler.Callback
           modify_key_with_extra_modifier(ptr, ptr.key.keys[0],
               KeyValue.Modifier.GESTURE);
       case Anticircle:
-        return _handler.modifyKey(ptr.key.keys[0], ptr.modifiers);
+        return _handler.modifyKey(ptr.key.anticircle, ptr.modifiers);
     }
     return ptr.value; // Unreachable
   }

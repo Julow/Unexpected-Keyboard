@@ -35,6 +35,7 @@ public class Theme
   private final Paint _keySubLabelPaint;
   private final Paint _specialKeySubLabelPaint;
   private final Paint _indicationPaint;
+  private final Paint _specialIndicationPaint;
 
   public Theme(Context context, AttributeSet attrs)
   {
@@ -68,6 +69,7 @@ public class Theme
     _specialKeyLabelPaint = initLabelPaint(Paint.Align.CENTER, specialKeyFont);
     _specialKeySubLabelPaint = initLabelPaint(Paint.Align.LEFT, specialKeyFont);
     _indicationPaint = initLabelPaint(Paint.Align.CENTER, null);
+    _specialIndicationPaint = initLabelPaint(Paint.Align.CENTER, specialKeyFont);
   }
 
   public Paint labelPaint(boolean special_font)
@@ -83,9 +85,9 @@ public class Theme
     return p;
   }
 
-  public Paint indicationPaint()
+  public Paint indicationPaint(boolean special_font)
   {
-    return _indicationPaint;
+    return special_font ? _specialIndicationPaint : _indicationPaint;
   }
 
   /** Interpolate the 'value' component toward its opposite by 'alpha'. */

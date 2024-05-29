@@ -374,6 +374,8 @@ public final class KeyboardData
      *  3 8 4
      */
     public final KeyValue[] keys;
+    /** Key accessed by the anti-clockwise circle gesture. */
+    public final KeyValue anticircle;
     /** Pack flags for every key values. Flags are: [F_LOC]. */
     private final int keysflags;
     /** Key width in relative unit. */
@@ -390,9 +392,10 @@ public final class KeyboardData
     public static final int F_LOC = 1;
     public static final int ALL_FLAGS = F_LOC;
 
-    protected Key(KeyValue[] ks, int f, float w, float s, boolean sl, String i)
+    protected Key(KeyValue[] ks, KeyValue antic, int f, float w, float s, boolean sl, String i)
     {
       keys = ks;
+      anticircle = antic;
       keysflags = f;
       width = w;
       shift = s;
@@ -434,6 +437,14 @@ public final class KeyboardData
       return (flags << index);
     }
 
+    static KeyValue parse_nonloc_key_attr(XmlPullParser parser, String attr_name) throws Exception
+    {
+      String name = parser.getAttributeValue(null, attr_name);
+      if (name == null)
+        return null;
+      return KeyValue.getKeyByName(name);
+    }
+
     static String stripPrefix(String s, String prefix)
     {
       return s.startsWith(prefix) ? s.substring(prefix.length()) : null;
@@ -454,13 +465,14 @@ public final class KeyboardData
       keysflags |= parse_key_attr(parser, get_key_attr(parser, "key7", "n"), ks, 7);
       keysflags |= parse_key_attr(parser, get_key_attr(parser, "key8", "s"), ks, 8);
       /* Other key attributes */
+      KeyValue anticircle = parse_nonloc_key_attr(parser, "anticircle");
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       boolean slider = attribute_bool(parser, "slider", false);
       String indication = parser.getAttributeValue(null, "indication");
       while (parser.next() != XmlPullParser.END_TAG)
         continue;
-      return new Key(ks, keysflags, width, shift, slider, indication);
+      return new Key(ks, anticircle, keysflags, width, shift, slider, indication);
     }
 
     /** Whether key at [index] as [flag]. */
@@ -472,7 +484,8 @@ public final class KeyboardData
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
-      return new Key(keys, keysflags, width * s, shift, slider, indication);
+      return new Key(keys, anticircle, keysflags, width * s, shift, slider,
+          indication);
     }
 
     public void getKeys(Map<KeyValue, KeyPos> dst, int row, int col)
@@ -493,12 +506,12 @@ public final class KeyboardData
       for (int j = 0; j < keys.length; j++) ks[j] = keys[j];
       ks[i] = kv;
       int flags = (keysflags & ~(ALL_FLAGS << i));
-      return new Key(ks, flags, width, shift, slider, indication);
+      return new Key(ks, anticircle, flags, width, shift, slider, indication);
     }
 
     public Key withShift(float s)
     {
-      return new Key(keys, keysflags, width, s, slider, indication);
+      return new Key(keys, anticircle, keysflags, width, s, slider, indication);
     }
 
     public boolean hasValue(KeyValue kv)
@@ -524,7 +537,7 @@ public final class KeyboardData
       for (int i = 0; i < ks.length; i++)
         if (k.keys[i] != null)
           ks[i] = apply(k.keys[i], k.keyHasFlag(i, Key.F_LOC));
-      return new Key(ks, k.keysflags, k.width, k.shift, k.slider, k.indication);
+      return new Key(ks, k.anticircle, k.keysflags, k.width, k.shift, k.slider, k.indication);
     }
   }
 
