@@ -4,12 +4,12 @@ plugins {
 
 android {
   namespace 'juloo.keyboard2'
-  compileSdk 33
+  compileSdk 34
 
   defaultConfig {
     applicationId "juloo.keyboard2"
     minSdk 11
-    targetSdkVersion 33
+    targetSdkVersion 34
     versionCode 39
     versionName "1.27.0"
   }
