@@ -1,23 +1,17 @@
-import textwrap, sys, re, string, json
+import textwrap, sys, re, string, json, os
 
-# Names not defined in Compose.pre
-xkb_char_extra_names = {
-        "space": " ",
-        "minus": "-",
-        "asterisk": "*",
-        "colon": ":",
-        "equal": "=",
-        "exclam": "!",
-        "grave": "`",
-        "parenleft": "(",
-        "parenright": ")",
-        "percent": "%",
-        "period": ".",
-        "plus": "+",
-        "question": "?",
-        "semicolon": ";",
-        "underscore": "_",
-        }
+# Parse symbol names from keysymdef.h. Many compose sequences in
+# en_US_UTF_8_Compose.pre reference theses. For example, all the sequences on
+# the Greek, Cyrillic and Hebrew scripts need these symbols.
+def parse_keysymdef_h():
+    with open(os.path.join(os.path.dirname(__file__), "keysymdef.h"), "r") as inp:
+        keysym_re = re.compile(r'^#define XK_(\S+)\s+\S+\s*/\*.U\+([0-9a-fA-F]+)\s')
+        for line in inp:
+            m = re.match(keysym_re, line)
+            if m != None:
+                yield (m.group(1), chr(int(m.group(2), 16)))
+
+xkb_char_extra_names = dict(parse_keysymdef_h())
 
 dropped_sequences = 0
 
