@@ -28,6 +28,9 @@
     <item>@string/pref_theme_e_epaper</item>
     <item>@string/pref_theme_e_desert</item>
     <item>@string/pref_theme_e_jungle</item>
+    <item>@string/pref_theme_e_monet</item>
+    <item>@string/pref_theme_e_monetlight</item>
+    <item>@string/pref_theme_e_monetdark</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
@@ -39,6 +42,9 @@
     <item>epaper</item>
     <item>desert</item>
     <item>jungle</item>
+    <item>monet</item>
+    <item>monetlight</item>
+    <item>monetdark</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
