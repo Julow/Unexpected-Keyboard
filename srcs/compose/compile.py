@@ -64,11 +64,6 @@ def parse_sequences_file_xkb(fname):
     def parse_seq_result(r):
         if len(r) == 2 and r[0] == '\\':
             return r[1]
-        # The state machine can't represent characters that do not fit in a
-        # 16-bit char. This breaks some sequences that output letters with
-        # combined diacritics or emojis.
-        if len(r) > 1 or ord(r[0]) > 65535:
-            raise Exception("Char out of range: " + r)
         return r
     # Populate [char_names] with the information present in the file.
     with open(fname, "r") as inp:
@@ -146,7 +141,15 @@ def make_automata(tree_root):
             states[i] = (c, node_i)
             i += 1
     def add_leaf(c):
-        states.append((c, 1))
+        # There are two encoding for leafs: character final state for 15-bit
+        # characters and string final state for the rest.
+        if len(c) > 1 or ord(c[0]) > 32767: # String final state
+            cb = c.encode("UTF-16")
+            states.append((-1, len(cb) + 1))
+            for c in cb:
+                states.append((c, 0))
+        else: # Character final state
+            states.append((c, 1))
     def add_node(n):
         if type(n) == str:
             add_leaf(n)
@@ -169,6 +172,7 @@ def gen_java(machine):
     chars_map = {
             # These characters cannot be used in unicode form as Java's parser
             # unescape unicode sequences before parsing.
+            -1: "\\uFFFF",
             "\"": "\\\"",
             "\\": "\\\\",
             "\n": "\\n",
