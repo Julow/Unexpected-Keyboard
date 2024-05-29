@@ -29,6 +29,8 @@ public final class KeyboardData
   public final String numpad_script;
   /** The [name] attribute. Might be null.  */
   public final String name;
+  /** Whether the bottom row should be added. */
+  public final boolean bottom_row;
   /** Position of every keys on the layout, see [getKeys()]. */
   private Map<KeyValue, KeyPos> _key_pos = null;
 
@@ -132,10 +134,12 @@ public final class KeyboardData
     return new KeyboardData(this, extendedRows);
   }
 
-  public KeyboardData addTopRow(Row row)
+  /** Insert the given row at the given indice. The row is scaled so that the
+      keys already on the keyboard don't change width. */
+  public KeyboardData insert_row(Row row, int i)
   {
     ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
-    rows_.add(0, row.updateWidth(keysWidth));
+    rows_.add(i, row.updateWidth(keysWidth));
     return new KeyboardData(this, rows_);
   }
 
@@ -159,23 +163,21 @@ public final class KeyboardData
     return _key_pos;
   }
 
-  public static Row bottom_row;
-  public static Row number_row;
-  public static KeyboardData num_pad;
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
 
-  public static void init(Resources res)
+  public static Row load_bottom_row(Resources res) throws Exception
   {
-    try
-    {
-      bottom_row = parse_row(res.getXml(R.xml.bottom_row));
-      number_row = parse_row(res.getXml(R.xml.number_row));
-      num_pad = parse_keyboard(res.getXml(R.xml.numpad));
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
+    return parse_row(res.getXml(R.xml.bottom_row));
+  }
+
+  public static Row load_number_row(Resources res) throws Exception
+  {
+    return parse_row(res.getXml(R.xml.number_row));
+  }
+
+  public static KeyboardData load_num_pad(Resources res) throws Exception
+  {
+    return parse_keyboard(res.getXml(R.xml.numpad));
   }
 
   /** Load a layout from a resource ID. Returns [null] on error. */
@@ -225,7 +227,7 @@ public final class KeyboardData
   {
     if (!expect_tag(parser, "keyboard"))
       throw error(parser, "Expected tag <keyboard>");
-    boolean add_bottom_row = attribute_bool(parser, "bottom_row", true);
+    boolean bottom_row = attribute_bool(parser, "bottom_row", true);
     float specified_kw = attribute_float(parser, "width", 0f);
     String script = parser.getAttributeValue(null, "script");
     String numpad_script = parser.getAttributeValue(null, "numpad_script");
@@ -249,9 +251,7 @@ public final class KeyboardData
       }
     }
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
-    if (add_bottom_row)
-      rows.add(bottom_row.updateWidth(kw));
-    return new KeyboardData(rows, kw, modmap, script, numpad_script, name);
+    return new KeyboardData(rows, kw, modmap, script, numpad_script, name, bottom_row);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -270,7 +270,7 @@ public final class KeyboardData
   }
 
   protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc,
-      String npsc, String name_)
+      String npsc, String name_, boolean bottom_row_)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -282,13 +282,14 @@ public final class KeyboardData
     name = name_;
     keysWidth = kw;
     keysHeight = kh;
+    bottom_row = bottom_row_;
   }
 
   /** Copies the fields of an other keyboard, with rows changed. */
   protected KeyboardData(KeyboardData src, List<Row> rows)
   {
     this(rows, compute_max_width(rows), src.modmap, src.script,
-        src.numpad_script, src.name);
+        src.numpad_script, src.name, src.bottom_row);
   }
 
   public static class Row

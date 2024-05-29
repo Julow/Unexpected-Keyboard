@@ -105,7 +105,6 @@ public class Keyboard2 extends InputMethodService
   public void onCreate()
   {
     super.onCreate();
-    KeyboardData.init(getResources());
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _keyeventhandler = new KeyEventHandler(getMainLooper(), this.new Receiver());
     Config.initGlobalConfig(prefs, getResources(), _keyeventhandler);
