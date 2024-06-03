@@ -20,7 +20,7 @@ A layout XML file comprises tags that start with `<` and end with `>`.
   * An optional `<modmap>`...`</modmap>` pair contains instructions if you want to change the behavior of a modifier key such as Shift.
 * Stand-alone tags include `<key`...`/>`, which defines a single key.
 
-A tag can have properties, defined using an equals sign and a pair of ASCII double quotes. For example, `<key key0="a"/>` defines the "a" key. The `key0` property of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specifies where it will go in the row.
+A tag can have properties, defined using an equals sign and a pair of ASCII double quotes. For example, `<key key0="a" />` defines the "a" key. The `key0` property of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specifies where it will go in the row.
 
 ### Example
 Here is a complete keyboard file with a single row containing a single key for the letter "a":
@@ -32,30 +32,30 @@ Here is a complete keyboard file with a single row containing a single key for t
         </row>
     </keyboard>
 
-### Keyboard metadata
+## Keyboard metadata
 The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses the whole keyboard. The following properties may be used (The first two appear in the example above):
 * `name`: The name of the keyboard. The name you specify will appear in the Settings menu. If not present, the layout will just appear as “Custom layout”.
 * `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. Defaults to `latin`.
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. Defaults to the same as `script`.
 * `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines a bottom row, you should specify `bottom_row=false` to disable the built-in bottom row.
 
-### Modmap
+## Modmap
+The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys.
 
-The `<modmap>` tag encloses custom mappings for the Shift and Fn key’s behavior.
+A modmap can contain the following tags, each of which must have an `a` and a `b` property:
+* `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made an anti-clockwise gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
+* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
 
-Each entry contains two mandatory properties: `a` for the base character before the modifier is applied, and `b` for the modified character.
+There can be as many of these tags inside `<modmap>` as needed.
 
-For example, to make the `I` key behave as in Turkish:
+### Example
+Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
 
     <modmap>
         <shift a="i" b="İ" />
     </modmap>
 
-There can be as many of these tags inside `<modmap>` as needed.
-
-Shift and Fn modmaps also affect the clockwise circle and the roundtrip gestures.
-
-### Row
+## Row
 
 The `<row>` tag encloses one row on the keyboard. It requires no properties, and supports the following:
 
@@ -63,7 +63,7 @@ The `<row>` tag encloses one row on the keyboard. It requires no properties, and
 
 The total height of the keyboard is defined in Settings as a percentage of the total height of the screen, which can be different between portrait and landscape. The height of a row is relative to the other ones, and are scaled to keep the height of the keyboard constant.
 
-### Key
+## Key
 
 The `<key />` tag defines a key on the keyboard. It requires at least one of the following properties:
 
