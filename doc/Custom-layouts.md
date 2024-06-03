@@ -23,12 +23,13 @@ A layout XML file comprises tags that start with `<` and end with `>`.
 A tag can have properties, defined using an equals sign and a pair of ASCII double quotes. For example, `<key key0="a" />` defines the "a" key. The `key0` property of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specifies where it will go in the row.
 
 ### Example
-Here is a complete keyboard file with a single row containing a single key for the letter "a":
+Here is a complete keyboard file with a single row containing an "a" key on the left and a "b" key on the right:
 
     <?xml version="1.0" encoding="utf-8"?>
     <keyboard name="Simple example" script="latin">
         <row>
             <key key0="a" />
+            <key key0="b" />
         </row>
     </keyboard>
 
