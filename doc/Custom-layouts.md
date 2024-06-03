@@ -20,7 +20,7 @@ A layout XML file comprises tags that start with `<` and end with `>`.
   * An optional `<modmap>`...`</modmap>` pair contains instructions if you want to change the behavior of a modifier key such as Shift.
 * Stand-alone tags include `<key`...`/>`, which defines a single key.
 
-A tag can have attributes, defined using an equals sign and a pair of ASCII double quotes. For example, `<key key0="a"/>` defines the "a" key. The `key0` attribute of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specify where it will go in the row.
+A tag can have properties, defined using an equals sign and a pair of ASCII double quotes. For example, `<key key0="a"/>` defines the "a" key. The `key0` property of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specifies where it will go in the row.
 
 ### Example
 Here is a complete keyboard file with a single row containing a single key for the letter "a":
@@ -33,13 +33,11 @@ Here is a complete keyboard file with a single row containing a single key for t
     </keyboard>
 
 ### Keyboard metadata
-
-The `<keyboard>` tag encloses the whole keyboard. The following properties may be used:
-
-* `name`: The name of the keyboard as it appears in the settings menu. If not present, it will just be called “Custom layout”.
-* `bottom_row`: Whether or not to show the common bottom row. Accepts `true` or `false`, and defaults to `true`.
-* `script`: The (main) writing system that it supports. Possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. Defaults to `latin`.
+The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses the whole keyboard. The following properties may be used (The first two appear in the example above):
+* `name`: The name of the keyboard. The name you specify will appear in the Settings menu. If not present, the layout will just appear as “Custom layout”.
+* `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. Defaults to `latin`.
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. Defaults to the same as `script`.
+* `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines a bottom row, you should specify `bottom_row=false` to disable the built-in bottom row.
 
 ### Modmap
 
