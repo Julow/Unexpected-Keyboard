@@ -48,45 +48,51 @@ A row's standard height is 1.0. The `height` property makes the row taller or sh
 You set the physical height of the complete keyboard in Settings as a percentage of the total height of the screen, which can be different between portrait and landscape. Unexpected Keyboard scales the "units" so all the rows fit in that alloted space. Thus, defining a shorter row gives space to the other rows.
 
 ## Key
+The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. It must have the following property:
+* `key0`: What the key does when tapped. Unexpected Keyboard provides a legend in the middle of the key's area.
 
-The `<key />` tag defines a key on the keyboard. It requires at least one of the following properties:
+The key tag may have additional properties as set out below.
 
-* `key0`: What the key should do when it is tapped.
-* `nw`, `ne`, `sw`, `se`, `w`, `e`, `n`, `s`: What the key should do when it is swiped. They are based on cardinal directions, and uses the convention that North is up. These are the new set of keywords, and should not be used with the other set of keywords.
+### Swipes
+The following optional properties define the effects of swipes:
+* `n`, `ne`, `e`, `se`, `s`, `sw`, `w`, `nw`: What the key should do when it is swiped in the direction of that compass point. ("North" means upward and "East" is to the right.)
 
  nw | n    |  ne
 :-: | :--: | :-:
  w  | key0 |  e
  sw | s    |  se
 
-* `key1` through `key8`: The older set of keywords for what the key should do when it is swiped. The directions are ordered as follows:
+* `key1` through `key8` is an older way to achieve the same effects. The directions are ordered as follows:
 
 key1 | key7 | key2
-:--: | :--: | :--:
+:-: | :--: | :-:
 key5 | key0 | key6
 key3 | key8 | key4
 
-The following properties are optionally supported:
+You can define a swipe only once with either compass-point or numeric notation. Unexpected Keyboard automatically puts a small legend in that direction from the center of the key.
 
-* `width`: The width of the key relative to the normal width. Defaults to `1` and accepts a positive floating point value.
-* `shift`: How much empty space to add to the left of this key. Defaults to `0` and accepts a non-negative floating point value.
-* `indication`: An extra label to show under the main label, intended to be used as a legend for 2A typing (e.g. `<key key0="2" indication="ABC" />`). Caution: if you have `key8` defined, it overlaps!
-* `slider`: If set to `true`, the keys `w` and `e` are sent repeatedly when the key is being slid on. Intended to be used on the space bar, and in fact used on the default space bar.
-* `anticircle`: The key value to send when doing an anti-clockwise circle gesture on the key. The clockwise circle and round-trip gestures are not configurable that way.
+* `slider`: If `slider="true"`, and the key also has `w` and `e` properties, then the key tracks horizontal finger motion precisely and sends the `w` and `e` keystrokes repeatedly. In built-in layouts, this makes the space bar send left and right characters as the user slides on the space bar.
+* `anticircle`: The key value to send when doing an anti-clockwise gesture on the key. (The clockwise gesture applies a Shift modifier and the round-trip gesture applies a Fn modifier. These results can be redefined using a modmap, as explained below.)
+
+### Layout
+A key may have the following properties to control the row's layout:
+* `width`: The width of the key, a positive floating-point value. It defaults to 1.0
+* `shift`: How much empty space to add to the left of this key, a non-negative floating-point value. It defaults to 0.0
+
+Normally, a key's width is 1.0 unit. Unexpected Keyboard occupies the full width of the screen, and the row defining the highest number of units (in widths plus shifts) is as wide as the screen. A row whose width is a smaller number of units has empty space on the right.
+
+### Extra legend
+* `indication`: An optional extra legend to show under the main label. For example, `<key key0="2" indication="ABC" />` displays ABC at the bottom of the 2 key, as on a pinpad or some telephones. If the key also defines a downward swipe with `s` or `key8`, the legends overlap.
 
 ## Possible key values
+The properties that define the effects of tapping or swiping a key may be one of the built-in strings documented on [this page](Possible-key-values). For example, `se="cut"` says that a southeast swipe produces the "cut" character (Ctrl-C).
 
-`key0` and `nw` through `se` (`key1` through `key8`) take arbitrary strings of characters, and if they don't match any of the special values, it is printed verbatim. (This is intended behavior.)
+Some of those strings begin with `loc `. These are place-holders; the tap or swipe does nothing unless enabled through the "Add keys to keyboard" option in the Settings menu, or implicitly enabled by the language the device is set to use. For example, `ne="loc accent_aigu"` says that a northeast swipe produces the acute accent combinatorial key—if enabled.
 
-Special values for the keys are documented in [this page](Possible-key-values).
-
-### `loc ` prefix
-
-Keys prefixed with `loc ` do not appear by default, and are only visible when they are enabled through the "Add keys to keyboard" option in the settings menu, or the language installed on the device is detected to require it.
+If the string defining a tap or a swipe is anything other than one of the built-in strings, the defined string is output *verbatim.* This is what most of the taps and swipes on a typical keyboard do. So `key0="a"` simply outputs the letter a.
 
 ## Modmap
 The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys.
-
 
 A modmap can contain the following tags, each of which must have an `a` and a `b` property:
 * `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made an anti-clockwise gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
