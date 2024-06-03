@@ -39,22 +39,6 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. Defaults to the same as `script`.
 * `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines a bottom row, you should specify `bottom_row=false` to disable the built-in bottom row.
 
-## Modmap
-The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys.
-
-A modmap can contain the following tags, each of which must have an `a` and a `b` property:
-* `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made an anti-clockwise gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
-* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
-
-There can be as many of these tags inside `<modmap>` as needed.
-
-### Example
-Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
-
-    <modmap>
-        <shift a="i" b="İ" />
-    </modmap>
-
 ## Row
 
 The `<row>` tag encloses one row on the keyboard. It requires no properties, and supports the following:
@@ -99,6 +83,25 @@ Special values for the keys are documented in [this page](Possible-key-values).
 ### `loc ` prefix
 
 Keys prefixed with `loc ` do not appear by default, and are only visible when they are enabled through the "Add keys to keyboard" option in the settings menu, or the language installed on the device is detected to require it.
+
+## Modmap
+The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys.
+
+
+A modmap can contain the following tags, each of which must have an `a` and a `b` property:
+* `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made an anti-clockwise gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
+* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
+
+
+There can be as many of these tags inside `<modmap>` as needed.
+
+### Example
+Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
+
+
+    <modmap>
+        <shift a="i" b="İ" />
+    </modmap>
 
 ## Portrait vs. landscape
 
