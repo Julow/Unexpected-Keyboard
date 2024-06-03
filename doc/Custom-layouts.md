@@ -40,12 +40,12 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 * `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines a bottom row, you should specify `bottom_row=false` to disable the built-in bottom row.
 
 ## Row
+The `<row>`...`</row>` pair encloses one row on the keyboard. It has only one optional property:
+* `height`: The height of the row: a positive floating-point value.
 
-The `<row>` tag encloses one row on the keyboard. It requires no properties, and supports the following:
+A row's standard height is 1.0. The `height` property makes the row taller or shorter than the others. For example, if you define a 5-row keyboard but the top row has `height="0.7"`, then the keyboard's total height is 4.7 units.
 
-* `height`: The height of the row. Defaults to 1, and accepts a positive floating point value.
-
-The total height of the keyboard is defined in Settings as a percentage of the total height of the screen, which can be different between portrait and landscape. The height of a row is relative to the other ones, and are scaled to keep the height of the keyboard constant.
+You set the physical height of the complete keyboard in Settings as a percentage of the total height of the screen, which can be different between portrait and landscape. Unexpected Keyboard scales the "units" so all the rows fit in that alloted space. Thus, defining a shorter row gives space to the other rows.
 
 ## Key
 
