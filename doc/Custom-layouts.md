@@ -1,10 +1,14 @@
 # Custom layouts
+Unexpected Keyboard includes key layouts for many natural languages. Unexpected starts out with a key layout likely to suit your device's language. You can select a different layout by calling up the Settings page (swipe the gear icon) and, at the top of the page, either tapping an existing layout or tapping _Add an alternate layout_. This displays a menu of available layouts.
 
-Unexpected Keyboard allows custom layouts to be defined, loaded, and used in the app. These layouts are defined in XML.
+If no built-in layout is what you want, you can define your own layout by choosing _Custom layout_ at the bottom of this menu. Unexpected Keyboard now displays code in the XML format. You make changes by replacing this with different code and tapping OK.
 
-## Existing keyboard layouts
+Start out in one of these ways:
+* Copypaste the displayed code into a text file (named something like `MyChanges.xml`) to maintain it independently of Unexpected Keyboard.
+* Make a copy of one of the built-in layouts found in [`/srcs/layouts`](https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts).
+* Use the [web-based editor](https://unexpected-keyboard-layout-editor.lixquid.com/). You can use touch gestures to define keys and swipes and move keys to desired positions, and it will write the XML code for you.
 
-The XML data files for the keyboard layouts that come with the app can be seen [in `/srcs/layouts`](https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts).
+When you have prepared suitable XML code in one of these ways, copy it to the clipboard and paste it into Unexpected Keyboard.
 
 ## Structure
 
