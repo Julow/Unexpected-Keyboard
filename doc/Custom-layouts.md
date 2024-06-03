@@ -10,37 +10,27 @@ Start out in one of these ways:
 
 When you have prepared suitable XML code in one of these ways, copy it to the clipboard and paste it into Unexpected Keyboard.
 
-## Structure
+## XML language overview
+A layout XML file comprises tags that start with `<` and end with `>`.
+* Every layout file starts with this declaration:
+  `<?xml version="1.0" encoding="utf-8"?>`
+* Certain tags come in pairs—an opening tag and a closing tag—and apply to everything between them.
+  * The `<keyboard>`...`</keyboard>` pair says that the material between them is the definition of your keyboard. There can be only one of these.
+  * The `<row>`...`</row>` pair enclose the definition of a single row.
+  * An optional `<modmap>`...`</modmap>` pair contains instructions if you want to change the behavior of a modifier key such as Shift.
+* Stand-alone tags include `<key`...`/>`, which defines a single key.
 
-A complete keyboard file with a single row containing a single Turkish "i" key is provided below:
+A tag can have attributes, defined using an equals sign and a pair of ASCII double quotes. For example, `<key key0="a"/>` defines the "a" key. The `key0` attribute of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specify where it will go in the row.
+
+### Example
+Here is a complete keyboard file with a single row containing a single key for the letter "a":
 
     <?xml version="1.0" encoding="utf-8"?>
-    <keyboard name="Keyboard Name" script="latin">
-        <modmap>
-            <shift a="i" b="İ" />
-        </modmap>
+    <keyboard name="Simple example" script="latin">
         <row>
-            <key key0="i" />
+            <key key0="a" />
         </row>
     </keyboard>
-
-Shift assignments can be changed on a per-character basis.
-
-### Crash course to XML
-
-An XML document is made out of tags.
-
-Paired tags start with `<` and end with `>`, and must be closed by another tag that starts with `</`. They can have other tags as children. Paired tags used in Unexpected Keyboard include `<row>`...`</row>` and `<keyboard>`...`</keyboard>`.
-
-Auto-terminating tags start with `<` and end with `/>`, and can't have any children. Auto-terminating tags used in Unexpected Keyboard include `<key />` and `<shift />`.
-
-An XML tag can have attributes, defined using an equals sign and a pair of ASCII double quotes.
-
-If you do not like XML, you can also use [this third-party GUI editor](https://unexpected-keyboard-layout-editor.lixquid.com/) to create or edit a keyboard layout.
-
-### XML declaration
-
-Every keyboard XML starts with `<?xml version="1.0" encoding="utf-8"?>`.
 
 ### Keyboard metadata
 
