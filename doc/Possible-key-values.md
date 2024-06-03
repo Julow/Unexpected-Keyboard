@@ -35,7 +35,7 @@ Value       | Meaning
 `capslock`  | Actives and locks Shift
 
 ## Special keys
-These keys are sent to apps, which are free to ignore them. The keyboard do not perform editing in response to these keys.
+These keys are sent to apps, which are free to ignore them. The keyboard does not perform editing in response to these keys.
 
 `esc`, `enter`,
 `up`, `right`,
@@ -83,7 +83,7 @@ Value                | Meaning
 `accent_slash`       | Slash through. `ø`
 `accent_arrow_right` | Right arrow above, used to denote a vector. `a⃗`
 `accent_breve`       | Breve. `ă`
-`accent_bar`         | Bar/strikethrough. `ᵢ`
+`accent_bar`         | Bar/strikethrough. `ɨ`
 `accent_dot_below`   | Dot below. `ạ`
 `accent_horn`        | Horn accent. `ơ`
 `accent_hook_above`  | Hook accent. `ả`
