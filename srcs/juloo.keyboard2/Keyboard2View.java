@@ -460,15 +460,19 @@ public class Keyboard2View extends View
   {
     boolean special_font = false;
     String indic;
+    int indic_length;
     float text_size;
     if (k.indication != null)
     {
       indic = k.indication;
+      indic_length = indic.length();
       text_size = keyH * _config.sublabelTextSize * _config.characterSize;
     }
     else if (k.anticircle != null)
     {
       indic = k.anticircle.getString();
+      // 3 character limit like regular labels
+      indic_length = Math.min(indic.length(), 3);
       special_font = k.anticircle.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
       text_size = scaleTextSize(k.anticircle, _config.sublabelTextSize, keyH);
     }
@@ -479,8 +483,7 @@ public class Keyboard2View extends View
     Paint p = _theme.indicationPaint(special_font);
     p.setColor(_theme.subLabelColor);
     p.setTextSize(text_size);
-    // Limit indication length to 3 characters
-    canvas.drawText(indic, 0, Math.min(indic.length(), 3),
+    canvas.drawText(indic, 0, indic_length,
         x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
