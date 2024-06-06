@@ -51,10 +51,12 @@ A row's standard height is 1.0. The `height` property makes the row taller or sh
 You set the physical height of the complete keyboard in Settings as a percentage of the total height of the screen, which can be different between portrait and landscape. Unexpected Keyboard scales the "units" so all the rows fit in that alloted space. Thus, defining a shorter row gives space to the other rows.
 
 ## Key
-The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. It must have the following property:
-* `key0`: What the key does when tapped. Unexpected Keyboard provides a legend in the middle of the key's area.
+The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. What the key does is defined by optional properties.
 
-The key tag may have additional properties as set out below.
+### Taps
+What the key does when tapped is defined by the `key0` property. For example, `<key key0="a" />` defines the "a" key. Unexpected Keyboard provides a legend in the middle of the key.
+
+When the Shift modifier is tapped, the "a" key becomes the "A" key and the legend temporarily changes. The Fn modifier makes a different change. You can override this behavior with a modmap (see below).
 
 ### Swipes
 The following optional properties define the effects of swipes:
