@@ -111,5 +111,9 @@ Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should pro
     </modmap>
 
 ## Portrait vs. landscape
-
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. That is to say, you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
+
+## Contributing your layout
+The Unexpected Keyboard project enthusiastically accepts user contributions, including custom layouts. (See the guidance for layouts at [CONTRIBUTING.md](https://github.com/Julow/Unexpected-Keyboard/blob/master/CONTRIBUTING.md#Adding-a-layout)).
+* Submit a layout that has innovations of possible interest to other users at [Unexpected-Keyboard-layouts](https://github.com/Julow/Unexpected-Keyboard-layouts).
+* Propose that your layout be included in the set of built-in layouts by making a Pull Request for an addition to [srcs/layouts](https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts). Please show that such a layout is standard in your locale or has a substantial number of users.
