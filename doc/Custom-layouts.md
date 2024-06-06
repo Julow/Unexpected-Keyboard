@@ -46,9 +46,7 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 The `<row>`...`</row>` pair encloses one row on the keyboard. It has only one optional property:
 * `height`: The height of the row: a positive floating-point value.
 
-A row's standard height is 1.0. The `height` property makes the row taller or shorter than the others. For example, if you define a 5-row keyboard but the top row has `height="0.7"`, then the keyboard's total height is 4.7 units.
-
-You set the physical height of the complete keyboard in Settings as a percentage of the total height of the screen, which can be different between portrait and landscape. Unexpected Keyboard scales the "units" so all the rows fit in that alloted space. Thus, defining a shorter row gives space to the other rows.
+A row's default height is 1.0 (one quarter of the keyboard height specified on the Settings menu). The `height` property makes the row taller or shorter than this. For example, if you define a 5-row keyboard but one row has `height="0.7"`, then the keyboard's total height is 4.7 units. If the total is different from 4.0, the keyboard will be taller or shorter than that specified in Settings.
 
 ## Key
 The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. What the key does is defined by optional properties.
@@ -96,13 +94,16 @@ Some of those strings begin with `loc `. These are place-holders; the tap or swi
 
 If the string defining a tap or a swipe is anything other than one of the built-in strings, the defined string is output *verbatim.* This is what most of the taps and swipes on a typical keyboard do. So `key0="a"` simply outputs the letter a.
 
+The string can output multiple characters, but cannot combine the built-in strings to specify a sequence of keystrokes.
+
 ## Modmap
 The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys.
 
 A modmap can contain the following tags, each of which must have an `a` and a `b` property:
-* `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made an anti-clockwise gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
-* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the "a" sequence, it must instead generate the  "b" sequence.
+* `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made a clockwise gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
+* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the value after "a" sequence, it must instead generate the value after "b".
 
+The "a" and "b" values are as specified above in _Possible key values_. A `<fn`...`/>` tag modifies a gesture only if no `<shift`...`/>` tag did.
 
 There can be as many of these tags inside `<modmap>` as needed.
 
