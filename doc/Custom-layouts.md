@@ -1,12 +1,14 @@
 # Custom layouts
-Unexpected Keyboard includes key layouts for many natural languages. Unexpected starts out with a key layout likely to suit your device's language. You can select a different layout by calling up the Settings page (swipe the gear icon) and, at the top of the page, either tapping an existing layout or tapping _Add an alternate layout_. This displays a menu of available layouts.
+Unexpected Keyboard includes key layouts for several natural languages. Unexpected starts out with a key layout likely to suit your device's language; if there is none, Unexpected starts with a traditional QWERTY layout. You can select a different layout by calling up the Settings page (swipe the gear icon) and, at the top of the page, either tapping an existing layout or tapping _Add an alternate layout_. This displays a menu of available layouts.
 
-If no built-in layout is what you want, you can define your own layout by choosing _Custom layout_ at the bottom of this menu. Unexpected Keyboard now displays code in the XML format. You make changes by replacing this with different code and tapping OK.
+You can define your own layout by choosing _Custom layout_ at the bottom of this menu. Unexpected Keyboard now displays code in the XML format. You make changes by replacing this with different code and tapping OK.
 
-Start out in one of these ways:
-* Copypaste the displayed code into a text file (named something like `MyChanges.xml`) to maintain it independently of Unexpected Keyboard.
+We recommend you keep your work in a file outside Unexpected Keyboard (named something like `MyChanges.xml`). If you installed a new version of Unexpected from a different website (with a different Build ID), then your Settings, including work you did solely by editing the XML inside Unexpected, would be lost.
+
+Put initial contents into your file in one of these ways:
+* Copypaste the code Unexpected displays for _Custom layout_.
 * Make a copy of one of the built-in layouts found in [`/srcs/layouts`](https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts).
-* Use the [web-based editor](https://unexpected-keyboard-layout-editor.lixquid.com/). You can use touch gestures to define keys and swipes and move keys to desired positions, and it will write the XML code for you.
+* Use the [web-based editor](https://unexpected-keyboard-layout-editor.lixquid.com/). Interact with this web page to define keys and swipes and move keys to desired positions, and it will write the XML code for you. You can make the web page put the XML in a text file or copy it to the clipboard.
 
 When you have prepared suitable XML code in one of these ways, copy it to the clipboard and paste it into Unexpected Keyboard.
 
@@ -16,7 +18,7 @@ A layout XML file comprises tags that start with `<` and end with `>`.
   `<?xml version="1.0" encoding="utf-8"?>`
 * Certain tags come in pairs—an opening tag and a closing tag—and apply to everything between them.
   * The `<keyboard>`...`</keyboard>` pair says that the material between them is the definition of your keyboard. There can be only one of these.
-  * The `<row>`...`</row>` pair enclose the definition of a single row.
+  * The `<row>`...`</row>` pair encloses the definition of a single row.
   * An optional `<modmap>`...`</modmap>` pair contains instructions if you want to change the behavior of a modifier key such as Shift.
 * Stand-alone tags include `<key`...`/>`, which defines a single key.
 
