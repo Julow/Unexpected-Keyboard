@@ -3,7 +3,7 @@ Unexpected Keyboard includes key layouts for several natural languages. Unexpect
 
 You can define your own layout by choosing _Custom layout_ at the bottom of this menu. Unexpected Keyboard now displays code in the XML format. You make changes by replacing this with different code and tapping OK.
 
-We recommend you keep your work in a file outside Unexpected Keyboard (named something like `MyChanges.xml`). If you installed a new version of Unexpected from a different website (with a different Build ID), then your Settings, including work you did solely by editing the XML inside Unexpected, would be lost.
+We recommend you keep your work in a file outside Unexpected Keyboard (named something like `MyChanges.xml`). If you installed a new version of Unexpected from a different website (with a different signature), then the work you did solely by editing the XML inside Unexpected, would be lost.
 
 Put initial contents into your file in one of these ways:
 * Copypaste the code Unexpected displays for _Custom layout_.
