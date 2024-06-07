@@ -38,9 +38,9 @@ Here is a complete keyboard file with a single row containing an "a" key on the 
 ## Keyboard metadata
 The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses the whole keyboard. The following properties may be used (The first two appear in the example above):
 * `name`: The name of the keyboard. The name you specify will appear in the Settings menu. If not present, the layout will just appear as “Custom layout”.
-* `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. Defaults to `latin`.
-* `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. Defaults to the same as `script`.
-* `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines a bottom row, you should specify `bottom_row=false` to disable the built-in bottom row.
+* `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. It defaults to `latin`.
+* `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. It defaults to the same as `script`.
+* `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines the bottom row, then specify `bottom_row=false` to disable the built-in bottom row.
 
 ## Row
 The `<row>`...`</row>` pair encloses one row on the keyboard. It has only one optional property:
@@ -101,7 +101,7 @@ The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys.
 
 A modmap can contain the following tags, each of which must have an `a` and a `b` property:
 * `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made a clockwise gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
-* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the value after "a" sequence, it must instead generate the value after "b".
+* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
 
 The "a" and "b" values are as specified above in _Possible key values_. A `<fn`...`/>` tag modifies a gesture only if no `<shift`...`/>` tag did.
 
