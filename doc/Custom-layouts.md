@@ -1,9 +1,7 @@
 # Custom layouts
-Unexpected Keyboard includes key layouts for several natural languages. Unexpected starts out with a key layout likely to suit your device's language; if there is none, Unexpected starts with a traditional QWERTY layout. You can select a different layout by calling up the Settings page (swipe the gear icon) and, at the top of the page, either tapping an existing layout or tapping _Add an alternate layout_. This displays a menu of available layouts.
+You select a key layout for Unexpected Keyboard by calling up the Settings page (swipe the gear icon) and, at the top of the page, either tapping an existing layout or tapping _Add an alternate layout_. This displays a menu of available layouts. You can define your own layout by choosing _Custom layout_ at the bottom of this menu. Unexpected Keyboard now displays code in the XML format. You make changes by replacing this with different code and tapping OK.
 
-You can define your own layout by choosing _Custom layout_ at the bottom of this menu. Unexpected Keyboard now displays code in the XML format. You make changes by replacing this with different code and tapping OK.
-
-We recommend you keep your work in a file outside Unexpected Keyboard (named something like `MyChanges.xml`). If you installed a new version of Unexpected from a different website (with a different signature), then the work you did solely by editing the XML inside Unexpected, would be lost.
+We recommend you keep your work in a file outside Unexpected Keyboard (named something like `MyChanges.xml`). If you installed a new version of Unexpected from a different website (with a different signature), then the work you did solely by editing the XML inside Unexpected would be lost.
 
 Put initial contents into your file in one of these ways:
 * Copypaste the code Unexpected displays for _Custom layout_.
