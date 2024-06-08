@@ -97,7 +97,8 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # latn_qwerty_no
 0 warnings
 # latn_qwerty_pl
-0 warnings
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
+1 warnings
 # latn_qwerty_ro
 0 warnings
 # latn_qwerty_se
