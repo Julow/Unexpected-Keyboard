@@ -6,19 +6,11 @@ import java.util.HashMap;
 
 public final class KeyModifier
 {
-  /** Cache key is KeyValue's name */
-  private static HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>> _cache =
-    new HashMap<KeyValue, HashMap<Pointers.Modifiers, KeyValue>>();
-
   /** The optional modmap takes priority over modifiers usual behaviors. Set to
       [null] to disable. */
   private static KeyboardData.Modmap _modmap = null;
   public static void set_modmap(KeyboardData.Modmap mm)
   {
-    // Clear the cache when switching to or from a layout that contain a modmap
-    // as the cache would otherwise override the modmap.
-    if (_modmap != null || mm != null)
-      _cache.clear();
     _modmap = mm;
   }
 
@@ -28,15 +20,9 @@ public final class KeyModifier
     if (k == null)
       return null;
     int n_mods = mods.size();
-    HashMap<Pointers.Modifiers, KeyValue> ks = cacheEntry(k);
-    KeyValue r = ks.get(mods);
-    if (r == null)
-    {
-      r = k;
-      for (int i = 0; i < n_mods; i++)
-        r = modify(r, mods.get(i));
-      ks.put(mods, r);
-    }
+    KeyValue r = k;
+    for (int i = 0; i < n_mods; i++)
+      r = modify(r, mods.get(i));
     /* Keys with an empty string are placeholder keys. */
     if (r.getString().length() == 0)
       return null;
@@ -527,18 +513,6 @@ public final class KeyModifier
     if (shifted == null || shifted.equals(k))
       return apply_fn(k);
     return shifted;
-  }
-
-  /* Lookup the cache entry for a key. Create it needed. */
-  private static HashMap<Pointers.Modifiers, KeyValue> cacheEntry(KeyValue k)
-  {
-    HashMap<Pointers.Modifiers, KeyValue> ks = _cache.get(k);
-    if (ks == null)
-    {
-      ks = new HashMap<Pointers.Modifiers, KeyValue>();
-      _cache.put(k, ks);
-    }
-    return ks;
   }
 
   public static abstract class Map_char
