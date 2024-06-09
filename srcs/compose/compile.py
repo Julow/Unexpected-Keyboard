@@ -1,4 +1,5 @@
 import textwrap, sys, re, string, json, os
+from array import array
 
 # Parse symbol names from keysymdef.h. Many compose sequences in
 # en_US_UTF_8_Compose.pre reference theses. For example, all the sequences on
@@ -41,16 +42,21 @@ def parse_sequences_file_xkb(fname):
         return def_, result
     char_names = { **xkb_char_extra_names }
     # Interpret character names of the form "U0000" or using [char_names].
-    def parse_seq_char(c):
-        uchar, named_char = c
+    def parse_seq_char(sc):
+        uchar, named_char = sc
         if uchar != "":
-            return chr(int(uchar, 16))
-        # else is a named char
-        if len(named_char) == 1:
-            return named_char
-        if not named_char in char_names:
-            raise Exception("Unknown char: " + named_char)
-        return char_names[named_char]
+            c = chr(int(uchar, 16))
+        elif len(named_char) == 1:
+            c = named_char
+        else:
+            if not named_char in char_names:
+                raise Exception("Unknown char: " + named_char)
+            c = char_names[named_char]
+        # The state machine can't represent sequence characters that do not fit
+        # in a 16-bit char.
+        if len(c) > 1 or ord(c[0]) > 65535:
+            raise Exception("Char out of range: " + r)
+        return c
     # Interpret the left hand side of a sequence.
     def parse_seq_chars(def_):
         return list(map(parse_seq_char, re.findall(char_re, def_)))
@@ -138,9 +144,9 @@ def make_automata(tree_root):
         # There are two encoding for leafs: character final state for 15-bit
         # characters and string final state for the rest.
         if len(c) > 1 or ord(c[0]) > 32767: # String final state
-            cb = c.encode("UTF-16")
-            states.append((-1, len(cb) + 1))
-            for c in cb:
+            javachars = array('H', c.encode("UTF-16-LE"))
+            states.append((-1, len(javachars) + 1))
+            for c in javachars:
                 states.append((c, 0))
         else: # Character final state
             states.append((c, 1))
@@ -151,6 +157,14 @@ def make_automata(tree_root):
             add_tree(n)
     add_tree(tree_root)
     return states
+
+# Debug
+def print_automata(automata):
+    i = 0
+    for (s, e) in automata:
+        s = "%#06x" % s if isinstance(s, int) else '"%s"' % str(s)
+        print("%3d %8s %d" % (i, s, e), file=sys.stderr)
+        i += 1
 
 def batched(ar, n):
     i = 0
@@ -213,3 +227,4 @@ for fname in sys.argv[1:]:
 automata = make_automata(trie)
 gen_java(automata)
 print("Compiled %d sequences into %d states. Dropped %d sequences." % (total_sequences, len(automata), dropped_sequences), file=sys.stderr)
+# print_automata(automata)

@@ -36,17 +36,17 @@ public final class ComposeKey
     if (next < 0)
       return null;
     next = edges[next];
-    char next_header = states[next];
+    int next_header = states[next];
     if (next_header == 0) // Enter a new intermediate state.
       return KeyValue.makeComposePending(String.valueOf(c), next, 0);
-    else if (next_header > 0) // Character final state.
-      return KeyValue.makeCharKey(next_header);
-    else // next_header is < 0, string final state.
+    else if (next_header == 0xFFFF) // String final state
     {
       int next_length = edges[next];
       return KeyValue.makeStringKey(
-          new String(states, next + 1, next + next_length));
+          new String(states, next + 1, next_length - 1));
     }
+    else // Character final state.
+      return KeyValue.makeCharKey((char)next_header);
   }
 
   /** The state machine is comprised of two arrays.
