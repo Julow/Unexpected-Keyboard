@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="বাংলা (জাতীয়)" script="bengali">
   <row>
-    <key key0="ঙ" key2="ং" key3="esc" key4="১"/>
+    <key key0="ঙ" key2="ং" key3="loc esc" key4="১"/>
     <key key0="য" key2="য়" key3="¶" key4="২"/>
     <key key0="ড" key2="ঢ" key3="π" key4="৩"/>
     <key key0="প" key2="ফ" key3="√" key4="৪"/>
@@ -13,7 +13,7 @@
     <key key0="ড়" key2="ঢ়" key3="-" key4="০"/>
   </row>
   <row>
-    <key shift="0.5" key0="ৃ" key1="ৠ" key2="ঋ" key3="tab" key4="র্"/>
+    <key shift="0.5" key0="ৃ" key1="ৠ" key2="ঋ" key3="loc tab" key4="র্"/>
     <key key0="ু" key1="ঊ" key2="উ" key3="~" key4="ূ"/>
     <key key0="ি" key1="ঈ" key2="ই" key3="•" key4="ী"/>
     <key key0="া" key1="ৄ" key2="আ" key3="°" key4="অ"/>

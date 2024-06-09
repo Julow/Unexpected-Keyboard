@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <keyboard name="ગુજરાતી ફોનેટિક - Gujarati Phonetic" script="gujarati">
   <row>
-    <key key0="ટ" key1="`" key2="1" key3="!" key4="esc"/>
+    <key key0="ટ" key1="`" key2="1" key3="!" key4="loc esc"/>
     <key key0="ડ" key1="~" key2="2" key3="\@" key4="\#"/>
     <key key0="ે" key1="એ" key2="3" key3="$" key4="૱"/>
     <key key0="ર" key1="ઋ" key2="4" key3="ૃ" key4="₹"/>
@@ -13,7 +13,7 @@
     <key key0="પ" key1="૰" key2="0" key4="॒"/>
   </row>
   <row>
-    <key shift="0.5" key0="ા" key1="tab" key3="અ"/>
+    <key shift="0.5" key0="ા" key1="loc tab" key3="અ"/>
     <key key0="સ" key1="“" key4="”"/>
     <key key0="દ" key1="ડ"/>
     <key key0="્" key1="ૠ" key3="ૄ"/>

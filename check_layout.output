@@ -4,7 +4,7 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 2 warnings
 # arab_hamvaj_tly
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], _, `, {, |, }
-Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc
 2 warnings
 # arab_pc
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
@@ -40,7 +40,7 @@ Layout includes some ASCII punctuation but not all, missing: ~
 1 warnings
 # deva_alt
 Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
-Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc, loc tab
 2 warnings
 # deva_inscript
 Duplicate keys: ।
@@ -55,7 +55,7 @@ Duplicate keys: ટ, ડ
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 2 warnings
 # hang_dubeolsik_kr
-Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc, loc tab
 1 warnings
 # hebr_1_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
@@ -109,7 +109,7 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 1 warnings
 # latn_qwerty_tly
 Duplicate keys: a, c, j, q
-Layout doesn't define some important keys, missing: esc, f11_placeholder, f12_placeholder, tab
+Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc, loc tab
 2 warnings
 # latn_qwerty_tr
 Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder

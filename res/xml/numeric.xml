@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard bottom_row="false">
   <row>
-    <key width="0.75" key0="esc" key2="~" key4="!"/>
+    <key width="0.75" key0="loc esc" key2="~" key4="!"/>
     <key width="0.75" key0="(" key2="[" key4="{"/>
     <key key0="7" key1="&lt;" key2="&gt;"/>
     <key key0="8" key2="∞"/>
@@ -10,7 +10,7 @@
     <key width="0.75" key0="/" key1="%" key3="÷"/>
   </row>
   <row>
-    <key width="0.75" key0="tab" key2="|" key4="\\"/>
+    <key width="0.75" key0="loc tab" key2="|" key4="\\"/>
     <key width="0.75" key0=")" key2="]" key4="}"/>
     <key key0="4" key1="box" key3="arrows"/>
     <key key0="5" key7="up" key6="right" key5="left" key8="down"/>

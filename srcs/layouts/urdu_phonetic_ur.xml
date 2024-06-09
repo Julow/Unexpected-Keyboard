@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <keyboard name="Urdu Phonetic" script="urdu">
   <row>
-    <key key0="ق" key3=" " key4="esc" key7="1"/>
+    <key key0="ق" key3=" " key4="loc esc" key7="1"/>
     <key key0="و" key2="ؤ" key3="\@" key7="2"/>
     <key key0="ع" key1="!" key3="\#" key7="3"/>
     <key key0="ر" key2="ڑ" key3="$" key7="4"/>
@@ -13,7 +13,7 @@
     <key key0="پ" key1="ٰ" key2="0" key3="؟" key5="ٓ" key7="ٗ" key8="ٖ"/>
   </row>
   <row>
-    <key width="1.1" key0="ا" key1="tab" key2="آ" key4="أ"/>
+    <key width="1.1" key0="ا" key1="loc tab" key2="آ" key4="أ"/>
     <key width="1.1" key0="س" key2="ص"/>
     <key width="1.1" key0="د" key2="ڈ" key4=" "/>
     <key width="1.1" key0="ف" key2="پھ"/>

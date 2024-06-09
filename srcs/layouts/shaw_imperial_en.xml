@@ -2,7 +2,7 @@
 <!-- Shaw Imperial layout for shavian alphabet, see https://www.shavian.info/keyboards/ -->
 <keyboard name="Shaw Imperial" script="shavian">
   <row>
-    <key key0="𐑶" key2="1" key4="esc"/>
+    <key key0="𐑶" key2="1" key4="loc esc"/>
     <key key0="𐑬" key1="~" key2="2" key3="\@"/>
     <key key0="𐑫" key1="!" key2="3" key3="\#"/>
     <key key0="𐑜" key2="4" key3="$"/>
@@ -14,7 +14,7 @@
     <key key0="𐑔" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>
   </row>
   <row>
-    <key key0="𐑭" key1="tab" key2="𐑸" key3="`"/>
+    <key key0="𐑭" key1="loc tab" key2="𐑸" key3="`"/>
     <key key0="𐑷" key2="𐑹"/>
     <key key0="𐑵" key2="𐑿"/>
     <key key0="𐑱" key2="𐑺"/>

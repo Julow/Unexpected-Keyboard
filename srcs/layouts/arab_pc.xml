@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="Arabic PC" script="arabic">
   <row>
-    <key key0="ض" key1="&#1614;" key2="1" key3="`" key4="esc"/>
+    <key key0="ض" key1="&#1614;" key2="1" key3="`" key4="loc esc"/>
     <key key0="ص" key1="&#1611;" key2="2" key3="\@"/>
     <key key0="ث" key1="&#1615;" key2="3" key3="\#" key4="loc €"/>
     <key key0="ق" key1="&#1612;" key2="4" key3="$" key4="loc £"/>
@@ -16,7 +16,7 @@
     <!-- <key key0="ذ" key1="&#1617;" key3="\\" key4="|"/> -->
   </row>
   <row>
-    <key shift="0.5" key0="ش" key1="&#1616;" key4="tab"/>
+    <key shift="0.5" key0="ش" key1="&#1616;" key4="loc tab"/>
     <key key0="س" key1="&#1613;"/>
     <key key0="ي" key1="["/>
     <key key0="ب" key1="]"/>

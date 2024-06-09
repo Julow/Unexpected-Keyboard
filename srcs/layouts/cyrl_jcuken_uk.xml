@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="ЙЦУКЕН (Українська)" script="cyrillic">
   <row>
-    <key shift="0.1 " key0="й" key2="1" key4="esc"/>
+    <key shift="0.1 " key0="й" key2="1" key4="loc esc"/>
     <key key0="ц" key1="~" key2="2" key3="\@"/>
     <key key0="у" key1="!" key2="3" key3="\#" key4="loc €"/>
     <key key0="к" key2="4" key3="$"/>
@@ -14,7 +14,7 @@
     <key key0="х"/>
   </row>
   <row>
-    <key shift="0.1" key0="ф" key1="tab" key2="`"/>
+    <key shift="0.1" key0="ф" key1="loc tab" key2="`"/>
     <key key0="і" key2="ї"/>
     <key key0="в" />
     <key key0="а" />

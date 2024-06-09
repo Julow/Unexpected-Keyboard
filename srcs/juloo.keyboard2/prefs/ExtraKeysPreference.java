@@ -49,6 +49,8 @@ public class ExtraKeysPreference extends PreferenceCategory
     "†",
     "ª",
     "º",
+    "tab",
+    "esc",
     "page_up",
     "page_down",
     "home",
@@ -76,6 +78,8 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "voice_typing":
       case "change_method":
       case "compose":
+      case "tab":
+      case "esc":
         return true;
       default:
         return false;

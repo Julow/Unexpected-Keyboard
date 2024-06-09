@@ -2,7 +2,7 @@
 <!-- https://neo-layout.org/Layouts/bone/ -->
 <keyboard name="Bone" bottom_row="false" script="latin">
 	<row>
-		<key key0="j"				key2="esc"				key4="…"/>
+		<key key0="j"				key2="loc esc"				key4="…"/>
 		<key key0="d"				key2="°"				key4="_"/>
 		<key key0="u"				key2="§"				key4="["/>
 		<key key0="a"										key4="]"/>
@@ -14,7 +14,7 @@
 		<key key0="w"							key3="&amp;"	key4="f12_placeholder"/>
 	</row>
 	<row>
-		<key key0="c"				key2="tab"											key4="\\"/>
+		<key key0="c"				key2="loc tab"											key4="\\"/>
 		<key key0="t"	key1="accent_circonflexe"	key2="accent_caron"					key4="/"/>
 		<key key0="i"	key1="accent_aigu"			key2="accent_grave"					key4="{"/>
 		<key key0="e"	key1="accent_cedille"		key2="accent_ogonek"				key4="}"/>

@@ -2,7 +2,7 @@
 <!-- Based on standard SI-1452-2 -->
 <keyboard name="Hebrew 2" script="hebrew">
   <row>
-    <key key0="ץ" key2="1" key3="!" key4="esc"/>
+    <key key0="ץ" key2="1" key3="!" key4="loc esc"/>
     <key key0="ן" key2="2" key3="\@" key1=";"/>
     <key key0="ק" key2="3" key3="\#" key1="€"/>
     <key key0="ר" key2="4" key3="$" key1="₪"/>
@@ -14,7 +14,7 @@
     <key key0="פ" key2="0" key3="b)" key4="rlm" width="1.333"/>
   </row>
   <row>
-    <key key0="ש" key2="`" key1="tab" key3="sindot_placeholder" key4="shindot_placeholder" width="1.333"/>
+    <key key0="ש" key2="`" key1="loc tab" key3="sindot_placeholder" key4="shindot_placeholder" width="1.333"/>
     <key key0="ד" key1="~"/>
     <key key0="ג" key1="geresh" key2="gershayim"/>
     <key key0="כ"/>

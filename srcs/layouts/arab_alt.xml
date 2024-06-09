@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="Arabic Alt" script="arabic" numpad_script="hindu-arabic">
   <row>
-    <key key0="ض" key2="١" key3="`" key4="esc"/>
+    <key key0="ض" key2="١" key3="`" key4="loc esc"/>
     <key key0="ص" key2="٢" key3="\@"/>
     <key key0="ث" key2="٣" key3="\#"/>
     <key key0="ق" key2="٤" key3="$"/>
@@ -14,7 +14,7 @@
     <key key0="ج"/>
   </row>
   <row>
-    <key key0="ش" key4="tab"/>
+    <key key0="ش" key4="loc tab"/>
     <key key0="س"/>
     <key key0="ي"/>
     <key key0="ب"/>

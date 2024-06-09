@@ -2,7 +2,7 @@
 <!-- Inspired by the bépo layout, but adapted to smartphone -->
 <keyboard name="BEPO (Français)" script="latin">
   <row>
-    <key width="1.1" key0="b" key1="esc" key2="1" key4="|"/>
+    <key width="1.1" key0="b" key1="loc esc" key2="1" key4="|"/>
     <key width="1.1" key0="é" key2="2" key4="è"/>
     <key width="1.1" key0="p" key2="3"/>
     <key width="1.1" key0="o" key2="4" key4="accent_circonflexe"/>
@@ -14,7 +14,7 @@
     <key width="1.1" key0="w" key2="0" key4="]"/>
   </row>
   <row>
-    <key width="1.1" key0="a" key1="tab" key4="à"/>
+    <key width="1.1" key0="a" key1="loc tab" key4="à"/>
     <key width="1.1" key0="u" key1="$" key4="ù"/>
     <key width="1.1" key0="i" key4="&amp;"/>
     <key width="1.1" key0="e" key1="+" key2="accent_trema" key4="€"/>

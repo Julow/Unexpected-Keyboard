@@ -2,7 +2,7 @@
 <!-- https://colemak.com/ -->
 <keyboard name="Colemak" script="latin">
   <row>
-    <key key0="q" key1="esc"                key2="loc accent_aigu"    key3="loc accent_tilde"   shift="0.5"/>
+    <key key0="q" key1="loc esc"                key2="loc accent_aigu"    key3="loc accent_tilde"   shift="0.5"/>
     <key key0="w" key1="loc accent_grave"       key2=" ́"              key3="~"            />
     <key key0="f" key1="`"                  key2="-"              key3="+" />
     <key key0="p"                           key2="="              key3="%"/>
@@ -14,7 +14,7 @@
 
   </row>
   <row>
-    <key key0="a"                           key2="1" key4="tab"/>
+    <key key0="a"                           key2="1" key4="loc tab"/>
     <key key0="r" key1="\@"                 key2="2" />
     <key key0="s" key1="\#"                 key2="3" key4="loc ß"/>
     <key key0="t" key1="$"                  key2="4" key4="loc accent_ogonek" />

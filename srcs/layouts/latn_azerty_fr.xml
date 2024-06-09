@@ -3,7 +3,7 @@
 <!-- https://norme-azerty.fr/ -->
 <keyboard name="AZERTY (Français)" script="latin">
   <row>
-    <key key0="a" key2="1" key4="esc"/>
+    <key key0="a" key2="1" key4="loc esc"/>
     <key key0="z" key2="2" key3="&amp;" key4="~"/>
     <key key0="e" key2="3" key3="&quot;" key4="\#"/>
     <key key0="r" key2="4" key3="'"/>
@@ -15,7 +15,7 @@
     <key key0="p" key2="0" key3="f12_placeholder"/>
   </row>
   <row>
-    <key key0="q" key2="tab"/>
+    <key key0="q" key2="loc tab"/>
     <key key0="s" key3="loc ß"/>
     <key key0="d" key1="loc accent_grave" key2="é" key3="loc accent_aigu"/>
     <key key0="f" key3="{" key4="}"/>

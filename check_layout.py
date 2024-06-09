@@ -68,7 +68,7 @@ def check_layout(layout):
     missing_some_of(keys, "~!@#$%^&*(){}`[]=\\-_;:/.,?<>'\"+|", "ASCII punctuation")
     missing_some_of(keys, "0123456789", "digits")
     missing_required(keys,
-                     ["esc", "tab", "backspace", "delete",
+                     ["loc esc", "loc tab", "backspace", "delete",
                       "f11_placeholder", "f12_placeholder"],
                      "Layout doesn't define some important keys")
     unexpected_keys(keys,
