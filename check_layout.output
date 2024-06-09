@@ -1,10 +1,9 @@
 # arab_alt
 Layout includes some ASCII punctuation but not all, missing: !, ", ', +, -, /, :, ;, <, =, >, ?, [, \, ], _, |, ~
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+1 warnings
 # arab_hamvaj_tly
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], _, `, {, |, }
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc
+Layout doesn't define some important keys, missing: loc esc
 2 warnings
 # arab_pc
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
@@ -19,16 +18,13 @@ Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
 1 warnings
 # armenian_ph_am
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
+0 warnings
 # beng_national
 Layout includes some ASCII punctuation but not all, missing: $
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+1 warnings
 # beng_provat
 Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+1 warnings
 # cyrl_jcuken_ru
 0 warnings
 # cyrl_jcuken_uk
@@ -40,22 +36,20 @@ Layout includes some ASCII punctuation but not all, missing: ~
 1 warnings
 # deva_alt
 Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc, loc tab
+Layout doesn't define some important keys, missing: loc esc, loc tab
 2 warnings
 # deva_inscript
 Duplicate keys: ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-3 warnings
+2 warnings
 # grek_qwerty
 Duplicate keys: ;
 1 warnings
 # guj_phonetic_in
 Duplicate keys: ટ, ડ
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+1 warnings
 # hang_dubeolsik_kr
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc, loc tab
+Layout doesn't define some important keys, missing: loc esc, loc tab
 1 warnings
 # hebr_1_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
@@ -66,8 +60,7 @@ Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {
 # latn_azerty_fr
 0 warnings
 # latn_bepo_fr
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
+0 warnings
 # latn_bone
 Layout includes some ASCII punctuation but not all, missing: $
 Layout redefines the bottom row but some important keys are missing, missing: cursor_left, cursor_right, loc compose, loc end, loc home, loc page_down, loc page_up, loc switch_greekmath, loc voice_typing, switch_backward
@@ -82,8 +75,7 @@ Some keys contain whitespaces, unexpected:  ́
 # latn_qwerty_br
 0 warnings
 # latn_qwerty_cz
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
+0 warnings
 # latn_qwerty_da
 0 warnings
 # latn_qwerty_es
@@ -97,23 +89,20 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # latn_qwerty_no
 0 warnings
 # latn_qwerty_pl
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
+0 warnings
 # latn_qwerty_ro
 0 warnings
 # latn_qwerty_se
 Duplicate keys: !, ', ,, -, ., ?
 1 warnings
 # latn_qwerty_sk
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
+0 warnings
 # latn_qwerty_tly
 Duplicate keys: a, c, j, q
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder, loc esc, loc tab
+Layout doesn't define some important keys, missing: loc esc, loc tab
 2 warnings
 # latn_qwerty_tr
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
+0 warnings
 # latn_qwerty_us
 0 warnings
 # latn_qwerty_vi
@@ -121,12 +110,10 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 # latn_qwertz
 0 warnings
 # latn_qwertz_cz
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-1 warnings
+0 warnings
 # latn_qwertz_cz_multifunctional
 Layout includes some ASCII punctuation but not all, missing: `
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+1 warnings
 # latn_qwertz_de
 0 warnings
 # latn_qwertz_fr_ch
@@ -135,13 +122,11 @@ Layout doesn't define some important keys, missing: f11_placeholder, f12_placeho
 0 warnings
 # latn_qwertz_sk
 Layout includes some ASCII punctuation but not all, missing: `
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
-2 warnings
+1 warnings
 # shaw_imperial_en
 0 warnings
 # urdu_phonetic_ur
 Duplicate keys:  
 Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
-Layout doesn't define some important keys, missing: f11_placeholder, f12_placeholder
 Some keys contain whitespaces, unexpected:  
-4 warnings
+3 warnings

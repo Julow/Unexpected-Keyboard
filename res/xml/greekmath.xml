@@ -9,8 +9,8 @@
     <key key0="ψ" key1="∥" key3="≪" key4="7"/>
     <key key0="υ" key1="⌀" key2="⟨" key3="≡" key4="8"/>
     <key key0="ι" key1="∞" key2="⟩" key3="≫" key4="9"/>
-    <key key0="ο" key1="∝" key3="□" key4="f11_placeholder"/>
-    <key key0="π" key1="∅" key3="∘" key4="f12_placeholder"/>
+    <key key0="ο" key1="∝" key3="□"/>
+    <key key0="π" key1="∅" key3="∘"/>
   </row>
   <row>
     <key key0="α" key4="ℂ"/>

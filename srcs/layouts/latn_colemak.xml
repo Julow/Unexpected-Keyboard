@@ -8,7 +8,7 @@
     <key key0="p"                           key2="="              key3="%"/>
     <key key0="g" key1="!"                  key2="/"              key3="\\"/>
     <key key0="j" key1="loc accent_caron"       key2="loc accent_trema"            />
-    <key key0="l" key1="f11_placeholder"    key2="f12_placeholder"/>
+    <key key0="l"/>
     <key key0="u" key1="loc accent_double_aigu" key2="loc accent_ring"    />
     <key key0="y" key1="&quot;"             key2="'"/>
 

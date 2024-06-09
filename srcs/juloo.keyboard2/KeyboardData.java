@@ -608,6 +608,7 @@ public final class KeyboardData
   /** See [addExtraKeys()]. */
   public final static class PreferredPos
   {
+    /** Default position for extra keys. */
     public static final PreferredPos DEFAULT;
     public static final PreferredPos ANYWHERE;
 
@@ -622,6 +623,9 @@ public final class KeyboardData
     public KeyPos[] positions = ANYWHERE_POSITIONS;
 
     public PreferredPos() {}
+    public PreferredPos(KeyValue next_to_) { next_to = next_to_; }
+    public PreferredPos(KeyPos[] pos) { positions = pos; }
+    public PreferredPos(KeyValue next_to_, KeyPos[] pos) { next_to = next_to_; positions = pos; }
 
     public PreferredPos(PreferredPos src)
     {
@@ -634,13 +638,12 @@ public final class KeyboardData
 
     static
     {
-      DEFAULT = new PreferredPos();
-      DEFAULT.positions = new KeyPos[]{
-        new KeyPos(1, -1, 4),
-        new KeyPos(1, -1, 3),
-        new KeyPos(2, -1, 2),
-        new KeyPos(2, -1, 1)
-      };
+      DEFAULT = new PreferredPos(new KeyPos[]{
+          new KeyPos(1, -1, 4),
+          new KeyPos(1, -1, 3),
+          new KeyPos(2, -1, 2),
+          new KeyPos(2, -1, 1)
+        });
       ANYWHERE = new PreferredPos();
     }
   }

@@ -35,6 +35,6 @@
     <key key0="מ" key1="blt" key2=","/>
     <key key0="צ" key1="bgt" key2="."/>
     <key key0="/" key1="\?"/>
-    <key key0="backspace" key2="delete" key3="f11_placeholder" key4="f12_placeholder" width="1.333"/>
+    <key key0="backspace" key2="delete" width="1.333"/>
   </row>
 </keyboard>

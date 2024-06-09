@@ -34,6 +34,6 @@
     <key key0="ب"/>
     <key key0="ن" key2="&#1548;" key3="&#1563;"/>
     <key key0="م"/>
-    <key key0="backspace" key2="delete" key3="f11_placeholder" key4="f12_placeholder"/>
+    <key key0="backspace" key2="delete"/>
   </row>
 </keyboard>

@@ -68,8 +68,7 @@ def check_layout(layout):
     missing_some_of(keys, "~!@#$%^&*(){}`[]=\\-_;:/.,?<>'\"+|", "ASCII punctuation")
     missing_some_of(keys, "0123456789", "digits")
     missing_required(keys,
-                     ["loc esc", "loc tab", "backspace", "delete",
-                      "f11_placeholder", "f12_placeholder"],
+                     ["loc esc", "loc tab", "backspace", "delete"],
                      "Layout doesn't define some important keys")
     unexpected_keys(keys,
                     ["copy", "paste", "cut", "selectAll", "shareText",
@@ -82,6 +81,7 @@ def check_layout(layout):
     unexpected_keys(keys, [""], "Layout contains empty strings")
     unexpected_keys(keys, ["loc"], "Special keyword cannot be a symbol")
     unexpected_keys(keys, filter(lambda k: k.strip()!=k, keys), "Some keys contain whitespaces")
+    unexpected_keys(keys, ["f11_placeholder", "f12_placeholder"], "These keys are now added automatically")
 
     _, bottom_row_keys, _ = parse_row("res/xml/bottom_row.xml")
 

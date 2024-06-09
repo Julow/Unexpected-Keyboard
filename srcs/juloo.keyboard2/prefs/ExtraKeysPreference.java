@@ -68,6 +68,8 @@ public class ExtraKeysPreference extends PreferenceCategory
     "redo",
     "superscript",
     "subscript",
+    "f11_placeholder",
+    "f12_placeholder",
   };
 
   /** Whether an extra key is enabled by default. */
@@ -80,6 +82,8 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "compose":
       case "tab":
       case "esc":
+      case "f11_placeholder":
+      case "f12_placeholder":
         return true;
       default:
         return false;
@@ -119,6 +123,40 @@ public class ExtraKeysPreference extends PreferenceCategory
     return res.getString(id);
   }
 
+  static String key_title(String key_name, KeyValue kv)
+  {
+    switch (key_name)
+    {
+      case "f11_placeholder": return "F11";
+      case "f12_placeholder": return "F12";
+    }
+    return kv.getString();
+  }
+
+  static KeyboardData.PreferredPos key_preferred_pos(String key_name)
+  {
+    switch (key_name)
+    {
+      case "f11_placeholder":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("9"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(0, 8, 3),
+              new KeyboardData.KeyPos(0, 8, 4),
+              new KeyboardData.KeyPos(0, -1, 3),
+              new KeyboardData.KeyPos(0, -1, 4),
+            });
+      case "f12_placeholder":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("0"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(0, 9, 3),
+              new KeyboardData.KeyPos(0, 9, 4),
+              new KeyboardData.KeyPos(0, -1, 3),
+              new KeyboardData.KeyPos(0, -1, 4),
+            });
+    }
+    return KeyboardData.PreferredPos.DEFAULT;
+  }
+
   /** Get the set of enabled extra keys. */
   public static Map<KeyValue, KeyboardData.PreferredPos> get_extra_keys(SharedPreferences prefs)
   {
@@ -128,7 +166,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       if (prefs.getBoolean(pref_key_of_key_name(key_name),
             default_checked(key_name)))
-        ks.put(KeyValue.getKeyByName(key_name), KeyboardData.PreferredPos.DEFAULT);
+        ks.put(KeyValue.getKeyByName(key_name), key_preferred_pos(key_name));
     }
     return ks;
   }
@@ -166,7 +204,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       super(ctx);
       KeyValue kv = KeyValue.getKeyByName(key_name);
-      String title = kv.getString();
+      String title = key_title(key_name, kv);
       String descr = key_description(ctx.getResources(), key_name);
       if (descr != null)
         title += " (" + descr + ")";
