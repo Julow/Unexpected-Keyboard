@@ -1,6 +1,14 @@
 import textwrap, sys, re, string, json, os
 from array import array
 
+# Compile compose sequences from Xorg's format or from JSON files into an
+# efficient state machine.
+# See [ComposeKey.java] for the interpreter.
+#
+# Takes input files as arguments and generate a Java file.
+# The initial state for each input is generated as a constant named after the
+# input file.
+
 # Parse symbol names from keysymdef.h. Many compose sequences in
 # en_US_UTF_8_Compose.pre reference theses. For example, all the sequences on
 # the Greek, Cyrillic and Hebrew scripts need these symbols.
@@ -122,7 +130,7 @@ def add_sequences_to_trie(seqs, trie):
         add_seq_to_trie(trie, seq, result)
 
 # Compile the trie into a state machine.
-def make_automata(tree_root):
+def make_automata(tries):
     states = []
     def add_tree(t):
         # Index and size of the new node
@@ -155,8 +163,12 @@ def make_automata(tree_root):
             add_leaf(n)
         else:
             add_tree(n)
-    add_tree(tree_root)
-    return states
+    states.append((1, 1)) # Add an empty state at the beginning.
+    entry_states = {}
+    for tname, tree_root in tries.items():
+        entry_states[tname] = len(states)
+        add_tree(tree_root)
+    return entry_states, states
 
 # Debug
 def print_automata(automata):
@@ -176,7 +188,7 @@ def batched(ar, n):
 
 # Print the state machine compiled by make_automata into java code that can be
 # used by [ComposeKeyData.java].
-def gen_java(machine):
+def gen_java(entry_states, machine):
     chars_map = {
             # These characters cannot be used in unicode form as Java's parser
             # unescape unicode sequences before parsing.
@@ -201,6 +213,9 @@ def gen_java(machine):
     def gen_array(array):
         chars = list(map(char_repr, array))
         return "\" +\n    \"".join(map(lambda b: "".join(b), batched(chars, 72)))
+    def gen_entry_state(s):
+        name, state = s
+        return "  public static final int %s = %d;" % (name, state)
     print("""package juloo.keyboard2;
 
 /** This file is generated, see [srcs/compose/compile.py]. */
@@ -212,19 +227,23 @@ public final class ComposeKeyData
 
   public static final char[] edges =
     ("%s").toCharArray();
+
+%s
 }""" % (
     # Break the edges array every few characters using string concatenation.
     gen_array(map(lambda s: s[0], machine)),
     gen_array(map(lambda s: s[1], machine)),
+    "\n".join(map(gen_entry_state, entry_states.items())),
 ))
 
 total_sequences = 0
-trie = {}
+tries = {} # Orderred dict
 for fname in sys.argv[1:]:
+    tname, _ = os.path.splitext(os.path.basename(fname))
     sequences = parse_sequences_file(fname)
-    add_sequences_to_trie(sequences, trie)
+    add_sequences_to_trie(sequences, tries.setdefault(tname, {}))
     total_sequences += len(sequences)
-automata = make_automata(trie)
-gen_java(automata)
+entry_states, automata = make_automata(tries)
+gen_java(entry_states, automata)
 print("Compiled %d sequences into %d states. Dropped %d sequences." % (total_sequences, len(automata), dropped_sequences), file=sys.stderr)
 # print_automata(automata)
