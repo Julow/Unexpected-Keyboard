@@ -77,6 +77,11 @@
   <string name="pref_border_config_title">自定义边界</string>
   <string name="pref_border_width_title">边界宽度</string>
   <string name="pref_corners_radius_title">圆角半径</string>
+  <!-- <string name="pref_circle_sensitivity_title">Circle gesture sensitivity</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_high">High</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_medium">Medium</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_low">Low</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_disabled">Disabled</string> -->
   <string name="key_action_next">下一项</string>
   <string name="key_action_done">完成</string>
   <string name="key_action_go">前往</string>

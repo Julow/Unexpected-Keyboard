@@ -65,6 +65,7 @@ public final class Config
   public boolean switch_input_immediate;
   public boolean pin_entry_enabled;
   public boolean borderConfig;
+  public int circle_sensitivity;
 
   // Dynamically set
   public boolean shouldOfferVoiceTyping;
@@ -181,6 +182,7 @@ public final class Config
     pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
     current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
     current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
+    circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
   }
 
   public int get_current_layout()

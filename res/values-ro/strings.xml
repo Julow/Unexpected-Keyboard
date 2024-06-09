@@ -77,6 +77,11 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <!-- <string name="pref_border_config_title">Customize borders</string> -->
   <!-- <string name="pref_border_width_title">Border Width</string> -->
   <!-- <string name="pref_corners_radius_title">Corner radius</string> -->
+  <!-- <string name="pref_circle_sensitivity_title">Circle gesture sensitivity</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_high">High</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_medium">Medium</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_low">Low</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_disabled">Disabled</string> -->
   <string name="key_action_next">Următor</string>
   <string name="key_action_done">Gata</string>
   <string name="key_action_go">Go</string>

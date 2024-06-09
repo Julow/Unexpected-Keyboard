@@ -77,6 +77,11 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="pref_border_config_title">Dostosuj krawędzie</string>
   <string name="pref_border_width_title">Grubość krawedzi</string>
   <string name="pref_corners_radius_title">Promień rogów</string>
+  <!-- <string name="pref_circle_sensitivity_title">Circle gesture sensitivity</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_high">High</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_medium">Medium</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_low">Low</string> -->
+  <!-- <string name="pref_circle_sensitivity_e_disabled">Disabled</string> -->
   <string name="key_action_next">Dalej</string>
   <string name="key_action_done">OK</string>
   <string name="key_action_go">Przejdź</string>

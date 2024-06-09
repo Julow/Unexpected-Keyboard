@@ -86,7 +86,7 @@ public final class Gesture
     switch (state)
     {
       case Swiped:
-        if (Math.abs(d) < ROTATION_THRESHOLD)
+        if (Math.abs(d) < Config.globalConfig().circle_sensitivity)
           return false;
         // Start a rotation
         state = (clockwise) ?
