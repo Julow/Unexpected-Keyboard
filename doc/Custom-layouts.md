@@ -95,23 +95,30 @@ If the string defining a tap or a swipe is anything other than one of the built-
 The string can output multiple characters, but cannot combine the built-in strings to specify a sequence of keystrokes.
 
 ## Modmap
-The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys.
+The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row.
 
 A modmap can contain the following tags, each of which must have an `a` and a `b` property:
 * `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made a clockwise gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
 * `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
 
-The "a" and "b" values are as specified above in _Possible key values_. A `<fn`...`/>` tag modifies a gesture only if no `<shift`...`/>` tag did.
+The "a" and "b" values are as specified above in **Possible key values**. A `<fn`...`/>` tag modifies a gesture only if no `<shift`...`/>` tag did.
 
 There can be as many of these tags inside `<modmap>` as needed.
 
-### Example
+### Examples
 Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
-
 
     <modmap>
         <shift a="i" b="İ" />
     </modmap>
+    
+On built-in layouts for European locales, `Fn`+`e` produces the € character. This can be inhibited with the following modmap, which maps the modified `e` key to itself:
+
+    <modmap>
+        <fn a="e" b="e" />
+    </modmap>
+
+These two examples are each shown in a modmap, for completeness. Typically, however, you would have a single modmap containing all the desired `<shift>` and `<fn>` tags.
 
 ## Portrait vs. landscape
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. That is to say, you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
