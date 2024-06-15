@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -146,6 +147,8 @@ public class EmojiGridView extends GridView
     public EmojiView(Context context)
     {
       super(context);
+      Typeface typeface = context.getResources().getFont(R.font.notocoloremoji);
+      this.setTypeface(typeface);
     }
 
     public void setEmoji(Emoji emoji)
