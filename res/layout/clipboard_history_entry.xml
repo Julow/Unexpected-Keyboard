@@ -3,5 +3,6 @@
   <TextView android:id="@+id/clipboard_entry_text" style="@style/clipboardEntry"/>
   <LinearLayout style="@style/clipboardEntryButtons">
     <View android:id="@+id/clipboard_entry_addpin" style="@style/clipboardEntryButton" android:background="@android:drawable/ic_menu_add"/>
+    <View android:id="@+id/clipboard_entry_removehist" style="@style/clipboardEntryButton" android:background="@android:drawable/ic_menu_delete"/>
   </LinearLayout>
 </LinearLayout>

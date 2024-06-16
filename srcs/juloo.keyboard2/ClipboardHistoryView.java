@@ -41,6 +41,12 @@ public final class ClipboardHistoryView extends NonScrollListView
     _service.remove_history_entry(clip);
   }
 
+  /** The history entry at index [pos] is removed from the history. */
+  public void remove_entry(int pos)
+  {
+    _service.remove_history_entry(_history.get(pos));
+  }
+
   @Override
   public void on_clipboard_history_change()
   {
@@ -84,6 +90,12 @@ public final class ClipboardHistoryView extends NonScrollListView
           {
             @Override
             public void onClick(View v) { pin_entry(pos); }
+          });
+      v.findViewById(R.id.clipboard_entry_removehist).setOnClickListener(
+          new View.OnClickListener()
+          {
+            @Override
+            public void onClick(View v) { remove_entry(pos); }
           });
       return v;
     }
