@@ -28,7 +28,6 @@ public class LauncherActivity extends Activity
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
-    
     super.onCreate(savedInstanceState);
     setContentView(R.layout.launcher_activity);
     _intro_video = (VideoView)findViewById(R.id.launcher_intro_video);
@@ -39,21 +38,26 @@ public class LauncherActivity extends Activity
           this.new Tryhere_OnUnhandledKeyEventListener());
     setup_intro_video(_intro_video);
   }
+
   @Override
-  public final boolean onCreateOptionsMenu(Menu menu) {
+  public final boolean onCreateOptionsMenu(Menu menu)
+  {
     getMenuInflater().inflate(R.menu.launcher_menu, menu);
     return true;
   }
 
   @Override
-  public final boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.btnLaunchSettingsActivity) {
+  public final boolean onOptionsItemSelected(MenuItem item)
+  {
+    if (item.getItemId() == R.id.btnLaunchSettingsActivity)
+    {
       Intent intent = new Intent(LauncherActivity.this, SettingsActivity.class);
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       startActivity(intent);
     }
     return super.onOptionsItemSelected(item);
   }
+
   public void launch_imesettings(View _btn)
   {
     startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS));
@@ -113,7 +117,7 @@ public class LauncherActivity extends Activity
       String kc = KeyEvent.keyCodeToString(ev.getKeyCode());
       s.append(kc.replaceFirst("^KEYCODE_", ""));
       _tryhere_text.setText(s.toString());
-      return true;
+      return false;
     }
   }
 }
