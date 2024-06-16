@@ -147,7 +147,7 @@ public class EmojiGridView extends GridView
     public EmojiView(Context context)
     {
       super(context);
-      Typeface typeface = context.getResources().getFont(R.font.notocoloremoji);
+      Typeface typeface = context.getResources().getFont(R.font.noto_color_emoji_compat);
       this.setTypeface(typeface);
     }
 

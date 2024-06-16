@@ -21,6 +21,10 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
   </application>
 
   <!-- To query enabled input methods for voice IME detection -->
