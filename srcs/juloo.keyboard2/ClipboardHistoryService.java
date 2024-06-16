@@ -11,9 +11,10 @@ import java.util.List;
 public final class ClipboardHistoryService
 {
   /** Start the service on startup and start listening to clipboard changes. */
-  public static void on_startup(Context ctx)
+  public static void on_startup(Context ctx, ClipboardPasteCallback cb)
   {
     get_service(ctx);
+    _paste_callback = cb;
   }
 
   /** Start the service if it hasn't been started before. Returns [null] if the
@@ -40,6 +41,13 @@ public final class ClipboardHistoryService
       _service.clear_history();
   }
 
+  /** Send the given string to the editor. */
+  public static void paste(String clip)
+  {
+    if (_paste_callback != null)
+      _paste_callback.paste_from_clipboard_pane(clip);
+  }
+
   /** The maximum size limits the amount of user data stored in memory but also
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
@@ -48,6 +56,7 @@ public final class ClipboardHistoryService
   public static final long HISTORY_TTL_MS = 5 * 60 * 1000;
 
   static ClipboardHistoryService _service = null;
+  static ClipboardPasteCallback _paste_callback = null;
 
   ClipboardManager _cm;
   List<HistoryEntry> _history;
@@ -162,5 +171,10 @@ public final class ClipboardHistoryService
       content = c;
       expiry_timestamp = System.currentTimeMillis() + HISTORY_TTL_MS;
     }
+  }
+
+  public interface ClipboardPasteCallback
+  {
+    public void paste_from_clipboard_pane(String content);
   }
 }

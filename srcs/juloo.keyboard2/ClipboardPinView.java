@@ -55,6 +55,12 @@ public final class ClipboardPinView extends NonScrollListView
     invalidate();
   }
 
+  /** Send the specified entry to the editor. */
+  public void paste_entry(int pos)
+  {
+    ClipboardHistoryService.paste(_entries.get(pos));
+  }
+
   void persist() { save_to_prefs(_persist_store, _entries); }
 
   static void load_from_prefs(SharedPreferences store, List<String> dst)
@@ -99,6 +105,12 @@ public final class ClipboardPinView extends NonScrollListView
         v = View.inflate(getContext(), R.layout.clipboard_pin_entry, null);
       ((TextView)v.findViewById(R.id.clipboard_pin_text))
         .setText(_entries.get(pos));
+      v.findViewById(R.id.clipboard_pin_paste).setOnClickListener(
+          new View.OnClickListener()
+          {
+            @Override
+            public void onClick(View v) { paste_entry(pos); }
+          });
       v.findViewById(R.id.clipboard_pin_remove).setOnClickListener(
           new View.OnClickListener()
           {

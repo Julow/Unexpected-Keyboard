@@ -114,7 +114,7 @@ public class Keyboard2 extends InputMethodService
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
-    ClipboardHistoryService.on_startup(this);
+    ClipboardHistoryService.on_startup(this, _keyeventhandler);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
