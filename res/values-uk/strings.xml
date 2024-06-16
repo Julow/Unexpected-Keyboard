@@ -77,11 +77,11 @@
   <string name="pref_border_config_title">Налаштувати межі</string>
   <string name="pref_border_width_title">Ширина межі</string>
   <string name="pref_corners_radius_title">Радіус кута</string>
-  <!-- <string name="pref_circle_sensitivity_title">Circle gesture sensitivity</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_high">High</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_medium">Medium</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_low">Low</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_disabled">Disabled</string> -->
+  <string name="pref_circle_sensitivity_title">Чутливість до колових жестів</string>
+  <string name="pref_circle_sensitivity_e_high">Висока</string>
+  <string name="pref_circle_sensitivity_e_medium">Середня</string>
+  <string name="pref_circle_sensitivity_e_low">Низька</string>
+  <string name="pref_circle_sensitivity_e_disabled">Вимкнено</string>
   <string name="key_action_next">Далі</string>
   <string name="key_action_done">Готово</string>
   <string name="key_action_go">Іти</string>
