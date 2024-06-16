@@ -223,6 +223,7 @@ public class Keyboard2 extends InputMethodService
     {
       _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
       _emojiPane = null;
+      setInputView(_keyboardView);
     }
     _keyboardView.reset();
   }
@@ -345,7 +346,6 @@ public class Keyboard2 extends InputMethodService
   public void onSharedPreferenceChanged(SharedPreferences _prefs, String _key)
   {
     refresh_config();
-    setInputView(_keyboardView);
     _keyboardView.setKeyboard(current_layout());
   }
 
