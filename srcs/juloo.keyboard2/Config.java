@@ -66,6 +66,7 @@ public final class Config
   public boolean pin_entry_enabled;
   public boolean borderConfig;
   public int circle_sensitivity;
+  public boolean clipboard_history_enabled;
 
   // Dynamically set
   public boolean shouldOfferVoiceTyping;
@@ -183,6 +184,7 @@ public final class Config
     current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
     current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
+    clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
   }
 
   public int get_current_layout()

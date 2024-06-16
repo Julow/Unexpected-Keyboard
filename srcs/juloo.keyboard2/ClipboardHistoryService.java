@@ -27,6 +27,19 @@ public final class ClipboardHistoryService
     return _service;
   }
 
+  public static void set_history_enabled(boolean e)
+  {
+    if (_service == null)
+      return;
+    Config.globalPrefs().edit()
+      .putBoolean("clipboard_history_enabled", e)
+      .commit();
+    if (e)
+      _service.add_current_clip();
+    else
+      _service.clear_history();
+  }
+
   /** The maximum size limits the amount of user data stored in memory but also
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
@@ -89,12 +102,21 @@ public final class ClipboardHistoryService
       empty strings. */
   public void add_clip(String clip)
   {
+    if (!Config.globalConfig().clipboard_history_enabled)
+      return;
     int size = _history.size();
     if (clip.equals("") || (size > 0 && _history.get(size - 1).content.equals(clip)))
       return;
     if (size >= MAX_HISTORY_SIZE)
       _history.remove(0);
     _history.add(new HistoryEntry(clip));
+    if (_listener != null)
+      _listener.on_clipboard_history_change();
+  }
+
+  public void clear_history()
+  {
+    _history.clear();
     if (_listener != null)
       _listener.on_clipboard_history_change();
   }
@@ -106,6 +128,17 @@ public final class ClipboardHistoryService
     public void on_clipboard_history_change();
   }
 
+  /** Add what is currently in the system clipboard into the history. */
+  void add_current_clip()
+  {
+    ClipData clip = _cm.getPrimaryClip();
+    if (clip == null)
+      return;
+    int count = clip.getItemCount();
+    for (int i = 0; i < count; i++)
+      add_clip(clip.getItemAt(i).getText().toString());
+  }
+
   final class SystemListener implements ClipboardManager.OnPrimaryClipChangedListener
   {
     public SystemListener() {}
@@ -113,12 +146,7 @@ public final class ClipboardHistoryService
     @Override
     public void onPrimaryClipChanged()
     {
-      ClipData clip = _cm.getPrimaryClip();
-      if (clip == null)
-        return;
-      int count = clip.getItemCount();
-      for (int i = 0; i < count; i++)
-        add_clip(clip.getItemAt(i).getText().toString());
+      add_current_clip();
     }
   }
 

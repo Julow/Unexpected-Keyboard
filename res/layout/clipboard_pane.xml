@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:background="?attr/colorKeyboard" android:hardwareAccelerated="false">
   <ScrollView android:layout_width="fill_parent" android:layout_height="@dimen/clipboard_view_height">
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
-      <TextView android:text="@string/clipboard_history_heading" style="@style/clipboardHeading" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+      <juloo.keyboard2.ClipboardHistoryCheckBox android:text="@string/clipboard_history_heading" style="@style/clipboardHeading" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
       <juloo.keyboard2.ClipboardHistoryView android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:divider="?attr/clipboard_divider_color" android:dividerHeight="?attr/clipboard_divider_height"/>
       <TextView android:text="@string/clipboard_pin_heading" style="@style/clipboardHeading" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
       <juloo.keyboard2.ClipboardPinView android:id="@+id/clipboard_pin_view" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:divider="?attr/clipboard_divider_color" android:dividerHeight="?attr/clipboard_divider_height"/>
