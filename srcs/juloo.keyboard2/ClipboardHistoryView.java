@@ -27,7 +27,7 @@ public final class ClipboardHistoryView extends ListView
     if (_service != null)
     {
       _service.set_on_clipboard_history_change(this);
-      _history = _service.get_history();
+      _history = _service.clear_expired_and_get_history();
     }
     setAdapter(_adapter);
   }
@@ -43,18 +43,23 @@ public final class ClipboardHistoryView extends ListView
   }
 
   @Override
-  public void on_clipboard_history_change(List<String> history)
+  public void on_clipboard_history_change()
   {
-    _history = history;
-    _adapter.notifyDataSetChanged();
-    invalidate();
+    update_data();
   }
 
   @Override
-  protected void onAttachedToWindow()
+  protected void onWindowVisibilityChanged(int visibility)
   {
-    super.onAttachedToWindow();
+    if (visibility == View.VISIBLE)
+      update_data();
+  }
+
+  void update_data()
+  {
+    _history = _service.clear_expired_and_get_history();
     _adapter.notifyDataSetChanged();
+    invalidate();
   }
 
   class ClipboardEntriesAdapter extends BaseAdapter

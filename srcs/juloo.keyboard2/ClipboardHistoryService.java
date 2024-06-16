@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build.VERSION;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public final class ClipboardHistoryService
@@ -30,21 +31,37 @@ public final class ClipboardHistoryService
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
   public static final int MAX_HISTORY_SIZE = 3;
+  /** Time in ms until history entries expire. */
+  public static final long HISTORY_TTL_MS = 5 * 60 * 1000;
 
   static ClipboardHistoryService _service = null;
 
   ClipboardManager _cm;
-  List<String> _history;
+  List<HistoryEntry> _history;
   OnClipboardHistoryChange _listener = null;
 
   ClipboardHistoryService(Context ctx)
   {
-    _history = new ArrayList<String>();
+    _history = new ArrayList<HistoryEntry>();
     _cm = (ClipboardManager)ctx.getSystemService(Context.CLIPBOARD_SERVICE);
     _cm.addPrimaryClipChangedListener(this.new SystemListener());
   }
 
-  public List<String> get_history() { return _history; }
+  public List<String> clear_expired_and_get_history()
+  {
+    long now_ms = System.currentTimeMillis();
+    List<String> dst = new ArrayList<String>();
+    Iterator<HistoryEntry> it = _history.iterator();
+    while (it.hasNext())
+    {
+      HistoryEntry ent = it.next();
+      if (ent.expiry_timestamp <= now_ms)
+        it.remove();
+      else
+        dst.add(ent.content);
+    }
+    return dst;
+  }
 
   /** This will call [on_clipboard_history_change]. */
   public void remove_history_entry(String clip)
@@ -52,7 +69,7 @@ public final class ClipboardHistoryService
     int last_pos = _history.size() - 1;
     for (int pos = last_pos; pos >= 0; pos--)
     {
-      if (!_history.get(pos).equals(clip))
+      if (!_history.get(pos).content.equals(clip))
         continue;
       // Removing the current clipboard, clear the system clipboard.
       if (pos == last_pos)
@@ -64,7 +81,7 @@ public final class ClipboardHistoryService
       }
       _history.remove(pos);
       if (_listener != null)
-        _listener.on_clipboard_history_change(_history);
+        _listener.on_clipboard_history_change();
     }
   }
 
@@ -73,20 +90,20 @@ public final class ClipboardHistoryService
   public void add_clip(String clip)
   {
     int size = _history.size();
-    if (clip.equals("") || (size > 0 && _history.get(size - 1).equals(clip)))
+    if (clip.equals("") || (size > 0 && _history.get(size - 1).content.equals(clip)))
       return;
     if (size >= MAX_HISTORY_SIZE)
       _history.remove(0);
-    _history.add(clip);
+    _history.add(new HistoryEntry(clip));
     if (_listener != null)
-      _listener.on_clipboard_history_change(_history);
+      _listener.on_clipboard_history_change();
   }
 
   public void set_on_clipboard_history_change(OnClipboardHistoryChange l) { _listener = l; }
 
   public static interface OnClipboardHistoryChange
   {
-    public void on_clipboard_history_change(List<String> history);
+    public void on_clipboard_history_change();
   }
 
   final class SystemListener implements ClipboardManager.OnPrimaryClipChangedListener
@@ -102,6 +119,20 @@ public final class ClipboardHistoryService
       int count = clip.getItemCount();
       for (int i = 0; i < count; i++)
         add_clip(clip.getItemAt(i).getText().toString());
+    }
+  }
+
+  static final class HistoryEntry
+  {
+    public final String content;
+
+    /** Time at which the entry expires. */
+    public final long expiry_timestamp;
+
+    public HistoryEntry(String c)
+    {
+      content = c;
+      expiry_timestamp = System.currentTimeMillis() + HISTORY_TTL_MS;
     }
   }
 }
