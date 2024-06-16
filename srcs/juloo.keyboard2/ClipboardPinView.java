@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +13,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public final class ClipboardPinView extends ListView
+public final class ClipboardPinView extends NonScrollListView
 {
   /** Preference file name that store pinned clipboards. */
   static final String PERSIST_FILE_NAME = "clipboards";
