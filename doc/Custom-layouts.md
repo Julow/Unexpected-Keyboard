@@ -121,7 +121,7 @@ By default, `Fn`+`e` produces the € character. This can be inhibited with the 
 These two examples are each shown in a modmap, for completeness. Typically, however, you would have a single modmap containing all the desired `<shift>` and `<fn>` tags.
 
 ## Portrait vs. landscape
-Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. That is to say, you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
+Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. So you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
 
 ## Contributing your layout
 The Unexpected Keyboard project enthusiastically accepts user contributions, including custom layouts. (See the guidance for layouts at [CONTRIBUTING.md](https://github.com/Julow/Unexpected-Keyboard/blob/master/CONTRIBUTING.md#Adding-a-layout)).
