@@ -112,7 +112,7 @@ Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should pro
         <shift a="i" b="İ" />
     </modmap>
     
-On built-in layouts for European locales, `Fn`+`e` produces the € character. This can be inhibited with the following modmap, which maps the modified `e` key to itself:
+On the built-in layouts, `Fn`+`e` produces the € character. This can be inhibited with the following modmap, which maps the modified `e` key to itself:
 
     <modmap>
         <fn a="e" b="e" />
