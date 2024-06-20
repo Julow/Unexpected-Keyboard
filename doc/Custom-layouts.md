@@ -57,11 +57,11 @@ When the Shift modifier is tapped, the "a" key becomes the "A" key and the legen
 ### Swipes
 The following optional properties define the effects of swipes:
 * `n`, `ne`, `e`, `se`, `s`, `sw`, `w`, `nw`: What the key should do when it is swiped in the direction of that compass point. ("North" means upward and "East" is to the right.)
-<TABLE>
+<TABLE ALIGN=CENTER>
   <TR>
-    <TD>nw</TD><TD>n</TD><TD>ne</TD>
+    <TD STYLE="width: 6em;">nw</TD><TD>n</TD><TD>ne</TD>
   </TR>
-  <TR>
+  <TR ALIGN=CENTER>
     <TD>w</TD><TD>&nbsp;</TD><TD>e</TD>
   </TR>
   <TR>
@@ -70,7 +70,7 @@ The following optional properties define the effects of swipes:
 </TABLE>
 
 * `key1` through `key8` is an older way to achieve the same effects. The directions are ordered as follows:
-<TABLE>
+<TABLE ALIGN=CENTER>
   <TR>
     <TD>key1</TD><TD>key7</TD><TD>key2</TD>
   </TR>
