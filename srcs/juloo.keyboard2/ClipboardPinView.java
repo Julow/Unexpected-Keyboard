@@ -1,10 +1,14 @@
 package juloo.keyboard2;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -115,7 +119,28 @@ public final class ClipboardPinView extends NonScrollListView
           new View.OnClickListener()
           {
             @Override
-            public void onClick(View v) { remove_entry(pos); }
+            public void onClick(View v)
+            {
+              // Confirmation dialog for removing a clip
+              AlertDialog d = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.clipboard_remove_confirm)
+                .setPositiveButton(R.string.clipboard_remove_confirmed, new DialogInterface.OnClickListener(){
+                  public void onClick(DialogInterface _dialog, int _which)
+                  {
+                    remove_entry(pos);
+                  }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+              // https://stackoverflow.com/questions/3494476/android-ime-how-to-show-a-pop-up-dialog
+              Window dw = d.getWindow(); 
+              WindowManager.LayoutParams lp = dw.getAttributes();
+              lp.token = v.getWindowToken();
+              lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+              dw.setAttributes(lp);
+              dw.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+              d.show();
+            }
           });
       return v;
     }
