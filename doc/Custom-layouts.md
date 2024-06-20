@@ -50,25 +50,37 @@ A row's default height is 1.0 (one quarter of the keyboard height specified on t
 The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. What the key does is defined by optional properties.
 
 ### Taps
-What the key does when tapped is defined by the `key0` property. For example, `<key key0="a" />` defines the "a" key. Unexpected Keyboard provides a legend in the middle of the key.
+What the key does when tapped is defined by the optional `key0` property. For example, `<key key0="a" />` defines the "a" key. Unexpected Keyboard provides a legend in the middle of the key.
 
 When the Shift modifier is tapped, the "a" key becomes the "A" key and the legend temporarily changes. The Fn modifier makes a different change. You can override this behavior with a modmap (see below).
 
 ### Swipes
 The following optional properties define the effects of swipes:
 * `n`, `ne`, `e`, `se`, `s`, `sw`, `w`, `nw`: What the key should do when it is swiped in the direction of that compass point. ("North" means upward and "East" is to the right.)
-
- nw | n    |  ne
-:-: | :--: | :-:
- w  | key0 |  e
- sw | s    |  se
+<TABLE>
+  <TR>
+    <TD>nw</TD><TD>n</TD><TD>ne</TD>
+  </TR>
+  <TR>
+    <TD>w</TD><TD>&nbsp;</TD><TD>e</TD>
+  </TR>
+  <TR>
+    <TD>sw</TD><TD>s</TD><TD>se</TD>
+  </TR>
+</TABLE>
 
 * `key1` through `key8` is an older way to achieve the same effects. The directions are ordered as follows:
-
-key1 | key7 | key2
-:-: | :--: | :-:
-key5 | key0 | key6
-key3 | key8 | key4
+<TABLE>
+  <TR>
+    <TD>key1</TD><TD>key7</TD><TD>key2</TD>
+  </TR>
+  <TR>
+    <TD>key5</TD><TD>&nbsp;</TD><TD>key6</TD>
+  </TR>
+  <TR>
+    <TD>key3</TD><TD>key8</TD><TD>key4</TD>
+  </TR>
+</TABLE>
 
 You can define a swipe only once with either compass-point or numeric notation. Unexpected Keyboard automatically puts a small legend in that direction from the center of the key.
 
@@ -95,7 +107,7 @@ If the string defining a tap or a swipe is anything other than one of the built-
 The string can output multiple characters, but cannot combine the built-in strings to specify a sequence of keystrokes.
 
 ## Modmap
-The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row.
+The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap.
 
 A modmap can contain the following tags, each of which must have an `a` and a `b` property:
 * `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made a clockwise gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
@@ -106,19 +118,19 @@ The "a" and "b" values are as specified above in **Possible key values**. A `<fn
 There can be as many of these tags inside `<modmap>` as needed.
 
 ### Examples
-Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
+① Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
 
     <modmap>
         <shift a="i" b="İ" />
     </modmap>
     
-By default, `Fn`+`e` produces the € character. This can be inhibited with the following modmap, which maps the modified `e` key to itself:
+② By default, `Fn`+`e` produces the € character. This can be inhibited with the following modmap, which maps the modified `e` key to itself:
 
     <modmap>
         <fn a="e" b="e" />
     </modmap>
 
-These two examples are each shown in a modmap, for completeness. Typically, however, you would have a single modmap containing all the desired `<shift>` and `<fn>` tags.
+These two examples are each shown in a modmap, for completeness. However, a layout can have at most one modmap, containing all the desired `<shift>` and `<fn>` tags.
 
 ## Portrait vs. landscape
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. So you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
