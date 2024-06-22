@@ -308,7 +308,6 @@ public final class Pointers implements Handler.Callback
       { // Gesture changed state
         if (!ptr.gesture.is_in_progress())
         { // Gesture ended
-          stopKeyRepeat(ptr);
           _handler.onPointerFlagsChanged(true);
         }
         else
