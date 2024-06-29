@@ -40,6 +40,7 @@ Este aplicativo não contém anúncios, não faz nenhuma solicitação de rede e
   <string name="pref_swipe_dist_summary">Distância até acionar os cantos das teclas (%s)</string>
   <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">Intervalo de repetição de tecla</string>
+  <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
   <string name="pref_lock_double_tap_title">Tecle duas vezes no shift para travá-lo acionado</string>
   <string name="pref_lock_double_tap_summary">Ao invés de apertar e segurar por um tempo</string>
   <string name="pref_category_behavior">Comportamento</string>

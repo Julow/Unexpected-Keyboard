@@ -40,6 +40,7 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_swipe_dist_summary">키 모서리 문자의 입력 범위 (%s)</string>
   <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">키 반복 간격</string>
+  <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
   <!-- <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string> -->
   <!-- <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string> -->
   <!-- <string name="pref_category_behavior">Behavior</string> -->

@@ -24,14 +24,14 @@ public final class Pointers implements Handler.Callback
   /** Can't be locked, even when long pressing. */
   public static final int FLAG_P_CANT_LOCK = (1 << 7);
 
-  private Handler _keyrepeat_handler;
+  private Handler _longpress_handler;
   private ArrayList<Pointer> _ptrs = new ArrayList<Pointer>();
   private IPointerEventHandler _handler;
   private Config _config;
 
   public Pointers(IPointerEventHandler h, Config c)
   {
-    _keyrepeat_handler = new Handler(this);
+    _longpress_handler = new Handler(this);
     _handler = h;
     _config = c;
   }
@@ -62,7 +62,7 @@ public final class Pointers implements Handler.Callback
   public void clear()
   {
     for (Pointer p : _ptrs)
-      stopKeyRepeat(p);
+      stopLongPress(p);
     _ptrs.clear();
   }
 
@@ -142,7 +142,7 @@ public final class Pointers implements Handler.Callback
       ptr.sliding.onTouchUp(ptr);
       return;
     }
-    stopKeyRepeat(ptr);
+    stopLongPress(ptr);
     KeyValue ptr_value = ptr.value;
     if (ptr.gesture != null && ptr.gesture.is_in_progress())
     {
@@ -206,7 +206,7 @@ public final class Pointers implements Handler.Callback
     KeyValue value = _handler.modifyKey(key.keys[0], mods);
     Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
-    startKeyRepeat(ptr);
+    startLongPress(ptr);
     _handler.onPointerDown(value, false);
   }
 
@@ -313,7 +313,7 @@ public final class Pointers implements Handler.Callback
         else
         {
           ptr.value = apply_gesture(ptr, ptr.gesture.get_gesture());
-          restartKeyRepeat(ptr);
+          restartLongPress(ptr);
           ptr.flags = 0; // Special behaviors are ignored during a gesture.
         }
       }
@@ -382,7 +382,7 @@ public final class Pointers implements Handler.Callback
 
   // Key repeat
 
-  /** Message from [_keyrepeat_handler]. */
+  /** Message from [_longpress_handler]. */
   @Override
   public boolean handleMessage(Message msg)
   {
@@ -390,11 +390,7 @@ public final class Pointers implements Handler.Callback
     {
       if (ptr.timeoutWhat == msg.what)
       {
-        if (handleKeyRepeat(ptr))
-          _keyrepeat_handler.sendEmptyMessageDelayed(msg.what,
-              _config.longPressInterval);
-        else
-          ptr.timeoutWhat = -1;
+        handleLongPress(ptr);
         return true;
       }
     }
@@ -403,60 +399,62 @@ public final class Pointers implements Handler.Callback
 
   private static int uniqueTimeoutWhat = 0;
 
-  private void startKeyRepeat(Pointer ptr)
+  private void startLongPress(Pointer ptr)
   {
     int what = (uniqueTimeoutWhat++);
     ptr.timeoutWhat = what;
-    _keyrepeat_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
+    _longpress_handler.sendEmptyMessageDelayed(what, _config.longPressTimeout);
   }
 
-  private void stopKeyRepeat(Pointer ptr)
+  private void stopLongPress(Pointer ptr)
   {
-    if (ptr.timeoutWhat != -1)
-    {
-      _keyrepeat_handler.removeMessages(ptr.timeoutWhat);
-      ptr.timeoutWhat = -1;
-    }
+    _longpress_handler.removeMessages(ptr.timeoutWhat);
   }
 
-  private void restartKeyRepeat(Pointer ptr)
+  private void restartLongPress(Pointer ptr)
   {
-    stopKeyRepeat(ptr);
-    startKeyRepeat(ptr);
+    stopLongPress(ptr);
+    startLongPress(ptr);
   }
 
-  /** A pointer is repeating. Returns [true] if repeat should continue. */
-  private boolean handleKeyRepeat(Pointer ptr)
+  /** A pointer is long pressing. */
+  private void handleLongPress(Pointer ptr)
   {
     // Long press toggle lock on modifiers
     if ((ptr.flags & FLAG_P_LATCHABLE) != 0)
     {
       if (!ptr.hasFlagsAny(FLAG_P_CANT_LOCK))
         lockPointer(ptr, true);
-      return false;
+      return;
     }
-    // Stop repeating: Latched key, no key
+    // Latched key, no key
     if (ptr.hasFlagsAny(FLAG_P_LATCHED) || ptr.value == null)
-      return false;
+      return;
+    // Key is long-pressable
     KeyValue kv = KeyModifier.modify_long_press(ptr.value);
     if (!kv.equals(ptr.value))
     {
       ptr.value = kv;
       _handler.onPointerDown(kv, true);
-      return true;
+      return;
     }
-    // Stop repeating: Special keys
+    // Special keys
     if (kv.hasFlagsAny(KeyValue.FLAG_SPECIAL))
-      return false;
-    _handler.onPointerHold(kv, ptr.modifiers);
-    return true;
+      return;
+    // For every other keys, key-repeat
+    if (_config.keyrepeat_enabled)
+    {
+      _handler.onPointerHold(kv, ptr.modifiers);
+      _longpress_handler.sendEmptyMessageDelayed(ptr.timeoutWhat,
+          _config.longPressInterval);
+    }
   }
 
   // Sliding
 
   void startSliding(Pointer ptr, float x)
   {
-    stopKeyRepeat(ptr);
+    stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
     ptr.sliding = new Sliding(x);
   }

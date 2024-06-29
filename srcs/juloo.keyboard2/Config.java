@@ -47,6 +47,7 @@ public final class Config
   public long vibrate_duration;
   public long longPressTimeout;
   public long longPressInterval;
+  public boolean keyrepeat_enabled;
   public float margin_bottom;
   public float keyHeight;
   public float horizontal_margin;
@@ -152,6 +153,7 @@ public final class Config
     vibrate_duration = _prefs.getInt("vibrate_duration", 20);
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
     longPressInterval = _prefs.getInt("longpress_interval", 65);
+    keyrepeat_enabled = _prefs.getBoolean("keyrepeat_enabled", true);
     margin_bottom = get_dip_pref_oriented(dm, "margin_bottom", 7, 3);
     key_vertical_margin = get_dip_pref(dm, "key_vertical_margin", 1.5f) / 100;
     key_horizontal_margin = get_dip_pref(dm, "key_horizontal_margin", 2) / 100;
