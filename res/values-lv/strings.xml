@@ -38,7 +38,7 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="pref_category_typing">Rakstīšana</string>
   <string name="pref_swipe_dist_title">Pavilkšanas attālums</string>
   <string name="pref_swipe_dist_summary">Taustiņu stūros esošo rakstzīmju attālums (%s)</string>
-  <string name="pref_long_timeout_title">Taustiņa atkārtošanās ātrums</string>
+  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">Taustiņa atkārtošanās aizture</string>
   <string name="pref_lock_double_tap_title">Divkāršs piesitiens burtslēgam</string>
   <string name="pref_lock_double_tap_summary">Tā vietā, lai ilstoši piespiestu pārveidotāju</string>

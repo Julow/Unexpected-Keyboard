@@ -38,7 +38,7 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_category_typing">Escritura</string>
   <string name="pref_swipe_dist_title">Distancia de deslizamiento</string>
   <string name="pref_swipe_dist_summary">Distancia de caracteres en las esquinas de las teclas (%s)</string>
-  <string name="pref_long_timeout_title">Tiempo de espera para repetir tecla</string>
+  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">Intervalo de repetición de tecla</string>
   <string name="pref_lock_double_tap_title">Doble toque en Mayús para bloquear las mayúsculas</string>
   <string name="pref_lock_double_tap_summary">Se puede bloquear cualquier modificador manteniéndolo presionado</string>

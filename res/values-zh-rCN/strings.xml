@@ -38,7 +38,7 @@
   <string name="pref_category_typing">输入</string>
   <string name="pref_swipe_dist_title">滑动触发距离</string>
   <string name="pref_swipe_dist_summary">输入按键四角的符号需要滑动的距离 (%s)</string>
-  <string name="pref_long_timeout_title">长按到开始重复输入的时间</string>
+  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">长按后每次重复输入的时间间隔</string>
   <string name="pref_lock_double_tap_title">双击 Shift 键锁定大写</string>
   <string name="pref_lock_double_tap_summary">任何时候长按修饰键均可将其锁定</string>

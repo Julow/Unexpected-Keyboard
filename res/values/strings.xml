@@ -38,7 +38,7 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_category_typing">Typing</string>
   <string name="pref_swipe_dist_title">Swiping distance</string>
   <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
-  <string name="pref_long_timeout_title">Key repeat timeout</string>
+  <string name="pref_long_timeout_title">Long press timeout</string>
   <string name="pref_long_interval_title">Key repeat interval</string>
   <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string>
   <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string>

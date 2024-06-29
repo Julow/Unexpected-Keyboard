@@ -38,7 +38,7 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_category_typing">Digitando</string>
   <string name="pref_swipe_dist_title">Distanza swipe</string>
   <string name="pref_swipe_dist_summary">Distanza dei caratteri negli angoli dei tasti (%s)</string>
-  <string name="pref_long_timeout_title">Timeout ripetizione tasto</string>
+  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">Intervallo ripetizione tasto</string>
   <string name="pref_lock_double_tap_title">Doppio tocco su Shift per attivare CapsLock</string>
   <string name="pref_lock_double_tap_summary">Invece di premere i modificatori a lungo</string>
