@@ -236,9 +236,13 @@ public final class KeyboardData
     boolean bottom_row = attribute_bool(parser, "bottom_row", true);
     float specified_kw = attribute_float(parser, "width", 0f);
     String script = parser.getAttributeValue(null, "script");
+    if (script != null && script.equals(""))
+      throw error(parser, "'script' attribute cannot be empty");
     String numpad_script = parser.getAttributeValue(null, "numpad_script");
     if (numpad_script == null)
       numpad_script = script;
+    else if (numpad_script.equals(""))
+      throw error(parser, "'numpad_script' attribute cannot be empty");
     String name = parser.getAttributeValue(null, "name");
     ArrayList<Row> rows = new ArrayList<Row>();
     Modmap modmap = null;
@@ -250,6 +254,8 @@ public final class KeyboardData
           rows.add(Row.parse(parser));
           break;
         case "modmap":
+          if (modmap != null)
+            throw error(parser, "Multiple '<modmap>' are not allowed");
           modmap = Modmap.parse(parser);
           break;
         default:
@@ -286,7 +292,7 @@ public final class KeyboardData
     script = sc;
     numpad_script = npsc;
     name = name_;
-    keysWidth = kw;
+    keysWidth = Math.max(kw, 1f);
     keysHeight = kh;
     bottom_row = bottom_row_;
   }
@@ -313,8 +319,8 @@ public final class KeyboardData
       float kw = 0.f;
       for (Key k : keys_) kw += k.width + k.shift;
       keys = keys_;
-      height = h;
-      shift = s;
+      height = Math.max(h, 0.5f);
+      shift = Math.max(s, 0f);
       keysWidth = kw;
     }
 
@@ -403,8 +409,8 @@ public final class KeyboardData
       keys = ks;
       anticircle = antic;
       keysflags = f;
-      width = w;
-      shift = s;
+      width = Math.max(w, 0.5f);
+      shift = Math.max(s, 0f);
       slider = sl;
       indication = i;
     }
