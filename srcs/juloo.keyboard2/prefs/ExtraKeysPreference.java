@@ -80,6 +80,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       case "voice_typing":
       case "change_method":
+      case "switch_clipboard":
       case "compose":
       case "tab":
       case "esc":
