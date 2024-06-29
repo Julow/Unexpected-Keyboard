@@ -85,7 +85,7 @@ The following optional properties define the effects of swipes:
 You can define a swipe only once with either compass-point or numeric notation. Unexpected Keyboard automatically puts a small legend in that direction from the center of the key.
 
 * `slider`: If `slider="true"`, and the key also has `w` and `e` properties, then the key tracks horizontal finger motion precisely and sends the `w` and `e` keystrokes repeatedly. In built-in layouts, this makes the space bar send left and right characters as the user slides on the space bar.
-* `anticircle`: The key value to send when doing an anti-clockwise gesture on the key. (The clockwise gesture applies a Shift modifier and the round-trip gesture applies a Fn modifier. These results can be redefined using a modmap, as explained below.)
+* `anticircle`: The key value to send when doing an anti-clockwise gesture on the key.
 
 ### Layout
 A key may have the following properties to control the row's layout:
@@ -98,7 +98,7 @@ Normally, a key's width is 1.0 unit. Unexpected Keyboard occupies the full width
 * `indication`: An optional extra legend to show under the main label. For example, `<key key0="2" indication="ABC" />` displays ABC at the bottom of the 2 key, as on a pinpad or some telephones. If the key also defines a downward swipe with `s` or `key8`, the legends overlap.
 
 ## Possible key values
-The properties that define the effects of tapping or swiping a key may be one of the built-in strings documented on [this page](Possible-key-values). For example, `se="cut"` says that a southeast swipe produces the "cut" key (Ctrl-C).
+The properties that define the effects of tapping or swiping a key may be one of the built-in strings documented on [this page](Possible-key-values.md). For example, `se="cut"` says that a southeast swipe produces the "cut" key (Ctrl-C).
 
 Some of those strings begin with `loc `. These are place-holders; the tap or swipe does nothing unless enabled through the "Add keys to keyboard" option in the Settings menu, or implicitly enabled by the language the device is set to use. For example, `ne="loc accent_aigu"` says that a northeast swipe produces the acute accent combinatorial key—if enabled.
 
@@ -110,12 +110,14 @@ The string can output multiple characters, but cannot combine the built-in strin
 The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap.
 
 A modmap can contain the following tags, each of which must have an `a` and a `b` property:
-* `<shift a="`...`" b="`...`" />` —This says that, if the Shift modifier is on (or the user made a clockwise gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
-* `<fn a="`...`" b="`...`" />` —This says that, if the Fn modifier is on (or the user made a round-trip gesture on a key), and if the key would normally generate the value after "a", it must instead generate the value after "b".
+* `<shift a="before" b="after" />` If the Shift modifier is on, the key `before` is changed into `after`.
+* `<fn a="before" b="after" />` If the Fn modifier is on, the key `before` is changed into `after`.
 
-The "a" and "b" values are as specified above in **Possible key values**. A `<fn`...`/>` tag modifies a gesture only if no `<shift`...`/>` tag did.
+Valid values for `before` and `after` are listed in [Possible key values](Possible-key-values.md).
 
 There can be as many of these tags inside `<modmap>` as needed.
+
+The clockwise circle and the round-trip gestures are affected by both Shift and Fn modmaps. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
 
 ### Examples
 ① Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
