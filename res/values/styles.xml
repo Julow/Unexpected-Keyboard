@@ -45,6 +45,8 @@
     <item name="android:layout_width">24dp</item>
     <item name="android:layout_height">24dp</item>
     <item name="android:layout_marginHorizontal">2dp</item>
+    <item name="android:backgroundTint">?attr/colorLabel</item>
+    <item name="android:backgroundTintMode">src_in</item>
   </style>
   <!-- Launcher activity -->
   <style name="paragraph">
