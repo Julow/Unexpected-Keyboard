@@ -38,8 +38,9 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="pref_category_typing">Tippen</string>
   <string name="pref_swipe_dist_title">Länge der Wischgeste</string>
   <string name="pref_swipe_dist_summary">Abstand der Zeichen in den Ecken der Tasten (%s)</string>
-  <string name="pref_long_timeout_title">Zeitüberschreitung bei Tastenwiederholung</string>
+  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">Intervall der Tastenwiederholung</string>
+  <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
   <string name="pref_lock_double_tap_title">Umschalttaste mit Doppeltippen einrasten</string>
   <string name="pref_lock_double_tap_summary">Anstatt Taste längere Zeit gedrückt zu halten</string>
   <string name="pref_category_behavior">Verhalten</string>

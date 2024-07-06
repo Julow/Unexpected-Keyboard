@@ -38,8 +38,9 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="pref_category_typing">Yazma</string>
   <string name="pref_swipe_dist_title">Kaydırma mesafesi</string>
   <string name="pref_swipe_dist_summary">Tuşların köşelerinden kaydırma mesafesi (%s)</string>
-  <string name="pref_long_timeout_title">Tuşların tekrarlaması için geçmesi gereken süre</string>
+  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
   <string name="pref_long_interval_title">Tuşların tekrarlama sıklığı</string>
+  <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
   <string name="pref_lock_double_tap_title">CapsLock için Shift tuşuna çift bas</string>
   <string name="pref_lock_double_tap_summary">Uzun basarak CapsLock açılabilir</string>
   <string name="pref_category_behavior">Klavye davranışı</string>

@@ -1,6 +1,9 @@
 # Key values
 
-This is an exhaustive list of special values accepted for the `key0` through `key8` or `nw` through `se` attributes on a key. Any string that does not exactly match these will be printed verbatim.
+This is an exhaustive list of special values accepted for the `key0` through `key8` or `nw` through `se` attributes on a key.
+
+Any string that does not exactly match these will be printed verbatim.
+A key can output multiple characters, but cannot combine multiple built-in key values.
 
 ## Escape codes
 Value | Escape code for

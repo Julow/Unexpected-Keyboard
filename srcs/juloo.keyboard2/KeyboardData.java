@@ -96,7 +96,7 @@ public final class KeyboardData
     {
       Row row = rows.get(i_row);
       int i_col = p.col;
-      int i_col_end = p.col;
+      int i_col_end = Math.min(p.col, row.keys.size() - 1);
       if (p.col == -1) { i_col = 0; i_col_end = row.keys.size() - 1; }
       for (; i_col <= i_col_end; i_col++)
       {

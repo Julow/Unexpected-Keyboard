@@ -38,8 +38,9 @@
   <string name="pref_category_typing">Введення</string>
   <string name="pref_swipe_dist_title">Відстань проведення</string>
   <string name="pref_swipe_dist_summary">Відстань між символами в кутах клавіш (%s)</string>
-  <string name="pref_long_timeout_title">Час очікування повтору клавіші</string>
+  <string name="pref_long_timeout_title">Час очікування тривалого натискання</string>
   <string name="pref_long_interval_title">Інтервал повторення клавіш</string>
+  <string name="pref_keyrepeat_enabled">Повторення клавіші при тривалому натисканні</string>
   <string name="pref_lock_double_tap_title">Двічі торкніться Shift для Caps Lock</string>
   <string name="pref_lock_double_tap_summary">Ви можете заблокувати будь-який модифікатор, утримуючи його</string>
   <string name="pref_category_behavior">Поведінка</string>
