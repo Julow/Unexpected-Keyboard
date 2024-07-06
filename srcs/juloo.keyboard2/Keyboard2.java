@@ -36,6 +36,7 @@ public class Keyboard2 extends InputMethodService
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
+  private ViewGroup _clipboard_pane = null;
   public int actionId; // Action performed by the Action key.
 
   private Config _config;
@@ -113,6 +114,7 @@ public class Keyboard2 extends InputMethodService
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
+    ClipboardHistoryService.on_startup(this, _keyeventhandler);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -223,6 +225,7 @@ public class Keyboard2 extends InputMethodService
     {
       _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
       _emojiPane = null;
+      _clipboard_pane = null;
       setInputView(_keyboardView);
     }
     _keyboardView.reset();
@@ -384,7 +387,14 @@ public class Keyboard2 extends InputMethodService
           setInputView(_emojiPane);
           break;
 
+        case SWITCH_CLIPBOARD:
+          if (_clipboard_pane == null)
+            _clipboard_pane = (ViewGroup)inflate_view(R.layout.clipboard_pane);
+          setInputView(_clipboard_pane);
+          break;
+
         case SWITCH_BACK_EMOJI:
+        case SWITCH_BACK_CLIPBOARD:
           setInputView(_keyboardView);
           break;
 

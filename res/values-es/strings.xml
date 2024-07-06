@@ -116,4 +116,9 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="key_descr_page_down">Re Pág</string>
   <string name="key_descr_home">Inicio</string>
   <string name="key_descr_end">Fin</string>
+  <!-- <string name="key_descr_clipboard">Clipboard manager</string> -->
+  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
+  <!-- <string name="clipboard_pin_heading">Pinned</string> -->
+  <!-- <string name="clipboard_remove_confirm">Remove this clipboard?</string> -->
+  <!-- <string name="clipboard_remove_confirmed">Yes</string> -->
 </resources>

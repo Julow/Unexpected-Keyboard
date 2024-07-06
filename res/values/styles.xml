@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- Emoji pane -->
   <style name="emojiTypeButton">
     <item name="android:padding">1px</item>
     <item name="android:gravity">center</item>
@@ -15,6 +16,39 @@
     <item name="android:textSize">@dimen/emoji_text_size</item>
     <item name="android:textColor">?attr/emoji_color</item>
   </style>
+  <!-- Clipboard pane -->
+  <style name="clipboardEntry">
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginHorizontal">14dp</item>
+    <item name="android:layout_marginVertical">14dp</item>
+    <item name="android:textSize">16dp</item>
+    <item name="android:textColor">?attr/colorLabel</item>
+  </style>
+  <style name="clipboardHeading">
+    <item name="android:layout_marginHorizontal">6dp</item>
+    <item name="android:layout_marginTop">14dp</item>
+    <item name="android:layout_marginBottom">0dp</item>
+    <item name="android:textSize">14dp</item>
+    <item name="android:fontWeight">700</item>
+    <item name="android:textColor">?attr/colorSubLabel</item>
+  </style>
+  <style name="clipboardEntryButtons">
+    <item name="android:orientation">horizontal</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginRight">12dp</item>
+  </style>
+  <style name="clipboardEntryButton">
+    <item name="android:layout_width">24dp</item>
+    <item name="android:layout_height">24dp</item>
+    <item name="android:layout_marginHorizontal">2dp</item>
+    <item name="android:backgroundTint">?attr/colorLabel</item>
+    <item name="android:backgroundTintMode">src_in</item>
+  </style>
+  <!-- Launcher activity -->
   <style name="paragraph">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>

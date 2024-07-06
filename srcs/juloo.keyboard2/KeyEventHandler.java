@@ -10,7 +10,9 @@ import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import java.util.Iterator;
 
-public final class KeyEventHandler implements Config.IKeyEventHandler
+public final class KeyEventHandler
+  implements Config.IKeyEventHandler,
+             ClipboardHistoryService.ClipboardPasteCallback
 {
   IReceiver _recv;
   Autocapitalisation _autocap;
@@ -103,6 +105,12 @@ public final class KeyEventHandler implements Config.IKeyEventHandler
   public void mods_changed(Pointers.Modifiers mods)
   {
     update_meta_state(mods);
+  }
+
+  @Override
+  public void paste_from_clipboard_pane(String content)
+  {
+    send_text(content);
   }
 
   /** Update [_mods] to be consistent with the [mods], sending key events if

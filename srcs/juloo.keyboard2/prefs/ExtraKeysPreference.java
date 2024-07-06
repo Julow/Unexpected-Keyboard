@@ -24,6 +24,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "meta",
     "compose",
     "voice_typing",
+    "switch_clipboard",
     "accent_aigu",
     "accent_grave",
     "accent_double_aigu",
@@ -79,6 +80,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       case "voice_typing":
       case "change_method":
+      case "switch_clipboard":
       case "compose":
       case "tab":
       case "esc":
@@ -117,6 +119,7 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "voice_typing": id = R.string.key_descr_voice_typing; break;
       case "ª": id = R.string.key_descr_ª; break;
       case "º": id = R.string.key_descr_º; break;
+      case "switch_clipboard": id = R.string.key_descr_clipboard; break;
     }
     if (id == 0)
       return null;
