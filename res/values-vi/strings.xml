@@ -67,6 +67,9 @@ Bây giờ đã hoàn hảo cho việc sử dụng hàng ngày.
   <string name="pref_theme_e_epaper">ePaper</string>
   <!-- <string name="pref_theme_e_desert">Desert</string> -->
   <!-- <string name="pref_theme_e_jungle">Jungle</string> -->
+  <!-- <string name="pref_theme_e_monet">System Monet</string> -->
+  <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
+  <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
   <string name="pref_swipe_dist_e_very_short">Rất gần</string>
   <string name="pref_swipe_dist_e_short">Gần</string>
   <string name="pref_swipe_dist_e_default">Trungbình</string>

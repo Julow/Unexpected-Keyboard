@@ -67,6 +67,9 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="pref_theme_e_epaper">ePapír</string>
   <string name="pref_theme_e_desert">Poušťě</string>
   <string name="pref_theme_e_jungle">Džungle</string>
+  <!-- <string name="pref_theme_e_monet">System Monet</string> -->
+  <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
+  <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
   <string name="pref_swipe_dist_e_very_short">Velmi krátká</string>
   <string name="pref_swipe_dist_e_short">Krátká</string>
   <string name="pref_swipe_dist_e_default">Běžná</string>

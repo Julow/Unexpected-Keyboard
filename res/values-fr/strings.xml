@@ -67,6 +67,9 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_theme_e_desert">Desert</string>
   <string name="pref_theme_e_jungle">Jungle</string>
+  <!-- <string name="pref_theme_e_monet">System Monet</string> -->
+  <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
+  <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
   <string name="pref_swipe_dist_e_very_short">Très courte</string>
   <string name="pref_swipe_dist_e_short">Courte</string>
   <string name="pref_swipe_dist_e_default">Normale</string>

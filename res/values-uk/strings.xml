@@ -67,6 +67,9 @@
   <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_theme_e_desert">Пустеля</string>
   <string name="pref_theme_e_jungle">Джунглі</string>
+  <!-- <string name="pref_theme_e_monet">System Monet</string> -->
+  <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
+  <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
   <string name="pref_swipe_dist_e_very_short">Дуже коротка</string>
   <string name="pref_swipe_dist_e_short">Коротка</string>
   <string name="pref_swipe_dist_e_default">Звичайна</string>
