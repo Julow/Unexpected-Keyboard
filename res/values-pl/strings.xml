@@ -67,7 +67,7 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="pref_theme_e_epaper">e-paper</string>
   <string name="pref_theme_e_desert">Pustynny</string>
   <string name="pref_theme_e_jungle">Dżunglowy</string>
-  <!-- <string name="pref_theme_e_monet">System Monet</string> -->
+  <!-- <string name="pref_theme_e_monet">Monet (System)</string> -->
   <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
   <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
   <string name="pref_swipe_dist_e_very_short">Bardzo mała</string>
