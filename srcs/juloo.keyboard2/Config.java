@@ -405,6 +405,7 @@ public final class Config
 
   private int getThemeId(Resources res, String theme_name)
   {
+    int night_mode = res.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
     switch (theme_name)
     {
       case "light": return R.style.Light;
@@ -415,9 +416,14 @@ public final class Config
       case "epaper": return R.style.ePaper;
       case "desert": return R.style.Desert;
       case "jungle": return R.style.Jungle;
+      case "monetlight": return R.style.MonetLight;
+      case "monetdark": return R.style.MonetDark;
+      case "monet":
+        if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
+          return R.style.MonetLight;
+        return R.style.MonetDark;
       default:
       case "system":
-        int night_mode = res.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
           return R.style.Light;
         return R.style.Dark;
