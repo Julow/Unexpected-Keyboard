@@ -31,6 +31,8 @@ public final class KeyboardData
   public final String name;
   /** Whether the bottom row should be added. */
   public final boolean bottom_row;
+  /** Whether extra keys from [method.xml] should be added to this layout. */
+  public final boolean locale_extra_keys;
   /** Position of every keys on the layout, see [getKeys()]. */
   private Map<KeyValue, KeyPos> _key_pos = null;
 
@@ -234,6 +236,7 @@ public final class KeyboardData
     if (!expect_tag(parser, "keyboard"))
       throw error(parser, "Expected tag <keyboard>");
     boolean bottom_row = attribute_bool(parser, "bottom_row", true);
+    boolean locale_extra_keys = attribute_bool(parser, "locale_extra_keys", true);
     float specified_kw = attribute_float(parser, "width", 0f);
     String script = parser.getAttributeValue(null, "script");
     if (script != null && script.equals(""))
@@ -263,7 +266,7 @@ public final class KeyboardData
       }
     }
     float kw = (specified_kw != 0f) ? specified_kw : compute_max_width(rows);
-    return new KeyboardData(rows, kw, modmap, script, numpad_script, name, bottom_row);
+    return new KeyboardData(rows, kw, modmap, script, numpad_script, name, bottom_row, locale_extra_keys);
   }
 
   private static float compute_max_width(List<Row> rows)
@@ -282,7 +285,7 @@ public final class KeyboardData
   }
 
   protected KeyboardData(List<Row> rows_, float kw, Modmap mm, String sc,
-      String npsc, String name_, boolean bottom_row_)
+      String npsc, String name_, boolean bottom_row_, boolean locale_extra_keys_)
   {
     float kh = 0.f;
     for (Row r : rows_)
@@ -295,13 +298,14 @@ public final class KeyboardData
     keysWidth = Math.max(kw, 1f);
     keysHeight = kh;
     bottom_row = bottom_row_;
+    locale_extra_keys = locale_extra_keys_;
   }
 
-  /** Copies the fields of an other keyboard, with rows changed. */
+  /** Copies the fields of a keyboard, with rows changed. */
   protected KeyboardData(KeyboardData src, List<Row> rows)
   {
     this(rows, compute_max_width(rows), src.modmap, src.script,
-        src.numpad_script, src.name, src.bottom_row);
+        src.numpad_script, src.name, src.bottom_row, src.locale_extra_keys);
   }
 
   public static class Row

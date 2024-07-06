@@ -39,6 +39,7 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 * `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. It defaults to `latin`.
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. It defaults to the same as `script`.
 * `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines the bottom row, then specify `bottom_row=false` to disable the built-in bottom row.
+* `locale_extra_keys`: Whether language-dependent extra keys from [method.xml](../res/xml/method.xml) should be added to this layout. It accepts `true` or `false`, and defaults to `true`.
 
 ## Row
 The `<row>`...`</row>` pair encloses one row on the keyboard. It has only one optional property:

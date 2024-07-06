@@ -234,7 +234,7 @@ public final class Config
     extra_keys.put(KeyValue.getKeyByName("config"), KeyboardData.PreferredPos.ANYWHERE);
     extra_keys.putAll(extra_keys_param);
     extra_keys.putAll(extra_keys_custom);
-    if (extra_keys_subtype != null)
+    if (extra_keys_subtype != null && kw.locale_extra_keys)
     {
       Set<KeyValue> present = new HashSet<KeyValue>();
       present.addAll(kw.getKeys().keySet());
