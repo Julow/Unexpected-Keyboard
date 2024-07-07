@@ -38,9 +38,9 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="pref_category_typing">Psaní</string>
   <string name="pref_swipe_dist_title">Vzdálenost posunutí prstem</string>
   <string name="pref_swipe_dist_summary">Jak daleko je třeba posunout prst pro zadání znaku/znaménka v rohu klávey (%s)</string>
-  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
+  <string name="pref_long_timeout_title">Doba pro aktivaci dlouhého podržení</string>
   <string name="pref_long_interval_title">Interval opakování znaků</string>
-  <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
+  <string name="pref_keyrepeat_enabled">Opakování kláves při držení</string>
   <string name="pref_lock_double_tap_title">Dvojklik pro aktivaci Capslock(u)</string>
   <string name="pref_lock_double_tap_summary">Umožňuje zamknout Shift dvojklikem, namísto podržení</string>
   <string name="pref_category_behavior">Chování</string>
@@ -68,9 +68,9 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="pref_theme_e_epaper">ePapír</string>
   <string name="pref_theme_e_desert">Poušťě</string>
   <string name="pref_theme_e_jungle">Džungle</string>
-  <!-- <string name="pref_theme_e_monet">Monet (System)</string> -->
-  <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
-  <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
+  <string name="pref_theme_e_monet">Monet (dle systému)</string>
+  <string name="pref_theme_e_monetlight">Monet (Světlý)</string>
+  <string name="pref_theme_e_monetdark">Monet (Tmavý)</string>
   <string name="pref_swipe_dist_e_very_short">Velmi krátká</string>
   <string name="pref_swipe_dist_e_short">Krátká</string>
   <string name="pref_swipe_dist_e_default">Běžná</string>
@@ -81,11 +81,11 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="pref_border_config_title">Přizpůsobit okraje</string>
   <string name="pref_border_width_title">Šířka okraje</string>
   <string name="pref_corners_radius_title">Poloměr okraje</string>
-  <!-- <string name="pref_circle_sensitivity_title">Circle gesture sensitivity</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_high">High</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_medium">Medium</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_low">Low</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_disabled">Disabled</string> -->
+  <string name="pref_circle_sensitivity_title">Citlivost kruhového gesta</string>
+  <string name="pref_circle_sensitivity_e_high">Vysoká</string>
+  <string name="pref_circle_sensitivity_e_medium">Střední</string>
+  <string name="pref_circle_sensitivity_e_low">Nízká</string>
+  <string name="pref_circle_sensitivity_e_disabled">Deaktivováno</string>
   <string name="key_action_next">Další</string>
   <string name="key_action_done">Dokončit</string>
   <string name="key_action_go">Spustit</string>
@@ -119,9 +119,9 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="key_descr_page_down">Page Down</string>
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
-  <!-- <string name="key_descr_clipboard">Clipboard manager</string> -->
-  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
-  <!-- <string name="clipboard_pin_heading">Pinned</string> -->
-  <!-- <string name="clipboard_remove_confirm">Remove this clipboard?</string> -->
-  <!-- <string name="clipboard_remove_confirmed">Yes</string> -->
+  <string name="key_descr_clipboard">Správce schránky</string>
+  <string name="clipboard_history_heading">Nedávno kopírovaný text</string>
+  <string name="clipboard_pin_heading">Připnout</string>
+  <string name="clipboard_remove_confirm">Odebrat ze schránky?</string>
+  <string name="clipboard_remove_confirmed">Ano</string>
 </resources>
