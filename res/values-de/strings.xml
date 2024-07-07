@@ -38,9 +38,9 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="pref_category_typing">Tippen</string>
   <string name="pref_swipe_dist_title">Länge der Wischgeste</string>
   <string name="pref_swipe_dist_summary">Abstand der Zeichen in den Ecken der Tasten (%s)</string>
-  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
+  <string name="pref_long_timeout_title">Zeitüberschreitung durch langes Drücken</string>
   <string name="pref_long_interval_title">Intervall der Tastenwiederholung</string>
-  <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
+  <string name="pref_keyrepeat_enabled">Tastenwiederholung bei langem Drücken</string>
   <string name="pref_lock_double_tap_title">Umschalttaste mit Doppeltippen einrasten</string>
   <string name="pref_lock_double_tap_summary">Anstatt Taste längere Zeit gedrückt zu halten</string>
   <string name="pref_category_behavior">Verhalten</string>
@@ -68,9 +68,9 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_theme_e_desert">Wüste</string>
   <string name="pref_theme_e_jungle">Dschungel</string>
-  <!-- <string name="pref_theme_e_monet">Monet (System)</string> -->
-  <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
-  <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
+  <string name="pref_theme_e_monet">Monet (System)</string>
+  <string name="pref_theme_e_monetlight">Monet (Hell)</string>
+  <string name="pref_theme_e_monetdark">Monet (Dunkel)</string>
   <string name="pref_swipe_dist_e_very_short">Sehr kurz</string>
   <string name="pref_swipe_dist_e_short">Kurz</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
@@ -119,9 +119,9 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="key_descr_page_down">Bild ab</string>
   <string name="key_descr_home">Pos1</string>
   <string name="key_descr_end">Ende</string>
-  <!-- <string name="key_descr_clipboard">Clipboard manager</string> -->
-  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
-  <!-- <string name="clipboard_pin_heading">Pinned</string> -->
-  <!-- <string name="clipboard_remove_confirm">Remove this clipboard?</string> -->
-  <!-- <string name="clipboard_remove_confirmed">Yes</string> -->
+  <string name="key_descr_clipboard">Clipboard-Manager</string>
+  <string name="clipboard_history_heading">Zuletzt kopierter Text</string>
+  <string name="clipboard_pin_heading">Angeheftet</string>
+  <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
+  <string name="clipboard_remove_confirmed">Ja</string>
 </resources>
