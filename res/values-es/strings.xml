@@ -38,9 +38,9 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_category_typing">Escritura</string>
   <string name="pref_swipe_dist_title">Distancia de deslizamiento</string>
   <string name="pref_swipe_dist_summary">Distancia de caracteres en las esquinas de las teclas (%s)</string>
-  <!-- <string name="pref_long_timeout_title">Long press timeout</string> -->
+  <string name="pref_long_timeout_title">Duración para toque largo</string>
   <string name="pref_long_interval_title">Intervalo de repetición de tecla</string>
-  <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
+  <string name="pref_keyrepeat_enabled">Permitir repetición de toque largo</string>
   <string name="pref_lock_double_tap_title">Doble toque en Mayús para bloquear las mayúsculas</string>
   <string name="pref_lock_double_tap_summary">Se puede bloquear cualquier modificador manteniéndolo presionado</string>
   <string name="pref_category_behavior">Comportamiento</string>
@@ -68,9 +68,9 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_theme_e_epaper">ePaper</string>
   <string name="pref_theme_e_desert">Desierto</string>
   <string name="pref_theme_e_jungle">Selva</string>
-  <!-- <string name="pref_theme_e_monet">Monet (System)</string> -->
-  <!-- <string name="pref_theme_e_monetlight">Monet (Light)</string> -->
-  <!-- <string name="pref_theme_e_monetdark">Monet (Dark)</string> -->
+  <string name="pref_theme_e_monet">Monet (de sistema)</string>
+  <string name="pref_theme_e_monetlight">Monet (claro)</string>
+  <string name="pref_theme_e_monetdark">Monet (oscuro)</string>
   <string name="pref_swipe_dist_e_very_short">Muy corta</string>
   <string name="pref_swipe_dist_e_short">Corta</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
@@ -81,11 +81,11 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_border_config_title">Bordes personalizados</string>
   <string name="pref_border_width_title">Ancho de bordes</string>
   <string name="pref_corners_radius_title">Radio de rincones</string>
-  <!-- <string name="pref_circle_sensitivity_title">Circle gesture sensitivity</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_high">High</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_medium">Medium</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_low">Low</string> -->
-  <!-- <string name="pref_circle_sensitivity_e_disabled">Disabled</string> -->
+  <string name="pref_circle_sensitivity_title">Sensibilidad a gestos circulares</string>
+  <string name="pref_circle_sensitivity_e_high">Alta</string>
+  <string name="pref_circle_sensitivity_e_medium">Mediana</string>
+  <string name="pref_circle_sensitivity_e_low">Baja</string>
+  <string name="pref_circle_sensitivity_e_disabled">Apagada</string>
   <string name="key_action_next">Siguiente</string>
   <string name="key_action_done">Hecho</string>
   <string name="key_action_go">Ir</string>
@@ -119,9 +119,9 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="key_descr_page_down">Re Pág</string>
   <string name="key_descr_home">Inicio</string>
   <string name="key_descr_end">Fin</string>
-  <!-- <string name="key_descr_clipboard">Clipboard manager</string> -->
-  <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
-  <!-- <string name="clipboard_pin_heading">Pinned</string> -->
-  <!-- <string name="clipboard_remove_confirm">Remove this clipboard?</string> -->
-  <!-- <string name="clipboard_remove_confirmed">Yes</string> -->
+  <string name="key_descr_clipboard">Arreglar portapapeles</string>
+  <string name="clipboard_history_heading">Textos recién copiados</string>
+  <string name="clipboard_pin_heading">Pegado</string>
+  <string name="clipboard_remove_confirm">¿Sacar este portapapeles?</string>
+  <string name="clipboard_remove_confirmed">Sí</string>
 </resources>
