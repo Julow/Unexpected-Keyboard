@@ -38,8 +38,8 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 * `name`: The name of the keyboard. The name you specify will appear in the Settings menu. If not present, the layout will just appear as “Custom layout”.
 * `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. It defaults to `latin`.
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. It defaults to the same as `script`.
-* `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines the bottom row, then specify `bottom_row=false` to disable the built-in bottom row.
-* `locale_extra_keys`: Whether language-dependent extra keys from [method.xml](../res/xml/method.xml) should be added to this layout. It accepts `true` or `false`, and defaults to `true`.
+* `bottom_row`: Whether or not to show the common bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines the bottom row, then specify `bottom_row="false"` to disable the built-in bottom row.
+* `locale_extra_keys`: Whether Unexpected should add language-dependent extra keys from [method.xml](../res/xml/method.xml) to this layout. It accepts `true` or `false`, and defaults to `true`. To disable these automatic additions, specify `locale_extra_keys="false"`.
 
 ## Row
 The `<row>`...`</row>` pair encloses one row on the keyboard. It has only one optional property:
@@ -118,20 +118,12 @@ There can be as many of these tags inside `<modmap>` as needed.
 
 The clockwise circle and the round-trip gestures are affected by both Shift and Fn modmaps. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
 
-### Examples
-① Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
+### Example
+Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
 
     <modmap>
         <shift a="i" b="İ" />
     </modmap>
-    
-② By default, `Fn`+`e` produces the € character. This can be inhibited with the following modmap, which maps the modified `e` key to itself:
-
-    <modmap>
-        <fn a="e" b="e" />
-    </modmap>
-
-These two examples are each shown in a modmap, for completeness. However, a layout can have at most one modmap, containing all the desired `<shift>` and `<fn>` tags.
 
 ## Portrait vs. landscape
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. So you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
