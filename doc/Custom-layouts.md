@@ -118,20 +118,12 @@ There can be as many of these tags inside `<modmap>` as needed.
 
 The clockwise circle and the round-trip gestures are affected by both Shift and Fn modmaps. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
 
-### Examples
-① Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
+### Example
+Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
 
     <modmap>
         <shift a="i" b="İ" />
     </modmap>
-    
-② By default, `Fn`+`e` produces the € character. This can be inhibited with the following modmap, which maps the modified `e` key to itself:
-
-    <modmap>
-        <fn a="e" b="e" />
-    </modmap>
-
-These two examples are each shown in a modmap, for completeness. However, a layout can have at most one modmap, containing all the desired `<shift>` and `<fn>` tags.
 
 ## Portrait vs. landscape
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. So you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
