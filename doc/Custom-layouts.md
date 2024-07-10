@@ -99,11 +99,9 @@ Normally, a key's width is 1.0 unit. Unexpected Keyboard occupies the full width
 * `indication`: An optional extra legend to show under the main label. For example, `<key key0="2" indication="ABC" />` displays ABC at the bottom of the 2 key, as on a pinpad or some telephones. If the key also defines a downward swipe with `s` or `key8`, the legends overlap.
 
 ### Possible key values
+Built-in strings that assign a special function to a key are described in [this page](Possible-key-values.md). For example, `se="copy"` means a southeasterly swipe produces the Copy key. If a key value does not match any of the built-in strings, it outputs that text _verbatim_. For example, `key0="a"` simply outputs the letter a.
 
-The possible key values are described in [this page](Possible-key-values.md).
-
-In a layout, a key value can also start with the `loc` prefix. These are place-holders, the tap or swipe does nothing unless enabled through the "Add keys to keyboard" option in the Settings menu, or implicitly enabled by the language the device is set to use.
-For example, `ne="loc accent_aigu"` says that a northeast swipe produces the acute accent combinatorial key—if enabled.
+In a layout, a key value can also start with the `loc` prefix. These are place-holders; the tap or swipe does nothing unless enabled through the "Add keys to keyboard" option in the Settings menu, or implicitly enabled by the language the device is set to use. For example, `ne="loc accent_aigu"` says that a northeast swipe produces the acute accent combinatorial key—if enabled.
 
 ## Modmap
 The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap.
