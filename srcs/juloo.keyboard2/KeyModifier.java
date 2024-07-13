@@ -69,7 +69,7 @@ public final class KeyModifier
       case OGONEK: return apply_compose_or_dead_char(k, ComposeKeyData.accent_ogonek, '\u02DB');
       case DOT_ABOVE: return apply_compose_or_dead_char(k, ComposeKeyData.accent_dot_above, '\u02D9');
       case BREVE: return apply_dead_char(k, '\u02D8');
-      case DOUBLE_AIGU: return apply_compose(k, ComposeKeyData.accent_double_aigu);
+      case DOUBLE_AIGU: return apply_diacritics(k, ComposeKeyData.accent_double_aigu, '\0', '\u030b');
       case ORDINAL: return apply_compose(k, ComposeKeyData.accent_ordinal);
       case SUPERSCRIPT: return apply_compose(k, ComposeKeyData.accent_superscript);
       case SUBSCRIPT: return apply_compose(k, ComposeKeyData.accent_subscript);
