@@ -58,7 +58,7 @@ public final class KeyModifier
       case GESTURE: return apply_gesture(k);
       case SHIFT: return apply_shift(k);
       case GRAVE: return apply_compose_or_dead_char(k, ComposeKeyData.accent_grave, '\u02CB');
-      case AIGU: return apply_compose_or_dead_char(k, ComposeKeyData.accent_aigu, '\u00B4');
+      case AIGU: return apply_diacritics(k, ComposeKeyData.accent_aigu, '\u00B4', '\u0301');
       case CIRCONFLEXE: return apply_compose_or_dead_char(k, ComposeKeyData.accent_circonflexe, '\u02C6');
       case TILDE: return apply_compose_or_dead_char(k, ComposeKeyData.accent_tilde, '\u02DC');
       case CEDILLE: return apply_compose_or_dead_char(k, ComposeKeyData.accent_cedille, '\u00B8');
@@ -131,43 +131,50 @@ public final class KeyModifier
     return k;
   }
 
-  /** Apply the given compose state or fallback to the dead_char. */
-  private static KeyValue apply_compose_or_dead_char(KeyValue k, int state, char dead_char)
+  /** Apply the following mapping, in this order, and stop at the first that
+      changes the key.
+
+      - The compose state, unless it is [0].
+      - The dead char, unless it is ['\0'].
+      - The combining diacritic, unless it is ['\0']. */
+  private static KeyValue apply_diacritics(KeyValue k, int state, char dead_char, char combining)
   {
     switch (k.getKind())
     {
       case Char:
         char c = k.getChar();
-        KeyValue r = ComposeKey.apply(state, c);
-        if (r != null)
-          return r;
+        if (state != 0)
+        {
+          KeyValue r = ComposeKey.apply(state, c);
+          if (r != null)
+            return r;
+        }
+        if (dead_char != '\0')
+        {
+          char modified = (char)KeyCharacterMap.getDeadChar(dead_char, c);
+          if (modified != 0 && modified != c)
+            return KeyValue.makeStringKey(String.valueOf(modified));
+        }
+        if (combining != '\0')
+          return KeyValue.makeStringKey(new String(new char[]{ c, combining }));
+        break;
     }
-    return apply_dead_char(k, dead_char);
+    return k;
   }
 
   private static KeyValue apply_compose(KeyValue k, int state)
   {
-    switch (k.getKind())
-    {
-      case Char:
-        KeyValue r = ComposeKey.apply(state, k.getChar());
-        if (r != null)
-          return r;
-    }
-    return k;
+    return apply_diacritics(k, state, '\0', '\0');
   }
 
   private static KeyValue apply_dead_char(KeyValue k, char dead_char)
   {
-    switch (k.getKind())
-    {
-      case Char:
-        char c = k.getChar();
-        char modified = (char)KeyCharacterMap.getDeadChar(dead_char, c);
-        if (modified != 0 && modified != c)
-          return KeyValue.makeStringKey(String.valueOf(modified));
-    }
-    return k;
+    return apply_diacritics(k, 0, dead_char, '\0');
+  }
+
+  private static KeyValue apply_compose_or_dead_char(KeyValue k, int state, char dead_char)
+  {
+    return apply_diacritics(k, state, dead_char, '\0');
   }
 
   private static KeyValue apply_shift(KeyValue k)
