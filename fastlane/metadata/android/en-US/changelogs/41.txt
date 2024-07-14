@@ -1,0 +1,8 @@
+Clipboard pane
+
+New Monet theme
+Improvements to custom layouts
+Options to disable key repeat and the circle gesture
+Options to disable the Tab and Esc keys
+
+Many thanks to the contributors: @alotbsol555 @ChasmSolacer @eandersons @polyctena @Sestowner @solokot @Spike-from-NH @TadaCZE @V6lhost @Validbit
