@@ -71,13 +71,15 @@ public final class KeyboardData
       KeyPos next_to_pos = getKeys().get(pos.next_to);
       // Use preferred direction if some preferred pos match
       if (next_to_pos != null)
+      {
         for (KeyPos p : pos.positions)
           if ((p.row == -1 || p.row == next_to_pos.row)
               && (p.col == -1 || p.col == next_to_pos.col)
               && add_key_to_pos(rows, kv, next_to_pos.with_dir(p.dir)))
             return true;
-      if (add_key_to_pos(rows, kv, next_to_pos.with_dir(-1)))
-        return true;
+        if (add_key_to_pos(rows, kv, next_to_pos.with_dir(-1)))
+          return true;
+      }
     }
     for (KeyPos p : pos.positions)
       if (add_key_to_pos(rows, kv, p))
