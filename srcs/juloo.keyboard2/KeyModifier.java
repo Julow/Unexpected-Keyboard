@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public final class KeyModifier
@@ -136,7 +137,8 @@ public final class KeyModifier
 
       - The compose state, unless it is [0].
       - The dead char, unless it is ['\0'].
-      - The combining diacritic, unless it is ['\0']. */
+      - The combining diacritic, unless it is ['\0'].
+        This is not done if the initial key matches [combining_disabled]. */
   private static KeyValue apply_diacritics(KeyValue k, int state, char dead_char, char combining)
   {
     switch (k.getKind())
@@ -155,7 +157,7 @@ public final class KeyModifier
           if (modified != 0 && modified != c)
             return KeyValue.makeStringKey(String.valueOf(modified));
         }
-        if (combining != '\0')
+        if (combining != '\0' && !combining_disabled(c))
           return KeyValue.makeStringKey(new String(new char[]{ c, combining }));
         break;
     }
@@ -812,5 +814,19 @@ public final class KeyModifier
       default: return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
     }
     return KeyValue.makeHangulFinal(precomposed, final_idx);
+  }
+
+  /** Characters for which combining diacritics should not be appeneded. */
+  private static final char[] combining_disabled_chars =
+    "0123456789@`!\"#$%&'()*:+;[{,<\\|-=]}.>^~/?_ \t\n¡¿«»‹›‘’“”‚„–—¬‰≈°…·¦¶‡∙€£₹¥¢₽₱₴₿".toCharArray();
+
+  static
+  {
+    Arrays.sort(combining_disabled_chars);
+  }
+
+  private static boolean combining_disabled(char c)
+  {
+    return (Arrays.binarySearch(combining_disabled_chars, c) >= 0);
   }
 }
