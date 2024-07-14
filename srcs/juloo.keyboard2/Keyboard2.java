@@ -136,13 +136,9 @@ public class Keyboard2 extends InputMethodService
     return ExtraKeys.EMPTY;
   }
 
-  @TargetApi(12)
-  private void refreshAccentsOption(InputMethodManager imm, InputMethodSubtype subtype)
+  private void refreshAccentsOption(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
   {
-    List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
     List<ExtraKeys> extra_keys = new ArrayList<ExtraKeys>();
-    // Gather extra keys from all enabled subtypes
-    extra_keys.add(extra_keys_of_subtype(subtype));
     for (InputMethodSubtype s : enabled_subtypes)
       extra_keys.add(extra_keys_of_subtype(s));
     _config.extra_keys_subtype = ExtraKeys.merge(extra_keys);
@@ -153,6 +149,18 @@ public class Keyboard2 extends InputMethodService
     return (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
   }
 
+  @TargetApi(12)
+  private String defaultLayoutForSubtypes(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
+  {
+    // Android might return a random subtype, for example, the first in the
+    // list alphabetically.
+    InputMethodSubtype current_subtype = imm.getCurrentInputMethodSubtype();
+    for (InputMethodSubtype s : enabled_subtypes)
+      if (s.getLanguageTag().equals(current_subtype.getLanguageTag()))
+        return s.getExtraValueOf("default_layout");
+    return null;
+  }
+
   private void refreshSubtypeImm()
   {
     InputMethodManager imm = get_imm();
@@ -161,13 +169,14 @@ public class Keyboard2 extends InputMethodService
     _config.extra_keys_subtype = null;
     if (VERSION.SDK_INT >= 12)
     {
+      List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
       InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
       if (subtype != null)
       {
-        String s = subtype.getExtraValueOf("default_layout");
+        String s = defaultLayoutForSubtypes(imm, enabled_subtypes);
         if (s != null)
           default_layout = LayoutsPreference.layout_of_string(getResources(), s);
-        refreshAccentsOption(imm, subtype);
+        refreshAccentsOption(imm, enabled_subtypes);
       }
     }
     if (default_layout == null)
