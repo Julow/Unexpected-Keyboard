@@ -27,7 +27,7 @@
     <key key0="گ"/>
   </row>
   <row>
-    <key key0="ظ"/>
+    <key shift="0.5" key0="ظ"/>
     <key key0="ط"/>
     <key key0="ز" key2="«"/>
     <key key0="ر" key2="»"/>
