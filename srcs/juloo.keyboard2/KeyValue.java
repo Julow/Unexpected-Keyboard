@@ -552,7 +552,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
       case "zwnj": return charKey("zwnj", '\u200C', 0); // zero-width non joiner (prevents unintended ligature)
       /* persian halfspace */
-      case "halfspace": return charKey("⸽", '\u200C', 0)
+      case "halfspace": return charKey("⸽", '\u200C', 0);
 
       /* Editing keys */
       case "copy": return editingKey(0xE030, Editing.COPY);
