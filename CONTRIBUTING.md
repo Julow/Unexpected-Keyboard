@@ -190,6 +190,12 @@ As translations need to be updated regularly, you can subscribe to this issue
 to receive a notification when an update is needed:
 https://github.com/Julow/Unexpected-Keyboard/issues/373
 
+### Adding Compose key sequences
+
+New Compose sequences can be added into `srcs/compose/compose/extra.json`.
+If a entirely new family of sequences were to be added, a new `.json` file can
+be created in the same directory to host them.
+
 ### Adding key combinations
 
 Key combinations are defined in `srcs/juloo.keyboard2/KeyModifier.java`.
