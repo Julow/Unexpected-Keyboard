@@ -151,7 +151,7 @@ tasks.register('compileComposeSequences') {
   println "\nGenerating ${out}"
   exec {
     def sequences = new File(projectDir, "srcs/compose").listFiles().findAll {
-      it.name.endsWith(".pre") || it.name.endsWith(".json")
+      !it.name.endsWith(".py") && !it.name.endsWith(".md")
     }
     workingDir = projectDir
     commandLine("python", "srcs/compose/compile.py", *sequences)
