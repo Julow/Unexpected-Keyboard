@@ -550,8 +550,6 @@ public final class KeyValue implements Comparable<KeyValue>
       case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
       /* intending/preventing ligature - supported by many scripts*/
       case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
-      case "zwnj": return charKey("zwnj", '\u200C', 0); // zero-width non joiner (prevents unintended ligature)
-      /* persian halfspace */
       case "halfspace": return charKey("⸽", '\u200C', 0);
 
       /* Editing keys */
