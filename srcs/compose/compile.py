@@ -238,7 +238,7 @@ public final class ComposeKeyData
 
 total_sequences = 0
 tries = {} # Orderred dict
-for fname in sys.argv[1:]:
+for fname in sorted(sys.argv[1:]):
     tname, _ = os.path.splitext(os.path.basename(fname))
     sequences = parse_sequences_file(fname)
     add_sequences_to_trie(sequences, tries.setdefault(tname, {}))
