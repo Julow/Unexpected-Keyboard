@@ -236,5 +236,5 @@ public final class ComposeKeyData
   public static final int accent_superscript = 534;
   public static final int accent_tilde = 615;
   public static final int accent_trema = 638;
-  public static final int en_US_UTF_8_Compose = 651;
+  public static final int compose = 651;
 }
