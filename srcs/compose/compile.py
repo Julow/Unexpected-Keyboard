@@ -12,20 +12,18 @@ from array import array
 # Parse symbol names from keysymdef.h. Many compose sequences in
 # en_US_UTF_8_Compose.pre reference theses. For example, all the sequences on
 # the Greek, Cyrillic and Hebrew scripts need these symbols.
-def parse_keysymdef_h():
-    with open(os.path.join(os.path.dirname(__file__), "keysymdef.h"), "r") as inp:
+def parse_keysymdef_h(fname):
+    with open(fname, "r") as inp:
         keysym_re = re.compile(r'^#define XK_(\S+)\s+\S+\s*/\*.U\+([0-9a-fA-F]+)\s')
         for line in inp:
             m = re.match(keysym_re, line)
             if m != None:
                 yield (m.group(1), chr(int(m.group(2), 16)))
 
-xkb_char_extra_names = dict(parse_keysymdef_h())
-
 dropped_sequences = 0
 
 # Parse XKB's Compose.pre files
-def parse_sequences_file_xkb(fname):
+def parse_sequences_file_xkb(fname, xkb_char_extra_names):
     # Parse a line of the form:
     #     <Multi_key> <minus> <space>		: "~"	asciitilde # TILDE
     # Sequences not starting with <Multi_key> are ignored.
@@ -99,12 +97,29 @@ def parse_sequences_file_json(fname):
     return list(seqs.items())
 
 # Format of the sequences file is determined by its extension
-def parse_sequences_file(fname):
+def parse_sequences_file(fname, xkb_char_extra_names={}):
     if fname.endswith(".pre"):
-        return parse_sequences_file_xkb(fname)
+        return parse_sequences_file_xkb(fname, xkb_char_extra_names)
     if fname.endswith(".json"):
         return parse_sequences_file_json(fname)
     raise Exception(fname + ": Unsupported format")
+
+# A sequence directory can contain several sequence files as well as
+# 'keysymdef.h'.
+def parse_sequences_dir(dname):
+    compose_files = []
+    xkb_char_extra_names = {}
+    # Parse keysymdef.h first if present
+    for fbasename in os.listdir(dname):
+        fname = os.path.join(dname, fbasename)
+        if fbasename == "keysymdef.h":
+            xkb_char_extra_names = dict(parse_keysymdef_h(fname))
+        else:
+            compose_files.append(fname)
+    sequences = []
+    for fname in compose_files:
+        sequences.extend(parse_sequences_file(fname, xkb_char_extra_names))
+    return sequences
 
 # Turn a list of sequences into a trie.
 def add_sequences_to_trie(seqs, trie):
@@ -238,9 +253,12 @@ public final class ComposeKeyData
 
 total_sequences = 0
 tries = {} # Orderred dict
-for fname in sys.argv[1:]:
+for fname in sorted(sys.argv[1:]):
     tname, _ = os.path.splitext(os.path.basename(fname))
-    sequences = parse_sequences_file(fname)
+    if os.path.isdir(fname):
+        sequences = parse_sequences_dir(fname)
+    else:
+        sequences = parse_sequences_file(fname)
     add_sequences_to_trie(sequences, tries.setdefault(tname, {}))
     total_sequences += len(sequences)
 entry_states, automata = make_automata(tries)
