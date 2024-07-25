@@ -106,15 +106,23 @@ In a layout, a key value can also start with the `loc` prefix. These are place-h
 ## Modmap
 The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap.
 
-A modmap can contain the following tags, each of which must have an `a` and a `b` property:
-* `<shift a="before" b="after" />` If the Shift modifier is on, the key `before` is changed into `after`.
-* `<fn a="before" b="after" />` If the Fn modifier is on, the key `before` is changed into `after`.
-
+A `<modmap>` can contain any number of elements of the form:
+```xml
+  <shift a="before" b="after" />
+```
+This means that when the Shift modifier is on, the key `before` is changed into `after`.
 Valid values for `before` and `after` are listed in [Possible key values](Possible-key-values.md).
 
-There can be as many of these tags inside `<modmap>` as needed.
+The supported modmaps are: `<shift />`, `<fn />` and `<ctrl />`.
 
-The clockwise circle and the round-trip gestures are affected by both Shift and Fn modmaps. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
+The `<ctrl />` modmap is special in that the built-in Ctrl modifier will then be applied to `after`.
+For example, this will map Ctrl+в to Ctrl+V (not to v):
+
+```xml
+  <ctrl a="в" b="v"/>
+```
+
+The clockwise circle and the round-trip gestures are affected by both `<shift />` and `<fn />` modmaps. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
 
 ### Example
 Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
