@@ -9,8 +9,8 @@
     <key key0="y" key2="6" key3="^"/>
     <key key0="u" key2="7" key3="&amp;" key4="loc €"/>
     <key key0="i" key1="loc accent_macron" key2="8" key3="*"/>
-    <key key0="o" key2="9" key4="ó"/>
-    <key key0="p" key2="0" key3="(" key4=")"/>
+    <key key0="o" key1="ó" key2="9" key3="(" key4=")"/>
+    <key key0="p" key2="0"/>
   </row>
   <row>
     <key shift="0.5" key0="a" key1="loc tab" key2="`" key4="ą"/>
