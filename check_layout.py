@@ -9,6 +9,12 @@ KNOWN_NOT_LAYOUT = set([
     "greekmath", "numeric", "emoji_bottom_row",
     "clipboard_bottom_row" ])
 
+KEY_ATTRIBUTES = set([
+    "key0",
+    "key1", "key2", "key3", "key4", "key5", "key6", "key7", "key8",
+    "nw", "ne", "sw", "se", "w", "e", "n", "s"
+    ])
+
 def warn(msg):
     global warning_count
     print(msg)
@@ -39,7 +45,7 @@ def unexpected_keys(keys, symbols, msg):
 def parse_row_from_et(row, keys, dup):
     for key in row:
         for attr in key.keys():
-            if attr.startswith("key"):
+            if attr in KEY_ATTRIBUTES:
                 k = key.get(attr).removeprefix("\\")
                 if k in keys: dup.add(k)
                 keys.add(k)
