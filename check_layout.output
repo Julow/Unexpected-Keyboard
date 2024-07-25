@@ -101,6 +101,9 @@ Duplicate keys: !, ', ,, -, ., ?
 1 warnings
 # latn_qwerty_sk
 0 warnings
+# latn_qwerty_sr
+Layout doesn't define some important keys, missing: delete, loc esc, loc tab
+1 warnings
 # latn_qwerty_tly
 Duplicate keys: a, c, j, q
 Layout doesn't define some important keys, missing: loc esc, loc tab
