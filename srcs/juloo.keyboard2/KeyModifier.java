@@ -51,7 +51,7 @@ public final class KeyModifier
   {
     switch (mod)
     {
-      case CTRL:
+      case CTRL: return apply_ctrl(k);
       case ALT:
       case META: return turn_into_keyevent(k);
       case FN: return apply_fn(k);
@@ -438,6 +438,19 @@ public final class KeyModifier
       case '٠': return "f10";
       default: return null;
     }
+  }
+
+  private static KeyValue apply_ctrl(KeyValue k)
+  {
+    if (_modmap != null)
+    {
+      KeyValue mapped = _modmap.ctrl.get(k);
+      // Do not return the modified character right away, first turn it into a
+      // key event.
+      if (mapped != null)
+        k = mapped;
+    }
+    return turn_into_keyevent(k);
   }
 
   private static KeyValue turn_into_keyevent(KeyValue k)
