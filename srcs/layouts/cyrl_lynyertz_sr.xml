@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="ЉЊЕРТЗ (Српски)" script="cyrillic">
+  <modmap>
+    <fn a="а" b="а̂" />
+    <fn a="е" b="е̂" />
+    <fn a="и" b="и̂" />
+    <fn a="о" b="о̂" />
+    <fn a="у" b="у̂" />
+    <fn a="ж" b="selectAll" />
+    <fn a="&lt;" b="undo" />
+    <fn a="&gt;" b="redo" />
+    <fn a="џ" b="cut" />
+    <fn a="ц" b="copy" />
+    <fn a="в" b="paste" />
+    <fn a="cursor_left" b="home" />
+    <fn a="cursor_right" b="end" />
+  </modmap>
+  <row>
+    <key key0="љ" ne="1" se="loc esc"/>
+    <key key0="њ" nw="~" ne="2" sw="\@"/>
+    <key key0="е" ne="3" sw="\#" se="€"/>
+    <key key0="р" ne="4" sw="$" se="loc £"/>
+    <key key0="т" ne="5" sw="%"/>
+    <key key0="з" ne="6" sw="^"/>
+    <key key0="у" ne="7" sw="&amp;"/>
+    <key key0="и" ne="8" sw="*"/>
+    <key key0="о" ne="9" sw="(" se=")"/>
+    <key key0="п" ne="0" sw="[" se="]"/>
+    <key key0="ш"/>
+  </row>
+  <row>
+    <key key0="а" nw="loc tab" ne="loc selectAll"/>
+    <key key0="с" nw="loc §" ne="loc shareText"/>
+    <key key0="д"/>
+    <key key0="ф"/>
+    <key key0="г"/>
+    <key key0="х"/>
+    <key key0="ј" ne="loc accent_circonflexe" sw="{" se="}"/>
+    <key key0="к" ne="-" sw="_"/>
+    <key key0="л" ne="=" sw="+"/>
+    <key key0="ч" nw="'" ne="&quot;" sw="\\"/>
+    <key key0="ћ" ne="`" sw="|"/>
+  </row>
+  <row>
+    <key width="1.5" key0="shift" nw="loc superscript" ne="loc capslock" sw="loc subscript"/>
+    <key key0="ж" nw="loc undo" ne="loc redo" sw="&lt;" se="&gt;"/>
+    <key key0="џ" ne="loc cut"/>
+    <key key0="ц" ne="loc copy"/>
+    <key key0="в" ne="loc paste"/>
+    <key key0="б" ne="loc pasteAsPlainText"/>
+    <key key0="н" nw="!" ne="\?" sw="/"/>
+    <key key0="м" ne=";" sw=","/>
+    <key key0="ђ" ne=":" sw="."/>
+    <key width="1.5" key0="backspace" ne="delete"/>
+  </row>
+</keyboard>
