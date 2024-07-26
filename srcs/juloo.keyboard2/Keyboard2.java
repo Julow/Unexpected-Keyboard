@@ -150,14 +150,16 @@ public class Keyboard2 extends InputMethodService
   }
 
   @TargetApi(12)
-  private String defaultLayoutForSubtypes(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
+  private InputMethodSubtype defaultSubtypes(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
   {
+    if (VERSION.SDK_INT < 24)
+      return imm.getCurrentInputMethodSubtype();
     // Android might return a random subtype, for example, the first in the
     // list alphabetically.
     InputMethodSubtype current_subtype = imm.getCurrentInputMethodSubtype();
     for (InputMethodSubtype s : enabled_subtypes)
       if (s.getLanguageTag().equals(current_subtype.getLanguageTag()))
-        return s.getExtraValueOf("default_layout");
+        return s;
     return null;
   }
 
@@ -170,10 +172,10 @@ public class Keyboard2 extends InputMethodService
     if (VERSION.SDK_INT >= 12)
     {
       List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
-      InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
+      InputMethodSubtype subtype = defaultSubtypes(imm, enabled_subtypes);
       if (subtype != null)
       {
-        String s = defaultLayoutForSubtypes(imm, enabled_subtypes);
+        String s = subtype.getExtraValueOf("default_layout");
         if (s != null)
           default_layout = LayoutsPreference.layout_of_string(getResources(), s);
         refreshAccentsOption(imm, enabled_subtypes);
