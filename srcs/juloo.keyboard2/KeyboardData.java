@@ -415,7 +415,7 @@ public final class KeyboardData
       keys = ks;
       anticircle = antic;
       keysflags = f;
-      width = Math.max(w, 0.5f);
+      width = Math.max(w, 0f);
       shift = Math.max(s, 0f);
       slider = sl;
       indication = i;
