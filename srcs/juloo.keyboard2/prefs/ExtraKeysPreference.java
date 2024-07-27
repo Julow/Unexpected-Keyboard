@@ -71,6 +71,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "subscript",
     "f11_placeholder",
     "f12_placeholder",
+    "menu",
   };
 
   /** Whether an extra key is enabled by default. */
