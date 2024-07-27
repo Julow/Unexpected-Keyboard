@@ -1,0 +1,6 @@
+Fix crash on Android 6.
+Fix scaling issues for layouts with few columns.
+Added Serbian layouts.
+Layout and compose key tweaks. Improvements to custom layouts. Added Menu key.
+
+Many thanks to the contributors: @adrian4096 @asivery @bokidori @dingodoppelt @RZHSSNZDH
