@@ -208,6 +208,7 @@ public final class KeyModifier
       case Keyevent: name = apply_fn_keyevent(k.getKeyevent()); break;
       case Event: name = apply_fn_event(k.getEvent()); break;
       case Placeholder: name = apply_fn_placeholder(k.getPlaceholder()); break;
+      case Cursor_move: name = apply_fn_cursormove(k.getCursorMove()); break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
@@ -249,6 +250,16 @@ public final class KeyModifier
       case SINDOT: return "sindot";
       case OLE: return "ole";
       case METEG: return "meteg";
+      default: return null;
+    }
+  }
+
+  private static String apply_fn_cursormove(short cur)
+  {
+    switch (cur)
+    {
+      case -1 : return "home"; // cursor_left
+      case 1 : return "end"; // cursor_right
       default: return null;
     }
   }
