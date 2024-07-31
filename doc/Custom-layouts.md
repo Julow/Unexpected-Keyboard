@@ -104,32 +104,39 @@ Built-in strings that assign a special function to a key are described in [this 
 In a layout, a key value can also start with the `loc` prefix. These are place-holders; the tap or swipe does nothing unless enabled through the "Add keys to keyboard" option in the Settings menu, or implicitly enabled by the language the device is set to use. For example, `ne="loc accent_aigu"` says that a northeast swipe produces the acute accent combinatorial key—if enabled.
 
 ## Modmap
-The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap.
+The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap. It can contain any number of mappings. Each mapping has an `a` property and a `b` property and directs Unexpected to map the `a` string to the `b` string. Valid values for these strings are listed in [Possible key values](Possible-key-values.md).
 
-A `<modmap>` can contain any number of elements of the form:
+Unexpected supports the following mappings:
+
 ```xml
   <shift a="before" b="after" />
 ```
 This means that when the Shift modifier is on, the key `before` is changed into `after`.
-Valid values for `before` and `after` are listed in [Possible key values](Possible-key-values.md).
-
-The supported modmaps are: `<shift />`, `<fn />` and `<ctrl />`.
-
-The `<ctrl />` modmap is special in that the built-in Ctrl modifier will then be applied to `after`.
-For example, this will map Ctrl+в to Ctrl+V (not to v):
 
 ```xml
-  <ctrl a="в" b="v"/>
+  <fn a="before" b="after" />
 ```
+This means that when the Fn modifier is on, the key `before` is changed into `after`.
 
-The clockwise circle and the round-trip gestures are affected by both `<shift />` and `<fn />` modmaps. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
+```xml
+  <ctrl a="before" b="after" />
+```
+This means that when the Ctrl modifier is on, the key `before` is changed into `after`. The `<ctrl />` mapping is special in that the Ctrl modifier is applied to `after` after the mapping.
 
-### Example
-Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following modmap: 
+The clockwise circle and the round-trip gestures are affected by both `<shift />` and `<fn />` mappings. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
 
-    <modmap>
-        <shift a="i" b="İ" />
-    </modmap>
+### Examples
+① Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following mapping: 
+
+```xml
+    <shift a="i" b="İ" />
+```
+② Cyrillic layouts have no V key. A layout can define Ctrl-V with the following mapping:
+
+```xml
+    <ctrl a="в" b="v" />
+```
+This maps Ctrl+в to Ctrl+V—not to v.
 
 ## Portrait vs. landscape
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. So you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
