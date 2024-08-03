@@ -104,9 +104,9 @@ Built-in strings that assign a special function to a key are described in [this 
 In a layout, a key value can also start with the `loc` prefix. These are place-holders; the tap or swipe does nothing unless enabled through the "Add keys to keyboard" option in the Settings menu, or implicitly enabled by the language the device is set to use. For example, `ne="loc accent_aigu"` says that a northeast swipe produces the acute accent combinatorial key—if enabled.
 
 ## Modmap
-The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap. It can contain any number of mappings. Each mapping has an `a` property and a `b` property and directs Unexpected to map the `a` string to the `b` string. Valid values for these strings are listed in [Possible key values](Possible-key-values.md).
+The `<modmap>`...`</modmap>` pair encloses custom mappings for modifier keys. The modmap is placed inside the `<keyboard>`...`</keyboard>` pair, but outside any row. A layout can have at most one modmap. It can contain any number of mappings. Each mapping has an `a` property and a `b` property and maps the `a` key to the `b` key. Valid values are listed in [Possible key values](Possible-key-values.md).
 
-Unexpected supports the following mappings:
+The following mappings are supported:
 
 ```xml
   <shift a="before" b="after" />
