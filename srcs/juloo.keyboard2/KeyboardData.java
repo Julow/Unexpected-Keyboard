@@ -405,12 +405,14 @@ public final class KeyboardData
     public final boolean slider;
     /** String printed on the keys. It has no other effect. */
     public final String indication;
+    /** Optional custom labels */
+    public final String[] keyslabels;
 
     /** Whether a key was declared with the 'loc' prefix. */
     public static final int F_LOC = 1;
     public static final int ALL_FLAGS = F_LOC;
 
-    protected Key(KeyValue[] ks, KeyValue antic, int f, float w, float s, boolean sl, String i)
+    protected Key(KeyValue[] ks, KeyValue antic, int f, float w, float s, boolean sl, String i, String[] l)
     {
       keys = ks;
       anticircle = antic;
@@ -419,6 +421,7 @@ public final class KeyboardData
       shift = Math.max(s, 0f);
       slider = sl;
       indication = i;
+      keyslabels = l;
     }
 
     /** Read a key value attribute that have a synonym. Having both synonyms
@@ -438,7 +441,7 @@ public final class KeyboardData
     /** Parse the key description [key_attr] and write into [ks] at [index].
         Returns flags that can be aggregated into the value for [keysflags].
         [key_attr] can be [null] for convenience. */
-    static int parse_key_attr(XmlPullParser parser, String key_val, KeyValue[] ks,
+    static int parse_key_attr(XmlPullParser parser, String key_val, String key_label, KeyValue[] ks, String[] klabels,
         int index)
         throws Exception
     {
@@ -452,6 +455,7 @@ public final class KeyboardData
         key_val = name_loc;
       }
       ks[index] = KeyValue.getKeyByName(key_val);
+      klabels[index] = key_label;
       return (flags << index);
     }
 
@@ -471,17 +475,18 @@ public final class KeyboardData
     public static Key parse(XmlPullParser parser) throws Exception
     {
       KeyValue[] ks = new KeyValue[9];
+      String[] klabels = new String[9];
       int keysflags = 0;
-      keysflags |= parse_key_attr(parser, parser.getAttributeValue(null, "key0"), ks, 0);
+      keysflags |= parse_key_attr(parser, parser.getAttributeValue(null, "key0"), parser.getAttributeValue(null, "key0_label"), ks, klabels, 0);
       /* Swipe gestures (key1-key8 diagram above), with compass-point synonyms. */
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key1", "nw"), ks, 1);
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key2", "ne"), ks, 2);
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key3", "sw"), ks, 3);
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key4", "se"), ks, 4);
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key5", "w"), ks, 5);
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key6", "e"), ks, 6);
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key7", "n"), ks, 7);
-      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key8", "s"), ks, 8);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key1", "nw"), get_key_attr(parser, "key1_label", "nw_label"), ks, klabels, 1);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key2", "ne"), get_key_attr(parser, "key2_label", "ne_label"),ks, klabels, 2);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key3", "sw"), get_key_attr(parser, "key3_label", "sw_label"), ks, klabels, 3);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key4", "se"), get_key_attr(parser, "key4_label", "se_label"),ks, klabels, 4);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key5", "w"), get_key_attr(parser, "key5_label", "w_label"), ks, klabels, 5);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key6", "e"), get_key_attr(parser, "key6_label", "e_label"), ks, klabels, 6);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key7", "n"), get_key_attr(parser, "key7_label", "n_label"), ks, klabels, 7);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key8", "s"), get_key_attr(parser, "key8_label", "s_label"), ks, klabels, 8);
       /* Other key attributes */
       KeyValue anticircle = parse_nonloc_key_attr(parser, "anticircle");
       float width = attribute_float(parser, "width", 1f);
@@ -490,7 +495,7 @@ public final class KeyboardData
       String indication = parser.getAttributeValue(null, "indication");
       while (parser.next() != XmlPullParser.END_TAG)
         continue;
-      return new Key(ks, anticircle, keysflags, width, shift, slider, indication);
+      return new Key(ks, anticircle, keysflags, width, shift, slider, indication, klabels);
     }
 
     /** Whether key at [index] as [flag]. */
@@ -503,7 +508,7 @@ public final class KeyboardData
     public Key scaleWidth(float s)
     {
       return new Key(keys, anticircle, keysflags, width * s, shift, slider,
-          indication);
+              indication, keyslabels);
     }
 
     public void getKeys(Map<KeyValue, KeyPos> dst, int row, int col)
@@ -524,12 +529,12 @@ public final class KeyboardData
       for (int j = 0; j < keys.length; j++) ks[j] = keys[j];
       ks[i] = kv;
       int flags = (keysflags & ~(ALL_FLAGS << i));
-      return new Key(ks, anticircle, flags, width, shift, slider, indication);
+      return new Key(ks, anticircle, flags, width, shift, slider, indication, keyslabels);
     }
 
     public Key withShift(float s)
     {
-      return new Key(keys, anticircle, keysflags, width, s, slider, indication);
+      return new Key(keys, anticircle, keysflags, width, s, slider, indication, keyslabels);
     }
 
     public boolean hasValue(KeyValue kv)
@@ -555,7 +560,7 @@ public final class KeyboardData
       for (int i = 0; i < ks.length; i++)
         if (k.keys[i] != null)
           ks[i] = apply(k.keys[i], k.keyHasFlag(i, Key.F_LOC));
-      return new Key(ks, k.anticircle, k.keysflags, k.width, k.shift, k.slider, k.indication);
+      return new Key(ks, k.anticircle, k.keysflags, k.width, k.shift, k.slider, k.indication, k.keyslabels);
     }
   }
 

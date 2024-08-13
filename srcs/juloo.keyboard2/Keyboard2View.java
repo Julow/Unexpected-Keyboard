@@ -331,11 +331,11 @@ public class Keyboard2View extends View
         boolean isKeyDown = _pointers.isKeyDown(k);
         drawKeyFrame(canvas, x, y, keyW, keyH, isKeyDown);
         if (k.keys[0] != null)
-          drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown);
+          drawLabel(canvas, k.keys[0], k.keyslabels[0], keyW / 2f + x, y, keyH, isKeyDown);
         for (int i = 1; i < 9; i++)
         {
           if (k.keys[i] != null)
-            drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown);
+            drawSubLabel(canvas, k.keys[i], k.keyslabels[i], x, y, keyW, keyH, i, isKeyDown);
         }
         drawIndication(canvas, k, x, y, keyW, keyH);
         x += _keyWidth * k.width;
@@ -412,20 +412,21 @@ public class Keyboard2View extends View
     return sublabel ? _theme.subLabelColor : _theme.labelColor;
   }
 
-  private void drawLabel(Canvas canvas, KeyValue kv, float x, float y, float keyH, boolean isKeyDown)
+  private void drawLabel(Canvas canvas, KeyValue kv, String klabel, float x, float y, float keyH, boolean isKeyDown)
   {
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
-    float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
+    Boolean use_smaller_font = klabel != null ? klabel.length() > 1 : kv.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT);
+    float textSize = scaleTextSize(use_smaller_font, _config.labelTextSize, keyH);
     Paint p = _theme.labelPaint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT));
     p.setColor(labelColor(kv, isKeyDown, false));
     p.setAlpha(_config.labelBrightness);
     p.setTextSize(textSize);
-    canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
+    canvas.drawText(klabel != null ? klabel : kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
-  private void drawSubLabel(Canvas canvas, KeyValue kv, float x, float y,
+  private void drawSubLabel(Canvas canvas, KeyValue kv, String klabel, float x, float y,
       float keyW, float keyH, int sub_index, boolean isKeyDown)
   {
     Paint.Align a = LABEL_POSITION_H[sub_index];
@@ -433,7 +434,8 @@ public class Keyboard2View extends View
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
-    float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
+    Boolean use_smaller_font = klabel != null ? klabel.length() > 1 : kv.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT);
+    float textSize = scaleTextSize(use_smaller_font, _config.sublabelTextSize, keyH);
     Paint p = _theme.subLabelPaint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), a);
     p.setColor(labelColor(kv, isKeyDown, true));
     p.setAlpha(_config.labelBrightness);
@@ -447,10 +449,10 @@ public class Keyboard2View extends View
       x += keyW / 2f;
     else
       x += (a == Paint.Align.LEFT) ? subPadding : keyW - subPadding;
-    String label = kv.getString();
+    String label = klabel != null ? klabel : kv.getString();
     int label_len = label.length();
-    // Limit the label of string keys to 3 characters
-    if (label_len > 3 && kv.getKind() == KeyValue.Kind.String)
+    // Limit the label of string keys to 3 characters (only for automatic labels)
+    if (klabel == null && label_len > 3 && kv.getKind() == KeyValue.Kind.String)
       label_len = 3;
     canvas.drawText(label, 0, label_len, x, y, p);
   }
@@ -474,7 +476,7 @@ public class Keyboard2View extends View
       // 3 character limit like regular labels
       indic_length = Math.min(indic.length(), 3);
       special_font = k.anticircle.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
-      text_size = scaleTextSize(k.anticircle, _config.sublabelTextSize, keyH);
+      text_size = scaleTextSize(k.anticircle.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT), _config.sublabelTextSize, keyH);
     }
     else
     {
@@ -487,9 +489,9 @@ public class Keyboard2View extends View
         x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
-  private float scaleTextSize(KeyValue k, float rel_size, float keyH)
+  private float scaleTextSize(Boolean use_smaller_font, float rel_size, float keyH)
   {
-    float smaller_font = k.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
+    float smaller_font = use_smaller_font ? 0.75f : 1.f;
     return keyH * rel_size * smaller_font * _config.characterSize;
   }
 }
