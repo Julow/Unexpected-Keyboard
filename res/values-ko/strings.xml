@@ -3,12 +3,12 @@
   <string name="app_name_release">Unexpected Keyboard</string>
   <!-- <string name="app_name_debug">Unexpected Keyboard (Debug)</string> -->
   <string name="short_description">개발자들을 위한 가벼운 가상 키보드.</string>
-  <string name="store_description">이 애플리케이션의 주된 기능은 모서리로 키를 스와이프하는 것으로 더 많은 문자를 입력할 수 있는 것입니다.
+  <string name="store_description">"주요 기능은 모서리 방향으로 키를 스와이프하여 더 많은 문자를 입력할 수 있다는 것입니다.
 
-이 애플리케이션은 원래 Termux를 사용하는 프로그래머를 위해 디자인되었습니다.
-Теперь идеально подходит для повседневного использования.
+이 앱은 처음에는 Termux를 사용하는 프로그래머들을 위한 것으로 개발되었습니다.
+지금은 일상적인 용도로도 완벽합니다.
 
-이 애플리케이션에는 광고가 없습니다. 네트워크 요청을 하지 않으며 오픈 소스입니다.</string> -->
+이 응용 프로그램에는 광고가 없으며 네트워크 요청을 하지 않고 오픈 소스입니다."</string>
   <string name="settings_activity_label">Unexpected Keyboard 설정</string>
   <string name="pref_portrait">세로 화면</string> -->
   <string name="pref_landscape">가로 화면</string> -->
