@@ -142,17 +142,19 @@ public final class Autocapitalisation
   void type_one_char(char c)
   {
     _cursor++;
-    if (is_trigger_character(c))
+    if (is_whitespace(c))
       _should_update_caps_mode = true;
     else
       _should_enable_shift = false;
   }
 
-  boolean is_trigger_character(char c)
+  boolean is_whitespace(char c)
   {
     switch (c)
     {
       case ' ':
+      case KEYCODE_ENTER:
+      case KEYCODE_TAB:
         return true;
       default:
         return false;
