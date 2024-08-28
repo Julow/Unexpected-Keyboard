@@ -145,7 +145,11 @@ public final class ClipboardHistoryService
       return;
     int count = clip.getItemCount();
     for (int i = 0; i < count; i++)
-      add_clip(clip.getItemAt(i).getText().toString());
+    {
+      CharSequence text = clip.getItemAt(i).getText();
+      if (text != null)
+        add_clip(text.toString());
+    }
   }
 
   final class SystemListener implements ClipboardManager.OnPrimaryClipChangedListener
