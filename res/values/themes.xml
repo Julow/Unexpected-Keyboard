@@ -64,6 +64,21 @@
     <item name="emoji_button_bg" type="color">#202020</item>
     <item name="emoji_color" type="color">#ffffff</item>
   </style>
+  <style name="Astrofish-Dark" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#1b1b1b</item>
+    <item name="colorKey">#333333</item>
+    <item name="colorKeyActivated">#1b1b1b</item>
+    <item name="keyBorderWidth">1.2dp</item>
+    <item name="keyBorderWidthActivated">0dp</item>
+    <item name="keyBorderColorBottom">#404040</item>
+    <item name="colorLabel">#ffffff</item>
+    <item name="colorLabelActivated">#3399ff</item>
+    <item name="colorLabelLocked">#33cc33</item>
+    <item name="colorSubLabel">#aaaaaa</item>
+    <item name="emoji_button_bg" type="color">#202020</item>
+    <item name="emoji_color" type="color">#ffffff</item>
+  </style>
   <style name="Light" parent="BaseTheme">
     <item name="android:isLightTheme">true</item>
     <item name="colorKeyboard">#e3e3e3</item>
