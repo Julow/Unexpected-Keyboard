@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <keyboard name="QWERTY (Japan)" script="latin">
   <row>
-    <key key0="q" key2="1" key3="!" key4="loc esc"/>
+    <key key0="q" key2="1" key4="!" key1="loc esc"/>
     <key key0="w" key2="2" key3="&quot;"/>
     <key key0="e" key2="3" key3="\#" key4="loc €"/>
     <key key0="r" key2="4" key3="$"/>
