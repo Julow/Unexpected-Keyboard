@@ -16,6 +16,7 @@ VALUE_DIR_TO_METADATA = {
         "fa": "fa-IR",
         "fr": "fr-FR",
         "it": "it-IT",
+        "ja": "ja-JP",
         "ko": "ko-KR",
         "lv": "lv",
         "pl": "pl-PL",
