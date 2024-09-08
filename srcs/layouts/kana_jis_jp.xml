@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<keyboard name="かな入力 (日本)" script="kana">
+  <modmap>
+    <shift a="あ" b="ア"/>
+    <shift a="い" b="イ"/>
+    <shift a="う" b="ウ"/>
+    <shift a="え" b="エ"/>
+    <shift a="お" b="オ"/>
+    <shift a="か" b="カ"/>
+    <shift a="き" b="キ"/>
+    <shift a="く" b="ク"/>
+    <shift a="け" b="ケ"/>
+    <shift a="こ" b="コ"/>
+    <shift a="さ" b="サ"/>
+    <shift a="し" b="シ"/>
+    <shift a="す" b="ス"/>
+    <shift a="せ" b="セ"/>
+    <shift a="そ" b="ソ"/>
+    <shift a="た" b="タ"/>
+    <shift a="ち" b="チ"/>
+    <shift a="つ" b="ツ"/>
+    <shift a="て" b="テ"/>
+    <shift a="と" b="ト"/>
+    <shift a="な" b="ナ"/>
+    <shift a="に" b="ニ"/>
+    <shift a="ぬ" b="ヌ"/>
+    <shift a="ね" b="ネ"/>
+    <shift a="の" b="ノ"/>
+    <shift a="は" b="ハ"/>
+    <shift a="ひ" b="ヒ"/>
+    <shift a="ふ" b="フ"/>
+    <shift a="へ" b="ヘ"/>
+    <shift a="ほ" b="ホ"/>
+    <shift a="ま" b="マ"/>
+    <shift a="み" b="ミ"/>
+    <shift a="む" b="ム"/>
+    <shift a="め" b="メ"/>
+    <shift a="も" b="モ"/>
+    <shift a="や" b="ヤ"/>
+    <shift a="ゆ" b="ユ"/>
+    <shift a="よ" b="ヨ"/>
+    <shift a="ら" b="ラ"/>
+    <shift a="り" b="リ"/>
+    <shift a="る" b="ル"/>
+    <shift a="れ" b="レ"/>
+    <shift a="ろ" b="ロ"/>
+    <shift a="わ" b="ワ"/>
+    <shift a="を" b="ヲ"/>
+    <shift a="ん" b="ン"/>
+    <shift a="ぁ" b="ァ"/>
+    <shift a="ぃ" b="ィ"/>
+    <shift a="ぅ" b="ゥ"/>
+    <shift a="ぇ" b="ェ"/>
+    <shift a="ぉ" b="ォ"/>
+    <shift a="っ" b="ッ"/>
+    <shift a="ゃ" b="ャ"/>
+    <shift a="ゅ" b="ュ"/>
+    <shift a="ょ" b="ョ"/>
+  </modmap>
+  <row>
+    <key key0="ぬ" key1="!" key3="1" key4="loc esc"/>
+    <key key0="ふ" key1="&quot;" key3="2"/>
+    <key key0="あ" key1="\#" key2="ぁ" key3="3"/>
+    <key key0="う" key1="$" key2="ぅ" key3="4"/>
+    <key key0="え" key1="%" key2="ぇ" key3="5"/>
+    <key key0="お" key1="&amp;" key2="ぉ" key3="6"/>
+    <key key0="や" key1="'" key2="ゃ" key3="7"/>
+    <key key0="ゆ" key1="(" key2="ゅ" key3="8"/>
+    <key key0="よ" key1=")" key2="ょ" key3="9"/>
+    <key key0="わ" key2="を" key3="0"/>
+    <key key0="ほ" key1="=" key3="-"/>
+    <key key0="へ" key1="~" key3="^"/>
+    <key key0="ー" key1="|" key3="¥"/>
+  </row>
+  <row>
+    <key shift="0.5" key0="た" key1="q" key3="loc tab"/>
+    <key key0="て" key1="w"/>
+    <key key0="い" key1="e" key2="ぃ"/>
+    <key key0="す" key1="r"/>
+    <key key0="か" key1="t"/>
+    <key key0="ん" key1="y"/>
+    <key key0="な" key1="u"/>
+    <key key0="に" key1="i"/>
+    <key key0="ら" key1="o"/>
+    <key key0="せ" key1="p"/>
+    <key key0="dakuten" key1="`" key3="\@"/>
+    <key key0="handakuten" key1="{" key2="「" key3="["/>
+  </row>
+  <row>
+    <key shift="0.5" key0="ち" key1="a"/>
+    <key key0="と" key1="s"/>
+    <key key0="し" key1="d"/>
+    <key key0="は" key1="f"/>
+    <key key0="き" key1="g"/>
+    <key key0="く" key1="h"/>
+    <key key0="ま" key1="j"/>
+    <key key0="の" key1="k"/>
+    <key key0="り" key1="l"/>
+    <key key0="れ" key1="+" key3=";"/>
+    <key key0="け" key1="*" key3=":"/>
+    <key key0="む" key1="}" key2="」" key3="]"/>
+  </row>
+  <row>
+    <key key0="shift" key2="loc capslock"/>
+    <key key0="つ" key1="z" key2="っ"/>
+    <key key0="さ" key1="x"/>
+    <key key0="そ" key1="c"/>
+    <key key0="ひ" key1="v"/>
+    <key key0="こ" key1="b"/>
+    <key key0="み" key1="n"/>
+    <key key0="も" key1="m"/>
+    <key key0="ね" key1="&lt;" key2="、" key3=","/>
+    <key key0="る" key1=">" key2="。" key3="."/>
+    <key key0="め" key1="\?" key2="・" key3="/"/>
+    <key key0="ろ" key1="_" key3="\\"/>
+    <key key0="backspace" key2="delete"/>
+  </row>
+</keyboard>
