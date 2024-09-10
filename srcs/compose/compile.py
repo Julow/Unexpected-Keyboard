@@ -90,10 +90,17 @@ def parse_sequences_file_xkb(fname, xkb_char_extra_names):
                 seqs.append(s)
         return seqs
 
+# Basic support for comments in json files. Reads a file
+def strip_cstyle_comments(inp):
+    def strip_line(line):
+        i = line.find("//")
+        return line[:i] + "\n" if i >= 0 else line
+    return "".join(map(strip_line, inp))
+
 # Parse from a json file containing a dictionary sequence → result string.
 def parse_sequences_file_json(fname):
     with open(fname, "r") as inp:
-        seqs = json.load(inp)
+        seqs = json.loads(strip_cstyle_comments(inp))
     return list(seqs.items())
 
 # Format of the sequences file is determined by its extension
