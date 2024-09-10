@@ -175,7 +175,7 @@ public final class Config
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
-      _prefs.getFloat("character_size", 1.f)
+      _prefs.getFloat("character_size", 1.15f)
       * characterSizeScale;
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
