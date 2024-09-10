@@ -42,7 +42,7 @@ public final class ComposeKey
     else if (next_header == 0xFFFF) // String final state
     {
       int next_length = edges[next];
-      return KeyValue.makeStringKey(
+      return KeyValue.getKeyByName(
           new String(states, next + 1, next_length - 1));
     }
     else // Character final state.
