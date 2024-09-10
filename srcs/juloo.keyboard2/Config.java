@@ -91,8 +91,8 @@ public final class Config
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
-    labelTextSize = 0.33f;
-    sublabelTextSize = 0.22f;
+    labelTextSize = 0.50f;
+    sublabelTextSize = 0.25f;
     try
     {
       number_row = KeyboardData.load_number_row(res);
@@ -136,7 +136,7 @@ public final class Config
     }
     else
     {
-      keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
+      keyboardHeightPercent = _prefs.getInt("keyboard_height", 24);
     }
     layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
@@ -178,7 +178,7 @@ public final class Config
       _prefs.getFloat("character_size", 1.f)
       * characterSizeScale;
     theme = getThemeId(res, _prefs.getString("theme", ""));
-    autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
+    autocapitalisation = _prefs.getBoolean("autocapitalisation", false);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
