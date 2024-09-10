@@ -81,6 +81,8 @@ public final class KeyModifier
       case HORN: return apply_compose(k, ComposeKeyData.accent_horn);
       case HOOK_ABOVE: return apply_compose(k, ComposeKeyData.accent_hook_above);
       case ARROW_RIGHT: return apply_map_char(k, map_char_arrow_right);
+      case DAKUTEN: return apply_compose(k, ComposeKeyData.dakuten);
+      case HANDAKUTEN: return apply_compose(k, ComposeKeyData.handakuten);
       default: return k;
     }
   }

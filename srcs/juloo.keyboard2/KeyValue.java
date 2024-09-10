@@ -44,6 +44,8 @@ public final class KeyValue implements Comparable<KeyValue>
     TREMA,
     HORN,
     HOOK_ABOVE,
+    DAKUTEN,
+    HANDAKUTEN,
     SUPERSCRIPT,
     SUBSCRIPT,
     RING,
@@ -298,10 +300,15 @@ public final class KeyValue implements Comparable<KeyValue>
     return modifierKey(String.valueOf((char)symbol), m, flags | FLAG_KEY_FONT);
   }
 
+  private static KeyValue diacritic(String symbol, Modifier m, int flags)
+  {
+    return new KeyValue(symbol, Kind.Modifier, m.ordinal(),
+        FLAG_LATCH | FLAG_SPECIAL | flags);
+  }
+
   private static KeyValue diacritic(int symbol, Modifier m)
   {
-    return new KeyValue(String.valueOf((char)symbol), Kind.Modifier, m.ordinal(),
-        FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
+    return diacritic(String.valueOf((char)symbol), m, FLAG_KEY_FONT);
   }
 
   private static KeyValue eventKey(String symbol, Event e, int flags)
@@ -448,6 +455,8 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_dot_below": return diacritic(0xE060, Modifier.DOT_BELOW);
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
+      case "dakuten": return diacritic("゛", Modifier.DAKUTEN, 0);
+      case "handakuten": return diacritic("゜", Modifier.HANDAKUTEN, 0);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
