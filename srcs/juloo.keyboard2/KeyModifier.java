@@ -182,9 +182,10 @@ public final class KeyModifier
     {
       case Char:
         char kc = k.getChar();
-        char c = map_char_shift(kc);
-        if (kc == c)
-          c = Character.toUpperCase(kc);
+        KeyValue r = ComposeKey.apply(ComposeKeyData.shift, kc);
+        if (r != null)
+          return r;
+        char c = Character.toUpperCase(kc);
         return (kc == c) ? k : k.withChar(c);
       case String:
         String s = Utils.capitalize_string(k.getString());
@@ -365,64 +366,6 @@ public final class KeyModifier
     new Map_char() {
       public String apply(char _c) { return null; }
     };
-
-  private static char map_char_shift(char c)
-  {
-    switch (c)
-    {
-      case '↙': return '⇙';
-      case '↓': return '⇓';
-      case '↘': return '⇘';
-      case '←': return '⇐';
-      case '→': return '⇒';
-      case '↖': return '⇖';
-      case '↑': return '⇑';
-      case '↗': return '⇗';
-      case '└': return '╚';
-      case '┴': return '╩';
-      case '┘': return '╝';
-      case '├': return '╠';
-      case '┼': return '╬';
-      case '┤': return '╣';
-      case '┌': return '╔';
-      case '┬': return '╦';
-      case '┐': return '╗';
-      case '─': return '═';
-      case '│': return '║';
-      case 'ß': return 'ẞ';
-      /* In Turkish, upper case of 'iı' is 'İI' but Java's toUpperCase will
-         return 'II'. To make 'İ' accessible, make it the shift of 'ı'. This
-         has the inconvenient of swapping i and ı on the keyboard. */
-      case 'ı': return 'İ';
-      case '₹': return '₨';
-      // Gujarati alternate characters
-      case 'અ': return 'આ';
-      case 'ઇ': return 'ઈ';
-      case 'િ': return 'ી';
-      case 'ઉ': return 'ઊ';
-      case 'ુ': return 'ૂ';
-      case 'એ': return 'ઐ';
-      case 'ે': return 'ૈ';
-      case 'ઓ': return 'ઔ';
-      case 'ો': return 'ૌ';
-      case 'ક': return 'ખ';
-      case 'ગ': return 'ઘ';
-      case 'ચ': return 'છ';
-      case 'જ': return 'ઝ';
-      case 'ટ': return 'ઠ';
-      case 'ડ': return 'ઢ';
-      case 'ન': return 'ણ';
-      case 'ત': return 'થ';
-      case 'દ': return 'ધ';
-      case 'પ': return 'ફ';
-      case 'બ': return 'ભ';
-      case 'મ': return 'ં';
-      case 'લ': return 'ળ';
-      case 'સ': return 'શ';
-      case 'હ': return 'ઃ';
-      default: return c;
-    }
-  }
 
   private static final Map_char map_char_arrow_right =
     new Map_char() {
