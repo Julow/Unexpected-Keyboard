@@ -130,6 +130,7 @@ Value                  | Meaning
 `switch_forward`       | Change the keyboard layout, as long as Unexpected Keyboard has multiple keyboard layouts enabled in the settings.
 `switch_backward`      | Change the keyboard layout to the previous one in the list.
 `switch_greekmath`     | Switch to the Greek & Math Symbols layer.
+`switch_clipboard`     | Switch to the clipboard pane.
 `change_method`        | Open the input method picker dialog.
 `change_method_prev`   | Switch to the previously used input method.
 `action`               | Performs a special context-sensitive operation related to the Enter key. For example, in the Twitter (X) app, `enter` adds a new line, while `action` posts.
