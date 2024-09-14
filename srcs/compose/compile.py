@@ -153,8 +153,10 @@ def add_sequences_to_trie(seqs, trie):
 
 # Compile the trie into a state machine.
 def make_automata(tries):
+    previous_leafs = {} # Deduplicate leafs
     states = []
     def add_tree(t):
+        this_node_index = len(states)
         # Index and size of the new node
         i = len(states)
         s = len(t.keys())
@@ -166,11 +168,14 @@ def make_automata(tries):
             states.append((None, None))
         # Add nested nodes and fill the current node
         for c in sorted(t.keys()):
-            node_i = len(states)
-            add_node(t[c])
-            states[i] = (c, node_i)
+            states[i] = (c, add_node(t[c]))
             i += 1
+        return this_node_index
     def add_leaf(c):
+        if c in previous_leafs:
+            return previous_leafs[c]
+        this_node_index = len(states)
+        previous_leafs[c] = this_node_index
         # There are two encoding for leafs: character final state for 15-bit
         # characters and string final state for the rest.
         if len(c) > 1 or ord(c[0]) > 32767: # String final state
@@ -180,16 +185,14 @@ def make_automata(tries):
                 states.append((c, 0))
         else: # Character final state
             states.append((c, 1))
+        return this_node_index
     def add_node(n):
         if type(n) == str:
-            add_leaf(n)
+            return add_leaf(n)
         else:
-            add_tree(n)
+            return add_tree(n)
     states.append((1, 1)) # Add an empty state at the beginning.
-    entry_states = {}
-    for tname, tree_root in tries.items():
-        entry_states[tname] = len(states)
-        add_tree(tree_root)
+    entry_states = { n: add_tree(root) for n, root in tries.items() }
     return entry_states, states
 
 # Debug
