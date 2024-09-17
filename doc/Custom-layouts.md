@@ -39,9 +39,9 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 * `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. It defaults to `latin`.
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. It defaults to the same as `script`.
 * `bottom_row`: Whether or not to show the built-in bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines the bottom row, then specify `bottom_row="false"` to disable the built-in bottom row.<br />
-We recommend your layout use the built-in bottom row, because it is still evolving and your layout will incorporate innovations in future versions. However, to define your own, the current definition of the bottom row is in [bottom_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/bottom_row.xml). You can copypaste this XML into your custom layout as a starting point.
+① We recommend your layout use the built-in bottom row, because it is still evolving and your layout will incorporate innovations in future versions. However, to define your own, the current definition of the bottom row is in [bottom_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/bottom_row.xml). You can copypaste this XML into your custom layout as a starting point.<br />
+② Likewise, the current definition of the top (number) row is in [number_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/number_row.xml). (You disable the built-in number row not in the XML but with the Settings menu.)
 * `locale_extra_keys`: Whether Unexpected should add language-dependent extra keys from [method.xml](../res/xml/method.xml) to this layout. It accepts `true` or `false`, and defaults to `true`. To disable these automatic additions, specify `locale_extra_keys="false"`.
-
 
 ## Row
 The `<row>`...`</row>` pair encloses one row on the keyboard. It has only one optional property:
