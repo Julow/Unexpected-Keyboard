@@ -11,7 +11,7 @@
     <key key0="ه" key2="۸" key3="*"/>
     <key key0="خ" key2="۹" key3="(" key4=")"/>
     <key key0="ح" key2="۰"/>
-    <key key0="ج" key2="چ"/>
+    <key key0="ج"/>
   </row>
   <row>
     <key key0="ش" key2="loc tab"/>
@@ -20,22 +20,22 @@
     <key key0="ب"/>
     <key key0="ل"/>
     <key key0="ا" key1="آ" key4="ء" key2="-" key3="_"/>
-    <key key0="ت" key1="halfspace" key2="+"/>
+    <key key0="ت" key1="&#x200C;" key2="+"/>
     <key key0="ن"/>
     <key key0="م"/>
     <key key0="ک"/>
     <key key0="گ"/>
   </row>
   <row>
-    <key shift="0.5" key0="ظ"/>
+    <key key0="ظ"/>
     <key key0="ط"/>
-    <key key0="ز" key2="«"/>
-    <key key0="ر" key2="»"/>
-    <key key0="ژ" key2="."/>
+    <key key0="ز" key1="«" key2="»"/>
+    <key key0="ر"  key1="ژ" key2="."/>
     <key key0="ذ" key2=":"/>
     <key key0="د" key2="؛"/>
     <key key0="پ" key2="&#1567;"/>
     <key key0="و"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key key0="چ"/>
+    <key width="1.0" key0="backspace" key2="delete"/>
   </row>
 </keyboard>
