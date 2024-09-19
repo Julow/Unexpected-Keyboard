@@ -64,7 +64,7 @@ Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {
 # latn_bepo_fr
 0 warnings
 # latn_bone
-Layout includes some ASCII punctuation but not all, missing: $
+Layout doesn't define some important keys, missing: loc esc, loc tab
 Layout redefines the bottom row but some important keys are missing, missing: cursor_left, cursor_right, loc compose, loc end, loc home, loc page_down, loc page_up, loc switch_clipboard, loc switch_greekmath, loc voice_typing, switch_backward
 2 warnings
 # latn_colemak
