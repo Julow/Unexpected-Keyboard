@@ -502,6 +502,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "f12": return keyeventKey("F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
       case "tab": return keyeventKey(0xE00F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
       case "menu": return keyeventKey("Menu", KeyEvent.KEYCODE_MENU, FLAG_SMALLER_FONT);
+      case "playpause": return keyeventKey("Play", KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, FLAG_SMALLER_FONT);
 
       /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
