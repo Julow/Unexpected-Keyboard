@@ -1,4 +1,4 @@
-<?xml	version="1.0"	encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- https://neo-layout.org/Layouts/bone/ -->
 <keyboard name="Bone" bottom_row="false" script="latin">
 	<!-- first row + characters from number row:
@@ -9,19 +9,19 @@
 	-->
 	<row>
 		<!--left side-->
-		<key key0="j" key2="°" key4="…"/>
-		<key key0="d" key2="§" key4="_"/>
-		<key key0="u" key2="ℓ" key4="["/>
-		<key key0="a" key2="»" key4="]" key1="›"/>
-		<key key0="x" key2="«" key4="^" key1="‹"/>
+		<key key0="j" se="…" ne="°" nw="loc esc"/>
+		<key key0="d" se="_" ne="§"/>
+		<key key0="u" se="[" ne="ℓ"/>
+		<key key0="a" se="]" ne="»" nw="›"/>
+		<key key0="x" se="^" ne="«" nw="‹"/>
 		<!--middle-->
-		<key key0="p" key7="¢" key8="!"/>
+		<key key0="p" s="!" n="¢"/>
 		<!--right side-->
-		<key key0="h" key1="€" key3="&lt;" key4="7" key2="¥"/>
-		<key key0="l" key1="„" key3="&gt;" key4="8" key2="‚"/>
-		<key key0="m" key1="“" key3="="    key4="9" key2="‘"/>
-		<key key0="w" key1="”" key3="&amp;"         key2="’"/>
-		<key key0="ß" key1="—" key3="ſ"/>
+		<key key0="h" sw="&lt;"  nw="€" ne="¥" se="7"/>
+		<key key0="l" sw="&gt;"  nw="„" ne="‚" se="8"/>
+		<key key0="m" sw="="     nw="“" ne="‘" se="9"/>
+		<key key0="w" sw="&amp;" nw="”" ne="’"/>
+		<key key0="ß" sw="ſ"     nw="—"/>
 	</row>
 	<!--second row:
 		ctieobnrsgq
@@ -29,19 +29,19 @@
 	-->
 	<row>
 		<!--left side-->
-		<key key0="c" key4="\\"/>
-		<key key0="t" key4="/"/>
-		<key key0="i" key4="{"/>
-		<key key0="e" key4="}"/>
-		<key key0="o" key4="*"/>
+		<key key0="c" se="\\" ne="loc tab"/>
+		<key key0="t" se="/"/>
+		<key key0="i" se="{"/>
+		<key key0="e" se="}"/>
+		<key key0="o" se="*"/>
 		<!--middle-->
-		<key key0="b" key8="\?"/>
+		<key key0="b" s="\?"/>
 		<!--right side-->
-		<key key0="n" key3="(" key4="4"/>
-		<key key0="r" key3=")" key4="5"/>
-		<key key0="s" key3="-" key4="6"/>
-		<key key0="g" key3=":"/>
-		<key key0="q" key3="@"/>
+		<key key0="n" sw="(" se="4"/>
+		<key key0="r" sw=")" se="5"/>
+		<key key0="s" sw="-" se="6"/>
+		<key key0="g" sw=":"/>
+		<key key0="q" sw="\@"/>
 	</row>
 	<!--third row -> compressed to also fit shift and backspace: 
 		fvüäöyz,.k
@@ -49,24 +49,24 @@
 	-->
 	<row>
 		<!--left side-->
-		<key width="1.5" key0="shift" key4="\#"/>
-		<key key0="f" key4="$"/>
-		<key key0="v" key4="|"/>
-		<key key0="ü" key4="~"/>
-		<key key0="ä" key4="`"/>
+		<key width="1.5" key0="shift" se="\#"/>
+		<key key0="f" se="$"/>
+		<key key0="v" se="|"/>
+		<key key0="ü" se="~"/>
+		<key key0="ä" se="`"/>
 		<!--right side-->
-		<key key0="ö" key3="+"/>
-		<key key0="y" key3="%"               key4="1"/>
-		<key key0="z" key3="," key1="&quot;" key4="2"/>
-		<key key0="k" key3="." key1="&apos;" key4="3"/>
-		<key width="1.5" key0="backspace" key3=";" key1="delete"/>
+		<key key0="ö" sw="+"/>
+		<key key0="y" sw="%"             se="1"/>
+		<key key0="z" sw="," nw="&quot;" se="2"/>
+		<key key0="k" sw="." nw="&apos;" se="3"/>
+		<key width="1.5" key0="backspace" sw=";" nw="delete"/>
 	</row>
 	<!--bottom row-->
 	<row height="0.95">
-		<key width="1.8" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
-		<key width="1.2" key0="fn" key1="loc alt" key2="loc change_method" key3="switch_emoji" key4="config"/>
-		<key width="5.0" key0="space" key7="switch_forward" key8="0"/>
-		<key width="1.2" key5="left" key6="right" key7="up" key8="down"/>
-		<key width="1.8" key0="enter" key3="action"/>
+		<key width="1.8" key0="ctrl" nw="loc switch_greekmath" ne="loc meta" se="switch_numeric"/>
+		<key width="1.2" key0="fn" nw="loc alt" ne="loc change_method" sw="switch_emoji" se="config"/>
+		<key width="5" key0="space" w="cursor_left" e="cursor_right" s="0" n="switch_forward" slider="true"/>
+		<key width="1.2" key0="loc compose" n="up" e="right" w="left" s="down" nw="loc home" ne="loc page_up" sw="loc end" se="loc page_down"/>
+		<key width="1.8" key0="enter" nw="loc voice_typing" sw="action" ne="loc switch_clipboard"/>
 	</row>
 </keyboard>
