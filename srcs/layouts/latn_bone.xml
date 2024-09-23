@@ -1,27 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://neo-layout.org/Layouts/bone/ -->
-<keyboard name="Bone" bottom_row="false" script="latin">
-	<!-- first row + characters from number row:
-		jduaxphlmwß
-		…_[]^!<>=&ſ
-		°§ℓ»«$€„“”—
-		›‹¢¥‚‘’
+<keyboard name="Bone" script="latin">
+	<modmap>
+		<!-- shift on number row:
+			1234567890 -> °§ℓ»«$€„“”
+		-->
+		<shift a="1" b="°"/>
+		<shift a="2" b="§"/>
+		<shift a="3" b="ℓ"/>
+		<shift a="4" b="»"/>
+		<shift a="5" b="«"/>
+		<shift a="6" b="$"/>
+		<shift a="7" b="€"/>
+		<shift a="8" b="„"/>
+		<shift a="9" b="“"/>
+		<shift a="0" b="”"/>
+
+		<!-- shift on bottom row:
+		 	,. -> –•
+		-->
+		<shift a="," b="–"/>
+		<shift a="." b="•"/>
+	</modmap>
+	<!-- number row:
+	 	left of numbers:
+			accent_circonflexe/superscript
+			accent_caron/subscript
+			↻
+			accent_dot_above
+			accent_hook_above/accent_horn
+			accent_dot_below
+		numbers:
+			1234567890
+			°§ℓ»«$€„“” -> shift modmap
+			¹²³›‹¢¥‚‘’
+			₁₂₃♀♂⚥ϰ⟨⟩₀v
+
+		right of numbers:
+			accent_grave
+			accent_cedille/accent_ogonek
+			accent_ring
+			accent_trema
+			accent_rough_breathing (not implemented yet)
+			accent_macron/accent_macron_below (not implemented yet)
 	-->
 	<row>
 		<!--left side-->
-		<key key0="j" se="…" ne="°" nw="loc esc"/>
-		<key key0="d" se="_" ne="§"/>
-		<key key0="u" se="[" ne="ℓ"/>
-		<key key0="a" se="]" ne="»" nw="›"/>
-		<key key0="x" se="^" ne="«" nw="‹"/>
-		<!--middle-->
-		<key key0="p" s="!" n="¢"/>
+		<key width="0.5" key0="loc accent_circonflexe" nw="superscript"/>
+		<key key0="1" ne="¹" se="₁" nw="loc accent_caron" n="subscript"/>
+		<key key0="2" ne="²" se="₂" nw="↻"/>
+		<key key0="3" ne="³" se="₃" nw="loc accent_dot_above"/>
+		<key key0="4" ne="›" se="♀" nw="loc accent_hook_above" n="loc accent_horn"/>
+		<key key0="5" ne="‹" se="♂" nw="loc accent_dot_below"/>
 		<!--right side-->
-		<key key0="h" sw="&lt;"  nw="€" ne="¥" se="7"/>
-		<key key0="l" sw="&gt;"  nw="„" ne="‚" se="8"/>
-		<key key0="m" sw="="     nw="“" ne="‘" se="9"/>
-		<key key0="w" sw="&amp;" nw="”" ne="’"/>
-		<key key0="ß" sw="ſ"     nw="—"/>
+		<key key0="6" nw="¢" sw="⚥" ne="loc accent_macron"/>
+		<key key0="7" nw="¥" sw="ϰ"/>
+		<key key0="8" nw="‚" sw="⟨" ne="loc accent_trema"/>
+		<key key0="9" nw="‘" sw="⟩" ne="loc accent_ring"/>
+		<key key0="0" nw="’" sw="₀" ne="loc accent_cedille" n="loc accent_ogonek"/>
+		<key width="0.5" key0="loc accent_grave"/>
+	</row>
+	<!-- first row:
+		jduaxphlmwß
+		…_[]^!<>=&ſ
+		
+		from the accent key on this row:
+			accent_aigu
+			accent_tilde
+			accent_double_aigu
+			accent_slash/accent_bar
+			accent_smooth_breathing (not implemented yet)
+			accent_breve
+	-->
+	<row>
+		<!--left side-->
+		<key key0="j" se="…" n="loc esc"/>
+		<key key0="d" se="_"/>
+		<key key0="u" se="["/>
+		<key key0="a" se="]"/>
+		<key key0="x" se="^"/>
+		<!--center-->
+		<key key0="p" s="!" ne="loc accent_breve"/>
+		<!--right side-->
+		<key key0="h" sw="&lt;"/>
+		<key key0="l" sw="&gt;" ne="loc accent_double_aigu"/>
+		<key key0="m" sw="=" ne="loc accent_slash" n="loc accent_bar"/>
+		<key key0="w" sw="&amp;" ne="loc accent_tilde"/>
+		<key key0="ß" sw="ſ" n="loc accent_aigu"/>
 	</row>
 	<!--second row:
 		ctieobnrsgq
@@ -34,12 +99,12 @@
 		<key key0="i" se="{"/>
 		<key key0="e" se="}"/>
 		<key key0="o" se="*"/>
-		<!--middle-->
+		<!--center-->
 		<key key0="b" s="\?"/>
 		<!--right side-->
-		<key key0="n" sw="(" se="4"/>
-		<key key0="r" sw=")" se="5"/>
-		<key key0="s" sw="-" se="6"/>
+		<key key0="n" sw="("/>
+		<key key0="r" sw=")"/>
+		<key key0="s" sw="-"/>
 		<key key0="g" sw=":"/>
 		<key key0="q" sw="\@"/>
 	</row>
@@ -49,24 +114,18 @@
 	-->
 	<row>
 		<!--left side-->
-		<key width="1.5" key0="shift" se="\#"/>
+		<key width="1.5" key0="shift"
+		              se="\#"/>
 		<key key0="f" se="$"/>
 		<key key0="v" se="|"/>
 		<key key0="ü" se="~"/>
 		<key key0="ä" se="`"/>
 		<!--right side-->
 		<key key0="ö" sw="+"/>
-		<key key0="y" sw="%"             se="1"/>
-		<key key0="z" sw="," nw="&quot;" se="2"/>
-		<key key0="k" sw="." nw="&apos;" se="3"/>
-		<key width="1.5" key0="backspace" sw=";" nw="delete"/>
-	</row>
-	<!--bottom row-->
-	<row height="0.95">
-		<key width="1.8" key0="ctrl" nw="loc switch_greekmath" ne="loc meta" se="switch_numeric"/>
-		<key width="1.2" key0="fn" nw="loc alt" ne="loc change_method" sw="switch_emoji" se="config"/>
-		<key width="5" key0="space" w="cursor_left" e="cursor_right" s="0" n="switch_forward" slider="true"/>
-		<key width="1.2" key0="loc compose" n="up" e="right" w="left" s="down" nw="loc home" ne="loc page_up" sw="loc end" se="loc page_down"/>
-		<key width="1.8" key0="enter" nw="loc voice_typing" sw="action" ne="loc switch_clipboard"/>
+		<key key0="y" sw="%"/>
+		<key key0="z" sw="," nw="&quot;"/>
+		<key key0="k" sw="." nw="&apos;"/>
+		<key width="1.5" key0="backspace"
+		              sw=";" nw="delete"/>
 	</row>
 </keyboard>
