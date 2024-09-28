@@ -454,7 +454,7 @@ public final class KeyValue implements Comparable<KeyValue>
     return new KeyValue("", Kind.Modifier, mod.ordinal(), 0);
   }
 
-  private static KeyValue parseKeyDefinition(String str)
+  public static KeyValue parseKeyDefinition(String str)
   {
     if (str.length() < 2 || str.charAt(0) != ':')
       return makeStringKey(str);
