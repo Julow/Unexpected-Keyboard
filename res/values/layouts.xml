@@ -56,6 +56,8 @@
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
     <item>shaw_imperial_en</item>
+    <item>slavonic</item>
+    <item>tajiki</item>
     <item>urdu_phonetic_ur</item>
     <item>custom</item>
   </string-array>
@@ -114,6 +116,8 @@
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
     <item>Shaw Imperial</item>
+    <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
+    <item>Tajiki Persian (Тоҷикӣ)</item>
     <item>Urdu Phonetic</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
@@ -172,6 +176,8 @@
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
     <item>@xml/shaw_imperial_en</item>
+    <item>@xml/slavonic</item>
+    <item>@xml/tajiki</item>
     <item>@xml/urdu_phonetic_ur</item>
     <item>-1</item>
   </integer-array>
