@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="Tajiki Persian (Тоҷикӣ)" script="cyrillic">
+  <row>
+    <key key0="й" key7="esc" key4="delete" />
+    <key key0="қ" key7="-" key8="_" />
+    <key key0="у" key7="ў" key8="ӯ" />
+    <key key0="к" key7="=" key8="+" />
+    <key key0="е" key8="ё" key7="!" />
+    <key key0="н" key7="$" key8="%"/>
+    <key key0="г" key7="^" key8="ғ" />
+    <key key0="ш" key7="\@" key8="*" />
+    <key key0="ҳ" key3="(" key2=")"/>
+    <key key0="з" key3="{" key2="}" />
+    <key key0="х" key3="backspace" key7="tab" />
+  </row>
+  <row>
+    <key key0="ф" key7="1" />
+    <key key0="ҷ" key7="2" />
+    <key key0="в" key7="3" />
+    <key key0="а" key7="4" />
+    <key key0="п" key7="5" />
+    <key key0="р" key7="6" />
+    <key key0="о" key7="7" />
+    <key key0="л" key7="8" />
+    <key key0="д" key7="9" />
+    <key key0="ж" key7="0" />
+    <key key0="э" key3="[" key7="]" key1="f11_placeholder" key4="f12_placeholder" />
+  </row>
+  <row>
+    <key width="1.18" key0="shift" key2="loc capslock" />
+    <key width="0.96" key0="я" key7="`" key8=";" />
+    <key width="0.96" key0="ч" key7="щ" key8=":" />
+    <key width="0.96" key0="с"  key7="&amp;" key8="\#" />
+    <key width="0.96" key0="м" key7="\?" key8="/" />
+    <key width="0.96" key0="и" key7="|" key8="\\" key1="loc і" />
+    <key width="0.96" key0="т" key3="&lt;" key2="&gt;" />
+    <key width="0.96" key0="ӣ" key7="ъ" key8="~" />
+    <key width="0.96" key0="б" key7="ь" key8="ы" />
+    <key width="0.96" key0="ю" key7="&quot;" key8="'"/>
+    <key width="1.18" key0="." key7="," />
+  </row>
+</keyboard>
