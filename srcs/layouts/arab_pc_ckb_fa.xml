@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="Central Kurdish (سۆرانی) Persian Layout" script="arabic" numpad_script="hindu-arabic">
+  <row>
+    <key key0="،" key7="esc" key4="delete" />
+    <key key0="." key1="&lt;" key4="&gt;" />
+    <key key0="ە" key1="(" key4=")" />
+    <key key0="ق" key7=":" key8="*" />
+    <key key0="ف" key7="؟" key8="+" />
+    <key key0="ۆ" key7="!" key8="ۊ" />
+    <key key0="ع" key7="غ" key8="_" />
+    <key key0="ھ" key7="٪" key8="ه" />
+    <key key0="خ"  key3="[" key2="]" />
+    <key key0="ح" key3="{" key2="}" />
+    <key key0="ج" key3="backspace" key7="halfspace" />
+  </row>
+  <row>
+    <key key0="ش" key7="١" key8="ض" />
+    <key key0="س" key7="٢" key8="ص" />
+    <key key0="ی" key7="٣" key8="ؽ" />
+    <key key0="ب" key7="٤" key8="ٮ" />
+    <key key0="ل" key7="٥" key8="ڵ" />
+    <key key0="ا" key7="٦" key8="آ" />
+    <key key0="ت" key7="٧" key8="ط" />
+    <key key0="ن" key7="٨" key8="-" />
+    <key key0="م" key7="٩" key8="=" />
+    <key key0="ک" key7="٠" key8="ك" />
+    <key key0="گ" key7="tab" key3="f11_placeholder" />
+  </row>
+  <row>
+    <key key0="ڕ" key7="&#1563;" />
+    <key key0="ژ" key7="ـ" />
+    <key key0="ز" key7="ظ" />
+    <key key0="ر" key7="ٔ" />
+    <key key0="ڤ" key7="ڡ" />
+    <key key0="د" key7="ذ" />
+    <key key0="پ" key7="ث" />
+    <key key0="و" key7="ۉ" />
+    <key key0="ێ" key7="ٕ" />
+    <key key0="ئ" key7="ء" />
+    <key key0="چ" key1="f12_placeholder" />
+  </row>
+</keyboard>
