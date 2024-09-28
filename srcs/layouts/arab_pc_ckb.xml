@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="Kurdish (کوردی)" script="arabic" numpad_script="hindu-arabic">
   <row>
-    <key key0="ق" key1="ٯ" key2="١" key3="loc esc"/>
-    <key key0="و" key1="وو" key2="٢" key3="\@"/>
-    <key key0="ە" key1="ة" key2="٣" key3="\#" />
+    <key key0="ق" key2="١" key3="loc esc"/>
+    <key key0="و" key1="وو" key2="٢" key3="\@" key4="ڡ" />
+    <key key0="ە" key1="ة" key2="٣" key3="\#" key4="ۉ" />
     <key key0="ر" key1="ڕ" key2="٤" key3="$"/>
     <key key0="ت" key1="ط" key2="٥" key3="٪"/>
     <key key0="ی" key1="ي" key2="٦" key3="^"/>
     <key key0="ێ" key1="ؽ" key2="٧" key3="&amp;"/>
     <key key0="ئ" key1="ء" key2="٨" key3="*"/>
-    <key key0="ۆ" key1="ؤ" key2="٩" key3=")" key4="("/>
+    <key key0="ۆ" key1="ۊ" key2="٩" key4=")" key3="("/>
     <key key0="پ" key1="ث" key2="٠"/>
   </row>
   <row>
-    <key key0="ا" key1="أ" key2="loc tab"/>
+    <key key0="ا" key1="آ" key2="loc tab"/>
     <key key0="س" key1="ص"/>
     <key key0="ش" key1="ض"/>
-    <key key0="د" key1="ذ" key2="ۮ"/>
+    <key key0="د" key1="ذ" key4="ۮ"/>
     <key key0="ف" key1="ڤ" key2="-" key3="_"/>
-    <key key0="ه" key2="ھ" key3="ـہ"/>
+    <key key2="ه" key0="ھ" key3="ہ"/>
     <key key0="ژ" key1="ـ" key4="}" key3="{"/>
-    <key key0="ل" key1="ڵ" key3="]" key4="["/>
+    <key key0="ل" key1="ڵ" key4="]" key3="["/>
     <key key0="ک" key2="ك" key3="\\"/>
     <key key0="گ" key2="غ" key3="/"/>
   </row>
@@ -29,11 +29,11 @@
     <key key0="خ"/>
     <key key0="ج"/>
     <key key0="چ"/>
-    <key key0="ح" key1="&#1567;" key3="!"/>
-    <key key0="ع" />
-    <key key0="ب"/>
+    <key key0="ح" key2="&#1567;" key3="!"/>
+    <key key0="ع" key1="ٔ" key4="ٕ" />
+    <key key0="ب" key1="ٮ" />
     <key key0="ن" key2="&#1548;" key3="&#1563;"/>
-    <key key0="م"/>
+    <key key0="م" key2="halfspace" />
     <key key0="backspace" key2="delete"/>
   </row>
 </keyboard>
