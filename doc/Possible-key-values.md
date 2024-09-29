@@ -119,7 +119,7 @@ Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
 `ole`, `ole_placeholder`,
 `meteg`, `meteg_placeholder`
 
-## Unexpected Keyboard specific
+## Keyboard behavior keys
 Value                  | Meaning
 :--------------------- | :------
 `config`               | Gear icon; opens Unexpected Keyboard settings.
@@ -148,3 +148,28 @@ These keys are known to do nothing.
 These keys are normally hidden unless the Fn modifier is activated.
 
 `f11_placeholder` | `f12_placeholder`
+
+## Complex keys
+
+More complex keys are of this form:
+
+```
+:<kind> <attributes>:<payload>
+```
+
+Where `<kind>` is one of the kinds documented below and `<attributes>` is a
+space separated list of attributes. `<payload>` depends on the `<kind>`.
+
+Attributes are:
+- `symbol='Sym'` is the symbol to be shown on the keyboard.
+- `flags='<flags>'` is a collection of flags that change the behavior of the key.
+  `<flags>` is a coma separated list of:
+  + `dim`: Make the symbol dimmer.
+  + `small`: Make the symbol smaller.
+
+### Kind `str`
+
+Defines a key that outputs an arbitrary string. `<payload>` is a string wrapped
+in single-quotes (`'`), escaping of other single quotes is allowed with `\'`.
+
+For example: `:str symbol='Sym':'Output string'`
