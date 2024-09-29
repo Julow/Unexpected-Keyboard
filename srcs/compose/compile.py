@@ -99,9 +99,12 @@ def strip_cstyle_comments(inp):
 
 # Parse from a json file containing a dictionary sequence → result string.
 def parse_sequences_file_json(fname):
-    with open(fname, "r") as inp:
-        seqs = json.loads(strip_cstyle_comments(inp))
-    return list(seqs.items())
+    try:
+        with open(fname, "r") as inp:
+            seqs = json.loads(strip_cstyle_comments(inp))
+        return list(seqs.items())
+    except Exception as e:
+        print("Failed parsing '%s': %s" % (fname, str(e)), file=sys.stderr)
 
 # Format of the sequences file is determined by its extension
 def parse_sequences_file(fname, xkb_char_extra_names={}):
