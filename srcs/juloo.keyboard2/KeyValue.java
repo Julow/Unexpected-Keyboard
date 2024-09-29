@@ -245,7 +245,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public KeyValue withFlags(int f)
   {
-    return new KeyValue(getString(), (_code & KIND_BITS), (_code & VALUE_BITS), f);
+    return new KeyValue(_payload, (_code & KIND_BITS), (_code & VALUE_BITS), f);
   }
 
   @Override
