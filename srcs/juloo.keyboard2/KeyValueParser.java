@@ -9,21 +9,7 @@ Parse a key definition. The syntax for a key definition is:
 - If [str] doesn't start with a [:] character, it is interpreted as an
   arbitrary string key.
 
-[(kind)] specifies the kind of the key, it can be:
-- [str]: An arbitrary string key. The payload is the string to output when
-  typed and is quoted by single quotes ([']). The payload can contain single
-  quotes if they are escaped with a backslash ([\']).
-
-The [(attributes)] part is a space-separated list of attributes, all optional,
-of the form: [attrname='attrvalue'].
-
-Attributes can be:
-- [flags]: Add flags that change the behavior of the key.
-  Value is a coma separated list of:
-  - [dim]: Make the symbol dimmer on the keyboard.
-  - [small]: Make the symbol smaller on the keyboard.
-- [symbol]: Specify the symbol that is rendered on the keyboard.
-  It can contain single quotes if they are escaped: ([\']).
+For the different kinds and attributes, see doc/Possible-key-values.md.
 
 Examples:
 - [:str flags=dim,small symbol='MyKey':'My arbitrary string'].
@@ -36,6 +22,7 @@ public final class KeyValueParser
   static Pattern ATTR_PAT;
   static Pattern QUOTED_PAT;
   static Pattern PAYLOAD_START_PAT;
+  static Pattern SINGLE_CHAR_PAT;
 
   static public KeyValue parse(String str) throws ParseError
   {
@@ -73,11 +60,14 @@ public final class KeyValueParser
     switch (kind)
     {
       case "str":
-        String payload = parseSingleQuotedString(m);
+        String str_payload = parseSingleQuotedString(m);
         if (symbol == null)
-          return KeyValue.makeStringKey(payload, flags);
-        return KeyValue.makeStringKeyWithSymbol(payload, symbol, flags);
+          return KeyValue.makeStringKey(str_payload, flags);
+        return KeyValue.makeStringKeyWithSymbol(str_payload, symbol, flags);
 
+      case "char":
+        char char_payload = parseOneChar(m);
+        return KeyValue.makeCharKey(char_payload, symbol, flags);
       default: break;
     }
     parseError("Unknown kind '"+kind+"'", m, 1);
@@ -89,6 +79,13 @@ public final class KeyValueParser
     if (!match(m, QUOTED_PAT))
       parseError("Expected quoted string", m);
     return m.group(1).replace("\\'", "'");
+  }
+
+  static char parseOneChar(Matcher m) throws ParseError
+  {
+    if (!match(m, SINGLE_CHAR_PAT))
+      parseError("Expected a character", m);
+    return m.group(0).charAt(0);
   }
 
   static int parseFlags(String s, Matcher m) throws ParseError
@@ -121,6 +118,7 @@ public final class KeyValueParser
     ATTR_PAT = Pattern.compile("\\s*(\\w+)\\s*=");
     QUOTED_PAT = Pattern.compile("'(([^'\\\\]+|\\\\')*)'");
     PAYLOAD_START_PAT = Pattern.compile("\\s*:");
+    SINGLE_CHAR_PAT = Pattern.compile(".");
   }
 
   static void parseError(String msg, Matcher m) throws ParseError

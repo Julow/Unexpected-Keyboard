@@ -161,8 +161,8 @@ Where `<kind>` is one of the kinds documented below and `<attributes>` is a
 space separated list of attributes. `<payload>` depends on the `<kind>`.
 
 Attributes are:
-- `symbol='Sym'` is the symbol to be shown on the keyboard.
-- `flags='<flags>'` is a collection of flags that change the behavior of the key.
+- `symbol='Sym'` specifies the symbol to be shown on the keyboard.
+- `flags='<flags>'` changes the behavior of the key.
   `<flags>` is a coma separated list of:
   + `dim`: Make the symbol dimmer.
   + `small`: Make the symbol smaller.
@@ -172,4 +172,18 @@ Attributes are:
 Defines a key that outputs an arbitrary string. `<payload>` is a string wrapped
 in single-quotes (`'`), escaping of other single quotes is allowed with `\'`.
 
-For example: `:str symbol='Sym':'Output string'`
+For example:
+- `:str:'Arbitrary string with a \' inside'`
+- `:str symbol='Symbol':'Output string'`
+
+### Kind `char`
+
+Defines a key that outputs a single character. `<payload>` is the character to
+output, unquoted.
+This kind of key can be used to define a character key with a different symbol
+on it. `char` keys can be modified by `ctrl` and other modifiers, unlike `str`
+keys.
+
+For example:
+- `:char symbol='q':љ`, which is used to implement `ctrl` shortcuts in cyrillic
+  layouts.

@@ -393,7 +393,14 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public static KeyValue makeCharKey(char c)
   {
-    return new KeyValue(String.valueOf(c), Kind.Char, c, 0);
+    return makeCharKey(c, null, 0);
+  }
+
+  public static KeyValue makeCharKey(char c, String symbol, int flags)
+  {
+    if (symbol == null)
+      symbol = String.valueOf(c);
+    return new KeyValue(symbol, Kind.Char, c, flags);
   }
 
   public static KeyValue makeComposePending(String symbol, int state, int flags)

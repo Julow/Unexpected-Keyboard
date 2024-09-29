@@ -10,7 +10,7 @@ public class KeyValueParserTest
   public KeyValueParserTest() {}
 
   @Test
-  public void parse() throws Exception
+  public void parseStr() throws Exception
   {
     Utils.parse(":str:'Foo'", KeyValue.makeStringKey("Foo"));
     Utils.parse(":str flags='dim':'Foo'", KeyValue.makeStringKey("Foo", KeyValue.FLAG_SECONDARY));
@@ -32,6 +32,13 @@ public class KeyValueParserTest
     Utils.expect_error(":str flags='' ");
     Utils.expect_error(":str flags='':");
     Utils.expect_error(":str flags='':'");
+  }
+
+  @Test
+  public void parseChar() throws Exception
+  {
+    Utils.parse(":char symbol='a':b", KeyValue.makeCharKey('b', "a", 0));
+    Utils.parse(":char:b", KeyValue.makeCharKey('b', "b", 0));
   }
 
   /** JUnit removes these functions from stacktraces. */
