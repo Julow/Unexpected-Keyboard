@@ -1,4 +1,11 @@
 {
+  // latin
   "a": "å",
-  "u": "ů"
+  "u": "ů",
+  "w": "ẘ", // no uppercase
+  "y": "ẙ", // no uppercase
+  // extended latin
+  "á": "ǻ",
+  // extra
+  "~": "⸛"
 }
