@@ -403,6 +403,11 @@ public final class KeyValue implements Comparable<KeyValue>
     return new KeyValue(symbol, Kind.Char, c, flags);
   }
 
+  public static KeyValue makeCharKey(int symbol, char c, int flags)
+  {
+    return makeCharKey(c, String.valueOf((char)symbol), flags | FLAG_KEY_FONT);
+  }
+
   public static KeyValue makeComposePending(String symbol, int state, int flags)
   {
     return new KeyValue(symbol, Kind.Compose_pending, state,
@@ -521,6 +526,27 @@ public final class KeyValue implements Comparable<KeyValue>
       case "box": return modifierKey("Box", Modifier.BOX, 0);
       case "fn": return modifierKey("Fn", Modifier.FN, 0);
       case "meta": return modifierKey("Meta", Modifier.META, 0);
+
+      /* Combining diacritics */
+      case "combining_dot_above": return makeCharKey(0xE15A, '\u0307', 0);
+      case "combining_double_aigu": return makeCharKey(0xE15B, '\u030B', 0);
+      case "combining_slash": return makeCharKey(0xE15C, '\u0337', 0);
+      case "combining_arrow_right": return makeCharKey(0xE15D, '\u20D7', 0);
+      case "combining_breve": return makeCharKey(0xE15E, '\u0306', 0);
+      case "combining_bar": return makeCharKey(0xE15F, '\u0335', 0);
+      case "combining_aigu": return makeCharKey(0xE150, '\u0301', 0);
+      case "combining_caron": return makeCharKey(0xE151, '\u030C', 0);
+      case "combining_cedille": return makeCharKey(0xE152, '\u0327', 0);
+      case "combining_circonflexe": return makeCharKey(0xE153, '\u0302', 0);
+      case "combining_grave": return makeCharKey(0xE154, '\u0300', 0);
+      case "combining_macron": return makeCharKey(0xE155, '\u0304', 0);
+      case "combining_ring": return makeCharKey(0xE156, '\u030A', 0);
+      case "combining_tilde": return makeCharKey(0xE157, '\u0303', 0);
+      case "combining_trema": return makeCharKey(0xE158, '\u0308', 0);
+      case "combining_ogonek": return makeCharKey(0xE159, '\u0328', 0);
+      case "combining_dot_below": return makeCharKey(0xE160, '\u0323', 0);
+      case "combining_horn": return makeCharKey(0xE161, '\u031B', 0);
+      case "combining_hook_above": return makeCharKey(0xE162, '\u0309', 0);
 
       /* Special event keys */
       case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);

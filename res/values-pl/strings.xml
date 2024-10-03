@@ -120,6 +120,7 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
   <string name="key_descr_clipboard">Zarządzanie schowkiem</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
   <string name="clipboard_history_heading">Ostatnio skopiowane elementy</string>
   <string name="clipboard_pin_heading">Przypięte</string>
   <string name="clipboard_remove_confirm">Usunąć ten element ze schowka?</string>

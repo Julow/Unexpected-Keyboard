@@ -121,6 +121,7 @@ PCキーボードでの半角入力を再現しています。日本語入力、
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
   <string name="key_descr_clipboard">クリップボード</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
   <string name="clipboard_history_heading">最近コピーしたテキスト</string>
   <string name="clipboard_pin_heading">お気に入り</string>
   <string name="clipboard_remove_confirm">クリップボードから削除しますか?</string>

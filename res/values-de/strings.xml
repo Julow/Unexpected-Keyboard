@@ -120,6 +120,7 @@ Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quell
   <string name="key_descr_home">Pos1</string>
   <string name="key_descr_end">Ende</string>
   <string name="key_descr_clipboard">Clipboard-Manager</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
   <string name="clipboard_history_heading">Zuletzt kopierter Text</string>
   <string name="clipboard_pin_heading">Angeheftet</string>
   <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
