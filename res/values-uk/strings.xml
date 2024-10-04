@@ -120,7 +120,7 @@
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
   <string name="key_descr_clipboard">Менеджер буфера обміну</string>
-  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
+  <string name="key_descr_combining">Комбінування діакритики</string>
   <string name="clipboard_history_heading">Нещодавно скопійований текст</string>
   <string name="clipboard_pin_heading">Закріплено</string>
   <string name="clipboard_remove_confirm">Видалити цей буфер обміну?</string>
