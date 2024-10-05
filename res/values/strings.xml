@@ -71,7 +71,9 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="pref_theme_e_monet">Monet (System)</string>
   <string name="pref_theme_e_monetlight">Monet (Light)</string>
   <string name="pref_theme_e_monetdark">Monet (Dark)</string>
-	<string name="pref_theme_e_pasteldarkblue">Pastel Dark (blue)</string>
+	<string name="pref_theme_e_pasteldark">Pastel Dark</string>
+	<string name="pref_theme_e_pastellight">Pastel light</string>
+	<string name="pref_theme_e_windowsphone">Windows Phone Style</string>
   <string name="pref_swipe_dist_e_very_short">Very short</string>
   <string name="pref_swipe_dist_e_short">Short</string>
   <string name="pref_swipe_dist_e_default">Normal</string>

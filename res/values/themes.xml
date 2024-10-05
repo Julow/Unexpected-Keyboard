@@ -203,7 +203,7 @@
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">@android:color/system_accent1_900</item>
   </style>
-	<style name="PastelDarkBlue" parent="@style/BaseTheme">
+	<style name="PastelDark" parent="@style/BaseTheme">
     <item name="android:isLightTheme">false</item>
     <item name="colorKeyboard">#333334</item>
     <item name="colorKey">#11111B</item>
@@ -220,5 +220,39 @@
     <item name="keyBorderColorBottom">#8AADF4</item>
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">#000000</item>
-  </style>
+</style>
+<style name="PastelLight" parent="@style/BaseTheme">
+		<item name="android:isLightTheme">true</item>
+		<item name="colorKeyboard">#E6E9EF</item>
+		<item name="colorKey">#DCE0E8</item>
+		<item name="colorKeyActivated">#EFF1F5</item>
+		<item name="colorLabel">#4C4F69</item>
+		<item name="colorLabelActivated">#9CA0B0</item>
+		<item name="colorLabelLocked">#437FF7</item>
+		<item name="colorSubLabel">#DEE5E3</item>
+		<item name="keyBorderWidth">1.0dip</item>
+		<item name="keyBorderWidthActivated">1.0dip</item>
+		<item name="keyBorderColorLeft">#9CA0B0</item>
+		<item name="keyBorderColorTop">#9CA0B0</item>
+		<item name="keyBorderColorRight">#9CA0B0</item>
+		<item name="keyBorderColorBottom">#9CA0B0</item>
+		<item name="emoji_button_bg">?colorKeyActivated</item>
+		<item name="emoji_color">#000000</item>
+	</style>
+	<style name="WindowsPhone" parent="BaseTheme">
+		<item name="android:isLightTheme">false</item>
+		<item name="colorKeyboard">#2B2B2C</item>
+		<item name="colorKey">#3C3C3C</item>
+		<item name="colorKeyActivated">#1A1A1A</item>
+		<item name="keyBorderRadius">0dp</item>
+		<item name="keyBorderWidth">0dp</item>
+		<item name="keyBorderWidthActivated">0dp</item>
+		<item name="keyBorderColorBottom">#404040</item>
+		<item name="colorLabel">#FFFFFF</item>
+		<item name="colorLabelActivated">#DDDDDD</item>
+		<item name="colorLabelLocked">#437FF7</item>
+		<item name="colorSubLabel">#CCCCCC</item>
+		<item name="emoji_button_bg" type="color">#2B2B2C</item>
+		<item name="emoji_color" type="color">#ffffff</item>
+	</style>
 </resources>
