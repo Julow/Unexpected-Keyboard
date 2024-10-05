@@ -20,6 +20,8 @@
     <item>cyrl_lynyertz_sr</item>
     <item>cyrl_ueishsht</item>
     <item>cyrl_yaverti</item>
+    <item>cyrl_yqukeng_tj</item>
+    <item>cyrl_yxukeng_os</item>
     <item>deva_alt</item>
     <item>deva_inscript</item>
     <item>grek_qwerty</item>
@@ -78,6 +80,8 @@
     <item>ЉЊЕРТЗ (Српски)</item>
     <item>УЕИШЩ (Български, БДС)</item>
     <item>ЯВЕРТЪ</item>
+    <item>Tajiki Persian (Тоҷикӣ)</item>
+    <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
     <item>QWERTY (Greek)</item>
@@ -136,6 +140,8 @@
     <item>@xml/cyrl_lynyertz_sr</item>
     <item>@xml/cyrl_ueishsht</item>
     <item>@xml/cyrl_yaverti</item>
+    <item>@xml/cyrl_yqukeng_tj</item>
+    <item>@xml/cyrl_yxukeng_os</item>
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
     <item>@xml/grek_qwerty</item>
