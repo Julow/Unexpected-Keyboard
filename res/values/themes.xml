@@ -205,12 +205,12 @@
   </style>
 	<style name="PastelDarkBlue" parent="@style/BaseTheme">
     <item name="android:isLightTheme">false</item>
-    <item name="colorKeyboard">#6C7086</item>
+    <item name="colorKeyboard">#333334</item>
     <item name="colorKey">#11111B</item>
-    <item name="colorKeyActivated">#00000A</item>
+    <item name="colorKeyActivated">#22222A</item>
     <item name="colorLabel">#CDD6F4</item>
-    <item name="colorLabelActivated">#BCC7F5</item>
-    <item name="colorLabelLocked">#DEE5E3</item>
+    <item name="colorLabelActivated">#ffffff</item>
+    <item name="colorLabelLocked">#8AADF4</item>
     <item name="colorSubLabel">#DEE5E3</item>
     <item name="keyBorderWidth">1.0dip</item>
     <item name="keyBorderWidthActivated">1.0dip</item>
