@@ -31,7 +31,9 @@
     <item>@string/pref_theme_e_monet</item>
     <item>@string/pref_theme_e_monetlight</item>
     <item>@string/pref_theme_e_monetdark</item>
-    <item>@string/pref_theme_e_pasteldarkblue</item>
+    <item>@string/pref_theme_e_pasteldark</item>
+	  <item>@string/pref_theme_e_pastellight</item>
+	  <item>@string/pref_theme_e_windowsphone</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
