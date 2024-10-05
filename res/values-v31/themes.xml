@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources> 
 	<style name="PastelDark" parent="@style/BaseTheme">
 		<item name="android:isLightTheme">false</item>
 		<item name="colorKeyboard">#333334</item>
@@ -36,4 +36,4 @@
 		<item name="emoji_button_bg">?colorKeyActivated</item>
 		<item name="emoji_color">android:color/system_accent1_900</item>
 	</style>
-</resource>
+</resources>
