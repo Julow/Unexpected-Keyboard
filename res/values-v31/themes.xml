@@ -19,7 +19,7 @@
 		<item name="emoji_color">android:color/system_accent1_50</item>
 	</style>
 	<style name="PastelLight" parent="@style/BaseTheme">
-		<item name="android:isLightTheme">true</item
+		<item name="android:isLightTheme">true</item>
 		<item name="colorKeyboard">#E6E9EF</item>
 		<item name="colorKey">android:color/system_accent1_50</item>
 		<item name="colorKeyActivated">android:color/system_accent1_100</item>
