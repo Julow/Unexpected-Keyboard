@@ -36,6 +36,15 @@ Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >
 # cyrl_yaverti
 Layout includes some ASCII punctuation but not all, missing: ~
 1 warnings
+# cyrl_yqukeng_tj
+Layout doesn't define some important keys, missing: loc esc, loc tab
+These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
+2 warnings
+# cyrl_yxukeng_os
+Layout includes some ASCII punctuation but not all, missing: ", #, $, &, ', @, [, ], ~
+Layout doesn't define some important keys, missing: loc esc, loc tab
+These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
+3 warnings
 # deva_alt
 Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
 Layout doesn't define some important keys, missing: loc esc, loc tab
