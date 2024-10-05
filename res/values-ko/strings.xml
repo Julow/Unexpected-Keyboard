@@ -120,6 +120,7 @@
   <string name="key_descr_home">홈</string>
   <string name="key_descr_end">종료</string>
   <string name="key_descr_clipboard">클립보드 관리자</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
   <string name="clipboard_history_heading">최근에 복사한 텍스트</string>
   <string name="clipboard_pin_heading">고정</string>
   <string name="clipboard_remove_confirm">이 클립보드를 제거하시겠습니까?</string>
