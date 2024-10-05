@@ -220,6 +220,7 @@
     <item name="keyBorderColorBottom">#8AADF4</item>
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">#000000</item>
+</style>
 <style name="PastelLightBlue" parent="@style/BaseTheme">
 		<item name="android:isLightTheme">true</item>
 		<item name="colorKeyboard">#E6E9EF</item>
@@ -254,6 +255,4 @@
 		<item name="emoji_button_bg" type="color">#2B2B2C</item>
 		<item name="emoji_color" type="color">#ffffff</item>
 	</style>
-
-  </style>
 </resources>
