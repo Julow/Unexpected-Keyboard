@@ -193,21 +193,22 @@ public final class KeyboardData
   /** Load a layout from a resource ID. Returns [null] on error. */
   public static KeyboardData load(Resources res, int id)
   {
-    KeyboardData l = _layoutCache.get(id);
-    if (l == null)
+    if (_layoutCache.containsKey(id))
+      return _layoutCache.get(id);
+    KeyboardData l = null;
+    XmlResourceParser parser = null;
+    try
     {
-      try
-      {
-        XmlResourceParser parser = res.getXml(id);
-        l = parse_keyboard(parser);
-        parser.close();
-        _layoutCache.put(id, l);
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
+      parser = res.getXml(id);
+      l = parse_keyboard(parser);
     }
+    catch (Exception e)
+    {
+      Logs.exn("Failed to load layout id " + id, e);
+    }
+    if (parser != null)
+      parser.close();
+    _layoutCache.put(id, l);
     return l;
   }
 

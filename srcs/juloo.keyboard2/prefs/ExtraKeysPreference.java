@@ -72,6 +72,33 @@ public class ExtraKeysPreference extends PreferenceCategory
     "f11_placeholder",
     "f12_placeholder",
     "menu",
+    "combining_dot_above",
+    "combining_double_aigu",
+    "combining_slash",
+    "combining_arrow_right",
+    "combining_breve",
+    "combining_bar",
+    "combining_aigu",
+    "combining_caron",
+    "combining_cedille",
+    "combining_circonflexe",
+    "combining_grave",
+    "combining_macron",
+    "combining_ring",
+    "combining_tilde",
+    "combining_trema",
+    "combining_ogonek",
+    "combining_dot_below",
+    "combining_horn",
+    "combining_hook_above",
+    "combining_vertical_tilde",
+    "combining_inverted_breve",
+    "combining_pokrytie",
+    "combining_slavonic_psili",
+    "combining_slavonic_dasia",
+    "combining_payerok",
+    "combining_titlo",
+    "combining_vzmet"
   };
 
   /** Whether an extra key is enabled by default. */
@@ -121,6 +148,36 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "ª": id = R.string.key_descr_ª; break;
       case "º": id = R.string.key_descr_º; break;
       case "switch_clipboard": id = R.string.key_descr_clipboard; break;
+
+      case "combining_dot_above":
+      case "combining_double_aigu":
+      case "combining_slash":
+      case "combining_arrow_right":
+      case "combining_breve":
+      case "combining_bar":
+      case "combining_aigu":
+      case "combining_caron":
+      case "combining_cedille":
+      case "combining_circonflexe":
+      case "combining_grave":
+      case "combining_macron":
+      case "combining_ring":
+      case "combining_tilde":
+      case "combining_trema":
+      case "combining_ogonek":
+      case "combining_dot_below":
+      case "combining_horn":
+      case "combining_hook_above":
+      case "combining_vertical_tilde":
+      case "combining_inverted_breve":
+      case "combining_pokrytie":
+      case "combining_slavonic_psili":
+      case "combining_slavonic_dasia":
+      case "combining_payerok":
+      case "combining_titlo":
+      case "combining_vzmet":
+        id = R.string.key_descr_combining;
+        break;
     }
     if (id == 0)
       return null;

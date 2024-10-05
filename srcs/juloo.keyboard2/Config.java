@@ -210,8 +210,7 @@ public final class Config
   KeyValue action_key()
   {
     // Update the name to avoid caching in KeyModifier
-    return (actionLabel == null) ? null :
-      KeyValue.getKeyByName("action").withSymbol(actionLabel);
+    return (actionLabel == null) ? null : KeyValue.makeActionKey(actionLabel);
   }
 
   /** Update the layout according to the configuration.
