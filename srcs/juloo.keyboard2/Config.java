@@ -417,7 +417,9 @@ public final class Config
       case "jungle": return R.style.Jungle;
       case "monetlight": return R.style.MonetLight;
       case "monetdark": return R.style.MonetDark;
-			 case "pasteldarkblue" : return R.style.PastelDarkBlue;
+			 case "pasteldark" : return R.style.PastelDark;
+case "pastellight" : return R.style.PastelLight;
+case "windowsphone" : return R.style.WindowsPhone;
       case "monet":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
           return R.style.MonetLight;
