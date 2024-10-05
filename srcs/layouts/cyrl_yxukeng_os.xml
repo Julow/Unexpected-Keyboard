@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)" script="cyrillic">
   <row>
-    <key key0="й" key7="ё" key4="delete" />
-    <key key0="ѯ" key7="ѱ" key8="ц" />
-    <key key0="у" key7="ꙋ" key8="ѵ" />
+    <key key0="й" key7="esc" key4="delete" />
+    <key key0="ѯ" key7="=" key8="+" />
+    <key key0="у" key8="ѵ" key7="!" />
     <key key0="к" key7="%" key8="*" />
-    <key key0="е" key7="̈" key8="!" />
-    <key key0="н" key7="҃" key8="="/>
-    <key key0="г" key7="꙽" key8="+" />
-    <key key0="ш" key7="꙯" key8="щ" />
-    <key key0="ѫ" key7="ѭ" key8="ѧ" />
-    <key key0="з" key7="ѕ" key8="ꙁ" />
-    <key key0="х" key7="ҁ" key3="backspace" key1="f11_placeholder" key4="f12_placeholder"/>
+    <key key0="е" key7="ё" key8="combining_trema" />
+    <key key0="н" key7="ѩ" key8="combining_titlo" />
+    <key key0="г" key7="^" key8="combining_payerok" />
+    <key key0="ш" key7="щ" key8="combining_vzmet" />
+    <key key0="ѳ" key3="combining_slavonic_dasia" key2="combining_slavonic_psili" />
+    <key key0="з" key3="combining_grave" key2="combining_aigu" />
+    <key key0="х" key7="ҁ" key3="backspace" />
   </row>
   <row>
-    <key key0="ф" key7="esc" key4="tab" />
-    <key key0="ꙉ" key7="^" key8="ꙃ" />
-    <key key0="в" key7="ꙑ" key8="ъ" />
-    <key key0="а" key7="ꙝ" key8="ꙙ" />
-    <key key0="п" key7="̀" key4="́" />
-    <key key0="р" key7="҅" key4="҆" />
-    <key key0="о" key7="ѡ" key8="ꙍ"/>
-    <key key0="л" key3="&lt;" key2="&gt;" />
-    <key key0="д" key3="(" key2=")" />
-    <key key0="ж" key3="{" key2="}" />
-    <key key0="э" key3="є" key7="/" />
+    <key key0="ф" key7="1" key4="tab" />
+    <key key0="ꙉ" key7="2" key8="ъ" />
+    <key key0="в" key7="3" key8="ꙑ" />
+    <key key0="а" key7="4" key8="ь" />
+    <key key0="п" key7="5" />
+    <key key0="р" key7="6" />
+    <key key0="о" key7="7" key8="ѡ" />
+    <key key0="л" key7="8" />
+    <key key0="д" key7="9" key8="f11_placeholder" />
+    <key key0="ж" key7="0" key8="f12_placeholder" />
+    <key key0="э" key7="/" key8="|" />
   </row>
   <row>
     <key width="1.18" key0="shift" />
-    <key width="0.96" key0="ꙗ" key7="̆" key8=";" />
-    <key width="0.96" key0="ч" key7="҇" key8=":" />
-    <key width="0.96" key0="с" key7="̑" key8="`" />
-    <key width="0.96" key0="м" key7="\?" key8="\\" />
-    <key width="0.96" key0="и" key8="|" key7="і" />
-    <key width="0.96" key0="т" key7="ѳ" key8="ѿ" />
-    <key width="0.96" key0="ѥ" key7="ѻ" key8="ѩ" />
-    <key width="0.96" key0="б" key7="ь" key8="ѣ" />
-    <key width="0.96" key0="ю" key7="̾" key8="-" />
+    <key width="0.96" key0="ꙗ" key7="combining_breve" key8=";" />
+    <key width="0.96" key0="ч" key7="combining_pokrytie" key8=":" />
+    <key width="0.96" key0="с" key7="combining_inverted_breve" key8="`" />
+    <key width="0.96" key0="м" key7="ѭ" />
+    <key width="0.96" key0="и" key7="combining_vertical_tilde" key8="-" />
+    <key width="0.96" key0="т" key7="\?" key8="\\" />
+    <key width="0.96" key0="ц" key3="&lt;" key2="&gt;" />
+    <key width="0.96" key0="б" key3="(" key2=")" />
+    <key width="0.96" key0="ю" key3="{" key2="}" />
     <key width="1.18" key0="." key7="," key8="_" />
   </row>
 </keyboard>

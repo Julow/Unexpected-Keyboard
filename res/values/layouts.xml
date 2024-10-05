@@ -20,6 +20,8 @@
     <item>cyrl_lynyertz_sr</item>
     <item>cyrl_ueishsht</item>
     <item>cyrl_yaverti</item>
+    <item>cyrl_yqukeng_tj</item>
+    <item>cyrl_yxukeng_os</item>
     <item>deva_alt</item>
     <item>deva_inscript</item>
     <item>grek_qwerty</item>
@@ -56,8 +58,6 @@
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
     <item>shaw_imperial_en</item>
-    <item>slavonic</item>
-    <item>tajiki</item>
     <item>urdu_phonetic_ur</item>
     <item>custom</item>
   </string-array>
@@ -80,6 +80,8 @@
     <item>ЉЊЕРТЗ (Српски)</item>
     <item>УЕИШЩ (Български, БДС)</item>
     <item>ЯВЕРТЪ</item>
+    <item>Tajiki Persian (Тоҷикӣ)</item>
+    <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
     <item>QWERTY (Greek)</item>
@@ -116,8 +118,6 @@
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
     <item>Shaw Imperial</item>
-    <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
-    <item>Tajiki Persian (Тоҷикӣ)</item>
     <item>Urdu Phonetic</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
@@ -140,6 +140,8 @@
     <item>@xml/cyrl_lynyertz_sr</item>
     <item>@xml/cyrl_ueishsht</item>
     <item>@xml/cyrl_yaverti</item>
+    <item>@xml/cyrl_yqukeng_tj</item>
+    <item>@xml/cyrl_yxukeng_os</item>
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
     <item>@xml/grek_qwerty</item>
@@ -176,8 +178,6 @@
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
     <item>@xml/shaw_imperial_en</item>
-    <item>@xml/slavonic</item>
-    <item>@xml/tajiki</item>
     <item>@xml/urdu_phonetic_ur</item>
     <item>-1</item>
   </integer-array>
