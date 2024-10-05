@@ -203,7 +203,7 @@
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">@android:color/system_accent1_900</item>
   </style>
-	<style name="PastelDarkBlue" parent="@style/BaseTheme">
+	<style name="PastelDark" parent="@style/BaseTheme">
     <item name="android:isLightTheme">false</item>
     <item name="colorKeyboard">#333334</item>
     <item name="colorKey">#11111B</item>
@@ -221,7 +221,7 @@
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">#000000</item>
 </style>
-<style name="PastelLightBlue" parent="@style/BaseTheme">
+<style name="PastelLight" parent="@style/BaseTheme">
 		<item name="android:isLightTheme">true</item>
 		<item name="colorKeyboard">#E6E9EF</item>
 		<item name="colorKey">#DCE0E8</item>
