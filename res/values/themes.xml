@@ -212,8 +212,8 @@
     <item name="colorLabelActivated">#ffffff</item>
     <item name="colorLabelLocked">#8AADF4</item>
     <item name="colorSubLabel">#DEE5E3</item>
-    <item name="keyBorderWidth">1.0dip</item>
-    <item name="keyBorderWidthActivated">1.0dip</item>
+    <item name="keyBorderWidth">0dip</item>
+    <item name="keyBorderWidthActivated">0dip</item>
     <item name="keyBorderColorLeft">#8AADF4</item>
     <item name="keyBorderColorTop">#8AADF4</item>
     <item name="keyBorderColorRight">#8AADF4</item>
@@ -229,9 +229,9 @@
 		<item name="colorLabel">#4C4F69</item>
 		<item name="colorLabelActivated">#9CA0B0</item>
 		<item name="colorLabelLocked">#437FF7</item>
-		<item name="colorSubLabel">#DEE5E3</item>
-		<item name="keyBorderWidth">1.0dip</item>
-		<item name="keyBorderWidthActivated">1.0dip</item>
+		<item name="colorSubLabel">#EFF1F5</item>
+		<item name="keyBorderWidth">0dip</item>
+		<item name="keyBorderWidthActivated">0dip</item>
 		<item name="keyBorderColorLeft">#9CA0B0</item>
 		<item name="keyBorderColorTop">#9CA0B0</item>
 		<item name="keyBorderColorRight">#9CA0B0</item>
