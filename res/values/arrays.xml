@@ -48,7 +48,9 @@
     <item>monet</item>
     <item>monetlight</item>
     <item>monetdark</item>
-		<item>pasteldarkblue</item>
+		<item>pasteldark</item>
+		<item>pastellight</item>
+		<item>windowsphone</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
