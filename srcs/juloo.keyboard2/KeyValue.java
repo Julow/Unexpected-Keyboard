@@ -528,6 +528,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "meta": return modifierKey("Meta", Modifier.META, 0);
 
       /* Combining diacritics */
+      /* Glyphs is the corresponding dead-key + 0x0100. */
       case "combining_dot_above": return makeCharKey(0xE15A, '\u0307', 0);
       case "combining_double_aigu": return makeCharKey(0xE15B, '\u030B', 0);
       case "combining_slash": return makeCharKey(0xE15C, '\u0337', 0);
@@ -547,6 +548,16 @@ public final class KeyValue implements Comparable<KeyValue>
       case "combining_dot_below": return makeCharKey(0xE160, '\u0323', 0);
       case "combining_horn": return makeCharKey(0xE161, '\u031B', 0);
       case "combining_hook_above": return makeCharKey(0xE162, '\u0309', 0);
+      /* Combining diacritics that do not have a corresponding dead keys start
+         at 0xE200. */
+      case "combining_vertical_tilde": return makeCharKey(0xE200, '\u033E', 0);
+      case "combining_inverted_breve": return makeCharKey(0xE201, '\u0311', 0);
+      case "combining_pokrytie": return makeCharKey(0xE202, '\u0487', 0);
+      case "combining_slavonic_psili": return makeCharKey(0xE203, '\u0486', 0);
+      case "combining_slavonic_dasia": return makeCharKey(0xE204, '\u0485', 0);
+      case "combining_payerok": return makeCharKey(0xE205, '\uA67D', 0);
+      case "combining_titlo": return makeCharKey(0xE206, '\u0483', 0);
+      case "combining_vzmet": return makeCharKey(0xE207, '\uA66F', 0);
 
       /* Special event keys */
       case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
