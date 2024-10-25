@@ -71,6 +71,7 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="pref_theme_e_monet">Monē (sistēmas)</string>
   <string name="pref_theme_e_monetlight">Monē (gaišs)</string>
   <string name="pref_theme_e_monetdark">Monē (tumšs)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Ļoti tuvs</string>
   <string name="pref_swipe_dist_e_short">Tuvs</string>
   <string name="pref_swipe_dist_e_default">Vidējs</string>

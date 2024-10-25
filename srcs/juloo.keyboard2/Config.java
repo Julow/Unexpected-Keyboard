@@ -421,6 +421,7 @@ public final class Config
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
           return R.style.MonetLight;
         return R.style.MonetDark;
+      case "rosepine": return R.style.RosePine;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)

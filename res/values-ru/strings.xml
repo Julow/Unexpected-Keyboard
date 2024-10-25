@@ -71,6 +71,7 @@
   <string name="pref_theme_e_monet">Моне (системная)</string>
   <string name="pref_theme_e_monetlight">Моне (светлая)</string>
   <string name="pref_theme_e_monetdark">Моне (темная)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Очень короткая</string>
   <string name="pref_swipe_dist_e_short">Короткая</string>
   <string name="pref_swipe_dist_e_default">Обычная</string>

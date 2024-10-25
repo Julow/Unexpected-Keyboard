@@ -71,6 +71,7 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="pref_theme_e_monet">Monet (Système)</string>
   <string name="pref_theme_e_monetlight">Monet (Clair)</string>
   <string name="pref_theme_e_monetdark">Monet (Sombre)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Très courte</string>
   <string name="pref_swipe_dist_e_short">Courte</string>
   <string name="pref_swipe_dist_e_default">Normale</string>

@@ -72,6 +72,7 @@ PCキーボードでの半角入力を再現しています。日本語入力、
   <string name="pref_theme_e_monet">Monet (システム)</string>
   <string name="pref_theme_e_monetlight">Monet (ライト)</string>
   <string name="pref_theme_e_monetdark">Monet (ダーク)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">短い</string>
   <string name="pref_swipe_dist_e_short">やや短い</string>
   <string name="pref_swipe_dist_e_default">普通</string>
