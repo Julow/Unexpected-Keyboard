@@ -71,6 +71,7 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="pref_theme_e_monet">Monet (de sistema)</string>
   <string name="pref_theme_e_monetlight">Monet (claro)</string>
   <string name="pref_theme_e_monetdark">Monet (oscuro)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Muy corta</string>
   <string name="pref_swipe_dist_e_short">Corta</string>
   <string name="pref_swipe_dist_e_default">Normal</string>

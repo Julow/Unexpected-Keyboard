@@ -71,6 +71,7 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="pref_theme_e_monet">Monet (dle systému)</string>
   <string name="pref_theme_e_monetlight">Monet (Světlý)</string>
   <string name="pref_theme_e_monetdark">Monet (Tmavý)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Velmi krátká</string>
   <string name="pref_swipe_dist_e_short">Krátká</string>
   <string name="pref_swipe_dist_e_default">Běžná</string>
