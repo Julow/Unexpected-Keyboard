@@ -301,10 +301,10 @@ public final class Config
     });
     if (show_numpad)
       kw = kw.addNumPad(modify_numpad(num_pad, kw));
-    if (added_number_row != null)
-      kw = kw.insert_row(added_number_row, 0);
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.entrySet().iterator());
+    if (added_number_row != null)
+      kw = kw.insert_row(added_number_row, 0);
     return kw;
   }
 
