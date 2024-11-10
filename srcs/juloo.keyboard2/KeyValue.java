@@ -574,7 +574,6 @@ public final class KeyValue implements Comparable<KeyValue>
       case "change_method_prev": return eventKey(0xE009, Event.CHANGE_METHOD_AUTO, FLAG_SMALLER_FONT);
       case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
       case "capslock": return eventKey(0xE012, Event.CAPS_LOCK, 0);
-      case "scrollLock": return eventKey("Scrl", KeyEvent.KEYCODE_SCROLL_LOCK, 0);
       case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
       case "voice_typing_chooser": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING_CHOOSER, FLAG_SMALLER_FONT);
 
@@ -606,6 +605,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "f12": return keyeventKey("F12", KeyEvent.KEYCODE_F12, FLAG_SMALLER_FONT);
       case "tab": return keyeventKey(0xE00F, KeyEvent.KEYCODE_TAB, FLAG_SMALLER_FONT);
       case "menu": return keyeventKey("Menu", KeyEvent.KEYCODE_MENU, FLAG_SMALLER_FONT);
+      case "scrollLock": return keyeventKey("Scrl", KeyEvent.KEYCODE_SCROLL_LOCK, FLAG_SMALLER_FONT);
 
       /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
