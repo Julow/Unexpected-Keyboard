@@ -72,6 +72,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "f11_placeholder",
     "f12_placeholder",
     "menu",
+    "scroll_lock",
     "combining_dot_above",
     "combining_double_aigu",
     "combining_slash",
