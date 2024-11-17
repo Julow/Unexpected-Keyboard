@@ -110,7 +110,7 @@ public final class Pointers implements Handler.Callback
       if (latched)
         add_fake_pointer(key, kv, lock);
     }
-    else if ((ptr.flags & FLAG_P_FAKE) != 0)
+    else if ((ptr.flags & FLAG_P_FAKE) == 0)
     {} // Key already latched but not by a fake ptr, do nothing.
     else if (lock)
     {
