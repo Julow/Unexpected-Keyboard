@@ -60,10 +60,10 @@ public final class KeyEventHandler
   {
     if (key == null)
       return;
+    // Stop auto capitalisation when pressing some keys
     switch (key.getKind())
     {
       case Modifier:
-        // Stop auto capitalisation when activating a system modifier
         switch (key.getModifier())
         {
           case CTRL:
@@ -72,6 +72,9 @@ public final class KeyEventHandler
             _autocap.stop();
             break;
         }
+        break;
+      case Compose_pending:
+        _autocap.stop();
         break;
       default: break;
     }
