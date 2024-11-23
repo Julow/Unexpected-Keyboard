@@ -220,8 +220,8 @@
   // Arabic
   ":": "zwnj",
   "ل": "ڵ",
-  "\u064F": "ۆ", // combining_fatha
-  "\u064E": "ێ", // combining_dammah
+  "\u064F": "ۆ", // combining_dammah
+  "\u0650": "ێ", // combining_kasra
   "ر": "ڕ",
   "ب": "ٮ",
   "ه": "ھ",
@@ -246,7 +246,6 @@
   "ة": "combining_fatha",
   "إ": "combining_hamza_below",
   "ۆ": "combining_arabic_v",
-  "ێ": "combining_arabic_v",
   "س": "ـ",
   "ف": "ڤ",
   "ن": "ں"
