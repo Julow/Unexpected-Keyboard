@@ -558,6 +558,20 @@ public final class KeyValue implements Comparable<KeyValue>
       case "combining_payerok": return makeCharKey(0xE205, '\uA67D', 0);
       case "combining_titlo": return makeCharKey(0xE206, '\u0483', 0);
       case "combining_vzmet": return makeCharKey(0xE207, '\uA66F', 0);
+      case "combining_arabic_v": return makeCharKey(0xE208, '\u065A', 0);
+      case "combining_arabic_inverted_v": return makeCharKey(0xE209, '\u065B', 0);
+      case "combining_shaddah": return makeCharKey(0xE210, '\u0651', 0);
+      case "combining_sukun": return makeCharKey(0xE211, '\u0652', 0);
+      case "combining_fatha": return makeCharKey(0xE212, '\u064E', 0);
+      case "combining_dammah": return makeCharKey(0xE213, '\u064F', 0);
+      case "combining_kasra": return makeCharKey(0xE214, '\u0650', 0);
+      case "combining_hamza_above": return makeCharKey(0xE215, '\u0654', 0);
+      case "combining_hamza_below": return makeCharKey(0xE216, '\u0655', 0);
+      case "combining_alef_above": return makeCharKey(0xE217, '\u0670', 0);
+      case "combining_fathatan": return makeCharKey(0xE218, '\u064B', 0);
+      case "combining_kasratan": return makeCharKey(0xE219, '\u064D', 0);
+      case "combining_dammatan": return makeCharKey(0xE220, '\u064C', 0);
+      case "combining_alef_below": return makeCharKey(0xE221, '\u0656', 0);
 
       /* Special event keys */
       case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
