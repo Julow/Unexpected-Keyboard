@@ -2,133 +2,133 @@
   "ا": {
     "ا": "combining_alef_above",
     "ع": "أ",
-      "و": "ۉ",
-      "ي": "ؽ",
-      "ی": "ؽ",
-      "۷": "combining_alef_below",
+    "و": "ۉ",
+    "ي": "ؽ",
+    "ی": "ؽ",
+    "۷": "combining_alef_below",
     "٧": "combining_alef_below"
   },
-    "ت": {
-      "د": "ط",
-      "ر": "ڑ",
-      "ش": "ث",
-      "ن": "ٹ"
-    },
-    "ج": {
-      "ش": "چ"
-    },
-    "ح": {
-      "ح": "combining_sukun"
-    },
-    "د": {
-      "ت": "ڈ",
-      "ز": "ذ",
-      "ت": "ڑ",
-      "۷": "ڕ"
-    },
-    "س": {
-      "ش": "ص"
-    },
-    "ش": {
-      "ت": "ث"
-    },
-    "ع": {
-      "ا": "إ",
-      "ه": "ۀ",
-      "و": "ؤ",
-      "ي": "ئ",
-      "ی": "ئ",
-      "۷": "combining_hamza_below",
-      "۸": "combining_hamza_above",
+  "ت": {
+    "د": "ط",
+    "ر": "ڑ",
+    "ش": "ث",
+    "ن": "ٹ"
+  },
+  "ج": {
+    "ش": "چ"
+  },
+  "ح": {
+    "ح": "combining_sukun"
+  },
+  "د": {
+    "ت": "ڈ",
+    "ز": "ذ",
+    "ت": "ڑ",
+    "۷": "ڕ"
+  },
+  "س": {
+    "ش": "ص"
+  },
+  "ش": {
+    "ت": "ث"
+  },
+  "ع": {
+    "ا": "إ",
+    "ه": "ۀ",
+    "و": "ؤ",
+    "ي": "ئ",
+    "ی": "ئ",
+    "۷": "combining_hamza_below",
+    "۸": "combining_hamza_above",
     "٧": "combining_hamza_below",
     "٨": "combining_hamza_above"
-    },
-    "غ": {
-      "ك": "گ",
-      "ک": "گ"
-    },
-    "ف": {
-      "و": "ڡ"
-    },
-    "ق": {
-      "و": "ۊ"
-    },
-    "ل": {
-      "ل": "combining_shaddah",
-      "۷": "ڵ",
-      "٧": "ڵ"
-    },
-    "ن": {
-      "ت": "ٹ",
-      "ه": "combining_fathatan",
-      "و": "combining_dammatan",
-      "ی": "combining_kasratan",
-      "ي": "combining_kasratan"
-    },
-    "ه": {
-      " ": "ە",
-      "ت": "ة",
-      "ع": "ۀ",
-      "ن": "combining_fathatan",
-      "ه": "combining_fatha",
-      "و": "ۆ",
-      "ي": "ێ",
-      "ی": "ێ"
-    },
-    "و": {
-      "ث": "ۋ",
-      "ع": "ؤ",
-      "ف": "ڡ",
-      "ن": "combining_dammatan",
-      "و": "combining_dammah",
-      "۷": "ۆ",
-      "۸": "ۉ",
-      "۸": "ۉ",
+  },
+  "غ": {
+    "ك": "گ",
+    "ک": "گ"
+  },
+  "ف": {
+    "و": "ڡ"
+  },
+  "ق": {
+    "و": "ۊ"
+  },
+  "ل": {
+    "ل": "combining_shaddah",
+    "۷": "ڵ",
+    "٧": "ڵ"
+  },
+  "ن": {
+    "ت": "ٹ",
+    "ه": "combining_fathatan",
+    "و": "combining_dammatan",
+    "ی": "combining_kasratan",
+    "ي": "combining_kasratan"
+  },
+  "ه": {
+    " ": "ە",
+    "ت": "ة",
+    "ع": "ۀ",
+    "ن": "combining_fathatan",
+    "ه": "combining_fatha",
+    "و": "ۆ",
+    "ي": "ێ",
+    "ی": "ێ"
+  },
+  "و": {
+    "ث": "ۋ",
+    "ع": "ؤ",
+    "ف": "ڡ",
+    "ن": "combining_dammatan",
+    "و": "combining_dammah",
+    "۷": "ۆ",
+    "۸": "ۉ",
+    "۸": "ۉ",
     "٧": "ۆ",
     "٨": "ۉ",
     "٨": "ۉ"
-    },
-    "ي": {
-      " ": "ے",
-      "ا": "ى",
-      "ع": "ئ",
-      "ي": "combining_kasra",
-      "۷": "ێ",
-      "۸": "ؽ",
-      "ن": "combining_kasratan",
+  },
+  "ي": {
+    " ": "ے",
+    "ا": "ى",
+    "ع": "ئ",
+    "ي": "combining_kasra",
+    "۷": "ێ",
+    "۸": "ؽ",
+    "ن": "combining_kasratan",
     "٧": "ێ",
     "٨": "ؽ"
-    },
-    "ی": {
-      " ": "ے",
-      "ا": "ى",
-      "ع": "ئ",
-      "ن": "combining_kasratan",
-      "ی": "combining_kasra",
-      "۷": "ێ",
-      "۸": "ؽ",
+  },
+  "ی": {
+    " ": "ے",
+    "ا": "ى",
+    "ع": "ئ",
+    "ن": "combining_kasratan",
+    "ی": "combining_kasra",
+    "۷": "ێ",
+    "۸": "ؽ",
     "٧": "ێ",
     "٨": "ؽ"
-    },
-    "۷": {
-      "ا": "combining_alef_below",
-      "ر": "ڕ",
-      "ع": "combining_hamza_below",
-      "ل": "ڵ",
-      "و": "ۆ",
-      "ي": "ێ",
-      "ی": "ێ",
-      "۷": "combining_arabic_v"
-    },
-    "۸": {
-      "ع": "combining_hamza_above",
-      "و": "ۉ",
-      "و": "ۉ",
-      "ي": "ؽ",
-      "ی": "ؽ",
-      "۸": "combining_arabic_inverted_v"
-    },
-    "٧": {
+  },
+  "۷": {
+    "ا": "combining_alef_below",
+    "ر": "ڕ",
+    "ع": "combining_hamza_below",
+    "ل": "ڵ",
+    "و": "ۆ",
+    "ي": "ێ",
+    "ی": "ێ",
+    "۷": "combining_arabic_v"
+  },
+  "۸": {
+    "ع": "combining_hamza_above",
+    "و": "ۉ",
+    "و": "ۉ",
+    "ي": "ؽ",
+    "ی": "ؽ",
+    "۸": "combining_arabic_inverted_v"
+  },
+  "٧": {
     "ا": "combining_alef_below",
     "ر": "ڕ",
     "ع": "combining_hamza_below",
@@ -137,13 +137,13 @@
     "ي": "ێ",
     "٧": "combining_arabic_v",
     "ی": "ێ"
-    },
-    "٨": {
+  },
+  "٨": {
     "ع": "combining_hamza_above",
     "و": "ۉ",
     "و": "ۉ",
     "ي": "ؽ",
     "٨": "combining_arabic_inverted_v",
     "ی": "ؽ"
-    }
+  }
 }
