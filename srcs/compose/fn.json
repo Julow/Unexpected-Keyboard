@@ -218,6 +218,7 @@
   "ӈ": "ԩ",
 
   // Arabic
+  ":": "zwnj",
   "ل": "ڵ",
   "\u064F": "ۆ", // combining_fatha
   "\u064E": "ێ", // combining_dammah
