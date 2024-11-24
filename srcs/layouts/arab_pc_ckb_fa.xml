@@ -24,7 +24,7 @@
     <key key0="ن" key7="٨" key8="-" />
     <key key0="م" key7="٩" key8="=" />
     <key key0="ک" key7="٠" key8="ك" />
-    <key key0="گ" key7="tab" key3="f11_placeholder" />
+    <key key0="گ" key7="tab" />
   </row>
   <row>
     <key key0="ڕ" key7="&#1563;" />
@@ -37,6 +37,6 @@
     <key key0="و" key7="ۉ" />
     <key key0="ێ" key7="ٕ" />
     <key key0="ئ" key7="ء" />
-    <key key0="چ" key1="f12_placeholder" />
+    <key key0="چ" />
   </row>
 </keyboard>
