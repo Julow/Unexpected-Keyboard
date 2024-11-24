@@ -10,9 +10,8 @@ KNOWN_NOT_LAYOUT = set([
     "clipboard_bottom_row" ])
 
 KEY_ATTRIBUTES = set([
-    "key0",
-    "key1", "key2", "key3", "key4", "key5", "key6", "key7", "key8",
-    "nw", "ne", "sw", "se", "w", "e", "n", "s"
+    "key0", "key1", "key2", "key3", "key4", "key5", "key6", "key7", "key8",
+    "c", "nw", "ne", "sw", "se", "w", "e", "n", "s"
     ])
 
 def warn(msg):

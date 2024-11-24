@@ -473,7 +473,7 @@ public final class KeyboardData
     {
       KeyValue[] ks = new KeyValue[9];
       int keysflags = 0;
-      keysflags |= parse_key_attr(parser, parser.getAttributeValue(null, "key0"), ks, 0);
+      keysflags |= parse_key_attr(parser, get_key_attr(parser, "key0", "c"), ks, 0);
       /* Swipe gestures (key1-key8 diagram above), with compass-point synonyms. */
       keysflags |= parse_key_attr(parser, get_key_attr(parser, "key1", "nw"), ks, 1);
       keysflags |= parse_key_attr(parser, get_key_attr(parser, "key2", "ne"), ks, 2);
