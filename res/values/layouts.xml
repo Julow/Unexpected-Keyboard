@@ -10,6 +10,7 @@
     <item>arab_hamvaj_tly</item>
     <item>arab_pc</item>
     <item>arab_pc_ckb</item>
+    <item>arab_pc_ckb_fa</item>
     <item>arab_pc_hindu</item>
     <item>arab_pc_ir</item>
     <item>armenian_ph_am</item>
@@ -69,7 +70,8 @@
     <item>Arabic Alt</item>
     <item>Talysh (تالشی همواج)</item>
     <item>Arabic PC</item>
-    <item>Kurdish (کوردی)</item>
+    <item>Kurdish (کوردی) QWERTY</item>
+    <item>Central Kurdish (سۆرانی) Persian Layout</item>
     <item>Arabic PC (Hindu numerals)</item>
     <item>Persian PC</item>
     <item>Armenian</item>
@@ -130,6 +132,7 @@
     <item>@xml/arab_hamvaj_tly</item>
     <item>@xml/arab_pc</item>
     <item>@xml/arab_pc_ckb</item>
+    <item>@xml/arab_pc_ckb_fa</item>
     <item>@xml/arab_pc_hindu</item>
     <item>@xml/arab_pc_ir</item>
     <item>@xml/armenian_ph_am</item>

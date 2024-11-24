@@ -9,8 +9,13 @@ Layout doesn't define some important keys, missing: loc esc
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
 # arab_pc_ckb
-Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ., :, ;, <, =, >, ?, `, |, ~
+Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ;, <, =, >, ?, `, |, ~
 1 warnings
+# arab_pc_ckb_fa
+Layout includes some ASCII punctuation but not all, missing: ", #, $, %, &, ', ,, /, ;, ?, @, \, ^, `, |, ~
+Layout doesn't define some important keys, missing: loc esc, loc tab
+These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
+3 warnings
 # arab_pc_hindu
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
