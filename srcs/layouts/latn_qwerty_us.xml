@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This file defines the QWERTY layout.
+<!-- This file defines the QWERTY (US) layout.
 
-A layout is made of keys arranged into rows. Keys can be made bigger with the
-'width' attribute and blank space can be added on the left of a key with the
-'shift' attribute.
+A layout is made of keys arranged into rows. Each keys can be assigned several
+symbols.
+'key0' assigns the symbol on the middle of the key. 'nw', 'ne', etc.. assign
+symbols to the corners of a key, they are arranged following the cardinal
+directions:
 
-'key0' assigns the symbol on the middle of the key. 'key1', 'key2', etc..
-assign symbols to the corners of a key, they are arranged like this:
+   nw   n   ne
+   w   key0  e
+   sw   s   se
 
-  1 7 2
-  5 0 6
-  3 8 4
-
-Keys prefixed with 'loc ' are not visible on the keyboard. They are used to
+Symbols prefixed with 'loc ' are not visible on the keyboard. They are used to
 specify a place for a key, if it needed to be added to the layout later.
 (for example, by the "Add keys to keyboard" option)
 
-See bottom_row.xml for the definition of the bottom row and neo2.xml for a
-layout that re-defines it.
-See srcs/juloo.keyboard2/KeyValue.java for the keys that have a special meaning.
+Keys can be made bigger with the 'width' attribute and blank space can be added
+on the left of a key with the 'shift' attribute.
+
+See res/xml/bottom_row.xml for the definition of the bottom row and
+doc/Possible-key-values.md for the keys that have a special meaning.
 -->
 <keyboard name="QWERTY (US)" script="latin">
   <row>
-    <key key0="q" key2="1" key4="loc esc"/>
-    <key key0="w" key1="~" key2="2" key3="\@"/>
-    <key key0="e" key1="!" key2="3" key3="\#" key4="loc €"/>
-    <key key0="r" key2="4" key3="$"/>
-    <key key0="t" key2="5" key3="%"/>
-    <key key0="y" key2="6" key3="^"/>
-    <key key0="u" key2="7" key3="&amp;"/>
-    <key key0="i" key2="8" key3="*"/>
-    <key key0="o" key2="9" key3="(" key4=")"/>
-    <key key0="p" key2="0"/>
+    <key key0="q" ne="1" se="loc esc"/>
+    <key key0="w" nw="~" ne="2" sw="\@"/>
+    <key key0="e" nw="!" ne="3" sw="\#" se="loc €"/>
+    <key key0="r" ne="4" sw="$"/>
+    <key key0="t" ne="5" sw="%"/>
+    <key key0="y" ne="6" sw="^"/>
+    <key key0="u" ne="7" sw="&amp;"/>
+    <key key0="i" ne="8" sw="*"/>
+    <key key0="o" ne="9" sw="(" se=")"/>
+    <key key0="p" ne="0"/>
   </row>
   <row>
-    <key shift="0.5" key0="a" key1="loc tab" key2="`"/>
-    <key key0="s" key2="loc §" key3="loc ß"/>
+    <key shift="0.5" key0="a" nw="loc tab" ne="`"/>
+    <key key0="s" ne="loc §" sw="loc ß"/>
     <key key0="d"/>
     <key key0="f"/>
-    <key key0="g" key2="-" key3="_"/>
-    <key key0="h" key2="=" key3="+"/>
-    <key key0="j" key4="}" key3="{"/>
-    <key key0="k" key3="[" key4="]"/>
-    <key key0="l" key2="|" key3="\\"/>
+    <key key0="g" ne="-" sw="_"/>
+    <key key0="h" ne="=" sw="+"/>
+    <key key0="j" se="}" sw="{"/>
+    <key key0="k" sw="[" se="]"/>
+    <key key0="l" ne="|" sw="\\"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key width="1.5" key0="shift" ne="loc capslock"/>
     <key key0="z"/>
-    <key key0="x" key2="loc †"/>
-    <key key0="c" key2="&lt;" key3="."/>
-    <key key0="v" key2="&gt;" key3=","/>
-    <key key0="b" key2="\?" key3="/"/>
-    <key key0="n" key2=":" key3=";"/>
-    <key key0="m" key2="&quot;" key3="'"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key key0="x" ne="loc †"/>
+    <key key0="c" ne="&lt;" sw="."/>
+    <key key0="v" ne="&gt;" sw=","/>
+    <key key0="b" ne="\?" sw="/"/>
+    <key key0="n" ne=":" sw=";"/>
+    <key key0="m" ne="&quot;" sw="'"/>
+    <key width="1.5" key0="backspace" ne="delete"/>
   </row>
 </keyboard>
