@@ -14,8 +14,7 @@ Layout includes some ASCII punctuation but not all, missing: ", %, ', +, ,, ;, <
 # arab_pc_ckb_fa
 Layout includes some ASCII punctuation but not all, missing: ", #, $, %, &, ', ,, /, ;, ?, @, \, ^, `, |, ~
 Layout doesn't define some important keys, missing: loc esc, loc tab
-These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
-3 warnings
+2 warnings
 # arab_pc_hindu
 Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 1 warnings
@@ -58,6 +57,12 @@ Layout doesn't define some important keys, missing: loc esc, loc tab
 Duplicate keys: ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 2 warnings
+# georgian_mes
+Layout includes some ASCII punctuation but not all, missing: `
+1 warnings
+# georgian_qwerty
+Layout includes some ASCII punctuation but not all, missing: `
+1 warnings
 # grek_qwerty
 Duplicate keys: ;
 1 warnings
