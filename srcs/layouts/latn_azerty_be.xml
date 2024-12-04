@@ -23,7 +23,7 @@
     <key key0="j" key1="è" key2="accent_trema" key3="accent_circonflexe"/>
     <key key0="k" key1="€" key2="*" key3="$"/>
     <key key0="l" key2="%" key3="ù"/>
-    <key key0="m" key2="£" key3="µ"/>
+    <key key0="m" key1="£" key3="µ"/>
   </row>
   <row>
     <key width="2.0" key0="shift" key2="loc capslock"/>
