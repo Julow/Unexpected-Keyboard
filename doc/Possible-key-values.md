@@ -186,5 +186,5 @@ on it. `char` keys can be modified by `ctrl` and other modifiers, unlike `str`
 keys.
 
 For example:
-- `:char symbol='q':љ`, which is used to implement `ctrl` shortcuts in cyrillic
+- `:char symbol='љ':q`, which is used to implement `ctrl` shortcuts in cyrillic
   layouts.
