@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--DO NOT EDIT. This file is generated, see gen_layouts.py.-->
+  <!-- DO NOT EDIT. This file is generated, run 'gradle genLayoutsList'. -->
   <string-array name="pref_layout_values">
     <item>system</item>
     <item>latn_qwerty_us</item>
