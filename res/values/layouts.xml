@@ -25,6 +25,8 @@
     <item>cyrl_yxukeng_os</item>
     <item>deva_alt</item>
     <item>deva_inscript</item>
+    <item>georgian_mes</item>
+    <item>georgian_qwerty</item>
     <item>grek_qwerty</item>
     <item>guj_phonetic_in</item>
     <item>hang_dubeolsik_kr</item>
@@ -87,6 +89,8 @@
     <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
+    <item>ქართული (MES)</item>
+    <item>ქართული (QWERTY)</item>
     <item>QWERTY (Greek)</item>
     <item>ગુજરાતી ફોનેટિક - Gujarati Phonetic</item>
     <item>두벌식 (Korean)</item>
@@ -149,6 +153,8 @@
     <item>@xml/cyrl_yxukeng_os</item>
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
+    <item>@xml/georgian_mes</item>
+    <item>@xml/georgian_qwerty</item>
     <item>@xml/grek_qwerty</item>
     <item>@xml/guj_phonetic_in</item>
     <item>@xml/hang_dubeolsik_kr</item>
