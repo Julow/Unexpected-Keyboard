@@ -58,11 +58,9 @@ Duplicate keys: ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 2 warnings
 # georgian_mes
-Layout includes some ASCII punctuation but not all, missing: `
-1 warnings
+0 warnings
 # georgian_qwerty
-Layout includes some ASCII punctuation but not all, missing: `
-1 warnings
+0 warnings
 # grek_qwerty
 Duplicate keys: ;
 1 warnings
