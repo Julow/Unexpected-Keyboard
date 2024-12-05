@@ -207,6 +207,12 @@ public final class Config
     e.apply();
   }
 
+  public void set_clipboard_history_enabled(boolean e)
+  {
+    clipboard_history_enabled = e;
+    _prefs.edit().putBoolean("clipboard_history_enabled", e).commit();
+  }
+
   KeyValue action_key()
   {
     // Update the name to avoid caching in KeyModifier
