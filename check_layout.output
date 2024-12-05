@@ -132,6 +132,8 @@ Layout doesn't define some important keys, missing: loc esc, loc tab
 0 warnings
 # latn_qwertz_cz
 0 warnings
+# latn_qwertz_cz_diacritics
+0 warnings
 # latn_qwertz_cz_multifunctional
 Layout includes some ASCII punctuation but not all, missing: `
 1 warnings
