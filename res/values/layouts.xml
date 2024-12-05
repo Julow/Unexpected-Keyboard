@@ -58,6 +58,7 @@
     <item>latn_qwertz_fr_ch</item>
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
+    <item>latn_qwertz_sq</item>
     <item>shaw_imperial_en</item>
     <item>urdu_phonetic_ur</item>
     <item>custom</item>
@@ -119,6 +120,7 @@
     <item>QWERTZ (Swiss French)</item>
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
+    <item>QWERTZ (Albanian)</item>
     <item>Shaw Imperial</item>
     <item>Urdu Phonetic</item>
     <item>@string/pref_layout_e_custom</item>
@@ -180,6 +182,7 @@
     <item>@xml/latn_qwertz_fr_ch</item>
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
+    <item>@xml/latn_qwertz_sq</item>
     <item>@xml/shaw_imperial_en</item>
     <item>@xml/urdu_phonetic_ur</item>
     <item>-1</item>
