@@ -3,17 +3,17 @@
   <row>
     <key key0="q" key2="1" key4="loc esc"/>
     <key key0="w" key1="~" key2="2" key3="\@"/>
-    <key key0="e" key1="!" key2="3" key3="\#" key4="loc €"/>
+    <key key0="e" key1="!" key2="3" key3="\#" key4="ē"/>
     <key key0="r" key2="4" key3="$"/>
     <key key0="t" key2="5" key3="%"/>
     <key key0="y" key2="6" key3="^"/>
-    <key key0="u" key2="7" key3="&amp;"/>
-    <key key0="i" key2="8" key3="*"/>
-    <key key0="o" key2="9" key3="(" key4=")"/>
-    <key key0="p" key2="0"/>
+    <key key0="u" key2="7" key3="&amp;" key4="ū"/>
+    <key key0="i" key2="8" key3="*" key4="ī"/>
+    <key key0="o" key2="9" key3="(" key4="ō"/>
+    <key key0="p" key2="0" key3=")"/>
   </row>
   <row>
-    <key key0="a" key1="loc tab" key2="`"/>
+    <key key0="a" key1="loc tab" key2="`" key3="ā"/>
     <key key0="s" key2="loc §" key3="loc ß"/>
     <key key0="d"/>
     <key key0="f"/>
