@@ -44,6 +44,7 @@ public final class KeyValue implements Comparable<KeyValue>
     TREMA,
     HORN,
     HOOK_ABOVE,
+    DOUBLE_GRAVE,
     SUPERSCRIPT,
     SUBSCRIPT,
     RING,
@@ -519,6 +520,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_dot_below": return diacritic(0xE060, Modifier.DOT_BELOW);
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
+      case "accent_double_grave": return diacritic(0xE063, Modifier.DOUBLE_GRAVE);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
