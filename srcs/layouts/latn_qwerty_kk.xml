@@ -5,15 +5,14 @@
     <shift a="ı" b="I" />
   </modmap>
   <row>
-    <key shift="0.5" key0="ä"/>
+    <key shift="1" key0="ä"/>
     <key key0="ñ"/>
     <key key0="ğ"/>
-    <key key0="ç"/>
+    <key key0="ş"/>
     <key key0="ū"/>
     <key key0="ü"/>
     <key key0="ı"/>
     <key key0="ö"/>
-    <key key0="ş"/>
   </row>
   <row>
     <key key0="q" key2="1" key4="loc esc"/>
@@ -21,18 +20,18 @@
     <key key0="e" key1="!" key2="3" key3="\#" key4="loc €"/>
     <key key0="r" key2="4" key3="$"/>
     <key key0="t" key2="5" key3="%"/>
-    <key key0="y" key2="6" key3="^" key4="ü"/>
-    <key key0="u" key2="7" key3="&amp;" key4="ū"/>
-    <key key0="i" key2="8" key3="*" key4="ı"/>
-    <key key0="o" key2="9" key3="(" key4="ö"/>
+    <key key0="y" key2="6" key3="^"/>
+    <key key0="u" key2="7" key3="&amp;"/>
+    <key key0="i" key2="8" key3="*"/>
+    <key key0="o" key2="9" key3="("/>
     <key key0="p" key2="0" key3=")"/>
   </row>
   <row>
-    <key shift="0.5" key0="a" key1="loc tab" key2="`" key3="ä"/>
-    <key key0="s" key2="loc §" key3="loc ß" key4="ş"/>
+    <key shift="0.5" key0="a" key1="loc tab" key2="`"/>
+    <key key0="s" key2="loc §" key3="loc ß"/>
     <key key0="d"/>
     <key key0="f"/>
-    <key key0="g" key2="-" key3="_" key4="ğ"/>
+    <key key0="g" key2="-" key3="_"/>
     <key key0="h" key2="=" key3="+"/>
     <key key0="j" key4="}" key3="{"/>
     <key key0="k" key3="[" key4="]"/>
@@ -45,7 +44,7 @@
     <key key0="c" key2="&lt;" key3="." key4="ç"/>
     <key key0="v" key2="&gt;" key3=","/>
     <key key0="b" key2="\?" key3="/"/>
-    <key key0="n" key2=":" key3=";" key4="ñ"/>
+    <key key0="n" key2=":" key3=";"/>
     <key key0="m" key2="&quot;" key3="'"/>
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
