@@ -78,6 +78,10 @@ Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {
 # hebr_2_il
 Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 1 warnings
+# kann_kannada
+Layout includes some ASCII punctuation but not all, missing: #, $, %, (, ), *, +, /, <, =, >, [, \, ], ^, `, {, |, }, ~
+Layout doesn't define some important keys, missing: loc esc, loc tab
+2 warnings
 # latn_azerty_be
 0 warnings
 # latn_azerty_fr
