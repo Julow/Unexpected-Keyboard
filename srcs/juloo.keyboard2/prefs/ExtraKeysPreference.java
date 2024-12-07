@@ -43,6 +43,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "accent_dot_below",
     "accent_hook_above",
     "accent_horn",
+    "accent_double_grave",
     "€",
     "ß",
     "£",
