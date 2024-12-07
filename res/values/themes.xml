@@ -203,4 +203,23 @@
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">@android:color/system_accent1_900</item>
   </style>
+  <style name="RosePine" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#191724</item>
+    <item name="colorKey">#26233a</item>
+    <item name="colorKeyActivated">#403d52</item>
+    <item name="keyBorderWidth">0dp</item>
+    <item name="keyBorderWidthActivated">1dp</item>
+    <item name="keyBorderColorLeft">#6e6a86</item>
+    <item name="keyBorderColorTop">#6e6a86</item>
+    <item name="keyBorderColorRight">#6e6a86</item>
+    <item name="keyBorderColorBottom">#6e6a86</item>
+    <item name="colorLabel">#e0def4</item>
+    <item name="colorLabelActivated">#c4a7e7</item>
+    <item name="colorLabelLocked">#31748f</item>
+    <item name="colorSubLabel">#6e6a86</item>
+    <item name="keyBorderRadius">1dp</item>
+    <item name="emoji_button_bg">#26233a</item>
+    <item name="emoji_color">#e0def4</item>
+  </style>
 </resources>

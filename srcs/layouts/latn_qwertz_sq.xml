@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="QWERTZ (Albanian)" script="latin">
+  <row>
+    <key key0="q" key2="1" key4="loc esc"/>
+    <key key0="w" key1="^" key2="2" key3="&quot;" key4="\@"/>
+    <key key0="e" key1="§" key2="3" key3="!" key4="€"/>
+    <key key0="r" key2="4" key3="$"/>
+    <key key0="t" key2="5" key3="%"/>
+    <key key0="z" key2="6" key3="&amp;" key4="{"/>
+    <key key0="u" key2="7" key3="ü" key4="}"/>
+    <key key0="i" key1="(" key2="8" key3="[" key4="]"/>
+    <key key0="o" key1=")" key2="9" key3="ö" key4="="/>
+    <key key0="p" key2="0" key3="\?"/>
+  </row>
+  <row>
+    <key key0="a" key1="loc tab" key2="`" key3="ä"/>
+    <key key0="s" key3="ß"/>
+    <key key0="d" key1="đ"/>
+    <key key0="f" key1="~"/>
+    <key key0="g" key3="-"/>
+    <key key0="h" key3="+"/>
+    <key key0="j" key3="*"/>
+    <key key0="k" key3="/" key4="\\"/>
+    <key key0="l" key1="'" key2="ł" key3="\#"/>
+    <key key0="ë" key1="¤"/>
+  </row>
+  <row>
+    <key key0="shift" key2="loc capslock"/>
+    <key key0="y" key1="&gt;" key2="|" key3="&lt;"/>
+    <key key0="x" key1="loc †"/>
+    <key key0="c"/>
+    <key key0="v" />
+    <key key0="b" key1=";" key3=","/>
+    <key key0="n" key1=":" key3="."/>
+    <key key0="m" key1="_" />
+    <key key0="ç" key1="×" key3="÷"/>
+    <key key0="backspace" key2="delete"/>
+  </row>
+</keyboard>

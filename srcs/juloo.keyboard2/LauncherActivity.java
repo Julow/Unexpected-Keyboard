@@ -3,11 +3,14 @@ package juloo.keyboard2;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,28 +18,49 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LauncherActivity extends Activity
+public class LauncherActivity extends Activity implements Handler.Callback
 {
   /** Text is replaced when receiving key events. */
-  VideoView _intro_video;
   TextView _tryhere_text;
   EditText _tryhere_area;
+  /** Periodically restart the animations. */
+  List<Animatable> _animations;
+  Handler _handler;
 
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.launcher_activity);
-    _intro_video = (VideoView)findViewById(R.id.launcher_intro_video);
     _tryhere_text = (TextView)findViewById(R.id.launcher_tryhere_text);
     _tryhere_area = (EditText)findViewById(R.id.launcher_tryhere_area);
     if (VERSION.SDK_INT >= 28)
       _tryhere_area.addOnUnhandledKeyEventListener(
           this.new Tryhere_OnUnhandledKeyEventListener());
-    setup_intro_video(_intro_video);
+  }
+
+  @Override
+  public void onStart()
+  {
+    super.onStart();
+    _animations = new ArrayList<Animatable>();
+    _animations.add(find_anim(R.id.launcher_anim_swipe));
+    _handler = new Handler(getMainLooper(), this);
+    _handler.sendEmptyMessageDelayed(0, 500);
+  }
+
+  @Override
+  public boolean handleMessage(Message _msg)
+  {
+    for (Animatable anim : _animations)
+      anim.start();
+    _handler.sendEmptyMessageDelayed(0, 3000);
+    return true;
   }
 
   @Override
@@ -70,31 +94,10 @@ public class LauncherActivity extends Activity
     imm.showInputMethodPicker();
   }
 
-  static void setup_intro_video(final VideoView v)
+  Animatable find_anim(int id)
   {
-    if (VERSION.SDK_INT >= 26)
-      v.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
-    v.setVideoURI(Uri.parse("android.resource://" +
-          v.getContext().getPackageName() + "/" + R.raw.intro_video));
-    v.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
-        {
-          @Override
-          public void onPrepared(MediaPlayer mp)
-          {
-            mp.setLooping(true);
-          }
-        });
-    v.setOnErrorListener(new MediaPlayer.OnErrorListener()
-        {
-          @Override
-          public boolean onError(MediaPlayer mp, int what, int extra)
-          {
-            v.stopPlayback();
-            v.setVisibility(View.GONE);
-            return true;
-          }
-        });
-    v.start();
+    ImageView img = (ImageView)findViewById(id);
+    return (Animatable)img.getDrawable();
   }
 
   @TargetApi(28)

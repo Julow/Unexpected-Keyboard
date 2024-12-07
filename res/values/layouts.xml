@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--DO NOT EDIT. This file is generated, see gen_layouts.py.-->
+  <!-- DO NOT EDIT. This file is generated, run 'gradle genLayoutsList'. -->
   <string-array name="pref_layout_values">
     <item>system</item>
     <item>latn_qwerty_us</item>
@@ -10,6 +10,7 @@
     <item>arab_hamvaj_tly</item>
     <item>arab_pc</item>
     <item>arab_pc_ckb</item>
+    <item>arab_pc_ckb_fa</item>
     <item>arab_pc_hindu</item>
     <item>arab_pc_ir</item>
     <item>armenian_ph_am</item>
@@ -20,13 +21,18 @@
     <item>cyrl_lynyertz_sr</item>
     <item>cyrl_ueishsht</item>
     <item>cyrl_yaverti</item>
+    <item>cyrl_yqukeng_tj</item>
+    <item>cyrl_yxukeng_os</item>
     <item>deva_alt</item>
     <item>deva_inscript</item>
+    <item>georgian_mes</item>
+    <item>georgian_qwerty</item>
     <item>grek_qwerty</item>
     <item>guj_phonetic_in</item>
     <item>hang_dubeolsik_kr</item>
     <item>hebr_1_il</item>
     <item>hebr_2_il</item>
+    <item>latn_azerty_be</item>
     <item>latn_azerty_fr</item>
     <item>latn_bepo_fr</item>
     <item>latn_bone</item>
@@ -50,11 +56,13 @@
     <item>latn_qwerty_vi</item>
     <item>latn_qwertz</item>
     <item>latn_qwertz_cz</item>
+    <item>latn_qwertz_cz_diacritics</item>
     <item>latn_qwertz_cz_multifunctional</item>
     <item>latn_qwertz_de</item>
     <item>latn_qwertz_fr_ch</item>
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
+    <item>latn_qwertz_sq</item>
     <item>shaw_imperial_en</item>
     <item>urdu_phonetic_ur</item>
     <item>custom</item>
@@ -67,7 +75,8 @@
     <item>Arabic Alt</item>
     <item>Talysh (تالشی همواج)</item>
     <item>Arabic PC</item>
-    <item>Kurdish (کوردی)</item>
+    <item>Kurdish (کوردی) QWERTY</item>
+    <item>Central Kurdish (سۆرانی) Persian Layout</item>
     <item>Arabic PC (Hindu numerals)</item>
     <item>Persian PC</item>
     <item>Armenian</item>
@@ -78,13 +87,18 @@
     <item>ЉЊЕРТЗ (Српски)</item>
     <item>УЕИШЩ (Български, БДС)</item>
     <item>ЯВЕРТЪ</item>
+    <item>Tajiki Persian (Тоҷикӣ)</item>
+    <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
+    <item>ქართული (MES)</item>
+    <item>ქართული (QWERTY)</item>
     <item>QWERTY (Greek)</item>
     <item>ગુજરાતી ફોનેટિક - Gujarati Phonetic</item>
     <item>두벌식 (Korean)</item>
     <item>Hebrew 1</item>
     <item>Hebrew 2</item>
+    <item>AZERTY (Belgian)</item>
     <item>AZERTY (Français)</item>
     <item>BEPO (Français)</item>
     <item>Bone</item>
@@ -108,11 +122,13 @@
     <item>QWERTY (Vietnamese)</item>
     <item>QWERTZ</item>
     <item>QWERTZ (Czech)</item>
+    <item>QWERTZ (Czech with diacritic keys)</item>
     <item>QWERTZ Multifunctional (Czech)</item>
     <item>QWERTZ (Deutsch)</item>
     <item>QWERTZ (Swiss French)</item>
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
+    <item>QWERTZ (Albanian)</item>
     <item>Shaw Imperial</item>
     <item>Urdu Phonetic</item>
     <item>@string/pref_layout_e_custom</item>
@@ -126,6 +142,7 @@
     <item>@xml/arab_hamvaj_tly</item>
     <item>@xml/arab_pc</item>
     <item>@xml/arab_pc_ckb</item>
+    <item>@xml/arab_pc_ckb_fa</item>
     <item>@xml/arab_pc_hindu</item>
     <item>@xml/arab_pc_ir</item>
     <item>@xml/armenian_ph_am</item>
@@ -136,13 +153,18 @@
     <item>@xml/cyrl_lynyertz_sr</item>
     <item>@xml/cyrl_ueishsht</item>
     <item>@xml/cyrl_yaverti</item>
+    <item>@xml/cyrl_yqukeng_tj</item>
+    <item>@xml/cyrl_yxukeng_os</item>
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
+    <item>@xml/georgian_mes</item>
+    <item>@xml/georgian_qwerty</item>
     <item>@xml/grek_qwerty</item>
     <item>@xml/guj_phonetic_in</item>
     <item>@xml/hang_dubeolsik_kr</item>
     <item>@xml/hebr_1_il</item>
     <item>@xml/hebr_2_il</item>
+    <item>@xml/latn_azerty_be</item>
     <item>@xml/latn_azerty_fr</item>
     <item>@xml/latn_bepo_fr</item>
     <item>@xml/latn_bone</item>
@@ -166,11 +188,13 @@
     <item>@xml/latn_qwerty_vi</item>
     <item>@xml/latn_qwertz</item>
     <item>@xml/latn_qwertz_cz</item>
+    <item>@xml/latn_qwertz_cz_diacritics</item>
     <item>@xml/latn_qwertz_cz_multifunctional</item>
     <item>@xml/latn_qwertz_de</item>
     <item>@xml/latn_qwertz_fr_ch</item>
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
+    <item>@xml/latn_qwertz_sq</item>
     <item>@xml/shaw_imperial_en</item>
     <item>@xml/urdu_phonetic_ur</item>
     <item>-1</item>

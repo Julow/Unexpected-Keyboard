@@ -207,11 +207,16 @@ public final class Config
     e.apply();
   }
 
+  public void set_clipboard_history_enabled(boolean e)
+  {
+    clipboard_history_enabled = e;
+    _prefs.edit().putBoolean("clipboard_history_enabled", e).commit();
+  }
+
   KeyValue action_key()
   {
     // Update the name to avoid caching in KeyModifier
-    return (actionLabel == null) ? null :
-      KeyValue.getKeyByName("action").withSymbol(actionLabel);
+    return (actionLabel == null) ? null : KeyValue.makeActionKey(actionLabel);
   }
 
   /** Update the layout according to the configuration.
@@ -302,10 +307,10 @@ public final class Config
     });
     if (show_numpad)
       kw = kw.addNumPad(modify_numpad(num_pad, kw));
-    if (added_number_row != null)
-      kw = kw.insert_row(added_number_row, 0);
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.entrySet().iterator());
+    if (added_number_row != null)
+      kw = kw.insert_row(added_number_row, 0);
     return kw;
   }
 
@@ -422,6 +427,7 @@ public final class Config
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
           return R.style.MonetLight;
         return R.style.MonetDark;
+      case "rosepine": return R.style.RosePine;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
