@@ -80,6 +80,7 @@ public final class KeyModifier
       case DOT_BELOW: return apply_compose(k, ComposeKeyData.accent_dot_below);
       case HORN: return apply_compose(k, ComposeKeyData.accent_horn);
       case HOOK_ABOVE: return apply_compose(k, ComposeKeyData.accent_hook_above);
+      case DOUBLE_GRAVE: return apply_compose(k, ComposeKeyData.accent_double_grave);
       case ARROW_RIGHT: return apply_map_char(k, map_char_arrow_right);
       default: return k;
     }
