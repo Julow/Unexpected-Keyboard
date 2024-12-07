@@ -43,6 +43,7 @@
     <item>latn_qwerty_es</item>
     <item>latn_qwerty_ga</item>
     <item>latn_qwerty_gb</item>
+    <item>latn_qwerty_haw</item>
     <item>latn_qwerty_hu</item>
     <item>latn_qwerty_jp</item>
     <item>latn_qwerty_lv</item>
@@ -110,6 +111,7 @@
     <item>QWERTY (Español)</item>
     <item>QWERTY (Irish)</item>
     <item>QWERTY (UK)</item>
+    <item>QWERTY (Hawaiian)</item>
     <item>QWERTY (Magyar)</item>
     <item>QWERTY (Japan)</item>
     <item>QWERTY (Latvian)</item>
@@ -177,6 +179,7 @@
     <item>@xml/latn_qwerty_es</item>
     <item>@xml/latn_qwerty_ga</item>
     <item>@xml/latn_qwerty_gb</item>
+    <item>@xml/latn_qwerty_haw</item>
     <item>@xml/latn_qwerty_hu</item>
     <item>@xml/latn_qwerty_jp</item>
     <item>@xml/latn_qwerty_lv</item>
