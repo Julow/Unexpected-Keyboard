@@ -18,7 +18,7 @@
     <key key0="ц" key1="loc ї" key2="2" key3="\@" key4="~"/>
     <key key0="у" key1="loc ў" key2="3" key3="\#" key4="!"/>
     <key key0="к" key2="4" key3="$"/>
-    <key key0="е" key1="ё" key2="5" key3="%"/>
+    <key key0="е" key2="5" key3="%"/>
     <key key0="н" key1="loc є" key2="6" key3="^"/>
     <key key0="г" key1="loc ґ" key2="7" key3="&amp;"/>
     <key key0="ш" key2="8" key3="*"/>
@@ -47,7 +47,7 @@
     <key key0="м"/>
     <key key0="и" key1="loc і" key2="&lt;" key3="."/>
     <key key0="т" key2="&gt;" key3=","/>
-    <key key0="ь" key1="ъ" key2="\?" key3="/"/>
+    <key key0="ь" key2="\?" key3="/"/>
     <key key0="б" key2=":" key3=";"/>
     <key key0="ю" key2="&quot;" key3="'"/>
     <key key0="backspace" key2="delete"/>
