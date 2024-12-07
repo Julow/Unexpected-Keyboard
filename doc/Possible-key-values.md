@@ -91,6 +91,7 @@ Value                | Meaning
 `accent_dot_below`   | Dot below. `ạ`
 `accent_horn`        | Horn accent. `ơ`
 `accent_hook_above`  | Hook accent. `ả`
+`accent_double_grave`  | Double grave accent. `ȁ`
 `superscript`        | Superscript. `ᵃ`
 `subscript`          | Subscript. `ₐ`
 `ordinal`            | Turns `a` and `o` into `ª` and `º`.
