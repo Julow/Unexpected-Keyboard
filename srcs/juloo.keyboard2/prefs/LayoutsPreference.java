@@ -145,8 +145,7 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
   @Override
   ListGroupPreference.Serializer<Layout> get_serializer() { return SERIALIZER; }
 
-  @Override
-  void select(final SelectionCallback callback)
+  void select_dialog(final SelectionCallback callback)
   {
     ArrayAdapter layouts = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, _layout_display_names);
     new AlertDialog.Builder(getContext())
@@ -207,10 +206,10 @@ public class LayoutsPreference extends ListGroupPreference<LayoutsPreference.Lay
   @Override
   void select(final SelectionCallback callback, Layout prev_layout)
   {
-    if (prev_layout instanceof CustomLayout)
+    if (prev_layout != null && prev_layout instanceof CustomLayout)
       select_custom(callback, ((CustomLayout)prev_layout).xml);
     else
-      select(callback);
+      select_dialog(callback);
   }
 
   /** The initial text for the custom layout entry box. The qwerty_us layout is
