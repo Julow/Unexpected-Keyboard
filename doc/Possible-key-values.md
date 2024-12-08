@@ -189,3 +189,11 @@ keys.
 For example:
 - `:char symbol='љ':q`, which is used to implement `ctrl` shortcuts in cyrillic
   layouts.
+
+### Kind `keyevent`
+
+Defines a key that sends an Android [key event](https://developer.android.com/reference/android/view/KeyEvent).
+`<payload>` is the key event number.
+
+For example:
+- `:keyevent symbol='⏯' flags='small':85`

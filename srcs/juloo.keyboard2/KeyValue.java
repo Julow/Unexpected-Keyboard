@@ -345,12 +345,12 @@ public final class KeyValue implements Comparable<KeyValue>
     return eventKey(String.valueOf((char)symbol), e, flags | FLAG_KEY_FONT);
   }
 
-  private static KeyValue keyeventKey(String symbol, int code, int flags)
+  public static KeyValue keyeventKey(String symbol, int code, int flags)
   {
     return new KeyValue(symbol, Kind.Keyevent, code, flags | FLAG_SECONDARY);
   }
 
-  private static KeyValue keyeventKey(int symbol, int code, int flags)
+  public static KeyValue keyeventKey(int symbol, int code, int flags)
   {
     return keyeventKey(String.valueOf((char)symbol), code, flags | FLAG_KEY_FONT);
   }
