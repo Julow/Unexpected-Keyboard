@@ -461,6 +461,12 @@ public final class KeyValue implements Comparable<KeyValue>
         Complex.Kind.StringWithSymbol, flags);
   }
 
+  public static KeyValue makeMacro(String symbol, KeyValue[] keys, int flags)
+  {
+    return new KeyValue(new Complex.Macro(keys, symbol),
+        Complex.Kind.Macro, flags);
+  }
+
   /** Make a modifier key for passing to [KeyModifier]. */
   public static KeyValue makeInternalModifier(Modifier mod)
   {
@@ -486,6 +492,14 @@ public final class KeyValue implements Comparable<KeyValue>
    * defined in this function, it is passed to [parseStringKey] as a fallback.
    */
   public static KeyValue getKeyByName(String name)
+  {
+    KeyValue k = getSpecialKeyByName(name);
+    if (k == null)
+      return parseKeyDefinition(name);
+    return k;
+  }
+
+  public static KeyValue getSpecialKeyByName(String name)
   {
     switch (name)
     {
@@ -719,8 +733,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "ㅍ": return makeHangulInitial("ㅍ", 17);
       case "ㅎ": return makeHangulInitial("ㅎ", 18);
 
-      /* The key is not one of the special ones. */
-      default: return parseKeyDefinition(name);
+      default: return null;
     }
   }
 
@@ -751,6 +764,7 @@ public final class KeyValue implements Comparable<KeyValue>
     public static enum Kind
     {
       StringWithSymbol,
+      Macro,
     }
 
     public static final class StringWithSymbol extends Complex
@@ -771,6 +785,33 @@ public final class KeyValue implements Comparable<KeyValue>
         StringWithSymbol snd = (StringWithSymbol)_snd;
         int d = str.compareTo(snd.str);
         if (d != 0) return d;
+        return _symbol.compareTo(snd._symbol);
+      }
+    }
+
+    public static final class Macro extends Complex
+    {
+      public final KeyValue[] keys;
+      private final String _symbol;
+
+      public Macro(KeyValue[] keys_, String sym_)
+      {
+        keys = keys_;
+        _symbol = sym_;
+      }
+
+      public String getSymbol() { return _symbol; }
+
+      public int compareTo(Complex _snd)
+      {
+        Macro snd = (Macro)_snd;
+        int d = keys.length - snd.keys.length;
+        if (d != 0) return d;
+        for (int i = 0; i < keys.length; i++)
+        {
+          d = keys[i].compareTo(snd.keys[i]);
+          if (d != 0) return d;
+        }
         return _symbol.compareTo(snd._symbol);
       }
     }

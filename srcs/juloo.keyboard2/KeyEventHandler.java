@@ -226,6 +226,8 @@ public final class KeyEventHandler
       case StringWithSymbol:
         send_text(((KeyValue.Complex.StringWithSymbol)val).str);
         break;
+      case Macro:
+        break;
     }
   }
 
