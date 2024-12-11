@@ -81,7 +81,7 @@ public final class KeyModifier
       case HORN: return apply_compose(k, ComposeKeyData.accent_horn);
       case HOOK_ABOVE: return apply_compose(k, ComposeKeyData.accent_hook_above);
       case DOUBLE_GRAVE: return apply_compose(k, ComposeKeyData.accent_double_grave);
-      case ARROW_RIGHT: return apply_map_char(k, map_char_arrow_right);
+      case ARROW_RIGHT: return apply_combining_char(k, "\u20D7");
       default: return k;
     }
   }
@@ -104,33 +104,21 @@ public final class KeyModifier
     return k;
   }
 
-  public static Map_char modify_numpad_script(String numpad_script)
+  /** Return the compose state that modifies the numpad script. */
+  public static int modify_numpad_script(String numpad_script)
   {
     if (numpad_script == null)
-      return map_char_none;
+      return -1;
     switch (numpad_script)
     {
-      case "hindu-arabic": return map_char_numpad_hindu;
-      case "bengali": return map_char_numpad_bengali;
-      case "devanagari": return map_char_numpad_devanagari;
-      case "persian": return map_char_numpad_persian;
-      case "gujarati": return map_char_numpad_gujarati;
-      case "kannada": return map_char_numpad_kannada;
-      default: return map_char_none;
+      case "hindu-arabic": return ComposeKeyData.numpad_hindu;
+      case "bengali": return ComposeKeyData.numpad_bengali;
+      case "devanagari": return ComposeKeyData.numpad_devanagari;
+      case "persian": return ComposeKeyData.numpad_persian;
+      case "gujarati": return ComposeKeyData.numpad_gujarati;
+      case "kannada": return ComposeKeyData.numpad_kannada;
+      default: return -1;
     }
-  }
-
-  private static KeyValue apply_map_char(KeyValue k, Map_char map)
-  {
-    switch (k.getKind())
-    {
-      case Char:
-        char kc = k.getChar();
-        String modified = map.apply(kc);
-        if (modified != null)
-          return KeyValue.makeStringKey(modified, k.getFlags());
-    }
-    return k;
   }
 
   /** Apply the given compose state or fallback to the dead_char. */
@@ -168,6 +156,16 @@ public final class KeyModifier
         char modified = (char)KeyCharacterMap.getDeadChar(dead_char, c);
         if (modified != 0 && modified != c)
           return KeyValue.makeStringKey(String.valueOf(modified));
+    }
+    return k;
+  }
+
+  private static KeyValue apply_combining_char(KeyValue k, String combining)
+  {
+    switch (k.getKind())
+    {
+      case Char:
+        return KeyValue.makeStringKey(k.getChar() + combining, k.getFlags());
     }
     return k;
   }
@@ -345,157 +343,6 @@ public final class KeyModifier
       return apply_fn(k);
     return shifted;
   }
-
-  public static abstract class Map_char
-  {
-    /** Modify a char or return [null] if the modifier do not apply. Return a
-        [String] that can contains combining diacritics. */
-    public abstract String apply(char c);
-  }
-
-  private static final Map_char map_char_none =
-    new Map_char() {
-      public String apply(char _c) { return null; }
-    };
-
-  private static final Map_char map_char_arrow_right =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          default: return c + "\u20D7";
-        }
-      }
-    };
-
-  // Used with Arabic despite the name; called "Hindi numerals" in Arabic
-  // map_char_numpad_devanagari is used in Hindi
-  private static final Map_char map_char_numpad_hindu =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "٠";
-          case '1': return "١";
-          case '2': return "٢";
-          case '3': return "٣";
-          case '4': return "٤";
-          case '5': return "٥";
-          case '6': return "٦";
-          case '7': return "٧";
-          case '8': return "٨";
-          case '9': return "٩";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_bengali =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "০";
-          case '1': return "১";
-          case '2': return "২";
-          case '3': return "৩";
-          case '4': return "৪";
-          case '5': return "৫";
-          case '6': return "৬";
-          case '7': return "৭";
-          case '8': return "৮";
-          case '9': return "৯";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_devanagari =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "०";
-          case '1': return "१";
-          case '2': return "२";
-          case '3': return "३";
-          case '4': return "४";
-          case '5': return "५";
-          case '6': return "६";
-          case '7': return "७";
-          case '8': return "८";
-          case '9': return "९";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_persian =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "۰";
-          case '1': return "۱";
-          case '2': return "۲";
-          case '3': return "۳";
-          case '4': return "۴";
-          case '5': return "۵";
-          case '6': return "۶";
-          case '7': return "۷";
-          case '8': return "۸";
-          case '9': return "۹";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_gujarati =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "૦";
-          case '1': return "૧";
-          case '2': return "૨";
-          case '3': return "૩";
-          case '4': return "૪";
-          case '5': return "૫";
-          case '6': return "૬";
-          case '7': return "૭";
-          case '8': return "૮";
-          case '9': return "૯";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_kannada =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "೦";
-          case '1': return "೧";
-          case '2': return "೨";
-          case '3': return "೩";
-          case '4': return "೪";
-          case '5': return "೫";
-          case '6': return "೬";
-          case '7': return "೭";
-          case '8': return "೮";
-          case '9': return "೯";
-          default: return null;
-        }
-      }
-    };
 
   /** Compose the precomposed initial with the medial [kv]. */
   private static KeyValue combine_hangul_initial(KeyValue kv, int precomposed)

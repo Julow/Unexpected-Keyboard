@@ -27,9 +27,9 @@ public class KeyValueTest
   String apply_numpad_script(String script)
   {
     StringBuilder b = new StringBuilder();
-    KeyModifier.Map_char map = KeyModifier.modify_numpad_script(script);
+    int map = KeyModifier.modify_numpad_script(script);
     for (char c : "0123456789".toCharArray())
-      b.append(map.apply(c));
+      b.append(ComposeKey.apply(map, c).getChar());
     return b.toString();
   }
 }
