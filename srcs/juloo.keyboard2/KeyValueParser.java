@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,18 +24,51 @@ public final class KeyValueParser
   static Pattern QUOTED_PAT;
   static Pattern PAYLOAD_START_PAT;
   static Pattern WORD_PAT;
+  static Pattern COMMA_PAT;
+  static Pattern END_OF_INPUT_PAT;
 
   static public KeyValue parse(String str) throws ParseError
   {
+    init();
+    Matcher m = START_PAT.matcher(str);
+    KeyValue k = parseKeyValue(m);
+    if (!match(m, END_OF_INPUT_PAT))
+      parseError("Unexpected character", m);
+    return k;
+  }
+
+  static void init()
+  {
+    if (START_PAT != null)
+      return;
+    START_PAT = Pattern.compile(":(\\w+)");
+    ATTR_PAT = Pattern.compile("\\s*(\\w+)\\s*=");
+    QUOTED_PAT = Pattern.compile("'(([^'\\\\]+|\\\\')*)'");
+    PAYLOAD_START_PAT = Pattern.compile("\\s*:");
+    WORD_PAT = Pattern.compile("[a-zA-Z0-9_]+|.");
+    COMMA_PAT = Pattern.compile(",");
+    END_OF_INPUT_PAT = Pattern.compile("$");
+  }
+
+  static KeyValue parseKeyValue(Matcher m) throws ParseError
+  {
+    if (match(m, START_PAT))
+      return parseComplexKeyValue(m, m.group(1));
+    // Key doesn't start with ':', accept either a char key or a key name.
+    if (!match(m, WORD_PAT))
+      parseError("Expected key, for example \":str ...\".", m);
+    String key = m.group(0);
+    KeyValue k = KeyValue.getSpecialKeyByName(key);
+    if (k == null)
+      return KeyValue.makeStringKey(key);
+    return k;
+  }
+
+  static KeyValue parseComplexKeyValue(Matcher m, String kind) throws ParseError
+  {
+    // Attributes
     String symbol = null;
     int flags = 0;
-    init();
-    // Kind
-    Matcher m = START_PAT.matcher(str);
-    if (!m.lookingAt())
-      parseError("Expected kind, for example \":str ...\".", m);
-    String kind = m.group(1);
-    // Attributes
     while (true)
     {
       if (!match(m, ATTR_PAT))
@@ -82,6 +116,14 @@ public final class KeyValueParser
           symbol = String.valueOf(eventcode);
         return KeyValue.keyeventKey(symbol, eventcode, flags);
 
+      case "macro":
+        // :macro symbol='copy':ctrl,a,ctrl,c
+        // :macro symbol='acute':compose,'
+        KeyValue[] macro = parseKeyValueList(m);
+        if (symbol == null)
+          symbol = "macro";
+        return KeyValue.makeMacro(symbol, macro, flags);
+
       default: break;
     }
     parseError("Unknown kind '"+kind+"'", m, 1);
@@ -117,22 +159,21 @@ public final class KeyValueParser
     return flags;
   }
 
+  // Parse keys separated by comas
+  static KeyValue[] parseKeyValueList(Matcher m) throws ParseError
+  {
+    ArrayList<KeyValue> out = new ArrayList<KeyValue>();
+    out.add(parseKeyValue(m));
+    while (match(m, COMMA_PAT))
+      out.add(parseKeyValue(m));
+    return out.toArray(new KeyValue[]{});
+  }
+
   static boolean match(Matcher m, Pattern pat)
   {
     try { m.region(m.end(), m.regionEnd()); } catch (Exception _e) {}
     m.usePattern(pat);
     return m.lookingAt();
-  }
-
-  static void init()
-  {
-    if (START_PAT != null)
-      return;
-    START_PAT = Pattern.compile(":(\\w+)");
-    ATTR_PAT = Pattern.compile("\\s*(\\w+)\\s*=");
-    QUOTED_PAT = Pattern.compile("'(([^'\\\\]+|\\\\')*)'");
-    PAYLOAD_START_PAT = Pattern.compile("\\s*:");
-    WORD_PAT = Pattern.compile("[a-zA-Z0-9_]*");
   }
 
   static void parseError(String msg, Matcher m) throws ParseError

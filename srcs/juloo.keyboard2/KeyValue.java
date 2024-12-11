@@ -96,6 +96,7 @@ public final class KeyValue implements Comparable<KeyValue>
     String, // [_payload] is also the string to output, value is unused.
     Slider, // [_payload] is a [KeyValue.Slider], value is slider repeatition.
     StringWithSymbol, // [_payload] is a [KeyValue.StringWithSymbol], value is unused.
+    Macro, // [_payload] is a [KeyValue.Macro], value is unused.
   }
 
   private static final int FLAGS_OFFSET = 20;
@@ -105,7 +106,8 @@ public final class KeyValue implements Comparable<KeyValue>
   public static final int FLAG_LATCH = (1 << FLAGS_OFFSET << 0);
   // Key can be locked by typing twice when enabled in settings
   public static final int FLAG_DOUBLE_TAP_LOCK = (1 << FLAGS_OFFSET << 1);
-  // Special keys are not repeated and don't clear latched modifiers.
+  // Special keys are not repeated.
+  // Special latchable keys don't clear latched modifiers.
   public static final int FLAG_SPECIAL = (1 << FLAGS_OFFSET << 2);
   // Whether the symbol should be greyed out. For example, keys that are not
   // part of the pending compose sequence.
@@ -227,6 +229,12 @@ public final class KeyValue implements Comparable<KeyValue>
   public String getStringWithSymbol()
   {
     return ((StringWithSymbol)_payload).str;
+  }
+
+  /** Defined only when [getKind() == Kind.Macro]. */
+  public KeyValue[] getMacro()
+  {
+    return ((Macro)_payload).keys;
   }
 
   /* Update the char and the symbol. */
@@ -460,6 +468,11 @@ public final class KeyValue implements Comparable<KeyValue>
         Kind.StringWithSymbol, 0, flags);
   }
 
+  public static KeyValue makeMacro(String symbol, KeyValue[] keys, int flags)
+  {
+    return new KeyValue(new Macro(keys, symbol), Kind.Macro, 0, flags);
+  }
+
   /** Make a modifier key for passing to [KeyModifier]. */
   public static KeyValue makeInternalModifier(Modifier mod)
   {
@@ -485,6 +498,14 @@ public final class KeyValue implements Comparable<KeyValue>
    * defined in this function, it is passed to [parseStringKey] as a fallback.
    */
   public static KeyValue getKeyByName(String name)
+  {
+    KeyValue k = getSpecialKeyByName(name);
+    if (k == null)
+      return parseKeyDefinition(name);
+    return k;
+  }
+
+  public static KeyValue getSpecialKeyByName(String name)
   {
     switch (name)
     {
@@ -735,8 +756,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "௲": case "௳":
         return makeStringKey(name, FLAG_SMALLER_FONT);
 
-      /* The key is not one of the special ones. */
-      default: return parseKeyDefinition(name);
+      default: return null;
     }
   }
 
@@ -786,5 +806,31 @@ public final class KeyValue implements Comparable<KeyValue>
 
     @Override
     public String toString() { return symbol; }
+  };
+
+  public static final class Macro implements Comparable<Macro>
+  {
+    public final KeyValue[] keys;
+    private final String _symbol;
+
+    public Macro(KeyValue[] keys_, String sym_)
+    {
+      keys = keys_;
+      _symbol = sym_;
+    }
+
+    public String toString() { return _symbol; }
+
+    public int compareTo(Macro snd)
+    {
+      int d = keys.length - snd.keys.length;
+      if (d != 0) return d;
+      for (int i = 0; i < keys.length; i++)
+      {
+        d = keys[i].compareTo(snd.keys[i]);
+        if (d != 0) return d;
+      }
+      return _symbol.compareTo(snd._symbol);
+    }
   };
 }

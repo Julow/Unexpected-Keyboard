@@ -41,6 +41,32 @@ public class KeyValueParserTest
     Utils.parse(":char:b", KeyValue.makeCharKey('b', "b", 0));
   }
 
+  @Test
+  public void parseKeyValue() throws Exception
+  {
+    Utils.parse("\'", KeyValue.makeStringKey("\'"));
+    Utils.parse("a", KeyValue.makeStringKey("a"));
+    Utils.parse("abc", KeyValue.makeStringKey("abc"));
+    Utils.parse("shift", KeyValue.getSpecialKeyByName("shift"));
+    Utils.expect_error("\'a");
+  }
+
+  @Test
+  public void parseMacro() throws Exception
+  {
+    Utils.parse(":macro symbol='copy':ctrl,a,ctrl,c", KeyValue.makeMacro("copy", new KeyValue[]{
+      KeyValue.getSpecialKeyByName("ctrl"),
+      KeyValue.makeStringKey("a"),
+      KeyValue.getSpecialKeyByName("ctrl"),
+      KeyValue.makeStringKey("c")
+    }, 0));
+    Utils.parse(":macro:abc,'", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("abc"),
+      KeyValue.makeStringKey("'")
+    }, 0));
+    Utils.expect_error(":macro:");
+  }
+
   /** JUnit removes these functions from stacktraces. */
   static class Utils
   {
