@@ -52,7 +52,7 @@ def generate_arrays(out, layouts):
     values_items, entries_items = zip(*(system_item + layouts + custom_item)) # unzip
     ids_items = map(lambda s: "@xml/%s" % s if s not in ["system", "custom"] else "-1", values_items)
     root = XML.Element("resources")
-    root.append(XML.Comment(text="DO NOT EDIT. This file is generated, see gen_layouts.py."))
+    root.append(XML.Comment(text=" DO NOT EDIT. This file is generated, run 'gradle genLayoutsList'. "))
     root.append(mk_array("string-array", "pref_layout_values", values_items))
     root.append(mk_array("string-array", "pref_layout_entries", entries_items))
     root.append(mk_array("integer-array", "layout_ids", ids_items))

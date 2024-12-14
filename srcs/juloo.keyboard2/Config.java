@@ -207,6 +207,12 @@ public final class Config
     e.apply();
   }
 
+  public void set_clipboard_history_enabled(boolean e)
+  {
+    clipboard_history_enabled = e;
+    _prefs.edit().putBoolean("clipboard_history_enabled", e).commit();
+  }
+
   KeyValue action_key()
   {
     // Update the name to avoid caching in KeyModifier
@@ -313,7 +319,7 @@ public final class Config
   public KeyboardData modify_numpad(KeyboardData kw, KeyboardData main_kw)
   {
     final KeyValue action_key = action_key();
-    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
+    final int map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
     return kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -339,9 +345,9 @@ public final class Config
             char c = prev_c;
             if (inverse_numpad)
               c = inverse_numpad_char(c);
-            String modified = map_digit.apply(c);
+            KeyValue modified = ComposeKey.apply(map_digit, c);
             if (modified != null) // Was modified by script
-              return KeyValue.makeStringKey(modified);
+              return modified;
             if (prev_c != c) // Was inverted
               return key.withChar(c);
             break;
@@ -353,16 +359,16 @@ public final class Config
 
   static KeyboardData.MapKeyValues numpad_script_map(String numpad_script)
   {
-    final KeyModifier.Map_char map_digit = KeyModifier.modify_numpad_script(numpad_script);
+    final int map_digit = KeyModifier.modify_numpad_script(numpad_script);
     return new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
         switch (key.getKind())
         {
           case Char:
-            String modified = map_digit.apply(key.getChar());
+            KeyValue modified = ComposeKey.apply(map_digit, key.getChar());
             if (modified != null)
-              return KeyValue.makeStringKey(modified);
+              return modified;
             break;
         }
         return key;

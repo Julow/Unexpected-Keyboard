@@ -11,6 +11,7 @@ final class ClipboardHistoryCheckBox extends CheckBox
   public ClipboardHistoryCheckBox(Context ctx, AttributeSet attrs)
   {
     super(ctx, attrs);
+    setChecked(Config.globalConfig().clipboard_history_enabled);
     setOnCheckedChangeListener(this);
   }
 
