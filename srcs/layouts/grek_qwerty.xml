@@ -8,7 +8,7 @@
     <key key0="τ" key2="5" key3="%"/>
     <key key0="υ" key2="6" key3="^"/>
     <key key0="θ" key2="7" key3="&amp;"/>
-    <key key0="ι" key1="accent_trema" key2="8" key3="*"/>
+    <key key0="ι"  key2="8" key3="*"/>
     <key key0="ο" key2="9" key3="(" key4=")"/>
     <key key0="π" key2="0"/>
   </row>
@@ -19,9 +19,10 @@
     <key key0="φ"/>
     <key key0="γ" key2="-" key3="_"/>
     <key key0="η" key2="=" key3="+"/>
-    <key key0="ξ" key2="accent_aigu" key3="{" key4="}"/>
-    <key key0="κ" key2="accent_grave" key3="[" key4="]"/>
+    <key key0="ξ" key3="{" key4="}"/>
+    <key key0="κ" key2="" key3="[" key4="]"/>
     <key key0="λ" key2="|" key3="\\"/>
+    <key key0="accent_aigu" key1="accent_trema" key2="accent_grave"/>
   </row>
   <row>
     <key width="1.5" key0="shift" key2="loc capslock"/>
