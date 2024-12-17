@@ -195,6 +195,9 @@ def make_automata(tries):
         # There are two encoding for leafs: character final state for 15-bit
         # characters and string final state for the rest.
         if len(c) > 1 or ord(c[0]) > 32767: # String final state
+            # A ':' can be added to the result of a sequence to force a string
+            # final state. For example, to go through KeyValue lookup.
+            if c.startswith(":"): c = c[1:]
             javachars = array('H', c.encode("UTF-16-LE"))
             states.append((-1, len(javachars) + 1))
             for c in javachars:
