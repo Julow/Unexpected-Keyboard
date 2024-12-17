@@ -719,6 +719,20 @@ public final class KeyValue implements Comparable<KeyValue>
       case "ㅍ": return makeHangulInitial("ㅍ", 17);
       case "ㅎ": return makeHangulInitial("ㅎ", 18);
 
+      /* Tamil letters should be smaller on the keyboard. */
+      case "ஔ": case "ந": case "ல": case "ழ": case "௯": case "க":
+      case "ஷ": case "ே": case "௨": case "ஜ": case "ங": case "ன":
+      case "௦": case "ை": case "ூ": case "ம": case "ஆ": case "௭":
+      case "௪": case "ா": case "ஶ": case "௬": case "வ": case "ஸ":
+      case "௮": case "ட": case "ப": case "ஈ": case "௩": case "ஒ":
+      case "ௌ": case "உ": case "௫": case "ய": case "ர": case "ு":
+      case "இ": case "ோ": case "ஓ": case "ஃ": case "ற": case "த":
+      case "௧": case "ண": case "ஏ": case "ஊ": case "ொ": case "ஞ":
+      case "அ": case "எ": case "ச": case "ெ": case "ஐ": case "ி":
+      case "௹": case "ள": case "ஹ": case "௰": case "ௐ": case "௱":
+      case "௲": case "௳":
+        return makeStringKey(name, FLAG_SMALLER_FONT);
+
       /* The key is not one of the special ones. */
       default: return parseKeyDefinition(name);
     }
