@@ -20,7 +20,7 @@
     <key key0="γ" key2="-" key3="_"/>
     <key key0="η" key2="=" key3="+"/>
     <key key0="ξ" key3="{" key4="}"/>
-    <key key0="κ" key2="" key3="[" key4="]"/>
+    <key key0="κ" key3="[" key4="]"/>
     <key key0="λ" key2="|" key3="\\"/>
     <key key0="accent_aigu" key1="accent_trema" key3="accent_grave"/>
   </row>
