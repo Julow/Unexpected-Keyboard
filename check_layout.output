@@ -59,6 +59,9 @@ Layout doesn't define some important keys, missing: loc esc, loc tab
 Duplicate keys: ।
 Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 2 warnings
+# deva_phonetic_in
+Duplicate keys: ट
+1 warnings
 # georgian_mes
 0 warnings
 # georgian_qwerty
