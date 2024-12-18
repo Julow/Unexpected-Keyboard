@@ -345,9 +345,12 @@ public final class Config
             char c = prev_c;
             if (inverse_numpad)
               c = inverse_numpad_char(c);
-            KeyValue modified = ComposeKey.apply(map_digit, c);
-            if (modified != null) // Was modified by script
-              return modified;
+            if (map_digit != -1)
+            {
+              KeyValue modified = ComposeKey.apply(map_digit, c);
+              if (modified != null) // Was modified by script
+                return modified;
+            }
             if (prev_c != c) // Was inverted
               return key.withChar(c);
             break;
@@ -360,6 +363,8 @@ public final class Config
   static KeyboardData.MapKeyValues numpad_script_map(String numpad_script)
   {
     final int map_digit = KeyModifier.modify_numpad_script(numpad_script);
+    if (map_digit == -1)
+      return null;
     return new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
@@ -380,14 +385,16 @@ public final class Config
       same script. */
   public KeyboardData modify_pinentry(KeyboardData kw, KeyboardData main_kw)
   {
-    return kw.mapKeys(numpad_script_map(main_kw.numpad_script));
+    KeyboardData.MapKeyValues m = numpad_script_map(main_kw.numpad_script);
+    return m == null ? kw : kw.mapKeys(m);
   }
 
   /** Modify the number row according to [main_kw]'s script. */
   public KeyboardData.Row modify_number_row(KeyboardData.Row row,
       KeyboardData main_kw)
   {
-    return row.mapKeys(numpad_script_map(main_kw.numpad_script));
+    KeyboardData.MapKeyValues m = numpad_script_map(main_kw.numpad_script);
+    return m == null ? row : row.mapKeys(m);
   }
 
   private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)
