@@ -69,6 +69,7 @@
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
     <item>latn_qwertz_sq</item>
+    <item>latn_workman_us</item>
     <item>shaw_imperial_en</item>
     <item>urdu_phonetic_ur</item>
     <item>custom</item>
@@ -141,6 +142,7 @@
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
     <item>QWERTZ (Albanian)</item>
+    <item>WORKMAN (US)</item>
     <item>Shaw Imperial</item>
     <item>Urdu Phonetic</item>
     <item>@string/pref_layout_e_custom</item>
@@ -213,6 +215,7 @@
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
     <item>@xml/latn_qwertz_sq</item>
+    <item>@xml/latn_workman_us</item>
     <item>@xml/shaw_imperial_en</item>
     <item>@xml/urdu_phonetic_ur</item>
     <item>-1</item>
