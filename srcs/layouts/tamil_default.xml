@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keyboard name="தமிழ்" script="tamil" numpad_script="tamil">
+  <row>
+    <key width="1.1" key0="ஞ" key1="௧" key2="1" key3="ஶ" key4="loc esc"/>
+    <key key0="ற" key1="௨" key2="2" key3="ஷ" key4="\@"/>
+    <key key0="ந" key1="௩" key2="3" key3="ஸ" key4="\#"/>
+    <key width="1.2" key0="ச" key1="௪" key2="4" key3="ஹ" key4="௹"/>
+    <key key0="வ" key1="௫" key2="5" key3="ஜ" key4="%"/>
+    <key key0="ர" key1="௬" key2="6" key3="ல" key4="^"/>
+    <key width="1.1" key0="ை" key1="௭" key2="7" key3="ஐ" key4="&amp;"/>
+    <key width="1.2" key0="ொ" key1="௮" key2="8" key3="ோ" key4="*"/>
+    <key width="0.9" key0="ி" key1="௯" key2="9" key3="ீ" key4="("/>
+    <key key0="ு" key1="௦" key2="0" key3="ூ" key4=")"/>
+  </row>
+  <row>
+    <key shift="0.2" key0="ய" key1="loc tab" key2="`"/>
+    <key key0="ள" key1="~"/>
+    <key key0="ன" key1="!" key2="$" />
+    <key key0="க"/>
+    <key key0="ப" key2="-" key3="_"/>
+    <key key0="ா" key2="=" key3="ழ" key4="+"/>
+    <key key0="த" key2="{" key3="ம" key4="}"/>
+    <key key0="ட" key2="[" key3="ங" key4="]"/>
+    <key key0="்" key2="|" key3="ஃ" key4="\\"/>
+    <key key0="இ" key3="ஈ"/>
+  </row>
+  <row>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key key0="ண"/>
+    <key key0="ஒ" key3="ஓ"/>
+    <key key0="உ" key2="&lt;" key3="ஊ" key4="."/>
+    <key key0="எ" key2=">" key3="ஏ" key4=","/>
+    <key width="1.05" key0="ெ" key2="\?" key3="ே" key4="/"/>
+    <key width="1.3" key0="ஔ" key2=":" key3="ௌ" key4=";"/>
+    <key key0="அ" key2="&quot;" key3="ஆ" key4="'"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
+  </row>
+</keyboard>
