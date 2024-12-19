@@ -23,6 +23,7 @@ public class KeyValueTest
     assertEquals(apply_numpad_script("persian"), "۰۱۲۳۴۵۶۷۸۹");
     assertEquals(apply_numpad_script("gujarati"), "૦૧૨૩૪૫૬૭૮૯");
     assertEquals(apply_numpad_script("kannada"), "೦೧೨೩೪೫೬೭೮೯");
+    assertEquals(apply_numpad_script("tamil"), "௦௧௨௩௪௫௬௭௮௯");
   }
   String apply_numpad_script(String script)
   {

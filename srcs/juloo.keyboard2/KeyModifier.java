@@ -117,6 +117,7 @@ public final class KeyModifier
       case "persian": return ComposeKeyData.numpad_persian;
       case "gujarati": return ComposeKeyData.numpad_gujarati;
       case "kannada": return ComposeKeyData.numpad_kannada;
+      case "tamil": return ComposeKeyData.numpad_tamil;
       default: return -1;
     }
   }
