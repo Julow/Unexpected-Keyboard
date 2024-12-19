@@ -1,41 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <keyboard name="हिन्दी फोनेटिक - Hindi Phonetic" script="devanagari">
   <modmap>
-    <shift a="अ" b="आ" />
-    <shift a="इ" b="ई" />
-    <shift a="ि" b="ी" />
-    <shift a="उ" b="ऊ" />
-    <shift a="ु" b="ू" />
-    <shift a="ए" b="ऐ" />
-    <shift a="े" b="ै" />
-    <shift a="ओ" b="औ" />
-    <shift a="ो" b="ौ" />
-    <shift a="क" b="ख" />
-    <shift a="ग" b="घ" />
-    <shift a="च" b="छ" />
-    <shift a="ज" b="झ" />
-    <shift a="ट" b="ठ" />
-    <shift a="ड" b="ढ" />
     <shift a="ड़" b="ढ़" />
     <shift a="क़" b="ख़" />
-    <shift a="न" b="ण" />
-    <shift a="त" b="थ" />
-    <shift a="द" b="ध" />
-    <shift a="ब" b="भ" />
-    <shift a="म" b="ं" />
-    <shift a="ल" b="ळ" />
-    <shift a="स" b="श" />
-    <shift a="ह" b="ः" />
-    <shift a="ऋ" b="ॠ" />
-    <shift a="ृ" b="ॄ" />
-    <shift a="ऌ" b="ॡ" />
-    <shift a="ॢ" b="ॣ" />
-    <shift a="॒" b="॑" />
-    <shift a= "ॅ" b="ॲ" />
-    <shift a= "ॉ" b="ऑ" />
     <shift a= "ज्ञ" b="ञ" />
-
-
   </modmap>
   <row>
     <key key0="ट" key1="`" key2="1" key3="!" key4="loc esc"/>
