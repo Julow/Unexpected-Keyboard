@@ -43,6 +43,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "accent_dot_below",
     "accent_hook_above",
     "accent_horn",
+    "accent_double_grave",
     "€",
     "ß",
     "£",
@@ -99,7 +100,21 @@ public class ExtraKeysPreference extends PreferenceCategory
     "combining_slavonic_dasia",
     "combining_payerok",
     "combining_titlo",
-    "combining_vzmet"
+    "combining_vzmet",
+    "combining_arabic_v",
+    "combining_arabic_inverted_v",
+    "combining_shaddah",
+    "combining_sukun",
+    "combining_fatha",
+    "combining_dammah",
+    "combining_kasra",
+    "combining_hamza_above",
+    "combining_hamza_below",
+    "combining_alef_above",
+    "combining_fathatan",
+    "combining_kasratan",
+    "combining_dammatan",
+    "combining_alef_below",
   };
 
   /** Whether an extra key is enabled by default. */
@@ -177,6 +192,20 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "combining_payerok":
       case "combining_titlo":
       case "combining_vzmet":
+      case "combining_arabic_v":
+      case "combining_arabic_inverted_v":
+      case "combining_shaddah":
+      case "combining_sukun":
+      case "combining_fatha":
+      case "combining_dammah":
+      case "combining_kasra":
+      case "combining_hamza_above":
+      case "combining_hamza_below":
+      case "combining_alef_above":
+      case "combining_fathatan":
+      case "combining_kasratan":
+      case "combining_dammatan":
+      case "combining_alef_below":
         id = R.string.key_descr_combining;
         break;
     }

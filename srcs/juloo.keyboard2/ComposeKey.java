@@ -27,7 +27,7 @@ public final class ComposeKey
   }
 
   /** Apply the pending compose sequence to char [c]. */
-  static KeyValue apply(int prev, char c)
+  public static KeyValue apply(int prev, char c)
   {
     char[] states = ComposeKeyData.states;
     char[] edges = ComposeKeyData.edges;

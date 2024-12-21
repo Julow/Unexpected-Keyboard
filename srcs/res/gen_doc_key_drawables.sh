@@ -20,6 +20,8 @@ TMP=`mktemp -d`
 trap "rm -r '$TMP'" EXIT
 set -x
 
+inkscape doc_key.svg -o "$TMP/doc_key_g.svg" -C --export-page 1 --export-plain-svg --export-text-to-path
 inkscape doc_key.svg -o "$TMP/doc_key_u.svg" -C --export-page 2 --export-plain-svg --export-text-to-path
 
+svg_to_vector "$TMP/doc_key_g.svg" "$DRAWABLE_DIR/doc_key_g.xml"
 svg_to_vector "$TMP/doc_key_u.svg" "$DRAWABLE_DIR/doc_key_u.xml"
