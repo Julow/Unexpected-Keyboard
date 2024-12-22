@@ -1,0 +1,14 @@
+New supported languages: Albanian, Belgian, Estonian, Georgian, Hawaiian,
+Irish, Kannada, Kazakh, Old Church Slavonic, Serbian, Tajiki, Tamil, Welsh
+
+Added WORKMAN (US) layout.
+Improved layouts for modern Hindi and Sanskrit, Greek, Kurdish, Persian, Czech.
+
+New compose sequences and added combining diacritic keys.
+New and improved themes.
+Many bug fixes and improvements.
+
+Many thanks to the contributors: @anaskaejdar @bokidori @cknight828 @cuhsy
+@Danger-Mkh @DocJr90 @IYO-OYI @kalankaboom @Kxeo @marciozomb13 @ms-jagadeeshan
+@npnpatidar @ptitgnu @quantenzitrone @Sestowner @solokot @Spike-from-NH
+@tenextractor
