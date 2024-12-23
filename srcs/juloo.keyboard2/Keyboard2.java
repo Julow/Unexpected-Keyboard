@@ -157,6 +157,8 @@ public class Keyboard2 extends InputMethodService
     // Android might return a random subtype, for example, the first in the
     // list alphabetically.
     InputMethodSubtype current_subtype = imm.getCurrentInputMethodSubtype();
+    if (current_subtype == null)
+      return null;
     for (InputMethodSubtype s : enabled_subtypes)
       if (s.getLanguageTag().equals(current_subtype.getLanguageTag()))
         return s;
