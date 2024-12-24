@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="QWERTY (Lietuviškai)" script="latin">
+  <row>
+    <key key0="q" key2="1" key4="loc esc"/>
+    <key key0="w" key1="~" key2="2" key3="\@"/>
+    <key key0="e" key1="!" key2="3" key3="\#" key4="ę"/>
+    <key key0="r" key2="4" key3="$"/>
+    <key key0="t" key2="5" key3="%"/>
+    <key key0="y" key2="6" key3="^"/>
+    <key key0="u" key2="7" key3="&amp;" key4="ū"/>
+    <key key0="i" key2="8" key3="*" key4="į"/>
+    <key key0="o" key2="9" key3="("/>
+    <key key0="p" key2="0" key3=")"/>
+  </row>
+  <row>
+    <key key0="a" key1="loc tab" key2="`" key4="ą"/>
+    <key key0="s" key2="loc §" key3="loc ß" key4="š"/>
+    <key key0="d"/>
+    <key key0="f"/>
+    <key key0="g" key2="-" key3="_"/>
+    <key key0="h" key2="=" key3="+"/>
+    <key key0="j" key4="}" key3="{"/>
+    <key key0="k" key3="[" key4="]"/>
+    <key key0="l" key2="|" key3="\\"/>
+    <key key0="ė" key4="€"/>
+  </row>
+  <row>
+    <key key0="shift" key2="loc capslock"/>
+    <key key0="z" key4="ž"/>
+    <key key0="x" key2="loc †"/>
+    <key key0="c" key2="&lt;" key3="." key4="č"/>
+    <key key0="v" key2="&gt;" key3=","/>
+    <key key0="b" key2="\?" key3="/"/>
+    <key key0="n" key2=":" key3=";"/>
+    <key key0="m" key2="&quot;" key3="'"/>
+    <key key0="ų"/>
+    <key key0="backspace" key2="delete"/>
+  </row>
+</keyboard>
+
