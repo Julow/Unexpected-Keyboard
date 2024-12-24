@@ -269,8 +269,8 @@ public class Keyboard2View extends View
           WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars()
           | WindowInsets.Type.displayCutout());
       width = metrics.getBounds().width() - insets.right - insets.left;
-      // Starting in API 34, keyboard window has LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-      if (VERSION.SDK_INT >= 34)
+      // Starting in API 35, keyboard window has LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+      if (VERSION.SDK_INT >= 35)
         _bottomMargin += insets.bottom;
     }
     int height =
