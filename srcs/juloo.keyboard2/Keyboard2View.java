@@ -42,7 +42,9 @@ public class Keyboard2View extends View
   private Config _config;
 
   private float _keyWidth;
-  private float _bottomMargin;
+  private float _marginRight;
+  private float _marginLeft;
+  private float _marginBottom;
 
   private Theme _theme;
 
@@ -232,7 +234,7 @@ public class Keyboard2View extends View
   private KeyboardData.Key getKeyAtPosition(float tx, float ty)
   {
     KeyboardData.Row row = getRowAtPosition(ty);
-    float x = _config.horizontal_margin;
+    float x = _marginLeft;
     if (row == null || tx < x)
       return null;
     for (KeyboardData.Key key : row.keys)
@@ -256,28 +258,34 @@ public class Keyboard2View extends View
   @Override
   public void onMeasure(int wSpec, int hSpec)
   {
-    DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-    int width = dm.widthPixels;
-    _bottomMargin = _config.margin_bottom;
-    // Compatibility with display cutouts and navigation on the right
+    int width;
+    _marginLeft = _config.horizontal_margin;
+    _marginRight = _config.horizontal_margin;
+    _marginBottom = _config.margin_bottom;
+    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
     if (VERSION.SDK_INT >= 30)
     {
       WindowMetrics metrics =
         ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
         .getCurrentWindowMetrics();
-      Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(
+      Insets insets = metrics.getWindowInsets().getInsets(
           WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars()
           | WindowInsets.Type.displayCutout());
-      width = metrics.getBounds().width() - insets.right - insets.left;
-      // Starting in API 35, keyboard window has LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-      if (VERSION.SDK_INT >= 35)
-        _bottomMargin += insets.bottom;
+      width = metrics.getBounds().width();
+      _marginLeft = Math.max(_marginLeft, insets.left);
+      _marginRight = Math.max(_marginRight, insets.right);
+      _marginBottom += insets.bottom;
+    }
+    else
+    {
+      DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+      width = dm.widthPixels;
     }
     int height =
       (int)(_config.keyHeight * _keyboard.keysHeight
-          + _config.marginTop + _bottomMargin);
+          + _config.marginTop + _marginBottom);
     setMeasuredDimension(width, height);
-    _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;
+    _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
   }
 
   @Override
@@ -289,10 +297,10 @@ public class Keyboard2View extends View
     {
       // Disable the back-gesture on the keyboard area
       Rect keyboard_area = new Rect(
-          left + (int)_config.horizontal_margin,
+          left + (int)_marginLeft,
           top + (int)_config.marginTop,
-          right - (int)_config.horizontal_margin,
-          bottom - (int)_bottomMargin);
+          right - (int)_marginRight,
+          bottom - (int)_marginBottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
   }
@@ -327,7 +335,7 @@ public class Keyboard2View extends View
     for (KeyboardData.Row row : _keyboard.rows)
     {
       y += row.shift * _config.keyHeight;
-      float x = _config.horizontal_margin + key_horizontal_margin / 2;
+      float x = _marginLeft + key_horizontal_margin / 2;
       float keyH = row.height * _config.keyHeight - key_vertical_margin;
       for (KeyboardData.Key k : row.keys)
       {
