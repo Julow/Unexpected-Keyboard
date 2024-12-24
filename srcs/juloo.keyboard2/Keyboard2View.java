@@ -42,6 +42,7 @@ public class Keyboard2View extends View
   private Config _config;
 
   private float _keyWidth;
+  private float _bottomMargin;
 
   private Theme _theme;
 
@@ -257,9 +258,7 @@ public class Keyboard2View extends View
   {
     DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
     int width = dm.widthPixels;
-    int height =
-      (int)(_config.keyHeight * _keyboard.keysHeight
-          + _config.marginTop + _config.margin_bottom);
+    _bottomMargin = _config.margin_bottom;
     // Compatibility with display cutouts and navigation on the right
     if (VERSION.SDK_INT >= 30)
     {
@@ -270,7 +269,13 @@ public class Keyboard2View extends View
           WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars()
           | WindowInsets.Type.displayCutout());
       width = metrics.getBounds().width() - insets.right - insets.left;
+      // Starting in API 34, keyboard window has LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+      if (VERSION.SDK_INT >= 34)
+        _bottomMargin += insets.bottom;
     }
+    int height =
+      (int)(_config.keyHeight * _keyboard.keysHeight
+          + _config.marginTop + _bottomMargin);
     setMeasuredDimension(width, height);
     _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;
   }
@@ -287,7 +292,7 @@ public class Keyboard2View extends View
           left + (int)_config.horizontal_margin,
           top + (int)_config.marginTop,
           right - (int)_config.horizontal_margin,
-          bottom - (int)_config.margin_bottom);
+          bottom - (int)_bottomMargin);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
   }
