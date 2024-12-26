@@ -81,6 +81,8 @@
   </style>
   <style name="appTheme" parent="@android:style/Theme.DeviceDefault.DayNight"/>
   <style name="settingsTheme" parent="appTheme">
+    <!-- Setting this in the activity theme so it propagate to nested
+         preference screens. -->
     <item name="android:fitsSystemWindows">true</item>
   </style>
 </resources>
