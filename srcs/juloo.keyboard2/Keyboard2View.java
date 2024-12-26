@@ -280,7 +280,10 @@ public class Keyboard2View extends View
       width = metrics.getBounds().width();
       _marginLeft = Math.max(_marginLeft, insets.left);
       _marginRight = Math.max(_marginRight, insets.right);
-      _marginBottom += insets.bottom;
+      // [insets.bottom] doesn't take into account the buttons that appear in
+      // the gesture navigation bar when the IME is showing so ensure a minimum
+      // of margin is added.
+      _marginBottom += Math.max(insets.bottom, _config.bottomInsetMin);
     }
     else
     {

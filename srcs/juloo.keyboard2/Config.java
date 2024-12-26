@@ -84,6 +84,7 @@ public final class Config
       [get_current_layout()] and [set_current_layout()]. */
   int current_layout_portrait;
   int current_layout_landscape;
+  public float bottomInsetMin;
 
   private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h)
   {
@@ -187,6 +188,8 @@ public final class Config
     current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
+    bottomInsetMin = Utils.is_navigation_bar_gestural(res) ?
+      res.getDimension(R.dimen.bottom_inset_min) : 0.0f;
   }
 
   public int get_current_layout()
