@@ -2,8 +2,12 @@ package juloo.keyboard2;
 
 import android.app.AlertDialog;
 import android.content.res.Resources;
+import android.graphics.Insets;
+import android.os.Build.VERSION;
 import android.os.IBinder;
+import android.view.View;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -54,5 +58,21 @@ public final class Utils
     // core/java/android/view/WindowManagerPolicyConstants.java
     int res_id = res.getIdentifier("config_navBarInteractionMode", "integer", "android");
     return (res_id > 0 && res.getInteger(res_id) == 2);
+  }
+
+  public static void enable_edge_to_edge(View v)
+  {
+    /* Edge-to-edge became enabled by default on API 35. */
+    if (VERSION.SDK_INT < 35)
+      return;
+    v.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener(){
+      @Override
+      public WindowInsets onApplyWindowInsets(View v, WindowInsets wi)
+      {
+        Insets i = wi.getInsets(WindowInsets.Type.systemBars());
+        v.setPadding(i.left, i.top, i.right, i.bottom);
+        return WindowInsets.CONSUMED;
+      }
+    });
   }
 }
