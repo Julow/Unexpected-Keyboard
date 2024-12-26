@@ -268,12 +268,19 @@ public class Keyboard2View extends View
       WindowMetrics metrics =
         ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
         .getCurrentWindowMetrics();
-      Insets insets = metrics.getWindowInsets().getInsets(
-          WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars()
-          | WindowInsets.Type.displayCutout());
-      width = metrics.getBounds().width();
-      _marginLeft = Math.max(_marginLeft, insets.left);
-      _marginRight = Math.max(_marginRight, insets.right);
+      WindowInsets wi = metrics.getWindowInsets();
+      // Keyboard doesn't draw behind button-navigation bars in landscape mode
+      Insets navigationBarInsets = wi.getInsets(WindowInsets.Type.navigationBars());
+      Insets insets = wi.getInsets(
+          WindowInsets.Type.statusBars()
+          | WindowInsets.Type.navigationBars()
+          | WindowInsets.Type.displayCutout()
+          | WindowInsets.Type.tappableElement()
+          | WindowInsets.Type.mandatorySystemGestures()
+          );
+      width = metrics.getBounds().width() - navigationBarInsets.left - navigationBarInsets.right;
+      _marginLeft = Math.max(_marginLeft, insets.left - navigationBarInsets.left);
+      _marginRight = Math.max(_marginRight, insets.right - navigationBarInsets.right);
       _marginBottom += insets.bottom;
     }
     else
