@@ -292,6 +292,15 @@ public class Keyboard2 extends InputMethodService
 
   private void updateSoftInputWindowLayoutParams() {
     final Window window = getWindow().getWindow();
+    // On API >= 30, Keyboard2View behaves as edge-to-edge
+    if (VERSION.SDK_INT >= 30)
+    {
+      WindowManager.LayoutParams wattrs = window.getAttributes();
+      wattrs.layoutInDisplayCutoutMode =
+        WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+      // Allow to draw behind system bars
+      wattrs.setFitInsetsTypes(0);
+    }
     updateLayoutHeightOf(window, ViewGroup.LayoutParams.MATCH_PARENT);
     final View inputArea = window.findViewById(android.R.id.inputArea);
 
