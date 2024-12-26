@@ -36,9 +36,7 @@ public class LauncherActivity extends Activity implements Handler.Callback
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    View content_view = View.inflate(this, R.layout.launcher_activity, null);
-    setContentView(content_view);
-    Utils.enable_edge_to_edge(content_view);
+    setContentView(R.layout.launcher_activity);
     _tryhere_text = (TextView)findViewById(R.id.launcher_tryhere_text);
     _tryhere_area = (EditText)findViewById(R.id.launcher_tryhere_area);
     if (VERSION.SDK_INT >= 28)

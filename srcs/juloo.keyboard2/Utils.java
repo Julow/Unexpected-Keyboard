@@ -59,20 +59,4 @@ public final class Utils
     int res_id = res.getIdentifier("config_navBarInteractionMode", "integer", "android");
     return (res_id > 0 && res.getInteger(res_id) == 2);
   }
-
-  public static void enable_edge_to_edge(View v)
-  {
-    /* Edge-to-edge became enabled by default on API 35. */
-    if (VERSION.SDK_INT < 35)
-      return;
-    v.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener(){
-      @Override
-      public WindowInsets onApplyWindowInsets(View v, WindowInsets wi)
-      {
-        Insets i = wi.getInsets(WindowInsets.Type.systemBars());
-        v.setPadding(i.left, i.top, i.right, i.bottom);
-        return WindowInsets.CONSUMED;
-      }
-    });
-  }
 }
