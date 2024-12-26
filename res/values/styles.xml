@@ -80,4 +80,7 @@
     <item name="android:orientation">horizontal</item>
   </style>
   <style name="appTheme" parent="@android:style/Theme.DeviceDefault.DayNight"/>
+  <style name="settingsTheme" parent="appTheme">
+    <item name="android:fitsSystemWindows">true</item>
+  </style>
 </resources>
