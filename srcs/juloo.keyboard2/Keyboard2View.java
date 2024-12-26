@@ -263,14 +263,13 @@ public class Keyboard2View extends View
     _marginRight = _config.horizontal_margin;
     _marginBottom = _config.margin_bottom;
     // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
+    // and keyboard is allowed do draw behind status/navigation bars
     if (VERSION.SDK_INT >= 30)
     {
       WindowMetrics metrics =
         ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
         .getCurrentWindowMetrics();
       WindowInsets wi = metrics.getWindowInsets();
-      // Keyboard doesn't draw behind button-navigation bars in landscape mode
-      Insets navigationBarInsets = wi.getInsets(WindowInsets.Type.navigationBars());
       Insets insets = wi.getInsets(
           WindowInsets.Type.statusBars()
           | WindowInsets.Type.navigationBars()
@@ -278,9 +277,9 @@ public class Keyboard2View extends View
           | WindowInsets.Type.tappableElement()
           | WindowInsets.Type.mandatorySystemGestures()
           );
-      width = metrics.getBounds().width() - navigationBarInsets.left - navigationBarInsets.right;
-      _marginLeft = Math.max(_marginLeft, insets.left - navigationBarInsets.left);
-      _marginRight = Math.max(_marginRight, insets.right - navigationBarInsets.right);
+      width = metrics.getBounds().width();
+      _marginLeft = Math.max(_marginLeft, insets.left);
+      _marginRight = Math.max(_marginRight, insets.right);
       _marginBottom += insets.bottom;
     }
     else
