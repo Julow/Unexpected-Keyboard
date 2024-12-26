@@ -62,7 +62,7 @@ public class Keyboard2 extends InputMethodService
   {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
-    return _config.modify_layout(current_layout_unmodified());
+    return LayoutModifier.modify_layout(current_layout_unmodified());
   }
 
   void setTextLayout(int l)
@@ -92,13 +92,13 @@ public class Keyboard2 extends InputMethodService
   /** Load a layout that contains a numpad. */
   KeyboardData loadNumpad(int layout_id)
   {
-    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id),
+    return LayoutModifier.modify_numpad(KeyboardData.load(getResources(), layout_id),
         current_layout_unmodified());
   }
 
   KeyboardData loadPinentry(int layout_id)
   {
-    return _config.modify_pinentry(KeyboardData.load(getResources(), layout_id),
+    return LayoutModifier.modify_pinentry(KeyboardData.load(getResources(), layout_id),
         current_layout_unmodified());
   }
 
