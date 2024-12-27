@@ -35,4 +35,17 @@
     <key key0="அ" key2="&quot;" key3="ஆ" key4="'"/>
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
+
+  <modmap>
+    <shift a="௹" b="₨"/>
+    <shift a="ய" b="௰"/>
+    <shift a="ஒ" b="ௐ"/>
+    <shift a="ள" b="௱"/>
+    <shift a="ச" b="௲"/>
+    <shift a="வ" b="௳"/>
+    <ctrl a="ய" b="a"/>
+    <ctrl a="எ" b="v"/>
+    <ctrl a="உ" b="c"/>
+    <ctrl a="ஒ" b="x"/>
+  </modmap>
 </keyboard>
