@@ -22,14 +22,11 @@ let
   };
 
   emulators = let
-    mk_emulator = { platformVersion, device ? "pixel_6" }:
+    mk_emulator = { platformVersion, device ? "pixel_6", abiVersion ? "x86_64", systemImageType ? "default" }:
       pkgs.androidenv.emulateApp rec {
         name = "emulator_api${platformVersion}";
-        inherit platformVersion;
-        abiVersion = "x86_64";
+        inherit platformVersion abiVersion systemImageType;
         androidAvdFlags = "--device ${device}";
-        # There's no 'default' image for Android 15
-        systemImageType = "google_apis";
         sdkExtraArgs = { inherit repoJson; };
       };
     # Allow to install several emulators in the same environment
@@ -38,8 +35,10 @@ let
       path = "${mk_emulator args}/bin/run-test-emulator";
     };
   in pkgs.linkFarm "emulator" [
-    (link_emulator "14" { platformVersion = "34"; })
-    (link_emulator "15" { platformVersion = "35"; })
+    (link_emulator "5" { platformVersion = "21"; })
+    # (link_emulator "14" { platformVersion = "34"; })
+    # There's no 'default' image for Android 15
+    (link_emulator "15" { platformVersion = "35"; systemImageType = "google_apis"; })
   ];
 
   ANDROID_SDK_ROOT = "${android.androidsdk}/libexec/android-sdk";
