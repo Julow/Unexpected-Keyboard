@@ -291,6 +291,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private KeyValue(Object p, int kind, int value, int flags)
   {
+    if (p == null)
+      throw new NullPointerException("KeyValue payload cannot be null");
     _payload = p;
     _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
   }
