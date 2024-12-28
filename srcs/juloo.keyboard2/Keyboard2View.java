@@ -264,7 +264,7 @@ public class Keyboard2View extends View
     int insets_bottom = 0;
     // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
     // and keyboard is allowed do draw behind status/navigation bars
-    if (VERSION.SDK_INT >= 30)
+    if (VERSION.SDK_INT >= 35)
     {
       WindowMetrics metrics =
         ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))

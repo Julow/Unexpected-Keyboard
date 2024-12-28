@@ -292,8 +292,9 @@ public class Keyboard2 extends InputMethodService
 
   private void updateSoftInputWindowLayoutParams() {
     final Window window = getWindow().getWindow();
-    // On API >= 30, Keyboard2View behaves as edge-to-edge
-    if (VERSION.SDK_INT >= 30)
+    // On API >= 35, Keyboard2View behaves as edge-to-edge
+    // APIs 30 to 34 have visual artifact when edge-to-edge is enabled
+    if (VERSION.SDK_INT >= 35)
     {
       WindowManager.LayoutParams wattrs = window.getAttributes();
       wattrs.layoutInDisplayCutoutMode =
