@@ -152,7 +152,9 @@ public final class LayoutModifier
               return KeyValue.getKeyByName("change_method_prev");
             break;
           case ACTION:
-            if (globalConfig.swapEnterActionKey && globalConfig.actionLabel != null)
+            if (globalConfig.actionLabel == null)
+              return null; // Remove the action key
+            if (globalConfig.swapEnterActionKey)
               return KeyValue.getKeyByName("enter");
             return KeyValue.makeActionKey(globalConfig.actionLabel);
           case SWITCH_FORWARD:
