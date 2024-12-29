@@ -58,5 +58,6 @@
   <subtype android:label="%s" android:languageTag="tly" android:imeSubtypeLocale="tly_IR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="default_layout=arab_hamvaj_tly"/>
   <subtype android:label="%s" android:languageTag="tr" android:imeSubtypeLocale="tr_TR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_tr,extra_keys=accent_cedille:ç:ş@c|accent_trema:ö:ü@u|accent_circonflexe:â:î:û@f|₺|ı|ğ"/>
   <subtype android:label="%s" android:languageTag="uk" android:imeSubtypeLocale="uk_UA" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=cyrillic,default_layout=cyrl_jcuken_uk,extra_keys=ґ|є|і|ї|₴"/>
+  <subtype android:label="%s" android:languageTag="uz" android:imeSubtypeLocale="uz_UZ" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_uz,extra_keys=ʻ|ʼ"/>
   <subtype android:label="%s" android:languageTag="vi" android:imeSubtypeLocale="vi_VN" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_vi"/>
 </input-method>
