@@ -18,6 +18,13 @@
   "┐": "╗",
   "─": "═",
   "│": "║",
+  "∈": "∉",
+  "∋": "∌",
+  "⊂": "⊄",
+  "⊃": "⊅",
+  "⊆": "⊈",
+  "⊇": "⊉",
+
   // superscript
   "ᵃ": "ᴬ",
   "ᵇ": "ᴮ",
@@ -42,18 +49,22 @@
   "ʷ": "ᵂ",
   "ᶾ": "ᴣ",
   "ᵠ": "ᶲ",
+
   // german eszett has an uppercase, but because it is uncommon, java doesn't know about it
   "ß": "ẞ",
+
   // these characters don't have a preapplied uppercase version, so we use combining characters
   "ẗ": "T\u0308",
   "ẘ": "W\u030A",
   "ẙ": "Y\u030A",
   "ǰ": "J\u030C",
   "ȷ": "J\u0307",
+
   // In Turkish, upper case of 'iı' is 'İI' but Java's toUpperCase will
   // return 'II'. To make 'İ' accessible, make it the shift of 'ı'. This
   // has the inconvenient of swapping i and ı on the keyboard.
   "ı": "İ",
+
   "₹": "₨",
   // Gujarati alternate characters
   "અ": "આ",
@@ -80,8 +91,10 @@
   "લ": "ળ",
   "સ": "શ",
   "હ": "ઃ",
+
   // Tamil alternate characters
   "௹": "₨",
+
   // Modern Hindi and Sanskrit
   "अ": "आ",
   "इ": "ई",
