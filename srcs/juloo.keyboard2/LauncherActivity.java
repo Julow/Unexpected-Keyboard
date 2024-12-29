@@ -50,6 +50,8 @@ public class LauncherActivity extends Activity implements Handler.Callback
     super.onStart();
     _animations = new ArrayList<Animatable>();
     _animations.add(find_anim(R.id.launcher_anim_swipe));
+    _animations.add(find_anim(R.id.launcher_anim_round_trip));
+    _animations.add(find_anim(R.id.launcher_anim_circle));
     _handler = new Handler(getMainLooper(), this);
     _handler.sendEmptyMessageDelayed(0, 500);
   }

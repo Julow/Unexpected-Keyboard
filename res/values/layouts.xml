@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--DO NOT EDIT. This file is generated, see gen_layouts.py.-->
+  <!-- DO NOT EDIT. This file is generated, run 'gradle genLayoutsList'. -->
   <string-array name="pref_layout_values">
     <item>system</item>
     <item>latn_qwerty_us</item>
@@ -16,6 +16,7 @@
     <item>armenian_ph_am</item>
     <item>beng_national</item>
     <item>beng_provat</item>
+    <item>cyrl_jcuken_kk</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
     <item>cyrl_lynyertz_sr</item>
@@ -25,22 +26,32 @@
     <item>cyrl_yxukeng_os</item>
     <item>deva_alt</item>
     <item>deva_inscript</item>
+    <item>deva_phonetic_in</item>
+    <item>georgian_mes</item>
+    <item>georgian_qwerty</item>
     <item>grek_qwerty</item>
     <item>guj_phonetic_in</item>
     <item>hang_dubeolsik_kr</item>
     <item>hebr_1_il</item>
     <item>hebr_2_il</item>
+    <item>kann_kannada</item>
+    <item>latn_azerty_be</item>
     <item>latn_azerty_fr</item>
     <item>latn_bepo_fr</item>
     <item>latn_bone</item>
     <item>latn_neo2</item>
     <item>latn_qwerty_br</item>
+    <item>latn_qwerty_cy</item>
     <item>latn_qwerty_cz</item>
     <item>latn_qwerty_da</item>
     <item>latn_qwerty_es</item>
+    <item>latn_qwerty_et</item>
+    <item>latn_qwerty_ga</item>
     <item>latn_qwerty_gb</item>
+    <item>latn_qwerty_haw</item>
     <item>latn_qwerty_hu</item>
     <item>latn_qwerty_jp</item>
+    <item>latn_qwerty_kk</item>
     <item>latn_qwerty_lv</item>
     <item>latn_qwerty_no</item>
     <item>latn_qwerty_pl</item>
@@ -53,12 +64,16 @@
     <item>latn_qwerty_vi</item>
     <item>latn_qwertz</item>
     <item>latn_qwertz_cz</item>
+    <item>latn_qwertz_cz_diacritics</item>
     <item>latn_qwertz_cz_multifunctional</item>
     <item>latn_qwertz_de</item>
     <item>latn_qwertz_fr_ch</item>
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
+    <item>latn_qwertz_sq</item>
+    <item>latn_workman_us</item>
     <item>shaw_imperial_en</item>
+    <item>tamil_default</item>
     <item>urdu_phonetic_ur</item>
     <item>custom</item>
   </string-array>
@@ -77,6 +92,7 @@
     <item>Armenian</item>
     <item>বাংলা (জাতীয়)</item>
     <item>বাংলা (প্রভাত)</item>
+    <item>ЙЦУКЕН (Қазақша)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>ЙЦУКЕН (Українська)</item>
     <item>ЉЊЕРТЗ (Српски)</item>
@@ -86,22 +102,32 @@
     <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
     <item>देवनागरी (हिंदी)-2</item>
     <item>देवनागरी (हिंदी)-1</item>
+    <item>हिन्दी फोनेटिक - Hindi Phonetic</item>
+    <item>ქართული (MES)</item>
+    <item>ქართული (QWERTY)</item>
     <item>QWERTY (Greek)</item>
     <item>ગુજરાતી ફોનેટિક - Gujarati Phonetic</item>
     <item>두벌식 (Korean)</item>
     <item>Hebrew 1</item>
     <item>Hebrew 2</item>
+    <item>ಕನ್ನಡ</item>
+    <item>AZERTY (Belgian)</item>
     <item>AZERTY (Français)</item>
     <item>BEPO (Français)</item>
     <item>Bone</item>
     <item>Neo 2</item>
     <item>QWERTY (Brasileiro)</item>
+    <item>QWERTY (Welsh)</item>
     <item>QWERTY (Czech)</item>
     <item>QWERTY (Danish)</item>
     <item>QWERTY (Español)</item>
+    <item>QWERTY (eesti)</item>
+    <item>QWERTY (Irish)</item>
     <item>QWERTY (UK)</item>
+    <item>QWERTY (Hawaiian)</item>
     <item>QWERTY (Magyar)</item>
     <item>QWERTY (Japan)</item>
+    <item>QWERTY (Qazaqşa)</item>
     <item>QWERTY (Latvian)</item>
     <item>QWERTY (Norwegian)</item>
     <item>QWERTY (Polski)</item>
@@ -114,12 +140,16 @@
     <item>QWERTY (Vietnamese)</item>
     <item>QWERTZ</item>
     <item>QWERTZ (Czech)</item>
+    <item>QWERTZ (Czech with diacritic keys)</item>
     <item>QWERTZ Multifunctional (Czech)</item>
     <item>QWERTZ (Deutsch)</item>
     <item>QWERTZ (Swiss French)</item>
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
+    <item>QWERTZ (Albanian)</item>
+    <item>WORKMAN (US)</item>
     <item>Shaw Imperial</item>
+    <item>தமிழ்</item>
     <item>Urdu Phonetic</item>
     <item>@string/pref_layout_e_custom</item>
   </string-array>
@@ -138,6 +168,7 @@
     <item>@xml/armenian_ph_am</item>
     <item>@xml/beng_national</item>
     <item>@xml/beng_provat</item>
+    <item>@xml/cyrl_jcuken_kk</item>
     <item>@xml/cyrl_jcuken_ru</item>
     <item>@xml/cyrl_jcuken_uk</item>
     <item>@xml/cyrl_lynyertz_sr</item>
@@ -147,22 +178,32 @@
     <item>@xml/cyrl_yxukeng_os</item>
     <item>@xml/deva_alt</item>
     <item>@xml/deva_inscript</item>
+    <item>@xml/deva_phonetic_in</item>
+    <item>@xml/georgian_mes</item>
+    <item>@xml/georgian_qwerty</item>
     <item>@xml/grek_qwerty</item>
     <item>@xml/guj_phonetic_in</item>
     <item>@xml/hang_dubeolsik_kr</item>
     <item>@xml/hebr_1_il</item>
     <item>@xml/hebr_2_il</item>
+    <item>@xml/kann_kannada</item>
+    <item>@xml/latn_azerty_be</item>
     <item>@xml/latn_azerty_fr</item>
     <item>@xml/latn_bepo_fr</item>
     <item>@xml/latn_bone</item>
     <item>@xml/latn_neo2</item>
     <item>@xml/latn_qwerty_br</item>
+    <item>@xml/latn_qwerty_cy</item>
     <item>@xml/latn_qwerty_cz</item>
     <item>@xml/latn_qwerty_da</item>
     <item>@xml/latn_qwerty_es</item>
+    <item>@xml/latn_qwerty_et</item>
+    <item>@xml/latn_qwerty_ga</item>
     <item>@xml/latn_qwerty_gb</item>
+    <item>@xml/latn_qwerty_haw</item>
     <item>@xml/latn_qwerty_hu</item>
     <item>@xml/latn_qwerty_jp</item>
+    <item>@xml/latn_qwerty_kk</item>
     <item>@xml/latn_qwerty_lv</item>
     <item>@xml/latn_qwerty_no</item>
     <item>@xml/latn_qwerty_pl</item>
@@ -175,12 +216,16 @@
     <item>@xml/latn_qwerty_vi</item>
     <item>@xml/latn_qwertz</item>
     <item>@xml/latn_qwertz_cz</item>
+    <item>@xml/latn_qwertz_cz_diacritics</item>
     <item>@xml/latn_qwertz_cz_multifunctional</item>
     <item>@xml/latn_qwertz_de</item>
     <item>@xml/latn_qwertz_fr_ch</item>
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
+    <item>@xml/latn_qwertz_sq</item>
+    <item>@xml/latn_workman_us</item>
     <item>@xml/shaw_imperial_en</item>
+    <item>@xml/tamil_default</item>
     <item>@xml/urdu_phonetic_ur</item>
     <item>-1</item>
   </integer-array>

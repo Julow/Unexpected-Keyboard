@@ -215,5 +215,45 @@
   "ԓ": "ԯ",
   "\ua67d": "\u0483",
   "\u0487": "\ua66f",
-  "ӈ": "ԩ"
+  "ӈ": "ԩ",
+
+  // Arabic
+  ":": "zwnj",
+  "ل": "ڵ",
+  "\u064F": "ۆ", // combining_dammah
+  "\u0650": "ێ", // combining_kasra
+  "ر": "ڕ",
+  "ب": "ٮ",
+  "ه": "ھ",
+  "ث": "پ",
+  "ز": "ژ",
+  "غ": "گ",
+  "ك": "ک",
+  "ا": "آ",
+  "ي": "ی",
+  "ک": "ك",
+  "ط": "ظ",
+  "ص": "ض",
+  "ی": "ي",
+  "ق": "غ",
+  "ع": "ء",
+  "ح": "ہ",
+  "ێ": "combining_kasra",
+  "ئ": "combining_hamza_above",
+  "ؽ": "combining_arabic_inverted_v",
+  "ۉ": "combining_arabic_inverted_v",
+  "ڡ": "combining_dammah",
+  "ة": "combining_fatha",
+  "إ": "combining_hamza_below",
+  "ۆ": "combining_arabic_v",
+  "س": "ـ",
+  "ف": "ڤ",
+  "ن": "ں",
+
+  // Tamil
+  "ய": ":௰",
+  "ஒ": ":ௐ",
+  "ள": ":௱",
+  "ச": ":௲",
+  "வ": ":௳"
 }

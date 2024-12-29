@@ -99,10 +99,16 @@ def strip_cstyle_comments(inp):
 
 # Parse from a json file containing a dictionary sequence → result string.
 def parse_sequences_file_json(fname):
+    def tree_to_seqs(tree, prefix):
+        for c, r in tree.items():
+            if isinstance(r, str):
+                yield prefix + [c], r
+            else:
+                yield from tree_to_seqs(r, prefix + [c])
     try:
         with open(fname, "r") as inp:
-            seqs = json.loads(strip_cstyle_comments(inp))
-        return list(seqs.items())
+            tree = json.loads(strip_cstyle_comments(inp))
+        return list(tree_to_seqs(tree, []))
     except Exception as e:
         print("Failed parsing '%s': %s" % (fname, str(e)), file=sys.stderr)
 
@@ -133,26 +139,33 @@ def parse_sequences_dir(dname):
 
 # Turn a list of sequences into a trie.
 def add_sequences_to_trie(seqs, trie):
-    def add_seq_to_trie(t_, seq, result):
+    global dropped_sequences
+    def add_seq_to_trie(seq, result):
         t_ = trie
-        i = 0
-        while i < len(seq) - 1:
-            c = seq[i]
-            if c not in t_:
-                t_[c] = {}
-            if isinstance(t_[c], str):
-                global dropped_sequences
-                dropped_sequences += 1
-                print("Sequence collide: '%s = %s' '%s = %s'" % (
-                    seq[:i+1], t_[c], seq, result),
-                      file=sys.stderr)
-                return
-            t_ = t_[c]
-            i += 1
-        c = seq[i]
+        for c in seq[:-1]:
+            t_ = t_.setdefault(c, {})
+            if isinstance(t_, str):
+                return False
+        c = seq[-1]
+        if c in t_:
+            return False
         t_[c] = result
+        return True
+    def existing_sequence_to_str(seq): # Used in error message
+        i = 0
+        t_ = trie
+        while i < len(seq):
+            if seq[i] not in t_: break # No collision ?
+            t_ = t_[seq[i]]
+            i += 1
+            if isinstance(t_, str): break
+        return "".join(seq[:i]) + " = " + str(t_)
     for seq, result in seqs:
-        add_seq_to_trie(trie, seq, result)
+        if not add_seq_to_trie(seq, result):
+            dropped_sequences += 1
+            print("Sequence collide: '%s' and '%s = %s'" % (
+                existing_sequence_to_str(seq),
+                "".join(seq), result), file=sys.stderr)
 
 # Compile the trie into a state machine.
 def make_automata(tries):
@@ -182,6 +195,9 @@ def make_automata(tries):
         # There are two encoding for leafs: character final state for 15-bit
         # characters and string final state for the rest.
         if len(c) > 1 or ord(c[0]) > 32767: # String final state
+            # A ':' can be added to the result of a sequence to force a string
+            # final state. For example, to go through KeyValue lookup.
+            if c.startswith(":"): c = c[1:]
             javachars = array('H', c.encode("UTF-16-LE"))
             states.append((-1, len(javachars) + 1))
             for c in javachars:

@@ -42,6 +42,9 @@ public class Keyboard2View extends View
   private Config _config;
 
   private float _keyWidth;
+  private float _marginRight;
+  private float _marginLeft;
+  private float _marginBottom;
 
   private Theme _theme;
 
@@ -231,7 +234,7 @@ public class Keyboard2View extends View
   private KeyboardData.Key getKeyAtPosition(float tx, float ty)
   {
     KeyboardData.Row row = getRowAtPosition(ty);
-    float x = _config.horizontal_margin;
+    float x = _marginLeft;
     if (row == null || tx < x)
       return null;
     for (KeyboardData.Key key : row.keys)
@@ -255,24 +258,56 @@ public class Keyboard2View extends View
   @Override
   public void onMeasure(int wSpec, int hSpec)
   {
-    DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-    int width = dm.widthPixels;
-    int height =
-      (int)(_config.keyHeight * _keyboard.keysHeight
-          + _config.marginTop + _config.margin_bottom);
-    // Compatibility with display cutouts and navigation on the right
-    if (VERSION.SDK_INT >= 30)
+    int width;
+    int insets_left = 0;
+    int insets_right = 0;
+    int insets_bottom = 0;
+    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
+    // and keyboard is allowed do draw behind status/navigation bars
+    if (VERSION.SDK_INT >= 35)
     {
       WindowMetrics metrics =
         ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
         .getCurrentWindowMetrics();
-      Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(
-          WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars()
-          | WindowInsets.Type.displayCutout());
-      width = metrics.getBounds().width() - insets.right - insets.left;
+      width = metrics.getBounds().width();
+      WindowInsets wi = metrics.getWindowInsets();
+      int insets_types =
+          WindowInsets.Type.statusBars()
+          | WindowInsets.Type.displayCutout()
+          | WindowInsets.Type.mandatorySystemGestures()
+          | WindowInsets.Type.navigationBars();
+      Insets insets = wi.getInsets(insets_types);
+      insets_left = insets.left;
+      insets_right = insets.right;
+      // On API 35, the keyboard is allowed to draw under the
+      // button-navigation bar but on lower APIs, it must be discounted from
+      // the width.
+      if (VERSION.SDK_INT < 35)
+      {
+        Insets nav_insets = wi.getInsets(WindowInsets.Type.navigationBars());
+        width -= nav_insets.left + nav_insets.right;
+        insets_left -= nav_insets.left;
+        insets_right -= nav_insets.right;
+      }
+      // [insets.bottom] doesn't take into account the buttons that appear in
+      // the gesture navigation bar when the IME is showing so ensure a minimum
+      // of margin is added.
+      if (VERSION.SDK_INT >= 35)
+        insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
     }
+    else
+    {
+      DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+      width = dm.widthPixels;
+    }
+    int height =
+      (int)(_config.keyHeight * _keyboard.keysHeight
+          + _config.marginTop + _marginBottom);
     setMeasuredDimension(width, height);
-    _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;
+    _marginLeft = Math.max(_config.horizontal_margin, insets_left);
+    _marginRight = Math.max(_config.horizontal_margin, insets_right);
+    _marginBottom = _config.margin_bottom + insets_bottom;
+    _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
   }
 
   @Override
@@ -284,10 +319,10 @@ public class Keyboard2View extends View
     {
       // Disable the back-gesture on the keyboard area
       Rect keyboard_area = new Rect(
-          left + (int)_config.horizontal_margin,
+          left + (int)_marginLeft,
           top + (int)_config.marginTop,
-          right - (int)_config.horizontal_margin,
-          bottom - (int)_config.margin_bottom);
+          right - (int)_marginRight,
+          bottom - (int)_marginBottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
   }
@@ -322,7 +357,7 @@ public class Keyboard2View extends View
     for (KeyboardData.Row row : _keyboard.rows)
     {
       y += row.shift * _config.keyHeight;
-      float x = _config.horizontal_margin + key_horizontal_margin / 2;
+      float x = _marginLeft + key_horizontal_margin / 2;
       float keyH = row.height * _config.keyHeight - key_vertical_margin;
       for (KeyboardData.Key k : row.keys)
       {
@@ -458,32 +493,12 @@ public class Keyboard2View extends View
   private void drawIndication(Canvas canvas, KeyboardData.Key k, float x,
       float y, float keyW, float keyH)
   {
-    boolean special_font = false;
-    String indic;
-    int indic_length;
-    float text_size;
-    if (k.indication != null)
-    {
-      indic = k.indication;
-      indic_length = indic.length();
-      text_size = keyH * _config.sublabelTextSize * _config.characterSize;
-    }
-    else if (k.anticircle != null)
-    {
-      indic = k.anticircle.getString();
-      // 3 character limit like regular labels
-      indic_length = Math.min(indic.length(), 3);
-      special_font = k.anticircle.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
-      text_size = scaleTextSize(k.anticircle, _config.sublabelTextSize, keyH);
-    }
-    else
-    {
+    if (k.indication == null || k.indication.equals(""))
       return;
-    }
-    Paint p = _theme.indicationPaint(special_font);
+    Paint p = _theme.indicationPaint(false);
     p.setColor(_theme.subLabelColor);
-    p.setTextSize(text_size);
-    canvas.drawText(indic, 0, indic_length,
+    p.setTextSize(keyH * _config.sublabelTextSize * _config.characterSize);
+    canvas.drawText(k.indication, 0, k.indication.length(),
         x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
