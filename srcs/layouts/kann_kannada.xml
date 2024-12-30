@@ -7,7 +7,7 @@
     <key key0="ತ" key1="ಥ" key2="ಧ" key3="ನ" key4="ದ"/>
     <key key0="ಪ" key1="ಫ" key2="ಭ" key3="ಮ" key4="ಬ"/>
     <key key0="ಯ" key1="ರ" key2="ವ" key3="ಱ" key4="ಲ" key8="ೞ"/>
-    <key key0="ಶ" key1="ಷ" key2="ಹ" key3="ಳ" key4="ಸ" key8="※"/>
+    <key key0="ಶ" key1="ಷ" key2="ಹ" key3="ಳ" key4="ಸ"/>
   </row>
   <row>
     <key key0="ಾ" key1="ಅ" key2="ಆ"/>
@@ -23,7 +23,7 @@
     <key key0="ಂ" key1="₹" key2="卐" key3="!" key4="\?" key7="ॐ"/>
     <key key0="ಃ" key5="ೲ" key6="ೱ" key7="ಽ"/>
     <key key0="।" key1="'" key2="&quot;" key3="." key4="," key6="॥"/>
-    <key key0="೦" key3="-" key4="_" key5=":" key6=";"/>
+    <key key0="೦" key1=":" key2=";" key3="-" key4="_"/>
     <key key0="೫" key1="೧" key2="೩" key3="೭" key4="೯" key5="೪" key6="೬" key7="೨" key8="೮"/>
     <key key0="backspace" key2="delete"/>
   </row>
