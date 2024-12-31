@@ -153,7 +153,8 @@ public final class Pointers implements Handler.Callback
     if (latched != null) // Already latched
     {
       removePtr(ptr); // Remove dupplicate
-      if ((latched.flags & FLAG_P_DOUBLE_TAP_LOCK) != 0) // Toggle lockable key
+      // Toggle lockable key, except if it's a fake pointer
+      if ((latched.flags & (FLAG_P_FAKE | FLAG_P_DOUBLE_TAP_LOCK)) == FLAG_P_DOUBLE_TAP_LOCK)
         lockPointer(latched, false);
       else // Otherwise, unlatch
       {
