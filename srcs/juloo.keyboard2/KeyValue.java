@@ -1,7 +1,6 @@
 package juloo.keyboard2;
 
 import android.view.KeyEvent;
-import java.util.HashMap;
 
 public final class KeyValue implements Comparable<KeyValue>
 {
@@ -23,6 +22,7 @@ public final class KeyValue implements Comparable<KeyValue>
     CAPS_LOCK,
     SWITCH_VOICE_TYPING,
     SWITCH_VOICE_TYPING_CHOOSER,
+    KEY_CODE,
   }
 
   // Must be evaluated in the reverse order of their values.
@@ -108,8 +108,8 @@ public final class KeyValue implements Comparable<KeyValue>
   public static final int FLAG_GREYED = (1 << FLAGS_OFFSET << 3);
   // Rendering flags.
   public static final int FLAG_KEY_FONT = (1 << FLAGS_OFFSET << 4); // special font file
-  public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5); // 25% smaller symbols
   public static final int FLAG_SECONDARY = (1 << FLAGS_OFFSET << 6); // dimmer
+  public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5); // 25% smaller symbols
   // Used by [Pointers].
   // Free: (1 << FLAGS_OFFSET << 7)
   // Free: (1 << FLAGS_OFFSET << 8)
@@ -130,6 +130,7 @@ public final class KeyValue implements Comparable<KeyValue>
   }
 
   private final String _symbol;
+  private final boolean _long_name;
 
   /** This field encodes three things: Kind, flags and value. */
   private final int _code;
@@ -147,6 +148,10 @@ public final class KeyValue implements Comparable<KeyValue>
   public boolean hasFlagsAny(int has)
   {
     return ((_code & has) != 0);
+  }
+  public boolean is_long_name()
+  {
+    return this._long_name;
   }
 
   /** The string to render on the keyboard.
@@ -268,11 +273,22 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     _symbol = s;
     _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
+    _long_name = false;
+  }
+  public KeyValue(String s, int kind, int value, int flags, boolean long_name)
+  {
+    _symbol = s;
+    _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
+    _long_name = long_name;
   }
 
   public KeyValue(String s, Kind k, int v, int f)
   {
     this(s, (k.ordinal() << KIND_OFFSET), v, f);
+  }
+  public KeyValue(String s, Kind k, int v, int f,boolean long_name)
+  {
+    this(s, (k.ordinal() << KIND_OFFSET), v, f,long_name);
   }
 
   private static KeyValue charKey(String symbol, char c, int flags)
@@ -599,8 +615,17 @@ public final class KeyValue implements Comparable<KeyValue>
       case "ㅍ": return makeHangulInitial("ㅍ", 17);
       case "ㅎ": return makeHangulInitial("ㅎ", 18);
 
-      /* Fallback to a string key that types its name */
-      default: return makeStringKey(name);
+      /* Fallback to a int keycode if possible or string key that types its name */
+      default:
+        String uppername = name.toUpperCase();
+        if(uppername.startsWith("KEYCODE_")){
+          int keycode = mapStringToKeycode(uppername);
+          String keyname = uppername.split("KEYCODE_")[1];
+          if (0 == keycode) keyname = "UNKNOWN";
+          return new KeyValue(keyname, Kind.Keyevent, keycode,  FLAG_SMALLER_FONT, true);
+        }else{
+          return makeStringKey(name);
+        }
     }
   }
 
@@ -609,5 +634,329 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     if (!b)
       throw new RuntimeException("Assertion failure");
+  }
+  private static int mapStringToKeycode(String str){
+    switch (str){
+      case "KEYCODE_UNKNOWN"         :return 0;
+      case "KEYCODE_SOFT_LEFT"       :return 1;
+      case "KEYCODE_SOFT_RIGHT"      :return 2;
+      case "KEYCODE_HOME"            :return 3;
+      case "KEYCODE_BACK"            :return 4;
+      case "KEYCODE_CALL"            :return 5;
+      case "KEYCODE_ENDCALL"         :return 6;
+      case "KEYCODE_0"               :return 7;
+      case "KEYCODE_1"               :return 8;
+      case "KEYCODE_2"               :return 9;
+      case "KEYCODE_3"               :return 10;
+      case "KEYCODE_4"               :return 11;
+      case "KEYCODE_5"               :return 12;
+      case "KEYCODE_6"               :return 13;
+      case "KEYCODE_7"               :return 14;
+      case "KEYCODE_8"               :return 15;
+      case "KEYCODE_9"               :return 16;
+      case "KEYCODE_STAR"            :return 17;
+      case "KEYCODE_POUND"           :return 18;
+      case "KEYCODE_DPAD_UP"         :return 19;
+      case "KEYCODE_DPAD_DOWN"       :return 20;
+      case "KEYCODE_DPAD_LEFT"       :return 21;
+      case "KEYCODE_DPAD_RIGHT"      :return 22;
+      case "KEYCODE_DPAD_CENTER"     :return 23;
+      case "KEYCODE_VOLUME_UP"       :return 24;
+      case "KEYCODE_VOLUME_DOWN"     :return 25;
+      case "KEYCODE_POWER"           :return 26;
+      case "KEYCODE_CAMERA"          :return 27;
+      case "KEYCODE_CLEAR"           :return 28;
+      case "KEYCODE_A"               :return 29;
+      case "KEYCODE_B"               :return 30;
+      case "KEYCODE_C"               :return 31;
+      case "KEYCODE_D"               :return 32;
+      case "KEYCODE_E"               :return 33;
+      case "KEYCODE_F"               :return 34;
+      case "KEYCODE_G"               :return 35;
+      case "KEYCODE_H"               :return 36;
+      case "KEYCODE_I"               :return 37;
+      case "KEYCODE_J"               :return 38;
+      case "KEYCODE_K"               :return 39;
+      case "KEYCODE_L"               :return 40;
+      case "KEYCODE_M"               :return 41;
+      case "KEYCODE_N"               :return 42;
+      case "KEYCODE_O"               :return 43;
+      case "KEYCODE_P"               :return 44;
+      case "KEYCODE_Q"               :return 45;
+      case "KEYCODE_R"               :return 46;
+      case "KEYCODE_S"               :return 47;
+      case "KEYCODE_T"               :return 48;
+      case "KEYCODE_U"               :return 49;
+      case "KEYCODE_V"               :return 50;
+      case "KEYCODE_W"               :return 51;
+      case "KEYCODE_X"               :return 52;
+      case "KEYCODE_Y"               :return 53;
+      case "KEYCODE_Z"               :return 54;
+      case "KEYCODE_COMMA"           :return 55;
+      case "KEYCODE_PERIOD"          :return 56;
+      case "KEYCODE_ALT_LEFT"        :return 57;
+      case "KEYCODE_ALT_RIGHT"       :return 58;
+      case "KEYCODE_SHIFT_LEFT"      :return 59;
+      case "KEYCODE_SHIFT_RIGHT"     :return 60;
+      case "KEYCODE_TAB"             :return 61;
+      case "KEYCODE_SPACE"           :return 62;
+      case "KEYCODE_SYM"             :return 63;
+      case "KEYCODE_EXPLORER"        :return 64;
+      case "KEYCODE_ENVELOPE"        :return 65;
+      case "KEYCODE_ENTER"           :return 66;
+      case "KEYCODE_DEL"             :return 67;
+      case "KEYCODE_GRAVE"           :return 68;
+      case "KEYCODE_MINUS"           :return 69;
+      case "KEYCODE_EQUALS"          :return 70;
+      case "KEYCODE_LEFT_BRACKET"    :return 71;
+      case "KEYCODE_RIGHT_BRACKET"   :return 72;
+      case "KEYCODE_BACKSLASH"       :return 73;
+      case "KEYCODE_SEMICOLON"       :return 74;
+      case "KEYCODE_APOSTROPHE"      :return 75;
+      case "KEYCODE_SLASH"           :return 76;
+      case "KEYCODE_AT"              :return 77;
+      case "KEYCODE_NUM"             :return 78;
+      case "KEYCODE_HEADSETHOOK"     :return 79;
+      case "KEYCODE_FOCUS"           :return 80;   // *Camera* focus
+      case "KEYCODE_PLUS"            :return 81;
+      case "KEYCODE_MENU"            :return 82;
+      case "KEYCODE_NOTIFICATION"    :return 83;
+      case "KEYCODE_SEARCH"          :return 84;
+      case "KEYCODE_MEDIA_PLAY_PAUSE":return 85;
+      case "KEYCODE_MEDIA_STOP"      :return 86;
+      case "KEYCODE_MEDIA_NEXT"      :return 87;
+      case "KEYCODE_MEDIA_PREVIOUS"  :return 88;
+      case "KEYCODE_MEDIA_REWIND"    :return 89;
+      case "KEYCODE_MEDIA_FAST_FORWARD" :return 90;
+      case "KEYCODE_MUTE"            :return 91;
+      case "KEYCODE_PAGE_UP"         :return 92;
+      case "KEYCODE_PAGE_DOWN"       :return 93;
+      case "KEYCODE_PICTSYMBOLS"     :return 94;   // switch symbol-sets (Emoji,Kao-moji)
+      case "KEYCODE_SWITCH_CHARSET"  :return 95;   // switch char-sets (Kanji,Katakana)
+      case "KEYCODE_BUTTON_A"        :return 96;
+      case "KEYCODE_BUTTON_B"        :return 97;
+      case "KEYCODE_BUTTON_C"        :return 98;
+      case "KEYCODE_BUTTON_X"        :return 99;
+      case "KEYCODE_BUTTON_Y"        :return 100;
+      case "KEYCODE_BUTTON_Z"        :return 101;
+      case "KEYCODE_BUTTON_L1"       :return 102;
+      case "KEYCODE_BUTTON_R1"       :return 103;
+      case "KEYCODE_BUTTON_L2"       :return 104;
+      case "KEYCODE_BUTTON_R2"       :return 105;
+      case "KEYCODE_BUTTON_THUMBL"   :return 106;
+      case "KEYCODE_BUTTON_THUMBR"   :return 107;
+      case "KEYCODE_BUTTON_START"    :return 108;
+      case "KEYCODE_BUTTON_SELECT"   :return 109;
+      case "KEYCODE_BUTTON_MODE"     :return 110;
+      case "KEYCODE_ESCAPE"          :return 111;
+      case "KEYCODE_FORWARD_DEL"     :return 112;
+      case "KEYCODE_CTRL_LEFT"       :return 113;
+      case "KEYCODE_CTRL_RIGHT"      :return 114;
+      case "KEYCODE_CAPS_LOCK"       :return 115;
+      case "KEYCODE_SCROLL_LOCK"     :return 116;
+      case "KEYCODE_META_LEFT"       :return 117;
+      case "KEYCODE_META_RIGHT"      :return 118;
+      case "KEYCODE_FUNCTION"        :return 119;
+      case "KEYCODE_SYSRQ"           :return 120;
+      case "KEYCODE_BREAK"           :return 121;
+      case "KEYCODE_MOVE_HOME"       :return 122;
+      case "KEYCODE_MOVE_END"        :return 123;
+      case "KEYCODE_INSERT"          :return 124;
+      case "KEYCODE_FORWARD"         :return 125;
+      case "KEYCODE_MEDIA_PLAY"      :return 126;
+      case "KEYCODE_MEDIA_PAUSE"     :return 127;
+      case "KEYCODE_MEDIA_CLOSE"     :return 128;
+      case "KEYCODE_MEDIA_EJECT"     :return 129;
+      case "KEYCODE_MEDIA_RECORD"    :return 130;
+      case "KEYCODE_F1"              :return 131;
+      case "KEYCODE_F2"              :return 132;
+      case "KEYCODE_F3"              :return 133;
+      case "KEYCODE_F4"              :return 134;
+      case "KEYCODE_F5"              :return 135;
+      case "KEYCODE_F6"              :return 136;
+      case "KEYCODE_F7"              :return 137;
+      case "KEYCODE_F8"              :return 138;
+      case "KEYCODE_F9"              :return 139;
+      case "KEYCODE_F10"             :return 140;
+      case "KEYCODE_F11"             :return 141;
+      case "KEYCODE_F12"             :return 142;
+      case "KEYCODE_NUM_LOCK"        :return 143;
+      case "KEYCODE_NUMPAD_0"        :return 144;
+      case "KEYCODE_NUMPAD_1"        :return 145;
+      case "KEYCODE_NUMPAD_2"        :return 146;
+      case "KEYCODE_NUMPAD_3"        :return 147;
+      case "KEYCODE_NUMPAD_4"        :return 148;
+      case "KEYCODE_NUMPAD_5"        :return 149;
+      case "KEYCODE_NUMPAD_6"        :return 150;
+      case "KEYCODE_NUMPAD_7"        :return 151;
+      case "KEYCODE_NUMPAD_8"        :return 152;
+      case "KEYCODE_NUMPAD_9"        :return 153;
+      case "KEYCODE_NUMPAD_DIVIDE"   :return 154;
+      case "KEYCODE_NUMPAD_MULTIPLY" :return 155;
+      case "KEYCODE_NUMPAD_SUBTRACT" :return 156;
+      case "KEYCODE_NUMPAD_ADD"      :return 157;
+      case "KEYCODE_NUMPAD_DOT"      :return 158;
+      case "KEYCODE_NUMPAD_COMMA"    :return 159;
+      case "KEYCODE_NUMPAD_ENTER"    :return 160;
+      case "KEYCODE_NUMPAD_EQUALS"   :return 161;
+      case "KEYCODE_NUMPAD_LEFT_PAREN" :return 162;
+      case "KEYCODE_NUMPAD_RIGHT_PAREN" :return 163;
+      case "KEYCODE_VOLUME_MUTE"     :return 164;
+      case "KEYCODE_INFO"            :return 165;
+      case "KEYCODE_CHANNEL_UP"      :return 166;
+      case "KEYCODE_CHANNEL_DOWN"    :return 167;
+      case "KEYCODE_ZOOM_IN"         :return 168;
+      case "KEYCODE_ZOOM_OUT"        :return 169;
+      case "KEYCODE_TV"              :return 170;
+      case "KEYCODE_WINDOW"          :return 171;
+      case "KEYCODE_GUIDE"           :return 172;
+      case "KEYCODE_DVR"             :return 173;
+      case "KEYCODE_BOOKMARK"        :return 174;
+      case "KEYCODE_CAPTIONS"        :return 175;
+      case "KEYCODE_SETTINGS"        :return 176;
+      case "KEYCODE_TV_POWER"        :return 177;
+      case "KEYCODE_TV_INPUT"        :return 178;
+      case "KEYCODE_STB_POWER"       :return 179;
+      case "KEYCODE_STB_INPUT"       :return 180;
+      case "KEYCODE_AVR_POWER"       :return 181;
+      case "KEYCODE_AVR_INPUT"       :return 182;
+      case "KEYCODE_PROG_RED"        :return 183;
+      case "KEYCODE_PROG_GREEN"      :return 184;
+      case "KEYCODE_PROG_YELLOW"     :return 185;
+      case "KEYCODE_PROG_BLUE"       :return 186;
+      case "KEYCODE_APP_SWITCH"      :return 187;
+      case "KEYCODE_BUTTON_1"        :return 188;
+      case "KEYCODE_BUTTON_2"        :return 189;
+      case "KEYCODE_BUTTON_3"        :return 190;
+      case "KEYCODE_BUTTON_4"        :return 191;
+      case "KEYCODE_BUTTON_5"        :return 192;
+      case "KEYCODE_BUTTON_6"        :return 193;
+      case "KEYCODE_BUTTON_7"        :return 194;
+      case "KEYCODE_BUTTON_8"        :return 195;
+      case "KEYCODE_BUTTON_9"        :return 196;
+      case "KEYCODE_BUTTON_10"       :return 197;
+      case "KEYCODE_BUTTON_11"       :return 198;
+      case "KEYCODE_BUTTON_12"       :return 199;
+      case "KEYCODE_BUTTON_13"       :return 200;
+      case "KEYCODE_BUTTON_14"       :return 201;
+      case "KEYCODE_BUTTON_15"       :return 202;
+      case "KEYCODE_BUTTON_16"       :return 203;
+      case "KEYCODE_LANGUAGE_SWITCH" :return 204;
+      case "KEYCODE_MANNER_MODE"     :return 205;
+      case "KEYCODE_3D_MODE"         :return 206;
+      case "KEYCODE_CONTACTS"        :return 207;
+      case "KEYCODE_CALENDAR"        :return 208;
+      case "KEYCODE_MUSIC"           :return 209;
+      case "KEYCODE_CALCULATOR"      :return 210;
+      case "KEYCODE_ZENKAKU_HANKAKU" :return 211;
+      case "KEYCODE_EISU"            :return 212;
+      case "KEYCODE_MUHENKAN"        :return 213;
+      case "KEYCODE_HENKAN"          :return 214;
+      case "KEYCODE_KATAKANA_HIRAGANA" :return 215;
+      case "KEYCODE_YEN"             :return 216;
+      case "KEYCODE_RO"              :return 217;
+      case "KEYCODE_KANA"            :return 218;
+      case "KEYCODE_ASSIST"          :return 219;
+      case "KEYCODE_BRIGHTNESS_DOWN" :return 220;
+      case "KEYCODE_BRIGHTNESS_UP"   :return 221;
+      case "KEYCODE_MEDIA_AUDIO_TRACK" :return 222;
+      case "KEYCODE_SLEEP"           :return 223;
+      case "KEYCODE_WAKEUP"          :return 224;
+      case "KEYCODE_PAIRING"         :return 225;
+      case "KEYCODE_MEDIA_TOP_MENU"  :return 226;
+      case "KEYCODE_11"              :return 227;
+      case "KEYCODE_12"              :return 228;
+      case "KEYCODE_LAST_CHANNEL"    :return 229;
+      case "KEYCODE_TV_DATA_SERVICE" :return 230;
+      case "KEYCODE_VOICE_ASSIST" :return 231;
+      case "KEYCODE_TV_RADIO_SERVICE" :return 232;
+      case "KEYCODE_TV_TELETEXT" :return 233;
+      case "KEYCODE_TV_NUMBER_ENTRY" :return 234;
+      case "KEYCODE_TV_TERRESTRIAL_ANALOG" :return 235;
+      case "KEYCODE_TV_TERRESTRIAL_DIGITAL" :return 236;
+      case "KEYCODE_TV_SATELLITE" :return 237;
+      case "KEYCODE_TV_SATELLITE_BS" :return 238;
+      case "KEYCODE_TV_SATELLITE_CS" :return 239;
+      case "KEYCODE_TV_SATELLITE_SERVICE" :return 240;
+      case "KEYCODE_TV_NETWORK" :return 241;
+      case "KEYCODE_TV_ANTENNA_CABLE" :return 242;
+      case "KEYCODE_TV_INPUT_HDMI_1" :return 243;
+      case "KEYCODE_TV_INPUT_HDMI_2" :return 244;
+      case "KEYCODE_TV_INPUT_HDMI_3" :return 245;
+      case "KEYCODE_TV_INPUT_HDMI_4" :return 246;
+      case "KEYCODE_TV_INPUT_COMPOSITE_1" :return 247;
+      case "KEYCODE_TV_INPUT_COMPOSITE_2" :return 248;
+      case "KEYCODE_TV_INPUT_COMPONENT_1" :return 249;
+      case "KEYCODE_TV_INPUT_COMPONENT_2" :return 250;
+      case "KEYCODE_TV_INPUT_VGA_1" :return 251;
+      case "KEYCODE_TV_AUDIO_DESCRIPTION" :return 252;
+      case "KEYCODE_TV_AUDIO_DESCRIPTION_MIX_UP" :return 253;
+      case "KEYCODE_TV_AUDIO_DESCRIPTION_MIX_DOWN" :return 254;
+      case "KEYCODE_TV_ZOOM_MODE" :return 255;
+      case "KEYCODE_TV_CONTENTS_MENU" :return 256;
+      case "KEYCODE_TV_MEDIA_CONTEXT_MENU" :return 257;
+      case "KEYCODE_TV_TIMER_PROGRAMMING" :return 258;
+      case "KEYCODE_HELP" :return 259;
+      case "KEYCODE_NAVIGATE_PREVIOUS" :return 260;
+      case "KEYCODE_NAVIGATE_NEXT"   :return 261;
+      case "KEYCODE_NAVIGATE_IN"     :return 262;
+      case "KEYCODE_NAVIGATE_OUT"    :return 263;
+      case "KEYCODE_STEM_PRIMARY" :return 264;
+      case "KEYCODE_STEM_1" :return 265;
+      case "KEYCODE_STEM_2" :return 266;
+      case "KEYCODE_STEM_3" :return 267;
+      case "KEYCODE_DPAD_UP_LEFT"    :return 268;
+      case "KEYCODE_DPAD_DOWN_LEFT"  :return 269;
+      case "KEYCODE_DPAD_UP_RIGHT"   :return 270;
+      case "KEYCODE_DPAD_DOWN_RIGHT" :return 271;
+      case "KEYCODE_MEDIA_SKIP_FORWARD" :return 272;
+      case "KEYCODE_MEDIA_SKIP_BACKWARD" :return 273;
+      case "KEYCODE_MEDIA_STEP_FORWARD" :return 274;
+      case "KEYCODE_MEDIA_STEP_BACKWARD" :return 275;
+      case "KEYCODE_SOFT_SLEEP" :return 276;
+      case "KEYCODE_CUT" :return 277;
+      case "KEYCODE_COPY" :return 278;
+      case "KEYCODE_PASTE" :return 279;
+      case "KEYCODE_SYSTEM_NAVIGATION_UP" :return 280;
+      case "KEYCODE_SYSTEM_NAVIGATION_DOWN" :return 281;
+      case "KEYCODE_SYSTEM_NAVIGATION_LEFT" :return 282;
+      case "KEYCODE_SYSTEM_NAVIGATION_RIGHT" :return 283;
+      case "KEYCODE_ALL_APPS" :return 284;
+      case "KEYCODE_REFRESH" :return 285;
+      case "KEYCODE_THUMBS_UP" :return 286;
+      case "KEYCODE_THUMBS_DOWN" :return 287;
+      case "KEYCODE_PROFILE_SWITCH" :return 288;
+      case "KEYCODE_VIDEO_APP_1" :return 289;
+      case "KEYCODE_VIDEO_APP_2" :return 290;
+      case "KEYCODE_VIDEO_APP_3" :return 291;
+      case "KEYCODE_VIDEO_APP_4" :return 292;
+      case "KEYCODE_VIDEO_APP_5" :return 293;
+      case "KEYCODE_VIDEO_APP_6" :return 294;
+      case "KEYCODE_VIDEO_APP_7" :return 295;
+      case "KEYCODE_VIDEO_APP_8" :return 296;
+      case "KEYCODE_FEATURED_APP_1" :return 297;
+      case "KEYCODE_FEATURED_APP_2" :return 298;
+      case "KEYCODE_FEATURED_APP_3" :return 299;
+      case "KEYCODE_FEATURED_APP_4" :return 300;
+      case "KEYCODE_DEMO_APP_1" :return 301;
+      case "KEYCODE_DEMO_APP_2" :return 302;
+      case "KEYCODE_DEMO_APP_3" :return 303;
+      case "KEYCODE_DEMO_APP_4" :return 304;
+      case "KEYCODE_KEYBOARD_BACKLIGHT_DOWN" :return 305;
+      case "KEYCODE_KEYBOARD_BACKLIGHT_UP" :return 306;
+      case "KEYCODE_KEYBOARD_BACKLIGHT_TOGGLE" :return 307;
+      case "KEYCODE_STYLUS_BUTTON_PRIMARY" :return 308;
+      case "KEYCODE_STYLUS_BUTTON_SECONDARY" :return 309;
+      case "KEYCODE_STYLUS_BUTTON_TERTIARY" :return 310;
+      case "KEYCODE_STYLUS_BUTTON_TAIL" :return 311;
+      case "KEYCODE_RECENT_APPS" :return 312;
+      case "KEYCODE_MACRO_1" :return 313;
+      case "KEYCODE_MACRO_2" :return 314;
+      case "KEYCODE_MACRO_3" :return 315;
+      case "KEYCODE_MACRO_4" :return 316;
+      case "KEYCODE_EMOJI_PICKER" :return 317;
+      case "KEYCODE_SCREENSHOT" :return 318;
+      default: return 0;
+    }
   }
 }
