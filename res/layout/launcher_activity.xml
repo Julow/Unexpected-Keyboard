@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" android:fitsSystemWindows="true">
   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
     <TextView style="@style/paragraph" android:text="@string/launcher_description"/>
     <Button style="@style/paragraph" android:text="@string/launcher_button_imesettings" android:onClick="launch_imesettings" android:layout_width="wrap_content"/>
     <Button style="@style/paragraph" android:text="@string/launcher_button_imepicker" android:onClick="launch_imepicker" android:layout_width="wrap_content"/>
-    <VideoView android:id="@+id/launcher_intro_video" android:layout_width="240dp" android:layout_height="wrap_content" android:layout_gravity="center"/>
+    <LinearLayout style="@style/anim_box">
+      <ImageView style="@style/anim" android:id="@+id/launcher_anim_swipe" android:background="@drawable/doc_key_u" android:src="@drawable/doc_anim_swipe"/>
+      <TextView style="@style/anim_text" android:text="7"/>
+    </LinearLayout>
+    <LinearLayout style="@style/anim_box">
+      <ImageView style="@style/anim" android:id="@+id/launcher_anim_circle" android:background="@drawable/doc_key_g" android:src="@drawable/doc_anim_circle"/>
+      <TextView style="@style/anim_text" android:text="G"/>
+    </LinearLayout>
+    <LinearLayout style="@style/anim_box">
+      <ImageView style="@style/anim" android:id="@+id/launcher_anim_round_trip" android:background="@drawable/doc_key_g" android:src="@drawable/doc_anim_round_trip"/>
+      <TextView style="@style/anim_text" android:text="–"/>
+    </LinearLayout>
     <TextView android:id="@+id/launcher_tryhere_text" style="@style/paragraph" android:text="@string/launcher_tryhere"/>
     <EditText android:id="@+id/launcher_tryhere_area" style="@style/paragraph" android:inputType="text" android:hint="@string/launcher_tryhere_hint" android:importantForAutofill="no"/>
     <TextView style="@style/paragraph" android:text="@string/launcher_sourcecode"/>

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class CustomExtraKeysPreference extends ListGroupPreference<String>
     if (key_names != null)
     {
       for (String key_name : key_names)
-        kvs.put(KeyValue.makeStringKey(key_name), KeyboardData.PreferredPos.DEFAULT);
+        kvs.put(KeyValue.parseKeyDefinition(key_name), KeyboardData.PreferredPos.DEFAULT);
     }
     return kvs;
   }
@@ -48,10 +49,12 @@ public class CustomExtraKeysPreference extends ListGroupPreference<String>
   String label_of_value(String value, int i) { return value; }
 
   @Override
-  void select(final SelectionCallback<String> callback)
+  void select(final SelectionCallback<String> callback, String old_value)
   {
+    View content = View.inflate(getContext(), R.layout.dialog_edit_text, null);
+    ((TextView)content.findViewById(R.id.text)).setText(old_value);
     new AlertDialog.Builder(getContext())
-      .setView(View.inflate(getContext(), R.layout.dialog_edit_text, null))
+      .setView(content)
       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface dialog, int which)
         {

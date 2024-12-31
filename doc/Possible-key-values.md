@@ -46,7 +46,8 @@ These keys are sent to apps, which are free to ignore them. The keyboard does no
 `page_up`, `page_down`,
 `home`, `end`,
 `backspace`, `delete`,
-`insert`, `f1`-`f12`,
+`insert`, `scroll_lock`,
+`f1`-`f12`,
 `tab`, `copy`,
 `paste`, `cut`,
 `selectAll`, `pasteAsPlainText`,
@@ -90,6 +91,7 @@ Value                | Meaning
 `accent_dot_below`   | Dot below. `ạ`
 `accent_horn`        | Horn accent. `ơ`
 `accent_hook_above`  | Hook accent. `ả`
+`accent_double_grave`  | Double grave accent. `ȁ`
 `superscript`        | Superscript. `ᵃ`
 `subscript`          | Subscript. `ₐ`
 `ordinal`            | Turns `a` and `o` into `ª` and `º`.
@@ -119,7 +121,7 @@ Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
 `ole`, `ole_placeholder`,
 `meteg`, `meteg_placeholder`
 
-## Unexpected Keyboard specific
+## Keyboard behavior keys
 Value                  | Meaning
 :--------------------- | :------
 `config`               | Gear icon; opens Unexpected Keyboard settings.
@@ -130,6 +132,7 @@ Value                  | Meaning
 `switch_forward`       | Change the keyboard layout, as long as Unexpected Keyboard has multiple keyboard layouts enabled in the settings.
 `switch_backward`      | Change the keyboard layout to the previous one in the list.
 `switch_greekmath`     | Switch to the Greek & Math Symbols layer.
+`switch_clipboard`     | Switch to the clipboard pane.
 `change_method`        | Open the input method picker dialog.
 `change_method_prev`   | Switch to the previously used input method.
 `action`               | Performs a special context-sensitive operation related to the Enter key. For example, in the Twitter (X) app, `enter` adds a new line, while `action` posts.
@@ -147,3 +150,50 @@ These keys are known to do nothing.
 These keys are normally hidden unless the Fn modifier is activated.
 
 `f11_placeholder` | `f12_placeholder`
+
+## Complex keys
+
+More complex keys are of this form:
+
+```
+:<kind> <attributes>:<payload>
+```
+
+Where `<kind>` is one of the kinds documented below and `<attributes>` is a
+space separated list of attributes. `<payload>` depends on the `<kind>`.
+
+Attributes are:
+- `symbol='Sym'` specifies the symbol to be shown on the keyboard.
+- `flags='<flags>'` changes the behavior of the key.
+  `<flags>` is a coma separated list of:
+  + `dim`: Make the symbol dimmer.
+  + `small`: Make the symbol smaller.
+
+### Kind `str`
+
+Defines a key that outputs an arbitrary string. `<payload>` is a string wrapped
+in single-quotes (`'`), escaping of other single quotes is allowed with `\'`.
+
+For example:
+- `:str:'Arbitrary string with a \' inside'`
+- `:str symbol='Symbol':'Output string'`
+
+### Kind `char`
+
+Defines a key that outputs a single character. `<payload>` is the character to
+output, unquoted.
+This kind of key can be used to define a character key with a different symbol
+on it. `char` keys can be modified by `ctrl` and other modifiers, unlike `str`
+keys.
+
+For example:
+- `:char symbol='љ':q`, which is used to implement `ctrl` shortcuts in cyrillic
+  layouts.
+
+### Kind `keyevent`
+
+Defines a key that sends an Android [key event](https://developer.android.com/reference/android/view/KeyEvent).
+`<payload>` is the key event number.
+
+For example:
+- `:keyevent symbol='⏯' flags='small':85`

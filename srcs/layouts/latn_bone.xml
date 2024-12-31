@@ -1,46 +1,72 @@
 <?xml	version="1.0"	encoding="utf-8"?>
 <!-- https://neo-layout.org/Layouts/bone/ -->
 <keyboard name="Bone" bottom_row="false" script="latin">
+	<!-- first row + characters from number row:
+		jduaxphlmwß
+		…_[]^!<>=&ſ
+		°§ℓ»«$€„“”—
+		›‹¢¥‚‘’
+	-->
 	<row>
-		<key key0="j"				key2="loc esc"				key4="…"/>
-		<key key0="d"				key2="°"				key4="_"/>
-		<key key0="u"				key2="§"				key4="["/>
-		<key key0="a"										key4="]"/>
-		<key key0="x"										key4="^"/>
-		<key key0="p"							key3="!"	key4="7"/>
-		<key key0="h"							key3="&lt;"	key4="8"/>
-		<key key0="l"	key1="ℓ"				key3="&gt;"	key4="9"/>
-		<key key0="m"	key1="≠"				key3="="/>
-		<key key0="w"							key3="&amp;"/>
+		<!--left side-->
+		<key key0="j" key2="°" key4="…"/>
+		<key key0="d" key2="§" key4="_"/>
+		<key key0="u" key2="ℓ" key4="["/>
+		<key key0="a" key2="»" key4="]" key1="›"/>
+		<key key0="x" key2="«" key4="^" key1="‹"/>
+		<!--middle-->
+		<key key0="p" key7="¢" key8="!"/>
+		<!--right side-->
+		<key key0="h" key1="€" key3="&lt;" key4="7" key2="¥"/>
+		<key key0="l" key1="„" key3="&gt;" key4="8" key2="‚"/>
+		<key key0="m" key1="“" key3="="    key4="9" key2="‘"/>
+		<key key0="w" key1="”" key3="&amp;"         key2="’"/>
+		<key key0="ß" key1="—" key3="ſ"/>
 	</row>
+	<!--second row:
+		ctieobnrsgq
+		\/{}*?()-:@
+	-->
 	<row>
-		<key key0="c"				key2="loc tab"											key4="\\"/>
-		<key key0="t"	key1="accent_circonflexe"	key2="accent_caron"					key4="/"/>
-		<key key0="i"	key1="accent_aigu"			key2="accent_grave"					key4="{"/>
-		<key key0="e"	key1="accent_cedille"		key2="accent_ogonek"				key4="}"/>
-		<key key0="o"	key1="accent_ring"			key2="accent_dot_above"				key4="*"/>
-		<key key0="b"								key2="accent_macron"	key3="\?"	key4="4"/>
-		<key key0="n"								key2="accent_tilde"		key3="("	key4="5"/>
-		<key key0="r"								key2="accent_trema"		key3=")"	key4="6"/>
-		<key key0="s"								key2="accent_slash"		key3="-"/>
-		<key key0="g"	key1="\@"											key3=":"/>
+		<!--left side-->
+		<key key0="c" key4="\\"/>
+		<key key0="t" key4="/"/>
+		<key key0="i" key4="{"/>
+		<key key0="e" key4="}"/>
+		<key key0="o" key4="*"/>
+		<!--middle-->
+		<key key0="b" key8="\?"/>
+		<!--right side-->
+		<key key0="n" key3="(" key4="4"/>
+		<key key0="r" key3=")" key4="5"/>
+		<key key0="s" key3="-" key4="6"/>
+		<key key0="g" key3=":"/>
+		<key key0="q" key3="@"/>
 	</row>
+	<!--third row -> compressed to also fit shift and backspace: 
+		fvüäöyz,.k
+		#$|~`+%"';
+	-->
 	<row>
-		<key width="1.5" key0="shift" key4="\#" key2="loc capslock"/>
-		<key key0="f"											key4="|"/>
-		<key key0="v"											key4="~"/>
-		<key key0="ß"											key4="`"/>
-		<key key0="y"							key3="%"		key4="1"/>
-		<key key0="z"	key1="&quot;" 			key3="+"		key4="2"/>
-		<key key0="q"	key1="&apos;" 			key3=","		key4="3"/>
-		<key key0="k"							key3="."/>
-		<key width="1.5" key0="backspace"	key1="delete"	key3=";"/>
+		<!--left side-->
+		<key width="1.5" key0="shift" key4="\#"/>
+		<key key0="f" key4="$"/>
+		<key key0="v" key4="|"/>
+		<key key0="ü" key4="~"/>
+		<key key0="ä" key4="`"/>
+		<!--right side-->
+		<key key0="ö" key3="+"/>
+		<key key0="y" key3="%"               key4="1"/>
+		<key key0="z" key3="," key1="&quot;" key4="2"/>
+		<key key0="k" key3="." key1="&apos;" key4="3"/>
+		<key width="1.5" key0="backspace" key3=";" key1="delete"/>
 	</row>
+	<!--bottom row-->
 	<row height="0.95">
-		<key width="1.8" key0="ctrl"						key2="loc meta" 								key4="switch_numeric"/>
-		<key width="1.2" key0="fn"		key1="loc alt"			key2="loc change_method"	key3="switch_emoji" key4="config"/>
-		<key width="4.0" key0="space"	key7="switch_forward"					key8="0"/>
-		<key width="1.2" key7="up" key6="right" key5="left" key8="down"/>
-		<key width="1.8" key0="enter"												key3="action"/>
+		<key width="1.8" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
+		<key width="1.2" key0="fn" key1="loc alt" key2="loc change_method" key3="switch_emoji" key4="config"/>
+		<key width="5.0" key0="space" key7="switch_forward" key8="0"/>
+		<key width="1.2" key5="left" key6="right" key7="up" key8="down"/>
+		<key width="1.8" key0="enter" key3="action"/>
 	</row>
 </keyboard>

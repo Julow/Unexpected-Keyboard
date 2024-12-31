@@ -90,11 +90,27 @@ def parse_sequences_file_xkb(fname, xkb_char_extra_names):
                 seqs.append(s)
         return seqs
 
+# Basic support for comments in json files. Reads a file
+def strip_cstyle_comments(inp):
+    def strip_line(line):
+        i = line.find("//")
+        return line[:i] + "\n" if i >= 0 else line
+    return "".join(map(strip_line, inp))
+
 # Parse from a json file containing a dictionary sequence → result string.
 def parse_sequences_file_json(fname):
-    with open(fname, "r") as inp:
-        seqs = json.load(inp)
-    return list(seqs.items())
+    def tree_to_seqs(tree, prefix):
+        for c, r in tree.items():
+            if isinstance(r, str):
+                yield prefix + [c], r
+            else:
+                yield from tree_to_seqs(r, prefix + [c])
+    try:
+        with open(fname, "r") as inp:
+            tree = json.loads(strip_cstyle_comments(inp))
+        return list(tree_to_seqs(tree, []))
+    except Exception as e:
+        print("Failed parsing '%s': %s" % (fname, str(e)), file=sys.stderr)
 
 # Format of the sequences file is determined by its extension
 def parse_sequences_file(fname, xkb_char_extra_names={}):
@@ -123,31 +139,40 @@ def parse_sequences_dir(dname):
 
 # Turn a list of sequences into a trie.
 def add_sequences_to_trie(seqs, trie):
-    def add_seq_to_trie(t_, seq, result):
+    global dropped_sequences
+    def add_seq_to_trie(seq, result):
         t_ = trie
-        i = 0
-        while i < len(seq) - 1:
-            c = seq[i]
-            if c not in t_:
-                t_[c] = {}
-            if isinstance(t_[c], str):
-                global dropped_sequences
-                dropped_sequences += 1
-                print("Sequence collide: '%s = %s' '%s = %s'" % (
-                    seq[:i+1], t_[c], seq, result),
-                      file=sys.stderr)
-                return
-            t_ = t_[c]
-            i += 1
-        c = seq[i]
+        for c in seq[:-1]:
+            t_ = t_.setdefault(c, {})
+            if isinstance(t_, str):
+                return False
+        c = seq[-1]
+        if c in t_:
+            return False
         t_[c] = result
+        return True
+    def existing_sequence_to_str(seq): # Used in error message
+        i = 0
+        t_ = trie
+        while i < len(seq):
+            if seq[i] not in t_: break # No collision ?
+            t_ = t_[seq[i]]
+            i += 1
+            if isinstance(t_, str): break
+        return "".join(seq[:i]) + " = " + str(t_)
     for seq, result in seqs:
-        add_seq_to_trie(trie, seq, result)
+        if not add_seq_to_trie(seq, result):
+            dropped_sequences += 1
+            print("Sequence collide: '%s' and '%s = %s'" % (
+                existing_sequence_to_str(seq),
+                "".join(seq), result), file=sys.stderr)
 
 # Compile the trie into a state machine.
 def make_automata(tries):
+    previous_leafs = {} # Deduplicate leafs
     states = []
     def add_tree(t):
+        this_node_index = len(states)
         # Index and size of the new node
         i = len(states)
         s = len(t.keys())
@@ -159,30 +184,34 @@ def make_automata(tries):
             states.append((None, None))
         # Add nested nodes and fill the current node
         for c in sorted(t.keys()):
-            node_i = len(states)
-            add_node(t[c])
-            states[i] = (c, node_i)
+            states[i] = (c, add_node(t[c]))
             i += 1
+        return this_node_index
     def add_leaf(c):
+        if c in previous_leafs:
+            return previous_leafs[c]
+        this_node_index = len(states)
+        previous_leafs[c] = this_node_index
         # There are two encoding for leafs: character final state for 15-bit
         # characters and string final state for the rest.
         if len(c) > 1 or ord(c[0]) > 32767: # String final state
+            # A ':' can be added to the result of a sequence to force a string
+            # final state. For example, to go through KeyValue lookup.
+            if c.startswith(":"): c = c[1:]
             javachars = array('H', c.encode("UTF-16-LE"))
             states.append((-1, len(javachars) + 1))
             for c in javachars:
                 states.append((c, 0))
         else: # Character final state
             states.append((c, 1))
+        return this_node_index
     def add_node(n):
         if type(n) == str:
-            add_leaf(n)
+            return add_leaf(n)
         else:
-            add_tree(n)
+            return add_tree(n)
     states.append((1, 1)) # Add an empty state at the beginning.
-    entry_states = {}
-    for tname, tree_root in tries.items():
-        entry_states[tname] = len(states)
-        add_tree(tree_root)
+    entry_states = { n: add_tree(root) for n, root in tries.items() }
     return entry_states, states
 
 # Debug

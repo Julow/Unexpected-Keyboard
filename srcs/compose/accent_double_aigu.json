@@ -1,7 +1,11 @@
 {
+  " ": "˝",
+  // latin
   "o": "ő",
   "u": "ű",
-  " ": "˝",
+  // cyrillic
+  "у": "ӳ",
+  // combining character
   "a": "a\u030b",
   "e": "e\u030b",
   "i": "i\u030b",

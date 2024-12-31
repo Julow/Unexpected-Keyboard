@@ -80,7 +80,8 @@ public final class KeyModifier
       case DOT_BELOW: return apply_compose(k, ComposeKeyData.accent_dot_below);
       case HORN: return apply_compose(k, ComposeKeyData.accent_horn);
       case HOOK_ABOVE: return apply_compose(k, ComposeKeyData.accent_hook_above);
-      case ARROW_RIGHT: return apply_map_char(k, map_char_arrow_right);
+      case DOUBLE_GRAVE: return apply_compose(k, ComposeKeyData.accent_double_grave);
+      case ARROW_RIGHT: return apply_combining_char(k, "\u20D7");
       default: return k;
     }
   }
@@ -103,32 +104,22 @@ public final class KeyModifier
     return k;
   }
 
-  public static Map_char modify_numpad_script(String numpad_script)
+  /** Return the compose state that modifies the numpad script. */
+  public static int modify_numpad_script(String numpad_script)
   {
     if (numpad_script == null)
-      return map_char_none;
+      return -1;
     switch (numpad_script)
     {
-      case "hindu-arabic": return map_char_numpad_hindu;
-      case "bengali": return map_char_numpad_bengali;
-      case "devanagari": return map_char_numpad_devanagari;
-      case "persian": return map_char_numpad_persian;
-      case "gujarati": return map_char_numpad_gujarati;
-      default: return map_char_none;
+      case "hindu-arabic": return ComposeKeyData.numpad_hindu;
+      case "bengali": return ComposeKeyData.numpad_bengali;
+      case "devanagari": return ComposeKeyData.numpad_devanagari;
+      case "persian": return ComposeKeyData.numpad_persian;
+      case "gujarati": return ComposeKeyData.numpad_gujarati;
+      case "kannada": return ComposeKeyData.numpad_kannada;
+      case "tamil": return ComposeKeyData.numpad_tamil;
+      default: return -1;
     }
-  }
-
-  private static KeyValue apply_map_char(KeyValue k, Map_char map)
-  {
-    switch (k.getKind())
-    {
-      case Char:
-        char kc = k.getChar();
-        String modified = map.apply(kc);
-        if (modified != null)
-          return KeyValue.makeStringKey(modified, k.getFlags());
-    }
-    return k;
   }
 
   /** Apply the given compose state or fallback to the dead_char. */
@@ -170,6 +161,16 @@ public final class KeyModifier
     return k;
   }
 
+  private static KeyValue apply_combining_char(KeyValue k, String combining)
+  {
+    switch (k.getKind())
+    {
+      case Char:
+        return KeyValue.makeStringKey(k.getChar() + combining, k.getFlags());
+    }
+    return k;
+  }
+
   private static KeyValue apply_shift(KeyValue k)
   {
     if (_modmap != null)
@@ -182,9 +183,10 @@ public final class KeyModifier
     {
       case Char:
         char kc = k.getChar();
-        char c = map_char_shift(kc);
-        if (kc == c)
-          c = Character.toUpperCase(kc);
+        KeyValue r = ComposeKey.apply(ComposeKeyData.shift, kc);
+        if (r != null)
+          return r;
+        char c = Character.toUpperCase(kc);
         return (kc == c) ? k : k.withChar(c);
       case String:
         String s = Utils.capitalize_string(k.getString());
@@ -204,11 +206,13 @@ public final class KeyModifier
     String name = null;
     switch (k.getKind())
     {
-      case Char: name = apply_fn_char(k.getChar()); break;
+      case Char:
+        KeyValue r = ComposeKey.apply(ComposeKeyData.fn, k.getChar());
+        return (r != null) ? r : k;
       case Keyevent: name = apply_fn_keyevent(k.getKeyevent()); break;
       case Event: name = apply_fn_event(k.getEvent()); break;
       case Placeholder: name = apply_fn_placeholder(k.getPlaceholder()); break;
-      case Cursor_move: name = apply_fn_cursormove(k.getCursorMove()); break;
+      case Editing: name = apply_fn_editing(k.getEditing()); break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
@@ -254,199 +258,12 @@ public final class KeyModifier
     }
   }
 
-  private static String apply_fn_cursormove(short cur)
+  private static String apply_fn_editing(KeyValue.Editing p)
   {
-    switch (cur)
+    switch (p)
     {
-      case -1 : return "home"; // cursor_left
-      case 1 : return "end"; // cursor_right
-      default: return null;
-    }
-  }
-
-  /** Return the name of modified key, or [null]. */
-  private static String apply_fn_char(char c)
-  {
-    switch (c)
-    {
-      case '1': return "f1";
-      case '2': return "f2";
-      case '3': return "f3";
-      case '4': return "f4";
-      case '5': return "f5";
-      case '6': return "f6";
-      case '7': return "f7";
-      case '8': return "f8";
-      case '9': return "f9";
-      case '0': return "f10";
-      case '<': return "«";
-      case '>': return "»";
-      case '{': return "‹";
-      case '}': return "›";
-      case '[': return "‘";
-      case ']': return "’";
-      case '(': return "“";
-      case ')': return "”";
-      case '\'': return "‚";
-      case '"': return "„";
-      case '-': return "–";
-      case '_': return "—";
-      case '^': return "¬";
-      case '%': return "‰";
-      case '=': return "≈";
-      case 'u': return "µ";
-      case 'a': return "æ";
-      case 'o': return "œ";
-      case '*': return "°";
-      case '.': return "…";
-      case ',': return "·";
-      case '!': return "¡";
-      case '?': return "¿";
-      case '|': return "¦";
-      case '§': return "¶";
-      case '†': return "‡";
-      case '×': return "∙";
-      case ' ': return "nbsp";
-      // arrows
-      case '↖': return "⇖";
-      case '↑': return "⇑";
-      case '↗': return "⇗";
-      case '←': return "⇐";
-      case '→': return "⇒";
-      case '↙': return "⇙";
-      case '↓': return "⇓";
-      case '↘': return "⇘";
-      case '↔': return "⇔";
-      case '↕': return "⇕";
-      // Currency symbols
-      case 'e': return "€";
-      case 'l': return "£";
-      case 'r': return "₹";
-      case 'y': return "¥";
-      case 'c': return "¢";
-      case 'p': return "₽";
-      case 'b': return "₱";
-      case 'h': return "₴";
-      case 'z': return "₿";
-      case '€': case '£': return "removed"; // Avoid showing these twice
-      // alternating greek letters
-      case 'π': return "ϖ";
-      case 'θ': return "ϑ";
-      case 'Θ': return "ϴ";
-      case 'ε': return "ϵ";
-      case 'β': return "ϐ";
-      case 'ρ': return "ϱ";
-      case 'σ': return "ς";
-      case 'γ': return "ɣ";
-      case 'φ': return "ϕ";
-      case 'υ': return "ϒ";
-      case 'κ': return "ϰ";
-      // alternating math characters
-      case '∪': return "⋃";
-      case '∩': return "⋂";
-      case '∃': return "∄";
-      case '∈': return "∉";
-      case '∫': return "∮";
-      case 'Π': return "∏";
-      case 'Σ': return "∑";
-      case '∨': return "⋁";
-      case '∧': return "⋀";
-      case '⊷': return "⊶";
-      case '⊂': return "⊆";
-      case '⊃': return "⊇";
-      case '±': return "∓";
-      // hebrew niqqud
-      case 'ק': return "qamats"; // kamatz
-      case 'ר': return "hataf_qamats"; // reduced kamatz
-      case 'ו': return "holam";
-      case 'ם': return "rafe";
-      case 'פ': return "patah"; // patach
-      case 'ש': return "sheva";
-      case 'ד': return "dagesh"; // or mapiq
-      case 'ח': return "hiriq";
-      case 'ף': return "hataf_patah"; // reduced patach
-      case 'ז': return "qubuts"; // kubuts
-      case 'ס': return "segol";
-      case 'ב': return "hataf_segol"; // reduced segol
-      case 'צ': return "tsere";
-      // Devanagari symbols
-      case 'ए': return "ऍ";
-      case 'े': return "ॅ";
-      case 'ऐ': return "ऎ";
-      case 'ै': return "ॆ";
-      case 'ऋ': return "ॠ";
-      case 'ृ': return "ॄ";
-      case 'ळ': return "ऴ";
-      case 'र': return "ऱ";
-      case 'क': return "क़";
-      case 'ख': return "ख़";
-      case 'ग': return "ग़";
-      case 'घ': return "ॻ";
-      case 'ढ': return "ढ़";
-      case 'न': return "ऩ";
-      case 'ड': return "ड़";
-      case 'ट': return "ॸ";
-      case 'ण': return "ॾ";
-      case 'फ': return "फ़";
-      case 'ऌ': return "ॡ";
-      case 'ॢ': return "ॣ";
-      case 'औ': return "ॵ";
-      case 'ौ': return "ॏ";
-      case 'ओ': return "ऒ";
-      case 'ो': return "ॊ";
-      case 'च': return "ॼ";
-      case 'ज': return "ज़";
-      case 'ब': return "ॿ";
-      case 'व': return "ॺ";
-      case 'य': return "य़";
-      case 'अ': return "ॲ";
-      case 'आ': return "ऑ";
-      case 'ा': return "ॉ";
-      case 'झ': return "ॹ";
-      case 'ई': return "ॴ";
-      case 'ी': return "ऻ";
-      case 'इ': return "ॳ";
-      case 'ि': return "ऺ";
-      case 'उ': return "ॶ";
-      case 'ऊ': return "ॷ";
-      case 'ु': return "ऄ";
-      case 'ष': return "क्ष";
-      case 'थ': return "त्र";
-      case 'द': return "द्र";
-      case 'प': return "प्र";
-      case 'श': return "श्र";
-      case 'छ': return "श्च";
-      case 'ँ': return "ऀ";
-      case '₹': return "₨";
-      case 'ॖ': return "ॗ";
-      case '॓': return "॔";
-      case '॰': return "ॱ";
-      case '।': return "॥";
-      case 'ं': return "ॕ";
-      case '़': return "ॎ";
-      case 'ऽ': return "ॽ";
-      // Persian numbers
-      case '۱': return "f1";
-      case '۲': return "f2";
-      case '۳': return "f3";
-      case '۴': return "f4";
-      case '۵': return "f5";
-      case '۶': return "f6";
-      case '۷': return "f7";
-      case '۸': return "f8";
-      case '۹': return "f9";
-      case '۰': return "f10";
-      // Arabic numbers
-      case '١': return "f1";
-      case '٢': return "f2";
-      case '٣': return "f3";
-      case '٤': return "f4";
-      case '٥': return "f5";
-      case '٦': return "f6";
-      case '٧': return "f7";
-      case '٨': return "f8";
-      case '٩': return "f9";
-      case '٠': return "f10";
+      case UNDO: return "redo";
+      case PASTE: return "pasteAsPlainText";
       default: return null;
     }
   }
@@ -538,194 +355,6 @@ public final class KeyModifier
       return apply_fn(k);
     return shifted;
   }
-
-  public static abstract class Map_char
-  {
-    /** Modify a char or return [null] if the modifier do not apply. Return a
-        [String] that can contains combining diacritics. */
-    public abstract String apply(char c);
-  }
-
-  private static final Map_char map_char_none =
-    new Map_char() {
-      public String apply(char _c) { return null; }
-    };
-
-  private static char map_char_shift(char c)
-  {
-    switch (c)
-    {
-      case '↙': return '⇙';
-      case '↓': return '⇓';
-      case '↘': return '⇘';
-      case '←': return '⇐';
-      case '→': return '⇒';
-      case '↖': return '⇖';
-      case '↑': return '⇑';
-      case '↗': return '⇗';
-      case '└': return '╚';
-      case '┴': return '╩';
-      case '┘': return '╝';
-      case '├': return '╠';
-      case '┼': return '╬';
-      case '┤': return '╣';
-      case '┌': return '╔';
-      case '┬': return '╦';
-      case '┐': return '╗';
-      case '─': return '═';
-      case '│': return '║';
-      case 'ß': return 'ẞ';
-      /* In Turkish, upper case of 'iı' is 'İI' but Java's toUpperCase will
-         return 'II'. To make 'İ' accessible, make it the shift of 'ı'. This
-         has the inconvenient of swapping i and ı on the keyboard. */
-      case 'ı': return 'İ';
-      case '₹': return '₨';
-      // Gujarati alternate characters
-      case 'અ': return 'આ';
-      case 'ઇ': return 'ઈ';
-      case 'િ': return 'ી';
-      case 'ઉ': return 'ઊ';
-      case 'ુ': return 'ૂ';
-      case 'એ': return 'ઐ';
-      case 'ે': return 'ૈ';
-      case 'ઓ': return 'ઔ';
-      case 'ો': return 'ૌ';
-      case 'ક': return 'ખ';
-      case 'ગ': return 'ઘ';
-      case 'ચ': return 'છ';
-      case 'જ': return 'ઝ';
-      case 'ટ': return 'ઠ';
-      case 'ડ': return 'ઢ';
-      case 'ન': return 'ણ';
-      case 'ત': return 'થ';
-      case 'દ': return 'ધ';
-      case 'પ': return 'ફ';
-      case 'બ': return 'ભ';
-      case 'મ': return 'ં';
-      case 'લ': return 'ળ';
-      case 'સ': return 'શ';
-      case 'હ': return 'ઃ';
-      default: return c;
-    }
-  }
-
-  private static final Map_char map_char_arrow_right =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          default: return c + "\u20D7";
-        }
-      }
-    };
-
-  // Used with Arabic despite the name; called "Hindi numerals" in Arabic
-  // map_char_numpad_devanagari is used in Hindi
-  private static final Map_char map_char_numpad_hindu =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "٠";
-          case '1': return "١";
-          case '2': return "٢";
-          case '3': return "٣";
-          case '4': return "٤";
-          case '5': return "٥";
-          case '6': return "٦";
-          case '7': return "٧";
-          case '8': return "٨";
-          case '9': return "٩";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_bengali =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "০";
-          case '1': return "১";
-          case '2': return "২";
-          case '3': return "৩";
-          case '4': return "৪";
-          case '5': return "৫";
-          case '6': return "৬";
-          case '7': return "৭";
-          case '8': return "৮";
-          case '9': return "৯";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_devanagari =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "०";
-          case '1': return "१";
-          case '2': return "२";
-          case '3': return "३";
-          case '4': return "४";
-          case '5': return "५";
-          case '6': return "६";
-          case '7': return "७";
-          case '8': return "८";
-          case '9': return "९";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_persian =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "۰";
-          case '1': return "۱";
-          case '2': return "۲";
-          case '3': return "۳";
-          case '4': return "۴";
-          case '5': return "۵";
-          case '6': return "۶";
-          case '7': return "۷";
-          case '8': return "۸";
-          case '9': return "۹";
-          default: return null;
-        }
-      }
-    };
-
-  private static final Map_char map_char_numpad_gujarati =
-    new Map_char() {
-      public String apply(char c)
-      {
-        switch (c)
-        {
-          case '0': return "૦";
-          case '1': return "૧";
-          case '2': return "૨";
-          case '3': return "૩";
-          case '4': return "૪";
-          case '5': return "૫";
-          case '6': return "૬";
-          case '7': return "૭";
-          case '8': return "૮";
-          case '9': return "૯";
-          default: return null;
-        }
-      }
-    };
 
   /** Compose the precomposed initial with the medial [kv]. */
   private static KeyValue combine_hangul_initial(KeyValue kv, int precomposed)

@@ -74,6 +74,9 @@ public final class Autocapitalisation
         if (_cursor > 0) _cursor--;
         _should_update_caps_mode = true;
         break;
+      case KeyEvent.KEYCODE_ENTER:
+        _should_update_caps_mode = true;
+        break;
     }
     callback(true);
   }

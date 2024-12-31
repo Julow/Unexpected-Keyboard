@@ -71,6 +71,7 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="pref_theme_e_monet">Monet (Sisteme uyarla)</string>
   <string name="pref_theme_e_monetlight">Monet (Açık)</string>
   <string name="pref_theme_e_monetdark">Monet (Koyu)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Çok kısa</string>
   <string name="pref_swipe_dist_e_short">Kısa</string>
   <string name="pref_swipe_dist_e_default">Normal</string>
@@ -120,6 +121,7 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="key_descr_home">BAŞ(Sol yön tuşu)</string>
   <string name="key_descr_end">SON(Sağ yön tuşu)</string>
   <string name="key_descr_clipboard">Pano</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
   <string name="clipboard_history_heading">Son kopyalanan metin</string>
   <string name="clipboard_pin_heading">Sabitlendi</string>
   <string name="clipboard_remove_confirm">Bu sabitlemeyi sil</string>

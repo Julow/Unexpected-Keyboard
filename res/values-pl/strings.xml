@@ -71,6 +71,7 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="pref_theme_e_monet">Monet (Systemowy)</string>
   <string name="pref_theme_e_monetlight">Monet (Jasny)</string>
   <string name="pref_theme_e_monetdark">Monet (Ciemny)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Bardzo mała</string>
   <string name="pref_swipe_dist_e_short">Mała</string>
   <string name="pref_swipe_dist_e_default">Normalna</string>
@@ -120,6 +121,7 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
   <string name="key_descr_clipboard">Zarządzanie schowkiem</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
   <string name="clipboard_history_heading">Ostatnio skopiowane elementy</string>
   <string name="clipboard_pin_heading">Przypięte</string>
   <string name="clipboard_remove_confirm">Usunąć ten element ze schowka?</string>

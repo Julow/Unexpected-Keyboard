@@ -2,24 +2,32 @@ plugins {
   id 'com.android.application' version '8.5.2'
 }
 
+dependencies {
+  testImplementation "junit:junit:4.13.2"
+}
+
 android {
   namespace 'juloo.keyboard2'
   compileSdk 34
 
   defaultConfig {
     applicationId "juloo.keyboard2"
-    minSdk 11
+    minSdk 21
     targetSdkVersion 35
-    versionCode 42
-    versionName "1.29.1"
+    versionCode 46
+    versionName "1.30.3"
   }
 
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs = ['srcs']
+      java.srcDirs = ['srcs/juloo.keyboard2']
       res.srcDirs = ['res', 'build/generated-resources']
       assets.srcDirs = ['assets']
+    }
+
+    test {
+      java.srcDirs = ['test']
     }
   }
 
@@ -82,9 +90,6 @@ android {
     // Translation are already checked by 'syncTranslations'
     disable 'MissingTranslation'
   }
-}
-
-dependencies {
 }
 
 tasks.register('buildKeyboardFont') {

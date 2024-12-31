@@ -60,10 +60,10 @@ public final class KeyEventHandler
   {
     if (key == null)
       return;
+    // Stop auto capitalisation when pressing some keys
     switch (key.getKind())
     {
       case Modifier:
-        // Stop auto capitalisation when activating a system modifier
         switch (key.getModifier())
         {
           case CTRL:
@@ -72,6 +72,9 @@ public final class KeyEventHandler
             _autocap.stop();
             break;
         }
+        break;
+      case Compose_pending:
+        _autocap.stop();
         break;
       default: break;
     }
@@ -97,6 +100,7 @@ public final class KeyEventHandler
         _recv.set_compose_pending(true);
         break;
       case Cursor_move: move_cursor(key.getCursorMove()); break;
+      case Complex: send_complex_key(key.getComplexKind(), key.getComplex()); break;
     }
     update_meta_state(old_mods);
   }
@@ -213,6 +217,16 @@ public final class KeyEventHandler
     if (conn == null)
       return;
     conn.performContextMenuAction(id);
+  }
+
+  void send_complex_key(KeyValue.Complex.Kind kind, KeyValue.Complex val)
+  {
+    switch (kind)
+    {
+      case StringWithSymbol:
+        send_text(((KeyValue.Complex.StringWithSymbol)val).str);
+        break;
+    }
   }
 
   @SuppressLint("InlinedApi")

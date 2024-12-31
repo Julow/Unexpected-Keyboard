@@ -1,9 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" 
-viewBox="-10 0 750 1000"
-fill="currentColor">
-  <!-- created by @sdrapha - https://github.com/sdrapha/IconFontSVG
-  License - LICENSE: CC BY-SA 4.0 -->
-  <!-- derived from Entypo+ arrow-right-bold by Daniel Bruce  -->
-  <title>arrow-end</title>
-  <path d="M680 170h50v660h-50v-660zM350 170l330 330l-330 330v-192h-350v-278h350v-190z" />
+<?xml version="1.0" standalone="no"?>
+<!-- Modified from DejaVuSans -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="-10 0 1726 2048">
+   <path fill="currentColor"
+d="M122 1556v-169h1322v-1324h169v1493h-1491zM1323 1203l-63 63h-556v-169h330l-862 -862l120 -120l862 862v-330h169v556z" />
 </svg>
