@@ -175,15 +175,6 @@ public final class LayoutModifier
             break;
         }
         break;
-      case Modifier:
-        switch (orig.getModifier())
-        {
-          case SHIFT:
-            if (globalConfig.double_tap_lock_shift)
-              return orig.withFlags(orig.getFlags() | KeyValue.FLAG_LOCK);
-            break;
-        }
-        break;
     }
     return orig;
   }

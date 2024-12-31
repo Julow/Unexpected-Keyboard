@@ -104,11 +104,6 @@ public class Keyboard2View extends View
     _keyboard = kw;
     _shift_kv = KeyValue.getKeyByName("shift");
     _shift_key = _keyboard.findKeyWithValue(_shift_kv);
-    if (_shift_key == null)
-    {
-      _shift_kv = _shift_kv.withFlags(_shift_kv.getFlags() | KeyValue.FLAG_LOCK);
-      _shift_key = _keyboard.findKeyWithValue(_shift_kv);
-    }
     _compose_kv = KeyValue.getKeyByName("compose");
     _compose_key = _keyboard.findKeyWithValue(_compose_kv);
     KeyModifier.set_modmap(_keyboard.modmap);

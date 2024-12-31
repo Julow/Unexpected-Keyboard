@@ -101,8 +101,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   // Behavior flags.
   public static final int FLAG_LATCH = (1 << FLAGS_OFFSET << 0);
-  // Key can be locked by typing twice
-  public static final int FLAG_LOCK = (1 << FLAGS_OFFSET << 1);
+  // Key can be locked by typing twice when enabled in settings
+  public static final int FLAG_DOUBLE_TAP_LOCK = (1 << FLAGS_OFFSET << 1);
   // Special keys are not repeated and don't clear latched modifiers.
   public static final int FLAG_SPECIAL = (1 << FLAGS_OFFSET << 2);
   // Whether the symbol should be greyed out. For example, keys that are not
@@ -118,8 +118,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   // Ranges for the different components
   private static final int FLAGS_BITS =
-    FLAG_LATCH | FLAG_LOCK | FLAG_SPECIAL | FLAG_GREYED | FLAG_KEY_FONT |
-    FLAG_SMALLER_FONT | FLAG_SECONDARY;
+    FLAG_LATCH | FLAG_DOUBLE_TAP_LOCK | FLAG_SPECIAL | FLAG_GREYED |
+    FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_SECONDARY;
   private static final int KIND_BITS = (0b1111 << KIND_OFFSET); // 4 bits wide
   private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
 
@@ -500,7 +500,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "\\\\": return makeStringKey("\\");
 
       /* Modifiers and dead-keys */
-      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, 0);
+      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, FLAG_DOUBLE_TAP_LOCK);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
       case "accent_aigu": return diacritic(0xE050, Modifier.AIGU);
