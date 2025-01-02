@@ -4016,7 +4016,7 @@ XCOMM Mathematical Operators
 <Multi_key> <U2225> <slash>		: "∦"	U2226 # NOT PARALLEL TO
 <Multi_key> <U223C> <slash>		: "≁"	U2241 # NOT TILDE
 <Multi_key> <U2243> <slash>		: "≄"	U2244 # NOT ASYMPTOTICALLY EQUAL TO
-<Multi_key> <approximate> <slash>	: "≇"	U2247 # NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
+XCOMM <Multi_key> <approximate> <slash>	: "≇"	U2247 # NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
 <Multi_key> <U2248> <slash>		: "≉"	U2249 # NOT ALMOST EQUAL TO
 <Multi_key> <slash> <equal>		: "≠"	U2260 # NOT EQUAL TO
 <Multi_key> <equal> <slash>		: "≠"	U2260 # NOT EQUAL TO

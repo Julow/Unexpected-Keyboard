@@ -10,11 +10,13 @@
       </intent-filter>
       <meta-data android:name="android.view.im" android:resource="@xml/method"/>
     </service>
-    <activity android:name="juloo.keyboard2.SettingsActivity" android:icon="@mipmap/ic_launcher" android:label="@string/settings_activity_label" android:theme="@style/appTheme" android:exported="true" android:directBootAware="true">
+
+    <activity android:name="juloo.keyboard2.SettingsActivity" android:icon="@mipmap/ic_launcher" android:label="@string/settings_activity_label" android:theme="@style/settingsTheme" android:exported="true" android:directBootAware="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
       </intent-filter>
     </activity>
+
     <activity android:name="juloo.keyboard2.LauncherActivity" android:icon="@mipmap/ic_launcher" android:theme="@style/appTheme" android:exported="true" android:directBootAware="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

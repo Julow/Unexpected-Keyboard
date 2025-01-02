@@ -22,7 +22,7 @@ public final class KeyValueParser
   static Pattern ATTR_PAT;
   static Pattern QUOTED_PAT;
   static Pattern PAYLOAD_START_PAT;
-  static Pattern SINGLE_CHAR_PAT;
+  static Pattern WORD_PAT;
 
   static public KeyValue parse(String str) throws ParseError
   {
@@ -57,17 +57,31 @@ public final class KeyValueParser
     // Payload
     if (!match(m, PAYLOAD_START_PAT))
       parseError("Unexpected character", m);
+    String payload;
     switch (kind)
     {
       case "str":
-        String str_payload = parseSingleQuotedString(m);
+        payload = parseSingleQuotedString(m);
         if (symbol == null)
-          return KeyValue.makeStringKey(str_payload, flags);
-        return KeyValue.makeStringKeyWithSymbol(str_payload, symbol, flags);
+          return KeyValue.makeStringKey(payload, flags);
+        return KeyValue.makeStringKeyWithSymbol(payload, symbol, flags);
 
       case "char":
-        char char_payload = parseOneChar(m);
-        return KeyValue.makeCharKey(char_payload, symbol, flags);
+        payload = parsePayloadWord(m);
+        if (payload.length() != 1)
+          parseError("Expected a single character payload", m);
+        return KeyValue.makeCharKey(payload.charAt(0), symbol, flags);
+
+      case "keyevent":
+        payload = parsePayloadWord(m);
+        int eventcode = 0;
+        try { eventcode = Integer.parseInt(payload); }
+        catch (Exception _e)
+        { parseError("Expected an integer payload", m); }
+        if (symbol == null)
+          symbol = String.valueOf(eventcode);
+        return KeyValue.keyeventKey(symbol, eventcode, flags);
+
       default: break;
     }
     parseError("Unknown kind '"+kind+"'", m, 1);
@@ -81,11 +95,11 @@ public final class KeyValueParser
     return m.group(1).replace("\\'", "'");
   }
 
-  static char parseOneChar(Matcher m) throws ParseError
+  static String parsePayloadWord(Matcher m) throws ParseError
   {
-    if (!match(m, SINGLE_CHAR_PAT))
-      parseError("Expected a character", m);
-    return m.group(0).charAt(0);
+    if (!match(m, WORD_PAT))
+      parseError("Expected a word after ':' made of [a-zA-Z0-9_]", m);
+    return m.group(0);
   }
 
   static int parseFlags(String s, Matcher m) throws ParseError
@@ -118,7 +132,7 @@ public final class KeyValueParser
     ATTR_PAT = Pattern.compile("\\s*(\\w+)\\s*=");
     QUOTED_PAT = Pattern.compile("'(([^'\\\\]+|\\\\')*)'");
     PAYLOAD_START_PAT = Pattern.compile("\\s*:");
-    SINGLE_CHAR_PAT = Pattern.compile(".");
+    WORD_PAT = Pattern.compile("[a-zA-Z0-9_]*");
   }
 
   static void parseError(String msg, Matcher m) throws ParseError

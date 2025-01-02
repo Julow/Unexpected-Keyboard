@@ -16,7 +16,7 @@ public final class Pointers implements Handler.Callback
   public static final int FLAG_P_LATCHABLE = 1;
   public static final int FLAG_P_LATCHED = (1 << 1);
   public static final int FLAG_P_FAKE = (1 << 2);
-  public static final int FLAG_P_LOCKABLE = (1 << 3);
+  public static final int FLAG_P_DOUBLE_TAP_LOCK = (1 << 3);
   public static final int FLAG_P_LOCKED = (1 << 4);
   public static final int FLAG_P_SLIDING = (1 << 5);
   /** Clear latched (only if also FLAG_P_LATCHABLE set). */
@@ -86,10 +86,10 @@ public final class Pointers implements Handler.Callback
   /** The key must not be already latched . */
   void add_fake_pointer(KeyboardData.Key key, KeyValue kv, boolean locked)
   {
-    Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags = FLAG_P_FAKE | FLAG_P_LATCHED;
+    int flags = pointer_flags_of_kv(kv) | FLAG_P_FAKE | FLAG_P_LATCHED;
     if (locked)
-      ptr.flags |= FLAG_P_LOCKED;
+      flags |= FLAG_P_LOCKED;
+    Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY, flags);
     _ptrs.add(ptr);
     _handler.onPointerFlagsChanged(false);
   }
@@ -153,7 +153,8 @@ public final class Pointers implements Handler.Callback
     if (latched != null) // Already latched
     {
       removePtr(ptr); // Remove dupplicate
-      if ((latched.flags & FLAG_P_LOCKABLE) != 0) // Toggle lockable key
+      // Toggle lockable key, except if it's a fake pointer
+      if ((latched.flags & (FLAG_P_FAKE | FLAG_P_DOUBLE_TAP_LOCK)) == FLAG_P_DOUBLE_TAP_LOCK)
         lockPointer(latched, false);
       else // Otherwise, unlatch
       {
@@ -204,7 +205,7 @@ public final class Pointers implements Handler.Callback
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
     KeyValue value = _handler.modifyKey(key.keys[0], mods);
-    Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
+    Pointer ptr = make_pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     startLongPress(ptr);
     _handler.onPointerDown(value, false);
@@ -368,7 +369,7 @@ public final class Pointers implements Handler.Callback
   /** Make a pointer into the locked state. */
   private void lockPointer(Pointer ptr, boolean shouldVibrate)
   {
-    ptr.flags = (ptr.flags & ~FLAG_P_LOCKABLE) | FLAG_P_LOCKED;
+    ptr.flags = (ptr.flags & ~FLAG_P_DOUBLE_TAP_LOCK) | FLAG_P_LOCKED;
     _handler.onPointerFlagsChanged(shouldVibrate);
   }
 
@@ -460,7 +461,7 @@ public final class Pointers implements Handler.Callback
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
-  static int pointer_flags_of_kv(KeyValue kv)
+  int pointer_flags_of_kv(KeyValue kv)
   {
     int flags = 0;
     if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
@@ -470,8 +471,9 @@ public final class Pointers implements Handler.Callback
         flags |= FLAG_P_CLEAR_LATCHED | FLAG_P_CANT_LOCK;
       flags |= FLAG_P_LATCHABLE;
     }
-    if (kv.hasFlagsAny(KeyValue.FLAG_LOCK))
-      flags |= FLAG_P_LOCKABLE;
+    if (_config.double_tap_lock_shift &&
+        kv.hasFlagsAny(KeyValue.FLAG_DOUBLE_TAP_LOCK))
+      flags |= FLAG_P_DOUBLE_TAP_LOCK;
     return flags;
   }
 
@@ -512,6 +514,13 @@ public final class Pointers implements Handler.Callback
 
   // Pointers
 
+  Pointer make_pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y,
+      Modifiers m)
+  {
+    int flags = (v == null) ? 0 : pointer_flags_of_kv(v);
+    return new Pointer(p, k, v, x, y, m, flags);
+  }
+
   private static final class Pointer
   {
     /** -1 when latched. */
@@ -533,7 +542,7 @@ public final class Pointers implements Handler.Callback
     /** [null] when not in sliding mode. */
     public Sliding sliding;
 
-    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m)
+    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m, int f)
     {
       pointerId = p;
       key = k;
@@ -542,7 +551,7 @@ public final class Pointers implements Handler.Callback
       downX = x;
       downY = y;
       modifiers = m;
-      flags = (v == null) ? 0 : pointer_flags_of_kv(v);
+      flags = f;
       timeoutWhat = -1;
       sliding = null;
     }

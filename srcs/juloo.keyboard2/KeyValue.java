@@ -44,6 +44,7 @@ public final class KeyValue implements Comparable<KeyValue>
     TREMA,
     HORN,
     HOOK_ABOVE,
+    DOUBLE_GRAVE,
     SUPERSCRIPT,
     SUBSCRIPT,
     RING,
@@ -100,8 +101,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   // Behavior flags.
   public static final int FLAG_LATCH = (1 << FLAGS_OFFSET << 0);
-  // Key can be locked by typing twice
-  public static final int FLAG_LOCK = (1 << FLAGS_OFFSET << 1);
+  // Key can be locked by typing twice when enabled in settings
+  public static final int FLAG_DOUBLE_TAP_LOCK = (1 << FLAGS_OFFSET << 1);
   // Special keys are not repeated and don't clear latched modifiers.
   public static final int FLAG_SPECIAL = (1 << FLAGS_OFFSET << 2);
   // Whether the symbol should be greyed out. For example, keys that are not
@@ -117,8 +118,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   // Ranges for the different components
   private static final int FLAGS_BITS =
-    FLAG_LATCH | FLAG_LOCK | FLAG_SPECIAL | FLAG_GREYED | FLAG_KEY_FONT |
-    FLAG_SMALLER_FONT | FLAG_SECONDARY;
+    FLAG_LATCH | FLAG_DOUBLE_TAP_LOCK | FLAG_SPECIAL | FLAG_GREYED |
+    FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_SECONDARY;
   private static final int KIND_BITS = (0b1111 << KIND_OFFSET); // 4 bits wide
   private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
 
@@ -290,6 +291,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private KeyValue(Object p, int kind, int value, int flags)
   {
+    if (p == null)
+      throw new NullPointerException("KeyValue payload cannot be null");
     _payload = p;
     _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
   }
@@ -344,12 +347,12 @@ public final class KeyValue implements Comparable<KeyValue>
     return eventKey(String.valueOf((char)symbol), e, flags | FLAG_KEY_FONT);
   }
 
-  private static KeyValue keyeventKey(String symbol, int code, int flags)
+  public static KeyValue keyeventKey(String symbol, int code, int flags)
   {
     return new KeyValue(symbol, Kind.Keyevent, code, flags | FLAG_SECONDARY);
   }
 
-  private static KeyValue keyeventKey(int symbol, int code, int flags)
+  public static KeyValue keyeventKey(int symbol, int code, int flags)
   {
     return keyeventKey(String.valueOf((char)symbol), code, flags | FLAG_KEY_FONT);
   }
@@ -497,7 +500,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "\\\\": return makeStringKey("\\");
 
       /* Modifiers and dead-keys */
-      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, 0);
+      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, FLAG_DOUBLE_TAP_LOCK);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
       case "accent_aigu": return diacritic(0xE050, Modifier.AIGU);
@@ -519,6 +522,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_dot_below": return diacritic(0xE060, Modifier.DOT_BELOW);
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
+      case "accent_double_grave": return diacritic(0xE063, Modifier.DOUBLE_GRAVE);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
@@ -558,6 +562,20 @@ public final class KeyValue implements Comparable<KeyValue>
       case "combining_payerok": return makeCharKey(0xE205, '\uA67D', 0);
       case "combining_titlo": return makeCharKey(0xE206, '\u0483', 0);
       case "combining_vzmet": return makeCharKey(0xE207, '\uA66F', 0);
+      case "combining_arabic_v": return makeCharKey(0xE208, '\u065A', 0);
+      case "combining_arabic_inverted_v": return makeCharKey(0xE209, '\u065B', 0);
+      case "combining_shaddah": return makeCharKey(0xE210, '\u0651', 0);
+      case "combining_sukun": return makeCharKey(0xE211, '\u0652', 0);
+      case "combining_fatha": return makeCharKey(0xE212, '\u064E', 0);
+      case "combining_dammah": return makeCharKey(0xE213, '\u064F', 0);
+      case "combining_kasra": return makeCharKey(0xE214, '\u0650', 0);
+      case "combining_hamza_above": return makeCharKey(0xE215, '\u0654', 0);
+      case "combining_hamza_below": return makeCharKey(0xE216, '\u0655', 0);
+      case "combining_alef_above": return makeCharKey(0xE217, '\u0670', 0);
+      case "combining_fathatan": return makeCharKey(0xE218, '\u064B', 0);
+      case "combining_kasratan": return makeCharKey(0xE219, '\u064D', 0);
+      case "combining_dammatan": return makeCharKey(0xE220, '\u064C', 0);
+      case "combining_alef_below": return makeCharKey(0xE221, '\u0656', 0);
 
       /* Special event keys */
       case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
@@ -702,6 +720,20 @@ public final class KeyValue implements Comparable<KeyValue>
       case "ㅌ": return makeHangulInitial("ㅌ", 16);
       case "ㅍ": return makeHangulInitial("ㅍ", 17);
       case "ㅎ": return makeHangulInitial("ㅎ", 18);
+
+      /* Tamil letters should be smaller on the keyboard. */
+      case "ஔ": case "ந": case "ல": case "ழ": case "௯": case "க":
+      case "ஷ": case "ே": case "௨": case "ஜ": case "ங": case "ன":
+      case "௦": case "ை": case "ூ": case "ம": case "ஆ": case "௭":
+      case "௪": case "ா": case "ஶ": case "௬": case "வ": case "ஸ":
+      case "௮": case "ட": case "ப": case "ஈ": case "௩": case "ஒ":
+      case "ௌ": case "உ": case "௫": case "ய": case "ர": case "ு":
+      case "இ": case "ோ": case "ஓ": case "ஃ": case "ற": case "த":
+      case "௧": case "ண": case "ஏ": case "ஊ": case "ொ": case "ஞ":
+      case "அ": case "எ": case "ச": case "ெ": case "ஐ": case "ி":
+      case "௹": case "ள": case "ஹ": case "௰": case "ௐ": case "௱":
+      case "௲": case "௳":
+        return makeStringKey(name, FLAG_SMALLER_FONT);
 
       /* The key is not one of the special ones. */
       default: return parseKeyDefinition(name);
