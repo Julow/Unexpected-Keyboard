@@ -315,7 +315,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private static KeyValue charKey(int symbol, char c, int flags)
   {
-    return charKey(String.valueOf((char)symbol), c, flags);
+    return charKey(String.valueOf((char)symbol), c, flags | FLAG_KEY_FONT);
   }
 
   private static KeyValue modifierKey(String symbol, Modifier m, int flags)
@@ -628,7 +628,7 @@ public final class KeyValue implements Comparable<KeyValue>
       /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
       case "\\n": return charKey("\\n", '\n', 0); // Send the newline character
-      case "space": return charKey(0xE00D, ' ', FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_GREYED);
+      case "space": return charKey(0xE00D, ' ', FLAG_SMALLER_FONT | FLAG_GREYED);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
       case "nnbsp": return charKey("\u2423", '\u202F', FLAG_SMALLER_FONT);
 
@@ -672,9 +672,9 @@ public final class KeyValue implements Comparable<KeyValue>
       case "meteg": return charKey("\u05DE\u05BD", '\u05BD', 0); // or siluq or sof-pasuq
       case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
       /* intending/preventing ligature - supported by many scripts*/
-      case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
+      case "zwj": return charKey(0xE019, '\u200D', 0); // zero-width joiner (provides ligature)
       case "zwnj":
-      case "halfspace": return charKey("⸽", '\u200C', 0); // zero-width non joiner
+      case "halfspace": return charKey(0xE018, '\u200C', 0); // zero-width non joiner
 
       /* Editing keys */
       case "copy": return editingKey(0xE030, Editing.COPY);
