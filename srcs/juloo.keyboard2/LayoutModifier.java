@@ -33,12 +33,20 @@ public final class LayoutModifier
     extra_keys.put(KeyValue.getKeyByName("config"), KeyboardData.PreferredPos.ANYWHERE);
     extra_keys.putAll(globalConfig.extra_keys_param);
     extra_keys.putAll(globalConfig.extra_keys_custom);
-    // The number row is added after the modification pass to avoid adding extra keys to it.
+    // Number row and numpads are added after the modification pass to allow
+    // removing the number keys from the main layout.
     KeyboardData.Row added_number_row = null;
-    if (globalConfig.add_number_row && !globalConfig.show_numpad)
+    KeyboardData added_numpad = null;
+    if (globalConfig.show_numpad)
+    {
+      added_numpad = modify_numpad(num_pad, kw);
+      remove_keys.addAll(added_numpad.getKeys().keySet());
+    }
+    else if (globalConfig.add_number_row) // The numpad removes the number row
+    {
       added_number_row = modify_number_row(number_row, kw);
-    if (added_number_row != null)
       remove_keys.addAll(added_number_row.getKeys(0).keySet());
+    }
     // Add the bottom row before computing the extra keys
     if (kw.bottom_row)
       kw = kw.insert_row(bottom_row, kw.rows.size());
@@ -64,12 +72,13 @@ public final class LayoutModifier
         return modify_key(key);
       }
     });
-    if (globalConfig.show_numpad)
-      kw = kw.addNumPad(modify_numpad(num_pad, kw));
+    if (added_numpad != null)
+      kw = kw.addNumPad(added_numpad);
     // Add extra keys that are not on the layout (including 'loc' keys)
     extra_keys_keyset.removeAll(kw_keys);
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.entrySet().iterator());
+    // Avoid adding extra keys to the number row
     if (added_number_row != null)
       kw = kw.insert_row(added_number_row, 0);
     return kw;
