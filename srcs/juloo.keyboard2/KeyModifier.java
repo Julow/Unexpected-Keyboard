@@ -213,6 +213,7 @@ public final class KeyModifier
       case Event: name = apply_fn_event(k.getEvent()); break;
       case Placeholder: name = apply_fn_placeholder(k.getPlaceholder()); break;
       case Editing: name = apply_fn_editing(k.getEditing()); break;
+      case Modifier: name = apply_fn_modifier(k.getModifier()); break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
@@ -264,6 +265,15 @@ public final class KeyModifier
     {
       case UNDO: return "redo";
       case PASTE: return "pasteAsPlainText";
+      default: return null;
+    }
+  }
+
+  private static String apply_fn_modifier(KeyValue.Modifier m)
+  {
+    switch (m)
+    {
+      case SHIFT: return "capslock";
       default: return null;
     }
   }
