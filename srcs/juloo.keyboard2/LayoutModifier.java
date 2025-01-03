@@ -33,29 +33,31 @@ public final class LayoutModifier
     extra_keys.put(KeyValue.getKeyByName("config"), KeyboardData.PreferredPos.ANYWHERE);
     extra_keys.putAll(globalConfig.extra_keys_param);
     extra_keys.putAll(globalConfig.extra_keys_custom);
-    if (globalConfig.extra_keys_subtype != null && kw.locale_extra_keys)
-    {
-      Set<KeyValue> present = new HashSet<KeyValue>();
-      present.addAll(kw.getKeys().keySet());
-      present.addAll(globalConfig.extra_keys_param.keySet());
-      present.addAll(globalConfig.extra_keys_custom.keySet());
-      globalConfig.extra_keys_subtype.compute(extra_keys,
-          new ExtraKeys.Query(kw.script, present));
-    }
+    // The number row is added after the modification pass to avoid adding extra keys to it.
     KeyboardData.Row added_number_row = null;
     if (globalConfig.add_number_row && !globalConfig.show_numpad)
       added_number_row = modify_number_row(number_row, kw);
     if (added_number_row != null)
       remove_keys.addAll(added_number_row.getKeys(0).keySet());
+    // Add the bottom row before computing the extra keys
     if (kw.bottom_row)
       kw = kw.insert_row(bottom_row, kw.rows.size());
+    // Compose keys to add to the layout
+    // 'extra_keys_keyset' reflects changes made to 'extra_keys'
+    Set<KeyValue> extra_keys_keyset = extra_keys.keySet();
+    // 'kw_keys' contains the keys present on the layout without any extra keys
+    Set<KeyValue> kw_keys = kw.getKeys().keySet();
+    if (globalConfig.extra_keys_subtype != null && kw.locale_extra_keys)
+    {
+      Set<KeyValue> present = new HashSet<KeyValue>(kw_keys);
+      present.addAll(extra_keys_keyset);
+      globalConfig.extra_keys_subtype.compute(extra_keys,
+          new ExtraKeys.Query(kw.script, present));
+    }
     kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
-        boolean is_extra_key = extra_keys.containsKey(key);
-        if (is_extra_key)
-          extra_keys.remove(key);
-        if (localized && !is_extra_key)
+        if (localized && !extra_keys.containsKey(key))
           return null;
         if (remove_keys.contains(key))
           return null;
@@ -64,6 +66,8 @@ public final class LayoutModifier
     });
     if (globalConfig.show_numpad)
       kw = kw.addNumPad(modify_numpad(num_pad, kw));
+    // Add extra keys that are not on the layout (including 'loc' keys)
+    extra_keys_keyset.removeAll(kw_keys);
     if (extra_keys.size() > 0)
       kw = kw.addExtraKeys(extra_keys.entrySet().iterator());
     if (added_number_row != null)
