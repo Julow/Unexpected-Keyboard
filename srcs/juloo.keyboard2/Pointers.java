@@ -254,7 +254,7 @@ public final class Pointers implements Handler.Callback
       return;
     if (ptr.hasFlagsAny(FLAG_P_SLIDING))
     {
-      ptr.sliding.onTouchMove(ptr, x);
+      ptr.sliding.onTouchMove(ptr, x, y);
       return;
     }
 
@@ -296,7 +296,7 @@ public final class Pointers implements Handler.Callback
           ptr.flags = pointer_flags_of_kv(new_value);
           // Start sliding mode
           if (new_value.getKind() == KeyValue.Kind.Slider)
-            startSliding(ptr, x, (dx < 0 ? -1 : 1), new_value);
+            startSliding(ptr, x, y, dx, dy, new_value);
           _handler.onPointerDown(new_value, true);
         }
 
@@ -449,12 +449,16 @@ public final class Pointers implements Handler.Callback
 
   // Sliding
 
-  /** [kv] must be of kind [Slider]. */
-  void startSliding(Pointer ptr, float x, int dir, KeyValue kv)
+  /** When sliding is ongoing, key events are handled by the [Slider] class.
+      [kv] must be of kind [Slider]. */
+  void startSliding(Pointer ptr, float x, float y, float dx, float dy, KeyValue kv)
   {
+    int r = kv.getSliderRepeat();
+    int dirx = dx < 0 ? -r : r;
+    int diry = dy < 0 ? -r : r;
     stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
-    ptr.sliding = new Sliding(x, dir * kv.getSliderRepeat(), kv.getSlider());
+    ptr.sliding = new Sliding(x, y, dirx, diry, kv.getSlider());
     _handler.onPointerHold(kv, ptr.modifiers);
   }
 
@@ -568,6 +572,7 @@ public final class Pointers implements Handler.Callback
     float speed = 0.5f;
     /** Coordinate of the last move. */
     float last_x;
+    float last_y;
     /** [System.currentTimeMillis()] at the time of the last move. Equals to
       [-1] when the sliding hasn't started yet. */
     long last_move_ms = -1;
@@ -575,38 +580,43 @@ public final class Pointers implements Handler.Callback
     KeyValue.Slider slider;
     /** Direction of the initial movement, positive if sliding to the right and
         negative if sliding to the left. */
-    int direction;
+    int direction_x;
+    int direction_y;
 
-    public Sliding(float x, int dir, KeyValue.Slider s)
+    public Sliding(float x, float y, int dirx, int diry, KeyValue.Slider s)
     {
       last_x = x;
+      last_y = y;
       slider = s;
-      direction = dir;
+      direction_x = dirx;
+      direction_y = diry;
     }
 
     static final float SPEED_SMOOTHING = 0.7f;
     /** Avoid absurdly large values. */
     static final float SPEED_MAX = 4.f;
 
-    public void onTouchMove(Pointer ptr, float x)
+    public void onTouchMove(Pointer ptr, float x, float y)
     {
       // Start sliding only after the pointer has travelled an other distance.
       // This allows to trigger the slider movements only once with a short
       // swipe.
+      float travelled = Math.abs(x - last_x) + Math.abs(y - last_y);
       if (last_move_ms == -1)
       {
-        if (Math.abs(last_x - x) < _config.swipe_dist_px)
+        if (travelled < _config.swipe_dist_px)
           return;
         last_move_ms = System.currentTimeMillis();
       }
-      d += (x - last_x) * speed / _config.slide_step_px;
-      update_speed(x);
+      d += ((x - last_x) * direction_x + (y - last_y) * direction_y)
+        * speed / _config.slide_step_px;
+      update_speed(travelled, x, y);
       // Send an event when [abs(d)] exceeds [1].
       int d_ = (int)d;
       if (d_ != 0)
       {
         d -= d_;
-        _handler.onPointerHold(KeyValue.sliderKey(slider, d_ * direction),
+        _handler.onPointerHold(KeyValue.sliderKey(slider, d_),
             ptr.modifiers);
       }
     }
@@ -622,15 +632,16 @@ public final class Pointers implements Handler.Callback
 
     /** [speed] is computed from the elapsed time and distance traveled
         between two move events. Exponential smoothing is used to smooth out
-        the noise. Sets [last_move_ms] and [last_x]. */
-    void update_speed(float x)
+        the noise. Sets [last_move_ms] and [last_pos]. */
+    void update_speed(float travelled, float x, float y)
     {
       long now = System.currentTimeMillis();
       float instant_speed = Math.min(SPEED_MAX,
-          Math.abs(x - last_x) / (float)(now - last_move_ms) + 1.f);
+          travelled / (float)(now - last_move_ms) + 1.f);
       speed = speed + (instant_speed - speed) * SPEED_SMOOTHING;
       last_move_ms = now;
       last_x = x;
+      last_y = y;
     }
   }
 
