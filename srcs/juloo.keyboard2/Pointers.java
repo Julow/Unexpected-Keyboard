@@ -299,7 +299,7 @@ public final class Pointers implements Handler.Callback
               (new_value.equals(ptr.key.getKeyValue(5))
                || new_value.equals(ptr.key.getKeyValue(6))))
           {
-            startSliding(ptr, x);
+            startSliding(ptr, x, dx < 0 ? -1 : 1);
           }
           _handler.onPointerDown(new_value, true);
         }
@@ -453,11 +453,12 @@ public final class Pointers implements Handler.Callback
 
   // Sliding
 
-  void startSliding(Pointer ptr, float x)
+  void startSliding(Pointer ptr, float x, int dir)
   {
     stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
     ptr.sliding = new Sliding(x);
+    ptr.sliding.move(ptr, dir);
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
@@ -567,16 +568,16 @@ public final class Pointers implements Handler.Callback
     /** Accumulated distance since last event. */
     float d = 0.f;
     /** The slider speed changes depending on the pointer speed. */
-    float speed = 1.f;
+    float speed = 0.5f;
     /** Coordinate of the last move. */
     float last_x;
-    /** [System.currentTimeMillis()] at the time of the last move. */
-    long last_move_ms;
+    /** [System.currentTimeMillis()] at the time of the last move. Equals to
+      [-1] when the sliding hasn't started yet. */
+    long last_move_ms = -1;
 
     public Sliding(float x)
     {
       last_x = x;
-      last_move_ms = System.currentTimeMillis();
     }
 
     static final float SPEED_SMOOTHING = 0.7f;
@@ -585,6 +586,15 @@ public final class Pointers implements Handler.Callback
 
     public void onTouchMove(Pointer ptr, float x)
     {
+      // Start sliding only after the pointer has travelled an other distance.
+      // This allows to trigger the slider movements only once with a short
+      // swipe.
+      if (last_move_ms == -1)
+      {
+        if (Math.abs(last_x - x) < _config.swipe_dist_px)
+          return;
+        last_move_ms = System.currentTimeMillis();
+      }
       d += (x - last_x) * speed / _config.slide_step_px;
       update_speed(x);
       // Send an event when [abs(d)] exceeds [1].
@@ -592,9 +602,7 @@ public final class Pointers implements Handler.Callback
       if (d_ != 0)
       {
         d -= d_;
-        int key_index = (d_ < 0) ? 5 : 6;
-        ptr.value = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
-        send_key(ptr, Math.abs(d_));
+        move(ptr, d_);
       }
     }
 
@@ -605,6 +613,13 @@ public final class Pointers implements Handler.Callback
     {
       removePtr(ptr);
       _handler.onPointerFlagsChanged(false);
+    }
+
+    public void move(Pointer ptr, int d_)
+    {
+      int key_index = (d_ < 0) ? 5 : 6;
+      ptr.value = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
+      send_key(ptr, Math.abs(d_));
     }
 
     /** Send the pressed key [n] times. */
