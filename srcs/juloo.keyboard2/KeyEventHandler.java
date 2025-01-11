@@ -99,7 +99,7 @@ public final class KeyEventHandler
       case Compose_pending:
         _recv.set_compose_pending(true);
         break;
-      case Cursor_move: move_cursor(key.getCursorMove()); break;
+      case Slider: handle_slider(key.getSlider(), key.getSliderRepeat()); break;
       case Complex: send_complex_key(key.getComplexKind(), key.getComplex()); break;
     }
     update_meta_state(old_mods);
@@ -260,6 +260,15 @@ public final class KeyEventHandler
       _move_cursor_req.hintMaxChars = 0;
     }
     return conn.getExtractedText(_move_cursor_req, 0);
+  }
+
+  void handle_slider(KeyValue.Slider s, int repeatition)
+  {
+    switch (s)
+    {
+      case Cursor_left: move_cursor(-repeatition); break;
+      case Cursor_right: move_cursor(repeatition); break;
+    }
   }
 
   /** Move the cursor right or left, if possible without sending key events.

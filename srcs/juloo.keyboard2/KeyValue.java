@@ -92,7 +92,7 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     Char, String, Keyevent, Event, Compose_pending, Hangul_initial,
     Hangul_medial, Modifier, Editing, Placeholder,
-    Cursor_move, // Value is encoded as a 16-bit integer.
+    Slider, // [_payload] is a [KeyValue.Slider], value is slider repeatition.
     Complex, // [_payload] is a [KeyValue.Complex], value is [Complex.Kind].
   }
 
@@ -211,10 +211,16 @@ public final class KeyValue implements Comparable<KeyValue>
     return (_code & VALUE_BITS);
   }
 
-  /** Defined only when [getKind() == Kind.Cursor_move]. */
-  public short getCursorMove()
+  /** Defined only when [getKind() == Kind.Slider]. */
+  public Slider getSlider()
   {
-    return (short)(_code & VALUE_BITS);
+    return (Slider)_payload;
+  }
+
+  /** Defined only when [getKind() == Kind.Slider]. */
+  public int getSliderRepeat()
+  {
+    return ((int)(short)(_code & VALUE_BITS));
   }
 
   /** Defined only when [getKind() == Kind.Complex]. */
@@ -284,6 +290,7 @@ public final class KeyValue implements Comparable<KeyValue>
     return "[KeyValue " + getKind().toString() + "+" + getFlags() + "+" + value + " \"" + getString() + "\"]";
   }
 
+  /** [value] is an unsigned integer. */
   private KeyValue(Comparable p, int kind, int value, int flags)
   {
     if (p == null)
@@ -367,13 +374,12 @@ public final class KeyValue implements Comparable<KeyValue>
     return editingKey(String.valueOf((char)symbol), action, FLAG_KEY_FONT);
   }
 
-  /** A key that moves the cursor [d] times to the right. If [d] is negative,
-      it moves the cursor [abs(d)] times to the left. */
-  public static KeyValue cursorMoveKey(int d)
+  /** A key that slides the property specified by [s] by the amount specified
+      with [repeatition]. */
+  public static KeyValue sliderKey(Slider s, int repeatition)
   {
-    int symbol = (d < 0) ? 0xE008 : 0xE006;
-    return new KeyValue(String.valueOf((char)symbol), Kind.Cursor_move,
-        ((short)d) & 0xFFFF,
+    // Casting to a short then back to a int to preserve the sign bit.
+    return new KeyValue(s, Kind.Slider, (short)repeatition & 0xFFFF,
         FLAG_SPECIAL | FLAG_SECONDARY | FLAG_KEY_FONT);
   }
 
@@ -679,8 +685,8 @@ public final class KeyValue implements Comparable<KeyValue>
       case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
       case "undo": return editingKey(0xE036, Editing.UNDO);
       case "redo": return editingKey(0xE037, Editing.REDO);
-      case "cursor_left": return cursorMoveKey(-1);
-      case "cursor_right": return cursorMoveKey(1);
+      case "cursor_left": return sliderKey(Slider.Cursor_left, 1);
+      case "cursor_right": return sliderKey(Slider.Cursor_right, 1);
       // These keys are not used
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
@@ -794,5 +800,21 @@ public final class KeyValue implements Comparable<KeyValue>
         return _symbol.compareTo(snd._symbol);
       }
     }
+  };
+
+  public static enum Slider
+  {
+    Cursor_left(0xE008),
+    Cursor_right(0xE006);
+
+    final String symbol;
+
+    Slider(int symbol_)
+    {
+      symbol = String.valueOf((char)symbol_);
+    }
+
+    @Override
+    public String toString() { return symbol; }
   };
 }

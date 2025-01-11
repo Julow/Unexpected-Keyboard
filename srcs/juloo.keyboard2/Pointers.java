@@ -294,13 +294,9 @@ public final class Pointers implements Handler.Callback
 
           ptr.value = new_value;
           ptr.flags = pointer_flags_of_kv(new_value);
-          // Sliding mode is entered when key5 or key6 is down on a slider key.
-          if (ptr.key.slider &&
-              (new_value.equals(ptr.key.getKeyValue(5))
-               || new_value.equals(ptr.key.getKeyValue(6))))
-          {
-            startSliding(ptr, x, dx < 0 ? -1 : 1);
-          }
+          // Start sliding mode
+          if (ptr.key.slider && new_value.getKind() == KeyValue.Kind.Slider)
+            startSliding(ptr, x, (dx < 0 ? -1 : 1), new_value);
           _handler.onPointerDown(new_value, true);
         }
 
@@ -453,12 +449,13 @@ public final class Pointers implements Handler.Callback
 
   // Sliding
 
-  void startSliding(Pointer ptr, float x, int dir)
+  /** [kv] must be of kind [Slider]. */
+  void startSliding(Pointer ptr, float x, int dir, KeyValue kv)
   {
     stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
-    ptr.sliding = new Sliding(x);
-    ptr.sliding.move(ptr, dir);
+    ptr.sliding = new Sliding(x, dir * kv.getSliderRepeat(), kv.getSlider());
+    _handler.onPointerHold(kv, ptr.modifiers);
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
@@ -574,10 +571,17 @@ public final class Pointers implements Handler.Callback
     /** [System.currentTimeMillis()] at the time of the last move. Equals to
       [-1] when the sliding hasn't started yet. */
     long last_move_ms = -1;
+    /** The property which is being slided. */
+    KeyValue.Slider slider;
+    /** Direction of the initial movement, positive if sliding to the right and
+        negative if sliding to the left. */
+    int direction;
 
-    public Sliding(float x)
+    public Sliding(float x, int dir, KeyValue.Slider s)
     {
       last_x = x;
+      slider = s;
+      direction = dir;
     }
 
     static final float SPEED_SMOOTHING = 0.7f;
@@ -602,7 +606,8 @@ public final class Pointers implements Handler.Callback
       if (d_ != 0)
       {
         d -= d_;
-        move(ptr, d_);
+        _handler.onPointerHold(KeyValue.sliderKey(slider, d_ * direction),
+            ptr.modifiers);
       }
     }
 
@@ -613,39 +618,6 @@ public final class Pointers implements Handler.Callback
     {
       removePtr(ptr);
       _handler.onPointerFlagsChanged(false);
-    }
-
-    public void move(Pointer ptr, int d_)
-    {
-      int key_index = (d_ < 0) ? 5 : 6;
-      ptr.value = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
-      send_key(ptr, Math.abs(d_));
-    }
-
-    /** Send the pressed key [n] times. */
-    void send_key(Pointer ptr, int n)
-    {
-      if (ptr.value == null)
-        return;
-      // Avoid looping if possible to avoid lag while sliding fast
-      KeyValue multiplied = multiply_key(ptr.value, n);
-      if (multiplied != null)
-        _handler.onPointerHold(multiplied, ptr.modifiers);
-      else
-        for (int i = 0; i < n; i++)
-          _handler.onPointerHold(ptr.value, ptr.modifiers);
-    }
-
-    /** Return a key performing the same action as [kv] but [n] times. Returns
-        [null] if [kv] cannot be multiplied. */
-    KeyValue multiply_key(KeyValue kv, int n)
-    {
-      switch (kv.getKind())
-      {
-        case Cursor_move:
-          return KeyValue.cursorMoveKey(kv.getCursorMove() * n);
-      }
-      return null;
     }
 
     /** [speed] is computed from the elapsed time and distance traveled
