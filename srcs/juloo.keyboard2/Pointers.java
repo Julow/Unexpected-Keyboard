@@ -295,7 +295,7 @@ public final class Pointers implements Handler.Callback
           ptr.value = new_value;
           ptr.flags = pointer_flags_of_kv(new_value);
           // Start sliding mode
-          if (ptr.key.slider && new_value.getKind() == KeyValue.Kind.Slider)
+          if (new_value.getKind() == KeyValue.Kind.Slider)
             startSliding(ptr, x, (dx < 0 ? -1 : 1), new_value);
           _handler.onPointerDown(new_value, true);
         }

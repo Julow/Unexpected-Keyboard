@@ -93,7 +93,6 @@ The following optional properties define the effects of swipes:
 
 You can define a swipe only once with either compass-point or numeric notation. Unexpected Keyboard automatically puts a small legend in that direction from the center of the key.
 
-* `slider`: If `slider="true"`, and the key also has `w` and `e` properties, then the key tracks horizontal finger motion precisely and sends the `w` and `e` keystrokes repeatedly. In built-in layouts, this makes the space bar send left and right characters as the user slides on the space bar.
 * `anticircle`: The key value to send when doing an anti-clockwise gesture on the key.
 
 ### Layout
