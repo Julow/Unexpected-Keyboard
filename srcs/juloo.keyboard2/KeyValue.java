@@ -132,12 +132,10 @@ public final class KeyValue implements Comparable<KeyValue>
   }
 
   /**
-   * The symbol that is rendered on the keyboard as a [String].
-   * Except for keys of kind:
-   * - [String], this is also the string to output.
-   * - [Complex], this is an instance of [KeyValue.Complex].
+   * [_payload.toString()] is the symbol that is rendered on the keyboard.
+   * For keys of kind [String], this is also the string to output.
    */
-  private final Object _payload;
+  private final Comparable _payload;
 
   /** This field encodes three things: Kind, flags and value. */
   private final int _code;
@@ -161,9 +159,7 @@ public final class KeyValue implements Comparable<KeyValue>
       When [getKind() == Kind.String], also the string to send. */
   public String getString()
   {
-    if (getKind() == Kind.Complex)
-      return ((Complex)_payload).getSymbol();
-    return (String)_payload;
+    return _payload.toString();
   }
 
   /** Defined only when [getKind() == Kind.Char]. */
@@ -255,6 +251,7 @@ public final class KeyValue implements Comparable<KeyValue>
     return sameKey((KeyValue)obj);
   }
 
+  @Override
   public int compareTo(KeyValue snd)
   {
     // Compare the kind and value first, then the flags.
@@ -264,9 +261,7 @@ public final class KeyValue implements Comparable<KeyValue>
     d = _code - snd._code;
     if (d != 0)
       return d;
-    if (getKind() == Kind.Complex)
-      return ((Complex)_payload).compareTo((Complex)snd._payload);
-    return ((String)_payload).compareTo((String)snd._payload);
+    return _payload.compareTo(snd._payload);
   }
 
   /** Type-safe alternative to [equals]. */
@@ -289,7 +284,7 @@ public final class KeyValue implements Comparable<KeyValue>
     return "[KeyValue " + getKind().toString() + "+" + getFlags() + "+" + value + " \"" + getString() + "\"]";
   }
 
-  private KeyValue(Object p, int kind, int value, int flags)
+  private KeyValue(Comparable p, int kind, int value, int flags)
   {
     if (p == null)
       throw new NullPointerException("KeyValue payload cannot be null");
@@ -297,13 +292,12 @@ public final class KeyValue implements Comparable<KeyValue>
     _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
   }
 
-  public KeyValue(Complex p, Complex.Kind value, int flags)
+  private KeyValue(Complex p, Complex.Kind value, int flags)
   {
-    this((Object)p, (Kind.Complex.ordinal() << KIND_OFFSET), value.ordinal(),
-        flags);
+    this(p, Kind.Complex, value.ordinal(), flags);
   }
 
-  public KeyValue(String p, Kind k, int v, int f)
+  public KeyValue(Comparable p, Kind k, int v, int f)
   {
     this(p, (k.ordinal() << KIND_OFFSET), v, f);
   }
@@ -747,18 +741,26 @@ public final class KeyValue implements Comparable<KeyValue>
       throw new RuntimeException("Assertion failure");
   }
 
-  public static abstract class Complex
+  public static abstract class Complex implements Comparable<Complex>
   {
     public abstract String getSymbol();
 
     /** [compareTo] can assume that [snd] is an instance of the same class. */
+    @Override
     public abstract int compareTo(Complex snd);
 
+    @Override
     public boolean equals(Object snd)
     {
       if (snd instanceof Complex)
         return compareTo((Complex)snd) == 0;
       return false;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getSymbol();
     }
 
     /** [hashCode] will be called on this class. */
@@ -780,8 +782,10 @@ public final class KeyValue implements Comparable<KeyValue>
         _symbol = _sym;
       }
 
+      @Override
       public String getSymbol() { return _symbol; }
 
+      @Override
       public int compareTo(Complex _snd)
       {
         StringWithSymbol snd = (StringWithSymbol)_snd;
