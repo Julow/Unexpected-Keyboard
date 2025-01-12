@@ -137,7 +137,9 @@ public final class KeyValue implements Comparable<KeyValue>
    */
   private final Comparable _payload;
 
-  /** This field encodes three things: Kind, flags and value. */
+  /** This field encodes three things: Kind (KIND_BITS), flags (FLAGS_BITS) and
+      value (VALUE_BITS).
+      The meaning of the value depends on the kind. */
   private final int _code;
 
   public Kind getKind()
@@ -267,6 +269,8 @@ public final class KeyValue implements Comparable<KeyValue>
     d = _code - snd._code;
     if (d != 0)
       return d;
+    // Calls [compareTo] assuming that if [_code] matches, then [_payload] are
+    // of the same class.
     return _payload.compareTo(snd._payload);
   }
 
@@ -275,7 +279,7 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     if (snd == null)
       return false;
-    return _code == snd._code && _payload.equals(snd._payload);
+    return _code == snd._code && _payload.compareTo(snd._payload) == 0;
   }
 
   @Override
@@ -756,14 +760,6 @@ public final class KeyValue implements Comparable<KeyValue>
     /** [compareTo] can assume that [snd] is an instance of the same class. */
     @Override
     public abstract int compareTo(Complex snd);
-
-    @Override
-    public boolean equals(Object snd)
-    {
-      if (snd instanceof Complex)
-        return compareTo((Complex)snd) == 0;
-      return false;
-    }
 
     @Override
     public String toString()
