@@ -100,7 +100,7 @@ public final class KeyEventHandler
         _recv.set_compose_pending(true);
         break;
       case Slider: handle_slider(key.getSlider(), key.getSliderRepeat()); break;
-      case Complex: send_complex_key(key.getComplexKind(), key.getComplex()); break;
+      case StringWithSymbol: send_text(key.getStringWithSymbol()); break;
     }
     update_meta_state(old_mods);
   }
@@ -217,16 +217,6 @@ public final class KeyEventHandler
     if (conn == null)
       return;
     conn.performContextMenuAction(id);
-  }
-
-  void send_complex_key(KeyValue.Complex.Kind kind, KeyValue.Complex val)
-  {
-    switch (kind)
-    {
-      case StringWithSymbol:
-        send_text(((KeyValue.Complex.StringWithSymbol)val).str);
-        break;
-    }
   }
 
   @SuppressLint("InlinedApi")
