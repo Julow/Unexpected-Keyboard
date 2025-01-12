@@ -68,6 +68,8 @@ Value              | Meaning
 :----------------- | :------
 `cursor_left`      | Moves the cursor to the left with the slider gesture.
 `cursor_right`     | Moves the cursor to the right with the slider gesture.
+`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
+`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
 
 ## Other modifiers and diacritics
 Value                | Meaning

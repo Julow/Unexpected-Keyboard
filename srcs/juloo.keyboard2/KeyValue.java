@@ -687,6 +687,8 @@ public final class KeyValue implements Comparable<KeyValue>
       case "redo": return editingKey(0xE037, Editing.REDO);
       case "cursor_left": return sliderKey(Slider.Cursor_left, 1);
       case "cursor_right": return sliderKey(Slider.Cursor_right, 1);
+      case "cursor_up": return sliderKey(Slider.Cursor_up, 1);
+      case "cursor_down": return sliderKey(Slider.Cursor_down, 1);
       // These keys are not used
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
@@ -805,7 +807,9 @@ public final class KeyValue implements Comparable<KeyValue>
   public static enum Slider
   {
     Cursor_left(0xE008),
-    Cursor_right(0xE006);
+    Cursor_right(0xE006),
+    Cursor_up(0xE005),
+    Cursor_down(0xE007);
 
     final String symbol;
 
