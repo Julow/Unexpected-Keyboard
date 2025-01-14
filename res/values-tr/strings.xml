@@ -122,6 +122,10 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="key_descr_end">SON(Sağ yön tuşu)</string>
   <string name="key_descr_clipboard">Pano</string>
   <!-- <string name="key_descr_combining">Combining diacritic</string> -->
+  <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
+  <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
+  <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
+  <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
   <string name="clipboard_history_heading">Son kopyalanan metin</string>
   <string name="clipboard_pin_heading">Sabitlendi</string>
   <string name="clipboard_remove_confirm">Bu sabitlemeyi sil</string>

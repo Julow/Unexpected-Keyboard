@@ -66,8 +66,10 @@ Value   | Meaning
 These keys perform editing on the text without sending keys that the app can interpret differently or ignore.
 Value              | Meaning
 :----------------- | :------
-`cursor_left`      | Moves the cursor position to the left directly, without sending a `left` key event.
-`cursor_right`     | Moves the cursor position to the right directly, without sending a `right` key event.
+`cursor_left`      | Moves the cursor to the left with the slider gesture.
+`cursor_right`     | Moves the cursor to the right with the slider gesture.
+`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
+`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
 
 ## Other modifiers and diacritics
 Value                | Meaning

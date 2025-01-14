@@ -51,6 +51,10 @@ public class ExtraKeysPreference extends PreferenceCategory
     "†",
     "ª",
     "º",
+    "zwj",
+    "zwnj",
+    "nbsp",
+    "nnbsp",
     "tab",
     "esc",
     "page_up",
@@ -164,6 +168,10 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "ª": id = R.string.key_descr_ª; break;
       case "º": id = R.string.key_descr_º; break;
       case "switch_clipboard": id = R.string.key_descr_clipboard; break;
+      case "zwj": id = R.string.key_descr_zwj; break;
+      case "zwnj": id = R.string.key_descr_zwnj; break;
+      case "nbsp": id = R.string.key_descr_nbsp; break;
+      case "nnbsp": id = R.string.key_descr_nnbsp; break;
 
       case "combining_dot_above":
       case "combining_double_aigu":

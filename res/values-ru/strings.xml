@@ -122,6 +122,10 @@
   <string name="key_descr_end">End</string>
   <string name="key_descr_clipboard">Менеджер буфера обмена</string>
   <string name="key_descr_combining">Сочетание диакритических знаков</string>
+  <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
+  <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
+  <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
+  <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
   <string name="clipboard_history_heading">Недавно скопированный текст</string>
   <string name="clipboard_pin_heading">Закреплено</string>
   <string name="clipboard_remove_confirm">Удалить этот буфер обмена?</string>
