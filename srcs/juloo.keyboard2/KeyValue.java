@@ -95,6 +95,7 @@ public final class KeyValue implements Comparable<KeyValue>
     String, // [_payload] is also the string to output, value is unused.
     Slider, // [_payload] is a [KeyValue.Slider], value is slider repeatition.
     StringWithSymbol, // [_payload] is a [KeyValue.StringWithSymbol], value is unused.
+    Macro, // [_payload] is a [KeyValue.Macro], value is unused.
   }
 
   private static final int FLAGS_OFFSET = 19;
@@ -184,6 +185,11 @@ public final class KeyValue implements Comparable<KeyValue>
   public Modifier getModifier()
   {
     return Modifier.values()[(_code & VALUE_BITS)];
+  }
+  /** Defined only when [getKind() == Kind.Macro]. */
+  public KeyValue[] getMacroKeys()
+  {
+    return ((Macro)_payload).keys;
   }
 
   /** Defined only when [getKind() == Kind.Editing]. */
@@ -401,6 +407,13 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     return makeCharKey(c, String.valueOf((char)symbol), flags | FLAG_KEY_FONT);
   }
+  public static KeyValue makeCharAsKeyEvent(char c)
+  {
+    int code = KeyModifier.getKeyCodeFromChar(c);
+    if(code>0)
+      return new KeyValue(String.valueOf(c), Kind.Keyevent, code, 0);
+    return makeCharKey(c);
+  }
 
   public static KeyValue makeComposePending(String symbol, int state, int flags)
   {
@@ -455,8 +468,7 @@ public final class KeyValue implements Comparable<KeyValue>
   }
   public static KeyValue makeMacroKeyWithSymbol(KeyValue[] keys, String symbol, int flags)
   {
-    return new KeyValue(new Complex.Macro(keys, symbol),
-        Complex.Kind.Macro, flags);
+    return new KeyValue(new Macro(keys, symbol), Kind.Macro,0, flags);
   }
 
   /** Make a modifier key for passing to [KeyModifier]. */
@@ -764,6 +776,32 @@ public final class KeyValue implements Comparable<KeyValue>
     {
       int d = str.compareTo(snd.str);
       if (d != 0) return d;
+      return _symbol.compareTo(snd._symbol);
+    }
+  };
+  public static final class Macro implements Comparable<Macro>
+  {
+    public final KeyValue[] keys;
+    final String _symbol;
+
+    public Macro(KeyValue[] _keys, String _sym)
+    {
+      keys = _keys;
+      _symbol = _sym;
+    }
+    
+    @Override
+    public String toString() { return _symbol; }
+
+    @Override
+    public int compareTo(Macro snd)
+    {
+//      int d = keys.length - snd.keys.length;
+//      if(d != 0) return d;
+//      for (int i = 0; i < keys.length; i++) {
+//        if(!keys[i].sameKey(snd.keys[i])) d++;
+//      }
+//      if (d != 0) return d;
       return _symbol.compareTo(snd._symbol);
     }
   };

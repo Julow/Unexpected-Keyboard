@@ -93,17 +93,12 @@ public final class KeyValueParser
         payload = parseSingleQuotedString(m);
         String[] keynames = payload.split(",");
 
-        ArrayList<KeyValue> keys = new ArrayList<>();
-          for (String keyname : keynames) {
-            KeyValue kv = KeyValue.getKeyByName(keyname);
-            keys.add(kv);
-          }
-          if (symbol == null)
-          symbol = String.valueOf(keys.get(0).getKind());
-          KeyValue[] kv_arr = new KeyValue[keys.size()];
-          kv_arr = keys.toArray(kv_arr);
-          return makeMacroKeyWithSymbol(kv_arr,symbol,flags);
-
+        KeyValue[] keys = new KeyValue[keynames.length];
+        for (int i = 0; i < keys.length; i++) {
+          keys[i] = KeyValue.getKeyByName(keynames[i]);
+        }
+        if (symbol == null) symbol = "∑[" + keys.length + "]";
+        return makeMacroKeyWithSymbol(keys,symbol,flags | KeyValue.FLAG_SMALLER_FONT | KeyValue.FLAG_SECONDARY);
       default: break;
     }
     parseError("Unknown kind '"+kind+"'", m, 1);

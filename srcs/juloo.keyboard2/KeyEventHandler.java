@@ -1,5 +1,7 @@
 package juloo.keyboard2;
 
+import static juloo.keyboard2.KeyValue.makeMacroKeyWithSymbol;
+
 import android.annotation.SuppressLint;
 import android.os.Looper;
 import android.text.InputType;
@@ -101,6 +103,7 @@ public final class KeyEventHandler
         break;
       case Slider: handle_slider(key.getSlider(), key.getSliderRepeat()); break;
       case StringWithSymbol: send_text(key.getStringWithSymbol()); break;
+      case Macro: send_macro(key.getMacroKeys()); break;
     }
     update_meta_state(old_mods);
   }
@@ -201,45 +204,33 @@ public final class KeyEventHandler
       Thread.currentThread().interrupt();
     }
   }
-  void handle_key_with_mods(KeyValue k,ArrayList<KeyValue> mods){
-    for(KeyValue mod: mods){
-      k = KeyModifier.modify(k,mod);
-    }
-    send_key_down_up(k.getKeyevent());
-  }
+
   void send_macro(KeyValue[] keys)
   {
-    ArrayList<KeyValue> mods = new ArrayList<>();
+    Pointers.Modifiers active_mods = Pointers.Modifiers.EMPTY;
     for(KeyValue key : keys){
       switch(key.getKind()){
         case Char:
-          if(mods.isEmpty()){
-            send_text(String.valueOf(key.getChar()));
-          }else{
-            handle_key_with_mods(key,mods);
-            mods = new ArrayList<>();
-          }
-          break;
-        case Event:
-
-          if(mods.isEmpty()){
-            _recv.handle_event_key(key.getEvent());
-          }else{
-            handle_key_with_mods(key,mods);
-            mods = new ArrayList<>();
-          }
-          break;
+          key = KeyModifier.turn_into_keyevent(key);
+        case String:
+//          String s = key.getString();
+//          for (int i = 0; i < s.length(); i++) {
+//            try{
+//              KeyValue k = KeyValue.makeCharAsKeyEvent(s.charAt(i));
+//              key_up(k,active_mods);
+//            }
+//            catch (Exception e){
+//
+//            }
+//          }
+//          active_mods = Pointers.Modifiers.EMPTY;
+//          break;
         case Keyevent:
-          if(mods.isEmpty()){
-            send_key_down_up(key.getKeyevent());
-          }else{
-            handle_key_with_mods(key,mods);
-            mods = new ArrayList<>();
-          }
+          key_up(key,active_mods);
+          active_mods = Pointers.Modifiers.EMPTY;
           break;
         case Modifier:
-          mods.add(key);
-
+          active_mods = active_mods.with_extra_mod(key);
         default:break;
       }
       wait(20);

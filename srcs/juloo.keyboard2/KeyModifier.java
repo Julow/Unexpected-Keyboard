@@ -291,12 +291,9 @@ public final class KeyModifier
     return turn_into_keyevent(k);
   }
 
-  private static KeyValue turn_into_keyevent(KeyValue k)
-  {
-    if (k.getKind() != KeyValue.Kind.Char)
-      return k;
+  public static int getKeyCodeFromChar(char c){
     int e;
-    switch (k.getChar())
+    switch (c)
     {
       case 'a': e = KeyEvent.KEYCODE_A; break;
       case 'b': e = KeyEvent.KEYCODE_B; break;
@@ -352,8 +349,17 @@ public final class KeyModifier
       case '(': e = KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN; break;
       case ')': e = KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN; break;
       case ' ': e = KeyEvent.KEYCODE_SPACE; break;
-      default: return k;
+      default: e = KeyEvent.KEYCODE_UNKNOWN; break;
     }
+    return e;
+  }
+
+  public static KeyValue turn_into_keyevent(KeyValue k)
+  {
+    if (k.getKind() != KeyValue.Kind.Char)
+      return k;
+    int e = getKeyCodeFromChar(k.getChar());
+    if(e == KeyEvent.KEYCODE_UNKNOWN) return k;
     return k.withKeyevent(e);
   }
 
