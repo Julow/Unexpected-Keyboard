@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.text.InputType;
 import android.text.Layout;
@@ -19,6 +20,7 @@ public class CustomLayoutEditDialog
       boolean allow_remove, final Callback callback)
   {
     final LayoutEntryEditText input = new LayoutEntryEditText(ctx);
+    input.setTextSize(12.0f);
     input.setText(initial_text);
     AlertDialog.Builder dialog = new AlertDialog.Builder(ctx)
       .setView(input)

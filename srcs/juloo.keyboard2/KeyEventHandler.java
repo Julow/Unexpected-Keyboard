@@ -8,7 +8,11 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
+
+import java.util.ArrayList;
 import java.util.Iterator;
+
+import juloo.keyboard2.KeyModifier;
 
 public final class KeyEventHandler
   implements Config.IKeyEventHandler,
@@ -190,6 +194,61 @@ public final class KeyEventHandler
     send_keyevent(KeyEvent.ACTION_DOWN, keyCode);
     send_keyevent(KeyEvent.ACTION_UP, keyCode);
   }
+  public static void wait(int ms)
+  {
+    try
+    {
+      Thread.sleep(ms);
+    }
+    catch(InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+    }
+  }
+  void handle_key_with_mods(KeyValue k,ArrayList<KeyValue> mods){
+    for(KeyValue mod: mods){
+      k = KeyModifier.modify(k,mod);
+    }
+    send_key_down_up(k.getKeyevent());
+  }
+  void send_macro(KeyValue[] keys)
+  {
+    ArrayList<KeyValue> mods = new ArrayList<>();
+    for(KeyValue key : keys){
+      switch(key.getKind()){
+        case Char:
+          if(mods.isEmpty()){
+            send_text(String.valueOf(key.getChar()));
+          }else{
+            handle_key_with_mods(key,mods);
+            mods = new ArrayList<>();
+          }
+          break;
+        case Event:
+
+          if(mods.isEmpty()){
+            _recv.handle_event_key(key.getEvent());
+          }else{
+            handle_key_with_mods(key,mods);
+            mods = new ArrayList<>();
+          }
+          break;
+        case Keyevent:
+          if(mods.isEmpty()){
+            send_key_down_up(key.getKeyevent());
+          }else{
+            handle_key_with_mods(key,mods);
+            mods = new ArrayList<>();
+          }
+          break;
+        case Modifier:
+          mods.add(key);
+
+        default:break;
+      }
+      wait(20);
+    }
+  }
 
   void send_keyevent(int eventAction, int eventCode)
   {
@@ -226,6 +285,8 @@ public final class KeyEventHandler
       case StringWithSymbol:
         send_text(((KeyValue.Complex.StringWithSymbol)val).str);
         break;
+      case Macro:
+        send_macro(((KeyValue.Complex.Macro)val).keys);
     }
   }
 

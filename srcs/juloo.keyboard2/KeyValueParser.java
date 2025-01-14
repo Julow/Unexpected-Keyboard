@@ -1,7 +1,14 @@
 package juloo.keyboard2;
 
+import static juloo.keyboard2.KeyValue.makeMacroKeyWithSymbol;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import juloo.keyboard2.KeyValue;
 
 /**
 Parse a key definition. The syntax for a key definition is:
@@ -82,11 +89,33 @@ public final class KeyValueParser
           symbol = String.valueOf(eventcode);
         return KeyValue.keyeventKey(symbol, eventcode, flags);
 
+      case "macro":
+        payload = parseSingleQuotedString(m);
+        String[] keynames = payload.split(",");
+
+        ArrayList<KeyValue> keys = new ArrayList<>();
+          for (String keyname : keynames) {
+            KeyValue kv = KeyValue.getKeyByName(keyname);
+            keys.add(kv);
+          }
+          if (symbol == null)
+          symbol = String.valueOf(keys.get(0).getKind());
+          KeyValue[] kv_arr = new KeyValue[keys.size()];
+          kv_arr = keys.toArray(kv_arr);
+          return makeMacroKeyWithSymbol(kv_arr,symbol,flags);
+
       default: break;
     }
     parseError("Unknown kind '"+kind+"'", m, 1);
     return null; // Unreachable
   }
+
+  static String[] parseMacroPayload(String payload) throws ParseError
+  {
+    String[] chords = payload.split(",");
+    return chords;
+  }
+
 
   static String parseSingleQuotedString(Matcher m) throws ParseError
   {
