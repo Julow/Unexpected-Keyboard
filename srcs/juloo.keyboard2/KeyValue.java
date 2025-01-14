@@ -410,7 +410,7 @@ public final class KeyValue implements Comparable<KeyValue>
   public static KeyValue makeCharAsKeyEvent(char c)
   {
     int code = KeyModifier.getKeyCodeFromChar(c);
-    if(code>0)
+    if(code != KeyEvent.KEYCODE_UNKNOWN)
       return new KeyValue(String.valueOf(c), Kind.Keyevent, code, 0);
     return makeCharKey(c);
   }

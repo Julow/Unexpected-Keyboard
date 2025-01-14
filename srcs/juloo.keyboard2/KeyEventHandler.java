@@ -1,7 +1,5 @@
 package juloo.keyboard2;
 
-import static juloo.keyboard2.KeyValue.makeMacroKeyWithSymbol;
-
 import android.annotation.SuppressLint;
 import android.os.Looper;
 import android.text.InputType;

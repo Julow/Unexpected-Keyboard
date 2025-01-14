@@ -83,8 +83,8 @@ public final class Config
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
-    labelTextSize = 0.50f;
-    sublabelTextSize = 0.25f;
+    labelTextSize = 0.33f;
+    sublabelTextSize = 0.22f;
     // from prefs
     refresh(res);
     // initialized later
@@ -157,10 +157,10 @@ public final class Config
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
-      _prefs.getFloat("character_size", 1.0f)
+      _prefs.getFloat("character_size", 1.15f)
       * characterSizeScale;
     theme = getThemeId(res, _prefs.getString("theme", ""));
-    autocapitalisation = _prefs.getBoolean("autocapitalisation", false);
+    autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
