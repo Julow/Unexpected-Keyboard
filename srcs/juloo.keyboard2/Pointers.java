@@ -682,6 +682,13 @@ public final class Pointers implements Handler.Callback
       return ofArray(newmods, newmods.length);
     }
 
+    /** Return a copy of this object. */
+    public Modifiers as_copy()
+    {
+      KeyValue[] newmods = Arrays.copyOf(_mods, _size);
+      return ofArray(newmods, newmods.length);
+    }
+
     /** Returns the activated modifiers that are not in [m2]. */
     public Iterator<KeyValue> diff(Modifiers m2)
     {

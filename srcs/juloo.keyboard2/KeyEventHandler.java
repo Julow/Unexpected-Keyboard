@@ -205,27 +205,15 @@ public final class KeyEventHandler
 
   void send_macro(KeyValue[] keys)
   {
-    Pointers.Modifiers active_mods = Pointers.Modifiers.EMPTY;
+    Pointers.Modifiers active_mods = _mods.as_copy();
     for(KeyValue key : keys){
       switch(key.getKind()){
         case Char:
           key = KeyModifier.turn_into_keyevent(key);
         case String:
-//          String s = key.getString();
-//          for (int i = 0; i < s.length(); i++) {
-//            try{
-//              KeyValue k = KeyValue.makeCharAsKeyEvent(s.charAt(i));
-//              key_up(k,active_mods);
-//            }
-//            catch (Exception e){
-//
-//            }
-//          }
-//          active_mods = Pointers.Modifiers.EMPTY;
-//          break;
         case Keyevent:
           key_up(key,active_mods);
-          active_mods = Pointers.Modifiers.EMPTY;
+          active_mods = _mods.as_copy();
           break;
         case Modifier:
           active_mods = active_mods.with_extra_mod(key);
