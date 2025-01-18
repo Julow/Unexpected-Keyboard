@@ -2,7 +2,7 @@ package juloo.keyboard2;
 
 import android.content.res.Resources;
 import android.view.KeyEvent;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +26,7 @@ public final class LayoutModifier
   {
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
-    final Map<KeyValue, KeyboardData.PreferredPos> extra_keys = new HashMap<KeyValue, KeyboardData.PreferredPos>();
+    final TreeMap<KeyValue, KeyboardData.PreferredPos> extra_keys = new TreeMap<KeyValue, KeyboardData.PreferredPos>();
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     // Make sure the config key is accessible to avoid being locked in a custom
     // layout.
