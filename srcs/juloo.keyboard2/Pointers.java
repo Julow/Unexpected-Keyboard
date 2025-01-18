@@ -16,7 +16,7 @@ public final class Pointers implements Handler.Callback
   public static final int FLAG_P_LATCHABLE = 1;
   public static final int FLAG_P_LATCHED = (1 << 1);
   public static final int FLAG_P_FAKE = (1 << 2);
-  public static final int FLAG_P_LOCKABLE = (1 << 3);
+  public static final int FLAG_P_DOUBLE_TAP_LOCK = (1 << 3);
   public static final int FLAG_P_LOCKED = (1 << 4);
   public static final int FLAG_P_SLIDING = (1 << 5);
   /** Clear latched (only if also FLAG_P_LATCHABLE set). */
@@ -86,10 +86,10 @@ public final class Pointers implements Handler.Callback
   /** The key must not be already latched . */
   void add_fake_pointer(KeyboardData.Key key, KeyValue kv, boolean locked)
   {
-    Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY);
-    ptr.flags = FLAG_P_FAKE | FLAG_P_LATCHED;
+    int flags = pointer_flags_of_kv(kv) | FLAG_P_FAKE | FLAG_P_LATCHED;
     if (locked)
-      ptr.flags |= FLAG_P_LOCKED;
+      flags |= FLAG_P_LOCKED;
+    Pointer ptr = new Pointer(-1, key, kv, 0.f, 0.f, Modifiers.EMPTY, flags);
     _ptrs.add(ptr);
     _handler.onPointerFlagsChanged(false);
   }
@@ -153,7 +153,8 @@ public final class Pointers implements Handler.Callback
     if (latched != null) // Already latched
     {
       removePtr(ptr); // Remove dupplicate
-      if ((latched.flags & FLAG_P_LOCKABLE) != 0) // Toggle lockable key
+      // Toggle lockable key, except if it's a fake pointer
+      if ((latched.flags & (FLAG_P_FAKE | FLAG_P_DOUBLE_TAP_LOCK)) == FLAG_P_DOUBLE_TAP_LOCK)
         lockPointer(latched, false);
       else // Otherwise, unlatch
       {
@@ -204,7 +205,7 @@ public final class Pointers implements Handler.Callback
     // The other key already "own" the latched modifiers and will clear them.
     Modifiers mods = getModifiers(isOtherPointerDown());
     KeyValue value = _handler.modifyKey(key.keys[0], mods);
-    Pointer ptr = new Pointer(pointerId, key, value, x, y, mods);
+    Pointer ptr = make_pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     startLongPress(ptr);
     _handler.onPointerDown(value, false);
@@ -253,7 +254,7 @@ public final class Pointers implements Handler.Callback
       return;
     if (ptr.hasFlagsAny(FLAG_P_SLIDING))
     {
-      ptr.sliding.onTouchMove(ptr, x);
+      ptr.sliding.onTouchMove(ptr, x, y);
       return;
     }
 
@@ -293,13 +294,9 @@ public final class Pointers implements Handler.Callback
 
           ptr.value = new_value;
           ptr.flags = pointer_flags_of_kv(new_value);
-          // Sliding mode is entered when key5 or key6 is down on a slider key.
-          if (ptr.key.slider &&
-              (new_value.equals(ptr.key.getKeyValue(5))
-               || new_value.equals(ptr.key.getKeyValue(6))))
-          {
-            startSliding(ptr, x);
-          }
+          // Start sliding mode
+          if (new_value.getKind() == KeyValue.Kind.Slider)
+            startSliding(ptr, x, y, dx, dy, new_value);
           _handler.onPointerDown(new_value, true);
         }
 
@@ -315,6 +312,7 @@ public final class Pointers implements Handler.Callback
           ptr.value = apply_gesture(ptr, ptr.gesture.get_gesture());
           restartLongPress(ptr);
           ptr.flags = 0; // Special behaviors are ignored during a gesture.
+          _handler.onPointerFlagsChanged(true); // Vibrate
         }
       }
     }
@@ -368,7 +366,7 @@ public final class Pointers implements Handler.Callback
   /** Make a pointer into the locked state. */
   private void lockPointer(Pointer ptr, boolean shouldVibrate)
   {
-    ptr.flags = (ptr.flags & ~FLAG_P_LOCKABLE) | FLAG_P_LOCKED;
+    ptr.flags = (ptr.flags & ~FLAG_P_DOUBLE_TAP_LOCK) | FLAG_P_LOCKED;
     _handler.onPointerFlagsChanged(shouldVibrate);
   }
 
@@ -452,15 +450,21 @@ public final class Pointers implements Handler.Callback
 
   // Sliding
 
-  void startSliding(Pointer ptr, float x)
+  /** When sliding is ongoing, key events are handled by the [Slider] class.
+      [kv] must be of kind [Slider]. */
+  void startSliding(Pointer ptr, float x, float y, float dx, float dy, KeyValue kv)
   {
+    int r = kv.getSliderRepeat();
+    int dirx = dx < 0 ? -r : r;
+    int diry = dy < 0 ? -r : r;
     stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
-    ptr.sliding = new Sliding(x);
+    ptr.sliding = new Sliding(x, y, dirx, diry, kv.getSlider());
+    _handler.onPointerHold(kv, ptr.modifiers);
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
-  static int pointer_flags_of_kv(KeyValue kv)
+  int pointer_flags_of_kv(KeyValue kv)
   {
     int flags = 0;
     if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
@@ -470,8 +474,9 @@ public final class Pointers implements Handler.Callback
         flags |= FLAG_P_CLEAR_LATCHED | FLAG_P_CANT_LOCK;
       flags |= FLAG_P_LATCHABLE;
     }
-    if (kv.hasFlagsAny(KeyValue.FLAG_LOCK))
-      flags |= FLAG_P_LOCKABLE;
+    if (_config.double_tap_lock_shift &&
+        kv.hasFlagsAny(KeyValue.FLAG_DOUBLE_TAP_LOCK))
+      flags |= FLAG_P_DOUBLE_TAP_LOCK;
     return flags;
   }
 
@@ -512,6 +517,13 @@ public final class Pointers implements Handler.Callback
 
   // Pointers
 
+  Pointer make_pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y,
+      Modifiers m)
+  {
+    int flags = (v == null) ? 0 : pointer_flags_of_kv(v);
+    return new Pointer(p, k, v, x, y, m, flags);
+  }
+
   private static final class Pointer
   {
     /** -1 when latched. */
@@ -533,7 +545,7 @@ public final class Pointers implements Handler.Callback
     /** [null] when not in sliding mode. */
     public Sliding sliding;
 
-    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m)
+    public Pointer(int p, KeyboardData.Key k, KeyValue v, float x, float y, Modifiers m, int f)
     {
       pointerId = p;
       key = k;
@@ -542,7 +554,7 @@ public final class Pointers implements Handler.Callback
       downX = x;
       downY = y;
       modifiers = m;
-      flags = (v == null) ? 0 : pointer_flags_of_kv(v);
+      flags = f;
       timeoutWhat = -1;
       sliding = null;
     }
@@ -558,34 +570,55 @@ public final class Pointers implements Handler.Callback
     /** Accumulated distance since last event. */
     float d = 0.f;
     /** The slider speed changes depending on the pointer speed. */
-    float speed = 1.f;
+    float speed = 0.5f;
     /** Coordinate of the last move. */
     float last_x;
-    /** [System.currentTimeMillis()] at the time of the last move. */
-    long last_move_ms;
+    float last_y;
+    /** [System.currentTimeMillis()] at the time of the last move. Equals to
+      [-1] when the sliding hasn't started yet. */
+    long last_move_ms = -1;
+    /** The property which is being slided. */
+    KeyValue.Slider slider;
+    /** Direction of the initial movement, positive if sliding to the right and
+        negative if sliding to the left. */
+    int direction_x;
+    int direction_y;
 
-    public Sliding(float x)
+    public Sliding(float x, float y, int dirx, int diry, KeyValue.Slider s)
     {
       last_x = x;
-      last_move_ms = System.currentTimeMillis();
+      last_y = y;
+      slider = s;
+      direction_x = dirx;
+      direction_y = diry;
     }
 
     static final float SPEED_SMOOTHING = 0.7f;
     /** Avoid absurdly large values. */
     static final float SPEED_MAX = 4.f;
 
-    public void onTouchMove(Pointer ptr, float x)
+    public void onTouchMove(Pointer ptr, float x, float y)
     {
-      d += (x - last_x) * speed / _config.slide_step_px;
-      update_speed(x);
+      // Start sliding only after the pointer has travelled an other distance.
+      // This allows to trigger the slider movements only once with a short
+      // swipe.
+      float travelled = Math.abs(x - last_x) + Math.abs(y - last_y);
+      if (last_move_ms == -1)
+      {
+        if (travelled < _config.swipe_dist_px)
+          return;
+        last_move_ms = System.currentTimeMillis();
+      }
+      d += ((x - last_x) * direction_x + (y - last_y) * direction_y)
+        * speed / _config.slide_step_px;
+      update_speed(travelled, x, y);
       // Send an event when [abs(d)] exceeds [1].
       int d_ = (int)d;
       if (d_ != 0)
       {
         d -= d_;
-        int key_index = (d_ < 0) ? 5 : 6;
-        ptr.value = _handler.modifyKey(ptr.key.keys[key_index], ptr.modifiers);
-        send_key(ptr, Math.abs(d_));
+        _handler.onPointerHold(KeyValue.sliderKey(slider, d_),
+            ptr.modifiers);
       }
     }
 
@@ -598,43 +631,18 @@ public final class Pointers implements Handler.Callback
       _handler.onPointerFlagsChanged(false);
     }
 
-    /** Send the pressed key [n] times. */
-    void send_key(Pointer ptr, int n)
-    {
-      if (ptr.value == null)
-        return;
-      // Avoid looping if possible to avoid lag while sliding fast
-      KeyValue multiplied = multiply_key(ptr.value, n);
-      if (multiplied != null)
-        _handler.onPointerHold(multiplied, ptr.modifiers);
-      else
-        for (int i = 0; i < n; i++)
-          _handler.onPointerHold(ptr.value, ptr.modifiers);
-    }
-
-    /** Return a key performing the same action as [kv] but [n] times. Returns
-        [null] if [kv] cannot be multiplied. */
-    KeyValue multiply_key(KeyValue kv, int n)
-    {
-      switch (kv.getKind())
-      {
-        case Cursor_move:
-          return KeyValue.cursorMoveKey(kv.getCursorMove() * n);
-      }
-      return null;
-    }
-
     /** [speed] is computed from the elapsed time and distance traveled
         between two move events. Exponential smoothing is used to smooth out
-        the noise. Sets [last_move_ms] and [last_x]. */
-    void update_speed(float x)
+        the noise. Sets [last_move_ms] and [last_pos]. */
+    void update_speed(float travelled, float x, float y)
     {
       long now = System.currentTimeMillis();
       float instant_speed = Math.min(SPEED_MAX,
-          Math.abs(x - last_x) / (float)(now - last_move_ms) + 1.f);
+          travelled / (float)(now - last_move_ms) + 1.f);
       speed = speed + (instant_speed - speed) * SPEED_SMOOTHING;
       last_move_ms = now;
       last_x = x;
+      last_y = y;
     }
   }
 

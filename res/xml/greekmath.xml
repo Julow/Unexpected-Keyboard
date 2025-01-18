@@ -17,7 +17,7 @@
     <key key0="σ" key3="←" key4="∂"/>
     <key key0="δ" key3="↓" key4="∫"/>
     <key key0="φ" key3="→" key4="∃"/>
-    <key key0="γ" key4="∈"/>
+    <key key0="γ" key3="∋" key4="∈"/>
     <key key0="η" key1="⊕" key4="4"/>
     <key key0="ξ" key1="⊖" key3="ℕ" key4="5"/>
     <key key0="κ" key1="⊙" key3="ℝ" key4="6"/>

@@ -124,6 +124,10 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="key_descr_end">Beigas</string>
   <string name="key_descr_clipboard">Starpliktuves pārvaldnieks</string>
   <!-- <string name="key_descr_combining">Combining diacritic</string> -->
+  <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
+  <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
+  <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
+  <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
   <string name="clipboard_history_heading">Nesen starpliktuvē ievietots teksts</string>
   <string name="clipboard_pin_heading">Piesprausts</string>
   <string name="clipboard_remove_confirm">Noņemt šo starpliktuves vienumu?</string>

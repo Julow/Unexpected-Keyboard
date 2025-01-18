@@ -44,6 +44,7 @@ public final class KeyValue implements Comparable<KeyValue>
     TREMA,
     HORN,
     HOOK_ABOVE,
+    DOUBLE_GRAVE,
     SUPERSCRIPT,
     SUBSCRIPT,
     RING,
@@ -89,10 +90,11 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public static enum Kind
   {
-    Char, String, Keyevent, Event, Compose_pending, Hangul_initial,
-    Hangul_medial, Modifier, Editing, Placeholder,
-    Cursor_move, // Value is encoded as a 16-bit integer.
-    Complex, // [_payload] is a [KeyValue.Complex], value is [Complex.Kind].
+    Char, Keyevent, Event, Compose_pending, Hangul_initial, Hangul_medial,
+    Modifier, Editing, Placeholder,
+    String, // [_payload] is also the string to output, value is unused.
+    Slider, // [_payload] is a [KeyValue.Slider], value is slider repeatition.
+    StringWithSymbol, // [_payload] is a [KeyValue.StringWithSymbol], value is unused.
   }
 
   private static final int FLAGS_OFFSET = 19;
@@ -100,8 +102,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   // Behavior flags.
   public static final int FLAG_LATCH = (1 << FLAGS_OFFSET << 0);
-  // Key can be locked by typing twice
-  public static final int FLAG_LOCK = (1 << FLAGS_OFFSET << 1);
+  // Key can be locked by typing twice when enabled in settings
+  public static final int FLAG_DOUBLE_TAP_LOCK = (1 << FLAGS_OFFSET << 1);
   // Special keys are not repeated and don't clear latched modifiers.
   public static final int FLAG_SPECIAL = (1 << FLAGS_OFFSET << 2);
   // Whether the symbol should be greyed out. For example, keys that are not
@@ -117,8 +119,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   // Ranges for the different components
   private static final int FLAGS_BITS =
-    FLAG_LATCH | FLAG_LOCK | FLAG_SPECIAL | FLAG_GREYED | FLAG_KEY_FONT |
-    FLAG_SMALLER_FONT | FLAG_SECONDARY;
+    FLAG_LATCH | FLAG_DOUBLE_TAP_LOCK | FLAG_SPECIAL | FLAG_GREYED |
+    FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_SECONDARY;
   private static final int KIND_BITS = (0b1111 << KIND_OFFSET); // 4 bits wide
   private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
 
@@ -130,15 +132,12 @@ public final class KeyValue implements Comparable<KeyValue>
     check((((Kind.values().length - 1) << KIND_OFFSET) & ~KIND_BITS) == 0);
   }
 
-  /**
-   * The symbol that is rendered on the keyboard as a [String].
-   * Except for keys of kind:
-   * - [String], this is also the string to output.
-   * - [Complex], this is an instance of [KeyValue.Complex].
-   */
-  private final Object _payload;
+  /** [_payload.toString()] is the symbol that is rendered on the keyboard. */
+  private final Comparable _payload;
 
-  /** This field encodes three things: Kind, flags and value. */
+  /** This field encodes three things: Kind (KIND_BITS), flags (FLAGS_BITS) and
+      value (VALUE_BITS).
+      The meaning of the value depends on the kind. */
   private final int _code;
 
   public Kind getKind()
@@ -160,9 +159,7 @@ public final class KeyValue implements Comparable<KeyValue>
       When [getKind() == Kind.String], also the string to send. */
   public String getString()
   {
-    if (getKind() == Kind.Complex)
-      return ((Complex)_payload).getSymbol();
-    return (String)_payload;
+    return _payload.toString();
   }
 
   /** Defined only when [getKind() == Kind.Char]. */
@@ -214,22 +211,22 @@ public final class KeyValue implements Comparable<KeyValue>
     return (_code & VALUE_BITS);
   }
 
-  /** Defined only when [getKind() == Kind.Cursor_move]. */
-  public short getCursorMove()
+  /** Defined only when [getKind() == Kind.Slider]. */
+  public Slider getSlider()
   {
-    return (short)(_code & VALUE_BITS);
+    return (Slider)_payload;
   }
 
-  /** Defined only when [getKind() == Kind.Complex]. */
-  public Complex getComplex()
+  /** Defined only when [getKind() == Kind.Slider]. */
+  public int getSliderRepeat()
   {
-    return (Complex)_payload;
+    return ((int)(short)(_code & VALUE_BITS));
   }
 
-  /** Defined only when [getKind() == Kind.Complex]. */
-  public Complex.Kind getComplexKind()
+  /** Defined only when [getKind() == Kind.StringWithSymbol]. */
+  public String getStringWithSymbol()
   {
-    return Complex.Kind.values()[(_code & VALUE_BITS)];
+    return ((StringWithSymbol)_payload).str;
   }
 
   /* Update the char and the symbol. */
@@ -254,6 +251,7 @@ public final class KeyValue implements Comparable<KeyValue>
     return sameKey((KeyValue)obj);
   }
 
+  @Override
   public int compareTo(KeyValue snd)
   {
     // Compare the kind and value first, then the flags.
@@ -263,9 +261,9 @@ public final class KeyValue implements Comparable<KeyValue>
     d = _code - snd._code;
     if (d != 0)
       return d;
-    if (getKind() == Kind.Complex)
-      return ((Complex)_payload).compareTo((Complex)snd._payload);
-    return ((String)_payload).compareTo((String)snd._payload);
+    // Calls [compareTo] assuming that if [_code] matches, then [_payload] are
+    // of the same class.
+    return _payload.compareTo(snd._payload);
   }
 
   /** Type-safe alternative to [equals]. */
@@ -273,7 +271,7 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     if (snd == null)
       return false;
-    return _code == snd._code && _payload.equals(snd._payload);
+    return _code == snd._code && _payload.compareTo(snd._payload) == 0;
   }
 
   @Override
@@ -288,19 +286,16 @@ public final class KeyValue implements Comparable<KeyValue>
     return "[KeyValue " + getKind().toString() + "+" + getFlags() + "+" + value + " \"" + getString() + "\"]";
   }
 
-  private KeyValue(Object p, int kind, int value, int flags)
+  /** [value] is an unsigned integer. */
+  private KeyValue(Comparable p, int kind, int value, int flags)
   {
+    if (p == null)
+      throw new NullPointerException("KeyValue payload cannot be null");
     _payload = p;
     _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
   }
 
-  public KeyValue(Complex p, Complex.Kind value, int flags)
-  {
-    this((Object)p, (Kind.Complex.ordinal() << KIND_OFFSET), value.ordinal(),
-        flags);
-  }
-
-  public KeyValue(String p, Kind k, int v, int f)
+  public KeyValue(Comparable p, Kind k, int v, int f)
   {
     this(p, (k.ordinal() << KIND_OFFSET), v, f);
   }
@@ -312,7 +307,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private static KeyValue charKey(int symbol, char c, int flags)
   {
-    return charKey(String.valueOf((char)symbol), c, flags);
+    return charKey(String.valueOf((char)symbol), c, flags | FLAG_KEY_FONT);
   }
 
   private static KeyValue modifierKey(String symbol, Modifier m, int flags)
@@ -344,12 +339,12 @@ public final class KeyValue implements Comparable<KeyValue>
     return eventKey(String.valueOf((char)symbol), e, flags | FLAG_KEY_FONT);
   }
 
-  private static KeyValue keyeventKey(String symbol, int code, int flags)
+  public static KeyValue keyeventKey(String symbol, int code, int flags)
   {
     return new KeyValue(symbol, Kind.Keyevent, code, flags | FLAG_SECONDARY);
   }
 
-  private static KeyValue keyeventKey(int symbol, int code, int flags)
+  public static KeyValue keyeventKey(int symbol, int code, int flags)
   {
     return keyeventKey(String.valueOf((char)symbol), code, flags | FLAG_KEY_FONT);
   }
@@ -370,13 +365,12 @@ public final class KeyValue implements Comparable<KeyValue>
     return editingKey(String.valueOf((char)symbol), action, FLAG_KEY_FONT);
   }
 
-  /** A key that moves the cursor [d] times to the right. If [d] is negative,
-      it moves the cursor [abs(d)] times to the left. */
-  public static KeyValue cursorMoveKey(int d)
+  /** A key that slides the property specified by [s] by the amount specified
+      with [repeatition]. */
+  public static KeyValue sliderKey(Slider s, int repeatition)
   {
-    int symbol = (d < 0) ? 0xE008 : 0xE006;
-    return new KeyValue(String.valueOf((char)symbol), Kind.Cursor_move,
-        ((short)d) & 0xFFFF,
+    // Casting to a short then back to a int to preserve the sign bit.
+    return new KeyValue(s, Kind.Slider, (short)repeatition & 0xFFFF,
         FLAG_SPECIAL | FLAG_SECONDARY | FLAG_KEY_FONT);
   }
 
@@ -456,8 +450,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public static KeyValue makeStringKeyWithSymbol(String str, String symbol, int flags)
   {
-    return new KeyValue(new Complex.StringWithSymbol(str, symbol),
-        Complex.Kind.StringWithSymbol, flags);
+    return new KeyValue(new StringWithSymbol(str, symbol),
+        Kind.StringWithSymbol, 0, flags);
   }
 
   /** Make a modifier key for passing to [KeyModifier]. */
@@ -497,7 +491,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "\\\\": return makeStringKey("\\");
 
       /* Modifiers and dead-keys */
-      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, 0);
+      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, FLAG_DOUBLE_TAP_LOCK);
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
       case "accent_aigu": return diacritic(0xE050, Modifier.AIGU);
@@ -519,6 +513,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_dot_below": return diacritic(0xE060, Modifier.DOT_BELOW);
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
+      case "accent_double_grave": return diacritic(0xE063, Modifier.DOUBLE_GRAVE);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
@@ -558,6 +553,20 @@ public final class KeyValue implements Comparable<KeyValue>
       case "combining_payerok": return makeCharKey(0xE205, '\uA67D', 0);
       case "combining_titlo": return makeCharKey(0xE206, '\u0483', 0);
       case "combining_vzmet": return makeCharKey(0xE207, '\uA66F', 0);
+      case "combining_arabic_v": return makeCharKey(0xE208, '\u065A', 0);
+      case "combining_arabic_inverted_v": return makeCharKey(0xE209, '\u065B', 0);
+      case "combining_shaddah": return makeCharKey(0xE210, '\u0651', 0);
+      case "combining_sukun": return makeCharKey(0xE211, '\u0652', 0);
+      case "combining_fatha": return makeCharKey(0xE212, '\u064E', 0);
+      case "combining_dammah": return makeCharKey(0xE213, '\u064F', 0);
+      case "combining_kasra": return makeCharKey(0xE214, '\u0650', 0);
+      case "combining_hamza_above": return makeCharKey(0xE215, '\u0654', 0);
+      case "combining_hamza_below": return makeCharKey(0xE216, '\u0655', 0);
+      case "combining_alef_above": return makeCharKey(0xE217, '\u0670', 0);
+      case "combining_fathatan": return makeCharKey(0xE218, '\u064B', 0);
+      case "combining_kasratan": return makeCharKey(0xE219, '\u064D', 0);
+      case "combining_dammatan": return makeCharKey(0xE220, '\u064C', 0);
+      case "combining_alef_below": return makeCharKey(0xE221, '\u0656', 0);
 
       /* Special event keys */
       case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
@@ -610,7 +619,7 @@ public final class KeyValue implements Comparable<KeyValue>
       /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
       case "\\n": return charKey("\\n", '\n', 0); // Send the newline character
-      case "space": return charKey(0xE00D, ' ', FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_GREYED);
+      case "space": return charKey(0xE00D, ' ', FLAG_SMALLER_FONT | FLAG_GREYED);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
       case "nnbsp": return charKey("\u2423", '\u202F', FLAG_SMALLER_FONT);
 
@@ -654,9 +663,9 @@ public final class KeyValue implements Comparable<KeyValue>
       case "meteg": return charKey("\u05DE\u05BD", '\u05BD', 0); // or siluq or sof-pasuq
       case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
       /* intending/preventing ligature - supported by many scripts*/
-      case "zwj": return charKey("zwj", '\u200D', 0); // zero-width joiner (provides ligature)
+      case "zwj": return charKey(0xE019, '\u200D', 0); // zero-width joiner (provides ligature)
       case "zwnj":
-      case "halfspace": return charKey("⸽", '\u200C', 0); // zero-width non joiner
+      case "halfspace": return charKey(0xE018, '\u200C', 0); // zero-width non joiner
 
       /* Editing keys */
       case "copy": return editingKey(0xE030, Editing.COPY);
@@ -667,8 +676,10 @@ public final class KeyValue implements Comparable<KeyValue>
       case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
       case "undo": return editingKey(0xE036, Editing.UNDO);
       case "redo": return editingKey(0xE037, Editing.REDO);
-      case "cursor_left": return cursorMoveKey(-1);
-      case "cursor_right": return cursorMoveKey(1);
+      case "cursor_left": return sliderKey(Slider.Cursor_left, 1);
+      case "cursor_right": return sliderKey(Slider.Cursor_right, 1);
+      case "cursor_up": return sliderKey(Slider.Cursor_up, 1);
+      case "cursor_down": return sliderKey(Slider.Cursor_down, 1);
       // These keys are not used
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
@@ -703,6 +714,20 @@ public final class KeyValue implements Comparable<KeyValue>
       case "ㅍ": return makeHangulInitial("ㅍ", 17);
       case "ㅎ": return makeHangulInitial("ㅎ", 18);
 
+      /* Tamil letters should be smaller on the keyboard. */
+      case "ஔ": case "ந": case "ல": case "ழ": case "௯": case "க":
+      case "ஷ": case "ே": case "௨": case "ஜ": case "ங": case "ன":
+      case "௦": case "ை": case "ூ": case "ம": case "ஆ": case "௭":
+      case "௪": case "ா": case "ஶ": case "௬": case "வ": case "ஸ":
+      case "௮": case "ட": case "ப": case "ஈ": case "௩": case "ஒ":
+      case "ௌ": case "உ": case "௫": case "ய": case "ர": case "ு":
+      case "இ": case "ோ": case "ஓ": case "ஃ": case "ற": case "த":
+      case "௧": case "ண": case "ஏ": case "ஊ": case "ொ": case "ஞ":
+      case "அ": case "எ": case "ச": case "ெ": case "ஐ": case "ி":
+      case "௹": case "ள": case "ஹ": case "௰": case "ௐ": case "௱":
+      case "௲": case "௳":
+        return makeStringKey(name, FLAG_SMALLER_FONT);
+
       /* The key is not one of the special ones. */
       default: return parseKeyDefinition(name);
     }
@@ -715,48 +740,44 @@ public final class KeyValue implements Comparable<KeyValue>
       throw new RuntimeException("Assertion failure");
   }
 
-  public static abstract class Complex
+  public static final class StringWithSymbol implements Comparable<StringWithSymbol>
   {
-    public abstract String getSymbol();
+    public final String str;
+    final String _symbol;
 
-    /** [compareTo] can assume that [snd] is an instance of the same class. */
-    public abstract int compareTo(Complex snd);
-
-    public boolean equals(Object snd)
+    public StringWithSymbol(String _str, String _sym)
     {
-      if (snd instanceof Complex)
-        return compareTo((Complex)snd) == 0;
-      return false;
+      str = _str;
+      _symbol = _sym;
     }
 
-    /** [hashCode] will be called on this class. */
+    @Override
+    public String toString() { return _symbol; }
 
-    /** The kind is stored in the [value] field of the key. */
-    public static enum Kind
+    @Override
+    public int compareTo(StringWithSymbol snd)
     {
-      StringWithSymbol,
+      int d = str.compareTo(snd.str);
+      if (d != 0) return d;
+      return _symbol.compareTo(snd._symbol);
+    }
+  };
+
+  public static enum Slider
+  {
+    Cursor_left(0xE008),
+    Cursor_right(0xE006),
+    Cursor_up(0xE005),
+    Cursor_down(0xE007);
+
+    final String symbol;
+
+    Slider(int symbol_)
+    {
+      symbol = String.valueOf((char)symbol_);
     }
 
-    public static final class StringWithSymbol extends Complex
-    {
-      public final String str;
-      private final String _symbol;
-
-      public StringWithSymbol(String _str, String _sym)
-      {
-        str = _str;
-        _symbol = _sym;
-      }
-
-      public String getSymbol() { return _symbol; }
-
-      public int compareTo(Complex _snd)
-      {
-        StringWithSymbol snd = (StringWithSymbol)_snd;
-        int d = str.compareTo(snd.str);
-        if (d != 0) return d;
-        return _symbol.compareTo(snd._symbol);
-      }
-    }
+    @Override
+    public String toString() { return symbol; }
   };
 }

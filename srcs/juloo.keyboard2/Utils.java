@@ -1,8 +1,13 @@
 package juloo.keyboard2;
 
 import android.app.AlertDialog;
+import android.content.res.Resources;
+import android.graphics.Insets;
+import android.os.Build.VERSION;
 import android.os.IBinder;
+import android.view.View;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,5 +48,15 @@ public final class Utils
     while ((l = reader.read(buff, 0, buff_length)) != -1)
       out.append(buff, 0, l);
     return out.toString();
+  }
+
+  /** Whether the thin gesture-navigation bar is used.
+      https://stackoverflow.com/questions/36514167/how-to-really-get-the-navigation-bar-height-in-android
+       */
+  public static boolean is_navigation_bar_gestural(Resources res)
+  {
+    // core/java/android/view/WindowManagerPolicyConstants.java
+    int res_id = res.getIdentifier("config_navBarInteractionMode", "integer", "android");
+    return (res_id > 0 && res.getInteger(res_id) == 2);
   }
 }

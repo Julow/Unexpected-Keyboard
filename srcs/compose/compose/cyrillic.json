@@ -1,7 +1,4 @@
 {
-  "\"": {
-    "і": "ї"
-  },
   ",": {
     "г": "ӻ",
     "к": "ӄ",
@@ -25,7 +22,7 @@
   "а": {
     "е": "ѣ",
     "у": "ѡ",
-    "ч": "combining_acute",
+    "ч": "combining_aigu",
     "ы": "ѣ",
     "ь": "ꙙ",
     "ꙋ": "ꙍ",
@@ -106,7 +103,7 @@
     "и": "ѵ",
     "й": "ў",
     "у": "ӯ",
-    "ч": "combining_porkrytie",
+    "ч": "combining_pokrytie",
     "і": "ѵ",
     "ј": "ў"
   },
@@ -117,7 +114,7 @@
   },
   "ч": {
     ".": "ҷ",
-    "а": "combining_acute",
+    "а": "combining_aigu",
     "б": "combining_slavonic_psili",
     "е": "combining_trema",
     "й": "combining_breve",
