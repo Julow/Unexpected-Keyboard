@@ -103,6 +103,8 @@ Some keys contain whitespaces, unexpected:  ́
 # latn_neo2
 Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
 1 warnings
+# latn_qwerty_az
+0 warnings
 # latn_qwerty_br
 0 warnings
 # latn_qwerty_cy

@@ -40,6 +40,7 @@
     <item>latn_bepo_fr</item>
     <item>latn_bone</item>
     <item>latn_neo2</item>
+    <item>latn_qwerty_az</item>
     <item>latn_qwerty_br</item>
     <item>latn_qwerty_cy</item>
     <item>latn_qwerty_cz</item>
@@ -118,6 +119,7 @@
     <item>BEPO (Français)</item>
     <item>Bone</item>
     <item>Neo 2</item>
+    <item>QWERTY (Azərbaycanca)</item>
     <item>QWERTY (Brasileiro)</item>
     <item>QWERTY (Welsh)</item>
     <item>QWERTY (Czech)</item>
@@ -196,6 +198,7 @@
     <item>@xml/latn_bepo_fr</item>
     <item>@xml/latn_bone</item>
     <item>@xml/latn_neo2</item>
+    <item>@xml/latn_qwerty_az</item>
     <item>@xml/latn_qwerty_br</item>
     <item>@xml/latn_qwerty_cy</item>
     <item>@xml/latn_qwerty_cz</item>
