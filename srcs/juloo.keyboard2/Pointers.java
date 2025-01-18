@@ -312,6 +312,7 @@ public final class Pointers implements Handler.Callback
           ptr.value = apply_gesture(ptr, ptr.gesture.get_gesture());
           restartLongPress(ptr);
           ptr.flags = 0; // Special behaviors are ignored during a gesture.
+          _handler.onPointerFlagsChanged(true); // Vibrate
         }
       }
     }
