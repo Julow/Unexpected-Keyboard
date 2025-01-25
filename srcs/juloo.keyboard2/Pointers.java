@@ -234,8 +234,9 @@ public final class Pointers implements Handler.Callback
   private KeyValue getNearestKeyAtDirection(Pointer ptr, int direction)
   {
     KeyValue k;
-    // [i] is [0, -1, 1, -2, 2, ...]
-    for (int i = 0; i > -4; i = (~i>>31) - i)
+    // [i] is [0, -1, 1, -2, 2], scanning a 1/4 of the circle's area, centered
+    // on the initial direction.
+    for (int i = 0; i > -2; i = (~i>>31) - i)
     {
       int d = (direction + i + 16) % 16;
       // Don't make the difference between a key that doesn't exist and a key
