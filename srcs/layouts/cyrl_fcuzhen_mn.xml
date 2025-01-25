@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<keyboard name="ФЦУЖЭН (Монгол)" script="cyrillic">
+  <row>
+    <key key0="ф" key2="1" key4="loc esc"/>
+    <key key0="ц" key1="~" key2="2" key3="\@"/>
+    <key key0="у" key1="!" key2="3" key3="\#"/>
+    <key key0="ж" key2="4" key3="$"/>
+    <key key0="э" key2="5" key3="%"/>
+    <key key0="н" key2="6" key3="^"/>
+    <key key0="г" key2="7" key3="&amp;"/>
+    <key key0="ш" key1="щ" key2="8" key3="*"/>
+    <key key0="ү" key2="9" key3="(" key4=")"/>
+    <key key0="з" key2="0"/>
+    <key key0="к"/>
+  </row>
+  <row>
+    <key key0="й" key1="loc tab" key2="`"/>
+    <key key0="ы"/>
+    <key key0="б"/>
+    <key key0="ө"/>
+    <key key0="а"/>
+    <key key0="х"/>
+    <key key0="р" key2="-" key3="_"/>
+    <key key0="о" key2="=" key3="+"/>
+    <key key0="л" key3="{" key4="}"/>
+    <key key0="д" key3="[" key4="]"/>
+    <key key0="п" key2="|" key3="\\"/>
+  </row>
+  <row>
+    <key key0="shift" key2="loc capslock"/>
+    <key key0="я"/>
+    <key key0="ч"/>
+    <key key0="ё" key1="е"/>
+    <key key0="с"/>
+    <key key0="м" key2="&lt;" key3="."/>
+    <key key0="и" key2=">" key3=","/>
+    <key key0="т" key1="₮" key2="\?" key3="/"/>
+    <key key0="ь" key1="ъ" key2=":" key3=";"/>
+    <key key0="в" key1="ю" key2="&quot;" key3="'"/>
+    <key key0="backspace" key2="delete"/>
+  </row>
+</keyboard>
