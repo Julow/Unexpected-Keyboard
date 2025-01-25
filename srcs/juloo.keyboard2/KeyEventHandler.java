@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.annotation.SuppressLint;
 import android.os.Looper;
 import android.text.InputType;
+import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
@@ -196,7 +197,9 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
-    conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0, _meta_state));
+    conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0,
+          _meta_state, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+          KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
     if (eventAction == KeyEvent.ACTION_UP)
       _autocap.event_sent(eventCode, _meta_state);
   }
