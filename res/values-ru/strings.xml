@@ -71,7 +71,7 @@
   <string name="pref_theme_e_monet">Моне (системная)</string>
   <string name="pref_theme_e_monetlight">Моне (светлая)</string>
   <string name="pref_theme_e_monetdark">Моне (темная)</string>
-  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
+  <string name="pref_theme_e_rosepine">Розовая сосна</string>
   <string name="pref_swipe_dist_e_very_short">Очень короткая</string>
   <string name="pref_swipe_dist_e_short">Короткая</string>
   <string name="pref_swipe_dist_e_default">Обычная</string>
@@ -122,10 +122,10 @@
   <string name="key_descr_end">End</string>
   <string name="key_descr_clipboard">Менеджер буфера обмена</string>
   <string name="key_descr_combining">Сочетание диакритических знаков</string>
-  <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
-  <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
-  <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
-  <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+  <string name="key_descr_zwj">Соединитель нулевой ширины</string>
+  <string name="key_descr_zwnj">Разделитель нулевой ширины</string>
+  <string name="key_descr_nbsp">Неразрывный пробел</string>
+  <string name="key_descr_nnbsp">Узкий неразрывный пробел</string>
   <string name="clipboard_history_heading">Недавно скопированный текст</string>
   <string name="clipboard_pin_heading">Закреплено</string>
   <string name="clipboard_remove_confirm">Удалить этот буфер обмена?</string>
