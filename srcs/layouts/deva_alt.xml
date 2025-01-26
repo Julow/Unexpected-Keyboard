@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="देवनागरी (हिंदी)-2" script="devanagari">
   <row>
-    <key shift="0.35" width="0.9" key0="क" key1="ख" key2="घ" key3="ङ"  key4="ग"/>
-    <key              width="0.9" key0="च" key1="छ" key2="झ" key3="ञ"  key4="ज"/>
-    <key              width="0.9" key0="ट" key1="ठ" key2="ढ" key3="ण"  key4="ड" anticircle="७" indication="७"/>
-    <key              width="0.9" key0="त" key1="थ" key2="ध" key3="न"  key4="द" anticircle="८" indication="८"/>
-    <key              width="0.9" key0="प" key1="फ" key2="भ" key3="म"  key4="ब" anticircle="९" indication="९"/>
-    <key              width="0.9" key0="र" key1="ज्ञ" key2="ल" key3="य"  key4="व"/>
-    <key              width="0.9" key0="ह" key1="श" key2="ळ" key3="स"  key4="ष"/>
+    <key shift="0.35" width="0.9" c="क" nw="ख" ne="घ" sw="ङ"  se="ग"/>
+    <key              width="0.9" c="च" nw="छ" ne="झ" sw="ञ"  se="ज"/>
+    <key              width="0.9" c="ट" nw="ठ" ne="ढ" sw="ण"  se="ड" anticircle="७" indication="७"/>
+    <key              width="0.9" c="त" nw="थ" ne="ध" sw="न"  se="द" anticircle="८" indication="८"/>
+    <key              width="0.9" c="प" nw="फ" ne="भ" sw="म"  se="ब" anticircle="९" indication="९"/>
+    <key              width="0.9" c="र" nw="ज्ञ" ne="ल" sw="य"  se="व"/>
+    <key              width="0.9" c="ह" nw="श" ne="ळ" sw="स"  se="ष"/>
   </row>
   <row>
-    <key shift="0.35" width="0.9" key0="ा" key1="अ" key2="आ"/>
-    <key              width="0.9" key0="ि" key1="इ"/>
-    <key              width="0.9" key0="ी" key1="ई" anticircle="४" indication="४"/>
-    <key              width="0.9" key0="ु" key1="उ" key2="ऊ" key4="ू" anticircle="५" indication="५"/>
-    <key              width="0.9" key0="े" key1="ए" key2="ऋ" key4="ृ" anticircle="६" indication="६"/>
-    <key              width="0.9" key0="ै" key1="ऐ" key2="ऌ" key4="ॢ"/>
-    <key              width="0.9" key0="ो" key1="ओ" key2="औ" key4="ौ"/>
+    <key shift="0.35" width="0.9" c="ा" nw="अ" ne="आ"/>
+    <key              width="0.9" c="ि" nw="इ"/>
+    <key              width="0.9" c="ी" nw="ई" anticircle="४" indication="४"/>
+    <key              width="0.9" c="ु" nw="उ" ne="ऊ" se="ू" anticircle="५" indication="५"/>
+    <key              width="0.9" c="े" nw="ए" ne="ऋ" se="ृ" anticircle="६" indication="६"/>
+    <key              width="0.9" c="ै" nw="ऐ" ne="ऌ" se="ॢ"/>
+    <key              width="0.9" c="ो" nw="ओ" ne="औ" se="ौ"/>
   </row>
   <row>
-    <key key0="ऽ" key4="\@"/>
-    <key key0="ँ" key1="₹" key2="॑" key3="ॖ" key4="॓" anticircle="०" indication="०"/>
-    <key key0="ं" key1="ॐ" key2="।" key3="ः" key4="&quot;" anticircle="१" indication="१"/>
-    <key key0="्" key1="," key2=";" key3="!" key4="\?" anticircle="२" indication="२"/>
-    <key key0="़" key1="॰" key3="-" key4="॒" anticircle="३" indication="३"/>
-    <key width="2" key0="backspace"/>
+    <key c="ऽ" se="\@"/>
+    <key c="ँ" nw="₹" ne="॑" sw="ॖ" se="॓" anticircle="०" indication="०"/>
+    <key c="ं" nw="ॐ" ne="।" sw="ः" se="&quot;" anticircle="१" indication="१"/>
+    <key c="्" nw="," ne=";" sw="!" se="\?" anticircle="२" indication="२"/>
+    <key c="़" nw="॰" sw="-" se="॒" anticircle="३" indication="३"/>
+    <key width="2" c="backspace"/>
   </row>
 </keyboard>
