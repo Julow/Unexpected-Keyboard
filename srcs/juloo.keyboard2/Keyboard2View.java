@@ -353,7 +353,17 @@ public class Keyboard2View extends View
         x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _tc.horizontal_margin;
         boolean isKeyDown = _pointers.isKeyDown(k);
-        Theme.Computed.Key tc_key = isKeyDown ? _tc.key_activated : _tc.key;
+        Theme.Computed.Key tc_key;
+        if (isKeyDown)
+          tc_key = _tc.key_activated;
+        else
+          switch (k.role)
+          {
+            case Action: tc_key = _tc.key_action; break;
+            case Space_bar: tc_key = _tc.key_space_bar; break;
+            default:
+            case Normal: tc_key = _tc.key; break;
+          }
         drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
         if (k.keys[0] != null)
           drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
