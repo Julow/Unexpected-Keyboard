@@ -47,6 +47,8 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
   + We recommend your layout use the built-in bottom row, because it is still evolving and your layout will incorporate innovations in future versions. However, to define your own, the current definition of the bottom row is in [bottom_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/bottom_row.xml). You can copypaste this XML into your custom layout as a starting point.
   + Likewise, the current definition of the top (number) row is in [number_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/number_row.xml).
 
+* `embedded_number_row`: Whether the layout has an embedded number row, and thus the "Show number row" setting shouldn't add another one. It accepts `true` or `false`, and defaults to `false`.
+
 * `locale_extra_keys`: Whether Unexpected should add language-dependent extra keys from [method.xml](../res/xml/method.xml) to this layout. It accepts `true` or `false`, and defaults to `true`. To disable these automatic additions, specify `locale_extra_keys="false"`.
 
 ## Row

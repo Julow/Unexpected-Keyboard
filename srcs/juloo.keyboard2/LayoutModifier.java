@@ -42,7 +42,7 @@ public final class LayoutModifier
       added_numpad = modify_numpad(num_pad, kw);
       remove_keys.addAll(added_numpad.getKeys().keySet());
     }
-    else if (globalConfig.add_number_row) // The numpad removes the number row
+    else if (globalConfig.add_number_row && !kw.embedded_number_row) // The numpad removes the number row
     {
       added_number_row = modify_number_row(number_row, kw);
       remove_keys.addAll(added_number_row.getKeys(0).keySet());
