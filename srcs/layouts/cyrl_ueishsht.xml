@@ -27,7 +27,7 @@
     <key key0="ч" key1="„" key2="“"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key width="1.5" role="action" key0="shift" key2="loc capslock"/>
     <key key0="ю"/>
     <key key0="й"/>
     <key key0="ъ" key1="loc accent_cedille" key2="&lt;" key4=">"/>
@@ -36,6 +36,6 @@
     <key key0="п" key2="&quot;" key3="'"/>
     <key key0="р" key3=","/>
     <key key0="л" key3="."/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key width="1.5" role="action" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

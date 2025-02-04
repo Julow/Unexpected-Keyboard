@@ -27,7 +27,7 @@
     <key c="ż"/>
   </row>
   <row>
-    <key width="1.5" c="shift" ne="loc capslock"/>
+    <key width="1.5" role="action" c="shift" ne="loc capslock"/>
     <key c="z"/>
     <key c="x" ne="loc †"/>
     <key c="c" ne="&lt;" sw="."/>
@@ -36,7 +36,7 @@
     <key c="n" ne=":" sw=";"/>
     <key c="m" ne="&quot;" sw="'"/>
     <key c="ċ"/>
-    <key width="1.5" c="backspace" ne="delete"/>
+    <key width="1.5" role="action" c="backspace" ne="delete"/>
   </row>
 </keyboard>
 

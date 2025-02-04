@@ -27,13 +27,13 @@
     <key key0="m" key3="*"/>
   </row>
   <row>
-    <key width="2.0" key0="shift" key2="loc capslock"/>
+    <key width="2.0" role="action" key0="shift" key2="loc capslock"/>
     <key key0="w" key3="&lt;" key4="&gt;"/>
     <key key0="x" key1="loc †"/>
     <key key0="c" key1="loc accent_cedille" key2="ç" key3="," key4="\?"/>
     <key key0="v" key3=";" key4="."/>
     <key key0="b" key3=":" key4="/"/>
     <key key0="n" key1="loc accent_tilde" key2="§" key4="!"/>
-    <key width="2.0" key0="backspace" key2="delete"/>
+    <key width="2.0" role="action" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

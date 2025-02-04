@@ -46,7 +46,7 @@ doc/Possible-key-values.md for the keys that have a special meaning.
     <key c="l" ne="|" sw="\\"/>
   </row>
   <row>
-    <key width="1.5" c="shift" ne="loc capslock"/>
+    <key width="1.5" role="action" c="shift" ne="loc capslock"/>
     <key c="z"/>
     <key c="x" ne="loc †"/>
     <key c="c" ne="&lt;" sw="."/>
@@ -54,6 +54,6 @@ doc/Possible-key-values.md for the keys that have a special meaning.
     <key c="b" ne="\?" sw="/"/>
     <key c="n" ne=":" sw=";"/>
     <key c="m" ne="&quot;" sw="'"/>
-    <key width="1.5" c="backspace" ne="delete"/>
+    <key width="1.5" role="action" c="backspace" ne="delete"/>
   </row>
 </keyboard>

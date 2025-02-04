@@ -27,7 +27,7 @@
     <key key0="э" key7="\?" key3="/" />
   </row>
   <row>
-    <key width="1.18" key0="shift" key2="loc capslock" />
+    <key width="1.18" role="action" key0="shift" key2="loc capslock" />
     <key width="0.96" key0="я" key7="`" key8=";" />
     <key width="0.96" key0="ч" key7="*" key8=":" />
     <key width="0.96" key0="с"  key7="&amp;" key8="\#" />

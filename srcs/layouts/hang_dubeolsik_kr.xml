@@ -24,7 +24,7 @@
     <key key0="ㅣ" key2="|" key3="\\"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key width="1.5" role="action" key0="shift" key2="loc capslock"/>
     <key key0="ㅋ"/>
     <key key0="ㅌ" key1="ㄾ" key3="&lt;" key4="&gt;"/>
     <key key0="ㅊ" key3="."/>
@@ -32,6 +32,6 @@
     <key key0="ㅠ" key1="ㅞ" key2="ㅝ" key3="/" key4="\?"/>
     <key key0="ㅜ" key2="ㅟ" key3=";" key4=":"/>
     <key key0="ㅡ" key2="ㅢ" key3="'" key4="&quot;"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key width="1.5" role="action" key0="backspace" key2="delete"/>
   </row>
 </keyboard>
