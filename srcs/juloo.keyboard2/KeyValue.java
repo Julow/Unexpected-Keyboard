@@ -80,6 +80,7 @@ public final class KeyValue implements Comparable<KeyValue>
   public static enum Placeholder
   {
     REMOVED,
+    NOTHING,
     F11,
     F12,
     SHINDOT,
@@ -378,6 +379,16 @@ public final class KeyValue implements Comparable<KeyValue>
   private static KeyValue placeholderKey(Placeholder id)
   {
     return new KeyValue("", Kind.Placeholder, id.ordinal(), 0);
+  }
+
+  /** Make a key that does nothing, inheriting the symbol from an other key. */
+  public static KeyValue nothingKey(KeyValue inherit)
+  {
+    // Keep only appearance flags
+    int flags = inherit.getFlags() & (FLAG_SPECIAL | FLAG_GREYED |
+        FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_SECONDARY);
+    return new KeyValue(inherit.getString(), Kind.Placeholder,
+        Placeholder.NOTHING.ordinal(), flags);
   }
 
   public static KeyValue makeStringKey(String str)

@@ -15,10 +15,12 @@ public final class ComposeKey
         if (res == null)
           return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
         return res;
+      /* Tapping compose again exits the pending sequence. */
+      case Compose_pending:
+        return KeyValue.nothingKey(kv);
       /* These keys are not greyed. */
       case Event:
       case Modifier:
-      case Compose_pending:
         return kv;
       /* Other keys cannot be part of sequences. */
       default:
