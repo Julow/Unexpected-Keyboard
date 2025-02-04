@@ -40,37 +40,50 @@ def unexpected_keys(keys, symbols, msg):
     if len(unexpected) > 0:
         warn("%s, unexpected: %s" % (msg, key_list_str(unexpected)))
 
-# Write to [keys] and [dup].
-def parse_row_from_et(row, keys, dup):
-    for key in row:
-        for attr in key.keys():
+def duplicates(keys):
+    dup = [ k for k, key_elts in keys.items() if len(key_elts) >= 2 ]
+    if len(dup) > 0:
+        warn("Duplicate keys: " + key_list_str(dup))
+
+def should_have_role(keys_map, role, keys):
+    def is_center_key(key):
+        def center(key_elt): return key_elt.get("key0", key_elt.get("c"))
+        return any(( center(key_elt) == key for key_elt in keys_map.get(key, []) ))
+    def key_roles(key):
+        return ( key_elt.get("role", "normal") for key_elt in keys_map[key] )
+    for key in keys:
+        if is_center_key(key) and role not in key_roles(key):
+            warn("Key '%s' is not on a key with role=\"%s\"" % (key, role))
+
+# Write to [keys], dict of keyvalue to the key elements they appear in
+def parse_row_from_et(row, keys):
+    for key_elt in row:
+        for attr in key_elt.keys():
             if attr in KEY_ATTRIBUTES:
-                k = key.get(attr).removeprefix("\\")
-                if k in keys: dup.add(k)
-                keys.add(k)
+                k = key_elt.get(attr).removeprefix("\\")
+                keys.setdefault(k, []).append(key_elt)
 
 def parse_layout(fname):
-    keys = set()
-    dup = set()
+    keys = {}
     root = ET.parse(fname).getroot()
     if root.tag != "keyboard":
         return None
     for row in root:
-        parse_row_from_et(row, keys, dup)
-    return root, keys, dup
+        parse_row_from_et(row, keys)
+    return root, keys
 
 def parse_row(fname):
-    keys = set()
-    dup = set()
+    keys = {}
     root = ET.parse(fname).getroot()
     if root.tag != "row":
         return None
-    parse_row_from_et(root, keys, dup)
-    return root, keys, dup
+    parse_row_from_et(root, keys)
+    return root, keys
 
 def check_layout(layout):
-    root, keys, dup = layout
-    if len(dup) > 0: warn("Duplicate keys: " + key_list_str(dup))
+    root, keys_map = layout
+    keys = set(keys_map.keys())
+    duplicates(keys_map)
     missing_some_of(keys, "~!@#$%^&*(){}`[]=\\-_;:/.,?<>'\"+|", "ASCII punctuation")
     missing_some_of(keys, "0123456789", "digits")
     missing_required(keys, ["backspace", "delete"], "Layout doesn't define some important keys")
@@ -91,8 +104,8 @@ def check_layout(layout):
         missing_required(keys, ["shift", "loc capslock"], "Missing important key")
         missing_required(keys, ["loc esc", "loc tab"], "Missing programming keys")
 
-    _, bottom_row_keys, _ = parse_row("res/xml/bottom_row.xml")
-
+    _, bottom_row_keys_map = parse_row("res/xml/bottom_row.xml")
+    bottom_row_keys = set(bottom_row_keys_map.keys())
     if root.get("bottom_row") == "false":
         missing_required(keys, bottom_row_keys,
                          "Layout redefines the bottom row but some important keys are missing")
@@ -102,6 +115,10 @@ def check_layout(layout):
 
     if root.get("script") == None:
         warn("Layout doesn't specify a script.")
+
+    should_have_role(keys_map, "action",
+                     [ "shift", "ctrl", "fn", "backspace", "enter" ])
+    should_have_role(keys_map, "space_bar", [ "space" ])
 
 for fname in sorted(glob.glob("srcs/layouts/*.xml")):
     layout_id, _ = os.path.splitext(os.path.basename(fname))
