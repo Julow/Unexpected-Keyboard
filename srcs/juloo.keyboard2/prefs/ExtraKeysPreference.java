@@ -144,6 +144,7 @@ public class ExtraKeysPreference extends PreferenceCategory
   static String key_description(Resources res, String name)
   {
     int id = 0;
+    String additional_info = null;
     switch (name)
     {
       case "capslock": id = R.string.key_descr_capslock; break;
@@ -151,13 +152,31 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "compose": id = R.string.key_descr_compose; break;
       case "copy": id = R.string.key_descr_copy; break;
       case "cut": id = R.string.key_descr_cut; break;
-      case "end": id = R.string.key_descr_end; break;
-      case "home": id = R.string.key_descr_home; break;
-      case "page_down": id = R.string.key_descr_page_down; break;
-      case "page_up": id = R.string.key_descr_page_up; break;
+      case "end":
+        id = R.string.key_descr_end;
+        additional_info = format_key_combination(new String[]{"fn", "right"});
+        break;
+      case "home":
+        id = R.string.key_descr_home;
+        additional_info = format_key_combination(new String[]{"fn", "left"});
+        break;
+      case "page_down":
+        id = R.string.key_descr_page_down;
+        additional_info = format_key_combination(new String[]{"fn", "down"});
+        break;
+      case "page_up":
+        id = R.string.key_descr_page_up;
+        additional_info = format_key_combination(new String[]{"fn", "up"});
+        break;
       case "paste": id = R.string.key_descr_paste; break;
-      case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
-      case "redo": id = R.string.key_descr_redo; break;
+      case "pasteAsPlainText":
+        id = R.string.key_descr_pasteAsPlainText;
+        additional_info = format_key_combination(new String[]{"fn", "paste"});
+        break;
+      case "redo":
+        id = R.string.key_descr_redo;
+        additional_info = format_key_combination(new String[]{"fn", "undo"});
+        break;
       case "selectAll": id = R.string.key_descr_selectAll; break;
       case "shareText": id = R.string.key_descr_shareText; break;
       case "subscript": id = R.string.key_descr_subscript; break;
@@ -218,8 +237,11 @@ public class ExtraKeysPreference extends PreferenceCategory
         break;
     }
     if (id == 0)
-      return null;
-    return res.getString(id);
+      return additional_info;
+    String descr = res.getString(id);
+    if (additional_info != null)
+      descr += "  —  " + additional_info;
+    return descr;
   }
 
   static String key_title(String key_name, KeyValue kv)
@@ -230,6 +252,17 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "f12_placeholder": return "F12";
     }
     return kv.getString();
+  }
+
+  static String format_key_combination(String[] keys)
+  {
+    StringBuilder out = new StringBuilder();
+    for (int i = 0; i < keys.length; i++)
+    {
+      if (i > 0) out.append(" + ");
+      out.append(KeyValue.getKeyByName(keys[i]).getString());
+    }
+    return out.toString();
   }
 
   static KeyboardData.PreferredPos key_preferred_pos(String key_name)
@@ -330,8 +363,6 @@ public class ExtraKeysPreference extends PreferenceCategory
 
   static class ExtraKeyCheckBoxPreference extends CheckBoxPreference
   {
-    boolean _key_font;
-
     public ExtraKeyCheckBoxPreference(Context ctx, String key_name,
         boolean default_checked)
     {
@@ -344,7 +375,6 @@ public class ExtraKeysPreference extends PreferenceCategory
       setKey(pref_key_of_key_name(key_name));
       setDefaultValue(default_checked);
       setTitle(title);
-      _key_font = kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
     }
 
     @Override
@@ -352,7 +382,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       super.onBindView(view);
       TextView title = (TextView)view.findViewById(android.R.id.title);
-      title.setTypeface(_key_font ? Theme.getKeyFont(getContext()) : null);
+      title.setTypeface(Theme.getKeyFont(getContext()));
     }
   }
 }
