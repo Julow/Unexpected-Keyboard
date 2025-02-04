@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
-import sys, os
+import sys, os, glob
 
-warning_count = 0
+layout_file_name = 0
+warnings = []
 
 KNOWN_NOT_LAYOUT = set([
     "number_row", "numpad", "pin",
@@ -15,9 +16,8 @@ KEY_ATTRIBUTES = set([
     ])
 
 def warn(msg):
-    global warning_count
-    print(msg)
-    warning_count += 1
+    global warnings
+    warnings.append("%s: %s" % (layout_file_name, msg))
 
 def key_list_str(keys):
     return ", ".join(sorted(list(keys)))
@@ -103,15 +103,17 @@ def check_layout(layout):
     if root.get("script") == None:
         warn("Layout doesn't specify a script.")
 
-for fname in sorted(sys.argv[1:]):
+for fname in sorted(glob.glob("srcs/layouts/*.xml")):
     layout_id, _ = os.path.splitext(os.path.basename(fname))
     if layout_id in KNOWN_NOT_LAYOUT:
         continue
+    layout_file_name = layout_id
     layout = parse_layout(fname)
     if layout == None:
-        print("Not a layout file: %s" % layout_id)
+        warn("Not a layout file")
     else:
-        print("# %s" % layout_id)
-        warning_count = 0
         check_layout(layout)
-        print("%d warnings" % warning_count)
+
+with open("check_layout.output", "w") as out:
+    for w in warnings:
+        print(w, file=out)

@@ -134,12 +134,8 @@ tasks.register('genLayoutsList') {
 tasks.register('checkKeyboardLayouts') {
   println "\nChecking layouts"
   exec {
-    def layouts = new File(projectDir, "srcs/layouts").listFiles().findAll {
-      it.name.endsWith(".xml")
-    }
     workingDir = projectDir
-    commandLine("python", "check_layout.py", *layouts)
-    standardOutput = new FileOutputStream("${projectDir}/check_layout.output")
+    commandLine("python", "check_layout.py")
   }
 }
 
