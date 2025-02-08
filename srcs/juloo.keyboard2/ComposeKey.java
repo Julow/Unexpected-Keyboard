@@ -17,7 +17,7 @@ public final class ComposeKey
         return res;
       /* Tapping compose again exits the pending sequence. */
       case Compose_pending:
-        return KeyValue.nothingKey(kv);
+        return KeyValue.getKeyByName("compose_cancel");
       /* These keys are not greyed. */
       case Event:
       case Modifier:

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Inspired from https://commons.wikimedia.org/w/index.php?curid=20206736 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" version="1.1" viewBox="0 0 200 200">
+  <g fill="none">
+    <line x1="100" y1="45" x2="100" y2="155" stroke="#000" stroke-width="10"/>
+    <circle cx="100" cy="100" r="55" stroke="#000" stroke-width="10"/>
+    <line x1="45" y1="45" x2="155" y2="155" stroke="#000" stroke-width="10"/>
+  </g>
+</svg>

@@ -80,7 +80,7 @@ public final class KeyValue implements Comparable<KeyValue>
   public static enum Placeholder
   {
     REMOVED,
-    NOTHING,
+    COMPOSE_CANCEL,
     F11,
     F12,
     SHINDOT,
@@ -381,14 +381,10 @@ public final class KeyValue implements Comparable<KeyValue>
     return new KeyValue("", Kind.Placeholder, id.ordinal(), 0);
   }
 
-  /** Make a key that does nothing, inheriting the symbol from an other key. */
-  public static KeyValue nothingKey(KeyValue inherit)
+  private static KeyValue placeholderKey(int symbol, Placeholder id, int flags)
   {
-    // Keep only appearance flags
-    int flags = inherit.getFlags() & (FLAG_SPECIAL | FLAG_GREYED |
-        FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_SECONDARY);
-    return new KeyValue(inherit.getString(), Kind.Placeholder,
-        Placeholder.NOTHING.ordinal(), flags);
+    return new KeyValue(String.valueOf((char)symbol), Kind.Placeholder,
+        id.ordinal(), flags | FLAG_KEY_FONT);
   }
 
   public static KeyValue makeStringKey(String str)
@@ -698,6 +694,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
       /* The compose key */
       case "compose": return makeComposePending(0xE016, ComposeKeyData.compose, FLAG_SECONDARY | FLAG_SPECIAL);
+      case "compose_cancel": return placeholderKey(0xE01A, Placeholder.COMPOSE_CANCEL, FLAG_SECONDARY | FLAG_SPECIAL);
 
       /* Placeholder keys */
       case "removed": return placeholderKey(Placeholder.REMOVED);
