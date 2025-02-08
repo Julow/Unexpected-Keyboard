@@ -213,7 +213,6 @@ public final class KeyModifier
       case Event: name = apply_fn_event(k.getEvent()); break;
       case Placeholder: name = apply_fn_placeholder(k.getPlaceholder()); break;
       case Editing: name = apply_fn_editing(k.getEditing()); break;
-      case Modifier: name = apply_fn_modifier(k.getModifier()); break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
@@ -265,15 +264,6 @@ public final class KeyModifier
     {
       case UNDO: return "redo";
       case PASTE: return "pasteAsPlainText";
-      default: return null;
-    }
-  }
-
-  private static String apply_fn_modifier(KeyValue.Modifier m)
-  {
-    switch (m)
-    {
-      case SHIFT: return "capslock";
       default: return null;
     }
   }
@@ -360,10 +350,23 @@ public final class KeyModifier
   /** Modify a key affected by a round-trip or a clockwise circle gesture. */
   private static KeyValue apply_gesture(KeyValue k)
   {
-    KeyValue shifted = apply_shift(k);
-    if (shifted == null || shifted.equals(k))
-      return apply_fn(k);
-    return shifted;
+    KeyValue modified = apply_shift(k);
+    if (modified != null && !modified.equals(k))
+      return modified;
+    modified = apply_fn(k);
+    if (modified != null && !modified.equals(k))
+      return modified;
+    String name = null;
+    switch (k.getKind())
+    {
+      case Modifier:
+        switch (k.getModifier())
+        {
+          case SHIFT: name = "capslock"; break;
+        }
+        break;
+    }
+    return (name == null) ? k : KeyValue.getKeyByName(name);
   }
 
   /** Compose the precomposed initial with the medial [kv]. */
