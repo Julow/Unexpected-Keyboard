@@ -601,9 +601,9 @@ public final class KeyValue implements Comparable<KeyValue>
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
       case "enter": return keyeventKey(0xE00E, KeyEvent.KEYCODE_ENTER, 0);
       case "up": return keyeventKey(0xE005, KeyEvent.KEYCODE_DPAD_UP, 0);
-      case "right": return keyeventKey(0xE006, KeyEvent.KEYCODE_DPAD_RIGHT, 0);
+      case "right": return keyeventKey(0xE006, KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_SMALLER_FONT);
       case "down": return keyeventKey(0xE007, KeyEvent.KEYCODE_DPAD_DOWN, 0);
-      case "left": return keyeventKey(0xE008, KeyEvent.KEYCODE_DPAD_LEFT, 0);
+      case "left": return keyeventKey(0xE008, KeyEvent.KEYCODE_DPAD_LEFT, FLAG_SMALLER_FONT);
       case "page_up": return keyeventKey(0xE002, KeyEvent.KEYCODE_PAGE_UP, 0);
       case "page_down": return keyeventKey(0xE003, KeyEvent.KEYCODE_PAGE_DOWN, 0);
       case "home": return keyeventKey(0xE00B, KeyEvent.KEYCODE_MOVE_HOME, FLAG_SMALLER_FONT);
