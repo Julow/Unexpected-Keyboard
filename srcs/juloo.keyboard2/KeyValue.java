@@ -693,8 +693,8 @@ public final class KeyValue implements Comparable<KeyValue>
       case "autofill": return editingKey("auto", Editing.AUTOFILL);
 
       /* The compose key */
-      case "compose": return makeComposePending(0xE016, ComposeKeyData.compose, FLAG_SECONDARY | FLAG_SPECIAL);
-      case "compose_cancel": return placeholderKey(0xE01A, Placeholder.COMPOSE_CANCEL, FLAG_SECONDARY | FLAG_SPECIAL);
+      case "compose": return makeComposePending(0xE016, ComposeKeyData.compose, FLAG_SECONDARY);
+      case "compose_cancel": return placeholderKey(0xE01A, Placeholder.COMPOSE_CANCEL, FLAG_SECONDARY);
 
       /* Placeholder keys */
       case "removed": return placeholderKey(Placeholder.REMOVED);
