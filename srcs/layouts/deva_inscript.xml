@@ -24,7 +24,7 @@
     <key key0="त" key1="थ" key2="ख़" key3="(" key4=")"/>
   </row>
   <row>
-    <key width="1.4" key0="shift" key2="loc capslock"/>
+    <key width="1.4" role="action" key0="shift" key2="loc capslock"/>
     <key shift="0.1" key0="ट" key1="ठ" key2="ड़" key3="\#" key4="*"/>
     <key key0="ं" key1="ँ" key2="।" key3="ॐ" key4="\@"/>
     <key key0="म" key1="ण" key2="य" key3="य़" key4="%"/>
@@ -32,6 +32,6 @@
     <key key0="व" key2="ढ़" key3=";" key4="."/>
     <key key0="ल" key1="ळ" key2="फ़" key3="!" key4=","/>
     <key key0="स" key1="श" key2="ष" key3="\?" key4="।"/>
-    <key shift="0.1" width="1.4" key0="backspace" key2="delete"/>
+    <key shift="0.1" width="1.4" role="action" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

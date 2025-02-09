@@ -12,6 +12,8 @@ public class Theme
   // Key colors
   public final int colorKey;
   public final int colorKeyActivated;
+  public final int colorKeyAction;
+  public final int colorKeySpaceBar;
 
   // Label colors
   public final int lockedColor;
@@ -25,6 +27,8 @@ public class Theme
   public final float keyBorderRadius;
   public final float keyBorderWidth;
   public final float keyBorderWidthActivated;
+  public final float keyBorderWidthAction;
+  public final float keyBorderWidthSpaceBar;
   public final int keyBorderColorLeft;
   public final int keyBorderColorTop;
   public final int keyBorderColorRight;
@@ -39,6 +43,8 @@ public class Theme
     TypedArray s = context.getTheme().obtainStyledAttributes(attrs, R.styleable.keyboard, 0, 0);
     colorKey = s.getColor(R.styleable.keyboard_colorKey, 0);
     colorKeyActivated = s.getColor(R.styleable.keyboard_colorKeyActivated, 0);
+    colorKeyAction = s.getColor(R.styleable.keyboard_colorKeyAction, colorKey);
+    colorKeySpaceBar = s.getColor(R.styleable.keyboard_colorKeySpaceBar, colorKey);
     // colorKeyboard = s.getColor(R.styleable.keyboard_colorKeyboard, 0);
     colorNavBar = s.getColor(R.styleable.keyboard_navigationBarColor, 0);
     isLightNavBar = s.getBoolean(R.styleable.keyboard_windowLightNavigationBar, false);
@@ -53,6 +59,8 @@ public class Theme
     keyBorderRadius = s.getDimension(R.styleable.keyboard_keyBorderRadius, 0);
     keyBorderWidth = s.getDimension(R.styleable.keyboard_keyBorderWidth, 0);
     keyBorderWidthActivated = s.getDimension(R.styleable.keyboard_keyBorderWidthActivated, 0);
+    keyBorderWidthAction = s.getDimension(R.styleable.keyboard_keyBorderWidthAction, 0);
+    keyBorderWidthSpaceBar = s.getDimension(R.styleable.keyboard_keyBorderWidthSpaceBar, 0);
     keyBorderColorLeft = s.getColor(R.styleable.keyboard_keyBorderColorLeft, colorKey);
     keyBorderColorTop = s.getColor(R.styleable.keyboard_keyBorderColorTop, colorKey);
     keyBorderColorRight = s.getColor(R.styleable.keyboard_keyBorderColorRight, colorKey);
@@ -61,7 +69,7 @@ public class Theme
   }
 
   /** Interpolate the 'value' component toward its opposite by 'alpha'. */
-  int adjustLight(int color, float alpha)
+  static int adjustLight(int color, float alpha)
   {
     float[] hsv = new float[3];
     Color.colorToHSV(color, hsv);
@@ -98,6 +106,8 @@ public class Theme
 
     public final Key key;
     public final Key key_activated;
+    public final Key key_action;
+    public final Key key_space_bar;
 
     public Computed(Theme theme, Config config, float keyWidth)
     {
@@ -107,8 +117,10 @@ public class Theme
       // added on the right and on the bottom of every keys.
       margin_top = config.marginTop + vertical_margin / 2;
       margin_left = horizontal_margin / 2;
-      key = new Key(theme, config, keyWidth, false);
-      key_activated = new Key(theme, config, keyWidth, true);
+      key = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Normal);
+      key_action = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Action);
+      key_space_bar = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Space_bar);
+      key_activated = new Key(theme, config, keyWidth, true, KeyboardData.Key.Role.Normal);
       indication_paint = init_label_paint(config, null);
       indication_paint.setColor(theme.subLabelColor);
     }
@@ -127,20 +139,37 @@ public class Theme
       final Paint _sublabel_paint;
       final Paint _special_sublabel_paint;
 
-      public Key(Theme theme, Config config, float keyWidth, boolean activated)
+      public Key(Theme theme, Config config, float keyWidth, boolean activated,
+          KeyboardData.Key.Role role)
       {
-        bg_paint.setColor(activated ? theme.colorKeyActivated : theme.colorKey);
-        if (config.borderConfig)
+        border_radius = config.borderConfig ? config.customBorderRadius * keyWidth : theme.keyBorderRadius;
+        int bg_color;
+        if (activated)
         {
-          border_radius = config.customBorderRadius * keyWidth;
-          border_width = config.customBorderLineWidth;
+          bg_color = theme.colorKeyActivated;
+          border_width = theme.keyBorderWidthActivated;
+          bg_paint.setAlpha(config.keyActivatedOpacity);
         }
         else
         {
-          border_radius = theme.keyBorderRadius;
-          border_width = activated ? theme.keyBorderWidthActivated : theme.keyBorderWidth;
+          switch (role)
+          {
+            case Action:
+              bg_color = theme.colorKeyAction;
+              border_width = theme.keyBorderWidthAction;
+              break;
+            case Space_bar:
+              bg_color = theme.colorKeySpaceBar;
+              border_width = theme.keyBorderWidthSpaceBar;
+              break;
+            default:
+              bg_color = theme.colorKey;
+              border_width = config.borderConfig ? config.customBorderLineWidth : theme.keyBorderWidth;
+              break;
+          }
+          bg_paint.setAlpha(config.keyOpacity);
         }
-        bg_paint.setAlpha(activated ? config.keyActivatedOpacity : config.keyOpacity);
+        bg_paint.setColor(bg_color);
         border_left_paint = init_border_paint(config, border_width, theme.keyBorderColorLeft);
         border_top_paint = init_border_paint(config, border_width, theme.keyBorderColorTop);
         border_right_paint = init_border_paint(config, border_width, theme.keyBorderColorRight);

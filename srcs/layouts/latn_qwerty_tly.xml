@@ -28,7 +28,7 @@
     <key key0="â" key3="\@"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key width="1.5" role="action" key0="shift" key2="loc capslock"/>
     <key key0="z"/>
     <key key0="x"/>
     <key key0="j" key2="&lt;" key3="." key4="c"/>
@@ -38,6 +38,6 @@
     <key key0="m" key2="&quot;" key3="'"/>
     <key key0="c" key4="ç"/>
     <key key0="š" key4="ş"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key width="1.5" role="action" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

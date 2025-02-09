@@ -27,7 +27,7 @@
 
   </row>
   <row>
-    <key key0="shift" key2="loc capslock" width="1.5" />
+    <key role="action" key0="shift" key2="loc capslock" width="1.5" />
     <key key0="z"         key1=","    key2="."/>
     <key key0="x"         key1="&gt;" key2="&lt;"/>
     <key key0="c"         key1="{"    key2="}" key3="loc accent_cedille"/>
@@ -35,7 +35,7 @@
     <key key0="b"         key1="("    key2=")"/>
     <key key0="k"         key1=";"    key2=":"/>
     <key key0="m"         key1="|"    key2="\?" />
-    <key key0="backspace" key1="delete" shift="0.25" width="1.25"/>
+    <key role="action" key0="backspace" key1="delete" shift="0.25" width="1.25"/>
 
   </row>
 </keyboard>

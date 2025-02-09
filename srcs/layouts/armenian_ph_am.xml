@@ -37,7 +37,7 @@
         <key key0="խ" key3="\\" key2="|"/>
     </row>
     <row>
-        <key key0="shift" key2="loc capslock"/>
+        <key role="action" key0="shift" key2="loc capslock"/>
         <key key0="զ"/>
         <key key0="ղ"/>
         <key key0="ց"/>
@@ -46,6 +46,6 @@
         <key key0="ն" key4="/" key2="\?"/>
         <key key0="մ" key4=";" key2=":"/>
         <key key0="շ" key4="&apos;" key2="&quot;"/>
-        <key key0="backspace" key2="delete"/>
+        <key role="action" key0="backspace" key2="delete"/>
     </row>
 </keyboard>

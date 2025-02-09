@@ -49,7 +49,7 @@
 	-->
 	<row>
 		<!--left side-->
-		<key width="1.5" key0="shift" key4="\#"/>
+		<key width="1.5" role="action" key0="shift" key4="\#"/>
 		<key key0="f" key4="$"/>
 		<key key0="v" key4="|"/>
 		<key key0="ü" key4="~"/>
@@ -59,14 +59,14 @@
 		<key key0="y" key3="%"               key4="1"/>
 		<key key0="z" key3="," key1="&quot;" key4="2"/>
 		<key key0="k" key3="." key1="&apos;" key4="3"/>
-		<key width="1.5" key0="backspace" key3=";" key1="delete"/>
+		<key width="1.5" role="action" key0="backspace" key3=";" key1="delete"/>
 	</row>
 	<!--bottom row-->
 	<row height="0.95">
-		<key width="1.8" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
-		<key width="1.2" key0="fn" key1="loc alt" key2="loc change_method" key3="switch_emoji" key4="config"/>
-		<key width="5.0" key0="space" key7="switch_forward" key8="0"/>
-		<key width="1.2" key5="left" key6="right" key7="up" key8="down"/>
-		<key width="1.8" key0="enter" key3="action"/>
+		<key width="1.8" role="action" key0="ctrl" key2="loc meta" key4="switch_numeric"/>
+		<key width="1.2" role="action" key0="fn" key1="loc alt" key2="loc change_method" key3="switch_emoji" key4="config"/>
+		<key width="5.0" role="space_bar" key0="space" key7="switch_forward" key8="0"/>
+		<key width="1.2" role="action" key5="left" key6="right" key7="up" key8="down"/>
+		<key width="1.8" role="action" key0="enter" key3="action"/>
 	</row>
 </keyboard>
