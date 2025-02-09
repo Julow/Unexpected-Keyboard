@@ -98,10 +98,10 @@ public final class KeyValue implements Comparable<KeyValue>
     StringWithSymbol, // [_payload] is a [KeyValue.StringWithSymbol], value is unused.
   }
 
-  private static final int FLAGS_OFFSET = 19;
+  private static final int FLAGS_OFFSET = 20;
   private static final int KIND_OFFSET = 28;
 
-  // Behavior flags.
+  // Key stay activated when pressed once.
   public static final int FLAG_LATCH = (1 << FLAGS_OFFSET << 0);
   // Key can be locked by typing twice when enabled in settings
   public static final int FLAG_DOUBLE_TAP_LOCK = (1 << FLAGS_OFFSET << 1);
@@ -110,24 +110,23 @@ public final class KeyValue implements Comparable<KeyValue>
   // Whether the symbol should be greyed out. For example, keys that are not
   // part of the pending compose sequence.
   public static final int FLAG_GREYED = (1 << FLAGS_OFFSET << 3);
-  // Rendering flags.
-  public static final int FLAG_KEY_FONT = (1 << FLAGS_OFFSET << 4); // special font file
-  public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5); // 25% smaller symbols
-  public static final int FLAG_SECONDARY = (1 << FLAGS_OFFSET << 6); // dimmer
-  // Used by [Pointers].
+  // The special font is required to render this key.
+  public static final int FLAG_KEY_FONT = (1 << FLAGS_OFFSET << 4);
+  // 25% smaller symbols
+  public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5);
+  // Dimmer symbol
+  public static final int FLAG_SECONDARY = (1 << FLAGS_OFFSET << 6);
   // Free: (1 << FLAGS_OFFSET << 7)
-  // Free: (1 << FLAGS_OFFSET << 8)
 
   // Ranges for the different components
-  private static final int FLAGS_BITS =
-    FLAG_LATCH | FLAG_DOUBLE_TAP_LOCK | FLAG_SPECIAL | FLAG_GREYED |
-    FLAG_KEY_FONT | FLAG_SMALLER_FONT | FLAG_SECONDARY;
+  private static final int FLAGS_BITS = (0b11111111 << FLAGS_OFFSET); // 8 bits wide
   private static final int KIND_BITS = (0b1111 << KIND_OFFSET); // 4 bits wide
-  private static final int VALUE_BITS = ~(FLAGS_BITS | KIND_BITS); // 20 bits wide
+  private static final int VALUE_BITS = 0b11111111111111111111; // 20 bits wide
 
   static
   {
-    check((FLAGS_BITS & KIND_BITS) == 0); // No overlap
+    check((FLAGS_BITS & KIND_BITS) == 0); // No overlap with kind
+    check(~(FLAGS_BITS | KIND_BITS) == VALUE_BITS); // No overlap with value
     check((FLAGS_BITS | KIND_BITS | VALUE_BITS) == ~0); // No holes
     // No kind is out of range
     check((((Kind.values().length - 1) << KIND_OFFSET) & ~KIND_BITS) == 0);
