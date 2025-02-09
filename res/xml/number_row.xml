@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <row height="0.75">
-    <key key0="1" se="!"/>
-    <key key0="2" se="@"/>
-    <key key0="3" se="#"/>
-    <key key0="4" se="$"/>
-    <key key0="5" se="%"/>
-    <key key0="6" sw="^"/>
-    <key key0="7" sw="&amp;"/>
-    <key key0="8" sw="*"/>
-    <key key0="9" sw="("/>
-    <key key0="0" sw=")"/>
+    <key role="action" key0="1" se="!"/>
+    <key role="action" key0="2" se="@"/>
+    <key role="action" key0="3" se="#"/>
+    <key role="action" key0="4" se="$"/>
+    <key role="action" key0="5" se="%"/>
+    <key role="action" key0="6" sw="^"/>
+    <key role="action" key0="7" sw="&amp;"/>
+    <key role="action" key0="8" sw="*"/>
+    <key role="action" key0="9" sw="("/>
+    <key role="action" key0="0" sw=")"/>
 </row>
