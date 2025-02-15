@@ -124,6 +124,7 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="key_descr_end">Beigas</string>
   <string name="key_descr_clipboard">Starpliktuves pārvaldnieks</string>
   <!-- <string name="key_descr_combining">Combining diacritic</string> -->
+  <!-- <string name="key_descr_dead_key">Dead key</string> -->
   <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->

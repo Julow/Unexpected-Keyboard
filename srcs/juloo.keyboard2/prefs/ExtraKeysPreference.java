@@ -192,6 +192,28 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "nbsp": id = R.string.key_descr_nbsp; break;
       case "nnbsp": id = R.string.key_descr_nnbsp; break;
 
+      case "accent_aigu":
+      case "accent_grave":
+      case "accent_double_aigu":
+      case "accent_dot_above":
+      case "accent_circonflexe":
+      case "accent_tilde":
+      case "accent_cedille":
+      case "accent_trema":
+      case "accent_ring":
+      case "accent_caron":
+      case "accent_macron":
+      case "accent_ogonek":
+      case "accent_breve":
+      case "accent_slash":
+      case "accent_bar":
+      case "accent_dot_below":
+      case "accent_hook_above":
+      case "accent_horn":
+      case "accent_double_grave":
+        id = R.string.key_descr_dead_key;
+        break;
+
       case "combining_dot_above":
       case "combining_double_aigu":
       case "combining_slash":

@@ -122,6 +122,7 @@ Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e 
   <!-- <string name="key_descr_end">End</string> -->
   <!-- <string name="key_descr_clipboard">Clipboard manager</string> -->
   <!-- <string name="key_descr_combining">Combining diacritic</string> -->
+  <!-- <string name="key_descr_dead_key">Dead key</string> -->
   <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
