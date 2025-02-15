@@ -62,7 +62,7 @@ public class Keyboard2 extends InputMethodService
   {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
-    return _config.modify_layout(current_layout_unmodified());
+    return LayoutModifier.modify_layout(current_layout_unmodified());
   }
 
   void setTextLayout(int l)
@@ -92,13 +92,13 @@ public class Keyboard2 extends InputMethodService
   /** Load a layout that contains a numpad. */
   KeyboardData loadNumpad(int layout_id)
   {
-    return _config.modify_numpad(KeyboardData.load(getResources(), layout_id),
+    return LayoutModifier.modify_numpad(KeyboardData.load(getResources(), layout_id),
         current_layout_unmodified());
   }
 
   KeyboardData loadPinentry(int layout_id)
   {
-    return _config.modify_pinentry(KeyboardData.load(getResources(), layout_id),
+    return LayoutModifier.modify_pinentry(KeyboardData.load(getResources(), layout_id),
         current_layout_unmodified());
   }
 
@@ -157,6 +157,8 @@ public class Keyboard2 extends InputMethodService
     // Android might return a random subtype, for example, the first in the
     // list alphabetically.
     InputMethodSubtype current_subtype = imm.getCurrentInputMethodSubtype();
+    if (current_subtype == null)
+      return null;
     for (InputMethodSubtype s : enabled_subtypes)
       if (s.getLanguageTag().equals(current_subtype.getLanguageTag()))
         return s;
@@ -290,6 +292,16 @@ public class Keyboard2 extends InputMethodService
 
   private void updateSoftInputWindowLayoutParams() {
     final Window window = getWindow().getWindow();
+    // On API >= 35, Keyboard2View behaves as edge-to-edge
+    // APIs 30 to 34 have visual artifact when edge-to-edge is enabled
+    if (VERSION.SDK_INT >= 35)
+    {
+      WindowManager.LayoutParams wattrs = window.getAttributes();
+      wattrs.layoutInDisplayCutoutMode =
+        WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+      // Allow to draw behind system bars
+      wattrs.setFitInsetsTypes(0);
+    }
     updateLayoutHeightOf(window, ViewGroup.LayoutParams.MATCH_PARENT);
     final View inputArea = window.findViewById(android.R.id.inputArea);
 

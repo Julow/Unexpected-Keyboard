@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
-import sys, os
+import sys, os, glob
 
-warning_count = 0
+layout_file_name = 0
+warnings = []
 
 KNOWN_NOT_LAYOUT = set([
     "number_row", "numpad", "pin",
@@ -10,15 +11,13 @@ KNOWN_NOT_LAYOUT = set([
     "clipboard_bottom_row" ])
 
 KEY_ATTRIBUTES = set([
-    "key0",
-    "key1", "key2", "key3", "key4", "key5", "key6", "key7", "key8",
-    "nw", "ne", "sw", "se", "w", "e", "n", "s"
+    "key0", "key1", "key2", "key3", "key4", "key5", "key6", "key7", "key8",
+    "c", "nw", "ne", "sw", "se", "w", "e", "n", "s"
     ])
 
 def warn(msg):
-    global warning_count
-    print(msg)
-    warning_count += 1
+    global warnings
+    warnings.append("%s: %s" % (layout_file_name, msg))
 
 def key_list_str(keys):
     return ", ".join(sorted(list(keys)))
@@ -74,9 +73,7 @@ def check_layout(layout):
     if len(dup) > 0: warn("Duplicate keys: " + key_list_str(dup))
     missing_some_of(keys, "~!@#$%^&*(){}`[]=\\-_;:/.,?<>'\"+|", "ASCII punctuation")
     missing_some_of(keys, "0123456789", "digits")
-    missing_required(keys,
-                     ["loc esc", "loc tab", "backspace", "delete"],
-                     "Layout doesn't define some important keys")
+    missing_required(keys, ["backspace", "delete"], "Layout doesn't define some important keys")
     unexpected_keys(keys,
                     ["copy", "paste", "cut", "selectAll", "shareText",
                      "pasteAsPlainText", "undo", "redo" ],
@@ -90,6 +87,10 @@ def check_layout(layout):
     unexpected_keys(keys, filter(lambda k: k.strip()!=k, keys), "Some keys contain whitespaces")
     unexpected_keys(keys, ["f11_placeholder", "f12_placeholder"], "These keys are now added automatically")
 
+    if root.get("script", "latin") == "latin":
+        missing_required(keys, ["shift", "loc capslock"], "Missing important key")
+        missing_required(keys, ["loc esc", "loc tab"], "Missing programming keys")
+
     _, bottom_row_keys, _ = parse_row("res/xml/bottom_row.xml")
 
     if root.get("bottom_row") == "false":
@@ -102,15 +103,17 @@ def check_layout(layout):
     if root.get("script") == None:
         warn("Layout doesn't specify a script.")
 
-for fname in sorted(sys.argv[1:]):
+for fname in sorted(glob.glob("srcs/layouts/*.xml")):
     layout_id, _ = os.path.splitext(os.path.basename(fname))
     if layout_id in KNOWN_NOT_LAYOUT:
         continue
+    layout_file_name = layout_id
     layout = parse_layout(fname)
     if layout == None:
-        print("Not a layout file: %s" % layout_id)
+        warn("Not a layout file")
     else:
-        print("# %s" % layout_id)
-        warning_count = 0
         check_layout(layout)
-        print("%d warnings" % warning_count)
+
+with open("check_layout.output", "w") as out:
+    for w in warnings:
+        print(w, file=out)

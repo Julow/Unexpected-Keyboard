@@ -13,7 +13,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
     - run: python3 gen_layouts.py
-    - name: "Check that the generated 'layouts.xml' is uptodate, otherwise run 'python3 gen_layouts.py'"
+    - name: "Run 'python3 gen_layouts.py' to update generated files"
       run: git diff --exit-code
   check-layouts:
     name: check_layout.output
@@ -22,5 +22,5 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
     - run: python3 check_layout.py
-    - name: "Check that the generated 'check_layout.output' is uptodate, otherwise run 'python3 check_layout.py'"
+    - name: "Fix your layout accordingly or run 'python3 check_layout.py' to promote the warnings"
       run: git diff --exit-code

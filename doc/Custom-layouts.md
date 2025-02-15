@@ -20,7 +20,7 @@ A layout XML file comprises tags that start with `<` and end with `>`.
   * An optional `<modmap>`...`</modmap>` pair contains instructions if you want to change the behavior of a modifier key such as Shift.
 * Stand-alone tags include `<key`...`/>`, which defines a single key.
 
-A tag can have properties, defined using an equals sign and a pair of ASCII double quotes. For example, `<key key0="a" />` defines the "a" key. The `key0` property of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specifies where it will go in the row.
+A tag can have properties, defined using an equals sign and a pair of ASCII double quotes. For example, `<key c="a" />` defines the "a" key. The `c` property of the `key` tag says which key you are defining, and the tag's location inside `<row>`...`</row>` specifies where it will go in the row.
 
 ### Example
 Here is a complete keyboard file with a single row containing an "a" key on the left and a "b" key on the right:
@@ -28,8 +28,8 @@ Here is a complete keyboard file with a single row containing an "a" key on the 
     <?xml version="1.0" encoding="utf-8"?>
     <keyboard name="Simple example" script="latin">
         <row>
-            <key key0="a" />
-            <key key0="b" />
+            <key c="a" />
+            <key c="b" />
         </row>
     </keyboard>
 
@@ -47,6 +47,8 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
   + We recommend your layout use the built-in bottom row, because it is still evolving and your layout will incorporate innovations in future versions. However, to define your own, the current definition of the bottom row is in [bottom_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/bottom_row.xml). You can copypaste this XML into your custom layout as a starting point.
   + Likewise, the current definition of the top (number) row is in [number_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/number_row.xml).
 
+* `embedded_number_row`: Whether the layout has an embedded number row, and thus the "Show number row" setting shouldn't add another one. It accepts `true` or `false`, and defaults to `false`.
+
 * `locale_extra_keys`: Whether Unexpected should add language-dependent extra keys from [method.xml](../res/xml/method.xml) to this layout. It accepts `true` or `false`, and defaults to `true`. To disable these automatic additions, specify `locale_extra_keys="false"`.
 
 ## Row
@@ -59,7 +61,7 @@ A row's default height is 1.0 (one quarter of the keyboard height specified on t
 The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. What the key does is defined by optional properties.
 
 ### Taps
-What the key does when tapped is defined by the optional `key0` property. For example, `<key key0="a" />` defines the "a" key. Unexpected Keyboard provides a legend in the middle of the key.
+What the key does when tapped is defined by the optional `c` property. For example, `<key c="a" />` defines the "a" key. Unexpected Keyboard provides a legend in the middle of the key.
 
 When the Shift modifier is tapped, the "a" key becomes the "A" key and the legend temporarily changes. The Fn modifier makes a different change. You can override this behavior with a modmap (see below).
 
@@ -71,7 +73,7 @@ The following optional properties define the effects of swipes:
     <TD STYLE="width: 6em;">nw</TD><TD>n</TD><TD>ne</TD>
   </TR>
   <TR ALIGN=CENTER>
-    <TD>w</TD><TD>&nbsp;</TD><TD>e</TD>
+    <TD>w</TD><TD>c</TD><TD>e</TD>
   </TR>
   <TR>
     <TD>sw</TD><TD>s</TD><TD>se</TD>
@@ -84,7 +86,7 @@ The following optional properties define the effects of swipes:
     <TD>key1</TD><TD>key7</TD><TD>key2</TD>
   </TR>
   <TR>
-    <TD>key5</TD><TD>&nbsp;</TD><TD>key6</TD>
+    <TD>key5</TD><TD>key0</TD><TD>key6</TD>
   </TR>
   <TR>
     <TD>key3</TD><TD>key8</TD><TD>key4</TD>
@@ -93,7 +95,6 @@ The following optional properties define the effects of swipes:
 
 You can define a swipe only once with either compass-point or numeric notation. Unexpected Keyboard automatically puts a small legend in that direction from the center of the key.
 
-* `slider`: If `slider="true"`, and the key also has `w` and `e` properties, then the key tracks horizontal finger motion precisely and sends the `w` and `e` keystrokes repeatedly. In built-in layouts, this makes the space bar send left and right characters as the user slides on the space bar.
 * `anticircle`: The key value to send when doing an anti-clockwise gesture on the key.
 
 ### Layout
@@ -104,10 +105,10 @@ A key may have the following properties to control the row's layout:
 Normally, a key's width is 1.0 unit. Unexpected Keyboard occupies the full width of the screen, and the row defining the highest number of units (in widths plus shifts) is as wide as the screen. A row whose width is a smaller number of units has empty space on the right.
 
 ### Extra legend
-* `indication`: An optional extra legend to show under the main label. For example, `<key key0="2" indication="ABC" />` displays ABC at the bottom of the 2 key, as on a pinpad or some telephones. If the key also defines a downward swipe with `s` or `key8`, the legends overlap.
+* `indication`: An optional extra legend to show under the main label. For example, `<key c="2" indication="ABC" />` displays ABC at the bottom of the 2 key, as on a pinpad or some telephones. If the key also defines a downward swipe with `s` or `key8`, the legends overlap.
 
 ### Possible key values
-Built-in strings that assign a special function to a key are described in [this page](Possible-key-values.md). For example, `se="copy"` means a southeasterly swipe produces the Copy key. If a key value does not match any of the built-in strings, it outputs that text _verbatim_. For example, `key0="a"` simply outputs the letter a.
+Built-in strings that assign a special function to a key are described in [this page](Possible-key-values.md). For example, `se="copy"` means a southeasterly swipe produces the Copy key. If a key value does not match any of the built-in strings, it outputs that text _verbatim_. For example, `c="a"` simply outputs the letter a.
 
 In a layout, a key value can also start with the `loc` prefix. These are place-holders; the tap or swipe does nothing unless enabled through the "Add keys to keyboard" option in the Settings menu, or implicitly enabled by the language the device is set to use. For example, `ne="loc accent_aigu"` says that a northeast swipe produces the acute accent combinatorial key—if enabled.
 

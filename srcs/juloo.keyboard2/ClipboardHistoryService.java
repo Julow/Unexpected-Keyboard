@@ -30,11 +30,9 @@ public final class ClipboardHistoryService
 
   public static void set_history_enabled(boolean e)
   {
+    Config.globalConfig().set_clipboard_history_enabled(e);
     if (_service == null)
       return;
-    Config.globalPrefs().edit()
-      .putBoolean("clipboard_history_enabled", e)
-      .commit();
     if (e)
       _service.add_current_clip();
     else

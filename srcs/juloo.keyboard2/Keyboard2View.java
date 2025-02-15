@@ -42,8 +42,12 @@ public class Keyboard2View extends View
   private Config _config;
 
   private float _keyWidth;
+  private float _marginRight;
+  private float _marginLeft;
+  private float _marginBottom;
 
   private Theme _theme;
+  private Theme.Computed _tc;
 
   private static RectF _tmpRect = new RectF();
 
@@ -101,11 +105,6 @@ public class Keyboard2View extends View
     _keyboard = kw;
     _shift_kv = KeyValue.getKeyByName("shift");
     _shift_key = _keyboard.findKeyWithValue(_shift_kv);
-    if (_shift_key == null)
-    {
-      _shift_kv = _shift_kv.withFlags(_shift_kv.getFlags() | KeyValue.FLAG_LOCK);
-      _shift_key = _keyboard.findKeyWithValue(_shift_kv);
-    }
     _compose_kv = KeyValue.getKeyByName("compose");
     _compose_key = _keyboard.findKeyWithValue(_compose_kv);
     KeyModifier.set_modmap(_keyboard.modmap);
@@ -231,7 +230,7 @@ public class Keyboard2View extends View
   private KeyboardData.Key getKeyAtPosition(float tx, float ty)
   {
     KeyboardData.Row row = getRowAtPosition(ty);
-    float x = _config.horizontal_margin;
+    float x = _marginLeft;
     if (row == null || tx < x)
       return null;
     for (KeyboardData.Key key : row.keys)
@@ -255,24 +254,57 @@ public class Keyboard2View extends View
   @Override
   public void onMeasure(int wSpec, int hSpec)
   {
-    DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-    int width = dm.widthPixels;
-    int height =
-      (int)(_config.keyHeight * _keyboard.keysHeight
-          + _config.marginTop + _config.margin_bottom);
-    // Compatibility with display cutouts and navigation on the right
-    if (VERSION.SDK_INT >= 30)
+    int width;
+    int insets_left = 0;
+    int insets_right = 0;
+    int insets_bottom = 0;
+    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
+    // and keyboard is allowed do draw behind status/navigation bars
+    if (VERSION.SDK_INT >= 35)
     {
       WindowMetrics metrics =
         ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
         .getCurrentWindowMetrics();
-      Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(
-          WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars()
-          | WindowInsets.Type.displayCutout());
-      width = metrics.getBounds().width() - insets.right - insets.left;
+      width = metrics.getBounds().width();
+      WindowInsets wi = metrics.getWindowInsets();
+      int insets_types =
+          WindowInsets.Type.statusBars()
+          | WindowInsets.Type.displayCutout()
+          | WindowInsets.Type.mandatorySystemGestures()
+          | WindowInsets.Type.navigationBars();
+      Insets insets = wi.getInsets(insets_types);
+      insets_left = insets.left;
+      insets_right = insets.right;
+      // On API 35, the keyboard is allowed to draw under the
+      // button-navigation bar but on lower APIs, it must be discounted from
+      // the width.
+      if (VERSION.SDK_INT < 35)
+      {
+        Insets nav_insets = wi.getInsets(WindowInsets.Type.navigationBars());
+        width -= nav_insets.left + nav_insets.right;
+        insets_left -= nav_insets.left;
+        insets_right -= nav_insets.right;
+      }
+      // [insets.bottom] doesn't take into account the buttons that appear in
+      // the gesture navigation bar when the IME is showing so ensure a minimum
+      // of margin is added.
+      if (VERSION.SDK_INT >= 35)
+        insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
     }
+    else
+    {
+      DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+      width = dm.widthPixels;
+    }
+    int height =
+      (int)(_config.keyHeight * _keyboard.keysHeight
+          + _config.marginTop + _marginBottom);
     setMeasuredDimension(width, height);
-    _keyWidth = (width - (_config.horizontal_margin * 2)) / _keyboard.keysWidth;
+    _marginLeft = Math.max(_config.horizontal_margin, insets_left);
+    _marginRight = Math.max(_config.horizontal_margin, insets_right);
+    _marginBottom = _config.margin_bottom + insets_bottom;
+    _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
+    _tc = new Theme.Computed(_theme, _config, _keyWidth);
   }
 
   @Override
@@ -284,10 +316,10 @@ public class Keyboard2View extends View
     {
       // Disable the back-gesture on the keyboard area
       Rect keyboard_area = new Rect(
-          left + (int)_config.horizontal_margin,
+          left + (int)_marginLeft,
           top + (int)_config.marginTop,
-          right - (int)_config.horizontal_margin,
-          bottom - (int)_config.margin_bottom);
+          right - (int)_marginRight,
+          bottom - (int)_marginBottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
   }
@@ -310,34 +342,27 @@ public class Keyboard2View extends View
   {
     // Set keyboard background opacity
     getBackground().setAlpha(_config.keyboardOpacity);
-    // Set keys opacity
-    _theme.keyBgPaint.setAlpha(_config.keyOpacity);
-    _theme.keyDownBgPaint.setAlpha(_config.keyActivatedOpacity);
-    _theme.keyBorderPaint.setAlpha(_config.keyOpacity);
-    float key_vertical_margin = _config.key_vertical_margin * _config.keyHeight;
-    float key_horizontal_margin = _config.key_horizontal_margin * _keyWidth;
-    // Add half of the key margin on the left and on the top as it's then added
-    // on the right and on the bottom of every keys.
-    float y = _config.marginTop + key_vertical_margin / 2;
+    float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {
       y += row.shift * _config.keyHeight;
-      float x = _config.horizontal_margin + key_horizontal_margin / 2;
-      float keyH = row.height * _config.keyHeight - key_vertical_margin;
+      float x = _marginLeft + _tc.margin_left;
+      float keyH = row.height * _config.keyHeight - _tc.vertical_margin;
       for (KeyboardData.Key k : row.keys)
       {
         x += k.shift * _keyWidth;
-        float keyW = _keyWidth * k.width - key_horizontal_margin;
+        float keyW = _keyWidth * k.width - _tc.horizontal_margin;
         boolean isKeyDown = _pointers.isKeyDown(k);
-        drawKeyFrame(canvas, x, y, keyW, keyH, isKeyDown);
+        Theme.Computed.Key tc_key = isKeyDown ? _tc.key_activated : _tc.key;
+        drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
         if (k.keys[0] != null)
-          drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown);
+          drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
         for (int i = 1; i < 9; i++)
         {
           if (k.keys[i] != null)
-            drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown);
+            drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown, tc_key);
         }
-        drawIndication(canvas, k, x, y, keyW, keyH);
+        drawIndication(canvas, k, x, y, keyW, keyH, _tc);
         x += _keyWidth * k.width;
       }
       y += row.height * _config.keyHeight;
@@ -352,42 +377,32 @@ public class Keyboard2View extends View
 
   /** Draw borders and background of the key. */
   void drawKeyFrame(Canvas canvas, float x, float y, float keyW, float keyH,
-      boolean isKeyDown)
+      Theme.Computed.Key tc)
   {
-    float r = _theme.keyBorderRadius;
-    if (_config.borderConfig)
-      r = _config.customBorderRadius * _keyWidth;
-    float w = (_config.borderConfig) ? _config.customBorderLineWidth : _theme.keyBorderWidth;
+    float r = tc.border_radius;
+    float w = tc.border_width;
     float padding = w / 2.f;
-    if (isKeyDown)
-      w = _theme.keyBorderWidthActivated;
     _tmpRect.set(x + padding, y + padding, x + keyW - padding, y + keyH - padding);
-    canvas.drawRoundRect(_tmpRect, r, r,
-        isKeyDown ? _theme.keyDownBgPaint : _theme.keyBgPaint);
+    canvas.drawRoundRect(_tmpRect, r, r, tc.bg_paint);
     if (w > 0.f)
     {
-      _theme.keyBorderPaint.setStrokeWidth(w);
       float overlap = r - r * 0.85f + w; // sin(45°)
-      drawBorder(canvas, x, y, x + overlap, y + keyH, _theme.keyBorderColorLeft);
-      drawBorder(canvas, x + keyW - overlap, y, x + keyW, y + keyH, _theme.keyBorderColorRight);
-      drawBorder(canvas, x, y, x + keyW, y + overlap, _theme.keyBorderColorTop);
-      drawBorder(canvas, x, y + keyH - overlap, x + keyW, y + keyH, _theme.keyBorderColorBottom);
+      drawBorder(canvas, x, y, x + overlap, y + keyH, tc.border_left_paint, tc);
+      drawBorder(canvas, x + keyW - overlap, y, x + keyW, y + keyH, tc.border_right_paint, tc);
+      drawBorder(canvas, x, y, x + keyW, y + overlap, tc.border_top_paint, tc);
+      drawBorder(canvas, x, y + keyH - overlap, x + keyW, y + keyH, tc.border_bottom_paint, tc);
     }
   }
 
   /** Clip to draw a border at a time. This allows to call [drawRoundRect]
       several time with the same parameters but a different Paint. */
   void drawBorder(Canvas canvas, float clipl, float clipt, float clipr,
-      float clipb, int color)
+      float clipb, Paint paint, Theme.Computed.Key tc)
   {
-    Paint p = _theme.keyBorderPaint;
-    float r = _theme.keyBorderRadius;
-    if (_config.borderConfig)
-      r = _config.customBorderRadius * _keyWidth;
+    float r = tc.border_radius;
     canvas.save();
     canvas.clipRect(clipl, clipt, clipr, clipb);
-    p.setColor(color);
-    canvas.drawRoundRect(_tmpRect, r, r, p);
+    canvas.drawRoundRect(_tmpRect, r, r, paint);
     canvas.restore();
   }
 
@@ -412,21 +427,21 @@ public class Keyboard2View extends View
     return sublabel ? _theme.subLabelColor : _theme.labelColor;
   }
 
-  private void drawLabel(Canvas canvas, KeyValue kv, float x, float y, float keyH, boolean isKeyDown)
+  private void drawLabel(Canvas canvas, KeyValue kv, float x, float y,
+      float keyH, boolean isKeyDown, Theme.Computed.Key tc)
   {
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
-    Paint p = _theme.labelPaint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT));
+    Paint p = tc.label_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), textSize);
     p.setColor(labelColor(kv, isKeyDown, false));
-    p.setAlpha(_config.labelBrightness);
-    p.setTextSize(textSize);
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
   private void drawSubLabel(Canvas canvas, KeyValue kv, float x, float y,
-      float keyW, float keyH, int sub_index, boolean isKeyDown)
+      float keyW, float keyH, int sub_index, boolean isKeyDown,
+      Theme.Computed.Key tc)
   {
     Paint.Align a = LABEL_POSITION_H[sub_index];
     Vertical v = LABEL_POSITION_V[sub_index];
@@ -434,10 +449,8 @@ public class Keyboard2View extends View
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
-    Paint p = _theme.subLabelPaint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), a);
+    Paint p = tc.sublabel_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), textSize, a);
     p.setColor(labelColor(kv, isKeyDown, true));
-    p.setAlpha(_config.labelBrightness);
-    p.setTextSize(textSize);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
       y += (keyH - p.ascent() - p.descent()) / 2f;
@@ -456,34 +469,13 @@ public class Keyboard2View extends View
   }
 
   private void drawIndication(Canvas canvas, KeyboardData.Key k, float x,
-      float y, float keyW, float keyH)
+      float y, float keyW, float keyH, Theme.Computed tc)
   {
-    boolean special_font = false;
-    String indic;
-    int indic_length;
-    float text_size;
-    if (k.indication != null)
-    {
-      indic = k.indication;
-      indic_length = indic.length();
-      text_size = keyH * _config.sublabelTextSize * _config.characterSize;
-    }
-    else if (k.anticircle != null)
-    {
-      indic = k.anticircle.getString();
-      // 3 character limit like regular labels
-      indic_length = Math.min(indic.length(), 3);
-      special_font = k.anticircle.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
-      text_size = scaleTextSize(k.anticircle, _config.sublabelTextSize, keyH);
-    }
-    else
-    {
+    if (k.indication == null || k.indication.equals(""))
       return;
-    }
-    Paint p = _theme.indicationPaint(special_font);
-    p.setColor(_theme.subLabelColor);
-    p.setTextSize(text_size);
-    canvas.drawText(indic, 0, indic_length,
+    Paint p = tc.indication_paint;
+    p.setTextSize(keyH * _config.sublabelTextSize * _config.characterSize);
+    canvas.drawText(k.indication, 0, k.indication.length(),
         x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 

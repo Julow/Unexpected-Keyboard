@@ -71,6 +71,7 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="pref_theme_e_monet">Monet (dle systému)</string>
   <string name="pref_theme_e_monetlight">Monet (Světlý)</string>
   <string name="pref_theme_e_monetdark">Monet (Tmavý)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Velmi krátká</string>
   <string name="pref_swipe_dist_e_short">Krátká</string>
   <string name="pref_swipe_dist_e_default">Běžná</string>
@@ -120,6 +121,11 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="key_descr_home">Home</string>
   <string name="key_descr_end">End</string>
   <string name="key_descr_clipboard">Správce schránky</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
+  <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
+  <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
+  <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
+  <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
   <string name="clipboard_history_heading">Nedávno kopírovaný text</string>
   <string name="clipboard_pin_heading">Připnout</string>
   <string name="clipboard_remove_confirm">Odebrat ze schránky?</string>

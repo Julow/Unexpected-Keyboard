@@ -43,6 +43,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "accent_dot_below",
     "accent_hook_above",
     "accent_horn",
+    "accent_double_grave",
     "€",
     "ß",
     "£",
@@ -50,6 +51,10 @@ public class ExtraKeysPreference extends PreferenceCategory
     "†",
     "ª",
     "º",
+    "zwj",
+    "zwnj",
+    "nbsp",
+    "nnbsp",
     "tab",
     "esc",
     "page_up",
@@ -72,6 +77,48 @@ public class ExtraKeysPreference extends PreferenceCategory
     "f11_placeholder",
     "f12_placeholder",
     "menu",
+    "scroll_lock",
+    "combining_dot_above",
+    "combining_double_aigu",
+    "combining_slash",
+    "combining_arrow_right",
+    "combining_breve",
+    "combining_bar",
+    "combining_aigu",
+    "combining_caron",
+    "combining_cedille",
+    "combining_circonflexe",
+    "combining_grave",
+    "combining_macron",
+    "combining_ring",
+    "combining_tilde",
+    "combining_trema",
+    "combining_ogonek",
+    "combining_dot_below",
+    "combining_horn",
+    "combining_hook_above",
+    "combining_vertical_tilde",
+    "combining_inverted_breve",
+    "combining_pokrytie",
+    "combining_slavonic_psili",
+    "combining_slavonic_dasia",
+    "combining_payerok",
+    "combining_titlo",
+    "combining_vzmet",
+    "combining_arabic_v",
+    "combining_arabic_inverted_v",
+    "combining_shaddah",
+    "combining_sukun",
+    "combining_fatha",
+    "combining_dammah",
+    "combining_kasra",
+    "combining_hamza_above",
+    "combining_hamza_below",
+    "combining_alef_above",
+    "combining_fathatan",
+    "combining_kasratan",
+    "combining_dammatan",
+    "combining_alef_below",
   };
 
   /** Whether an extra key is enabled by default. */
@@ -97,6 +144,7 @@ public class ExtraKeysPreference extends PreferenceCategory
   static String key_description(Resources res, String name)
   {
     int id = 0;
+    String additional_info = null;
     switch (name)
     {
       case "capslock": id = R.string.key_descr_capslock; break;
@@ -104,13 +152,31 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "compose": id = R.string.key_descr_compose; break;
       case "copy": id = R.string.key_descr_copy; break;
       case "cut": id = R.string.key_descr_cut; break;
-      case "end": id = R.string.key_descr_end; break;
-      case "home": id = R.string.key_descr_home; break;
-      case "page_down": id = R.string.key_descr_page_down; break;
-      case "page_up": id = R.string.key_descr_page_up; break;
+      case "end":
+        id = R.string.key_descr_end;
+        additional_info = format_key_combination(new String[]{"fn", "right"});
+        break;
+      case "home":
+        id = R.string.key_descr_home;
+        additional_info = format_key_combination(new String[]{"fn", "left"});
+        break;
+      case "page_down":
+        id = R.string.key_descr_page_down;
+        additional_info = format_key_combination(new String[]{"fn", "down"});
+        break;
+      case "page_up":
+        id = R.string.key_descr_page_up;
+        additional_info = format_key_combination(new String[]{"fn", "up"});
+        break;
       case "paste": id = R.string.key_descr_paste; break;
-      case "pasteAsPlainText": id = R.string.key_descr_pasteAsPlainText; break;
-      case "redo": id = R.string.key_descr_redo; break;
+      case "pasteAsPlainText":
+        id = R.string.key_descr_pasteAsPlainText;
+        additional_info = format_key_combination(new String[]{"fn", "paste"});
+        break;
+      case "redo":
+        id = R.string.key_descr_redo;
+        additional_info = format_key_combination(new String[]{"fn", "undo"});
+        break;
       case "selectAll": id = R.string.key_descr_selectAll; break;
       case "shareText": id = R.string.key_descr_shareText; break;
       case "subscript": id = R.string.key_descr_subscript; break;
@@ -121,10 +187,61 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "ª": id = R.string.key_descr_ª; break;
       case "º": id = R.string.key_descr_º; break;
       case "switch_clipboard": id = R.string.key_descr_clipboard; break;
+      case "zwj": id = R.string.key_descr_zwj; break;
+      case "zwnj": id = R.string.key_descr_zwnj; break;
+      case "nbsp": id = R.string.key_descr_nbsp; break;
+      case "nnbsp": id = R.string.key_descr_nnbsp; break;
+
+      case "combining_dot_above":
+      case "combining_double_aigu":
+      case "combining_slash":
+      case "combining_arrow_right":
+      case "combining_breve":
+      case "combining_bar":
+      case "combining_aigu":
+      case "combining_caron":
+      case "combining_cedille":
+      case "combining_circonflexe":
+      case "combining_grave":
+      case "combining_macron":
+      case "combining_ring":
+      case "combining_tilde":
+      case "combining_trema":
+      case "combining_ogonek":
+      case "combining_dot_below":
+      case "combining_horn":
+      case "combining_hook_above":
+      case "combining_vertical_tilde":
+      case "combining_inverted_breve":
+      case "combining_pokrytie":
+      case "combining_slavonic_psili":
+      case "combining_slavonic_dasia":
+      case "combining_payerok":
+      case "combining_titlo":
+      case "combining_vzmet":
+      case "combining_arabic_v":
+      case "combining_arabic_inverted_v":
+      case "combining_shaddah":
+      case "combining_sukun":
+      case "combining_fatha":
+      case "combining_dammah":
+      case "combining_kasra":
+      case "combining_hamza_above":
+      case "combining_hamza_below":
+      case "combining_alef_above":
+      case "combining_fathatan":
+      case "combining_kasratan":
+      case "combining_dammatan":
+      case "combining_alef_below":
+        id = R.string.key_descr_combining;
+        break;
     }
     if (id == 0)
-      return null;
-    return res.getString(id);
+      return additional_info;
+    String descr = res.getString(id);
+    if (additional_info != null)
+      descr += "  —  " + additional_info;
+    return descr;
   }
 
   static String key_title(String key_name, KeyValue kv)
@@ -137,10 +254,55 @@ public class ExtraKeysPreference extends PreferenceCategory
     return kv.getString();
   }
 
+  static String format_key_combination(String[] keys)
+  {
+    StringBuilder out = new StringBuilder();
+    for (int i = 0; i < keys.length; i++)
+    {
+      if (i > 0) out.append(" + ");
+      out.append(KeyValue.getKeyByName(keys[i]).getString());
+    }
+    return out.toString();
+  }
+
   static KeyboardData.PreferredPos key_preferred_pos(String key_name)
   {
     switch (key_name)
     {
+      case "cut":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("x"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(2, 2, 8),
+              new KeyboardData.KeyPos(2, -1, 8),
+              new KeyboardData.KeyPos(-1, -1, 8),
+            });
+      case "copy":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("c"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(2, 3, 8),
+              new KeyboardData.KeyPos(2, -1, 8),
+              new KeyboardData.KeyPos(-1, -1, 8),
+            });
+      case "paste":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("v"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(2, 4, 8),
+              new KeyboardData.KeyPos(2, -1, 8),
+              new KeyboardData.KeyPos(-1, -1, 8),
+            });
+      case "undo":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("z"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(2, 1, 8),
+              new KeyboardData.KeyPos(2, -1, 8),
+              new KeyboardData.KeyPos(-1, -1, 8),
+            });
+      case "redo":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("y"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(0, -1, 8),
+              new KeyboardData.KeyPos(-1, -1, 8),
+            });
       case "f11_placeholder":
         return new KeyboardData.PreferredPos(KeyValue.getKeyByName("9"),
             new KeyboardData.KeyPos[]{
@@ -201,8 +363,6 @@ public class ExtraKeysPreference extends PreferenceCategory
 
   static class ExtraKeyCheckBoxPreference extends CheckBoxPreference
   {
-    boolean _key_font;
-
     public ExtraKeyCheckBoxPreference(Context ctx, String key_name,
         boolean default_checked)
     {
@@ -215,7 +375,6 @@ public class ExtraKeysPreference extends PreferenceCategory
       setKey(pref_key_of_key_name(key_name));
       setDefaultValue(default_checked);
       setTitle(title);
-      _key_font = kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT);
     }
 
     @Override
@@ -223,7 +382,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     {
       super.onBindView(view);
       TextView title = (TextView)view.findViewById(android.R.id.title);
-      title.setTypeface(_key_font ? Theme.getKeyFont(getContext()) : null);
+      title.setTypeface(Theme.getKeyFont(getContext()));
     }
   }
 }

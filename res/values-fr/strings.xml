@@ -71,6 +71,7 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="pref_theme_e_monet">Monet (Système)</string>
   <string name="pref_theme_e_monetlight">Monet (Clair)</string>
   <string name="pref_theme_e_monetdark">Monet (Sombre)</string>
+  <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Très courte</string>
   <string name="pref_swipe_dist_e_short">Courte</string>
   <string name="pref_swipe_dist_e_default">Normale</string>
@@ -120,6 +121,11 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="key_descr_home">Début</string>
   <string name="key_descr_end">Fin</string>
   <string name="key_descr_clipboard">Presse-papiers</string>
+  <!-- <string name="key_descr_combining">Combining diacritic</string> -->
+  <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
+  <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
+  <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
+  <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
   <string name="clipboard_history_heading">Texte récemment copié</string>
   <string name="clipboard_pin_heading">Épinglé</string>
   <string name="clipboard_remove_confirm">Supprimer ce presse-papiers ?</string>

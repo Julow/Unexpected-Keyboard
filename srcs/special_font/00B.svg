@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="no"?>
+<!-- Modified from DejaVuSans -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="-10 0 1726 2048">
+   <path fill="currentColor"
+d="M1613 63v169h-1322v1324h-169v-1493h1491zM412 416l63 -63h556v169h-330l862 862l-120 120l-862 -862v330h-169v-556z" />
+</svg>
