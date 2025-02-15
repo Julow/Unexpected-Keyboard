@@ -11,7 +11,8 @@ cyrl_yaverti: Layout includes some ASCII punctuation but not all, missing: ~
 cyrl_yqukeng_tj: These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
 cyrl_yxukeng_os: Layout includes some ASCII punctuation but not all, missing: ", #, $, &, ', @, [, ], ~
 cyrl_yxukeng_os: These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
-deva_alt: Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
+deva_alt: Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
+deva_alt: Layout doesn't define some important keys, missing: delete
 deva_inscript: Duplicate keys: ।
 deva_inscript: Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
 deva_phonetic_in: Duplicate keys: ट
@@ -22,8 +23,6 @@ hebr_2_il: Layout includes some ASCII punctuation but not all, missing: (, ), <,
 kann_kannada: Layout includes some ASCII punctuation but not all, missing: #, $, %, (, ), *, +, /, <, =, >, [, \, ], ^, `, {, |, }, ~
 latn_bepo_fr: Missing important key, missing: loc capslock
 latn_bone: Missing important key, missing: loc capslock
-latn_bone: Missing programming keys, missing: loc esc, loc tab
-latn_bone: Layout redefines the bottom row but some important keys are missing, missing: cursor_left, cursor_right, loc compose, loc end, loc home, loc page_down, loc page_up, loc switch_clipboard, loc switch_greekmath, loc voice_typing, switch_backward
 latn_colemak: Some keys contain whitespaces, unexpected:  ́
 latn_dvorak: Missing important key, missing: loc capslock
 latn_neo2: Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
