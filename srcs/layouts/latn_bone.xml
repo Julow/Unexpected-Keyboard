@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://neo-layout.org/Layouts/bone/ -->
-<keyboard name="Bone" script="latin">
+<keyboard name="Bone" script="latin" embedded_number_row="true">
 	<modmap>
 		<!-- shift on number row:
 			1234567890 -> °§ℓ»«$€„“”
