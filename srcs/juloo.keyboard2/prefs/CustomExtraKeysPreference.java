@@ -41,7 +41,7 @@ public class CustomExtraKeysPreference extends ListGroupPreference<String>
     if (key_names != null)
     {
       for (String key_name : key_names)
-        kvs.put(KeyValue.parseKeyDefinition(key_name), KeyboardData.PreferredPos.DEFAULT);
+        kvs.put(KeyValue.getKeyByName(key_name), KeyboardData.PreferredPos.DEFAULT);
     }
     return kvs;
   }

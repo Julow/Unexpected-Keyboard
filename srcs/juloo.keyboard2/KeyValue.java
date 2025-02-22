@@ -479,30 +479,21 @@ public final class KeyValue implements Comparable<KeyValue>
     return new KeyValue("", Kind.Modifier, mod.ordinal(), 0);
   }
 
-  public static KeyValue parseKeyDefinition(String str)
-  {
-    if (str.length() < 2 || str.charAt(0) != ':')
-      return makeStringKey(str);
-    try
-    {
-      return KeyValueParser.parse(str);
-    }
-    catch (KeyValueParser.ParseError _e)
-    {
-      return makeStringKey(str);
-    }
-  }
-
-  /**
-   * Return a key by its name. If the given name doesn't correspond to a key
-   * defined in this function, it is passed to [parseStringKey] as a fallback.
-   */
+  /** Return a key by its name. If the given name doesn't correspond to any
+      special key, it is parsed with [KeyValueParser]. */
   public static KeyValue getKeyByName(String name)
   {
     KeyValue k = getSpecialKeyByName(name);
-    if (k == null)
-      return parseKeyDefinition(name);
-    return k;
+    if (k != null)
+      return k;
+    try
+    {
+      return KeyValueParser.parse(name);
+    }
+    catch (KeyValueParser.ParseError _e)
+    {
+      return makeStringKey(name);
+    }
   }
 
   public static KeyValue getSpecialKeyByName(String name)
@@ -821,6 +812,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
     public String toString() { return _symbol; }
 
+    @Override
     public int compareTo(Macro snd)
     {
       int d = keys.length - snd.keys.length;

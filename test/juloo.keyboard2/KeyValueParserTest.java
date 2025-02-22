@@ -10,7 +10,100 @@ public class KeyValueParserTest
   public KeyValueParserTest() {}
 
   @Test
-  public void parseStr() throws Exception
+  public void parse_key_value() throws Exception
+  {
+    Utils.parse("'", KeyValue.makeStringKey("'"));
+    Utils.parse("\\'", KeyValue.makeStringKey("\\'"));
+    Utils.parse("\\,", KeyValue.makeStringKey("\\,"));
+    Utils.parse("a\\'b", KeyValue.makeStringKey("a\\'b"));
+    Utils.parse("a\\,b", KeyValue.makeStringKey("a\\,b"));
+    Utils.parse("a", KeyValue.makeStringKey("a"));
+    Utils.parse("abc", KeyValue.makeStringKey("abc"));
+    Utils.parse("shift", KeyValue.getSpecialKeyByName("shift"));
+    Utils.parse("'a", KeyValue.makeStringKey("'a"));
+  }
+
+  @Test
+  public void parse_macro() throws Exception
+  {
+    Utils.parse("symbol:abc", KeyValue.makeMacro("symbol", new KeyValue[]{
+      KeyValue.makeStringKey("abc")
+    }, 0));
+    Utils.parse("copy:ctrl,a,ctrl,c", KeyValue.makeMacro("copy", new KeyValue[]{
+      KeyValue.getSpecialKeyByName("ctrl"),
+      KeyValue.makeStringKey("a"),
+      KeyValue.getSpecialKeyByName("ctrl"),
+      KeyValue.makeStringKey("c")
+    }, 0));
+    Utils.parse("macro:abc,\\'", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("abc"),
+      KeyValue.makeStringKey("'")
+    }, 0));
+    Utils.parse("macro:abc,\\,", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("abc"),
+      KeyValue.makeStringKey(",")
+    }, 0));
+    Utils.parse("<2:ctrl,backspace", KeyValue.makeMacro("<2", new KeyValue[]{
+      KeyValue.getSpecialKeyByName("ctrl"),
+      KeyValue.getSpecialKeyByName("backspace")
+    }, 0));
+    Utils.expect_error("symbol:");
+    Utils.expect_error("unterminated_string:'");
+    Utils.expect_error("unterminated_string:abc,'");
+    Utils.expect_error("unexpected_quote:abc,,");
+    Utils.expect_error("unexpected_quote:,");
+  }
+
+  @Test
+  public void parse_string_key() throws Exception
+  {
+    Utils.parse("symbol:'str'", KeyValue.makeMacro("symbol", new KeyValue[]{
+      KeyValue.makeStringKey("str")
+    }, 0));
+    Utils.parse("symbol:'str\\''", KeyValue.makeMacro("symbol", new KeyValue[]{
+      KeyValue.makeStringKey("str'")
+    }, 0));
+    Utils.parse("macro:'str',abc", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("str"),
+      KeyValue.makeStringKey("abc")
+    }, 0));
+    Utils.parse("macro:abc,'str'", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("abc"),
+      KeyValue.makeStringKey("str")
+    }, 0));
+    Utils.parse("macro:\\',\\,", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("'"),
+      KeyValue.makeStringKey(","),
+    }, 0));
+    Utils.parse("macro:a\\'b,a\\,b,a\\xb", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("a'b"),
+      KeyValue.makeStringKey("a,b"),
+      KeyValue.makeStringKey("axb")
+    }, 0));
+    Utils.expect_error("symbol:'");
+    Utils.expect_error("symbol:'foo");
+  }
+
+  @Test
+  public void parse_key_event() throws Exception
+  {
+    Utils.parse("symbol:keyevent:85", KeyValue.makeMacro("symbol", new KeyValue[]{
+      KeyValue.keyeventKey("", 85, 0)
+    }, 0));
+    Utils.parse("macro:keyevent:85,abc", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.keyeventKey("", 85, 0),
+      KeyValue.makeStringKey("abc")
+    }, 0));
+    Utils.parse("macro:abc,keyevent:85", KeyValue.makeMacro("macro", new KeyValue[]{
+      KeyValue.makeStringKey("abc"),
+      KeyValue.keyeventKey("", 85, 0)
+    }, 0));
+    Utils.expect_error("symbol:keyevent:");
+    Utils.expect_error("symbol:keyevent:85a");
+  }
+
+  @Test
+  public void parse_old_syntax() throws Exception
   {
     Utils.parse(":str:'Foo'", KeyValue.makeStringKey("Foo"));
     Utils.parse(":str flags='dim':'Foo'", KeyValue.makeStringKey("Foo", KeyValue.FLAG_SECONDARY));
@@ -32,39 +125,9 @@ public class KeyValueParserTest
     Utils.expect_error(":str flags='' ");
     Utils.expect_error(":str flags='':");
     Utils.expect_error(":str flags='':'");
-  }
-
-  @Test
-  public void parseChar() throws Exception
-  {
+    // Char
     Utils.parse(":char symbol='a':b", KeyValue.makeCharKey('b', "a", 0));
     Utils.parse(":char:b", KeyValue.makeCharKey('b', "b", 0));
-  }
-
-  @Test
-  public void parseKeyValue() throws Exception
-  {
-    Utils.parse("\'", KeyValue.makeStringKey("\'"));
-    Utils.parse("a", KeyValue.makeStringKey("a"));
-    Utils.parse("abc", KeyValue.makeStringKey("abc"));
-    Utils.parse("shift", KeyValue.getSpecialKeyByName("shift"));
-    Utils.expect_error("\'a");
-  }
-
-  @Test
-  public void parseMacro() throws Exception
-  {
-    Utils.parse(":macro symbol='copy':ctrl,a,ctrl,c", KeyValue.makeMacro("copy", new KeyValue[]{
-      KeyValue.getSpecialKeyByName("ctrl"),
-      KeyValue.makeStringKey("a"),
-      KeyValue.getSpecialKeyByName("ctrl"),
-      KeyValue.makeStringKey("c")
-    }, 0));
-    Utils.parse(":macro:abc,'", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("abc"),
-      KeyValue.makeStringKey("'")
-    }, 0));
-    Utils.expect_error(":macro:");
   }
 
   /** JUnit removes these functions from stacktraces. */
@@ -72,7 +135,7 @@ public class KeyValueParserTest
   {
     static void parse(String key_descr, KeyValue ref) throws Exception
     {
-      assertEquals(ref, KeyValueParser.parse(key_descr));
+      assertEquals(ref, KeyValue.getKeyByName(key_descr));
     }
 
     static void expect_error(String key_descr)
