@@ -146,11 +146,11 @@ public final class KeyEventHandler
     if (down)
     {
       _meta_state = _meta_state | meta_flags;
-      send_keyevent(KeyEvent.ACTION_DOWN, eventCode);
+      send_keyevent(KeyEvent.ACTION_DOWN, eventCode, _meta_state);
     }
     else
     {
-      send_keyevent(KeyEvent.ACTION_UP, eventCode);
+      send_keyevent(KeyEvent.ACTION_UP, eventCode, _meta_state);
       _meta_state = _meta_state & ~meta_flags;
     }
   }
@@ -181,25 +181,28 @@ public final class KeyEventHandler
     }
   }
 
-  /*
-   * Don't set KeyEvent.FLAG_SOFT_KEYBOARD.
-   */
   void send_key_down_up(int keyCode)
   {
-    send_keyevent(KeyEvent.ACTION_DOWN, keyCode);
-    send_keyevent(KeyEvent.ACTION_UP, keyCode);
+    send_key_down_up(keyCode, _meta_state);
   }
 
-  void send_keyevent(int eventAction, int eventCode)
+  /** Ignores currently pressed system modifiers. */
+  void send_key_down_up(int keyCode, int metaState)
+  {
+    send_keyevent(KeyEvent.ACTION_DOWN, keyCode, metaState);
+    send_keyevent(KeyEvent.ACTION_UP, keyCode, metaState);
+  }
+
+  void send_keyevent(int eventAction, int eventCode, int metaState)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
     conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0,
-          _meta_state, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+          metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
           KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
     if (eventAction == KeyEvent.ACTION_UP)
-      _autocap.event_sent(eventCode, _meta_state);
+      _autocap.event_sent(eventCode, metaState);
   }
 
   void send_text(CharSequence text)
@@ -236,6 +239,8 @@ public final class KeyEventHandler
       case REPLACE: send_context_menu_action(android.R.id.replaceText); break;
       case ASSIST: send_context_menu_action(android.R.id.textAssist); break;
       case AUTOFILL: send_context_menu_action(android.R.id.autofill); break;
+      case DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
+      case FORWARD_DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
     }
   }
 
