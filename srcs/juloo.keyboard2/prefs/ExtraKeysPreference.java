@@ -397,6 +397,7 @@ public class ExtraKeysPreference extends PreferenceCategory
       setKey(pref_key_of_key_name(key_name));
       setDefaultValue(default_checked);
       setTitle(title);
+      setSingleLineTitle(false);
     }
 
     @Override
