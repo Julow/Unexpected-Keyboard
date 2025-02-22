@@ -87,12 +87,14 @@ These keys are sent to apps, which are free to ignore them. The keyboard does no
 
 ## Keyboard editing actions
 In contrast, these keys perform editing on the text without sending anything to the app.
-Value              | Meaning
-:----------------- | :------
-`cursor_left`      | Moves the cursor to the left with the slider gesture.
-`cursor_right`     | Moves the cursor to the right with the slider gesture.
-`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
-`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
+Value                 | Meaning
+:-------------------- | :------
+`cursor_left`         | Moves the cursor to the left with the slider gesture.
+`cursor_right`        | Moves the cursor to the right with the slider gesture.
+`cursor_up`           | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
+`cursor_down`         | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
+`delete_word`         | Delete the word to the left of the cursor.
+`forward_delete_word` | Delete the word to the right of the cursor.
 
 ## Whitespace
 Value   | Meaning
