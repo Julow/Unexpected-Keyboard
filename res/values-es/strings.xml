@@ -127,6 +127,9 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+  <!-- <string name="key_descr_delete_word">Delete a word</string> -->
+  <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
+  <!-- <string name="key_descr_gesture">Gesture</string> -->
   <string name="clipboard_history_heading">Textos recién copiados</string>
   <string name="clipboard_pin_heading">Pegado</string>
   <string name="clipboard_remove_confirm">¿Sacar este portapapeles?</string>

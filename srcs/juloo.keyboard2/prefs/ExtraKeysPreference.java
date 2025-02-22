@@ -72,6 +72,8 @@ public class ExtraKeysPreference extends PreferenceCategory
     "pasteAsPlainText",
     "undo",
     "redo",
+    "delete_word",
+    "forward_delete_word",
     "superscript",
     "subscript",
     "f11_placeholder",
@@ -177,6 +179,14 @@ public class ExtraKeysPreference extends PreferenceCategory
         id = R.string.key_descr_redo;
         additional_info = format_key_combination(new String[]{"fn", "undo"});
         break;
+      case "delete_word":
+        id = R.string.key_descr_delete_word;
+        additional_info = format_key_combination_gesture(res, "backspace");
+        break;
+      case "forward_delete_word":
+        id = R.string.key_descr_forward_delete_word;
+        additional_info = format_key_combination_gesture(res, "forward_delete");
+        break;
       case "selectAll": id = R.string.key_descr_selectAll; break;
       case "shareText": id = R.string.key_descr_shareText; break;
       case "subscript": id = R.string.key_descr_subscript; break;
@@ -276,6 +286,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     return kv.getString();
   }
 
+  /** Format a key combination */
   static String format_key_combination(String[] keys)
   {
     StringBuilder out = new StringBuilder();
@@ -285,6 +296,13 @@ public class ExtraKeysPreference extends PreferenceCategory
       out.append(KeyValue.getKeyByName(keys[i]).getString());
     }
     return out.toString();
+  }
+
+  /** Explain a gesture on a key */
+  static String format_key_combination_gesture(Resources res, String key_name)
+  {
+    return res.getString(R.string.key_descr_gesture) + " + "
+      + KeyValue.getKeyByName(key_name).getString();
   }
 
   static KeyboardData.PreferredPos key_preferred_pos(String key_name)
@@ -340,6 +358,16 @@ public class ExtraKeysPreference extends PreferenceCategory
               new KeyboardData.KeyPos(0, 9, 4),
               new KeyboardData.KeyPos(0, -1, 3),
               new KeyboardData.KeyPos(0, -1, 4),
+            });
+      case "delete_word":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("backspace"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(-1, -1, 3),
+            });
+      case "forward_delete_word":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("backspace"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(-1, -1, 4),
             });
     }
     return KeyboardData.PreferredPos.DEFAULT;
