@@ -127,6 +127,9 @@
   <string name="key_descr_zwnj">Разділювач нульової ширини</string>
   <string name="key_descr_nbsp">Нерозривний пробіл</string>
   <string name="key_descr_nnbsp">Вузький нерозривний пробіл</string>
+  <!-- <string name="key_descr_delete_word">Delete a word</string> -->
+  <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
+  <!-- <string name="key_descr_gesture">Gesture</string> -->
   <string name="clipboard_history_heading">Нещодавно скопійований текст</string>
   <string name="clipboard_pin_heading">Закріплено</string>
   <string name="clipboard_remove_confirm">Видалити цей буфер обміну?</string>
