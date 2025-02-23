@@ -1,30 +1,36 @@
 # Key values
 
-A key value is the denomination of a key accepted in the "Add keys to the keyboard" option or for the `nw`, ..., `se` attributes in custom layouts (or `key0` ... `key8`).
-It can be:
+A key value defines what a key on the keyboard does when pressed or swiped.
 
-- The name of a special key. An exhaustive list of the special keys follows.
+Key values appear in the following places:
+
+- In custom layouts, they are the value of: the `c` attribute, the compass-point attributes `nw` ... `se`, and the old-style `key0` ... `key8` attributes.
+- Internally, they are used in the definition of the "Add keys to the keyboard" setting.
+
+Key values can be any of the following:
+
+- The name of a special key. A complete list of valid special keys follows.
 
 - An arbitrary sequence of characters not containing `:`.
   This results in a key that writes the specified characters.
 
-- Using the syntax `symbol:key_def`.
-  `symbol` is the symbol that appears on the keyboard, it cannot contain `:`.
+- The syntax `legend:key_def`.
+  `legend` is the visible legend on the keyboard. It cannot contain `:`.
   `key_def` can be:
   + The name of a special key, as listed below.
-  + `'Arbitrary string'` An arbitrary string that can contain `:`. `'` can be added to the string as `` \' ``.
+  + `'string'` An arbitrary string that can contain `:`. `'` can be added to the string as `` \' ``.
   + `keyevent:keycode` An Android keycode. They are listed as `KEYCODE_...` in [KeyEvent](https://developer.android.com/reference/android/view/KeyEvent#summary).
 
   Examples:
-  + `⏯:keyevent:85` A play/pause key (which probably doesn't do anything in most apps).
-  + `my@:'my.email@domain.com'` An arbitrary string key
+  + `⏯:keyevent:85` A play/pause key (which has no effect in most apps).
+  + `my@:'my.email@domain.com'` A key that sends an arbitrary string
 
 - A macro, `symbol:key_def1,key_def2,...`.
   This results in a key that behaves as if the sequence of `key_def` had been pressed in order.
 
   Examples:
-  + `CA:ctrl,a,ctrl,c` The sequence `ctrl+a`, `ctrl+c`.
-  + `Cd:ctrl,backspace` The shortcut `ctrl+backspace`.
+  + `CA:ctrl,a,ctrl,c` A key with legend CA that sends the sequence `ctrl+a`, `ctrl+c`.
+  + `Cd:ctrl,backspace` A key with legend Cd that sends the shortcut `ctrl+backspace`.
 
 ## Escape codes
 Value | Escape code for
