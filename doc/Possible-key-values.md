@@ -52,17 +52,22 @@ Value    | Escape code for
 `&quot;` | `"`
 
 ## Modifiers
-System modifiers are sent to the app, which is free to do whatever they want in response.
-The other modifiers only exist within the keyboard.
+System modifiers are sent to the app, which can take app-specific action.
+
 Value       | Meaning
 :---------- | :------
 `shift`     | System modifier.
 `ctrl`      | System modifier.
 `alt`       | System modifier.
 `meta`      | System modifier. Equivalent to the Windows key.
-`fn`        | Activates Fn mode, which assigns letters and symbols to special characters. e.g. `fn` `!` = `¡`
-`compose`   | Compose key. Enables composing characters using Linux-like shortcuts; e.g. `Compose` `A` `single quote` types `Á` (A with acute accent).
-`capslock`  | Actives and locks Shift
+
+The other modifiers take effect only within the keyboard.
+
+Value       | Meaning
+:---------- | :------
+`fn`        | Activates Fn mode, which assigns letters and symbols to special characters. Example: `fn` `!` = `¡`
+`compose`   | Compose key. Enables composing characters using Linux-like shortcuts. Example: `Compose` `A` `'` types `Á` (A with acute accent).
+`capslock`  | Activates and locks Shift.
 
 ## Special keys
 These keys are sent to apps, which are free to ignore them. The keyboard does not perform editing in response to these keys.
