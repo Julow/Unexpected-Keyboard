@@ -97,11 +97,10 @@ public final class KeyEventHandler
       case Keyevent: send_key_down_up(key.getKeyevent()); break;
       case Modifier: break;
       case Editing: handle_editing_key(key.getEditing()); break;
-      case Compose_pending:
-        _recv.set_compose_pending(true);
-        break;
+      case Compose_pending: _recv.set_compose_pending(true); break;
       case Slider: handle_slider(key.getSlider(), key.getSliderRepeat()); break;
       case StringWithSymbol: send_text(key.getStringWithSymbol()); break;
+      case Macro: evaluate_macro(key.getMacro()); break;
     }
     update_meta_state(old_mods);
   }
@@ -317,6 +316,35 @@ public final class KeyEventHandler
       send_key_down_up_repeat(KeyEvent.KEYCODE_DPAD_UP, -d);
     else
       send_key_down_up_repeat(KeyEvent.KEYCODE_DPAD_DOWN, d);
+  }
+
+  void evaluate_macro(KeyValue[] keys)
+  {
+    final Pointers.Modifiers empty = Pointers.Modifiers.EMPTY;
+    // Ignore modifiers that are activated at the time the macro is evaluated
+    mods_changed(empty);
+    Pointers.Modifiers mods = empty;
+    final boolean autocap_paused = _autocap.pause();
+    for (KeyValue kv : keys)
+    {
+      kv = KeyModifier.modify(kv, mods);
+      if (kv == null)
+        continue;
+      if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
+      {
+        // Non-special latchable keys clear latched modifiers
+        if (!kv.hasFlagsAny(KeyValue.FLAG_SPECIAL))
+          mods = empty;
+        mods = mods.with_extra_mod(kv);
+      }
+      else
+      {
+        key_down(kv, false);
+        key_up(kv, mods);
+        mods = empty;
+      }
+    }
+    _autocap.unpause(autocap_paused);
   }
 
   /** Repeat calls to [send_key_down_up]. */

@@ -88,6 +88,24 @@ public final class Autocapitalisation
     callback_now(true);
   }
 
+  /** Pause auto capitalisation until [unpause()] is called. */
+  public boolean pause()
+  {
+    boolean was_enabled = _enabled;
+    stop();
+    _enabled = false;
+    return was_enabled;
+  }
+
+  /** Continue auto capitalisation after [pause()] was called. Argument is the
+      output of [pause()]. */
+  public void unpause(boolean was_enabled)
+  {
+    _enabled = was_enabled;
+    _should_update_caps_mode = true;
+    callback_now(true);
+  }
+
   public static interface Callback
   {
     public void update_shift_state(boolean should_enable, boolean should_disable);

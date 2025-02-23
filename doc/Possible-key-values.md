@@ -1,9 +1,30 @@
 # Key values
 
-This is an exhaustive list of special values accepted for the `key0` through `key8` or `nw` through `se` attributes on a key.
+A key value is the denomination of a key accepted in the "Add keys to the keyboard" option or for the `nw`, ..., `se` attributes in custom layouts (or `key0` ... `key8`).
+It can be:
 
-Any string that does not exactly match these will be printed verbatim.
-A key can output multiple characters, but cannot combine multiple built-in key values.
+- The name of a special key. An exhaustive list of the special keys follows.
+
+- An arbitrary sequence of characters not containing `:`.
+  This results in a key that writes the specified characters.
+
+- Using the syntax `symbol:key_def`.
+  `symbol` is the symbol that appears on the keyboard, it cannot contain `:`.
+  `key_def` can be:
+  + The name of a special key, as listed below.
+  + `'Arbitrary string'` An arbitrary string that can contain `:`. `'` can be added to the string as `` \' ``.
+  + `keyevent:keycode` An Android keycode. They are listed as `KEYCODE_...` in [KeyEvent](https://developer.android.com/reference/android/view/KeyEvent#summary).
+
+  Examples:
+  + `⏯:keyevent:85` A play/pause key (which probably doesn't do anything in most apps).
+  + `my@:'my.email@domain.com'` An arbitrary string key
+
+- A macro, `symbol:key_def1,key_def2,...`.
+  This results in a key that behaves as if the sequence of `key_def` had been pressed in order.
+
+  Examples:
+  + `CA:ctrl,a,ctrl,c` The sequence `ctrl+a`, `ctrl+c`.
+  + `Cd:ctrl,backspace` The shortcut `ctrl+backspace`.
 
 ## Escape codes
 Value | Escape code for
@@ -152,50 +173,3 @@ These keys are known to do nothing.
 These keys are normally hidden unless the Fn modifier is activated.
 
 `f11_placeholder` | `f12_placeholder`
-
-## Complex keys
-
-More complex keys are of this form:
-
-```
-:<kind> <attributes>:<payload>
-```
-
-Where `<kind>` is one of the kinds documented below and `<attributes>` is a
-space separated list of attributes. `<payload>` depends on the `<kind>`.
-
-Attributes are:
-- `symbol='Sym'` specifies the symbol to be shown on the keyboard.
-- `flags='<flags>'` changes the behavior of the key.
-  `<flags>` is a coma separated list of:
-  + `dim`: Make the symbol dimmer.
-  + `small`: Make the symbol smaller.
-
-### Kind `str`
-
-Defines a key that outputs an arbitrary string. `<payload>` is a string wrapped
-in single-quotes (`'`), escaping of other single quotes is allowed with `\'`.
-
-For example:
-- `:str:'Arbitrary string with a \' inside'`
-- `:str symbol='Symbol':'Output string'`
-
-### Kind `char`
-
-Defines a key that outputs a single character. `<payload>` is the character to
-output, unquoted.
-This kind of key can be used to define a character key with a different symbol
-on it. `char` keys can be modified by `ctrl` and other modifiers, unlike `str`
-keys.
-
-For example:
-- `:char symbol='љ':q`, which is used to implement `ctrl` shortcuts in cyrillic
-  layouts.
-
-### Kind `keyevent`
-
-Defines a key that sends an Android [key event](https://developer.android.com/reference/android/view/KeyEvent).
-`<payload>` is the key event number.
-
-For example:
-- `:keyevent symbol='⏯' flags='small':85`
