@@ -128,6 +128,9 @@ PCキーボードでの半角入力を再現しています。日本語入力、
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+  <!-- <string name="key_descr_delete_word">Delete a word</string> -->
+  <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
+  <!-- <string name="key_descr_gesture">Gesture</string> -->
   <string name="clipboard_history_heading">最近コピーしたテキスト</string>
   <string name="clipboard_pin_heading">お気に入り</string>
   <string name="clipboard_remove_confirm">クリップボードから削除しますか?</string>

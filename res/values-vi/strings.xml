@@ -127,6 +127,9 @@ Bây giờ đã hoàn hảo cho việc sử dụng hàng ngày.
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+  <!-- <string name="key_descr_delete_word">Delete a word</string> -->
+  <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
+  <!-- <string name="key_descr_gesture">Gesture</string> -->
   <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
   <!-- <string name="clipboard_pin_heading">Pinned</string> -->
   <!-- <string name="clipboard_remove_confirm">Remove this clipboard?</string> -->

@@ -127,6 +127,9 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+  <!-- <string name="key_descr_delete_word">Delete a word</string> -->
+  <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
+  <!-- <string name="key_descr_gesture">Gesture</string> -->
   <string name="clipboard_history_heading">Ostatnio skopiowane elementy</string>
   <string name="clipboard_pin_heading">Przypięte</string>
   <string name="clipboard_remove_confirm">Usunąć ten element ze schowka?</string>

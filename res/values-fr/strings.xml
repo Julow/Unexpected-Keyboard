@@ -127,6 +127,9 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+  <!-- <string name="key_descr_delete_word">Delete a word</string> -->
+  <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
+  <!-- <string name="key_descr_gesture">Gesture</string> -->
   <string name="clipboard_history_heading">Texte récemment copié</string>
   <string name="clipboard_pin_heading">Épinglé</string>
   <string name="clipboard_remove_confirm">Supprimer ce presse-papiers ?</string>

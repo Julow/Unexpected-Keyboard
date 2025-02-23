@@ -127,6 +127,9 @@ Este aplicativo não contém anúncios, não faz nenhuma solicitação de rede e
   <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+  <!-- <string name="key_descr_delete_word">Delete a word</string> -->
+  <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
+  <!-- <string name="key_descr_gesture">Gesture</string> -->
   <string name="clipboard_history_heading">Textos recém copiados</string>
   <string name="clipboard_pin_heading">Fixados</string>
   <string name="clipboard_remove_confirm">Remover esta cópia?</string>
