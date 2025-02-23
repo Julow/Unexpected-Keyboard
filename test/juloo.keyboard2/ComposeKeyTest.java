@@ -42,22 +42,21 @@ public class ComposeKeyTest
     assertEquals(apply("ய", state), KeyValue.makeStringKey("௰", KeyValue.FLAG_SMALLER_FONT));
   }
 
-  KeyValue apply(String seq) throws Exception
+  @Test
+  public void stringKeys() throws Exception
   {
-    return apply(seq, ComposeKeyData.compose);
+    int state = ComposeKeyData.shift;
+    assertEquals(apply("𝕨", state), KeyValue.makeStringKey("𝕎"));
+    assertEquals(apply("𝕩", state), KeyValue.makeStringKey("𝕏"));
   }
 
-  KeyValue apply(String seq, int state) throws Exception
+  KeyValue apply(String seq)
   {
-    KeyValue r = null;
-    for (int i = 0; i < seq.length(); i++)
-    {
-      r = ComposeKey.apply(state, seq.charAt(i));
-      if (r.getKind() == KeyValue.Kind.Compose_pending)
-        state = r.getPendingCompose();
-      else if (i + 1 < seq.length())
-        throw new Exception("Sequence too long: " + seq);
-    }
-    return r;
+    return ComposeKey.apply(ComposeKeyData.compose, seq);
+  }
+
+  KeyValue apply(String seq, int state)
+  {
+    return ComposeKey.apply(state, seq);
   }
 }

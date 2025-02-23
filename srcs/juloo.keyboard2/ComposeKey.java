@@ -4,31 +4,22 @@ import java.util.Arrays;
 
 public final class ComposeKey
 {
-  /** Apply the pending compose sequence to [kv]. */
+  /** Apply the pending compose sequence to [kv]. Returns [null] if no sequence
+      matched. */
   public static KeyValue apply(int state, KeyValue kv)
   {
     switch (kv.getKind())
     {
       case Char:
-        KeyValue res = apply(state, kv.getChar());
-        // Grey-out characters not part of any sequence.
-        if (res == null)
-          return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
-        return res;
-      /* Tapping compose again exits the pending sequence. */
-      case Compose_pending:
-        return KeyValue.getKeyByName("compose_cancel");
-      /* These keys are not greyed. */
-      case Event:
-      case Modifier:
-        return kv;
-      /* Other keys cannot be part of sequences. */
-      default:
-        return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
+        return apply(state, kv.getChar());
+      case String:
+        return apply(state, kv.getString());
     }
+    return null;
   }
 
-  /** Apply the pending compose sequence to char [c]. */
+  /** Apply the pending compose sequence to char [c]. Returns [null] if no
+      sequence matched. */
   public static KeyValue apply(int prev, char c)
   {
     char[] states = ComposeKeyData.states;
@@ -49,6 +40,23 @@ public final class ComposeKey
     }
     else // Character final state.
       return KeyValue.makeCharKey((char)next_header);
+  }
+
+  /** Apply each char of a string to a sequence. Returns [null] if no sequence
+      matched. */
+  public static KeyValue apply(int prev, String s)
+  {
+    int i = 0;
+    while (true)
+    {
+      KeyValue k = apply(prev, s.charAt(i));
+      i++;
+      if (k == null) return null;
+      if (i >= s.length()) return k;
+      if (k.getKind() != KeyValue.Kind.Compose_pending)
+        return null; // Found a final state before the end of [s].
+      prev = k.getPendingCompose();
+    }
   }
 
   /** The state machine is comprised of two arrays.

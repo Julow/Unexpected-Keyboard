@@ -138,15 +138,8 @@ public final class LayoutModifier
     return new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
-        switch (key.getKind())
-        {
-          case Char:
-            KeyValue modified = ComposeKey.apply(map_digit, key.getChar());
-            if (modified != null)
-              return modified;
-            break;
-        }
-        return key;
+        KeyValue modified = ComposeKey.apply(map_digit, key);
+        return (modified != null) ? modified : key;
       }
     };
   }

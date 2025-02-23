@@ -36,7 +36,7 @@ public final class KeyModifier
       case Modifier:
         return modify(k, mod.getModifier());
       case Compose_pending:
-        return ComposeKey.apply(mod.getPendingCompose(), k);
+        return apply_compose_pending(mod.getPendingCompose(), k);
       case Hangul_initial:
         if (k.equals(mod)) // Allow typing the initial in letter form
           return KeyValue.makeStringKey(k.getString(), KeyValue.FLAG_GREYED);
@@ -122,30 +122,44 @@ public final class KeyModifier
     }
   }
 
+  /** Keys that do not match any sequence are greyed. */
+  private static KeyValue apply_compose_pending(int state, KeyValue kv)
+  {
+    switch (kv.getKind())
+    {
+      case Char:
+      case String:
+        KeyValue res = ComposeKey.apply(state, kv);
+        // Grey-out characters not part of any sequence.
+        if (res == null)
+          return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
+        return res;
+      /* Tapping compose again exits the pending sequence. */
+      case Compose_pending:
+        return KeyValue.getKeyByName("compose_cancel");
+      /* These keys are not greyed. */
+      case Event:
+      case Modifier:
+        return kv;
+      /* Other keys cannot be part of sequences. */
+      default:
+        return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
+    }
+  }
+
   /** Apply the given compose state or fallback to the dead_char. */
   private static KeyValue apply_compose_or_dead_char(KeyValue k, int state, char dead_char)
   {
-    switch (k.getKind())
-    {
-      case Char:
-        char c = k.getChar();
-        KeyValue r = ComposeKey.apply(state, c);
-        if (r != null)
-          return r;
-    }
+    KeyValue r = ComposeKey.apply(state, k);
+    if (r != null)
+      return r;
     return apply_dead_char(k, dead_char);
   }
 
   private static KeyValue apply_compose(KeyValue k, int state)
   {
-    switch (k.getKind())
-    {
-      case Char:
-        KeyValue r = ComposeKey.apply(state, k.getChar());
-        if (r != null)
-          return r;
-    }
-    return k;
+    KeyValue r = ComposeKey.apply(state, k);
+    return (r != null) ? r : k;
   }
 
   private static KeyValue apply_dead_char(KeyValue k, char dead_char)
@@ -179,18 +193,19 @@ public final class KeyModifier
       if (mapped != null)
         return mapped;
     }
+    KeyValue r = ComposeKey.apply(ComposeKeyData.shift, k);
+    if (r != null)
+      return r;
     switch (k.getKind())
     {
       case Char:
         char kc = k.getChar();
-        KeyValue r = ComposeKey.apply(ComposeKeyData.shift, kc);
-        if (r != null)
-          return r;
         char c = Character.toUpperCase(kc);
         return (kc == c) ? k : k.withChar(c);
       case String:
-        String s = Utils.capitalize_string(k.getString());
-        return KeyValue.makeStringKey(s, k.getFlags());
+        String ks = k.getString();
+        String s = Utils.capitalize_string(ks);
+        return s.equals(ks) ? k : KeyValue.makeStringKey(s, k.getFlags());
       default: return k;
     }
   }
@@ -207,7 +222,8 @@ public final class KeyModifier
     switch (k.getKind())
     {
       case Char:
-        KeyValue r = ComposeKey.apply(ComposeKeyData.fn, k.getChar());
+      case String:
+        KeyValue r = ComposeKey.apply(ComposeKeyData.fn, k);
         return (r != null) ? r : k;
       case Keyevent: name = apply_fn_keyevent(k.getKeyevent()); break;
       case Event: name = apply_fn_event(k.getEvent()); break;
