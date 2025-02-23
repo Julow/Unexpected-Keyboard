@@ -69,7 +69,7 @@ Value       | Meaning
 `compose`   | Compose key. Enables composing characters using Linux-like shortcuts. Example: `Compose` `A` `'` types `Á` (A with acute accent).
 `capslock`  | Activates and locks Shift.
 
-## Special keys
+## App function keys
 These keys are sent to apps, which are free to ignore them. The keyboard does not perform editing in response to these keys.
 
 `esc`, `enter`,
@@ -85,6 +85,15 @@ These keys are sent to apps, which are free to ignore them. The keyboard does no
 `selectAll`, `pasteAsPlainText`,
 `undo`, `redo`
 
+## Keyboard editing actions
+In contrast, these keys perform editing on the text without sending anything to the app.
+Value              | Meaning
+:----------------- | :------
+`cursor_left`      | Moves the cursor to the left with the slider gesture.
+`cursor_right`     | Moves the cursor to the right with the slider gesture.
+`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
+`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
+
 ## Whitespace
 Value   | Meaning
 :------ | :------
@@ -93,15 +102,6 @@ Value   | Meaning
 `nnbsp` | Narrow non-breaking space.
 `zwj`   | Zero-width joiner.
 `zwnj`  | Zero-width non-joiner.
-
-## Keyboard editing actions
-These keys perform editing on the text without sending keys that the app can interpret differently or ignore.
-Value              | Meaning
-:----------------- | :------
-`cursor_left`      | Moves the cursor to the left with the slider gesture.
-`cursor_right`     | Moves the cursor to the right with the slider gesture.
-`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
-`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
 
 ## Other modifiers and diacritics
 Value                | Meaning
