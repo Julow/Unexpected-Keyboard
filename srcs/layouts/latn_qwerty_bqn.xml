@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="QWERTY (BQN)" script="latin" embedded_number_row="true">
+  <row height="0.75">
+    <key c="1" nw="˘" ne="⎉"                  se="!"/>
+    <key c="2" nw="¨" ne="⚇"                  se="@" sw="`"/>
+    <key c="3" nw="⁼" ne="⍟"                  se="#" sw="~"/>
+    <key c="4" nw="⌜" ne="◶"                  se="$"/>
+    <key c="5" nw="´" ne="⊘"                  se="%"/>
+    <key c="6" nw="˝" ne="⎊"                  sw="^"/>
+    <key c="7"                                sw="&amp;" se="|"/>
+    <key c="8" nw="∞"                         sw="*" se="\\"/>
+    <key c="9" nw="⟨" ne="¯"                  sw="("/>
+    <key c="0" nw="⟩" ne="•"                  sw=")"/>
+  </row>
+  <row>
+    <key c="q" nw="⌽" ne="˜"                  se="loc esc"/>
+    <key c="w" nw="𝕨"                         sw="'" se="&quot;"/>
+    <key c="e" nw="∊" ne="⍷"/>
+    <key c="r" nw="↑" ne="𝕣" sw="←" se="⇐"/>
+    <key c="t" nw="∧" ne="⍋" sw="↩&#xFE0E;:↩" se="→"/>
+    <key c="y" nw="¬" ne="√" se="÷"           sw="-"/>
+    <key c="u" nw="⊔" ne="⋆" se="×"           sw="+"/>
+    <key c="i" nw="⊏" ne="⊑"                  sw="[" se="{"/>
+    <key c="o" nw="⊐" ne="⊒"                  sw="]" se="}"/>
+    <key c="p" nw="π" ne="⍳"/>
+  </row>
+  <row>
+    <key c="a"        ne="⍉"                  se="loc tab"/>
+    <key c="s" nw="𝕤"/>
+    <key c="d" nw="↕&#xFE0E;:↕" se="∾"/>
+    <key c="f" nw="𝕗"        se="≍"/>
+    <key c="g" nw="𝕘"                         s="_"/>
+    <key c="h" nw="⊸" ne="«"/>
+    <key c="j" nw="∘"  w="⊣" e="⊢"/>
+    <key c="k" nw="○" ne="⌾"/>
+    <key c="l" nw="⟜" ne="»"/>
+    <key c=";"  w="·"  n="⋄"                  s=","/>
+  </row>
+  <row>
+    <key c="shift" e="loc capslock"/>
+    <key c="z" nw="⥊" ne="⋈"/>
+    <key c="x" nw="𝕩"/>
+    <key c="c" nw="↓" ne="˙"                  sw="." se=":"/>
+    <key c="v" nw="∨" ne="⍒" s="‿"/>
+    <key c="b"  s="⌊"  n="⌈"/>
+    <key c="n" nw="≤" ne="≥"  n="≠"           sw="&lt;" se="&gt;" s="="/>
+    <key c="m" nw="≡" ne="≢"                  sw="/" se="?"/>
+    <key width="2" c="backspace" e="delete"/>
+  </row>
+</keyboard>
