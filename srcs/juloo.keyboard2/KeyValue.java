@@ -233,7 +233,8 @@ public final class KeyValue implements Comparable<KeyValue>
   /* Update the char and the symbol. */
   public KeyValue withChar(char c)
   {
-    return new KeyValue(String.valueOf(c), Kind.Char, c, getFlags());
+    return new KeyValue(String.valueOf(c), Kind.Char, c,
+        getFlags() & ~(FLAG_KEY_FONT | FLAG_SMALLER_FONT));
   }
 
   public KeyValue withKeyevent(int code)
@@ -248,6 +249,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public KeyValue withSymbol(String symbol)
   {
+    int flags = getFlags() & ~(FLAG_KEY_FONT | FLAG_SMALLER_FONT);
     switch (getKind())
     {
       case Char:
@@ -259,11 +261,13 @@ public final class KeyValue implements Comparable<KeyValue>
       case Modifier:
       case Editing:
       case Placeholder:
-        return new KeyValue(symbol, _code, _code, getFlags());
+        if (symbol.length() > 1)
+          flags |= FLAG_SMALLER_FONT;
+        return new KeyValue(symbol, _code, _code, flags);
       case Macro:
-        return makeMacro(symbol, getMacro(), 0);
+        return makeMacro(symbol, getMacro(), flags);
       default:
-        return makeMacro(symbol, new KeyValue[]{ this }, 0);
+        return makeMacro(symbol, new KeyValue[]{ this }, flags);
     }
   }
 
@@ -477,6 +481,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public static KeyValue makeMacro(String symbol, KeyValue[] keys, int flags)
   {
+    if (symbol.length() > 1)
+      flags |= FLAG_SMALLER_FONT;
     return new KeyValue(new Macro(keys, symbol), Kind.Macro, 0, flags);
   }
 

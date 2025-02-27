@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import android.view.KeyEvent;
 import juloo.keyboard2.KeyValue;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -13,6 +14,12 @@ public class KeyValueTest
   {
     assertEquals(KeyValue.makeStringKey("Foo").withSymbol("Symbol"),
         KeyValue.makeMacro("Symbol", new KeyValue[] { KeyValue.makeStringKey("Foo") }, 0));
+    assertEquals(KeyValue.getSpecialKeyByName("tab"),
+        KeyValue.keyeventKey(0xE00F, KeyEvent.KEYCODE_TAB, KeyValue.FLAG_KEY_FONT | KeyValue.FLAG_SMALLER_FONT));
+    assertEquals(KeyValue.getSpecialKeyByName("tab").withSymbol("t"),
+        KeyValue.keyeventKey("t", KeyEvent.KEYCODE_TAB, 0));
+    assertEquals(KeyValue.getSpecialKeyByName("tab").withSymbol("tab"),
+        KeyValue.keyeventKey("tab", KeyEvent.KEYCODE_TAB, KeyValue.FLAG_SMALLER_FONT));
   }
 
   @Test
