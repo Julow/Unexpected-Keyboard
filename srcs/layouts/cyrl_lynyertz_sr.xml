@@ -8,32 +8,32 @@
     <fn a="у" b="у̂" />
     <fn a="cursor_left" b="home" />
     <fn a="cursor_right" b="end" />
-    <ctrl a="љ" b=":char symbol='љ':q" />
-    <ctrl a="њ" b=":char symbol='њ':w" />
-    <ctrl a="е" b=":char symbol='е':e" />
-    <ctrl a="р" b=":char symbol='р':r" />
-    <ctrl a="т" b=":char symbol='т':t" />
-    <ctrl a="ж" b=":char symbol='ж':y" />
-    <ctrl a="у" b=":char symbol='у':u" />
-    <ctrl a="и" b=":char symbol='и':i" />
-    <ctrl a="о" b=":char symbol='о':o" />
-    <ctrl a="п" b=":char symbol='п':p" />
-    <ctrl a="а" b=":char symbol='а':a" />
-    <ctrl a="с" b=":char symbol='с':s" />
-    <ctrl a="д" b=":char symbol='д':d" />
-    <ctrl a="ф" b=":char symbol='ф':f" />
-    <ctrl a="г" b=":char symbol='г':g" />
-    <ctrl a="х" b=":char symbol='х':h" />
-    <ctrl a="ј" b=":char symbol='ј':j" />
-    <ctrl a="к" b=":char symbol='к':k" />
-    <ctrl a="л" b=":char symbol='л':l" />
-    <ctrl a="з" b=":char symbol='з':z" />
-    <ctrl a="џ" b=":char symbol='џ':x" />
-    <ctrl a="ц" b=":char symbol='ц':c" />
-    <ctrl a="в" b=":char symbol='в':v" />
-    <ctrl a="б" b=":char symbol='б':b" />
-    <ctrl a="н" b=":char symbol='н':n" />
-    <ctrl a="м" b=":char symbol='м':m" />
+    <ctrl a="љ" b="љ:q" />
+    <ctrl a="њ" b="њ:w" />
+    <ctrl a="е" b="е:e" />
+    <ctrl a="р" b="р:r" />
+    <ctrl a="т" b="т:t" />
+    <ctrl a="ж" b="ж:y" />
+    <ctrl a="у" b="у:u" />
+    <ctrl a="и" b="и:i" />
+    <ctrl a="о" b="о:o" />
+    <ctrl a="п" b="п:p" />
+    <ctrl a="а" b="а:a" />
+    <ctrl a="с" b="с:s" />
+    <ctrl a="д" b="д:d" />
+    <ctrl a="ф" b="ф:f" />
+    <ctrl a="г" b="г:g" />
+    <ctrl a="х" b="х:h" />
+    <ctrl a="ј" b="ј:j" />
+    <ctrl a="к" b="к:k" />
+    <ctrl a="л" b="л:l" />
+    <ctrl a="з" b="з:z" />
+    <ctrl a="џ" b="џ:x" />
+    <ctrl a="ц" b="ц:c" />
+    <ctrl a="в" b="в:v" />
+    <ctrl a="б" b="б:b" />
+    <ctrl a="н" b="н:n" />
+    <ctrl a="м" b="м:m" />
   </modmap>
   <row>
     <key key0="љ" ne="1" se="loc esc"/>
