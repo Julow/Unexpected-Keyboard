@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="QWERTY (APL)" script="latin" embedded_number_row="true">
+  <row height="0.75">
+    <key c="1" nw="⌶"    ne="¨"        se="!"/>
+    <key c="2" nw="¯"    ne="⍫"        se="@" sw="`"/>
+    <key c="3" nw="&lt;" ne="⍒"        se="#" sw="~"/>
+    <key c="4" nw="≤"    ne="⍋"        se="$"/>
+    <key c="5" nw="="    ne="⌽"        se="%"/>
+    <key c="6" nw="≥"    ne="⍉"        sw="^"/>
+    <key c="7" nw=">"    ne="⊖"        sw="&amp;" se="|"/>
+    <key c="8" nw="≠"    ne="⍟" se="∞" sw="*"/>
+    <key c="9" nw="∨"    ne="⍱"        sw="("/>
+    <key c="0" nw="∧"    ne="⍲"        sw=")"/>
+  </row>
+  <row>
+    <key c="q"                         ne="?" se="loc esc"/>
+    <key c="w"        ne="⍵"           sw="'" se="&quot;"/>
+    <key c="e" nw="∊" ne="⍷"/>
+    <key c="r" nw="⍴"        sw="←"/>
+    <key c="t" nw="⍨"        se="→"/>
+    <key c="y" nw="↑" ne="⌹" se="÷"    sw="-"/>
+    <key c="u" nw="↓" ne="⍮" se="×"    sw="+"/>
+    <key c="i" nw="⍳" ne="⍸"           sw="[" se="{"/>
+    <key c="o" nw="○" ne="⍥"           sw="]" se="}"/>
+    <key c="p" nw="⍣" sw="⍬"/>
+  </row>
+  <row>
+    <key c="a"        ne="⍺"                  se="loc tab"/>
+    <key c="s" nw="⌈" ne="ᑈ" se="«"/>
+    <key c="d" nw="⌊" ne="ᐵ" se="»"/>
+    <key c="f"  s="…"/>
+    <key c="g" nw="∇"                         s="_"/>
+    <key c="h" nw="∆"/>
+    <key c="j" nw="∘" ne="⍤" w="⊣" e="⊢"/>
+    <key c="k"        ne="⌸"/>
+    <key c="l" nw="⎕" ne="⌷" se="⍪"/>
+    <key c=";"         n="⋄"                  s=","/>
+  </row>
+  <row>
+    <key c="shift" e="loc capslock"/>
+    <key c="z" nw="⊂"               se="⍝"/>
+    <key c="x" nw="⊃"/>
+    <key c="c" nw="∩" ne="⍛"                  sw="." se=":"/>
+    <key c="v" nw="∪" ne="√"/>
+    <key c="b" nw="⊥" ne="⍎" sw="⌿" se="⍀"/>
+    <key c="n" nw="⊤" ne="⍕"                  sw="/" se="\\"/>
+    <key c="m" nw="≡" ne="≢" sw="∥" se="⍠"/>
+    <key width="2" c="backspace" e="delete"/>
+  </row>
+</keyboard>
