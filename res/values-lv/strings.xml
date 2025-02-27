@@ -133,4 +133,5 @@ Tagad lieliski piemērota izmantošanai ikdienā.
   <string name="clipboard_pin_heading">Piesprausts</string>
   <string name="clipboard_remove_confirm">Noņemt šo starpliktuves vienumu?</string>
   <string name="clipboard_remove_confirmed">Jā</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

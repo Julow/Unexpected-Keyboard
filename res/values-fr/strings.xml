@@ -131,4 +131,5 @@ Cette application ne contient pas de publicité, n'accède pas au réseau et est
   <string name="clipboard_pin_heading">Épinglé</string>
   <string name="clipboard_remove_confirm">Supprimer ce presse-papiers ?</string>
   <string name="clipboard_remove_confirmed">Oui</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

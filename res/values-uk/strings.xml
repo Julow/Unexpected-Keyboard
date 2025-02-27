@@ -131,4 +131,5 @@
   <string name="clipboard_pin_heading">Закріплено</string>
   <string name="clipboard_remove_confirm">Видалити цей буфер обміну?</string>
   <string name="clipboard_remove_confirmed">Так</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

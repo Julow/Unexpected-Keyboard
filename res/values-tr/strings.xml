@@ -131,4 +131,5 @@ Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz."</str
   <string name="clipboard_pin_heading">Sabitlendi</string>
   <string name="clipboard_remove_confirm">Bu sabitlemeyi sil</string>
   <string name="clipboard_remove_confirmed">Evet</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

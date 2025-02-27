@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,8 @@ class VoiceImeSwitcher
         }
       })
       .create();
+    if (ime_display_names.size() == 0)
+      dialog.setMessage(ims.getResources().getString(R.string.toast_no_voice_input));
     Utils.show_dialog_on_ime(dialog, ims.getWindow().getWindow().getDecorView().getWindowToken());
   }
 

@@ -131,4 +131,5 @@ Este aplicativo não contém anúncios, não faz nenhuma solicitação de rede e
   <string name="clipboard_pin_heading">Fixados</string>
   <string name="clipboard_remove_confirm">Remover esta cópia?</string>
   <string name="clipboard_remove_confirmed">Sim</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

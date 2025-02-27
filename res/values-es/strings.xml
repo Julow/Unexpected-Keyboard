@@ -131,4 +131,5 @@ La misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y 
   <string name="clipboard_pin_heading">Pegado</string>
   <string name="clipboard_remove_confirm">¿Sacar este portapapeles?</string>
   <string name="clipboard_remove_confirmed">Sí</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

@@ -131,4 +131,5 @@ Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źród
   <string name="clipboard_pin_heading">Przypięte</string>
   <string name="clipboard_remove_confirm">Usunąć ten element ze schowka?</string>
   <string name="clipboard_remove_confirmed">Tak</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

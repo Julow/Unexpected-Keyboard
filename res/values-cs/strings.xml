@@ -131,4 +131,5 @@ Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je
   <string name="clipboard_pin_heading">Připnout</string>
   <string name="clipboard_remove_confirm">Odebrat ze schránky?</string>
   <string name="clipboard_remove_confirmed">Ano</string>
+  <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>
