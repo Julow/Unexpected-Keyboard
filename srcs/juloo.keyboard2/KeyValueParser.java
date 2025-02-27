@@ -184,7 +184,7 @@ public final class KeyValueParser
           payload = parseSingleQuotedString(m);
           if (symbol == null)
             return KeyValue.makeStringKey(payload, flags);
-          return KeyValue.makeStringKeyWithSymbol(payload, symbol, flags);
+          return KeyValue.makeStringKey(payload, flags).withSymbol(symbol);
 
         case "char":
           payload = parsePayloadWord(m);

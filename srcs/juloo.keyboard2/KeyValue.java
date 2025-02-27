@@ -95,7 +95,6 @@ public final class KeyValue implements Comparable<KeyValue>
     Modifier, Editing, Placeholder,
     String, // [_payload] is also the string to output, value is unused.
     Slider, // [_payload] is a [KeyValue.Slider], value is slider repeatition.
-    StringWithSymbol, // [_payload] is a [KeyValue.StringWithSymbol], value is unused.
     Macro, // [_payload] is a [KeyValue.Macro], value is unused.
   }
 
@@ -225,12 +224,6 @@ public final class KeyValue implements Comparable<KeyValue>
     return ((int)(short)(_code & VALUE_BITS));
   }
 
-  /** Defined only when [getKind() == Kind.StringWithSymbol]. */
-  public String getStringWithSymbol()
-  {
-    return ((StringWithSymbol)_payload).str;
-  }
-
   /** Defined only when [getKind() == Kind.Macro]. */
   public KeyValue[] getMacro()
   {
@@ -250,7 +243,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public KeyValue withFlags(int f)
   {
-    return new KeyValue(_payload, (_code & ~FLAGS_BITS) | (f & FLAGS_BITS));
+    return new KeyValue(_payload, _code, _code, f);
   }
 
   public KeyValue withSymbol(String symbol)
@@ -266,7 +259,9 @@ public final class KeyValue implements Comparable<KeyValue>
       case Modifier:
       case Editing:
       case Placeholder:
-        return new KeyValue(symbol, _code);
+        return new KeyValue(symbol, _code, _code, getFlags());
+      case Macro:
+        return makeMacro(symbol, getMacro(), 0);
       default:
         return makeMacro(symbol, new KeyValue[]{ this }, 0);
     }
@@ -313,17 +308,12 @@ public final class KeyValue implements Comparable<KeyValue>
     return "[KeyValue " + getKind().toString() + "+" + getFlags() + "+" + value + " \"" + getString() + "\"]";
   }
 
-  private KeyValue(Comparable p, int code)
+  private KeyValue(Comparable p, int kind, int value, int flags)
   {
     if (p == null)
       throw new NullPointerException("KeyValue payload cannot be null");
     _payload = p;
-    _code = code;
-  }
-
-  private KeyValue(Comparable p, int kind, int value, int flags)
-  {
-    this(p, (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS));
+    _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
   }
 
   public KeyValue(Comparable p, Kind k, int v, int f)
@@ -483,12 +473,6 @@ public final class KeyValue implements Comparable<KeyValue>
       return new KeyValue(str, Kind.Char, str.charAt(0), flags);
     else
       return new KeyValue(str, Kind.String, 0, flags | FLAG_SMALLER_FONT);
-  }
-
-  public static KeyValue makeStringKeyWithSymbol(String str, String symbol, int flags)
-  {
-    return new KeyValue(new StringWithSymbol(str, symbol),
-        Kind.StringWithSymbol, 0, flags);
   }
 
   public static KeyValue makeMacro(String symbol, KeyValue[] keys, int flags)
@@ -780,29 +764,6 @@ public final class KeyValue implements Comparable<KeyValue>
     if (!b)
       throw new RuntimeException("Assertion failure");
   }
-
-  public static final class StringWithSymbol implements Comparable<StringWithSymbol>
-  {
-    public final String str;
-    final String _symbol;
-
-    public StringWithSymbol(String _str, String _sym)
-    {
-      str = _str;
-      _symbol = _sym;
-    }
-
-    @Override
-    public String toString() { return _symbol; }
-
-    @Override
-    public int compareTo(StringWithSymbol snd)
-    {
-      int d = str.compareTo(snd.str);
-      if (d != 0) return d;
-      return _symbol.compareTo(snd._symbol);
-    }
-  };
 
   public static enum Slider
   {

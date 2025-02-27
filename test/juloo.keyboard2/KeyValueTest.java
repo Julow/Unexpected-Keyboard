@@ -11,7 +11,8 @@ public class KeyValueTest
   @Test
   public void equals()
   {
-    assertEquals(KeyValue.makeStringKeyWithSymbol("Foo", "Symbol", 0), KeyValue.makeStringKeyWithSymbol("Foo", "Symbol", 0));
+    assertEquals(KeyValue.makeStringKey("Foo").withSymbol("Symbol"),
+        KeyValue.makeMacro("Symbol", new KeyValue[] { KeyValue.makeStringKey("Foo") }, 0));
   }
 
   @Test

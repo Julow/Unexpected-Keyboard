@@ -26,9 +26,6 @@ public class KeyValueParserTest
   @Test
   public void parse_macro() throws Exception
   {
-    Utils.parse("symbol:abc", KeyValue.makeMacro("symbol", new KeyValue[]{
-      KeyValue.makeStringKey("abc")
-    }, 0));
     Utils.parse("copy:ctrl,a,ctrl,c", KeyValue.makeMacro("copy", new KeyValue[]{
       KeyValue.getSpecialKeyByName("ctrl"),
       KeyValue.makeStringKey("a"),
@@ -59,6 +56,7 @@ public class KeyValueParserTest
   public void parse_non_macro() throws Exception
   {
     Utils.parse("a:b", KeyValue.makeCharKey('b', "a", 0));
+    Utils.parse("symbol:abc", KeyValue.makeStringKey("abc").withSymbol("symbol"));
   }
 
   @Test
@@ -94,6 +92,7 @@ public class KeyValueParserTest
   @Test
   public void parse_key_event() throws Exception
   {
+    Utils.parse("a:keyevent:85", KeyValue.keyeventKey("a", 85, 0));
     Utils.parse("symbol:keyevent:85", KeyValue.keyeventKey("symbol", 85, 0));
     Utils.parse("macro:keyevent:85,abc", KeyValue.makeMacro("macro", new KeyValue[]{
       KeyValue.keyeventKey("", 85, 0),
@@ -112,8 +111,8 @@ public class KeyValueParserTest
   {
     Utils.parse(":str:'Foo'", KeyValue.makeStringKey("Foo"));
     Utils.parse(":str flags='dim':'Foo'", KeyValue.makeStringKey("Foo", KeyValue.FLAG_SECONDARY));
-    Utils.parse(":str symbol='Symbol':'Foo'", KeyValue.makeStringKeyWithSymbol("Foo", "Symbol", 0));
-    Utils.parse(":str symbol='Symbol' flags='dim':'Foo'", KeyValue.makeStringKeyWithSymbol("Foo", "Symbol", KeyValue.FLAG_SECONDARY));
+    Utils.parse(":str symbol='Symbol':'Foo'", KeyValue.makeStringKey("Foo").withSymbol("Symbol"));
+    Utils.parse(":str symbol='Symbol' flags='dim':'f'", KeyValue.makeStringKey("f").withSymbol("Symbol").withFlags(KeyValue.FLAG_SECONDARY));
     Utils.parse(":str flags='dim,small':'Foo'", KeyValue.makeStringKey("Foo", KeyValue.FLAG_SECONDARY | KeyValue.FLAG_SMALLER_FONT));
     Utils.parse(":str flags=',,':'Foo'", KeyValue.makeStringKey("Foo")); // Unintentional
     Utils.expect_error(":unknown:Foo"); // Unknown kind

@@ -99,7 +99,6 @@ public final class KeyEventHandler
       case Editing: handle_editing_key(key.getEditing()); break;
       case Compose_pending: _recv.set_compose_pending(true); break;
       case Slider: handle_slider(key.getSlider(), key.getSliderRepeat()); break;
-      case StringWithSymbol: send_text(key.getStringWithSymbol()); break;
       case Macro: evaluate_macro(key.getMacro()); break;
     }
     update_meta_state(old_mods);
