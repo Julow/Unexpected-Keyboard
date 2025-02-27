@@ -1,30 +1,36 @@
 # Key values
 
-A key value is the denomination of a key accepted in the "Add keys to the keyboard" option or for the `nw`, ..., `se` attributes in custom layouts (or `key0` ... `key8`).
-It can be:
+A key value defines what a key on the keyboard does when pressed or swiped.
 
-- The name of a special key. An exhaustive list of the special keys follows.
+Key values appear in the following places:
+
+- In custom layouts, they are the value of: the `c` attribute, the compass-point attributes `nw` ... `se`, and the old-style `key0` ... `key8` attributes.
+- Internally, they are used in the definition of the "Add keys to the keyboard" setting.
+
+Key values can be any of the following:
+
+- The name of a special key. A complete list of valid special keys follows.
 
 - An arbitrary sequence of characters not containing `:`.
   This results in a key that writes the specified characters.
 
-- Using the syntax `symbol:key_def`.
-  `symbol` is the symbol that appears on the keyboard, it cannot contain `:`.
+- The syntax `legend:key_def`.
+  `legend` is the visible legend on the keyboard. It cannot contain `:`.
   `key_def` can be:
   + The name of a special key, as listed below.
-  + `'Arbitrary string'` An arbitrary string that can contain `:`. `'` can be added to the string as `` \' ``.
+  + `'string'` An arbitrary string that can contain `:`. `'` can be added to the string as `` \' ``.
   + `keyevent:keycode` An Android keycode. They are listed as `KEYCODE_...` in [KeyEvent](https://developer.android.com/reference/android/view/KeyEvent#summary).
 
   Examples:
-  + `⏯:keyevent:85` A play/pause key (which probably doesn't do anything in most apps).
-  + `my@:'my.email@domain.com'` An arbitrary string key
+  + `⏯:keyevent:85` A play/pause key (which has no effect in most apps).
+  + `my@:'my.email@domain.com'` A key that sends an arbitrary string
 
 - A macro, `symbol:key_def1,key_def2,...`.
   This results in a key that behaves as if the sequence of `key_def` had been pressed in order.
 
   Examples:
-  + `CA:ctrl,a,ctrl,c` The sequence `ctrl+a`, `ctrl+c`.
-  + `Cd:ctrl,backspace` The shortcut `ctrl+backspace`.
+  + `CA:ctrl,a,ctrl,c` A key with legend CA that sends the sequence `ctrl+a`, `ctrl+c`.
+  + `Cd:ctrl,backspace` A key with legend Cd that sends the shortcut `ctrl+backspace`.
 
 ## Escape codes
 Value | Escape code for
@@ -46,19 +52,24 @@ Value    | Escape code for
 `&quot;` | `"`
 
 ## Modifiers
-System modifiers are sent to the app, which is free to do whatever they want in response.
-The other modifiers only exist within the keyboard.
+System modifiers are sent to the app, which can take app-specific action.
+
 Value       | Meaning
 :---------- | :------
 `shift`     | System modifier.
 `ctrl`      | System modifier.
 `alt`       | System modifier.
 `meta`      | System modifier. Equivalent to the Windows key.
-`fn`        | Activates Fn mode, which assigns letters and symbols to special characters. e.g. `fn` `!` = `¡`
-`compose`   | Compose key. Enables composing characters using Linux-like shortcuts; e.g. `Compose` `A` `single quote` types `Á` (A with acute accent).
-`capslock`  | Actives and locks Shift
 
-## Special keys
+The other modifiers take effect only within the keyboard.
+
+Value       | Meaning
+:---------- | :------
+`fn`        | Activates Fn mode, which assigns letters and symbols to special characters. Example: `fn` `!` = `¡`
+`compose`   | Compose key. Enables composing characters using Linux-like shortcuts. Example: `Compose` `A` `'` types `Á` (A with acute accent).
+`capslock`  | Activates and locks Shift.
+
+## App function keys
 These keys are sent to apps, which are free to ignore them. The keyboard does not perform editing in response to these keys.
 
 `esc`, `enter`,
@@ -74,6 +85,15 @@ These keys are sent to apps, which are free to ignore them. The keyboard does no
 `selectAll`, `pasteAsPlainText`,
 `undo`, `redo`
 
+## Keyboard editing actions
+In contrast, these keys perform editing on the text without sending anything to the app.
+Value              | Meaning
+:----------------- | :------
+`cursor_left`      | Moves the cursor to the left with the slider gesture.
+`cursor_right`     | Moves the cursor to the right with the slider gesture.
+`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
+`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
+
 ## Whitespace
 Value   | Meaning
 :------ | :------
@@ -82,15 +102,6 @@ Value   | Meaning
 `nnbsp` | Narrow non-breaking space.
 `zwj`   | Zero-width joiner.
 `zwnj`  | Zero-width non-joiner.
-
-## Keyboard editing actions
-These keys perform editing on the text without sending keys that the app can interpret differently or ignore.
-Value              | Meaning
-:----------------- | :------
-`cursor_left`      | Moves the cursor to the left with the slider gesture.
-`cursor_right`     | Moves the cursor to the right with the slider gesture.
-`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
-`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
 
 ## Other modifiers and diacritics
 Value                | Meaning
