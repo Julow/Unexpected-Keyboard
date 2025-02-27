@@ -55,6 +55,13 @@ public class KeyValueParserTest
   }
 
   @Test
+  /* Using the [symbol:..] syntax but not resulting in a macro. */
+  public void parse_non_macro() throws Exception
+  {
+    Utils.parse("a:b", KeyValue.makeCharKey('b', "a", 0));
+  }
+
+  @Test
   public void parse_string_key() throws Exception
   {
     Utils.parse("symbol:'str'", KeyValue.makeMacro("symbol", new KeyValue[]{
@@ -87,9 +94,7 @@ public class KeyValueParserTest
   @Test
   public void parse_key_event() throws Exception
   {
-    Utils.parse("symbol:keyevent:85", KeyValue.makeMacro("symbol", new KeyValue[]{
-      KeyValue.keyeventKey("", 85, 0)
-    }, 0));
+    Utils.parse("symbol:keyevent:85", KeyValue.keyeventKey("symbol", 85, 0));
     Utils.parse("macro:keyevent:85,abc", KeyValue.makeMacro("macro", new KeyValue[]{
       KeyValue.keyeventKey("", 85, 0),
       KeyValue.makeStringKey("abc")

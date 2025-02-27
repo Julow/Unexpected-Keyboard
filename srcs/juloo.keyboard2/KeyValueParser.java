@@ -41,15 +41,17 @@ public final class KeyValueParser
     if (symbol_ends == input_len) // String key
       return KeyValue.makeStringKey(input);
     String symbol = input.substring(0, symbol_ends);
-    ArrayList<KeyValue> keydefs = new ArrayList<KeyValue>();
     init();
     Matcher m = KEYDEF_TOKEN.matcher(input);
     m.region(symbol_ends + 1, input_len);
+    KeyValue first_key = parse_key_def(m);
+    if (!parse_comma(m)) // Input is a single key def with a specified symbol
+      return first_key.withSymbol(symbol);
+    // Input is a macro
+    ArrayList<KeyValue> keydefs = new ArrayList<KeyValue>();
+    keydefs.add(first_key);
     do { keydefs.add(parse_key_def(m)); }
     while (parse_comma(m));
-    for (KeyValue k : keydefs)
-      if (k == null)
-        parseError("Contains null key", m);
     return KeyValue.makeMacro(symbol, keydefs.toArray(new KeyValue[]{}), 0);
   }
 

@@ -250,7 +250,26 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public KeyValue withFlags(int f)
   {
-    return new KeyValue(_payload, (_code & KIND_BITS), (_code & VALUE_BITS), f);
+    return new KeyValue(_payload, (_code & ~FLAGS_BITS) | (f & FLAGS_BITS));
+  }
+
+  public KeyValue withSymbol(String symbol)
+  {
+    switch (getKind())
+    {
+      case Char:
+      case Keyevent:
+      case Event:
+      case Compose_pending:
+      case Hangul_initial:
+      case Hangul_medial:
+      case Modifier:
+      case Editing:
+      case Placeholder:
+        return new KeyValue(symbol, _code);
+      default:
+        return makeMacro(symbol, new KeyValue[]{ this }, 0);
+    }
   }
 
   @Override
@@ -294,13 +313,17 @@ public final class KeyValue implements Comparable<KeyValue>
     return "[KeyValue " + getKind().toString() + "+" + getFlags() + "+" + value + " \"" + getString() + "\"]";
   }
 
-  /** [value] is an unsigned integer. */
-  private KeyValue(Comparable p, int kind, int value, int flags)
+  private KeyValue(Comparable p, int code)
   {
     if (p == null)
       throw new NullPointerException("KeyValue payload cannot be null");
     _payload = p;
-    _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
+    _code = code;
+  }
+
+  private KeyValue(Comparable p, int kind, int value, int flags)
+  {
+    this(p, (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS));
   }
 
   public KeyValue(Comparable p, Kind k, int v, int f)
