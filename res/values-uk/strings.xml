@@ -124,7 +124,7 @@
   <string name="key_descr_combining">Комбінування діакритики</string>
   <string name="key_descr_dead_key">Мертва клавіша</string>
   <string name="key_descr_zwj">З\'єднувач нульової ширини</string>
-  <string name="key_descr_zwnj">Разділювач нульової ширини/string>
+  <string name="key_descr_zwnj">Разділювач нульової ширини</string>
   <string name="key_descr_nbsp">Нерозривний пробіл</string>
   <string name="key_descr_nnbsp">Вузький нерозривний пробіл</string>
   <string name="clipboard_history_heading">Нещодавно скопійований текст</string>
