@@ -46,13 +46,15 @@ public final class ComposeKey
       matched. */
   public static KeyValue apply(int prev, String s)
   {
+    final int len = s.length();
     int i = 0;
+    if (len == 0) return null;
     while (true)
     {
       KeyValue k = apply(prev, s.charAt(i));
       i++;
       if (k == null) return null;
-      if (i >= s.length()) return k;
+      if (i >= len) return k;
       if (k.getKind() != KeyValue.Kind.Compose_pending)
         return null; // Found a final state before the end of [s].
       prev = k.getPendingCompose();
