@@ -296,15 +296,15 @@ public class Keyboard2View extends View
       DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
       width = dm.widthPixels;
     }
-    int height =
-      (int)(_config.keyHeight * _keyboard.keysHeight
-          + _config.marginTop + _marginBottom);
-    setMeasuredDimension(width, height);
     _marginLeft = Math.max(_config.horizontal_margin, insets_left);
     _marginRight = Math.max(_config.horizontal_margin, insets_right);
     _marginBottom = _config.margin_bottom + insets_bottom;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
     _tc = new Theme.Computed(_theme, _config, _keyWidth);
+    int height =
+      (int)(_config.keyHeight * _keyboard.keysHeight
+          + _config.marginTop + _marginBottom);
+    setMeasuredDimension(width, height);
   }
 
   @Override
