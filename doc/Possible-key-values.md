@@ -36,23 +36,23 @@ Key values can be any of the following:
 
 When defining a key value, several characters have special effects. If you want a character not to have its usual effect but to be taken literally, you should "escape" it by typing it in a special way:
 
-Value | Escape code for
+To get this character... | ...you can type
 :---- | :------
-`\?`  | `?`
-`\#`  | `#`
-`\@`  | `@`
-`\n`  | Literal newline character. This is different from `enter` and `action` in certain apps.
-`\t`  | Literal tab character. This is different from `tab` in certain apps.
-`\\`  | `\`
+`?` | `\?`
+`#` | `\#`
+`@` | `\@`
+A literal newline character, which is different from `enter` and `action` in certain apps. | `\n`
+A literal tab character, which is different from `tab` in certain apps. | `\t`
+`\` | `\\`
 
 Certain other characters have special effects in the XML language. To have these characters taken literally, you can escape them in the usual way for XML:
 
-Value    | Escape code for
+To get this character... | ...you can type
 :------- | :------
-`&amp;`  | `&`
-`&lt;`   | `<`
-`&gt;`   | `>`
-`&quot;` | `"`
+`&` | `&amp;`
+`<` | `&lt;`
+`>` | `&gt;`
+`"` | `&quot;`
 
 For simplicity, there is no escape for `,` or `:`.
 
