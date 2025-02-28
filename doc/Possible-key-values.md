@@ -32,7 +32,10 @@ Key values can be any of the following:
   + `CA:ctrl,a,ctrl,c` A key with legend CA that sends the sequence `ctrl+a`, `ctrl+c`.
   + `Cd:ctrl,backspace` A key with legend Cd that sends the shortcut `ctrl+backspace`.
 
-## Escape codes
+### Escape codes
+
+When defining a key value, several characters have special effects. If you want a character not to have its usual effect but to be taken literally, you should "escape" it by typing it in a special way:
+
 Value | Escape code for
 :---- | :------
 `\?`  | `?`
@@ -42,7 +45,7 @@ Value | Escape code for
 `\t`  | Literal tab character. This is different from `tab` in certain apps.
 `\\`  | `\`
 
-XML escape codes also work, including:
+Certain other characters have special effects in the XML language. To have these characters taken literally, you can escape them in the usual way for XML:
 
 Value    | Escape code for
 :------- | :------
@@ -50,6 +53,8 @@ Value    | Escape code for
 `&lt;`   | `<`
 `&gt;`   | `>`
 `&quot;` | `"`
+
+For simplicity, there is no escape for `,` or `:`.
 
 ## Modifiers
 System modifiers are sent to the app, which can take app-specific action.
