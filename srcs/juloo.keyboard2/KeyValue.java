@@ -59,6 +59,7 @@ public final class KeyValue implements Comparable<KeyValue>
     BREVE,
     BAR,
     FN,
+    SELECTION_MODE,
   } // Last is be applied first
 
   public static enum Editing
@@ -75,6 +76,7 @@ public final class KeyValue implements Comparable<KeyValue>
     SHARE,
     ASSIST,
     AUTOFILL,
+    SELECTION_CANCEL,
   }
 
   public static enum Placeholder
@@ -759,6 +761,10 @@ public final class KeyValue implements Comparable<KeyValue>
       case "௹": case "ள": case "ஹ": case "௰": case "ௐ": case "௱":
       case "௲": case "௳":
         return makeStringKey(name, FLAG_SMALLER_FONT);
+
+      /* Internal keys */
+      case "selection_mode": return makeInternalModifier(Modifier.SELECTION_MODE);
+      case "selection_cancel": return editingKey("Esc", Editing.SELECTION_CANCEL, FLAG_SMALLER_FONT);
 
       default: return null;
     }

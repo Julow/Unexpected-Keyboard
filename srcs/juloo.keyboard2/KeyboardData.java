@@ -422,6 +422,8 @@ public final class KeyboardData
       indication = i;
     }
 
+    static final Key EMPTY = new Key(new KeyValue[9], null, 0, 1.f, 1.f, null);
+
     /** Read a key value attribute that have a synonym. Having both synonyms
         present at the same time is an error.
         Returns [null] if the attributes are not present. */

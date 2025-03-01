@@ -236,6 +236,7 @@ public final class KeyEventHandler
       case REPLACE: send_context_menu_action(android.R.id.replaceText); break;
       case ASSIST: send_context_menu_action(android.R.id.textAssist); break;
       case AUTOFILL: send_context_menu_action(android.R.id.autofill); break;
+      case SELECTION_CANCEL: cancel_selection(); break;
     }
   }
 
@@ -353,11 +354,25 @@ public final class KeyEventHandler
       send_key_down_up(event_code);
   }
 
+  void cancel_selection()
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    ExtractedText et = get_cursor_pos(conn);
+    if (et == null) return;
+    final int curs = et.selectionStart;
+    // Notify the receiver as Android's [onUpdateSelection] is not triggered.
+    if (conn.setSelection(curs, curs));
+      _recv.selection_state_changed(false);
+  }
+
   public static interface IReceiver
   {
     public void handle_event_key(KeyValue.Event ev);
     public void set_shift_state(boolean state, boolean lock);
     public void set_compose_pending(boolean pending);
+    public void selection_state_changed(boolean selection_is_ongoing);
     public InputConnection getCurrentInputConnection();
   }
 
