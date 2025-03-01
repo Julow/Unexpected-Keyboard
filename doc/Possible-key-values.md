@@ -25,31 +25,30 @@ Key values can be any of the following:
   + `⏯:keyevent:85` A play/pause key (which has no effect in most apps).
   + `my@:'my.email@domain.com'` A key that sends an arbitrary string
 
-- A macro, `symbol:key_def1,key_def2,...`.
-  This results in a key that behaves as if the sequence of `key_def` had been pressed in order.
+- A macro, `legend:key_def1,key_def2,...`.
+  This results in a key with legend `legend` that behaves as if the sequence of `key_def` had been pressed in order.
 
   Examples:
   + `CA:ctrl,a,ctrl,c` A key with legend CA that sends the sequence `ctrl+a`, `ctrl+c`.
   + `Cd:ctrl,backspace` A key with legend Cd that sends the shortcut `ctrl+backspace`.
 
-## Escape codes
-Value | Escape code for
+### Escape codes
+
+When defining a key value, several characters have special effects. If you want a character not to have its usual effect but to be taken literally, you should "escape" it in the usual way for XML:
+
+To get this character... | ...you can type
 :---- | :------
-`\?`  | `?`
-`\#`  | `#`
-`\@`  | `@`
-`\n`  | Literal newline character. This is different from `enter` and `action` in certain apps.
-`\t`  | Literal tab character. This is different from `tab` in certain apps.
-`\\`  | `\`
+A literal newline character, which is different from `enter` and `action` in certain apps. | `\n`
+A literal tab character, which is different from `tab` in certain apps. | `\t`
+`\` | `\\`
+`&` | `&amp;`
+`<` | `&lt;`
+`>` | `&gt;`
+`"` | `&quot;`
 
-XML escape codes also work, including:
+The characters `?`, `#`, and `@` do not need to be escaped when writing custom layouts. Internally, they can be escaped by prepending backslash (by typing `\?`, `\#`, and `\@`).
 
-Value    | Escape code for
-:------- | :------
-`&amp;`  | `&`
-`&lt;`   | `<`
-`&gt;`   | `>`
-`&quot;` | `"`
+For simplicity, there is no escape for `,` or `:`.
 
 ## Modifiers
 System modifiers are sent to the app, which can take app-specific action.
