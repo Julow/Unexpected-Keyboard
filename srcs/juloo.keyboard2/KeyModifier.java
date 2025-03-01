@@ -397,6 +397,13 @@ public final class KeyModifier
           case ' ': name = "selection_cancel"; break;
         }
         break;
+      case Slider:
+        switch (k.getSlider())
+        {
+          case Cursor_left: name = "selection_cursor_left"; break;
+          case Cursor_right: name = "selection_cursor_right"; break;
+        }
+        break;
       case Keyevent:
         switch (k.getKeyevent())
         {
