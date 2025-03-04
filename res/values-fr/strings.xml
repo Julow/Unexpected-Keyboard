@@ -3,12 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (debug)</string>
     <string name="short_description">Clavier virtuel léger et respectueux de la vie privée pour Android.</string>
-    <string name="store_description">"La fonctionnalité principale est l'accès rapide à plus de caractères en balayant les touches vers les coins.
-
-Cette application a été conçue à l'origine pour les programmeurs utilisant Termux.
-Elle est maintenant parfaite pour une utilisation quotidienne.
-
-Cette application ne contient pas de publicité, n'accède pas au réseau et est Open Source."</string>
+    <string name="store_description">La fonctionnalité principale est l\'accès rapide à plus de caractères en balayant les touches vers les coins.\n\nCette application a été conçue à l\'origine pour les programmeurs utilisant Termux.\nElle est maintenant parfaite pour une utilisation quotidienne.\n\nCette application ne contient pas de publicité, n\'accède pas au réseau et est Open Source.</string>
     <string name="settings_activity_label">Unexpected Keyboard Paramètres</string>
     <string name="pref_portrait">En mode portrait</string>
     <string name="pref_landscape">En mode landscape</string>
