@@ -126,12 +126,4 @@
     <string name="clipboard_pin_heading">고정</string>
     <string name="clipboard_remove_confirm">이 클립보드를 제거하시겠습니까?</string>
     <string name="clipboard_remove_confirmed">예</string>
-    <string name="pref_theme_e_rosepine"></string>
-    <string name="key_descr_nbsp"></string>
-    <string name="key_descr_zwj"></string>
-    <string name="key_descr_nnbsp"></string>
-    <string name="key_descr_dead_key"></string>
-    <string name="key_descr_zwnj"></string>
-    <string name="key_descr_combining"></string>
-    <string name="app_name_debug"></string>
 </resources>
