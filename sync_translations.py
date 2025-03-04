@@ -39,7 +39,7 @@ def parse_strings_file(file):
 def write_updated_strings(out, strings):
     out.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n')
     for key, string, comment in strings:
-        out.write("  ")
+        out.write("    ")
         if comment: out.write("<!-- ")
         out.write(ET.tostring(string, "unicode").strip())
         if comment: out.write(" -->")
