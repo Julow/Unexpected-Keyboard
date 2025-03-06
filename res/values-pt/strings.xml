@@ -126,4 +126,9 @@
     <string name="clipboard_pin_heading">Fixados</string>
     <string name="clipboard_remove_confirm">Remover esta cópia?</string>
     <string name="clipboard_remove_confirmed">Sim</string>
+    <string name="key_descr_dead_key"></string>
+    <string name="key_descr_nbsp"></string>
+    <string name="key_descr_nnbsp"></string>
+    <string name="key_descr_zwj"></string>
+    <string name="key_descr_zwnj"></string>
 </resources>
