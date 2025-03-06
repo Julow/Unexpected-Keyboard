@@ -126,4 +126,11 @@
     <string name="clipboard_pin_heading">Pegado</string>
     <string name="clipboard_remove_confirm">¿Sacar este portapapeles?</string>
     <string name="clipboard_remove_confirmed">Sí</string>
+    <string name="key_descr_nbsp"></string>
+    <string name="key_descr_zwnj"></string>
+    <string name="pref_theme_e_rosepine"></string>
+    <string name="key_descr_nnbsp"></string>
+    <string name="key_descr_zwj"></string>
+    <string name="key_descr_dead_key"></string>
+    <string name="key_descr_combining"></string>
 </resources>
