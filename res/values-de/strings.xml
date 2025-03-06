@@ -126,4 +126,11 @@
     <string name="clipboard_pin_heading">Angeheftet</string>
     <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
     <string name="clipboard_remove_confirmed">Ja</string>
+    <string name="key_descr_combining"></string>
+    <string name="key_descr_nbsp"></string>
+    <string name="key_descr_nnbsp"></string>
+    <string name="key_descr_zwj"></string>
+    <string name="key_descr_dead_key"></string>
+    <string name="pref_theme_e_rosepine"></string>
+    <string name="key_descr_zwnj"></string>
 </resources>
