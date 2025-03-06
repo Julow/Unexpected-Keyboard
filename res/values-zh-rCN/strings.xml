@@ -115,26 +115,4 @@
     <string name="key_descr_page_down">下一页</string>
     <string name="key_descr_home">Home</string>
     <string name="key_descr_end">End</string>
-    <string name="pref_circle_sensitivity_e_high"></string>
-    <string name="pref_circle_sensitivity_title"></string>
-    <string name="pref_circle_sensitivity_e_medium"></string>
-    <string name="pref_circle_sensitivity_e_low"></string>
-    <string name="pref_circle_sensitivity_e_disabled"></string>
-    <string name="clipboard_pin_heading"></string>
-    <string name="clipboard_history_heading"></string>
-    <string name="clipboard_remove_confirm"></string>
-    <string name="key_descr_clipboard"></string>
-    <string name="key_descr_zwj"></string>
-    <string name="pref_theme_e_rosepine"></string>
-    <string name="clipboard_remove_confirmed"></string>
-    <string name="key_descr_dead_key"></string>
-    <string name="pref_keyrepeat_enabled"></string>
-    <string name="key_descr_zwnj"></string>
-    <string name="pref_long_timeout_title"></string>
-    <string name="key_descr_nnbsp"></string>
-    <string name="key_descr_combining"></string>
-    <string name="key_descr_nbsp"></string>
-    <string name="pref_theme_e_monetdark"></string>
-    <string name="pref_theme_e_monetlight"></string>
-    <string name="pref_theme_e_monet"></string>
 </resources>
