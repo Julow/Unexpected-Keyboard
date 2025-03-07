@@ -48,7 +48,7 @@ A literal tab character, which is different from `tab` in certain apps. | `\t`
 
 The characters `?`, `#`, and `@` do not need to be escaped when writing custom layouts. Internally, they can be escaped by prepending backslash (by typing `\?`, `\#`, and `\@`).
 
-For simplicity, there is no escape for `,` or `:`.
+The characters `,` and `:` can be escaped in a key value, using single quotes. For example, this macro defines a key with legend `http` that sends a string containing `:`: `<key c="http:home,'https://'" />` For simplicity, `,` and `:` cannot be escaped in the key legend.
 
 ## Modifiers
 System modifiers are sent to the app, which can take app-specific action.
