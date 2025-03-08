@@ -74,7 +74,11 @@ def sync_metadata(value_dir, strings):
                 os.makedirs(meta_dir)
             txt_file = os.path.join(meta_dir, fname)
             with open(txt_file, "w", encoding="utf-8") as out:
-                out.write(string.text.removeprefix('"').removesuffix('"'))
+                out.write(string.text
+                          .replace("\\n", "\n")
+                          .replace("\\'", "'")
+                          .removeprefix('"')
+                          .removesuffix('"'))
                 out.write("\n")
     sync_meta_file("title.txt", ("app_name_release", None))
     sync_meta_file("short_description.txt", ("short_description", None))
