@@ -9,32 +9,21 @@ Key values appear in the following places:
 
 Key values can be any of the following:
 
-- The name of a special key. A complete list of valid special keys follows.
+- The name of a special key. A complete list of valid special keys appears later in this document.
 
-- An arbitrary sequence of characters not containing `:`.
-  This results in a key that writes the specified characters.
+- Any other sequence of characters not containing `:` results in a key that sends those characters.
 
-- The syntax `legend:key_def`.
-  `legend` is the visible legend on the keyboard. It cannot contain `:`.
-  `key_def` can be:
-  + The name of a special key, as listed below.
-  + `'string'` An arbitrary string that can contain `:`. `'` can be added to the string as `` \' ``.
-  + `keyevent:keycode` An Android keycode. They are listed as `KEYCODE_...` in [KeyEvent](https://developer.android.com/reference/android/view/KeyEvent#summary).
+- `keyevent:keycode` An Android keycode: one of the numbers listed with symbol `KEYCODE_...` in the Android [KeyEvent](https://developer.android.com/reference/android/view/KeyEvent#summary) document.
 
-  Examples:
-  + `⏯:keyevent:85` A play/pause key (which has no effect in most apps).
-  + `my@:'my.email@domain.com'` A key that sends an arbitrary string
+- A macro, `key_def1,key_def2,...`. Each `key_def` is any of the above definitions. This results in a key that behaves as if the sequence of `key_def` had been pressed in order.
 
-- A macro, `legend:key_def1,key_def2,...`.
-  This results in a key with legend `legend` that behaves as if the sequence of `key_def` had been pressed in order.
+### Legends
 
-  Examples:
-  + `CA:ctrl,a,ctrl,c` A key with legend CA that sends the sequence `ctrl+a`, `ctrl+c`.
-  + `Cd:ctrl,backspace` A key with legend Cd that sends the shortcut `ctrl+backspace`.
+Any of the above forms can be preceded by `legend:`. The string excluding `:` defines the visible legend on the keyboard. A legend cannot contain `:`, which is interpreted as the end of the legend, nor `,`, which is interpreted as a macro.
 
 ### Escape codes
 
-When defining a key value, several characters have special effects. If you want a character not to have its usual effect but to be taken literally, you should "escape" it in the usual way for XML:
+**When defining a key value**, several characters have special effects. If you want a character not to have its usual effect but to be taken literally, you should "escape" it in the usual way for XML:
 
 To get this character... | ...you can type
 :---- | :------
@@ -48,7 +37,18 @@ A literal tab character, which is different from `tab` in certain apps. | `\t`
 
 The characters `?`, `#`, and `@` do not need to be escaped when writing custom layouts. Internally, they can be escaped by prepending backslash (by typing `\?`, `\#`, and `\@`).
 
-The characters `,` and `:` can be escaped in a key value, using single quotes. For example, this macro defines a key with legend `http` that sends a string containing `:`: `<key c="http:home,'https://'" />` For simplicity, `,` and `:` cannot be escaped in the key legend.
+The characters `,` and `:` must be escaped in a key value, using single quotes.
+
+**When defining a legend**, there are no escape codes.
+
+### Examples
+These examples use the `c=` attribute to define the effect of a touch, but the same syntax can also be used for swipes.
+
+- `<key c="CA:ctrl,a,ctrl,c" />`<br />A key with legend CA that sends the sequence `ctrl+a`, `ctrl+c`
+- `<key c="Cd:ctrl,backspace" />`<br />A key with legend Cd that sends the shortcut `ctrl+backspace`
+- `<key c="⏯:keyevent:85" />`<br />A play/pause key (which has no effect in most apps)
+- `<key c="my@:'my.email@domain.com'" />`<br />A key that sends an arbitrary string
+- `<key c="http:home,'https://'" />`<br />The single-quotes here are required because the string contains `:`.
 
 ## Modifiers
 System modifiers are sent to the app, which can take app-specific action.
