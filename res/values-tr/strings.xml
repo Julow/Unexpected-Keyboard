@@ -126,11 +126,4 @@
     <string name="clipboard_pin_heading">Sabitlendi</string>
     <string name="clipboard_remove_confirm">Bu sabitlemeyi sil</string>
     <string name="clipboard_remove_confirmed">Evet</string>
-    <string name="key_descr_zwnj"></string>
-    <string name="key_descr_nnbsp"></string>
-    <string name="key_descr_nbsp"></string>
-    <string name="pref_theme_e_rosepine"></string>
-    <string name="key_descr_combining"></string>
-    <string name="key_descr_dead_key"></string>
-    <string name="key_descr_zwj"></string>
 </resources>
