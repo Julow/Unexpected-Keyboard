@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.annotation.SuppressLint;
 import android.os.Looper;
+import android.os.Handler;
 import android.text.InputType;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -28,10 +29,10 @@ public final class KeyEventHandler
       [setSelection] could be used instead. */
   boolean _move_cursor_force_fallback = false;
 
-  public KeyEventHandler(Looper looper, IReceiver recv)
+  public KeyEventHandler(IReceiver recv)
   {
     _recv = recv;
-    _autocap = new Autocapitalisation(looper,
+    _autocap = new Autocapitalisation(recv.getHandler(),
         this.new Autocapitalisation_callback());
     _mods = Pointers.Modifiers.EMPTY;
   }
@@ -364,6 +365,7 @@ public final class KeyEventHandler
     public void set_shift_state(boolean state, boolean lock);
     public void set_compose_pending(boolean pending);
     public InputConnection getCurrentInputConnection();
+    public Handler getHandler();
   }
 
   class Autocapitalisation_callback implements Autocapitalisation.Callback
