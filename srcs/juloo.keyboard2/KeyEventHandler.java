@@ -325,31 +325,72 @@ public final class KeyEventHandler
 
   void evaluate_macro(KeyValue[] keys)
   {
-    final Pointers.Modifiers empty = Pointers.Modifiers.EMPTY;
+    if (keys.length == 0)
+      return;
     // Ignore modifiers that are activated at the time the macro is evaluated
-    mods_changed(empty);
-    Pointers.Modifiers mods = empty;
-    final boolean autocap_paused = _autocap.pause();
-    for (KeyValue kv : keys)
+    mods_changed(Pointers.Modifiers.EMPTY);
+    evaluate_macro_loop(keys, 0, Pointers.Modifiers.EMPTY, _autocap.pause());
+  }
+
+  /** Evaluate the macro asynchronously to make sure event are processed in the
+      right order. */
+  void evaluate_macro_loop(final KeyValue[] keys, int i, Pointers.Modifiers mods, final boolean autocap_paused)
+  {
+    boolean should_delay = false;
+    KeyValue kv = KeyModifier.modify(keys[i], mods);
+    if (kv != null)
     {
-      kv = KeyModifier.modify(kv, mods);
-      if (kv == null)
-        continue;
       if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
       {
         // Non-special latchable keys clear latched modifiers
         if (!kv.hasFlagsAny(KeyValue.FLAG_SPECIAL))
-          mods = empty;
+          mods = Pointers.Modifiers.EMPTY;
         mods = mods.with_extra_mod(kv);
       }
       else
       {
         key_down(kv, false);
         key_up(kv, mods);
-        mods = empty;
+        mods = Pointers.Modifiers.EMPTY;
       }
+      should_delay = wait_after_macro_key(kv);
     }
-    _autocap.unpause(autocap_paused);
+    i++;
+    if (i >= keys.length) // Stop looping
+    {
+      _autocap.unpause(autocap_paused);
+    }
+    else if (should_delay)
+    {
+      // Add a delay before sending the next key to avoid race conditions
+      // causing keys to be handled in the wrong order. Notably, KeyEvent keys
+      // handling is scheduled differently than the other edit functions.
+      final int i_ = i;
+      final Pointers.Modifiers mods_ = mods;
+      _recv.getHandler().postDelayed(new Runnable() {
+        public void run()
+        {
+          evaluate_macro_loop(keys, i_, mods_, autocap_paused);
+        }
+      }, 1000/30);
+    }
+    else
+      evaluate_macro_loop(keys, i, mods, autocap_paused);
+  }
+
+  boolean wait_after_macro_key(KeyValue kv)
+  {
+    switch (kv.getKind())
+    {
+      case Keyevent:
+      case Editing:
+      case Event:
+        return true;
+      case Slider:
+        return _move_cursor_force_fallback;
+      default:
+        return false;
+    }
   }
 
   /** Repeat calls to [send_key_down_up]. */
