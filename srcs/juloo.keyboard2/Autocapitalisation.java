@@ -1,7 +1,6 @@
 package juloo.keyboard2;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
@@ -27,9 +26,9 @@ public final class Autocapitalisation
     InputType.TYPE_TEXT_FLAG_CAP_SENTENCES |
     InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 
-  public Autocapitalisation(Looper looper, Callback cb)
+  public Autocapitalisation(Handler h, Callback cb)
   {
-    _handler = new Handler(looper);
+    _handler = h;
     _callback = cb;
   }
 

@@ -25,31 +25,30 @@ Key values can be any of the following:
   + `⏯:keyevent:85` A play/pause key (which has no effect in most apps).
   + `my@:'my.email@domain.com'` A key that sends an arbitrary string
 
-- A macro, `symbol:key_def1,key_def2,...`.
-  This results in a key that behaves as if the sequence of `key_def` had been pressed in order.
+- A macro, `legend:key_def1,key_def2,...`.
+  This results in a key with legend `legend` that behaves as if the sequence of `key_def` had been pressed in order.
 
   Examples:
   + `CA:ctrl,a,ctrl,c` A key with legend CA that sends the sequence `ctrl+a`, `ctrl+c`.
   + `Cd:ctrl,backspace` A key with legend Cd that sends the shortcut `ctrl+backspace`.
 
-## Escape codes
-Value | Escape code for
+### Escape codes
+
+When defining a key value, several characters have special effects. If you want a character not to have its usual effect but to be taken literally, you should "escape" it in the usual way for XML:
+
+To get this character... | ...you can type
 :---- | :------
-`\?`  | `?`
-`\#`  | `#`
-`\@`  | `@`
-`\n`  | Literal newline character. This is different from `enter` and `action` in certain apps.
-`\t`  | Literal tab character. This is different from `tab` in certain apps.
-`\\`  | `\`
+A literal newline character, which is different from `enter` and `action` in certain apps. | `\n`
+A literal tab character, which is different from `tab` in certain apps. | `\t`
+`\` | `\\`
+`&` | `&amp;`
+`<` | `&lt;`
+`>` | `&gt;`
+`"` | `&quot;`
 
-XML escape codes also work, including:
+The characters `?`, `#`, and `@` do not need to be escaped when writing custom layouts. Internally, they can be escaped by prepending backslash (by typing `\?`, `\#`, and `\@`).
 
-Value    | Escape code for
-:------- | :------
-`&amp;`  | `&`
-`&lt;`   | `<`
-`&gt;`   | `>`
-`&quot;` | `"`
+The characters `,` and `:` can be escaped in a key value, using single quotes. For example, this macro defines a key with legend `http` that sends a string containing `:`: `<key c="http:home,'https://'" />` For simplicity, `,` and `:` cannot be escaped in the key legend.
 
 ## Modifiers
 System modifiers are sent to the app, which can take app-specific action.
@@ -87,12 +86,14 @@ These keys are sent to apps, which are free to ignore them. The keyboard does no
 
 ## Keyboard editing actions
 In contrast, these keys perform editing on the text without sending anything to the app.
-Value              | Meaning
-:----------------- | :------
-`cursor_left`      | Moves the cursor to the left with the slider gesture.
-`cursor_right`     | Moves the cursor to the right with the slider gesture.
-`cursor_up`     | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
-`cursor_down`     | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
+Value                 | Meaning
+:-------------------- | :------
+`cursor_left`         | Moves the cursor to the left with the slider gesture.
+`cursor_right`        | Moves the cursor to the right with the slider gesture.
+`cursor_up`           | Moves the cursor up with the slider gesture. Warning: this might make the cursor leave the text box.
+`cursor_down`         | Moves the cursor down with the slider gesture. Warning: this might make the cursor leave the text box.
+`delete_word`         | Delete the word to the left of the cursor.
+`forward_delete_word` | Delete the word to the right of the cursor.
 
 ## Whitespace
 Value   | Meaning

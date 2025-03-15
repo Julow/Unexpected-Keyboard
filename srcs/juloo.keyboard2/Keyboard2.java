@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
+import android.os.Handler;
 import android.os.IBinder;
 import android.text.InputType;
 import android.util.Log;
@@ -38,6 +39,7 @@ public class Keyboard2 extends InputMethodService
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   public int actionId; // Action performed by the Action key.
+  private Handler _handler;
 
   private Config _config;
 
@@ -107,7 +109,8 @@ public class Keyboard2 extends InputMethodService
   {
     super.onCreate();
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
-    _keyeventhandler = new KeyEventHandler(getMainLooper(), this.new Receiver());
+    _handler = new Handler(getMainLooper());
+    _keyeventhandler = new KeyEventHandler(this.new Receiver());
     Config.initGlobalConfig(prefs, getResources(), _keyeventhandler);
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
@@ -487,6 +490,11 @@ public class Keyboard2 extends InputMethodService
     public InputConnection getCurrentInputConnection()
     {
       return Keyboard2.this.getCurrentInputConnection();
+    }
+
+    public Handler getHandler()
+    {
+      return _handler;
     }
   }
 

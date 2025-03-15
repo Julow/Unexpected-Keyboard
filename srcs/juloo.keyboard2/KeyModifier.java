@@ -382,6 +382,13 @@ public final class KeyModifier
           case SHIFT: name = "capslock"; break;
         }
         break;
+      case Keyevent:
+        switch (k.getKeyevent())
+        {
+          case KeyEvent.KEYCODE_DEL: name = "delete_word"; break;
+          case KeyEvent.KEYCODE_FORWARD_DEL: name = "forward_delete_word"; break;
+        }
+        break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
