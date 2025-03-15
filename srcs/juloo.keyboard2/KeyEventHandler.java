@@ -242,6 +242,7 @@ public final class KeyEventHandler
       case AUTOFILL: send_context_menu_action(android.R.id.autofill); break;
       case DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
       case FORWARD_DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
+      case SELECTION_CANCEL: cancel_selection(); break;
     }
   }
 
@@ -259,15 +260,17 @@ public final class KeyEventHandler
     return conn.getExtractedText(_move_cursor_req, 0);
   }
 
-  /** [repeatition] might be negative, in which case the direction is reversed. */
-  void handle_slider(KeyValue.Slider s, int repeatition)
+  /** [r] might be negative, in which case the direction is reversed. */
+  void handle_slider(KeyValue.Slider s, int r)
   {
     switch (s)
     {
-      case Cursor_left: move_cursor(-repeatition); break;
-      case Cursor_right: move_cursor(repeatition); break;
-      case Cursor_up: move_cursor_vertical(-repeatition); break;
-      case Cursor_down: move_cursor_vertical(repeatition); break;
+      case Cursor_left: move_cursor(-r); break;
+      case Cursor_right: move_cursor(r); break;
+      case Cursor_up: move_cursor_vertical(-r); break;
+      case Cursor_down: move_cursor_vertical(r); break;
+      case Selection_cursor_left: move_cursor_sel(r, true); break;
+      case Selection_cursor_right: move_cursor_sel(r, false); break;
     }
   }
 
@@ -281,12 +284,7 @@ public final class KeyEventHandler
     if (conn == null)
       return;
     ExtractedText et = get_cursor_pos(conn);
-    int system_mods =
-      KeyEvent.META_CTRL_ON | KeyEvent.META_ALT_ON | KeyEvent.META_META_ON;
-    // Fallback to sending key events if system modifiers are activated or
-    // ExtractedText is not supported, for example on Termux.
-    if (!_move_cursor_force_fallback && et != null
-        && (_meta_state & system_mods) == 0)
+    if (et != null && can_set_selection(conn))
     {
       int sel_start = et.selectionStart;
       int sel_end = et.selectionEnd;
@@ -305,8 +303,45 @@ public final class KeyEventHandler
           sel_start = sel_end;
       }
       if (conn.setSelection(sel_start, sel_end))
-        return; // [setSelection] succeeded, don't fallback to key events
+        return; // Fallback to sending key events if [setSelection] failed
     }
+    move_cursor_fallback(d);
+  }
+
+  /** Move one of the two side of a selection. If [sel_left] is true, the left
+      position is moved, otherwise the right position is moved. */
+  void move_cursor_sel(int d, boolean sel_left)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    ExtractedText et = get_cursor_pos(conn);
+    if (et != null && can_set_selection(conn))
+    {
+      int sel_start = et.selectionStart;
+      int sel_end = et.selectionEnd;
+      if (sel_left == (sel_start <= sel_end))
+        sel_start += d;
+      else
+        sel_end += d;
+      if (conn.setSelection(sel_start, sel_end))
+        return; // Fallback to sending key events if [setSelection] failed
+    }
+    move_cursor_fallback(d);
+  }
+
+  /** Returns whether the selection can be set using [conn.setSelection()].
+      This can happen on Termux or when system modifiers are activated for
+      example. */
+  boolean can_set_selection(InputConnection conn)
+  {
+    final int system_mods =
+      KeyEvent.META_CTRL_ON | KeyEvent.META_ALT_ON | KeyEvent.META_META_ON;
+    return !_move_cursor_force_fallback && (_meta_state & system_mods) == 0;
+  }
+
+  void move_cursor_fallback(int d)
+  {
     if (d < 0)
       send_key_down_up_repeat(KeyEvent.KEYCODE_DPAD_LEFT, -d);
     else
@@ -400,11 +435,25 @@ public final class KeyEventHandler
       send_key_down_up(event_code);
   }
 
+  void cancel_selection()
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    ExtractedText et = get_cursor_pos(conn);
+    if (et == null) return;
+    final int curs = et.selectionStart;
+    // Notify the receiver as Android's [onUpdateSelection] is not triggered.
+    if (conn.setSelection(curs, curs));
+      _recv.selection_state_changed(false);
+  }
+
   public static interface IReceiver
   {
     public void handle_event_key(KeyValue.Event ev);
     public void set_shift_state(boolean state, boolean lock);
     public void set_compose_pending(boolean pending);
+    public void selection_state_changed(boolean selection_is_ongoing);
     public InputConnection getCurrentInputConnection();
     public Handler getHandler();
   }

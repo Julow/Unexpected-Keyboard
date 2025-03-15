@@ -59,6 +59,7 @@ public final class KeyValue implements Comparable<KeyValue>
     BREVE,
     BAR,
     FN,
+    SELECTION_MODE,
   } // Last is be applied first
 
   public static enum Editing
@@ -77,6 +78,7 @@ public final class KeyValue implements Comparable<KeyValue>
     AUTOFILL,
     DELETE_WORD,
     FORWARD_DELETE_WORD,
+    SELECTION_CANCEL,
   }
 
   public static enum Placeholder
@@ -715,6 +717,9 @@ public final class KeyValue implements Comparable<KeyValue>
       case "cursor_right": return sliderKey(Slider.Cursor_right, 1);
       case "cursor_up": return sliderKey(Slider.Cursor_up, 1);
       case "cursor_down": return sliderKey(Slider.Cursor_down, 1);
+      case "selection_cancel": return editingKey("Esc", Editing.SELECTION_CANCEL, FLAG_SMALLER_FONT);
+      case "selection_cursor_left": return sliderKey(Slider.Selection_cursor_left, -1); // Move the left side of the selection
+      case "selection_cursor_right": return sliderKey(Slider.Selection_cursor_right, 1);
       // These keys are not used
       case "replaceText": return editingKey("repl", Editing.REPLACE);
       case "textAssist": return editingKey(0xE038, Editing.ASSIST);
@@ -764,6 +769,9 @@ public final class KeyValue implements Comparable<KeyValue>
       case "௲": case "௳":
         return makeStringKey(name, FLAG_SMALLER_FONT);
 
+      /* Internal keys */
+      case "selection_mode": return makeInternalModifier(Modifier.SELECTION_MODE);
+
       default: return null;
     }
   }
@@ -780,7 +788,9 @@ public final class KeyValue implements Comparable<KeyValue>
     Cursor_left(0xE008),
     Cursor_right(0xE006),
     Cursor_up(0xE005),
-    Cursor_down(0xE007);
+    Cursor_down(0xE007),
+    Selection_cursor_left(0xE008),
+    Selection_cursor_right(0xE006);
 
     final String symbol;
 

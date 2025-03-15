@@ -362,6 +362,8 @@ public class Keyboard2 extends InputMethodService
   {
     super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
     _keyeventhandler.selection_updated(oldSelStart, newSelStart);
+    if ((oldSelStart == oldSelEnd) != (newSelStart == newSelEnd))
+      _keyboardView.set_selection_state(newSelStart != newSelEnd);
   }
 
   @Override
@@ -478,6 +480,11 @@ public class Keyboard2 extends InputMethodService
     public void set_compose_pending(boolean pending)
     {
       _keyboardView.set_compose_pending(pending);
+    }
+
+    public void selection_state_changed(boolean selection_is_ongoing)
+    {
+      _keyboardView.set_selection_state(selection_is_ongoing);
     }
 
     public InputConnection getCurrentInputConnection()

@@ -82,6 +82,7 @@ public final class KeyModifier
       case HOOK_ABOVE: return apply_compose(k, ComposeKeyData.accent_hook_above);
       case DOUBLE_GRAVE: return apply_compose(k, ComposeKeyData.accent_double_grave);
       case ARROW_RIGHT: return apply_combining_char(k, "\u20D7");
+      case SELECTION_MODE: return apply_selection_mode(k);
       default: return k;
     }
   }
@@ -386,6 +387,34 @@ public final class KeyModifier
         {
           case KeyEvent.KEYCODE_DEL: name = "delete_word"; break;
           case KeyEvent.KEYCODE_FORWARD_DEL: name = "forward_delete_word"; break;
+        }
+        break;
+    }
+    return (name == null) ? k : KeyValue.getKeyByName(name);
+  }
+
+  private static KeyValue apply_selection_mode(KeyValue k)
+  {
+    String name = null;
+    switch (k.getKind())
+    {
+      case Char:
+        switch (k.getChar())
+        {
+          case ' ': name = "selection_cancel"; break;
+        }
+        break;
+      case Slider:
+        switch (k.getSlider())
+        {
+          case Cursor_left: name = "selection_cursor_left"; break;
+          case Cursor_right: name = "selection_cursor_right"; break;
+        }
+        break;
+      case Keyevent:
+        switch (k.getKeyevent())
+        {
+          case KeyEvent.KEYCODE_ESCAPE: name = "selection_cancel"; break;
         }
         break;
     }
