@@ -3,6 +3,7 @@ package juloo.keyboard2.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build.VERSION;
 import android.preference.CheckBoxPreference;
 import android.preference.PreferenceCategory;
 import android.util.AttributeSet;
@@ -425,7 +426,8 @@ public class ExtraKeysPreference extends PreferenceCategory
       setKey(pref_key_of_key_name(key_name));
       setDefaultValue(default_checked);
       setTitle(title);
-      setSingleLineTitle(false);
+      if (VERSION.SDK_INT >= 26)
+        setSingleLineTitle(false);
     }
 
     @Override
