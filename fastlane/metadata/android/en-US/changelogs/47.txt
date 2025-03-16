@@ -1,0 +1,6 @@
+Delete a word with a circle gesture on the delete key.
+Compose key can be unselected.
+Improved space bar slider and added selection mode.
+Lock shift with a circle gesture.
+Improvements to layouts.
+Various bug fixes and improvements to themes.
