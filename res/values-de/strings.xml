@@ -3,12 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Eine schlanke, datenschutzfreundliche Bildschirmtastatur für Android.</string>
-    <string name="store_description">"Diese Tastatur zeichnet sich dadurch aus, dass man zusätzliche Zeichen durch Wischgesten in Richtung der Tastenecken eingeben kann.
-
-Die Anwendung wurde ursprünglich für das Programmieren in Termux entwickelt.
-Mittlerweile ist sie auch für den täglichen Gebrauch perfekt geeignet.
-
-Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quelloffen."</string>
+    <string name="store_description">Diese Tastatur zeichnet sich dadurch aus, dass man zusätzliche Zeichen durch Wischgesten in Richtung der Tastenecken eingeben kann.\n\nDie Anwendung wurde ursprünglich für das Programmieren in Termux entwickelt.\nMittlerweile ist sie auch für den täglichen Gebrauch perfekt geeignet.\n\nDiese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quelloffen.</string>
     <string name="settings_activity_label">Unexpected Keyboard - Einstellungen</string>
     <string name="pref_portrait">Im Hochformatmodus</string>
     <string name="pref_landscape">Im Querformatmodus</string>

@@ -3,12 +3,7 @@
     <string name="app_name_release">Klávesnice Unexpected</string>
     <string name="app_name_debug">Klávesnice Unexpected (pro ladění)</string>
     <string name="short_description">Nenáročná virtuální klávesnice pro vývojáře.</string>
-    <string name="store_description">"Hlavní funkcí je možnost psát více znaků posunutím kláves směrem k rohům.
-
-Tato aplikace byla původně navržena pro programátory používající Termux.
-Nyní je ideální pro každodenní použití.
-
-Tato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je Open Source."</string>
+    <string name="store_description">Hlavní funkcí je možnost psát více znaků posunutím kláves směrem k rohům.\n\nTato aplikace byla původně navržena pro programátory používající Termux.\nNyní je ideální pro každodenní použití.\n\nTato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je Open Source.</string>
     <string name="settings_activity_label">Nastavení Klávesnice Unexpected</string>
     <string name="pref_portrait">V režimu na výšku</string>
     <string name="pref_landscape">V režimu na šířku</string>

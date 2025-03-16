@@ -3,12 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Tastatură Unexpected (depanare)</string>
     <string name="short_description">Tastatură virtuală pentru Android, ușoară și respectuoasă cu viața privată.</string>
-    <string name="store_description">"Funcționalitatea principală este accesul rapid la o mulțime de caractere ASCII prin glisarea către colțurile tastelor.
-
-Această aplicație a fost concepută inițial pentru programatori care folosec Termux.
-Este perfectă pentru uzul cotidian.
-
-Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e Open Source."</string>
+    <string name="store_description">Funcționalitatea principală este accesul rapid la o mulțime de caractere ASCII prin glisarea către colțurile tastelor.\n\nAceastă aplicație a fost concepută inițial pentru programatori care folosec Termux.\nEste perfectă pentru uzul cotidian.\n\nAceastă aplicație nu conține publicitate, nu folosește rețeaua deloc și e Open Source.</string>
     <string name="settings_activity_label">Setări Tastatură Unexpected</string>
     <string name="pref_portrait">În mod portret</string>
     <string name="pref_landscape">În mod panoramă</string>

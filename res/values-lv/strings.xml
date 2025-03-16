@@ -3,12 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (atkļūdošana)</string>
     <string name="short_description">Mazizmēra un privātumu ievērojoša virtuālā Android tastatūra.</string>
-    <string name="store_description">"Galvenā iezīme ir iespēja ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.
-
-Šī lietotne sākotnēji tika izstrādāta programmētājiem, kas izmanto Termux.
-Tagad lieliski piemērota izmantošanai ikdienā.
-
-Šī lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem."</string>
+    <string name="store_description">Galvenā iezīme ir iespēja ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.\n\nŠī lietotne sākotnēji tika izstrādāta programmētājiem, kas izmanto Termux.\nTagad lieliski piemērota izmantošanai ikdienā.\n\nŠī lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.</string>
     <string name="settings_activity_label">Unexpected Keyboard iestatījumi</string>
     <string name="pref_portrait">Stateniski</string>
     <string name="pref_landscape">Guleniski</string>
@@ -95,10 +90,8 @@ Tagad lieliski piemērota izmantošanai ikdienā.
     <string name="key_action_send">Sūtīt</string>
     <string name="launcher_button_imesettings">Iespējot tastatūru</string>
     <string name="launcher_button_imepicker">Izvēlēties tastatūru</string>
-    <string name="launcher_description">Šī lietotne ir virtuālā tastatūra.
-    Ar zemāk esošo pogu var atvērt sistēmas iestatījumus un iespējot Unexpected Keyboard.</string>
-    <string name="launcher_sourcecode">Šī ir bezmaksas un atvērtā pirmkoda lietotne.
-    GitHub var atrast pirmkodu un ziņot par nepilnībām.</string>
+    <string name="launcher_description">Šī lietotne ir virtuālā tastatūra. Ar zemāk esošo pogu var atvērt sistēmas iestatījumus un iespējot Unexpected Keyboard.</string>
+    <string name="launcher_sourcecode">Šī ir bezmaksas un atvērtā pirmkoda lietotne. GitHub var atrast pirmkodu un ziņot par nepilnībām.</string>
     <string name="launcher_tryhere">Pēc iespējošanas šeit var izmēģināt tastatūru:</string>
     <string name="launcher_tryhere_hint">Izmēģināt šeit</string>
     <string name="key_descr_capslock">Burtslēgs</string>

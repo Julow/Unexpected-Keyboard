@@ -3,12 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Налагодження)</string>
     <string name="short_description">Легка та конфіденційна віртуальна клавіатура для Android.</string>
-    <string name="store_description">"Головна особливість полягає в тому, що ви можете вводити більше символів, проводячи клавіші до кутів.
-
-Ця програма спочатку була розроблена для програмістів, які використовують Termux.
-Тепер ідеально підходить для щоденного використання.
-
-Ця програма не містить реклами, не надсилає жодних мережевих запитів і має відкритий код."</string>
+    <string name="store_description">Головна особливість полягає в тому, що ви можете вводити більше символів, проводячи клавіші до кутів.\n\nЦя програма спочатку була розроблена для програмістів, які використовують Termux.\nТепер ідеально підходить для щоденного використання.\n\nЦя програма не містить реклами, не надсилає жодних мережевих запитів і має відкритий код.</string>
     <string name="settings_activity_label">Unexpected Keyboard Налаштування</string>
     <string name="pref_portrait">У портретному режимі</string>
     <string name="pref_landscape">У альбомному режимі</string>
@@ -23,7 +18,7 @@
     <string name="pref_layouts_item">Макет %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Видалити макет</string>
     <string name="pref_custom_layout_title">Власний макет</string>
-    <string name="pref_show_numpad_title">Показувати числову клавіатуру </string>
+    <string name="pref_show_numpad_title">Показувати числову клавіатуру</string>
     <string name="pref_show_numpad_never">Ніколи</string>
     <string name="pref_show_numpad_landscape">Тільки в альбомному режимі</string>
     <string name="pref_show_numpad_always">Завжди</string>
