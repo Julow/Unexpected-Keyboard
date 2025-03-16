@@ -1,5 +1,5 @@
 plugins {
-  id 'com.android.application' version '8.8.1'
+  id 'com.android.application' version '8.1.1'
 }
 
 dependencies {
@@ -82,13 +82,14 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_17
-    targetCompatibility JavaVersion.VERSION_17
-  }
-  lint {
-    disable 'MissingTranslation'
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
   }
 
+  lintOptions {
+    // Translation are already checked by 'syncTranslations'
+    disable 'MissingTranslation'
+  }
 }
 
 tasks.register('buildKeyboardFont') {
