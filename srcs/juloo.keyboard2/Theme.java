@@ -126,6 +126,7 @@ public class Theme
       final Paint _special_label_paint;
       final Paint _sublabel_paint;
       final Paint _special_sublabel_paint;
+      final int _label_alpha_bits;
 
       public Key(Theme theme, Config config, float keyWidth, boolean activated)
       {
@@ -149,18 +150,21 @@ public class Theme
         _special_label_paint = init_label_paint(config, _key_font);
         _sublabel_paint = init_label_paint(config, null);
         _special_sublabel_paint = init_label_paint(config, _key_font);
+        _label_alpha_bits = (config.labelBrightness & 0xFF) << 24;
       }
 
-      public Paint label_paint(boolean special_font, float text_size)
+      public Paint label_paint(boolean special_font, int color, float text_size)
       {
         Paint p = special_font ? _special_label_paint : _label_paint;
+        p.setColor((color & 0x00FFFFFF) | _label_alpha_bits);
         p.setTextSize(text_size);
         return p;
       }
 
-      public Paint sublabel_paint(boolean special_font, float text_size, Paint.Align align)
+      public Paint sublabel_paint(boolean special_font, int color, float text_size, Paint.Align align)
       {
         Paint p = special_font ? _special_sublabel_paint : _sublabel_paint;
+        p.setColor((color & 0x00FFFFFF) | _label_alpha_bits);
         p.setTextSize(text_size);
         p.setTextAlign(align);
         return p;
@@ -181,7 +185,6 @@ public class Theme
     {
       Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
       p.setTextAlign(Paint.Align.CENTER);
-      p.setAlpha(config.labelBrightness);
       if (font != null)
         p.setTypeface(font);
       return p;

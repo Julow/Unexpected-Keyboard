@@ -441,8 +441,7 @@ public class Keyboard2View extends View
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
-    Paint p = tc.label_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), textSize);
-    p.setColor(labelColor(kv, isKeyDown, false));
+    Paint p = tc.label_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), labelColor(kv, isKeyDown, false), textSize);
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
 
@@ -456,8 +455,7 @@ public class Keyboard2View extends View
     if (kv == null)
       return;
     float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
-    Paint p = tc.sublabel_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), textSize, a);
-    p.setColor(labelColor(kv, isKeyDown, true));
+    Paint p = tc.sublabel_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), labelColor(kv, isKeyDown, true), textSize, a);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
       y += (keyH - p.ascent() - p.descent()) / 2f;
