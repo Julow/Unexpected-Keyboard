@@ -338,6 +338,13 @@ public class ExtraKeysPreference extends PreferenceCategory
               new KeyboardData.KeyPos(2, -1, 8),
               new KeyboardData.KeyPos(-1, -1, 8),
             });
+      case "selectAll":
+        return new KeyboardData.PreferredPos(KeyValue.getKeyByName("a"),
+            new KeyboardData.KeyPos[]{
+              new KeyboardData.KeyPos(1, 0, 8),
+              new KeyboardData.KeyPos(1, -1, 8),
+              new KeyboardData.KeyPos(-1, -1, 8),
+            });
       case "redo":
         return new KeyboardData.PreferredPos(KeyValue.getKeyByName("y"),
             new KeyboardData.KeyPos[]{
