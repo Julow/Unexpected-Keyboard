@@ -122,7 +122,7 @@ public final class Config
     }
     layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
-    add_number_row = _prefs.getBoolean("number_row", false);
+    add_number_row = _prefs.getString("number_row", "default").equals("symbols");
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
