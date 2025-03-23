@@ -3,10 +3,12 @@
   <string-array name="pref_show_number_row_values">
     <item>symbols</item>
     <item>no_symbols</item>
+    <item>no_number_row</item>
   </string-array>
   <string-array name="pref_show_number_row_entries">
     <item>@string/pref_show_number_row_symbols</item>
     <item>@string/pref_show_number_row_no_symbols</item>
+    <item>@string/pref_show_number_row_no_number_row</item>
   </string-array>
   <string-array name="pref_show_numpad_values">
     <item>never</item>
