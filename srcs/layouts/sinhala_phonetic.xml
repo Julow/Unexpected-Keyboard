@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This file defines Sinhala layout.
+
+Based on XKB Sinhala (phonetic) layout.
+
+TODO Layers
+TODO Numbers
+-->
+
+<keyboard name="සිංහල" script="sinhala" numpad_script="sinhala">
+  <row>
+    <key c="ඍ" ne="1" se="loc esc"/>
+    <key c="ඇ" nw="~" ne="2" sw="\@"/>
+    <key c="එ" nw="!" ne="3" sw="\#" se="loc €"/>
+    <key c="ර" ne="4" sw="$"/>
+    <key c="ත" ne="5" sw="%"/>
+    <key c="ය" ne="6" sw="^"/>
+    <key c="උ" ne="7" sw="&amp;"/>
+    <key c="ඉ" ne="8" sw="*"/>
+    <key c="ඔ" ne="9" sw="(" se=")"/>
+    <key c="ප" ne="0"/>
+  </row>
+
+  <row>
+    <key shift="0.5" c="අ" nw="loc tab" ne="`"/>
+    <key c="ස" ne="loc §" sw="loc ß"/>
+    <key c="ද"/>
+    <key c="ෆ"/>
+    <key c="ග" ne="-" sw="_"/>
+    <key c="හ" ne="=" sw="+"/>
+    <key c="ජ" se="}" sw="{"/>
+    <key c="ක" sw="[" se="]"/>
+    <key c="ල" ne="|" sw="\\"/>
+  </row>
+
+  <row>
+    <key width="1.5" c="shift" ne="loc capslock"/>
+    <key c="ඤ"/>
+    <key c="ඳ" ne="loc †"/>
+    <key c="ච" ne="&lt;" sw="."/>
+    <key c="ව" ne="&gt;" sw=","/>
+    <key c="බ" ne="\?" sw="/"/>
+    <key c="න" ne=":" sw=";"/>
+    <key c="ම" ne="&quot;" sw="'"/>
+    <key width="1.5" c="backspace" ne="delete"/>
+  </row>
+
+  <modmap>
+    <!-- TODO -->
+  </modmap>
+</keyboard>
+
