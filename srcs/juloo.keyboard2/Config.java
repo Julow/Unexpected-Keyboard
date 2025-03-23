@@ -272,7 +272,7 @@ public final class Config
 
   /** Config migrations. */
 
-  private static int CONFIG_VERSION = 1;
+  private static int CONFIG_VERSION = 2;
 
   public static void migrate(SharedPreferences prefs)
   {
