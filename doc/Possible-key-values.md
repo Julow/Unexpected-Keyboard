@@ -95,6 +95,8 @@ Value                 | Meaning
 `delete_word`         | Delete the word to the left of the cursor.
 `forward_delete_word` | Delete the word to the right of the cursor.
 
+The values with `cursor_` are new in v1.31.0. Previous custom layouts specified the slider with `slider="true"`, which should be removed.
+
 ## Whitespace
 Value   | Meaning
 :------ | :------
