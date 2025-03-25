@@ -2,12 +2,19 @@
 
 import re
 
-from collections import defaultdict
 from xml.etree import ElementTree
 
 # TODO Merge with default lat
 # TODO Header and commens
 # TODO keboard attribs
+
+
+COMMENT = '''
+<!-- This file defines Sinhala layout.
+
+Based on XKB Sinhala (phonetic) layout.
+-->
+'''
 
 
 class Key:
@@ -30,7 +37,7 @@ class Key:
         if not val:
             res = None
         elif len(val) == 4:
-            res = f'&#x{val};'
+            res = f'&#x{val.upper()};'
         else:
             res = val
         return res
@@ -56,8 +63,25 @@ TABLE = {
         'p': Key('ප', 'ඵ', '', ''),
     },
     'row_2': {
+        'a': Key('අ', 'ආ', '0DCA', '0DCF'),
+        's': Key('ස', 'ශ', 'ෂ', ''),
+        'd': Key('ද', 'ධ', 'ඩ', 'ඪ'),
+        # FIXME 'f': Key('ෆ', '', '0DDB', 'ෛ'),
+        'g': Key('ග', 'ඝ', 'ඟ', ''),
+        'h': Key('හ', '0D83', '0DDE', 'ඖ'),
+        'j': Key('ජ', 'ඣ', 'ඦ', ''),
+        'k': Key('ක', 'ඛ', 'ඦ', 'ඐ'),
+        'l': Key('ල', 'ළ', '0DDF', '0DF3'),
     },
+    # TODO Kunddaliya ෴
     'row_3': {
+        'z': Key('ඤ', 'ඥ', '007C', '00A6'),
+        'x': Key('ඳ', 'ඬ', '', ''),
+        'c': Key('ච', 'ඡ', '', ''),
+        'v': Key('ව', '', '', ''),
+        'b': Key('බ', 'භ', '', ''),
+        'n': Key('න', 'ණ', '0D82', 'ඞ'),
+        'm': Key('ම', 'ඹ', '', ''),
     }
 }
 
@@ -73,8 +97,29 @@ BAD_NUMERIC_REFS_PATTERN = re.compile('&amp;#x')
 
 
 class LayoutBuilder:
-    def __init__(self) -> None:
-        self._xml_root = ElementTree.Element('keyboard')
+    XML_DECLARATION = "<?xml version='1.0' encoding='utf-8'?>"
+
+    def __init__(
+        self,
+        name: str | None = None,
+        script: str | None = None,
+        numpad_script: str | None = None,
+        comment: str | None = None,
+    ) -> None:
+        """
+        :param comment: MUST be a valid XML comment wrapped in <!-- tags -->
+        """
+        attrs = {}
+        if name:
+            attrs['name'] = name
+        if script:
+            attrs['script'] = script
+        if numpad_script:
+            attrs['numpad_script'] = numpad_script
+        self._comment = None
+        if comment:
+            self._comment = comment.strip() or None
+        self._xml_keyboard = ElementTree.Element('keyboard', attrib=attrs)
         self._modmap = ElementTree.Element('modmap')
 
     def _process_key(self, xml_row: ElementTree.Element, key: Key) -> None:
@@ -98,19 +143,29 @@ class LayoutBuilder:
 
     def build(self) -> None:
         for row in TABLE.values():
-            self._xml_row = ElementTree.SubElement(self._xml_root, 'row')
+            self._xml_row = ElementTree.SubElement(self._xml_keyboard, 'row')
             for key in row.values():
                 self._process_key(self._xml_row, key)
-        self._xml_root.append(self._modmap)
+        self._xml_keyboard.append(self._modmap)
 
-    def print(self) -> None:
-        ElementTree.indent(self._xml_root)
-        raw = ElementTree.tostring(self._xml_root, encoding='unicode')
-        post = re.sub(BAD_NUMERIC_REFS_PATTERN, '&#x', raw)  # FIXME Ugly and fragile
-        print(post)
+    def get_xml(self) -> str:
+        ElementTree.indent(self._xml_keyboard)
+        raw_body = ElementTree.tostring(
+            self._xml_keyboard,
+            xml_declaration=False,
+            encoding='unicode')
+
+        fixed_body = re.sub(BAD_NUMERIC_REFS_PATTERN, '&#x', raw_body)  # FIXME Ugly and fragile
+
+        result = self.XML_DECLARATION + '\n'
+        if self._comment:
+            result += self._comment
+        result += fixed_body
+
+        return result
 
 
 if __name__ == '__main__':
-    builder = LayoutBuilder()
+    builder = LayoutBuilder(name='සිංහල', script='sinhala', comment=COMMENT)
     builder.build()
-    builder.print()
+    print(builder.get_xml())
