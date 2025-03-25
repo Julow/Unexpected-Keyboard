@@ -1,12 +1,15 @@
 #! /bin/env python3
 
-import re
+## Generator
+## May be adoped
+## Usage
+## Made with Python 3.13.
+##
 
+# TODO Extra modmap for numbers and so on
+
+from pathlib import Path
 from xml.etree import ElementTree
-
-# TODO Merge with default lat
-# TODO Header and commens
-# TODO keboard attribs
 
 
 COMMENT = '''
@@ -35,12 +38,9 @@ class Key:
     @staticmethod
     def _clean_val(val: None | str) -> None | str:
         if not val:
-            res = None
-        elif len(val) == 4:
-            res = f'&#x{val.upper()};'
+            return None
         else:
-            res = val
-        return res
+            return val
 
     def __getitem__(self, index: int) -> str | None:
         return self._values[index]
@@ -51,36 +51,38 @@ class Key:
 
 TABLE = {
     'row_1': {
-        'q': Key('ඍ', 'ඎ', '0DD8', '0DF2'),
-        'w': Key('ඇ', 'ඈ', '0DD0', '0DD1'),
-        'e': Key('එ', 'ඒ', '0DD9', '0DDA'),
+        'q': Key('ඍ', 'ඎ', '\u034F\u0DD8', '\u034F\u0DF2'),
+        'w': Key('ඇ', 'ඈ', '\u034F\u0DD0', '\u034F\u0DD1'),
+        'e': Key('එ', 'ඒ', '\u034F\u0DD9', '\u034F\u0DDA'),
         'r': Key('ර', '', '', ''),  # In XKB virama was on layer 2
         't': Key('ත', 'ථ', 'ට', 'ඨ'),
         'y': Key('ය', '', '', ''),  # In XKB virama was on layer 2
-        'u': Key('උ', 'ඌ', '0DD4', '0DD6'),
-        'i': Key('ඉ', 'ඊ', '0DD2', '0DD3'),
-        'o': Key('ඔ', 'ඕ', '0DDC', '0DDD'),
+        'u': Key('උ', 'ඌ', '\u034F\u0DD4', '\u034F\u0DD6'),
+        'i': Key('ඉ', 'ඊ', '\u034F\u0DD2', '\u034F\u0DD3'),
+        'o': Key('ඔ', 'ඕ', '\u034F\u0DDC', '\u034F\u0DDD'),
         'p': Key('ප', 'ඵ', '', ''),
     },
     'row_2': {
-        'a': Key('අ', 'ආ', '0DCA', '0DCF'),
+        'a': Key('අ', 'ආ', '\u034F\u0DCA', '\u034F\u0DCF'),
         's': Key('ස', 'ශ', 'ෂ', ''),
         'd': Key('ද', 'ධ', 'ඩ', 'ඪ'),
-        # FIXME 'f': Key('ෆ', '', '0DDB', 'ෛ'),
+        # TODO Swap letter and sigh?
+        # In XKB aiyanna is on 1 level higher
+        'f': Key('ෆ', '\u034F\u0DDB', 'ෛ', ''),
         'g': Key('ග', 'ඝ', 'ඟ', ''),
-        'h': Key('හ', '0D83', '0DDE', 'ඖ'),
+        'h': Key('හ', '\u034F\u0D83', '\u034F\u0DDE', 'ඖ'),
         'j': Key('ජ', 'ඣ', 'ඦ', ''),
         'k': Key('ක', 'ඛ', 'ඦ', 'ඐ'),
-        'l': Key('ල', 'ළ', '0DDF', '0DF3'),
+        'l': Key('ල', 'ළ', '\u034F\u0DDF', '\u034F\u0DF3'),
     },
     # TODO Kunddaliya ෴
     'row_3': {
-        'z': Key('ඤ', 'ඥ', '007C', '00A6'),
+        'z': Key('ඤ', 'ඥ', '\u034F\u007C', '\u034F\u00A6'),
         'x': Key('ඳ', 'ඬ', '', ''),
         'c': Key('ච', 'ඡ', '', ''),
         'v': Key('ව', '', '', ''),
         'b': Key('බ', 'භ', '', ''),
-        'n': Key('න', 'ණ', '0D82', 'ඞ'),
+        'n': Key('න', 'ණ', '\u034F\u0D82', 'ඞ'),
         'm': Key('ම', 'ඹ', '', ''),
     }
 }
@@ -92,9 +94,7 @@ MAP = {
     3: '1+shift',
 }
 
-
-BAD_NUMERIC_REFS_PATTERN = re.compile('&amp;#x')
-
+REFERENCE_LAYOUT_FILE = Path(__file__).parent / 'srcs/layouts/latn_qwerty_us.xml'
 
 class LayoutBuilder:
     XML_DECLARATION = "<?xml version='1.0' encoding='utf-8'?>"
@@ -121,6 +121,19 @@ class LayoutBuilder:
             self._comment = comment.strip() or None
         self._xml_keyboard = ElementTree.Element('keyboard', attrib=attrs)
         self._modmap = ElementTree.Element('modmap')
+
+    @staticmethod
+    def _parse_reference_layout() :
+        result: list[dict] = []
+        rows = ElementTree.parse(REFERENCE_LAYOUT_FILE).findall('row')
+        return rows
+        for row in rows:
+            row_dict = {}
+            for key in row:
+                attrs = key.attrib
+                row_dict[attrs.pop('c')] = attrs
+            result.append(row_dict)
+        return result
 
     def _process_key(self, xml_row: ElementTree.Element, key: Key) -> None:
         xml_key = ElementTree.SubElement(xml_row, 'key')
@@ -150,17 +163,15 @@ class LayoutBuilder:
 
     def get_xml(self) -> str:
         ElementTree.indent(self._xml_keyboard)
-        raw_body = ElementTree.tostring(
+        body = ElementTree.tostring(
             self._xml_keyboard,
             xml_declaration=False,
             encoding='unicode')
 
-        fixed_body = re.sub(BAD_NUMERIC_REFS_PATTERN, '&#x', raw_body)  # FIXME Ugly and fragile
-
         result = self.XML_DECLARATION + '\n'
         if self._comment:
             result += self._comment
-        result += fixed_body
+        result += body
 
         return result
 
@@ -169,3 +180,5 @@ if __name__ == '__main__':
     builder = LayoutBuilder(name='සිංහල', script='sinhala', comment=COMMENT)
     builder.build()
     print(builder.get_xml())
+    #from pprint import pprint
+    #pprint(builder._parse_reference_layout())
