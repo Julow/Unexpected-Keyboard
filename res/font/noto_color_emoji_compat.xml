@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fontProviderAuthority="com.google.android.gms.fonts"
+        android:fontProviderPackage="com.google.android.gms"
+        android:fontProviderQuery="Noto Color Emoji Compat"
+        android:fontProviderCerts="@array/com_google_android_gms_fonts_certs">
+</font-family>
