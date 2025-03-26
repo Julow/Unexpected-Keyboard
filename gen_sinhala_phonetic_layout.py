@@ -46,39 +46,40 @@ class Key:
     def __repr__(self) -> str:
         return f'Key{self._values}'
 
-
+# TODO Postprocessor to escape chars from selected ranges.
 TABLE = {
-    # TODO Check CGJ
+    # TODO Add ZWJ and ZWNJ (200D, 200C)
     # Row 1 ###########################################
-    'q': Key('ඍ', 'ඎ', '\u034F\u0DD8', '\u034F\u0DF2'),
-    'w': Key('ඇ', 'ඈ', '\u034F\u0DD0', '\u034F\u0DD1'),
-    'e': Key('එ', 'ඒ', '\u034F\u0DD9', '\u034F\u0DDA'),
+    'q': Key('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
+    'w': Key('ඇ', 'ඈ', '\u0DD0', '\u0DD1'),
+    'e': Key('එ', 'ඒ', '\u0DD9', '\u0DDA'),
     'r': Key('ර', '', '', ''),  # In XKB virama was on layer 2
     't': Key('ත', 'ථ', 'ට', 'ඨ'),
     'y': Key('ය', '', '', ''),  # In XKB virama was on layer 2
-    'u': Key('උ', 'ඌ', '\u034F\u0DD4', '\u034F\u0DD6'),
-    'i': Key('ඉ', 'ඊ', '\u034F\u0DD2', '\u034F\u0DD3'),
-    'o': Key('ඔ', 'ඕ', '\u034F\u0DDC', '\u034F\u0DDD'),
+    'u': Key('උ', 'ඌ', '\u0DD4', '\u0DD6'),
+    'i': Key('ඉ', 'ඊ', '\u0DD2', '\u0DD3'),
+    'o': Key('ඔ', 'ඕ', '\u0DDC', '\u0DDD'),
     'p': Key('ප', 'ඵ', '', ''),
     # Row 2 ###########################################
-    'a': Key('අ', 'ආ', '\u034F\u0DCA', '\u034F\u0DCF'),
+    'a': Key('අ', 'ආ', '\u0DCA', '\u0DCF'),
     's': Key('ස', 'ශ', 'ෂ', ''),
     'd': Key('ද', 'ධ', 'ඩ', 'ඪ'),
     # TODO Swap letter and sigh?
-    'f': Key('ෆ', '\u034F\u0DDB', 'ෛ', ''), # In XKB aiyanna is 1 level higher
+    # FIXME
+    'f': Key('ෆ', '\u0DDB', 'ෛ', ''), # In XKB aiyanna is 1 level higher
     'g': Key('ග', 'ඝ', 'ඟ', ''),
-    'h': Key('හ', '\u034F\u0D83', '\u034F\u0DDE', 'ඖ'),
+    'h': Key('හ', '\u0D83', '\u0DDE', 'ඖ'),
     'j': Key('ජ', 'ඣ', 'ඦ', ''),
     'k': Key('ක', 'ඛ', 'ඦ', 'ඐ'),
-    'l': Key('ල', 'ළ', '\u034F\u0DDF', '\u034F\u0DF3'),
+    'l': Key('ල', 'ළ', '\u0DDF', '\u0DF3'),
     # Row 3 ###########################################
     # TODO Kunddaliya ෴
-    'z': Key('ඤ', 'ඥ', '\u034F\u007C', '\u034F\u00A6'),
+    'z': Key('ඤ', 'ඥ', '\u007C', '\u00A6'),
     'x': Key('ඳ', 'ඬ', '', ''),
     'c': Key('ච', 'ඡ', '', ''),
     'v': Key('ව', '', '', ''),
     'b': Key('බ', 'භ', '', ''),
-    'n': Key('න', 'ණ', '\u034F\u0D82', 'ඞ'),
+    'n': Key('න', 'ණ', '\u0D82', 'ඞ'),
     'm': Key('ම', 'ඹ', '', ''),
 }
 
