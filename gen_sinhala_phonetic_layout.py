@@ -29,7 +29,6 @@ class Placement(StrEnum):
     W = 'w'
 
 
-# TODO Del
 class Key:
     def __init__(
         self,
@@ -109,19 +108,46 @@ LAYERS_MAP = {
 MODMAP_EXTRA: dict[str, str] = {
 }
 
-# TODO Doc
-TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement]] = {
-    #('q', Placement.NE): ('q', Placement.SE),  # 1
+# TODO Doc not Placement.C
+TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement | None]] = {
+    ('q', Placement.SE): ('q', Placement.SW),  # loc esc
+    ('q', Placement.NE): ('q', Placement.SE),  # 1
+
     ('w', Placement.NE): ('w', Placement.SE),  # 2
-    #('e', Placement.NE): ('e', Placement.SE),  # 3
+
+    ('e', Placement.SE): ('r', Placement.NW),  # loc €
+    ('e', Placement.NE): ('e', Placement.SE),  # 3
+
     ('r', Placement.NE): ('r', Placement.SE),  # 4
     ('t', Placement.NE): ('t', Placement.SE),  # 5
     ('y', Placement.NE): ('y', Placement.SE),  # 6
     ('u', Placement.NE): ('u', Placement.SE),  # 7
     ('i', Placement.NE): ('i', Placement.SE),  # 8
-    #('o', Placement.NE): ('o', Placement.SE),  # 9
+
+    ('o', Placement.SE): ('o', Placement.S),  # )
+    ('o', Placement.NE): ('o', Placement.SE),  # 9
+
     ('p', Placement.NE): ('p', Placement.SE),  # 0
-    ('a', Placement.NE): ('a', Placement.SE),  # `
+
+    ('a', Placement.NE): ('a', Placement.NW),  # `
+    ('a', Placement.NW): ('a', Placement.SW),  # loc tab
+
+    ('s', Placement.NE): ('s', Placement.NW),  # loc §
+
+    ('g', Placement.SW): ('g', Placement.NW),  # _
+    ('g', Placement.NE): ('g', Placement.SW),  # -
+
+    ('h', Placement.SW): ('h', Placement.NW),  # +
+    ('h', Placement.NE): ('h', Placement.SW),  # =
+
+    # FIXME dup
+    ('l', Placement.NE): ('l', Placement.NW),  # |
+
+    ('x', Placement.NE): ('x', Placement.NW),  # loc †
+    ('c', Placement.NE): ('c', Placement.NW),  # <
+    ('b', Placement.NE): ('b', Placement.NW),  # ?
+    ('n', Placement.NE): ('n', Placement.NW),  # :
+    ('m', Placement.NE): ('m', Placement.NW),  # "
 }
 
 COMMENT = '''
@@ -233,9 +259,9 @@ class LayoutBuilder:
         result_map = [[ElementTree.Element('key') for key in row] for row in ref_map]
 
         ## Place by transitions map on new places
-        for from_pair, to_pair in TRANSITIONS_MAP.items():
-            from_key_name, to_key_name = from_pair[0], to_pair[0]
-            from_plc, to_plc = str(from_pair[1]), str(to_pair[1])
+        for (from_key_name, from_plc), (to_key_name, to_plc) in TRANSITIONS_MAP.items():
+            if Placement.C in (from_plc, to_plc):
+                raise NotImplementedError('Transition from or to placment "c"')
             if not (from_coord := coord_map.get(from_key_name)):
                 raise RuntimeError(f'Transition from missing key {from_key_name}')
             if not (to_coord := coord_map.get(to_key_name)):
@@ -250,10 +276,15 @@ class LayoutBuilder:
             if to_key.get(to_plc):
                 msg = f'Second transition to key {to_key_name}, placement {to_plc}'
                 raise RuntimeError(msg)
-            to_key.set(to_plc, val)
-            LOGGER.info(
-                'Moved "%s" from %s:%s to %s:%s',
-                val, from_key_name, from_plc, to_key_name, to_plc)
+            if to_plc is not None:
+                to_key.set(to_plc, val)
+                LOGGER.info(
+                    'Moved "%s" from %s:%s to %s:%s',
+                    val, from_key_name, from_plc, to_key_name, to_plc)
+            else:
+                LOGGER.info(
+                    'Deleted "%s" from %s:%s',
+                    val, from_key_name, from_plc)
 
         # Fill new map with other values
         cls._move_untransited_to_new_map(ref_map, new_map=result_map)
@@ -343,7 +374,7 @@ def get_args() -> argparse.Namespace:
 if __name__ == '__main__':
     args = get_args()
     logging.basicConfig(
-        level=logging.DEBUG if args.verbose else logging.INFO,
+        level=logging.DEBUG if args.verbose else logging.WARNING,
         format='%(levelname)s: %(message)s')
     builder = LayoutBuilder(name='සිංහල', script='sinhala', comment=COMMENT)
     builder.build()
