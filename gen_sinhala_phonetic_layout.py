@@ -1,23 +1,35 @@
 #! /bin/env python3
 
-## Generator
-## May be adoped
-## Usage
-## Made with Python 3.13.
-##
+# TODO Fill the doc
+"""
+Generator
+May be adoped
+Usage
+Requires Python >= 3.8.
+Made with Python 3.13.
+"""
 
+import argparse
+import logging
+
+from enum import StrEnum
 from pathlib import Path
 from xml.etree import ElementTree
 
 
-COMMENT = '''
-<!-- This file defines Sinhala layout.
+class Placement(StrEnum):
+    C = 'c'
+    NW = 'nw'
+    N = 'n'
+    NE = 'ne'
+    E = 'e'
+    SE = 'se'
+    S = 's'
+    SW = 'sw'
+    W = 'w'
 
-Based on XKB Sinhala (phonetic) layout.
--->
-'''
 
-
+# TODO Del
 class Key:
     def __init__(
         self,
@@ -46,8 +58,9 @@ class Key:
     def __repr__(self) -> str:
         return f'Key{self._values}'
 
+
 # TODO Postprocessor to escape chars from selected ranges.
-TABLE = {
+KEYS_MAP = {
     # TODO Add ZWJ and ZWNJ (200D, 200C)
     # Row 1 ###########################################
     'q': Key('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
@@ -83,7 +96,7 @@ TABLE = {
     'm': Key('ම', 'ඹ', '', ''),
 }
 
-MAP = {
+LAYERS_MAP = {
     0: 'c',
     1: 'ne',
     2: '0+shift',
@@ -96,8 +109,52 @@ MAP = {
 MODMAP_EXTRA: dict[str, str] = {
 }
 
+# TODO Doc
+TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement]] = {
+    #('q', Placement.NE): ('q', Placement.SE),  # 1
+    ('w', Placement.NE): ('w', Placement.SE),  # 2
+    #('e', Placement.NE): ('e', Placement.SE),  # 3
+    ('r', Placement.NE): ('r', Placement.SE),  # 4
+    ('t', Placement.NE): ('t', Placement.SE),  # 5
+    ('y', Placement.NE): ('y', Placement.SE),  # 6
+    ('u', Placement.NE): ('u', Placement.SE),  # 7
+    ('i', Placement.NE): ('i', Placement.SE),  # 8
+    #('o', Placement.NE): ('o', Placement.SE),  # 9
+    ('p', Placement.NE): ('p', Placement.SE),  # 0
+    ('a', Placement.NE): ('a', Placement.SE),  # `
+}
 
-REFERENCE_LAYOUT_FILE = Path(__file__).parent / 'srcs/layouts/latn_qwerty_us.xml'
+COMMENT = '''
+<!-- This file defines Sinhala layout.
+
+Based on XKB Sinhala (phonetic) layout.
+-->
+'''
+
+BASE_DIR = Path(__file__).parent
+REFERENCE_LAYOUT_FILE = BASE_DIR / 'srcs/layouts/latn_qwerty_us.xml'
+
+LOGGER = logging.getLogger(__name__)
+
+KeysMapType = list[list[ElementTree.Element]]
+
+
+def xml_elem_to_str(element: ElementTree.Element) -> str:
+    return ElementTree.tostring(
+        element,
+        xml_declaration=False,
+        encoding='unicode').strip()
+
+
+def keys_map_to_str(keys_map: KeysMapType) -> str:
+    result = '[\n'
+    for row in keys_map:
+        result += ' ' * 4
+        for key in row:
+            result += str(key.attrib) + ', '
+        result += '\n'
+    result += ']'
+    return result
 
 
 class LayoutBuilder:
@@ -130,53 +187,169 @@ class LayoutBuilder:
     def _parse_reference_layout() -> list[ElementTree.Element]:
         return ElementTree.parse(REFERENCE_LAYOUT_FILE).findall('row')
 
+    @staticmethod
+    def _move_untransited_to_new_map(
+        ref_map: KeysMapType,
+        new_map: KeysMapType
+    ) -> None:
+        coordinates = [
+            (row_num, key_num)
+            for row_num in range(len(ref_map))
+            for key_num in range(len(ref_map[row_num]))
+        ]
+
+        for row_num, key_num in coordinates:
+            old_key = ref_map[row_num][key_num]
+            new_key = new_map[row_num][key_num]
+            for k, val in old_key.attrib.items():
+                if (transited := new_key.attrib.get(k)) is not None:
+                    msg = (
+                        f'Transition of {transited} to'
+                        f' {new_key.get(Placement.C)}:{k} conflictls with'
+                        f' existing value "{val}"')
+                    raise RuntimeError(msg)
+                new_key.set(k, val)
+
+    @classmethod
+    def _apply_transitions(cls, ref_map: list) -> list:
+        coord_map = {}
+
+        coordinates = [
+            (row_num, key_num)
+            for row_num in range(len(ref_map))
+            for key_num in range(len(ref_map[row_num]))
+        ]
+
+        for row_num, key_num in coordinates:
+            row = ref_map[row_num]
+            key = row[key_num]
+            key_name = key.get(Placement.C)
+            if key_name in coord_map:
+                msg = f'Duplicated value "{key_name}" in central position'
+                raise RuntimeError(msg)
+            coord_map[key_name] = (row_num, key_num)
+
+        # Make new map with empty keys
+        result_map = [[ElementTree.Element('key') for key in row] for row in ref_map]
+
+        ## Place by transitions map on new places
+        for from_pair, to_pair in TRANSITIONS_MAP.items():
+            from_key_name, to_key_name = from_pair[0], to_pair[0]
+            from_plc, to_plc = str(from_pair[1]), str(to_pair[1])
+            if not (from_coord := coord_map.get(from_key_name)):
+                raise RuntimeError(f'Transition from missing key {from_key_name}')
+            if not (to_coord := coord_map.get(to_key_name)):
+                raise RuntimeError(f'Transition to missing key {to_key_name}')
+            from_key = ref_map[from_coord[0]][from_coord[1]]
+            to_key = result_map[to_coord[0]][to_coord[1]]
+            try:
+                val = from_key.attrib.pop(from_plc)
+            except KeyError:
+                msg = f'No value in key {from_key_name}, placement {from_plc} to move'
+                raise RuntimeError(msg)
+            if to_key.get(to_plc):
+                msg = f'Second transition to key {to_key_name}, placement {to_plc}'
+                raise RuntimeError(msg)
+            to_key.set(to_plc, val)
+            LOGGER.info(
+                'Moved "%s" from %s:%s to %s:%s',
+                val, from_key_name, from_plc, to_key_name, to_plc)
+
+        # Fill new map with other values
+        cls._move_untransited_to_new_map(ref_map, new_map=result_map)
+
+        return result_map
+
+    @staticmethod
+    def _resolve_placement(
+        key: ElementTree.Element,
+        placement: Placement,
+        new_char: str
+    ) -> None:
+        if placement != Placement.C:
+            central_char = key.get(Placement.C)
+            existing = key.get(placement)
+            if existing:
+                LOGGER.warning(
+                    'Placement %s of key %s already occupied with %s',
+                    placement, central_char, existing)
+        key.set(placement, new_char)
+
     def _process_key(self, key: ElementTree.Element) -> ElementTree.Element:
-        char = key.get('c')
-        if not char:
+        central_char = key.get(Placement.C)
+        if not central_char:
             return key
-        new_key_entry = TABLE.get(char)
+        new_key_entry = KEYS_MAP.get(central_char)
         if new_key_entry is None:
             return key
 
-        for level, placement in MAP.items():
-            if (char := new_key_entry[level]) is None:
+        for level, placement_spec in LAYERS_MAP.items():
+            if (new_char := new_key_entry[level]) is None:
                 continue
-            if '+' in placement:
-                pair = placement.split('+')
+            if '+' in placement_spec:
+                pair = placement_spec.split('+')
                 from_level, modkey = int(pair[0]), pair[1]
                 key_a = new_key_entry[from_level]
-                key_b = char
+                key_b = new_char
                 if key_a is None:
                     raise RuntimeError(f'Tried to modife {key_a} to {key_b}')
                 ElementTree.SubElement(self._modmap, modkey, a=key_a, b=key_b)
             else:
-                key.set(placement, char)  # TODO Resolve conflicting
+                placement = Placement(placement_spec)
+                self._resolve_placement(key, placement=placement, new_char=new_char)
         return key
 
     def build(self) -> None:
-        ref_rows = self._parse_reference_layout()
+        raw_ref_rows = self._parse_reference_layout()
+        ref_rows = self._apply_transitions(raw_ref_rows)
         for row in ref_rows:
             new_row = ElementTree.SubElement(self._xml_keyboard, 'row')
             for key in row:
+                LOGGER.debug(
+                    'Processing reference entry %s',
+                    xml_elem_to_str(key))
                 new_row.append(self._process_key(key))
         self._xml_keyboard.append(self._modmap)
 
     def get_xml(self) -> str:
         ElementTree.indent(self._xml_keyboard)
-        body = ElementTree.tostring(
-            self._xml_keyboard,
-            xml_declaration=False,
-            encoding='unicode')
+        body = xml_elem_to_str(self._xml_keyboard)
 
         result = self.XML_DECLARATION + '\n'
         if self._comment:
-            result += self._comment
-        result += body
+            result += self._comment + '\n'
+        result += body + '\n'
 
         return result
 
 
+def get_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog='gen_sinhala_phonetic_layout',
+        description='Generate XKB-based Sinhala layout',)
+    parser.add_argument(
+        '-o',
+        '--output',
+        default=BASE_DIR / 'srcs/layouts/sinhala_phonetic.xml',
+        help='File to write result, `-` for stdout')
+    parser.add_argument(
+        '-v',
+        '--verbose',
+        help='More verbose logging',
+        action='store_true')
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
+    args = get_args()
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format='%(levelname)s: %(message)s')
     builder = LayoutBuilder(name='සිංහල', script='sinhala', comment=COMMENT)
     builder.build()
-    print(builder.get_xml())
+    content = builder.get_xml()
+    if args.output == '-':
+        print(content)
+    else:
+        with open(args.output, 'w') as file:
+            file.write(content)
