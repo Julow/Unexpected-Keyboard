@@ -103,9 +103,20 @@ LAYERS_MAP = {
 }
 
 
-# TODO Implement
-# TODO Numeric
-MODMAP_EXTRA: dict[str, str] = {
+MODMAP_EXTRA: dict[str, dict[str, str]] = {
+    'shift': {
+        # Astrological numbers
+        '1': '෧',
+        '2': '෨',
+        '3': '෩',
+        '4': '෪',
+        '5': '෫',
+        '6': '෬',
+        '7': '෭',
+        '8': '෮',
+        '9': '෯',
+        '0': '෦',
+    }
 }
 
 # TODO Doc not Placement.C
@@ -124,7 +135,7 @@ TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement | None]] = {
     ('u', Placement.NE): ('u', Placement.SE),  # 7
     ('i', Placement.NE): ('i', Placement.SE),  # 8
 
-    ('o', Placement.SE): ('o', Placement.S),  # )
+    ('o', Placement.SE): ('p', Placement.SW),  # )
     ('o', Placement.NE): ('o', Placement.SE),  # 9
 
     ('p', Placement.NE): ('p', Placement.SE),  # 0
@@ -330,6 +341,15 @@ class LayoutBuilder:
                 self._resolve_placement(key, placement=placement, new_char=new_char)
         return key
 
+    @staticmethod
+    def _make_extra_modmap(modmap: ElementTree.Element) -> ElementTree.Element:
+        for modkey, ab_map in MODMAP_EXTRA.items():
+            for a, b in ab_map.items():
+                LOGGER.info('Adding modmap %s "%s" -> "%s"', modkey, a, b)
+                ElementTree.SubElement(modmap, modkey, a=a, b=b)
+        return modmap
+
+
     def build(self) -> None:
         raw_ref_rows = self._parse_reference_layout()
         ref_rows = self._apply_transitions(raw_ref_rows)
@@ -340,6 +360,7 @@ class LayoutBuilder:
                     'Processing reference entry %s',
                     xml_elem_to_str(key))
                 new_row.append(self._process_key(key))
+        self._modmap = self._make_extra_modmap(self._modmap)
         self._xml_keyboard.append(self._modmap)
 
     def get_xml(self) -> str:
