@@ -1,18 +1,14 @@
-<!-- See [number_row_no_symbols.xml] for the number row with no symbols. -->
-
 <?xml version="1.0" encoding="utf-8"?>
+<!-- See [number_row_no_symbols.xml] for the number row with no symbols. -->
 <row height="0.75">
-    <key key0="1" se="!"/>
-    <key key0="2" se="@"/>
-    <key key0="3" se="#"/>
-    <key key0="4" se="$"/>
-    <key key0="5" se="%"/>
-    <key key0="6" sw="^"/>
-    <key key0="7" sw="&amp;"/>
-    <key key0="8" sw="*"/>
-    <key key0="9" sw="("/>
-    <key key0="0" sw=")"/>
+  <key key0="1" se="!"/>
+  <key key0="2" se="@"/>
+  <key key0="3" se="#"/>
+  <key key0="4" se="$"/>
+  <key key0="5" se="%"/>
+  <key key0="6" sw="^"/>
+  <key key0="7" sw="&amp;"/>
+  <key key0="8" sw="*"/>
+  <key key0="9" sw="("/>
+  <key key0="0" sw=")"/>
 </row>
-
-
-
