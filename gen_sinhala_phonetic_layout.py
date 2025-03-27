@@ -1,16 +1,30 @@
 #! /bin/env python3
 
-# TODO Fill the doc
 """
-Generator
-May be adoped
-Usage
+Script to generate a layout based on an existing.
 
-Uses c as indintifier
+Tuned to create Sinhala phonetic layout based on qwerty (US), but may be adoped
+for other scripts. Look at dicts before the LayoutBuilder code.
 
-Requires Python >= 3.8.
-Made with Python 3.13.
+Usage:
+    python3 gen_sinhala_phonetic_layout [-h|--help] [-v|--verbose] [-o|--output]
+
+By default with no args will write to corresponding file in `srcs/layouts/`.
+
+Script uses central symbol (in direction "c") to identify a key, which may not
+be appropriate for base (reference) layouts other, than qwerty (US).
+
+Warning will be printed to stderr if new symbol overrides some symbol of the
+reference layout in directions other, than "c".
+
+Exception will be rised on other
+conflicts e. g. when trying to move a symbol into occupied position.
+
+  - Made with latn_qwerty_us.xml from commit `6b1551d`
+  - Made with Python 3.13
+  - Requires Python >= 3.8
 """
+# FIXME | annot >= ??
 
 import argparse
 import logging
@@ -61,8 +75,8 @@ class Key:
         return f'Key{self._values}'
 
 
-# TODO Postprocessor to escape chars from selected ranges.
 # Based on XKB Sinhala (phonetic)
+# TODO Chandrabindu
 KEYS_MAP = {
     # Row 1 ###########################################
     'q': Key('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
@@ -95,9 +109,14 @@ KEYS_MAP = {
     'm': Key('ම', 'ඹ', '', ''),
 }
 
-LAYERS_MAP = {
-    0: 'c',
-    1: 'ne',
+# How to place four levels of Key.
+# Syntax: LEVEL: PLACEMENT | 'FROM_LEVEL+MODIFIER'
+# The last means symbol on level FROM_LEVEL with modifier key MODIFIER gives
+# key on level LEVEL
+#
+LEVELS_MAP = {
+    0: Placement.C,
+    1: Placement.NE,
     2: '0+shift',
     3: '1+shift',
 }
@@ -189,6 +208,17 @@ CHARS_EXTRA = {
 }
 
 
+# List of char unicode numbers and inclusive ranges of numbers to encode as XML
+# numeric character references.
+# Good for combining signs to not mess with quotes.
+# Characters in line of the keyboard tag will not be escaped.
+#
+ESCAPE_LIST: list[int | tuple[int, int]] = [
+    # Sinhalese diacritics
+    (0xD81, 0xD83),
+    (0xDCA, 0xDDF),
+]
+
 # Default filename. Output path can be overrided with `-o` flag also.
 LAYOUT_FILENAME = 'sinhala_phonetic.xml'
 
@@ -228,6 +258,27 @@ def keys_map_to_str(keys_map: KeysMapType) -> str:
         result += '\n'
     result += ']'
     return result
+
+
+def is_in_escape_list(char: str | int) -> bool:
+    if isinstance(char, str):
+        char = ord(char)
+    for item in ESCAPE_LIST:
+        if isinstance(item, tuple) and char >= item[0] and char <= item[1]:
+            return True
+        elif isinstance(item, int):
+            if char == item:
+                return True
+        else:
+            TypeError(f'Unexpected item {item} of ESCAPE_LIST')
+    return False
+
+
+def xml_encode_char(ch: str | int) -> str:
+    if isinstance(ch, str):
+        ch = ord(ch)
+    hex_val = hex(ch).split('x')[-1]
+    return f'&#x{hex_val.upper().zfill(4)};'
 
 
 class LayoutBuilder:
@@ -384,7 +435,7 @@ class LayoutBuilder:
         if new_key_entry is None:
             return key
 
-        for level, placement_spec in LAYERS_MAP.items():
+        for level, placement_spec in LEVELS_MAP.items():
             if (new_char := new_key_entry[level]) is None:
                 continue
             if '+' in placement_spec:
@@ -408,6 +459,21 @@ class LayoutBuilder:
                 ElementTree.SubElement(modmap, modkey, a=a, b=b)
         return modmap
 
+    @staticmethod
+    def _post_escape(data: str) -> str:
+        buf = ''
+        lines = data.splitlines(keepends=True)
+        for line in lines:
+            # Skip keyboard tag line to keep attributes
+            if '<keyboard ' in line:
+                buf += line
+                continue
+            for ch in line:
+                if is_in_escape_list(ch):
+                    ch = xml_encode_char(ch)
+                buf += ch
+        return buf
+
     def build(self) -> None:
         raw_ref_rows = self._parse_reference_layout()
         ref_rows = self._apply_transitions(raw_ref_rows)
@@ -423,7 +489,8 @@ class LayoutBuilder:
 
     def get_xml(self) -> str:
         ElementTree.indent(self._xml_keyboard)
-        body = xml_elem_to_str(self._xml_keyboard)
+        body_raw = xml_elem_to_str(self._xml_keyboard)
+        body = self._post_escape(body_raw)
 
         result = self.XML_DECLARATION + '\n'
         if self._comment:
