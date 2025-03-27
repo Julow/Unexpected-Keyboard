@@ -30,6 +30,7 @@ public final class Config
   // From the 'numpad_layout' option, also apply to the numeric pane.
   public boolean inverse_numpad = false;
   public boolean add_number_row;
+  public boolean number_row_symbols;
   public float swipe_dist_px;
   public float slide_step_px;
   // Let the system handle vibration when false.
@@ -122,7 +123,9 @@ public final class Config
     }
     layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
-    add_number_row = _prefs.getBoolean("number_row", false);
+    String number_row = _prefs.getString("number_row", "no_number_row");
+    add_number_row = !number_row.equals("no_number_row");
+    number_row_symbols = number_row.equals("symbols");
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
@@ -272,7 +275,7 @@ public final class Config
 
   /** Config migrations. */
 
-  private static int CONFIG_VERSION = 1;
+  private static int CONFIG_VERSION = 2;
 
   public static void migrate(SharedPreferences prefs)
   {
@@ -284,7 +287,7 @@ public final class Config
     e.putInt("version", CONFIG_VERSION);
     // Migrations might run on an empty [prefs] for new installs, in this case
     // they set the default values of complex options.
-    switch (saved_version) // Fallback switch
+    switch (saved_version)
     {
       case 0:
         // Primary, secondary and custom layout options are merged into the new
@@ -298,7 +301,12 @@ public final class Config
         if (custom_layout != null && !custom_layout.equals(""))
           l.add(LayoutsPreference.CustomLayout.parse(custom_layout));
         LayoutsPreference.save_to_preferences(e, l);
+        // Fallthrough
       case 1:
+        boolean add_number_row = prefs.getBoolean("number_row", false);
+        e.putString("number_row", add_number_row ? "no_symbols" : "no_number_row");
+        // Fallthrough
+      case 2:
       default: break;
     }
     e.apply();

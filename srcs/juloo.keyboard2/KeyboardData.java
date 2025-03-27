@@ -177,14 +177,9 @@ public final class KeyboardData
 
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
 
-  public static Row load_bottom_row(Resources res) throws Exception
+  public static Row load_row(Resources res, int res_id) throws Exception
   {
-    return parse_row(res.getXml(R.xml.bottom_row));
-  }
-
-  public static Row load_number_row(Resources res) throws Exception
-  {
-    return parse_row(res.getXml(R.xml.number_row));
+    return parse_row(res.getXml(res_id));
   }
 
   public static KeyboardData load_num_pad(Resources res) throws Exception
