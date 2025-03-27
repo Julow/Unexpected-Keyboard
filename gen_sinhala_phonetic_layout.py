@@ -64,7 +64,6 @@ class Key:
 # TODO Postprocessor to escape chars from selected ranges.
 # Based on XKB Sinhala (phonetic)
 KEYS_MAP = {
-    # TODO Add ZWJ and ZWNJ (200D, 200C)
     # Row 1 ###########################################
     'q': Key('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
     'w': Key('ඇ', 'ඈ', '\u0DD0', '\u0DD1'),
@@ -125,6 +124,8 @@ MODMAP_EXTRA: dict[str, dict[str, str]] = {
         '.': '෴',
         # Extra broken bar intead z key in XKB
         '\u007C': '\u00A6',
+        # Special whitespaces
+        'zwj': 'zwnj',
     }
 }
 
@@ -179,6 +180,15 @@ TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement | None]] = {
     ('m', Placement.NE): ('m', Placement.NW),  # "
 }
 
+# Add additional characters to arbitrary places.
+# Syntax is CHAR: POSITION, where POSITION is a pari as in TRANSITIONS_MAP.
+#
+CHARS_EXTRA = {
+    # In XKB ZWJ is on `/` key, and ZWNJ is on spacebar
+    'zwj': ('m', Placement.SE),
+}
+
+
 # Default filename. Output path can be overrided with `-o` flag also.
 LAYOUT_FILENAME = 'sinhala_phonetic.xml'
 
@@ -195,6 +205,10 @@ REFERENCE_LAYOUT_FILE = BASE_DIR / 'srcs/layouts/latn_qwerty_us.xml'
 
 LOGGER = logging.getLogger(__name__)
 KeysMapType = list[list[ElementTree.Element]]
+
+
+class LayoutGenError(RuntimeError):
+    ...
 
 
 def xml_elem_to_str(element: ElementTree.Element) -> str:
@@ -266,12 +280,32 @@ class LayoutBuilder:
                         f'Transition of {transited} to'
                         f' {new_key.get(Placement.C)}:{k} conflictls with'
                         f' existing value "{val}"')
-                    raise RuntimeError(msg)
+                    raise LayoutGenError(msg)
                 new_key.set(k, val)
+
+    @staticmethod
+    def _add_extra_chars_to_ref_map(
+        coord_map: dict[str, tuple[int, int]],
+        new_map: KeysMapType
+    ) -> None:
+        for char, (to_key_name, to_plc) in CHARS_EXTRA.items():
+            if not (to_coord := coord_map.get(to_key_name)):
+                msg = f'Trying to add "{char}" to missing key "{to_key_name}"'
+                raise LayoutGenError(msg)
+            row_num, key_num = to_coord
+            key = new_map[row_num][key_num]
+            if (existing := key.get(to_plc)) is not None:
+                msg = f'Trying to add char to <{to_key_name}:{to_plc}>, but already contains "{existing}"'
+                raise LayoutGenError(msg)
+            key.set(to_plc, char)
+            LOGGER.info(
+                'Added "%s" to <%s:%s>',
+                char, to_key_name, to_plc)
+
 
     @classmethod
     def _apply_transitions(cls, ref_map: list) -> list:
-        coord_map = {}
+        coord_map: dict[str, tuple[int, int]] = {}
 
         coordinates = [
             (row_num, key_num)
@@ -285,42 +319,45 @@ class LayoutBuilder:
             key_name = key.get(Placement.C)
             if key_name in coord_map:
                 msg = f'Duplicated value "{key_name}" in central position'
-                raise RuntimeError(msg)
+                raise LayoutGenError(msg)
             coord_map[key_name] = (row_num, key_num)
 
         # Make new map with empty keys
         result_map = [[ElementTree.Element('key') for key in row] for row in ref_map]
 
-        ## Place by transitions map on new places
+        # Place by transitions map on new places
         for (from_key_name, from_plc), (to_key_name, to_plc) in TRANSITIONS_MAP.items():
             if Placement.C in (from_plc, to_plc):
                 raise NotImplementedError('Transition from or to placment "c"')
             if not (from_coord := coord_map.get(from_key_name)):
-                raise RuntimeError(f'Transition from missing key {from_key_name}')
+                raise LayoutGenError(f'Transition from missing key {from_key_name}')
             if not (to_coord := coord_map.get(to_key_name)):
-                raise RuntimeError(f'Transition to missing key {to_key_name}')
+                raise LayoutGenError(f'Transition to missing key {to_key_name}')
             from_key = ref_map[from_coord[0]][from_coord[1]]
             to_key = result_map[to_coord[0]][to_coord[1]]
             try:
                 val = from_key.attrib.pop(from_plc)
             except KeyError:
                 msg = f'No value in key {from_key_name}, placement {from_plc} to move'
-                raise RuntimeError(msg)
-            if to_key.get(to_plc):
-                msg = f'Second transition to key {to_key_name}, placement {to_plc}'
-                raise RuntimeError(msg)
+                raise LayoutGenError(msg)
             if to_plc is not None:
+                if to_key.get(to_plc):
+                    msg = f'Second transition to key {to_key_name}, placement {to_plc}'
+                    raise LayoutGenError(msg)
                 to_key.set(to_plc, val)
                 LOGGER.info(
-                    'Moved "%s" from %s:%s to %s:%s',
+                    'Moved "%s" from <%s:%s> to <%s:%s>',
                     val, from_key_name, from_plc, to_key_name, to_plc)
             else:
                 LOGGER.info(
-                    'Deleted "%s" from %s:%s',
+                    'Deleted "%s" from <%s:%s>',
                     val, from_key_name, from_plc)
 
         # Fill new map with other values
         cls._move_untransited_to_new_map(ref_map, new_map=result_map)
+
+        # Add additional characters
+        cls._add_extra_chars_to_ref_map(coord_map, new_map=result_map)
 
         return result_map
 
@@ -356,7 +393,7 @@ class LayoutBuilder:
                 key_a = new_key_entry[from_level]
                 key_b = new_char
                 if key_a is None:
-                    raise RuntimeError(f'Tried to modife {key_a} to {key_b}')
+                    raise LayoutGenError(f'Tried to modife {key_a} to {key_b}')
                 ElementTree.SubElement(self._modmap, modkey, a=key_a, b=key_b)
             else:
                 placement = Placement(placement_spec)
@@ -370,7 +407,6 @@ class LayoutBuilder:
                 LOGGER.info('Adding modmap %s "%s" -> "%s"', modkey, a, b)
                 ElementTree.SubElement(modmap, modkey, a=a, b=b)
         return modmap
-
 
     def build(self) -> None:
         raw_ref_rows = self._parse_reference_layout()
