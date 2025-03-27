@@ -18,6 +18,9 @@
     <string name="pref_layouts_item">레이아웃 %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">레이아웃 제거</string>
     <string name="pref_custom_layout_title">사용자 정의 레이아웃</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">NumPad 표시</string>
     <string name="pref_show_numpad_never">안 함</string>
     <string name="pref_show_numpad_landscape">가로 모드에서만</string>
