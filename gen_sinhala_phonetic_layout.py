@@ -45,67 +45,38 @@ class Placement(StrEnum):
     W = 'w'
 
 
-class Key:
-    def __init__(
-        self,
-        l1: str | None,
-        l2: str | None,
-        l3: str | None,
-        l4: str | None
-    ) -> None:
-        self._values = (
-            self._clean_val(l1),
-            self._clean_val(l2),
-            self._clean_val(l3),
-            self._clean_val(l4),
-        )
-
-    @staticmethod
-    def _clean_val(val: None | str) -> None | str:
-        if not val:
-            return None
-        else:
-            return val
-
-    def __getitem__(self, index: int) -> str | None:
-        return self._values[index]
-
-    def __repr__(self) -> str:
-        return f'Key{self._values}'
-
-
 # Based on XKB Sinhala (phonetic)
 # TODO Chandrabindu
-KEYS_MAP = {
+KEYS_MAP: dict[str, tuple[str, str, str, str]] = {
     # Row 1 ###########################################
-    'q': Key('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
-    'w': Key('ඇ', 'ඈ', '\u0DD0', '\u0DD1'),
-    'e': Key('එ', 'ඒ', '\u0DD9', '\u0DDA'),
-    'r': Key('ර', '', '', ''),  # In XKB virama is on layer 2
-    't': Key('ත', 'ථ', 'ට', 'ඨ'),
-    'y': Key('ය', '', '', ''),  # In XKB virama is on layer 2
-    'u': Key('උ', 'ඌ', '\u0DD4', '\u0DD6'),
-    'i': Key('ඉ', 'ඊ', '\u0DD2', '\u0DD3'),
-    'o': Key('ඔ', 'ඕ', '\u0DDC', '\u0DDD'),
-    'p': Key('ප', 'ඵ', '', ''),
+    'q': ('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
+    'w': ('ඇ', 'ඈ', '\u0DD0', '\u0DD1'),
+    'e': ('එ', 'ඒ', '\u0DD9', '\u0DDA'),
+    'r': ('ර', '', '', ''),  # In XKB virama is on layer 2
+    't': ('ත', 'ථ', 'ට', 'ඨ'),
+    'y': ('ය', '', '', ''),  # In XKB virama is on layer 2
+    'u': ('උ', 'ඌ', '\u0DD4', '\u0DD6'),
+    'i': ('ඉ', 'ඊ', '\u0DD2', '\u0DD3'),
+    'o': ('ඔ', 'ඕ', '\u0DDC', '\u0DDD'),
+    'p': ('ප', 'ඵ', '', ''),
     # Row 2 ###########################################
-    'a': Key('අ', 'ආ', '\u0DCA', '\u0DCF'),
-    's': Key('ස', 'ශ', 'ෂ', ''),
-    'd': Key('ද', 'ධ', 'ඩ', 'ඪ'),
-    'f': Key('ෆ', '\u0D93', '', '\u0DDB'),  # In XKB aiyanna placed otherwise
-    'g': Key('ග', 'ඝ', 'ඟ', ''),
-    'h': Key('හ', '\u0D83', '\u0DDE', 'ඖ'),
-    'j': Key('ජ', 'ඣ', 'ඦ', ''),
-    'k': Key('ක', 'ඛ', 'ඦ', 'ඐ'),
-    'l': Key('ල', 'ළ', '\u0DDF', '\u0DF3'),
+    'a': ('අ', 'ආ', '\u0DCA', '\u0DCF'),
+    's': ('ස', 'ශ', 'ෂ', ''),
+    'd': ('ද', 'ධ', 'ඩ', 'ඪ'),
+    'f': ('ෆ', '\u0D93', '', '\u0DDB'),  # In XKB aiyanna placed otherwise
+    'g': ('ග', 'ඝ', 'ඟ', ''),
+    'h': ('හ', '\u0D83', '\u0DDE', 'ඖ'),
+    'j': ('ජ', 'ඣ', 'ඦ', ''),
+    'k': ('ක', 'ඛ', 'ඦ', 'ඐ'),
+    'l': ('ල', 'ළ', '\u0DDF', '\u0DF3'),
     # Row 3 ###########################################
-    'z': Key('ඤ', 'ඥ', '', ''),  # In XKB contains bar, broken bar
-    'x': Key('ඳ', 'ඬ', '', ''),
-    'c': Key('ච', 'ඡ', '', ''),
-    'v': Key('ව', '', '', ''),
-    'b': Key('බ', 'භ', '', ''),
-    'n': Key('න', 'ණ', '\u0D82', 'ඞ'),
-    'm': Key('ම', 'ඹ', '', ''),
+    'z': ('ඤ', 'ඥ', '', ''),  # In XKB contains bar, broken bar
+    'x': ('ඳ', 'ඬ', '', ''),
+    'c': ('ච', 'ඡ', '', ''),
+    'v': ('ව', '', '', ''),
+    'b': ('බ', 'භ', '', ''),
+    'n': ('න', 'ණ', '\u0D82', 'ඞ'),
+    'm': ('ම', 'ඹ', '', ''),
 }
 
 # How to place four levels of Key.
@@ -285,10 +256,10 @@ class LayoutBuilder:
 
     def __init__(
         self,
-        name: str | None = None,
-        script: str | None = None,
-        numpad_script: str | None = None,
-        comment: str | None = None,
+        name: str = '',
+        script: str = '',
+        numpad_script: str = '',
+        comment: str = '',
     ) -> None:
         """
         :param comment: MUST be a valid XML comment wrapped in <!-- tags -->
@@ -351,7 +322,6 @@ class LayoutBuilder:
             LOGGER.info(
                 'Added "%s" to <%s:%s>',
                 char, to_key_name, to_plc)
-
 
     @classmethod
     def _apply_transitions(cls, ref_map: list) -> list:
@@ -435,7 +405,7 @@ class LayoutBuilder:
             return key
 
         for level, placement_spec in LEVELS_MAP.items():
-            if (new_char := new_key_entry[level]) is None:
+            if not (new_char := new_key_entry[level]):
                 continue
             if '+' in placement_spec:
                 pair = placement_spec.split('+')
