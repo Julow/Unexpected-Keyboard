@@ -46,7 +46,6 @@ class Placement(StrEnum):
 
 
 # Based on XKB Sinhala (phonetic)
-# TODO Chandrabindu
 KEYS_MAP: dict[str, tuple[str, str, str, str]] = {
     # Row 1 ###########################################
     'q': ('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
@@ -95,7 +94,6 @@ LEVELS_MAP = {
 # Syntax:
 #   MODKEY: { A: B }
 #
-# TODO Moar numerics!
 MODMAP_EXTRA: dict[str, dict[str, str]] = {
     'shift': {
         # Astrological numbers
@@ -115,7 +113,12 @@ MODMAP_EXTRA: dict[str, dict[str, str]] = {
         '\u007C': '\u00A6',
         # Special whitespaces
         'zwj': 'zwnj',
-    }
+    },
+    # TODO Add archaic numbers?
+    'fn': {
+        # Sinhala candrabindu for Sanskrit
+        'ණ': '\u0D81',
+    },
 }
 
 # Table to move additional characters in reference layout.
