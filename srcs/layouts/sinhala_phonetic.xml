@@ -1,53 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version='1.0' encoding='utf-8'?>
 <!-- This file defines Sinhala layout.
 
 Based on XKB Sinhala (phonetic) layout.
-
-TODO Layers
-TODO Numbers
 -->
-
-<keyboard name="සිංහල" script="sinhala" numpad_script="sinhala">
+<keyboard name="සිංහල" script="sinhala">
   <row>
-    <key c="ඍ" ne="1" se="loc esc"/>
-    <key c="ඇ" nw="~" ne="2" sw="\@"/>
-    <key c="එ" nw="!" ne="3" sw="\#" se="loc €"/>
-    <key c="ර" ne="4" sw="$"/>
-    <key c="ත" ne="5" sw="%"/>
-    <key c="ය" ne="6" sw="^"/>
-    <key c="උ" ne="7" sw="&amp;"/>
-    <key c="ඉ" ne="8" sw="*"/>
-    <key c="ඔ" ne="9" sw="(" se=")"/>
-    <key c="ප" ne="0"/>
+    <key sw="loc esc" se="1" c="ඍ" ne="ඎ" />
+    <key se="2" c="ඇ" nw="~" sw="\@" ne="ඈ" />
+    <key se="3" c="එ" nw="!" sw="\#" ne="ඒ" />
+    <key nw="loc €" se="4" c="ර" sw="$" />
+    <key se="5" c="ත" sw="%" ne="ථ" />
+    <key se="6" c="ය" sw="^" />
+    <key se="7" c="උ" sw="&amp;" ne="ඌ" />
+    <key se="8" c="ඉ" sw="*" ne="ඊ" />
+    <key se="9" c="ඔ" sw="(" ne="ඕ" />
+    <key sw=")" se="0" c="ප" ne="ඵ" />
   </row>
-
   <row>
-    <key shift="0.5" c="අ" nw="loc tab" ne="`"/>
-    <key c="ස" ne="loc §" sw="loc ß"/>
-    <key c="ද"/>
-    <key c="ෆ"/>
-    <key c="ග" ne="-" sw="_"/>
-    <key c="හ" ne="=" sw="+"/>
-    <key c="ජ" se="}" sw="{"/>
-    <key c="ක" sw="[" se="]"/>
-    <key c="ල" ne="|" sw="\\"/>
+    <key nw="`" sw="loc tab" shift="0.5" c="අ" ne="ආ" />
+    <key nw="loc §" c="ස" sw="loc ß" ne="ශ" />
+    <key c="ද" ne="ධ" />
+    <key c="ෆ" ne="ඓ" />
+    <key nw="_" sw="-" c="ග" ne="ඝ" />
+    <key nw="+" sw="=" c="හ" ne="&#x0D83;" />
+    <key c="ජ" se="}" sw="{" ne="ඣ" />
+    <key c="ක" sw="[" se="]" ne="ඛ" />
+    <key nw="|" c="ල" sw="\\" ne="ළ" />
   </row>
-
   <row>
-    <key width="1.5" c="shift" ne="loc capslock"/>
-    <key c="ඤ"/>
-    <key c="ඳ" ne="loc †"/>
-    <key c="ච" ne="&lt;" sw="."/>
-    <key c="ව" ne="&gt;" sw=","/>
-    <key c="බ" ne="\?" sw="/"/>
-    <key c="න" ne=":" sw=";"/>
-    <key c="ම" ne="&quot;" sw="'"/>
-    <key width="1.5" c="backspace" ne="delete"/>
+    <key width="1.5" c="shift" ne="loc capslock" />
+    <key c="ඤ" ne="ඥ" />
+    <key nw="loc †" c="ඳ" ne="ඬ" />
+    <key nw="&lt;" c="ච" sw="." ne="ඡ" />
+    <key c="ව" ne="&gt;" sw="," />
+    <key nw="\?" c="බ" sw="/" ne="භ" />
+    <key nw=":" c="න" sw=";" ne="ණ" />
+    <key nw="&quot;" c="ම" sw="'" se="zwj" ne="ඹ" />
+    <key width="1.5" c="backspace" ne="delete" />
   </row>
-
   <modmap>
-    <!-- TODO -->
+    <shift a="ඍ" b="&#x0DD8;" />
+    <shift a="ඎ" b="ෲ" />
+    <shift a="ඇ" b="&#x0DD0;" />
+    <shift a="ඈ" b="&#x0DD1;" />
+    <shift a="එ" b="&#x0DD9;" />
+    <shift a="ඒ" b="&#x0DDA;" />
+    <shift a="ත" b="ට" />
+    <shift a="ථ" b="ඨ" />
+    <shift a="උ" b="&#x0DD4;" />
+    <shift a="ඌ" b="&#x0DD6;" />
+    <shift a="ඉ" b="&#x0DD2;" />
+    <shift a="ඊ" b="&#x0DD3;" />
+    <shift a="ඔ" b="&#x0DDC;" />
+    <shift a="ඕ" b="&#x0DDD;" />
+    <shift a="අ" b="&#x0DCA;" />
+    <shift a="ආ" b="&#x0DCF;" />
+    <shift a="ස" b="ෂ" />
+    <shift a="ද" b="ඩ" />
+    <shift a="ධ" b="ඪ" />
+    <shift a="ඓ" b="&#x0DDB;" />
+    <shift a="ග" b="ඟ" />
+    <shift a="හ" b="&#x0DDE;" />
+    <shift a="&#x0D83;" b="ඖ" />
+    <shift a="ජ" b="ඦ" />
+    <shift a="ක" b="ඦ" />
+    <shift a="ඛ" b="ඐ" />
+    <shift a="ල" b="&#x0DDF;" />
+    <shift a="ළ" b="ෳ" />
+    <shift a="න" b="&#x0D82;" />
+    <shift a="ණ" b="ඞ" />
+    <shift a="1" b="෧" />
+    <shift a="2" b="෨" />
+    <shift a="3" b="෩" />
+    <shift a="4" b="෪" />
+    <shift a="5" b="෫" />
+    <shift a="6" b="෬" />
+    <shift a="7" b="෭" />
+    <shift a="8" b="෮" />
+    <shift a="9" b="෯" />
+    <shift a="0" b="෦" />
+    <shift a="." b="෴" />
+    <shift a="|" b="¦" />
+    <shift a="zwj" b="zwnj" />
+    <fn a="ණ" b="&#x0D81;" />
   </modmap>
 </keyboard>
-
