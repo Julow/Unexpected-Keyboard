@@ -5,6 +5,9 @@
 Generator
 May be adoped
 Usage
+
+Uses c as indintifier
+
 Requires Python >= 3.8.
 Made with Python 3.13.
 """
@@ -59,15 +62,16 @@ class Key:
 
 
 # TODO Postprocessor to escape chars from selected ranges.
+# Based on XKB Sinhala (phonetic)
 KEYS_MAP = {
     # TODO Add ZWJ and ZWNJ (200D, 200C)
     # Row 1 ###########################################
     'q': Key('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
     'w': Key('ඇ', 'ඈ', '\u0DD0', '\u0DD1'),
     'e': Key('එ', 'ඒ', '\u0DD9', '\u0DDA'),
-    'r': Key('ර', '', '', ''),  # In XKB virama was on layer 2
+    'r': Key('ර', '', '', ''),  # In XKB virama is on layer 2
     't': Key('ත', 'ථ', 'ට', 'ඨ'),
-    'y': Key('ය', '', '', ''),  # In XKB virama was on layer 2
+    'y': Key('ය', '', '', ''),  # In XKB virama is on layer 2
     'u': Key('උ', 'ඌ', '\u0DD4', '\u0DD6'),
     'i': Key('ඉ', 'ඊ', '\u0DD2', '\u0DD3'),
     'o': Key('ඔ', 'ඕ', '\u0DDC', '\u0DDD'),
@@ -76,17 +80,14 @@ KEYS_MAP = {
     'a': Key('අ', 'ආ', '\u0DCA', '\u0DCF'),
     's': Key('ස', 'ශ', 'ෂ', ''),
     'd': Key('ද', 'ධ', 'ඩ', 'ඪ'),
-    # TODO Swap letter and sigh?
-    # FIXME
-    'f': Key('ෆ', '\u0DDB', 'ෛ', ''), # In XKB aiyanna is 1 level higher
+    'f': Key('ෆ', '\u0D93', '', '\u0DDB'),  # In XKB aiyanna placed otherwise
     'g': Key('ග', 'ඝ', 'ඟ', ''),
     'h': Key('හ', '\u0D83', '\u0DDE', 'ඖ'),
     'j': Key('ජ', 'ඣ', 'ඦ', ''),
     'k': Key('ක', 'ඛ', 'ඦ', 'ඐ'),
     'l': Key('ල', 'ළ', '\u0DDF', '\u0DF3'),
     # Row 3 ###########################################
-    # TODO Kunddaliya ෴
-    'z': Key('ඤ', 'ඥ', '\u007C', '\u00A6'),
+    'z': Key('ඤ', 'ඥ', '', ''),  # In XKB contains bar, broken bar
     'x': Key('ඳ', 'ඬ', '', ''),
     'c': Key('ච', 'ඡ', '', ''),
     'v': Key('ව', '', '', ''),
@@ -102,7 +103,11 @@ LAYERS_MAP = {
     3: '1+shift',
 }
 
-
+# Additional modify keys combinations.
+# Syntax:
+#   MODKEY: { A: B }
+#
+# TODO Moar numerics!
 MODMAP_EXTRA: dict[str, dict[str, str]] = {
     'shift': {
         # Astrological numbers
@@ -116,10 +121,24 @@ MODMAP_EXTRA: dict[str, dict[str, str]] = {
         '8': '෮',
         '9': '෯',
         '0': '෦',
+        # Kunddaliya
+        '.': '෴',
+        # Extra broken bar intead z key in XKB
+        '\u007C': '\u00A6',
     }
 }
 
-# TODO Doc not Placement.C
+# Table to move additional characters in reference layout.
+# Format is (CENTRAL_CHAR, PLACEMENT): (CENTRAL_CHAR, PLACEMENT). E. g. to move
+# char from key with central character "q", direction "se" to key with central
+# character "w", direction "sw", add line:
+#   ('q', Placement.SE): ('w', Placement.SW),
+#
+# To delete a char, use None as destination placement. E.g.:
+#   ('q', Placment.SE): ('q', None)
+#
+# Moving of main char in central placement is not supported.
+#
 TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement | None]] = {
     ('q', Placement.SE): ('q', Placement.SW),  # loc esc
     ('q', Placement.NE): ('q', Placement.SE),  # 1
@@ -151,7 +170,6 @@ TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement | None]] = {
     ('h', Placement.SW): ('h', Placement.NW),  # +
     ('h', Placement.NE): ('h', Placement.SW),  # =
 
-    # FIXME dup
     ('l', Placement.NE): ('l', Placement.NW),  # |
 
     ('x', Placement.NE): ('x', Placement.NW),  # loc †
@@ -161,6 +179,10 @@ TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement | None]] = {
     ('m', Placement.NE): ('m', Placement.NW),  # "
 }
 
+# Default filename. Output path can be overrided with `-o` flag also.
+LAYOUT_FILENAME = 'sinhala_phonetic.xml'
+
+# Will be placed after XML declaration. Need to have proper <!-- --> tags.
 COMMENT = '''
 <!-- This file defines Sinhala layout.
 
@@ -172,7 +194,6 @@ BASE_DIR = Path(__file__).parent
 REFERENCE_LAYOUT_FILE = BASE_DIR / 'srcs/layouts/latn_qwerty_us.xml'
 
 LOGGER = logging.getLogger(__name__)
-
 KeysMapType = list[list[ElementTree.Element]]
 
 
@@ -184,6 +205,7 @@ def xml_elem_to_str(element: ElementTree.Element) -> str:
 
 
 def keys_map_to_str(keys_map: KeysMapType) -> str:
+    """ Make laout rows map printable for debug purposes """
     result = '[\n'
     for row in keys_map:
         result += ' ' * 4
@@ -382,7 +404,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         '-o',
         '--output',
-        default=BASE_DIR / 'srcs/layouts/sinhala_phonetic.xml',
+        default=BASE_DIR / f'srcs/layouts/{LAYOUT_FILENAME}',
         help='File to write result, `-` for stdout')
     parser.add_argument(
         '-v',
