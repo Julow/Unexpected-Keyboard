@@ -22,9 +22,8 @@ conflicts e. g. when trying to move a symbol into occupied position.
 
   - Made with latn_qwerty_us.xml from commit `6b1551d`
   - Made with Python 3.13
-  - Requires Python >= 3.8
+  - Requires Python >= 3.11
 """
-# FIXME | annot >= ??
 
 import argparse
 import logging
