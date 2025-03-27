@@ -2,13 +2,13 @@
 <resources>
   <string-array name="pref_show_number_row_values">
     <item>no_number_row</item>
-    <item>symbols</item>
     <item>no_symbols</item>
+    <item>symbols</item>
   </string-array>
   <string-array name="pref_show_number_row_entries">
     <item>@string/pref_show_number_row_no_number_row</item>
-    <item>@string/pref_show_number_row_symbols</item>
     <item>@string/pref_show_number_row_no_symbols</item>
+    <item>@string/pref_show_number_row_symbols</item>
   </string-array>
   <string-array name="pref_show_numpad_values">
     <item>never</item>
