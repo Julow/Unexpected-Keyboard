@@ -219,7 +219,7 @@ public final class Pointers implements Handler.Callback
    * [direction] is an int between [0] and [15] that represent 16 sections of a
    * circle, clockwise, starting at the top.
    */
-  KeyValue getKeyAtDirection(KeyboardData.Key k, int direction)
+  static KeyValue getKeyAtDirection(KeyboardData.Key k, int direction)
   {
     return k.keys[DIRECTION_TO_INDEX[direction]];
   }
@@ -234,16 +234,24 @@ public final class Pointers implements Handler.Callback
   private KeyValue getNearestKeyAtDirection(Pointer ptr, int direction)
   {
     KeyValue k;
-    // [i] is [0, -1, 1, -2, 2], scanning a 1/4 of the circle's area, centered
-    // on the initial direction.
-    for (int i = 0; i > -2; i = (~i>>31) - i)
+    // [i] is [0, -1, +1, ..., -3, +3], scanning 43% of the circle's area,
+    // centered on the initial swipe direction.
+    for (int i = 0; i > -4; i = (~i>>31) - i)
     {
       int d = (direction + i + 16) % 16;
       // Don't make the difference between a key that doesn't exist and a key
       // that is removed by [_handler]. Triggers side effects.
       k = _handler.modifyKey(getKeyAtDirection(ptr.key, d), ptr.modifiers);
       if (k != null)
+      {
+        // When the nearest key is a slider, it is only selected if it's placed
+        // within 18% of the original swipe direction.
+        // This reduces accidental swipes on the slider and allow typing circle
+        // gestures without being interrupted by the slider.
+        if (k.getKind() == KeyValue.Kind.Slider && Math.abs(i) >= 2)
+          continue;
         return k;
+      }
     }
     return null;
   }
