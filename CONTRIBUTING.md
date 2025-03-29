@@ -190,18 +190,46 @@ As translations need to be updated regularly, you can subscribe to this issue
 to receive a notification when an update is needed:
 https://github.com/Julow/Unexpected-Keyboard/issues/373
 
-### Adding Compose key sequences
+### Adding symbols to Shift, Fn, Compose and other modifiers
 
-New Compose sequences can be added into `srcs/compose/compose/extra.json`.
-If a entirely new family of sequences were to be added, a new `.json` file can
-be created in the same directory to host them.
+New key combinations can be added to builtin modifiers in the following files:
 
-### Adding key combinations
+- Shift in `srcs/compose/shift.json`.
+- Fn in `srcs/compose/fn.json`.
+- Compose in `srcs/compose/compose/extra.json`.
+- Other modifiers are defined in the `accent_*.json` files in `srcs/compose`.
 
-Key combinations are defined in `srcs/juloo.keyboard2/KeyModifier.java`.
-For example, keys modified by the `Fn` key are defined in method
-`apply_fn_char`.
+Generated code must then be updated by running:
 
-Keys with special meaning are defined in `KeyValue.java` in method
-`getKeyByName`. Their special action are defined in `KeyEventHandler.java` in
-method `key_up`
+```
+./gradlew compileComposeSequences
+```
+
+These files describe each symbols that get transformed when a given modifier is
+activated, in JSON format. For example:
+
+Example from `fn.json`, when `Fn` is activated, `<` becomes `«`:
+```json
+{
+  "<": "«",
+}
+```
+
+The result of a sequence can be a key name. See the list of key names in
+[doc/Possible-key-values.md](doc/Possible-key-values.md). For example from
+`fn.json`, when `Fn` is activated, space becomes `nbsp`:
+```json
+{
+  " ": "nbsp",
+}
+```
+
+Compose sequences are made of several steps. For example, the sequence
+`Compose V s = Š` is defined as:
+```json
+{
+  "V": {
+    "s": "Š"
+  }
+}
+```
