@@ -599,8 +599,10 @@ XCOMM Latin Extended-A
 <Multi_key> <c> <apostrophe>		: "ć"	U0107 # LATIN SMALL LETTER C WITH ACUTE
 <dead_circumflex> <C>			: "Ĉ"	U0108 # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <C>		: "Ĉ"	U0108 # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
+<Multi_key> <C> <asciicircum>		: "Ĉ"	U0108 # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
 <dead_circumflex> <c>			: "ĉ"	U0109 # LATIN SMALL LETTER C WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <c>		: "ĉ"	U0109 # LATIN SMALL LETTER C WITH CIRCUMFLEX
+<Multi_key> <c> <asciicircum>		: "ĉ"	U0109 # LATIN SMALL LETTER C WITH CIRCUMFLEX
 <dead_abovedot> <C>			: "Ċ"	U010A # LATIN CAPITAL LETTER C WITH DOT ABOVE
 <Multi_key> <period> <C>		: "Ċ"	U010A # LATIN CAPITAL LETTER C WITH DOT ABOVE
 <Multi_key> <C> <period>		: "Ċ"	U010A # LATIN CAPITAL LETTER C WITH DOT ABOVE
@@ -685,8 +687,10 @@ XCOMM Latin Extended-A
 <Multi_key> <e> <less>			: "ě"	U011B # LATIN SMALL LETTER E WITH CARON
 <dead_circumflex> <G>			: "Ĝ"	U011C # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <G>		: "Ĝ"	U011C # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
+<Multi_key> <G> <asciicircum>		: "Ĝ"	U011C # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
 <dead_circumflex> <g>			: "ĝ"	U011D # LATIN SMALL LETTER G WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <g>		: "ĝ"	U011D # LATIN SMALL LETTER G WITH CIRCUMFLEX
+<Multi_key> <g> <asciicircum>		: "ĝ"	U011D # LATIN SMALL LETTER G WITH CIRCUMFLEX
 <dead_breve> <G>			: "Ğ"	U011E # LATIN CAPITAL LETTER G WITH BREVE
 <Multi_key> <U> <G>			: "Ğ"	U011E # LATIN CAPITAL LETTER G WITH BREVE
 <Multi_key> <u> <G>			: "Ğ"	U011E # LATIN CAPITAL LETTER G WITH BREVE
@@ -719,8 +723,10 @@ XCOMM Latin Extended-A
 <Multi_key> <cedilla> <g>		: "ģ"	U0123 # LATIN SMALL LETTER G WITH CEDILLA
 <dead_circumflex> <H>			: "Ĥ"	U0124 # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <H>		: "Ĥ"	U0124 # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
+<Multi_key> <H> <asciicircum>		: "Ĥ"	U0124 # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
 <dead_circumflex> <h>			: "ĥ"	U0125 # LATIN SMALL LETTER H WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <h>		: "ĥ"	U0125 # LATIN SMALL LETTER H WITH CIRCUMFLEX
+<Multi_key> <h> <asciicircum>		: "ĥ"	U0125 # LATIN SMALL LETTER H WITH CIRCUMFLEX
 <dead_stroke> <H>			: "Ħ"	U0126 # LATIN CAPITAL LETTER H WITH STROKE
 <Multi_key> <slash> <H>			: "Ħ"	U0126 # LATIN CAPITAL LETTER H WITH STROKE
 <Multi_key> <KP_Divide> <H>		: "Ħ"	U0126 # LATIN CAPITAL LETTER H WITH STROKE
@@ -771,8 +777,10 @@ XCOMM Latin Extended-A
 <Multi_key> <period> <i>		: "ı"	U0131 # LATIN SMALL LETTER DOTLESS I
 <dead_circumflex> <J>			: "Ĵ"	U0134 # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <J>		: "Ĵ"	U0134 # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
+<Multi_key> <J> <asciicircum>		: "Ĵ"	U0134 # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
 <dead_circumflex> <j>			: "ĵ"	U0135 # LATIN SMALL LETTER J WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <j>		: "ĵ"	U0135 # LATIN SMALL LETTER J WITH CIRCUMFLEX
+<Multi_key> <j> <asciicircum>		: "ĵ"	U0135 # LATIN SMALL LETTER J WITH CIRCUMFLEX
 <dead_cedilla> <K>			: "Ķ"	U0136 # LATIN CAPITAL LETTER K WITH CEDILLA
 <Multi_key> <comma> <K>			: "Ķ"	U0136 # LATIN CAPITAL LETTER K WITH CEDILLA
 <Multi_key> <K> <comma>			: "Ķ"	U0136 # LATIN CAPITAL LETTER K WITH CEDILLA
@@ -902,8 +910,10 @@ XCOMM Latin Extended-A
 <Multi_key> <s> <apostrophe>		: "ś"	U015B # LATIN SMALL LETTER S WITH ACUTE
 <dead_circumflex> <S>			: "Ŝ"	U015C # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <S>		: "Ŝ"	U015C # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
+<Multi_key> <S> <asciicircum>		: "Ŝ"	U015C # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
 <dead_circumflex> <s>			: "ŝ"	U015D # LATIN SMALL LETTER S WITH CIRCUMFLEX
 <Multi_key> <asciicircum> <s>		: "ŝ"	U015D # LATIN SMALL LETTER S WITH CIRCUMFLEX
+<Multi_key> <s> <asciicircum>		: "ŝ"	U015D # LATIN SMALL LETTER S WITH CIRCUMFLEX
 <dead_cedilla> <S>			: "Ş"	U015E # LATIN CAPITAL LETTER S WITH CEDILLA
 <Multi_key> <comma> <S>			: "Ş"	U015E # LATIN CAPITAL LETTER S WITH CEDILLA
 <Multi_key> <S> <comma>			: "Ş"	U015E # LATIN CAPITAL LETTER S WITH CEDILLA
