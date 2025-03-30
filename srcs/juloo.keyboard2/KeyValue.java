@@ -513,8 +513,24 @@ public final class KeyValue implements Comparable<KeyValue>
     }
   }
 
+  /** Check is symbol from Sinhala Unicode ranges. */
+  public static boolean isSinhalaChar(String name)
+  {
+    if (name.length() == 1) {
+      int code = name.charAt(0);
+      // Sinhala Unicode block
+      if (code >= 0xD80 && code <= 0xDFF) return true;
+      // Sinhala Archaic Numbers Unicode block
+      if (code >= 0x111E0 && code <= 0x111FF) return true;
+      // Rupee sign. Is not exclusively Sinhalese!
+      if (code == 0x20A8) return true;
+    }
+    return false;
+  }
+
   public static KeyValue getSpecialKeyByName(String name)
   {
+    if (isSinhalaChar(name)) return makeStringKey(name, FLAG_SMALLER_FONT);
     switch (name)
     {
       /* These symbols have special meaning when in `srcs/layouts` and are
