@@ -1065,6 +1065,7 @@ XCOMM Latin Extended-B
 <dead_stroke> <z>				: "ƶ"	U01B6 # LATIN SMALL LETTER Z WITH STROKE
 <Multi_key> <slash> <z>				: "ƶ"	U01B6 # LATIN SMALL LETTER Z WITH STROKE
 <Multi_key> <KP_Divide> <z>			: "ƶ"	U01B6 # LATIN SMALL LETTER Z WITH STROKE
+<Multi_key> <Z> <H>				: "Ʒ"	U01B7 # LATIN CAPITAL LETTER EZH
 <dead_caron> <A>				: "Ǎ"	U01CD # LATIN CAPITAL LETTER A WITH CARON
 <Multi_key> <c> <A>				: "Ǎ"	U01CD # LATIN CAPITAL LETTER A WITH CARON
 <Multi_key> <v> <A>				: "Ǎ"	U01CD # LATIN CAPITAL LETTER A WITH CARON
@@ -1416,6 +1417,7 @@ XCOMM IPA Extensions
 <dead_stroke> <i>				: "ɨ"	U0268 # LATIN SMALL LETTER I WITH STROKE
 <Multi_key> <slash> <i>				: "ɨ"	U0268 # LATIN SMALL LETTER I WITH STROKE
 <Multi_key> <KP_Divide> <i>			: "ɨ"	U0268 # LATIN SMALL LETTER I WITH STROKE
+<Multi_key> <z> <h>				: "ʒ"	U0292 # LATIN SMALL LETTER EZH
 
 XCOMM Spacing Modifier Letters
 <Multi_key> <slash> <U0294>				: "ʡ"	U02A1 # LATIN LETTER GLOTTAL STOP WITH STROKE
