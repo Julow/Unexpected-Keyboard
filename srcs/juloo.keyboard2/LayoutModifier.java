@@ -11,7 +11,8 @@ public final class LayoutModifier
 {
   static Config globalConfig;
   static KeyboardData.Row bottom_row;
-  static KeyboardData.Row number_row;
+  static KeyboardData.Row number_row_no_symbols;
+  static KeyboardData.Row number_row_symbols;
   static KeyboardData num_pad;
 
   /** Update the layout according to the configuration.
@@ -44,7 +45,7 @@ public final class LayoutModifier
     }
     else if (globalConfig.add_number_row && !kw.embedded_number_row) // The numpad removes the number row
     {
-      added_number_row = modify_number_row(number_row, kw);
+      added_number_row = modify_number_row(globalConfig.number_row_symbols ? number_row_symbols : number_row_no_symbols, kw);
       remove_keys.addAll(added_number_row.getKeys(0).keySet());
     }
     // Add the bottom row before computing the extra keys
@@ -204,8 +205,9 @@ public final class LayoutModifier
     globalConfig = globalConfig_;
     try
     {
-      number_row = KeyboardData.load_number_row(res);
-      bottom_row = KeyboardData.load_bottom_row(res);
+      number_row_no_symbols = KeyboardData.load_row(res, R.xml.number_row_no_symbols);
+      number_row_symbols = KeyboardData.load_row(res, R.xml.number_row);
+      bottom_row = KeyboardData.load_row(res, R.xml.bottom_row);
       num_pad = KeyboardData.load_num_pad(res);
     }
     catch (Exception e)

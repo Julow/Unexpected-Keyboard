@@ -4,3 +4,5 @@ Improved space bar slider and added selection mode.
 Lock shift with a circle gesture.
 Improvements to layouts.
 Various bug fixes and improvements to themes.
+
+Huge thanks to the contributors: @0skar2 @chuckwagoncomputing @dzaima @eandersons Lokesh Kumar @lrvideckis @ms-jagadeeshan @quantenzitrone @Sestowner @solokot @Spike-from-NH @srikanban @tenextractor

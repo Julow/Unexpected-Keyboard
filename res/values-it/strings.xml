@@ -18,6 +18,9 @@
     <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
     <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
     <!-- <string name="pref_custom_layout_title">Custom layout</string> -->
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <!-- <string name="pref_show_numpad_title">Show NumPad</string> -->
     <!-- <string name="pref_show_numpad_never">Never</string> -->
     <!-- <string name="pref_show_numpad_landscape">Only in landscape mode</string> -->

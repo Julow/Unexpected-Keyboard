@@ -51,8 +51,14 @@ public class Emoji
       if ((line = reader.readLine()) != null)
       {
         String[] tokens = line.split(" ");
-        for (int i = 0; i < tokens.length-1; i++)
-          _groups.add(_all.subList(Integer.parseInt(tokens[i]), Integer.parseInt(tokens[i+1])));
+        int last = 0;
+        for (int i = 1; i < tokens.length; i++)
+        {
+          int next = Integer.parseInt(tokens[i]);
+          _groups.add(_all.subList(last, next));
+          last = next;
+        }
+        _groups.add(_all.subList(last, _all.size()));
       }
     }
     catch (IOException e) { Logs.exn("Emoji.init() failed", e); }

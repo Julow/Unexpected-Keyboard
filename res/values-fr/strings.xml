@@ -18,6 +18,9 @@
     <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Supprimer</string>
     <string name="pref_custom_layout_title">Disposition personnalisée</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Afficher le pavé numérique</string>
     <string name="pref_show_numpad_never">Jamais</string>
     <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
