@@ -31,12 +31,12 @@ jobs:
     - name: Build debug APK
       uses: gradle/gradle-build-action@v3
       env:
-        DEBUG_KEYSTORE: "debug.keystore"
-        DEBUG_KEYSTORE_PASSWORD: debug0
-        DEBUG_KEY_ALIAS: debug
-        DEBUG_KEY_PASSWORD: debug0
+        RELEASE_KEYSTORE: "debug.keystore"
+        RELEASE_KEYSTORE_PASSWORD: debug0
+        RELEASE_KEY_ALIAS: debug
+        RELEASE_KEY_PASSWORD: debug0
       with:
-        arguments: assembleDebug
+        arguments: assembleRelease
     - name: Artifact naming
       run: |
         artifact="${{github.repository_owner}} ${{github.ref_name}}"
@@ -46,4 +46,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: "${{env.artifact}} debug_apk"
-        path: build/outputs/apk/debug/*.apk
+        path: build/outputs/apk/release/*.apk
