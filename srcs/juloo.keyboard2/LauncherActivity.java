@@ -42,6 +42,7 @@ public class LauncherActivity extends Activity implements Handler.Callback
     if (VERSION.SDK_INT >= 28)
       _tryhere_area.addOnUnhandledKeyEventListener(
           this.new Tryhere_OnUnhandledKeyEventListener());
+    _handler = new Handler(getMainLooper(), this);
   }
 
   @Override
@@ -52,7 +53,7 @@ public class LauncherActivity extends Activity implements Handler.Callback
     _animations.add(find_anim(R.id.launcher_anim_swipe));
     _animations.add(find_anim(R.id.launcher_anim_round_trip));
     _animations.add(find_anim(R.id.launcher_anim_circle));
-    _handler = new Handler(getMainLooper(), this);
+    _handler.removeMessages(0);
     _handler.sendEmptyMessageDelayed(0, 500);
   }
 
