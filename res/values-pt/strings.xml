@@ -4,7 +4,6 @@
     <string name="app_name_debug">Teclado Unexpected</string>
     <string name="short_description">Um teclado virtual leve para desenvolvedores.</string>
     <string name="store_description">A principal característica é que você pode digitar mais caracteres deslizando as teclas para os cantos.\n\nO app foi criado originalmente para desenvolvedores que usam Termux.\nAgora aperfeiçoado para o uso diário.\n\nEste aplicativo não contém anúncios, não faz nenhuma solicitação de rede e é Open Source.</string>
-    <string name="settings_activity_label">Configurações</string>
     <string name="pref_portrait">No modo retrato</string>
     <string name="pref_landscape">No modo paisagem</string>
     <string name="pref_category_layout">Layout</string>

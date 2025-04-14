@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (gỡ lỗi)</string>
     <string name="short_description">Bàn phím ảo gọn nhẹ và tôn trọng quyền riêng tư cho Android.</string>
     <string name="store_description">Chức năng chính là dễ dàng gõ nhiều ký tự bằng cách kéo phím về góc của nó.\n\nỨng dụng này ban đầu được thiết kế cho các lập trình viên dùng Termux.\nBây giờ đã hoàn hảo cho việc sử dụng hàng ngày.\n\nỨng dụng này không chứa quảng cáo, không cần đến mạng, và có mã nguồn mở.</string>
-    <string name="settings_activity_label">Cài đặt Unexpected Keyboard</string>
     <string name="pref_portrait">Trong chế độ chân dung</string>
     <string name="pref_landscape">Trong chế độ phong cảnh</string>
     <string name="pref_category_layout">Bố cục</string>

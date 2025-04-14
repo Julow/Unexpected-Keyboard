@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (debug)</string>
     <string name="short_description">适用于 Android 的轻量级、注重隐私的虚拟键盘。</string>
     <string name="store_description">此应用的主要功能是，通过将按键沿四角滑动，您可以输入更多字符。\n\n此应用最初是为使用 Termux 的程序员而设计的。\n现在对于日常使用来说也很完美。\n\n此应用没有广告，不会发送任何网络请求，而且是开源的。</string>
-    <string name="settings_activity_label">Unexpected Keyboard 设置</string>
     <string name="pref_portrait">在竖屏模式下</string>
     <string name="pref_landscape">在横屏模式下</string>
     <string name="pref_category_layout">布局</string>
