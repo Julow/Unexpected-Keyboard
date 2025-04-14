@@ -8,8 +8,8 @@ public final class KeyModifier
 {
   /** The optional modmap takes priority over modifiers usual behaviors. Set to
       [null] to disable. */
-  private static KeyboardData.Modmap _modmap = null;
-  public static void set_modmap(KeyboardData.Modmap mm)
+  private static Modmap _modmap = null;
+  public static void set_modmap(Modmap mm)
   {
     _modmap = mm;
   }
@@ -190,7 +190,7 @@ public final class KeyModifier
   {
     if (_modmap != null)
     {
-      KeyValue mapped = _modmap.shift.get(k);
+      KeyValue mapped = _modmap.get(Modmap.M.Shift, k);
       if (mapped != null)
         return mapped;
     }
@@ -215,7 +215,7 @@ public final class KeyModifier
   {
     if (_modmap != null)
     {
-      KeyValue mapped = _modmap.fn.get(k);
+      KeyValue mapped = _modmap.get(Modmap.M.Fn, k);
       if (mapped != null)
         return mapped;
     }
@@ -289,7 +289,7 @@ public final class KeyModifier
   {
     if (_modmap != null)
     {
-      KeyValue mapped = _modmap.ctrl.get(k);
+      KeyValue mapped = _modmap.get(Modmap.M.Ctrl, k);
       // Do not return the modified character right away, first turn it into a
       // key event.
       if (mapped != null)
