@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Coller</string>
     <string name="key_descr_cut">Couper</string>
     <string name="key_descr_selectAll">Sel. tout</string>
-    <string name="key_descr_shareText">Partager</string>
     <string name="key_descr_pasteAsPlainText">Copier en texte brut</string>
     <string name="key_descr_undo">Annuler</string>
     <string name="key_descr_redo">Refaire</string>

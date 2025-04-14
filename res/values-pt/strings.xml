@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Colar</string>
     <string name="key_descr_cut">Recortar</string>
     <string name="key_descr_selectAll">Selecionar tudo</string>
-    <string name="key_descr_shareText">Compartilhar texto</string>
     <string name="key_descr_pasteAsPlainText">Colar texto não formatado</string>
     <string name="key_descr_undo">Desfazer</string>
     <string name="key_descr_redo">Refazer</string>

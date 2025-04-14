@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Ielīmēt</string>
     <string name="key_descr_cut">Izgriezt</string>
     <string name="key_descr_selectAll">Iezīmēt visu</string>
-    <string name="key_descr_shareText">Kopīgot tekstu</string>
     <string name="key_descr_pasteAsPlainText">Ielīmēt kā vienkāršu tekstu</string>
     <string name="key_descr_undo">Atsaukt</string>
     <string name="key_descr_redo">Atatsaukt</string>

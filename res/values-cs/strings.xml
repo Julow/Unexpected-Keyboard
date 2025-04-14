@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Vložit</string>
     <string name="key_descr_cut">Vyjmout</string>
     <string name="key_descr_selectAll">Označit vše</string>
-    <string name="key_descr_shareText">Sdílet text</string>
     <string name="key_descr_pasteAsPlainText">Vložit jako prostý text</string>
     <string name="key_descr_undo">Zpět</string>
     <string name="key_descr_redo">Znovu</string>

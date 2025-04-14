@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Yapıştır</string>
     <string name="key_descr_cut">Kes</string>
     <string name="key_descr_selectAll">Tümünü seç</string>
-    <string name="key_descr_shareText">Metni paylaş</string>
     <string name="key_descr_pasteAsPlainText">Düz metin olarak yapıştır</string>
     <string name="key_descr_undo">Geri al</string>
     <string name="key_descr_redo">İleri al</string>

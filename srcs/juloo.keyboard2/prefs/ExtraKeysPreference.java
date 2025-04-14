@@ -189,7 +189,6 @@ public class ExtraKeysPreference extends PreferenceCategory
         additional_info = format_key_combination_gesture(res, "forward_delete");
         break;
       case "selectAll": id = R.string.key_descr_selectAll; break;
-      case "shareText": id = R.string.key_descr_shareText; break;
       case "subscript": id = R.string.key_descr_subscript; break;
       case "superscript": id = R.string.key_descr_superscript; break;
       case "switch_greekmath": id = R.string.key_descr_switch_greekmath; break;

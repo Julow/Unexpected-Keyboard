@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Вставить</string>
     <string name="key_descr_cut">Вырезать</string>
     <string name="key_descr_selectAll">Выбрать все</string>
-    <string name="key_descr_shareText">Поделиться текстом</string>
     <string name="key_descr_pasteAsPlainText">Вставить как простой текст</string>
     <string name="key_descr_undo">Отменить</string>
     <string name="key_descr_redo">Повторить</string>

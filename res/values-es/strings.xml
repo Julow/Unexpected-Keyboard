@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Pegar</string>
     <string name="key_descr_cut">Cortar</string>
     <string name="key_descr_selectAll">Seleccionar todo</string>
-    <string name="key_descr_shareText">Compartir texto</string>
     <string name="key_descr_pasteAsPlainText">Pegar como texto sin formato</string>
     <string name="key_descr_undo">Deshacer</string>
     <string name="key_descr_redo">Rehacer</string>

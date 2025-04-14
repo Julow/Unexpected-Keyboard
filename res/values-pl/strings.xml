@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Wklej</string>
     <string name="key_descr_cut">Wytnij</string>
     <string name="key_descr_selectAll">Zaznacz wszystko</string>
-    <string name="key_descr_shareText">Udostępnij tekst</string>
     <string name="key_descr_pasteAsPlainText">Wklej sam tekst</string>
     <string name="key_descr_undo">Cofnij</string>
     <string name="key_descr_redo">Ponów</string>

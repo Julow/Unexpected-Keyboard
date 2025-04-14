@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Einfügen</string>
     <string name="key_descr_cut">Ausschneiden</string>
     <string name="key_descr_selectAll">Alles auswählen</string>
-    <string name="key_descr_shareText">Text teilen</string>
     <string name="key_descr_pasteAsPlainText">Unformatiert einfügen</string>
     <string name="key_descr_undo">Rückgängig</string>
     <string name="key_descr_redo">Wiederholen</string>

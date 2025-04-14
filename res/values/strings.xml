@@ -106,7 +106,6 @@
     <string name="key_descr_paste">Paste</string>
     <string name="key_descr_cut">Cut</string>
     <string name="key_descr_selectAll">Select all</string>
-    <string name="key_descr_shareText">Share text</string>
     <string name="key_descr_pasteAsPlainText">Paste as plain text</string>
     <string name="key_descr_undo">Undo</string>
     <string name="key_descr_redo">Redo</string>

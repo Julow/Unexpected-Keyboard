@@ -106,7 +106,6 @@
     <string name="key_descr_paste">붙여넣기</string>
     <string name="key_descr_cut">자르기</string>
     <string name="key_descr_selectAll">전부 선택</string>
-    <string name="key_descr_shareText">텍스트 공유</string>
     <string name="key_descr_pasteAsPlainText">일반 텍스트로 붙여넣기</string>
     <string name="key_descr_undo">실행 취소</string>
     <string name="key_descr_redo">다시 실행</string>
