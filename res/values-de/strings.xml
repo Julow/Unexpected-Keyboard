@@ -128,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Zuletzt kopierter Text</string>
     <string name="clipboard_pin_heading">Angeheftet</string>
-    <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <string name="clipboard_remove_confirmed">Ja</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>
