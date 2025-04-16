@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import androidx.window.layout.WindowInfoTracker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import juloo.keyboard2.prefs.LayoutsPreference;
 public final class Config
 {
   private final SharedPreferences _prefs;
+  private final FoldStateTracker _foldStateTracker;
 
   // From resources
   public final float marginTop;
@@ -72,15 +74,19 @@ public final class Config
 
   public final IKeyEventHandler handler;
   public boolean orientation_landscape = false;
+  public boolean foldable_unfolded = false;
   /** Index in 'layouts' of the currently used layout. See
       [get_current_layout()] and [set_current_layout()]. */
   int current_layout_portrait;
   int current_layout_landscape;
+  int current_layout_unfolded_portrait;
+  int current_layout_unfolded_landscape;
   public int bottomInsetMin;
 
-  private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h)
+  private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h, FoldStateTracker foldStateTracker)
   {
     _prefs = prefs;
+    _foldStateTracker = foldStateTracker;
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
@@ -104,6 +110,8 @@ public final class Config
   {
     DisplayMetrics dm = res.getDisplayMetrics();
     orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    foldable_unfolded = _foldStateTracker.isUnfolded();
+
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
     int keyboardHeightPercent;
@@ -170,6 +178,8 @@ public final class Config
     pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
     current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
     current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
+    current_layout_unfolded_portrait = _prefs.getInt("current_layout_unfolded_portrait", 0);
+    current_layout_unfolded_landscape = _prefs.getInt("current_layout_unfolded_landscape", 0);
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
     bottomInsetMin = Utils.is_navigation_bar_gestural(res) ?
@@ -178,19 +188,34 @@ public final class Config
 
   public int get_current_layout()
   {
-    return (orientation_landscape)
-      ? current_layout_landscape : current_layout_portrait;
+    if (foldable_unfolded) {
+      return (orientation_landscape)
+              ? current_layout_unfolded_landscape : current_layout_unfolded_portrait;
+    } else {
+      return (orientation_landscape)
+              ? current_layout_landscape : current_layout_portrait;
+    }
   }
 
   public void set_current_layout(int l)
   {
-    if (orientation_landscape)
-      current_layout_landscape = l;
-    else
-      current_layout_portrait = l;
+    if (foldable_unfolded) {
+      if (orientation_landscape)
+        current_layout_unfolded_landscape = l;
+      else
+        current_layout_unfolded_portrait = l;
+    } else {
+      if (orientation_landscape)
+        current_layout_landscape = l;
+      else
+        current_layout_portrait = l;
+    }
+
     SharedPreferences.Editor e = _prefs.edit();
     e.putInt("current_layout_portrait", current_layout_portrait);
     e.putInt("current_layout_landscape", current_layout_landscape);
+    e.putInt("current_layout_unfolded_portrait", current_layout_unfolded_portrait);
+    e.putInt("current_layout_unfolded_landscape", current_layout_unfolded_landscape);
     e.apply();
   }
 
@@ -249,10 +274,10 @@ public final class Config
   private static Config _globalConfig = null;
 
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
-      IKeyEventHandler handler)
+      IKeyEventHandler handler, FoldStateTracker foldStateTracker)
   {
     migrate(prefs);
-    _globalConfig = new Config(prefs, res, handler);
+    _globalConfig = new Config(prefs, res, handler, foldStateTracker);
     LayoutModifier.init(_globalConfig, res);
   }
 
