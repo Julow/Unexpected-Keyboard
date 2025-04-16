@@ -27,6 +27,8 @@ public class SettingsActivity extends PreferenceActivity
     boolean foldableDevice = new FoldStateTracker(this).isFoldableDevice();
     findPreference("margin_bottom_portrait_unfolded").setEnabled(foldableDevice);
     findPreference("margin_bottom_landscape_unfolded").setEnabled(foldableDevice);
+    findPreference("horizontal_margin_portrait_unfolded").setEnabled(foldableDevice);
+    findPreference("horizontal_margin_landscape_unfolded").setEnabled(foldableDevice);
   }
 
   void fallbackEncrypted()
