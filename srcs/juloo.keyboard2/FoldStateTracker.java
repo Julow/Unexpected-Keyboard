@@ -12,22 +12,19 @@ import androidx.core.util.Consumer;
 
 
 public class FoldStateTracker {
-    private final Context _context;
     private final Consumer<WindowLayoutInfo> _innerListener;
     private final WindowInfoTrackerCallbackAdapter _windowInfoTracker;
     private FoldingFeature _foldingFeature = null;
     private Runnable _changedCallback = null;
     public FoldStateTracker(Context context) {
-        this._context = context;
-
         _windowInfoTracker =
                 new WindowInfoTrackerCallbackAdapter(WindowInfoTracker.getOrCreate(context));
         _innerListener = new LayoutStateChangeCallback();
         _windowInfoTracker.addWindowLayoutInfoListener(context, Runnable::run, _innerListener);
     }
 
-    public boolean isFoldableDevice() {
-        return _context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_HINGE_ANGLE);
+    public static boolean isFoldableDevice(Context context) {
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_HINGE_ANGLE);
     }
 
     public boolean isUnfolded() {

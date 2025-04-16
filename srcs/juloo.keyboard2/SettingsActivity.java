@@ -24,7 +24,7 @@ public class SettingsActivity extends PreferenceActivity
     catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
 
-    boolean foldableDevice = new FoldStateTracker(this).isFoldableDevice();
+    boolean foldableDevice = FoldStateTracker.isFoldableDevice(this);
     findPreference("margin_bottom_portrait_unfolded").setEnabled(foldableDevice);
     findPreference("margin_bottom_landscape_unfolded").setEnabled(foldableDevice);
     findPreference("horizontal_margin_portrait_unfolded").setEnabled(foldableDevice);
