@@ -238,7 +238,13 @@ public final class Config
   /** [get_dip_pref] depending on orientation. */
   float get_dip_pref_oriented(DisplayMetrics dm, String pref_base_name, float def_port, float def_land)
   {
-    String suffix = orientation_landscape ? "_landscape" : "_portrait";
+    final String suffix;
+    if (foldable_unfolded) {
+      suffix = orientation_landscape ? "_landscape_unfolded" : "_portrait_unfolded";
+    } else {
+      suffix = orientation_landscape ? "_landscape" : "_portrait";
+    }
+    
     float def = orientation_landscape ? def_land : def_port;
     return get_dip_pref(dm, pref_base_name + suffix, def);
   }
