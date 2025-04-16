@@ -122,12 +122,12 @@ public final class Config
     {
       if ("landscape".equals(show_numpad_s))
         show_numpad = true;
-      keyboardHeightPercent = _prefs.getInt("keyboard_height_landscape", 50);
+      keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_landscape_unfolded" : "keyboard_height_landscape", 50);
       characterSizeScale = 1.25f;
     }
     else
     {
-      keyboardHeightPercent = _prefs.getInt("keyboard_height", 35);
+      keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_unfolded" : "keyboard_height", 35);
     }
     layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
@@ -244,7 +244,7 @@ public final class Config
     } else {
       suffix = orientation_landscape ? "_landscape" : "_portrait";
     }
-    
+
     float def = orientation_landscape ? def_land : def_port;
     return get_dip_pref(dm, pref_base_name + suffix, def);
   }

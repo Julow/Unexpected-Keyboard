@@ -29,6 +29,8 @@ public class SettingsActivity extends PreferenceActivity
     findPreference("margin_bottom_landscape_unfolded").setEnabled(foldableDevice);
     findPreference("horizontal_margin_portrait_unfolded").setEnabled(foldableDevice);
     findPreference("horizontal_margin_landscape_unfolded").setEnabled(foldableDevice);
+    findPreference("keyboard_height_unfolded").setEnabled(foldableDevice);
+    findPreference("keyboard_height_landscape_unfolded").setEnabled(foldableDevice);
   }
 
   void fallbackEncrypted()
