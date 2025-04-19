@@ -131,4 +131,6 @@
     <string name="key_descr_combining">Kombinace diakritiky</string>
     <string name="key_descr_zwj">Spojka nulové šířky (ZWJ)</string>
     <string name="key_descr_zwnj">ne-Spojka nulové šířky (ZWNJ)</string>
+    <string name="key_descr_nnbsp">Úzká nezlomitelná mezera</string>
+    <string name="key_descr_nbsp">Nezlomitelná mezera</string>
 </resources>
