@@ -126,4 +126,9 @@
     <string name="clipboard_pin_heading">Připnout</string>
     <string name="clipboard_remove_confirm">Odebrat ze schránky?</string>
     <string name="clipboard_remove_confirmed">Ano</string>
+    <string name="key_descr_dead_key">Mrtvá klávesa</string>
+    <string name="pref_theme_e_rosepine">Růžová borovice</string>
+    <string name="key_descr_combining">Kombinace diakritiky</string>
+    <string name="key_descr_zwj">Spojka nulové šířky (ZWJ)</string>
+    <string name="key_descr_zwnj">ne-Spojka nulové šířky (ZWNJ)</string>
 </resources>
