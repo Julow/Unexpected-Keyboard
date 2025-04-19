@@ -80,7 +80,7 @@
     <string name="pref_circle_sensitivity_title">Czułość gestu koła</string>
     <string name="pref_circle_sensitivity_e_high">Wysoka</string>
     <string name="pref_circle_sensitivity_e_medium">Średnia</string>
-    <string name="pref_circle_sensitivity_e_low">Mała</string>
+    <string name="pref_circle_sensitivity_e_low">Niska</string>
     <string name="pref_circle_sensitivity_e_disabled">Wyłączona</string>
     <string name="key_action_next">Dalej</string>
     <string name="key_action_done">OK</string>
@@ -126,4 +126,11 @@
     <string name="clipboard_pin_heading">Przypięte</string>
     <string name="clipboard_remove_confirm">Usunąć ten element ze schowka?</string>
     <string name="clipboard_remove_confirmed">Tak</string>
+    <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="key_descr_dead_key">Martwy klawisz</string>
+    <string name="key_descr_zwj">Łącznik zerowej szerokości (ZWJ)</string>
+    <string name="key_descr_combining">Składający znak diakrytyczny</string>
+    <string name="key_descr_nbsp">Spacja niełamiąca</string>
+    <string name="key_descr_nnbsp">Wąska spacja niełamiąca</string>
+    <string name="key_descr_zwnj">Rozdzielający łącznik zerowej szerokości (ZWNJ)</string>
 </resources>
