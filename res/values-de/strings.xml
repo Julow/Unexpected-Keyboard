@@ -126,4 +126,5 @@
     <string name="clipboard_pin_heading">Angeheftet</string>
     <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
     <string name="clipboard_remove_confirmed">Ja</string>
+    <string name="pref_theme_e_rosepine">Rosé Pine</string>
 </resources>
