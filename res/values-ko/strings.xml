@@ -5,7 +5,9 @@
     <string name="short_description">개발자들을 위한 가벼운 가상 키보드.</string>
     <string name="store_description">주요 기능은 모서리 방향으로 키를 스와이프하여 더 많은 문자를 입력할 수 있다는 것입니다.\n\n이 앱은 처음에는 Termux를 사용하는 프로그래머들을 위한 것으로 개발되었습니다.\n지금은 일상적인 용도로도 완벽합니다.\n\n이 응용 프로그램에는 광고가 없으며 네트워크 요청을 하지 않고 오픈 소스입니다.</string>
     <string name="pref_portrait">세로 화면</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">가로 화면</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">레이아웃</string>
     <string name="pref_label_brightness">라벨 밝기 조절</string>
     <string name="pref_keyboard_opacity">키보드 배경 불투명도 조절</string>
