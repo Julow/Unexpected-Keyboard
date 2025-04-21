@@ -16,7 +16,6 @@ import juloo.keyboard2.prefs.LayoutsPreference;
 public final class Config
 {
   private final SharedPreferences _prefs;
-  private final FoldStateTracker _foldStateTracker;
 
   // From resources
   public final float marginTop;
@@ -83,17 +82,16 @@ public final class Config
   int current_layout_unfolded_landscape;
   public int bottomInsetMin;
 
-  private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h, FoldStateTracker foldStateTracker)
+  private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h, Boolean foldableUnfolded)
   {
     _prefs = prefs;
-    _foldStateTracker = foldStateTracker;
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
     labelTextSize = 0.33f;
     sublabelTextSize = 0.22f;
     // from prefs
-    refresh(res);
+    refresh(res, foldableUnfolded);
     // initialized later
     shouldOfferVoiceTyping = false;
     actionLabel = null;
@@ -106,11 +104,11 @@ public final class Config
   /*
    ** Reload prefs
    */
-  public void refresh(Resources res)
+  public void refresh(Resources res, Boolean foldableUnfolded)
   {
     DisplayMetrics dm = res.getDisplayMetrics();
     orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-    foldable_unfolded = _foldStateTracker.isUnfolded();
+    foldable_unfolded = foldableUnfolded;
 
     // The height of the keyboard is relative to the height of the screen.
     // This is the height of the keyboard if it have 4 rows.
@@ -280,10 +278,10 @@ public final class Config
   private static Config _globalConfig = null;
 
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
-      IKeyEventHandler handler, FoldStateTracker foldStateTracker)
+      IKeyEventHandler handler, Boolean foldableUnfolded)
   {
     migrate(prefs);
-    _globalConfig = new Config(prefs, res, handler, foldStateTracker);
+    _globalConfig = new Config(prefs, res, handler, foldableUnfolded);
     LayoutModifier.init(_globalConfig, res);
   }
 

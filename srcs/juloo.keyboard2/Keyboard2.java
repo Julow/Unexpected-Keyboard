@@ -114,7 +114,7 @@ public class Keyboard2 extends InputMethodService
     _handler = new Handler(getMainLooper());
     _keyeventhandler = new KeyEventHandler(this.new Receiver());
     _foldStateTracker = new FoldStateTracker(this);
-    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker);
+    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
@@ -245,7 +245,7 @@ public class Keyboard2 extends InputMethodService
   private void refresh_config()
   {
     int prev_theme = _config.theme;
-    _config.refresh(getResources());
+    _config.refresh(getResources(), _foldStateTracker.isUnfolded());
     refreshSubtypeImm();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
