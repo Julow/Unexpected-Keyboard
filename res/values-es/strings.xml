@@ -5,7 +5,9 @@
     <string name="short_description">Un teclado virtual ligero para Android consciente de su privacidad.</string>
     <string name="store_description">La característica principal es que hay acceso a más caractéres deslizando hacia las esquinas de las teclas.\n\nEsta aplicación fue originalmente diseñada para programadores que usaran Termux.\nAhora es perfecta para uso cotidiano.\n\nLa misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y es de Fuente Abierta.</string>
     <string name="pref_portrait">En modo vertical</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">En modo horizontal</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Distribución</string>
     <string name="pref_label_brightness">Ajustar brillo de etiqueta</string>
     <string name="pref_keyboard_opacity">Ajustar opacidad del fondo del teclado</string>

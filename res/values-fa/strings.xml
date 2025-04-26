@@ -5,7 +5,9 @@
     <!-- <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string> -->
     <!-- <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads, doesn\'t make any network requests and is Open Source.</string> -->
     <string name="pref_portrait">در حالت عمودی</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">در حالت افقی</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">طرح</string>
     <string name="pref_label_brightness">تنظیم برچسب روشنایی</string>
     <string name="pref_keyboard_opacity">تنظیم کدر بودن پس‌زمینه صفحه کلید</string>
