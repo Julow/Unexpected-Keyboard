@@ -128,7 +128,7 @@
     <string name="key_descr_gesture">Жест</string>
     <string name="clipboard_history_heading">Недавно скопированный текст</string>
     <string name="clipboard_pin_heading">Закреплено</string>
-    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
+    <string name="clipboard_remove_confirm">Удалить этот элемент буфера обмена?</string>
     <string name="clipboard_remove_confirmed">Да</string>
     <string name="toast_no_voice_input">Приложение для голосового ввода не установлено</string>
 </resources>
