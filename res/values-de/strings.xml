@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Eine schlanke, datenschutzfreundliche Bildschirmtastatur für Android.</string>
     <string name="store_description">Diese Tastatur zeichnet sich dadurch aus, dass man zusätzliche Zeichen durch Wischgesten in Richtung der Tastenecken eingeben kann.\n\nDie Anwendung wurde ursprünglich für das Programmieren in Termux entwickelt.\nMittlerweile ist sie auch für den täglichen Gebrauch perfekt geeignet.\n\nDiese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quelloffen.</string>
-    <string name="settings_activity_label">Unexpected Keyboard - Einstellungen</string>
     <string name="pref_portrait">Im Hochformatmodus</string>
     <string name="pref_landscape">Im Querformatmodus</string>
     <string name="pref_category_layout">Layout</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Layout %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Layout entfernen</string>
     <string name="pref_custom_layout_title">Eigenes Layout</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Ziffernblock anzeigen</string>
     <string name="pref_show_numpad_never">Nie</string>
     <string name="pref_show_numpad_landscape">Nur im Querformat</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Einfügen</string>
     <string name="key_descr_cut">Ausschneiden</string>
     <string name="key_descr_selectAll">Alles auswählen</string>
-    <string name="key_descr_shareText">Text teilen</string>
     <string name="key_descr_pasteAsPlainText">Unformatiert einfügen</string>
     <string name="key_descr_undo">Rückgängig</string>
     <string name="key_descr_redo">Wiederholen</string>
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Zuletzt kopierter Text</string>
     <string name="clipboard_pin_heading">Angeheftet</string>
-    <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <string name="clipboard_remove_confirmed">Ja</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

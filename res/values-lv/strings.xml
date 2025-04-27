@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (atkļūdošana)</string>
     <string name="short_description">Mazizmēra un privātumu ievērojoša virtuālā Android tastatūra.</string>
     <string name="store_description">Galvenā iezīme ir iespēja ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.\n\nŠī lietotne sākotnēji tika izstrādāta programmētājiem, kas izmanto Termux.\nTagad lieliski piemērota izmantošanai ikdienā.\n\nŠī lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.</string>
-    <string name="settings_activity_label">Unexpected Keyboard iestatījumi</string>
     <string name="pref_portrait">Stateniski</string>
     <string name="pref_landscape">Guleniski</string>
     <string name="pref_category_layout">Izkārtojums</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Izkārtojums %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Noņemt izkārtojumu</string>
     <string name="pref_custom_layout_title">Pielāgots izkārtojums</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Rādīt ciparnīcu</string>
     <string name="pref_show_numpad_never">Nekad</string>
     <string name="pref_show_numpad_landscape">Tikai guleniskajā skatā</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Ielīmēt</string>
     <string name="key_descr_cut">Izgriezt</string>
     <string name="key_descr_selectAll">Iezīmēt visu</string>
-    <string name="key_descr_shareText">Kopīgot tekstu</string>
     <string name="key_descr_pasteAsPlainText">Ielīmēt kā vienkāršu tekstu</string>
     <string name="key_descr_undo">Atsaukt</string>
     <string name="key_descr_redo">Atatsaukt</string>

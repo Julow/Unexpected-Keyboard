@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (debug)</string>
     <string name="short_description">Android için hafif ve güvenlik odaklı bir sanal klavye uygulaması.</string>
     <string name="store_description">Bu uygulama özünde tuşların kenarlarından kaydırarak daha fazla karakter yazabilmek amacıyla geliştirildi.\n\nBu uygulama aslında Termux kullanıcıları için geliştirildi.\nArtık gündelik kullanım için de uygun.\n\nBu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz.</string>
-    <string name="settings_activity_label">Unexpected Keyboard Ayarları</string>
     <string name="pref_portrait">Portre modunda</string>
     <string name="pref_landscape">Manzara modunda</string>
     <string name="pref_category_layout">Tuş düzeni</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Tuş düzeni %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Tuş düzenini kaldır</string>
     <string name="pref_custom_layout_title">Özel tuş düzeni</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">NumPadi göster</string>
     <string name="pref_show_numpad_never">Asla</string>
     <string name="pref_show_numpad_landscape">Sadece manzara modunda</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Yapıştır</string>
     <string name="key_descr_cut">Kes</string>
     <string name="key_descr_selectAll">Tümünü seç</string>
-    <string name="key_descr_shareText">Metni paylaş</string>
     <string name="key_descr_pasteAsPlainText">Düz metin olarak yapıştır</string>
     <string name="key_descr_undo">Geri al</string>
     <string name="key_descr_redo">İleri al</string>
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Son kopyalanan metin</string>
     <string name="clipboard_pin_heading">Sabitlendi</string>
-    <string name="clipboard_remove_confirm">Bu sabitlemeyi sil</string>
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <string name="clipboard_remove_confirmed">Evet</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

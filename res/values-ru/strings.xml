@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (отладка)</string>
     <string name="short_description">Легкая клавиатура для пользователей, заботящихся о конфиденциальности.</string>
     <string name="store_description">Главная особенность клавиатуры — это возможность легко напечатать любой ASCII-символ жестами в углы клавиш.\n\nПриложение изначально было разработано для использования с Termux.\nНа данный момент оно также удобно в повседневном использовании.\n\nПриложение не содержит рекламы, не осуществляет никаких запросов в сеть и имеет открытый исходный код.</string>
-    <string name="settings_activity_label">Настройки Unexpected Keyboard</string>
     <string name="pref_portrait">В портретном режиме</string>
     <string name="pref_landscape">В ландшафтном режиме</string>
     <string name="pref_category_layout">Расположение</string>
@@ -18,12 +17,15 @@
     <string name="pref_layouts_item">Раскладка %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Удалить раскладку</string>
     <string name="pref_custom_layout_title">Пользовательская раскладка</string>
+    <string name="pref_show_number_row_no_number_row">Нет строки цифр</string>
+    <string name="pref_show_number_row_no_symbols">Строка цифр без символов</string>
+    <string name="pref_show_number_row_symbols">Строка цифр с символами</string>
     <string name="pref_show_numpad_title">Показывать цифровой блок</string>
     <string name="pref_show_numpad_never">Никогда</string>
     <string name="pref_show_numpad_landscape">Только в ландшафтном режиме</string>
     <string name="pref_show_numpad_always">Всегда</string>
     <string name="pref_number_row_title">Показывать цифры</string>
-    <string name="pref_number_row_summary">Добавить ряд цифр над клавиатурой, когда цифровой блок не активен</string>
+    <string name="pref_number_row_summary">Добавить строку цифр над клавиатурой, когда цифровой блок не активен</string>
     <string name="pref_numpad_layout">Раскладка цифрового блока</string>
     <string name="pref_numpad_layout_e_high_first">Старшие цифры сверху</string>
     <string name="pref_numpad_layout_e_low_first">Младшие цифры сверху</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Вставить</string>
     <string name="key_descr_cut">Вырезать</string>
     <string name="key_descr_selectAll">Выбрать все</string>
-    <string name="key_descr_shareText">Поделиться текстом</string>
     <string name="key_descr_pasteAsPlainText">Вставить как простой текст</string>
     <string name="key_descr_undo">Отменить</string>
     <string name="key_descr_redo">Повторить</string>
@@ -117,17 +118,17 @@
     <string name="key_descr_end">End</string>
     <string name="key_descr_clipboard">Менеджер буфера обмена</string>
     <string name="key_descr_combining">Сочетание диакритических знаков</string>
-    <!-- <string name="key_descr_dead_key">Dead key</string> -->
+    <string name="key_descr_dead_key">Немая клавиша</string>
     <string name="key_descr_zwj">Соединитель нулевой ширины</string>
     <string name="key_descr_zwnj">Разделитель нулевой ширины</string>
     <string name="key_descr_nbsp">Неразрывный пробел</string>
     <string name="key_descr_nnbsp">Узкий неразрывный пробел</string>
-    <!-- <string name="key_descr_delete_word">Delete a word</string> -->
-    <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
-    <!-- <string name="key_descr_gesture">Gesture</string> -->
+    <string name="key_descr_delete_word">Удалить слово</string>
+    <string name="key_descr_forward_delete_word">Удалить слово справа</string>
+    <string name="key_descr_gesture">Жест</string>
     <string name="clipboard_history_heading">Недавно скопированный текст</string>
     <string name="clipboard_pin_heading">Закреплено</string>
-    <string name="clipboard_remove_confirm">Удалить этот буфер обмена?</string>
+    <string name="clipboard_remove_confirm">Удалить этот элемент буфера обмена?</string>
     <string name="clipboard_remove_confirmed">Да</string>
-    <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
+    <string name="toast_no_voice_input">Приложение для голосового ввода не установлено</string>
 </resources>

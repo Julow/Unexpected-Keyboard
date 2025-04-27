@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (Налагодження)</string>
     <string name="short_description">Легка та конфіденційна віртуальна клавіатура для Android.</string>
     <string name="store_description">Головна особливість полягає в тому, що ви можете вводити більше символів, проводячи клавіші до кутів.\n\nЦя програма спочатку була розроблена для програмістів, які використовують Termux.\nТепер ідеально підходить для щоденного використання.\n\nЦя програма не містить реклами, не надсилає жодних мережевих запитів і має відкритий код.</string>
-    <string name="settings_activity_label">Unexpected Keyboard Налаштування</string>
     <string name="pref_portrait">У портретному режимі</string>
     <string name="pref_landscape">У альбомному режимі</string>
     <string name="pref_category_layout">Макет</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Макет %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Видалити макет</string>
     <string name="pref_custom_layout_title">Власний макет</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Показувати числову клавіатуру</string>
     <string name="pref_show_numpad_never">Ніколи</string>
     <string name="pref_show_numpad_landscape">Тільки в альбомному режимі</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Вставити</string>
     <string name="key_descr_cut">Вирізати</string>
     <string name="key_descr_selectAll">Вибрати все</string>
-    <string name="key_descr_shareText">Поділитися текстом</string>
     <string name="key_descr_pasteAsPlainText">Вставити як звичайний текст</string>
     <string name="key_descr_undo">Відмінити</string>
     <string name="key_descr_redo">Повторити</string>
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Нещодавно скопійований текст</string>
     <string name="clipboard_pin_heading">Закріплено</string>
-    <string name="clipboard_remove_confirm">Видалити цей буфер обміну?</string>
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <string name="clipboard_remove_confirmed">Так</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

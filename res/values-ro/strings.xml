@@ -4,7 +4,6 @@
     <string name="app_name_debug">Tastatură Unexpected (depanare)</string>
     <string name="short_description">Tastatură virtuală pentru Android, ușoară și respectuoasă cu viața privată.</string>
     <string name="store_description">Funcționalitatea principală este accesul rapid la o mulțime de caractere ASCII prin glisarea către colțurile tastelor.\n\nAceastă aplicație a fost concepută inițial pentru programatori care folosec Termux.\nEste perfectă pentru uzul cotidian.\n\nAceastă aplicație nu conține publicitate, nu folosește rețeaua deloc și e Open Source.</string>
-    <string name="settings_activity_label">Setări Tastatură Unexpected</string>
     <string name="pref_portrait">În mod portret</string>
     <string name="pref_landscape">În mod panoramă</string>
     <string name="pref_category_layout">Aspect</string>
@@ -18,6 +17,9 @@
     <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
     <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
     <string name="pref_custom_layout_title">Aranjament personalizat</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Arată NumPad</string>
     <string name="pref_show_numpad_never">Niciodată</string>
     <string name="pref_show_numpad_landscape">Doar în mod panoramă</string>
@@ -103,7 +105,6 @@
     <!-- <string name="key_descr_paste">Paste</string> -->
     <!-- <string name="key_descr_cut">Cut</string> -->
     <!-- <string name="key_descr_selectAll">Select all</string> -->
-    <!-- <string name="key_descr_shareText">Share text</string> -->
     <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
     <!-- <string name="key_descr_undo">Undo</string> -->
     <!-- <string name="key_descr_redo">Redo</string> -->
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
     <!-- <string name="clipboard_pin_heading">Pinned</string> -->
-    <!-- <string name="clipboard_remove_confirm">Remove this clipboard?</string> -->
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <!-- <string name="clipboard_remove_confirmed">Yes</string> -->
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

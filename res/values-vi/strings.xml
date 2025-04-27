@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (gỡ lỗi)</string>
     <string name="short_description">Bàn phím ảo gọn nhẹ và tôn trọng quyền riêng tư cho Android.</string>
     <string name="store_description">Chức năng chính là dễ dàng gõ nhiều ký tự bằng cách kéo phím về góc của nó.\n\nỨng dụng này ban đầu được thiết kế cho các lập trình viên dùng Termux.\nBây giờ đã hoàn hảo cho việc sử dụng hàng ngày.\n\nỨng dụng này không chứa quảng cáo, không cần đến mạng, và có mã nguồn mở.</string>
-    <string name="settings_activity_label">Cài đặt Unexpected Keyboard</string>
     <string name="pref_portrait">Trong chế độ chân dung</string>
     <string name="pref_landscape">Trong chế độ phong cảnh</string>
     <string name="pref_category_layout">Bố cục</string>
@@ -18,6 +17,9 @@
     <!-- <string name="pref_layouts_item">Layout %1$d: %2$s</string> -->
     <!-- <string name="pref_layouts_remove_custom">Remove layout</string> -->
     <string name="pref_custom_layout_title">Tùy chỉnh bố cục</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Hiện NumPad</string>
     <string name="pref_show_numpad_never">Không bao giờ</string>
     <string name="pref_show_numpad_landscape">Chỉ trong chế độ phong cảnh</string>
@@ -103,7 +105,6 @@
     <!-- <string name="key_descr_paste">Paste</string> -->
     <!-- <string name="key_descr_cut">Cut</string> -->
     <!-- <string name="key_descr_selectAll">Select all</string> -->
-    <!-- <string name="key_descr_shareText">Share text</string> -->
     <!-- <string name="key_descr_pasteAsPlainText">Paste as plain text</string> -->
     <!-- <string name="key_descr_undo">Undo</string> -->
     <!-- <string name="key_descr_redo">Redo</string> -->
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <!-- <string name="clipboard_history_heading">Recently copied text</string> -->
     <!-- <string name="clipboard_pin_heading">Pinned</string> -->
-    <!-- <string name="clipboard_remove_confirm">Remove this clipboard?</string> -->
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <!-- <string name="clipboard_remove_confirmed">Yes</string> -->
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

@@ -177,14 +177,9 @@ public final class KeyboardData
 
   private static Map<Integer, KeyboardData> _layoutCache = new HashMap<Integer, KeyboardData>();
 
-  public static Row load_bottom_row(Resources res) throws Exception
+  public static Row load_row(Resources res, int res_id) throws Exception
   {
-    return parse_row(res.getXml(R.xml.bottom_row));
-  }
-
-  public static Row load_number_row(Resources res) throws Exception
-  {
-    return parse_row(res.getXml(R.xml.number_row));
+    return parse_row(res.getXml(res_id));
   }
 
   public static KeyboardData load_num_pad(Resources res) throws Exception
@@ -265,7 +260,7 @@ public final class KeyboardData
         case "modmap":
           if (modmap != null)
             throw error(parser, "Multiple '<modmap>' are not allowed");
-          modmap = Modmap.parse(parser);
+          modmap = parse_modmap(parser);
           break;
         default:
           throw error(parser, "Expecting tag <row>, got <" + parser.getName() + ">");
@@ -560,53 +555,34 @@ public final class KeyboardData
     }
   }
 
-  public static class Modmap
+  public static Modmap parse_modmap(XmlPullParser parser) throws Exception
   {
-    public final Map<KeyValue, KeyValue> shift;
-    public final Map<KeyValue, KeyValue> fn;
-    public final Map<KeyValue, KeyValue> ctrl;
-
-    public Modmap(Map<KeyValue, KeyValue> s, Map<KeyValue, KeyValue> f, Map<KeyValue, KeyValue> c)
+    Modmap mm = new Modmap();
+    while (next_tag(parser))
     {
-      shift = s;
-      fn = f;
-      ctrl = c;
-    }
-
-    public static Modmap parse(XmlPullParser parser) throws Exception
-    {
-      HashMap<KeyValue, KeyValue> shift = new HashMap<KeyValue, KeyValue>();
-      HashMap<KeyValue, KeyValue> fn = new HashMap<KeyValue, KeyValue>();
-      HashMap<KeyValue, KeyValue> ctrl = new HashMap<KeyValue, KeyValue>();
-      while (next_tag(parser))
+      Modmap.M m;
+      switch (parser.getName())
       {
-        switch (parser.getName())
-        {
-          case "shift":
-            parse_mapping(parser, shift);
-            break;
-          case "fn":
-            parse_mapping(parser, fn);
-            break;
-          case "ctrl":
-            parse_mapping(parser, ctrl);
-            break;
-          default:
-            throw error(parser, "Expecting tag <shift> or <fn>, got <" + parser.getName() + ">");
-        }
+        case "shift": m = Modmap.M.Shift; break;
+        case "fn": m = Modmap.M.Fn; break;
+        case "ctrl": m = Modmap.M.Ctrl; break;
+        default:
+          throw error(parser, "Expecting tag <shift> or <fn>, got <" +
+              parser.getName() + ">");
       }
-
-      return new Modmap(shift, fn, ctrl);
+      parse_modmap_mapping(parser, mm, m);
     }
+    return mm;
+  }
 
-    private static void parse_mapping(XmlPullParser parser, Map<KeyValue, KeyValue> dst) throws Exception
-    {
-      KeyValue a = KeyValue.getKeyByName(parser.getAttributeValue(null, "a"));
-      KeyValue b = KeyValue.getKeyByName(parser.getAttributeValue(null, "b"));
-      while (parser.next() != XmlPullParser.END_TAG)
-        continue;
-      dst.put(a, b);
-    }
+  private static void parse_modmap_mapping(XmlPullParser parser, Modmap mm,
+      Modmap.M m) throws Exception
+  {
+    KeyValue a = KeyValue.getKeyByName(parser.getAttributeValue(null, "a"));
+    KeyValue b = KeyValue.getKeyByName(parser.getAttributeValue(null, "b"));
+    while (parser.next() != XmlPullParser.END_TAG)
+      continue;
+    mm.add(m, a, b);
   }
 
   /** Position of a key on the layout. */

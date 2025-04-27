@@ -3,28 +3,15 @@
   <aapt:attr name="android:drawable">
     <vector android:name="vector" android:width="35dp" android:height="40dp" android:viewportWidth="35" android:viewportHeight="40">
       <path android:name="trace" android:pathData="M 17.5 20 C 20 3 26 7 27.5 10" android:strokeColor="#09b3f1" android:strokeWidth="2" android:strokeLineCap="round"/>
-      <group android:name="pointer_g">
-        <path android:name="pointer" android:pathData="m 2,0 a 2,2 0 1,1 -4,0 a 2,2 0 1,1 4,0" android:fillColor="#09b3f1" android:strokeColor="#09b3f1" android:strokeWidth="2" android:fillAlpha="0" android:strokeAlpha="0"/>
+      <group android:name="pointer_g" android:translateX="27" android:translateY="10">
+        <path android:name="pointer" android:pathData="m 2,0 a 2,2 0 1,1 -4,0 a 2,2 0 1,1 4,0" android:fillColor="#09b3f1" android:strokeColor="#09b3f1" android:strokeWidth="2"/>
       </group>
     </vector>
   </aapt:attr>
   <target android:name="trace">
     <aapt:attr name="android:animation">
       <set>
-        <objectAnimator android:propertyName="strokeAlpha" android:duration="100" android:valueFrom="0" android:valueTo="1" android:valueType="floatType" android:interpolator="@android:interpolator/fast_out_slow_in"/>
         <objectAnimator android:propertyName="trimPathEnd" android:duration="700" android:valueFrom="0" android:valueTo="1" android:interpolator="@android:interpolator/linear_out_slow_in"/>
-        <objectAnimator android:propertyName="strokeAlpha" android:startOffset="900" android:duration="400" android:valueFrom="1" android:valueTo="0" android:valueType="floatType" android:interpolator="@android:interpolator/linear_out_slow_in"/>
-      </set>
-    </aapt:attr>
-  </target>
-  <target android:name="pointer">
-    <aapt:attr name="android:animation">
-      <set>
-        <objectAnimator android:propertyName="fillAlpha" android:duration="100" android:valueFrom="0" android:valueTo="1" android:valueType="floatType" android:interpolator="@android:interpolator/fast_out_slow_in"/>
-        <objectAnimator android:propertyName="strokeAlpha" android:duration="100" android:valueFrom="0" android:valueTo="1" android:valueType="floatType" android:interpolator="@android:interpolator/fast_out_slow_in"/>
-        <objectAnimator android:propertyName="strokeAlpha" android:duration="100" android:valueFrom="0" android:valueTo="1" android:valueType="floatType" android:interpolator="@android:interpolator/fast_out_slow_in"/>
-        <objectAnimator android:propertyName="fillAlpha" android:startOffset="900" android:duration="400" android:valueFrom="1" android:valueTo="0" android:valueType="floatType" android:interpolator="@android:interpolator/linear_out_slow_in"/>
-        <objectAnimator android:propertyName="strokeAlpha" android:startOffset="900" android:duration="400" android:valueFrom="1" android:valueTo="0" android:valueType="floatType" android:interpolator="@android:interpolator/linear_out_slow_in"/>
       </set>
     </aapt:attr>
   </target>

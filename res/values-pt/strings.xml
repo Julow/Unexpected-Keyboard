@@ -4,7 +4,6 @@
     <string name="app_name_debug">Teclado Unexpected</string>
     <string name="short_description">Um teclado virtual leve para desenvolvedores.</string>
     <string name="store_description">A principal característica é que você pode digitar mais caracteres deslizando as teclas para os cantos.\n\nO app foi criado originalmente para desenvolvedores que usam Termux.\nAgora aperfeiçoado para o uso diário.\n\nEste aplicativo não contém anúncios, não faz nenhuma solicitação de rede e é Open Source.</string>
-    <string name="settings_activity_label">Configurações</string>
     <string name="pref_portrait">No modo retrato</string>
     <string name="pref_landscape">No modo paisagem</string>
     <string name="pref_category_layout">Layout</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Layout %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Remover layout</string>
     <string name="pref_custom_layout_title">Layout personalizado</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Mostrar Teclado Numérico</string>
     <string name="pref_show_numpad_never">Nunca</string>
     <string name="pref_show_numpad_landscape">Somente no modo paisagem</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Colar</string>
     <string name="key_descr_cut">Recortar</string>
     <string name="key_descr_selectAll">Selecionar tudo</string>
-    <string name="key_descr_shareText">Compartilhar texto</string>
     <string name="key_descr_pasteAsPlainText">Colar texto não formatado</string>
     <string name="key_descr_undo">Desfazer</string>
     <string name="key_descr_redo">Refazer</string>

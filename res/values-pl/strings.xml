@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (debug)</string>
     <string name="short_description">Lekka i dbająca o prywatność klawiatura wirtualna dla Androida.</string>
     <string name="store_description">Główną cechą tej klawiatury jest możliwość wprowadzania więcej znaków poprzez przesuwanie po klawiszach do ich rogów.\n\nTa aplikacja została pierwotnie zaprojektowana z myślą o programistach używających Termuxa.\nObecnie nadaje się doskonale do codziennego użytku.\n\nAplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źródłowy jest dostępny publicznie.</string>
-    <string name="settings_activity_label">Ustawienia Unexpected Keyboard</string>
     <string name="pref_portrait">W widoku pionowym</string>
     <string name="pref_landscape">W widoku poziomym</string>
     <string name="pref_category_layout">Układ</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Układ %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Usuń układ</string>
     <string name="pref_custom_layout_title">Własny układ</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Pokaż klawiaturę numeryczną</string>
     <string name="pref_show_numpad_never">Nigdy</string>
     <string name="pref_show_numpad_landscape">Tylko w orientacji poziomej</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Wklej</string>
     <string name="key_descr_cut">Wytnij</string>
     <string name="key_descr_selectAll">Zaznacz wszystko</string>
-    <string name="key_descr_shareText">Udostępnij tekst</string>
     <string name="key_descr_pasteAsPlainText">Wklej sam tekst</string>
     <string name="key_descr_undo">Cofnij</string>
     <string name="key_descr_redo">Ponów</string>

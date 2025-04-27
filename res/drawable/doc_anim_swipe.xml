@@ -2,23 +2,13 @@
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt">
   <aapt:attr name="android:drawable">
     <vector android:name="vector" android:width="35dp" android:height="40dp" android:viewportWidth="35" android:viewportHeight="40">
-      <path android:name="trace" android:pathData="M 0 0" android:fillColor="#09b3f1" android:strokeColor="#09b3f1" android:strokeWidth="2" android:strokeLineCap="round"/>
+      <path android:name="trace" android:pathData="  M 31 4      m 2,0 a 2,2 0 1,1 -4,0 a 2,2 0 1,1 4,0 M 17.5 20.0 L 31  ,4" android:fillColor="#09b3f1" android:strokeColor="#09b3f1" android:strokeWidth="2" android:strokeLineCap="round"/>
     </vector>
   </aapt:attr>
   <target android:name="trace">
     <aapt:attr name="android:animation">
       <set>
-        <objectAnimator android:propertyName="fillAlpha" android:duration="100" android:valueFrom="0" android:valueTo="1" android:valueType="floatType" android:interpolator="@android:interpolator/fast_out_slow_in"/>
-        <objectAnimator android:propertyName="strokeAlpha" android:duration="100" android:valueFrom="0" android:valueTo="1" android:valueType="floatType" android:interpolator="@android:interpolator/fast_out_slow_in"/>
-        <objectAnimator
-          android:propertyName="pathData"
-          android:duration="700"
-          android:valueFrom="M 17.5 20.0 m 2,0 a 2,2 0 1,1 -4,0 a 2,2 0 1,1 4,0 M 17.5 20.0 L 17.5,20.0"
-          android:valueTo="  M 31 4      m 2,0 a 2,2 0 1,1 -4,0 a 2,2 0 1,1 4,0 M 17.5 20.0 L 31  ,4"
-          android:valueType="pathType"
-          android:interpolator="@android:interpolator/linear_out_slow_in"/>
-        <objectAnimator android:propertyName="fillAlpha" android:startOffset="900" android:duration="400" android:valueFrom="1" android:valueTo="0" android:valueType="floatType" android:interpolator="@android:interpolator/linear_out_slow_in"/>
-        <objectAnimator android:propertyName="strokeAlpha" android:startOffset="900" android:duration="400" android:valueFrom="1" android:valueTo="0" android:valueType="floatType" android:interpolator="@android:interpolator/linear_out_slow_in"/>
+        <objectAnimator android:propertyName="pathData" android:duration="700" android:valueFrom="M 17.5 20.0 m 2,0 a 2,2 0 1,1 -4,0 a 2,2 0 1,1 4,0 M 17.5 20.0 L 17.5,20.0" android:valueTo="  M 31 4      m 2,0 a 2,2 0 1,1 -4,0 a 2,2 0 1,1 4,0 M 17.5 20.0 L 31  ,4" android:valueType="pathType" android:interpolator="@android:interpolator/linear_out_slow_in"/>
       </set>
     </aapt:attr>
   </target>

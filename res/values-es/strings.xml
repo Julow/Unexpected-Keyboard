@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (debug)</string>
     <string name="short_description">Un teclado virtual ligero para Android consciente de su privacidad.</string>
     <string name="store_description">La característica principal es que hay acceso a más caractéres deslizando hacia las esquinas de las teclas.\n\nEsta aplicación fue originalmente diseñada para programadores que usaran Termux.\nAhora es perfecta para uso cotidiano.\n\nLa misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y es de Fuente Abierta.</string>
-    <string name="settings_activity_label">Ajustes de Unexpected Keyboard</string>
     <string name="pref_portrait">En modo vertical</string>
     <string name="pref_landscape">En modo horizontal</string>
     <string name="pref_category_layout">Distribución</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Diseño %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Quitar diseño</string>
     <string name="pref_custom_layout_title">Diseño personalizado</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Mostrar teclado numérico</string>
     <string name="pref_show_numpad_never">Nunca</string>
     <string name="pref_show_numpad_landscape">Solo en modo horizontal</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Pegar</string>
     <string name="key_descr_cut">Cortar</string>
     <string name="key_descr_selectAll">Seleccionar todo</string>
-    <string name="key_descr_shareText">Compartir texto</string>
     <string name="key_descr_pasteAsPlainText">Pegar como texto sin formato</string>
     <string name="key_descr_undo">Deshacer</string>
     <string name="key_descr_redo">Rehacer</string>
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Textos recién copiados</string>
     <string name="clipboard_pin_heading">Pegado</string>
-    <string name="clipboard_remove_confirm">¿Sacar este portapapeles?</string>
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <string name="clipboard_remove_confirmed">Sí</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

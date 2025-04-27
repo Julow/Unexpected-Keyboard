@@ -4,7 +4,6 @@
     <string name="app_name_debug">Klávesnice Unexpected (pro ladění)</string>
     <string name="short_description">Nenáročná virtuální klávesnice pro vývojáře.</string>
     <string name="store_description">Hlavní funkcí je možnost psát více znaků posunutím kláves směrem k rohům.\n\nTato aplikace byla původně navržena pro programátory používající Termux.\nNyní je ideální pro každodenní použití.\n\nTato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je Open Source.</string>
-    <string name="settings_activity_label">Nastavení Klávesnice Unexpected</string>
     <string name="pref_portrait">V režimu na výšku</string>
     <string name="pref_landscape">V režimu na šířku</string>
     <string name="pref_category_layout">Rozvržení</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Rozložení %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Odebrat rozložení</string>
     <string name="pref_custom_layout_title">Vlastní rozložení</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Zobrazit NumPad</string>
     <string name="pref_show_numpad_never">Nikdy</string>
     <string name="pref_show_numpad_landscape">Pouze v režimu na šířku</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Vložit</string>
     <string name="key_descr_cut">Vyjmout</string>
     <string name="key_descr_selectAll">Označit vše</string>
-    <string name="key_descr_shareText">Sdílet text</string>
     <string name="key_descr_pasteAsPlainText">Vložit jako prostý text</string>
     <string name="key_descr_undo">Zpět</string>
     <string name="key_descr_redo">Znovu</string>
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Nedávno kopírovaný text</string>
     <string name="clipboard_pin_heading">Připnout</string>
-    <string name="clipboard_remove_confirm">Odebrat ze schránky?</string>
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <string name="clipboard_remove_confirmed">Ano</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">軽量でプライバシーに配慮したAndroid用仮想キーボード</string>
     <string name="store_description">このキーボードは、キーの角をスワイプすることで様々なキーを入力できます。\n\nこのアプリは元々はTermuxでのプログラミング用に設計されました。\nしかし、今では普段の入力にも適しています。\nPCキーボードでの半角入力を再現しています。日本語入力、変換は出来ません。\n\nこのアプリは広告を含まず、インターネットに接続せず、そしてオープンソースです。</string>
-    <string name="settings_activity_label">Unexpected Keyboardの設定</string>
     <string name="pref_portrait">縦向き</string>
     <string name="pref_landscape">横向き</string>
     <string name="pref_category_layout">レイアウト</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">レイアウト %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">レイアウトを削除</string>
     <string name="pref_custom_layout_title">カスタムレイアウト</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">テンキーを表示</string>
     <string name="pref_show_numpad_never">表示しない</string>
     <string name="pref_show_numpad_landscape">横向きの時は表示</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">貼り付け</string>
     <string name="key_descr_cut">切り取り</string>
     <string name="key_descr_selectAll">すべて選択</string>
-    <string name="key_descr_shareText">テキストを共有</string>
     <string name="key_descr_pasteAsPlainText">書式なしで貼り付け</string>
     <string name="key_descr_undo">元に戻す</string>
     <string name="key_descr_redo">やり直し</string>

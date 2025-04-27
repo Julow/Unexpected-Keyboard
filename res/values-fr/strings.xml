@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (debug)</string>
     <string name="short_description">Clavier virtuel léger et respectueux de la vie privée pour Android.</string>
     <string name="store_description">La fonctionnalité principale est l\'accès rapide à plus de caractères en balayant les touches vers les coins.\n\nCette application a été conçue à l\'origine pour les programmeurs utilisant Termux.\nElle est maintenant parfaite pour une utilisation quotidienne.\n\nCette application ne contient pas de publicité, n\'accède pas au réseau et est Open Source.</string>
-    <string name="settings_activity_label">Unexpected Keyboard Paramètres</string>
     <string name="pref_portrait">En mode portrait</string>
     <string name="pref_landscape">En mode landscape</string>
     <string name="pref_category_layout">Disposition</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Supprimer</string>
     <string name="pref_custom_layout_title">Disposition personnalisée</string>
+    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
+    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
+    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Afficher le pavé numérique</string>
     <string name="pref_show_numpad_never">Jamais</string>
     <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Coller</string>
     <string name="key_descr_cut">Couper</string>
     <string name="key_descr_selectAll">Sel. tout</string>
-    <string name="key_descr_shareText">Partager</string>
     <string name="key_descr_pasteAsPlainText">Copier en texte brut</string>
     <string name="key_descr_undo">Annuler</string>
     <string name="key_descr_redo">Refaire</string>
@@ -127,7 +128,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Texte récemment copié</string>
     <string name="clipboard_pin_heading">Épinglé</string>
-    <string name="clipboard_remove_confirm">Supprimer ce presse-papiers ?</string>
+    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
     <string name="clipboard_remove_confirmed">Oui</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

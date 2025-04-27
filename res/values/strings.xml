@@ -4,7 +4,6 @@
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string>
     <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads, doesn\'t make any network requests and is Open Source.</string>
-    <string name="settings_activity_label">Unexpected Keyboard Settings</string>
     <string name="pref_portrait">In portrait mode</string>
     <string name="pref_landscape">In landscape mode</string>
     <string name="pref_category_layout">Layout</string>
@@ -18,6 +17,9 @@
     <string name="pref_layouts_item">Layout %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Remove layout</string>
     <string name="pref_custom_layout_title">Custom layout</string>
+    <string name="pref_show_number_row_no_number_row">No number row</string>
+    <string name="pref_show_number_row_no_symbols">Number row without symbols</string>
+    <string name="pref_show_number_row_symbols">Number row with symbols</string>
     <string name="pref_show_numpad_title">Show NumPad</string>
     <string name="pref_show_numpad_never">Never</string>
     <string name="pref_show_numpad_landscape">Only in landscape mode</string>
@@ -103,7 +105,6 @@
     <string name="key_descr_paste">Paste</string>
     <string name="key_descr_cut">Cut</string>
     <string name="key_descr_selectAll">Select all</string>
-    <string name="key_descr_shareText">Share text</string>
     <string name="key_descr_pasteAsPlainText">Paste as plain text</string>
     <string name="key_descr_undo">Undo</string>
     <string name="key_descr_redo">Redo</string>
@@ -127,7 +128,7 @@
     <string name="key_descr_gesture">Gesture</string>
     <string name="clipboard_history_heading">Recently copied text</string>
     <string name="clipboard_pin_heading">Pinned</string>
-    <string name="clipboard_remove_confirm">Remove this clipboard?</string>
+    <string name="clipboard_remove_confirm">Remove this clipboard item?</string>
     <string name="clipboard_remove_confirmed">Yes</string>
     <string name="toast_no_voice_input">No voice typing app installed</string>
 </resources>
