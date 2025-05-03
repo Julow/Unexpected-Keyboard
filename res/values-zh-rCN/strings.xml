@@ -95,7 +95,7 @@
     <string name="launcher_tryhere">启用键盘后，可以在这里测试效果：</string>
     <string name="launcher_tryhere_hint">在这里测试</string>
     <string name="key_descr_capslock">大写锁定</string>
-    <string name="key_descr_compose">Compose</string>
+    <string name="key_descr_compose">字符组合键</string>
     <string name="key_descr_switch_greekmath">希腊 &amp; 数学符号</string>
     <string name="key_descr_change_method">切换键盘</string>
     <string name="key_descr_voice_typing">语音输入</string>
@@ -115,4 +115,26 @@
     <string name="key_descr_page_down">下一页</string>
     <string name="key_descr_home">Home</string>
     <string name="key_descr_end">End</string>
+    <string name="pref_theme_e_rosepine">桃红松韵（Rosé Pine）</string>
+    <string name="pref_circle_sensitivity_e_low">低</string>
+    <string name="key_descr_clipboard">管理剪贴板</string>
+    <string name="key_descr_zwnj">零宽连字符</string>
+    <string name="pref_long_timeout_title">长按触发延时</string>
+    <string name="pref_keyrepeat_enabled">长按重复输入</string>
+    <string name="pref_circle_sensitivity_title">环形手势灵敏度</string>
+    <string name="pref_circle_sensitivity_e_high">高</string>
+    <string name="pref_circle_sensitivity_e_medium">中</string>
+    <string name="pref_circle_sensitivity_e_disabled">禁用</string>
+    <string name="key_descr_zwj">零宽连字符</string>
+    <string name="clipboard_pin_heading">已固定</string>
+    <string name="clipboard_remove_confirm">确定移除此剪贴内容？</string>
+    <string name="clipboard_history_heading">最近剪贴内容</string>
+    <string name="key_descr_combining">组合用附加符号</string>
+    <string name="key_descr_dead_key">前置组合键</string>
+    <string name="clipboard_remove_confirmed">确定</string>
+    <string name="key_descr_nbsp">不间断空格</string>
+    <string name="key_descr_nnbsp">窄距不间断空格</string>
+    <string name="pref_theme_e_monet">莫奈（系统）</string>
+    <string name="pref_theme_e_monetdark">莫奈（深色）</string>
+    <string name="pref_theme_e_monetlight">莫奈（浅色）</string>
 </resources>
