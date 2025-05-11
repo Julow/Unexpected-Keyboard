@@ -26,6 +26,7 @@ latn_bone: Missing important key, missing: loc capslock
 latn_colemak: Some keys contain whitespaces, unexpected:  ́
 latn_dvorak: Missing important key, missing: loc capslock
 latn_neo2: Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
+latn_qwerty_jp: Layout contains unknown keys: accent-macron
 latn_qwerty_se: Duplicate keys: !, ', ,, -, ., ?
 latn_qwerty_tly: Duplicate keys: a, c, j, q
 latn_qwerty_tly: Missing programming keys, missing: loc esc, loc tab
