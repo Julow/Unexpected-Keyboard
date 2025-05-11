@@ -24,6 +24,6 @@
     <key c="ं" nw="ॐ" ne="।" sw="ः" se="&quot;" anticircle="१" indication="१"/>
     <key c="्" nw="," ne=";" sw="!" se="\?" anticircle="२" indication="२"/>
     <key c="़" nw="॰" sw="-" se="॒" anticircle="३" indication="३"/>
-    <key width="2" c="backspace"/>
+    <key width="2" c="backspace" ne="delete"/>
   </row>
 </keyboard>
