@@ -29,7 +29,7 @@
     <key key0="ж" key2=")" key3="("/>
   </row>
   <row>
-    <key width="2" key0="shift" key2="loc capslock"/>
+    <key width="1.5" key0="shift" key2="loc capslock"/>
     <key key0="я"/>
     <key key0="ч"/>
     <key key0="ѣ"/>
@@ -37,8 +37,9 @@
     <key key0="м"/>
     <key key0="и"/>
     <key key0="т"/>
-    <key key0="ь" key2="«"/>
+    <key key0="ь"/>
+    <key key0="б" key2="«"/>
     <key key0="ю" key2="»"/>
-    <key width="2" key0="backspace" key2="delete"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
   </row>
 </keyboard>
