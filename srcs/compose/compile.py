@@ -1,4 +1,4 @@
-import textwrap, sys, re, string, json, os
+import textwrap, sys, re, string, json, os, string
 from array import array
 
 # Compile compose sequences from Xorg's format or from JSON files into an
@@ -21,6 +21,20 @@ def parse_keysymdef_h(fname):
                 yield (m.group(1), chr(int(m.group(2), 16)))
 
 dropped_sequences = 0
+warning_count = 0
+
+# [s] is a list of strings
+def seq_to_str(s, result=None):
+    msg = "+".join(s)
+    return msg if result is None else msg + " = " + result
+
+# Print a warning. If [seq] is passed, it is prepended to the message.
+def warn(msg, seq=None, result=None):
+    global warning_count
+    if seq is not None:
+        msg = f"Sequence {seq_to_str(seq, result=result)} {msg}"
+    print(f"Warning: {msg}", file=sys.stderr)
+    warning_count += 1
 
 # Parse XKB's Compose.pre files
 def parse_sequences_file_xkb(fname, xkb_char_extra_names):
@@ -110,7 +124,7 @@ def parse_sequences_file_json(fname):
             tree = json.loads(strip_cstyle_comments(inp))
         return list(tree_to_seqs(tree, []))
     except Exception as e:
-        print("Failed parsing '%s': %s" % (fname, str(e)), file=sys.stderr)
+        warn("Failed parsing '%s': %s" % (fname, str(e)))
 
 # Format of the sequences file is determined by its extension
 def parse_sequences_file(fname, xkb_char_extra_names={}):
@@ -163,9 +177,9 @@ def add_sequences_to_trie(seqs, trie):
     for seq, result in seqs:
         if not add_seq_to_trie(seq, result):
             dropped_sequences += 1
-            print("Sequence collide: '%s' and '%s = %s'" % (
+            warn("Sequence collide: '%s' and '%s = %s'" % (
                 existing_sequence_to_str(seq),
-                "".join(seq), result), file=sys.stderr)
+                "".join(seq), result))
 
 # Compile the trie into a state machine.
 def make_automata(tries):
@@ -221,6 +235,32 @@ def print_automata(automata):
         s = "%#06x" % s if isinstance(s, int) else '"%s"' % str(s)
         print("%3d %8s %d" % (i, s, e), file=sys.stderr)
         i += 1
+
+# Report warnings about the compose sequences
+def check_for_warnings(tries):
+    def get(seq):
+        t = tries
+        for c in seq:
+            if c not in t:
+                return None
+            t = t[c]
+        return t if type(t) == str else None
+    # Check that compose+Upper+Upper have an equivalent compose+Upper+Lower or compose+Lower+Lower
+    for c1 in string.ascii_uppercase:
+        for c2 in string.ascii_uppercase:
+            seq = [c1, c2]
+            seq_l = [c1, c2.lower()]
+            seq_ll = [c1.lower(), c2.lower()]
+            r = get(seq)
+            r_l = get(seq_l)
+            r_ll = get(seq_ll)
+            if r is not None:
+                ll_warning = f" (but {seq_to_str(seq_ll)} = {r_ll} exists)" if r_ll is not None else ""
+                if r_l is None:
+                    if r != r_ll:
+                        warn(f"has no lower case equivalent {seq_to_str(seq_l)}{ll_warning}", seq=seq, result=r)
+                elif r != r_l:
+                    warn(f"is not the same as {seq_to_str(seq_l)} = {r_l}{ll_warning}", seq=seq, result=r)
 
 def batched(ar, n):
     i = 0
@@ -290,7 +330,10 @@ for fname in sorted(sys.argv[1:]):
         sequences = parse_sequences_file(fname)
     add_sequences_to_trie(sequences, tries.setdefault(tname, {}))
     total_sequences += len(sequences)
+
+check_for_warnings(tries["compose"])
 entry_states, automata = make_automata(tries)
 gen_java(entry_states, automata)
-print("Compiled %d sequences into %d states. Dropped %d sequences." % (total_sequences, len(automata), dropped_sequences), file=sys.stderr)
+
+print("Compiled %d sequences into %d states. Dropped %d sequences. Generated %d warnings." % (total_sequences, len(automata), dropped_sequences, warning_count), file=sys.stderr)
 # print_automata(automata)
