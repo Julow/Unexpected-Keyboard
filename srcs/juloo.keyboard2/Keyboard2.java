@@ -43,6 +43,8 @@ public class Keyboard2 extends InputMethodService
 
   private Config _config;
 
+  private FoldStateTracker _foldStateTracker;
+
   /** Layout currently visible before it has been modified. */
   KeyboardData current_layout_unmodified()
   {
@@ -111,13 +113,22 @@ public class Keyboard2 extends InputMethodService
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
     _keyeventhandler = new KeyEventHandler(this.new Receiver());
-    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler);
+    _foldStateTracker = new FoldStateTracker(this);
+    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
+    _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    _foldStateTracker.close();
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -234,7 +245,7 @@ public class Keyboard2 extends InputMethodService
   private void refresh_config()
   {
     int prev_theme = _config.theme;
-    _config.refresh(getResources());
+    _config.refresh(getResources(), _foldStateTracker.isUnfolded());
     refreshSubtypeImm();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)

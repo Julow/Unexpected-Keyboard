@@ -5,7 +5,9 @@
     <string name="short_description">Легка та конфіденційна віртуальна клавіатура для Android.</string>
     <string name="store_description">Головна особливість полягає в тому, що ви можете вводити більше символів, проводячи клавіші до кутів.\n\nЦя програма спочатку була розроблена для програмістів, які використовують Termux.\nТепер ідеально підходить для щоденного використання.\n\nЦя програма не містить реклами, не надсилає жодних мережевих запитів і має відкритий код.</string>
     <string name="pref_portrait">У портретному режимі</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">У альбомному режимі</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Макет</string>
     <string name="pref_label_brightness">Налаштувати яскравість символів</string>
     <string name="pref_keyboard_opacity">Налаштувати прозорість фону клавіатури</string>
