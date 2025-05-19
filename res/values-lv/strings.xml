@@ -6,7 +6,7 @@
     <string name="store_description">Galvenā tastatūras iespēja ir viegli ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.\n\nSākotnēji šī lietotne tika izstrādāta programmētājiem, kas izmanto Termux.\nTagad tā lieliski piemērota ikdienas lietošanai.\n\nLietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.</string>
     <string name="settings_activity_label">Unexpected Keyboard iestatījumi</string>
     <string name="pref_portrait">Stateniski</string>
-    <string name="pref_landscape">Guleniski</string>
+    <string name="pref_landscape">Līmeniski</string>
     <string name="pref_category_layout">Izkārtojums</string>
     <string name="pref_label_brightness">Pielāgot iezīmju spilgtumu</string>
     <string name="pref_keyboard_opacity">Pielāgot tastatūras fona necaurredzamību</string>
@@ -20,7 +20,7 @@
     <string name="pref_custom_layout_title">Pielāgots izkārtojums</string>
     <string name="pref_show_numpad_title">Rādīt ciparnīcu</string>
     <string name="pref_show_numpad_never">Nekad</string>
-    <string name="pref_show_numpad_landscape">Tikai guleniskajā stāvoklī</string>
+    <string name="pref_show_numpad_landscape">Tikai līmeniskajā stāvoklī</string>
     <string name="pref_show_numpad_always">Vienmēr</string>
     <string name="pref_number_row_title">Rādīt ciparu rindu</string>
     <string name="pref_number_row_summary">Pievienot ciparu rindu virs tastatūras, kad ciparnīca ir paslēpta</string>
