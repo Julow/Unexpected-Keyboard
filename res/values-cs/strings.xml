@@ -5,7 +5,9 @@
     <string name="short_description">Nenáročná virtuální klávesnice pro vývojáře.</string>
     <string name="store_description">Hlavní funkcí je možnost psát více znaků posunutím kláves směrem k rohům.\n\nTato aplikace byla původně navržena pro programátory používající Termux.\nNyní je ideální pro každodenní použití.\n\nTato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je Open Source.</string>
     <string name="pref_portrait">V režimu na výšku</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">V režimu na šířku</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Rozvržení</string>
     <string name="pref_label_brightness">Upravit jas nápisu</string>
     <string name="pref_keyboard_opacity">Upravit průhlednost pozadí klávesnice</string>
