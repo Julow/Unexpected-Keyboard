@@ -18,8 +18,24 @@ specify a place for a key, if it needed to be added to the layout later.
 Keys can be made bigger with the 'width' attribute and blank space can be added
 on the left of a key with the 'shift' attribute.
 
-See res/xml/bottom_row.xml for the definition of the bottom row and
-doc/Possible-key-values.md for the keys that have a special meaning.
+You can define your own bottom row by simply adding another '<row>...<row/>' tag
+then disabling the built-in bottom row by adding 'bottom_row="false"' to the
+keyboard metadata.
+
+Useful links.
+
+- Web based editor that will simplify editing of this file.
+  https://unexpected-keyboard-layout-editor.lixquid.com
+
+- Full guide on how to edit the layout.
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/doc/Custom-layouts.md
+
+- Current definition of the bottom row (for easy importing).
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/res/xml/bottom_row.xml
+
+- Built-in layouts (for easy importing)
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts
+
 -->
 <keyboard name="QWERTY (US)" script="latin">
   <row>
