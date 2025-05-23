@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<keyboard name="QWERTY (Íslenska)" script="latin">
+  <row>
+    <key c="q" ne="1" se="loc esc"/>
+    <key c="w" nw="~" ne="2" sw="\@"/>
+    <key c="e" nw="!" ne="3" sw="\#" se="€"/>
+    <key c="r" ne="4" sw="$"/>
+    <key c="t" ne="5" sw="%"/>
+    <key c="y" ne="6" sw="^"/>
+    <key c="u" ne="7" sw="&amp;"/>
+    <key c="i" ne="8" sw="*"/>
+    <key c="o" ne="9" sw="(" se=")"/>
+    <key c="p" ne="0"/>
+    <key c="ð"/>
+  </row>
+  <row>
+    <key c="a" nw="loc tab" ne="`" se="å"/>
+    <key c="s" ne="loc §" sw="loc ß"/>
+    <key c="d"/>
+    <key c="f"/>
+    <key c="g" ne="-" sw="_"/>
+    <key c="h" ne="=" sw="+"/>
+    <key c="j" se="}" sw="{"/>
+    <key c="k" sw="[" se="]"/>
+    <key c="l" ne="|" sw="\\"/>
+    <key c="æ"/>
+    <key c="ö" nw="ø"/>
+  </row>
+  <row>
+    <key c="shift" ne="loc capslock"/>
+    <key c="z"/>
+    <key c="x" ne="loc †"/>
+    <key c="c" ne="&lt;" sw="."/>
+    <key c="v" ne="&gt;" sw=","/>
+    <key c="b" ne="\?" sw="/"/>
+    <key c="n" ne=":" sw=";"/>
+    <key c="m" ne="&quot;" sw="'"/>
+    <key c="accent_aigu" ne="accent_trema" nw="accent_grave" sw="accent_circonflexe" se="accent_ring"/>
+    <key c="þ"/>
+    <key c="backspace" ne="delete"/>
+  </row>
+</keyboard>
