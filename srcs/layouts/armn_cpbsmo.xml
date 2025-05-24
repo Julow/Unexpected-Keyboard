@@ -40,12 +40,12 @@
     <key key0="shift" key2="loc capslock"/>
     <key key0="դ"/>
     <key key0="չ"/>
-    <key key0="չ"/>
     <key key0="յ"/>
     <key key0="զ"/>
     <key key0="լ"/>
     <key key0="ք"/>
-    <key key0="խ" key4="."/>
+    <key key0="խ"/>
+    <key key0="շ" key4="."/>
     <key key0="backspace" key2="delete"/>
   </row>
 </keyboard>
