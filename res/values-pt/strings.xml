@@ -127,4 +127,6 @@
     <string name="clipboard_remove_confirm">Remover esta cópia?</string>
     <string name="clipboard_remove_confirmed">Sim</string>
     <string name="key_descr_dead_key">Tecla morta</string>
+    <string name="key_descr_zwnj">Sem junta de largura zero</string>
+    <string name="key_descr_zwj">Junta de largura zero</string>
 </resources>
