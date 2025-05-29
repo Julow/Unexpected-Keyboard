@@ -40,7 +40,7 @@
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_landscape_unfolded" android:title="@string/pref_landscape_unfolded" android:summary="%sdp" android:defaultValue="3" min="0" max="100"/>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_keyboard_height_title">
-      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="keyboard_height" android:title="@string/pref_portrait" android:summary="%s%%" android:defaultValue="35" min="10" max="50"/>
+      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="keyboard_height" android:title="@string/pref_portrait" android:summary="%s%%" android:defaultValue="35" min="10" max="100"/>
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="keyboard_height_landscape" android:title="@string/pref_landscape" android:summary="%s%%" android:defaultValue="50" min="20" max="65"/>
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="keyboard_height_unfolded" android:title="@string/pref_portrait_unfolded" android:summary="%s%%" android:defaultValue="35" min="10" max="50"/>
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="keyboard_height_landscape_unfolded" android:title="@string/pref_landscape_unfolded" android:summary="%s%%" android:defaultValue="50" min="20" max="65"/>
