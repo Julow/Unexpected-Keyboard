@@ -229,7 +229,7 @@ public class Keyboard2View extends View
       return null;
     for (KeyboardData.Row row : _keyboard.rows)
     {
-      y += (row.shift + row.height) * _config.keyHeight;
+      y += (row.shift + row.height) * _tc.row_height;
       if (ty < y)
         return row;
     }
@@ -309,19 +309,19 @@ public class Keyboard2View extends View
     _marginRight = Math.max(_config.horizontal_margin, insets_right);
     _marginBottom = _config.margin_bottom + insets_bottom;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
-    _tc = new Theme.Computed(_theme, _config, _keyWidth);
+    _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
     // Compute the size of labels based on the width or the height of keys. The
     // margin around keys is taken into account. Keys normal aspect ratio is
     // assumed to be 3/2. It's generally more, the width computation is useful
     // when the keyboard is unusually high.
     float labelBaseSize = Math.min(
-        _config.keyHeight - _tc.vertical_margin,
+        _tc.row_height - _tc.vertical_margin,
         _keyWidth * 3/2 - _tc.horizontal_margin
         ) * _config.characterSize;
     _mainLabelSize = labelBaseSize * _config.labelTextSize;
     _subLabelSize = labelBaseSize * _config.sublabelTextSize;
     int height =
-      (int)(_config.keyHeight * _keyboard.keysHeight
+      (int)(_tc.row_height * _keyboard.keysHeight
           + _config.marginTop + _marginBottom);
     setMeasuredDimension(width, height);
   }
@@ -364,9 +364,9 @@ public class Keyboard2View extends View
     float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {
-      y += row.shift * _config.keyHeight;
+      y += row.shift * _tc.row_height;
       float x = _marginLeft + _tc.margin_left;
-      float keyH = row.height * _config.keyHeight - _tc.vertical_margin;
+      float keyH = row.height * _tc.row_height - _tc.vertical_margin;
       for (KeyboardData.Key k : row.keys)
       {
         x += k.shift * _keyWidth;
@@ -384,7 +384,7 @@ public class Keyboard2View extends View
         drawIndication(canvas, k, x, y, keyW, keyH, _tc);
         x += _keyWidth * k.width;
       }
-      y += row.height * _config.keyHeight;
+      y += row.height * _tc.row_height;
     }
   }
 
