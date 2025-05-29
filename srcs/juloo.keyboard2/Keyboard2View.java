@@ -42,6 +42,8 @@ public class Keyboard2View extends View
   private Config _config;
 
   private float _keyWidth;
+  private float _mainLabelSize;
+  private float _subLabelSize;
   private float _marginRight;
   private float _marginLeft;
   private float _marginBottom;
@@ -308,6 +310,16 @@ public class Keyboard2View extends View
     _marginBottom = _config.margin_bottom + insets_bottom;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
     _tc = new Theme.Computed(_theme, _config, _keyWidth);
+    // Compute the size of labels based on the width or the height of keys. The
+    // margin around keys is taken into account. Keys normal aspect ratio is
+    // assumed to be 3/2. It's generally more, the width computation is useful
+    // when the keyboard is unusually high.
+    float labelBaseSize = Math.min(
+        _config.keyHeight - _tc.vertical_margin,
+        _keyWidth * 3/2 - _tc.horizontal_margin
+        ) * _config.characterSize;
+    _mainLabelSize = labelBaseSize * _config.labelTextSize;
+    _subLabelSize = labelBaseSize * _config.sublabelTextSize;
     int height =
       (int)(_config.keyHeight * _keyboard.keysHeight
           + _config.marginTop + _marginBottom);
@@ -440,7 +452,7 @@ public class Keyboard2View extends View
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
-    float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
+    float textSize = scaleTextSize(kv, true);
     Paint p = tc.label_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), labelColor(kv, isKeyDown, false), textSize);
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
@@ -454,7 +466,7 @@ public class Keyboard2View extends View
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
-    float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
+    float textSize = scaleTextSize(kv, false);
     Paint p = tc.sublabel_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), labelColor(kv, isKeyDown, true), textSize, a);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
@@ -479,14 +491,15 @@ public class Keyboard2View extends View
     if (k.indication == null || k.indication.equals(""))
       return;
     Paint p = tc.indication_paint;
-    p.setTextSize(keyH * _config.sublabelTextSize * _config.characterSize);
+    p.setTextSize(_subLabelSize);
     canvas.drawText(k.indication, 0, k.indication.length(),
         x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
-  private float scaleTextSize(KeyValue k, float rel_size, float keyH)
+  private float scaleTextSize(KeyValue k, boolean main_label)
   {
     float smaller_font = k.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
-    return keyH * rel_size * smaller_font * _config.characterSize;
+    float label_size = main_label ? _mainLabelSize : _subLabelSize;
+    return label_size * smaller_font;
   }
 }
