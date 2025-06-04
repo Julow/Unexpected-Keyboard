@@ -267,7 +267,7 @@ public class Keyboard2 extends InputMethodService
       case InputType.TYPE_CLASS_DATETIME:
         if (_config.pin_entry_enabled)
           return loadPinentry(R.xml.pin);
-        else
+        else if (_config.number_entry_enabled)
           return loadNumpad(R.xml.numeric);
       default:
         break;

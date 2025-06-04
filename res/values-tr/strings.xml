@@ -51,6 +51,8 @@
     <string name="pref_vibrate_duration_title">Titreşim yoğunluğu</string>
     <string name="pref_pin_entry_enabled_title">NumPad</string>
     <string name="pref_pin_entry_enabled_summary">Sayıları, tarihleri ve telefon numaralarını yazarken</string>
+    <!-- <string name="pref_number_entry_enabled_title">Number entry layout</string> -->
+    <!-- <string name="pref_number_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
     <string name="pref_category_style">Tarz</string>
     <string name="pref_margin_bottom_title">Alt boşluk</string>
     <string name="pref_keyboard_height_title">Klavye yüksekliği</string>
