@@ -1,0 +1,91 @@
+{
+  "version": "v1.0.0",
+  "entity": {
+    "type": "individual",
+    "role": "owner",
+    "name": "Julow",
+    "email": "jules@j3s.fr",
+    "description": "Open source developer and maintainer of Unexpected Keyboard.",
+    "webpageUrl": {
+      "url": "https://github.com/Julow"
+    }
+  },
+  "projects": [
+    {
+      "guid": "unexpected-keyboard",
+      "name": "Unexpected Keyboard",
+      "description": "Lightweight and privacy-conscious virtual keyboard for Android.",
+      "webpageUrl": {
+        "url": "https://github.com/Julow/Unexpected-Keyboard/"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/Julow/Unexpected-Keyboard/"
+      },
+      "licenses": [
+        "spdx:GPL-3.0",
+        "spdx:CC0-1.0"
+      ],
+      "tags": [
+        "android",
+        "mobile",
+        "privacy",
+        "productivity",
+        "programming",
+        "user-experience"
+      ]
+    }
+  ],
+  "funding": {
+    "channels": [
+      {
+        "guid": "liberapay",
+        "type": "other",
+        "address": "https://liberapay.com/Julow/",
+        "description": "Recurring donations for funding Unexpected Keyboard."
+      },
+      {
+        "guid": "github-sponsors",
+        "type": "other",
+        "address": "https://github.com/sponsors/Julow",
+        "description": "Recurring donations for funding Unexpected Keyboard."
+      },
+      {
+        "guid": "paypal",
+        "type": "other",
+        "address": "https://paypal.me/JulesAguillon",
+        "description": "One-time donations for funding Unexpected-keyboard."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "fund-maintenance",
+        "status": "active",
+        "name": "Fund developer time",
+        "description": "Help the maintainers spend time on Unexpected Keyboard",
+        "amount": 0,
+        "currency": "EUR",
+        "frequency": "monthly",
+        "channels": [
+          "liberapay",
+          "github-sponsors",
+          "paypal"
+        ]
+      },
+      {
+        "guid": "one-time-contribution",
+        "status": "active",
+        "name": "Fund developer time",
+        "description": "Help the maintainers spend time on Unexpected Keyboard",
+        "amount": 0,
+        "currency": "EUR",
+        "frequency": "one-time",
+        "channels": [
+          "liberapay",
+          "github-sponsors",
+          "paypal"
+        ]
+      }
+    ],
+    "history": []
+  }
+}
