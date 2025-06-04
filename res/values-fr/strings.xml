@@ -51,6 +51,8 @@
     <string name="pref_vibrate_duration_title">Intensité des vibrations</string>
     <string name="pref_pin_entry_enabled_title">Clavier PIN</string>
     <string name="pref_pin_entry_enabled_summary">Lors de la saisie de nombres, de dates et de numéros de téléphone</string>
+    <!-- <string name="pref_number_entry_enabled_title">Number entry layout</string> -->
+    <!-- <string name="pref_number_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
     <string name="pref_category_style">Style</string>
     <string name="pref_margin_bottom_title">Marge du bas</string>
     <string name="pref_keyboard_height_title">Hauteur du clavier</string>

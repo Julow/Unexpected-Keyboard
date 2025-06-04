@@ -59,6 +59,7 @@ public final class Config
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
   public boolean pin_entry_enabled;
+  public boolean number_entry_enabled;
   public boolean borderConfig;
   public int circle_sensitivity;
   public boolean clipboard_history_enabled;
@@ -170,6 +171,7 @@ public final class Config
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
     pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
+    number_entry_enabled = _prefs.getBoolean("number_entry_enabled", true);
     current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
     current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
     current_layout_unfolded_portrait = _prefs.getInt("current_layout_unfolded_portrait", 0);

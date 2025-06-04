@@ -51,6 +51,8 @@
     <string name="pref_vibrate_duration_title">Інтенсивність вібрації</string>
     <string name="pref_pin_entry_enabled_title">Макет введення PIN-коду</string>
     <string name="pref_pin_entry_enabled_summary">При наборі чисел, дат і номерів телефонів</string>
+    <!-- <string name="pref_number_entry_enabled_title">Number entry layout</string> -->
+    <!-- <string name="pref_number_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
     <string name="pref_category_style">Стиль</string>
     <string name="pref_margin_bottom_title">Поле знизу</string>
     <string name="pref_keyboard_height_title">Висота клавіатури</string>
