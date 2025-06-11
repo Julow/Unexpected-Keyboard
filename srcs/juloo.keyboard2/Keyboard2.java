@@ -125,6 +125,40 @@ public class Keyboard2 extends InputMethodService
   }
 
   @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    int orientation = getResources().getConfiguration().orientation;
+    int rotation = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+
+    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+      if (_keyeventhandler != null) {
+        if (orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE && rotation == Surface.ROTATION_90) {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_LEFT); 
+        } else {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_RIGHT);
+        }
+      }
+      return true;
+    } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+      if (_keyeventhandler != null) {
+        if (orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE && rotation == Surface.ROTATION_90) {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_RIGHT);
+        } else {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_LEFT);
+        }
+      }
+      return true;
+    }
+    return super.onKeyDown(keyCode, event);
+  }
+
+  @Override
+  public boolean onKeyUp(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)
+      return true;
+    return super.onKeyUp(keyCode, event);
+  }
+
+  @Override
   public void onDestroy() {
     super.onDestroy();
 
