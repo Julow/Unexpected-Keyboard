@@ -38,6 +38,7 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
+  private int _lastInputType = 0;
   public int actionId; // Action performed by the Action key.
   private Handler _handler;
 
@@ -126,6 +127,12 @@ public class Keyboard2 extends InputMethodService
 
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
+    int inputClass = _lastInputType & InputType.TYPE_MASK_CLASS;
+    InputConnection conn = getCurrentInputConnection();
+    if (conn == null || !isInputViewShown() || inputClass != InputType.TYPE_CLASS_TEXT) {
+      return super.onKeyDown(keyCode, event);
+    }
+
     int orientation = getResources().getConfiguration().orientation;
     int rotation = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getRotation();
 
@@ -312,6 +319,7 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
+    _lastInputType = info.inputType;
     refresh_config();
     refresh_action_label(info);
     _currentSpecialLayout = refresh_special_layout(info);
