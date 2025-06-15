@@ -602,6 +602,8 @@ public final class KeyValue implements Comparable<KeyValue>
       case "combining_kasratan": return makeCharKey(0xE219, '\u064D', 0);
       case "combining_dammatan": return makeCharKey(0xE220, '\u064C', 0);
       case "combining_alef_below": return makeCharKey(0xE221, '\u0656', 0);
+      case "combining_kavyka": return makeCharKey(0xE222, '\uA67C', 0);
+      case "combining_palatalization": return makeCharKey(0xE223, '\u0484', 0);
 
       /* Special event keys */
       case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
