@@ -306,7 +306,6 @@ public final class Pointers implements Handler.Callback
           // Start sliding mode
           if (new_value.getKind() == KeyValue.Kind.Slider)
             startSliding(ptr, x, y, dx, dy, new_value);
-          _handler.onPointerDown(new_value, true);
         }
 
       }
@@ -469,7 +468,7 @@ public final class Pointers implements Handler.Callback
     stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
     ptr.sliding = new Sliding(x, y, dirx, diry, kv.getSlider());
-    _handler.onPointerHold(kv, ptr.modifiers);
+    _handler.onPointerDown(kv, true);
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
