@@ -320,10 +320,16 @@ public final class KeyEventHandler
     {
       int sel_start = et.selectionStart;
       int sel_end = et.selectionEnd;
-      if (sel_left == (sel_start <= sel_end))
-        sel_start += d;
-      else
-        sel_end += d;
+      boolean modify_sel_start = sel_left == (sel_start <= sel_end);
+      do
+      {
+        if (modify_sel_start)
+          sel_start += d;
+        else
+          sel_end += d;
+        // Move the cursor twice if moving it once would make the selection
+        // empty and stop selection mode.
+      } while (sel_start == sel_end);
       if (conn.setSelection(sel_start, sel_end))
         return; // Fallback to sending key events if [setSelection] failed
     }
