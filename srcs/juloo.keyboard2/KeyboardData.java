@@ -336,9 +336,13 @@ public final class KeyboardData
       int status;
       float h = attribute_float(parser, "height", 1f);
       float shift = attribute_float(parser, "shift", 0f);
+      float scale = attribute_float(parser, "scale", 0f);
       while (expect_tag(parser, "key"))
         keys.add(Key.parse(parser));
-      return new Row(keys, h, shift);
+      Row row = new Row(keys, h, shift);
+      if (scale > 0f)
+        row = row.updateWidth(scale);
+      return row;
     }
 
     public Row copy()
