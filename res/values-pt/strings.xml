@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Comportamento da tecla de troca de teclado</string>
     <string name="pref_vibrate_custom">Vibração personalizada</string>
     <string name="pref_vibrate_duration_title">Intensidade da vibração</string>
-    <string name="pref_pin_entry_enabled_title">Layout PIN</string>
-    <string name="pref_pin_entry_enabled_summary">Quando digitando números, datas ou números de telefone</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Estilo</string>
     <string name="pref_margin_bottom_title">Margem inferior</string>
     <string name="pref_keyboard_height_title">Altura do teclado</string>

@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Klavye değistirme tuşunun davranışını belirler</string>
     <string name="pref_vibrate_custom">Özel titreşim</string>
     <string name="pref_vibrate_duration_title">Titreşim yoğunluğu</string>
-    <string name="pref_pin_entry_enabled_title">NumPad</string>
-    <string name="pref_pin_entry_enabled_summary">Sayıları, tarihleri ve telefon numaralarını yazarken</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Tarz</string>
     <string name="pref_margin_bottom_title">Alt boşluk</string>
     <string name="pref_keyboard_height_title">Klavye yüksekliği</string>

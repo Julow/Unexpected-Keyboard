@@ -12,6 +12,7 @@ import java.util.Map;
 import juloo.keyboard2.prefs.CustomExtraKeysPreference;
 import juloo.keyboard2.prefs.ExtraKeysPreference;
 import juloo.keyboard2.prefs.LayoutsPreference;
+import juloo.keyboard2.NumberLayout;
 
 public final class Config
 {
@@ -58,7 +59,7 @@ public final class Config
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
   public boolean switch_input_immediate;
-  public boolean pin_entry_enabled;
+  public NumberLayout selected_number_layout;
   public boolean borderConfig;
   public int circle_sensitivity;
   public boolean clipboard_history_enabled;
@@ -169,7 +170,7 @@ public final class Config
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
-    pin_entry_enabled = _prefs.getBoolean("pin_entry_enabled", true);
+    selected_number_layout = NumberLayout.valueOf(_prefs.getString("number_entry_layout",  "pin").toUpperCase());
     current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
     current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
     current_layout_unfolded_portrait = _prefs.getInt("current_layout_unfolded_portrait", 0);
@@ -300,7 +301,7 @@ public final class Config
 
   /** Config migrations. */
 
-  private static int CONFIG_VERSION = 2;
+  private static int CONFIG_VERSION = 3;
 
   public static void migrate(SharedPreferences prefs)
   {
@@ -332,6 +333,11 @@ public final class Config
         e.putString("number_row", add_number_row ? "no_symbols" : "no_number_row");
         // Fallthrough
       case 2:
+        if (!prefs.contains("number_entry_layout")) {
+          e.putString("number_entry_layout", prefs.getBoolean("pin_entry_enabled", true) ? "pin" : "number");
+        }
+        // Fallthrough
+      case 3:
       default: break;
     }
     e.apply();

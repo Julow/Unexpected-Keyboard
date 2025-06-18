@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">キーボード切替キーの挙動</string>
     <string name="pref_vibrate_custom">キーボード独自の振動設定</string>
     <string name="pref_vibrate_duration_title">振動の時間</string>
-    <string name="pref_pin_entry_enabled_title">PIN入力</string>
-    <string name="pref_pin_entry_enabled_summary">数字・日付・電話番号入力時</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">表示</string>
     <string name="pref_margin_bottom_title">下の余白</string>
     <string name="pref_keyboard_height_title">キーボードの高さ</string>
