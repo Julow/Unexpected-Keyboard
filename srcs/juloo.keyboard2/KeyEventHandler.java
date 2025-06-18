@@ -78,6 +78,11 @@ public final class KeyEventHandler
       case Compose_pending:
         _autocap.stop();
         break;
+      case Slider:
+        // Don't wait for the next key_up and move the cursor right away. This
+        // is called after the trigger distance have been travelled.
+        handle_slider(key.getSlider(), key.getSliderRepeat(), true);
+        break;
       default: break;
     }
   }
@@ -99,7 +104,7 @@ public final class KeyEventHandler
       case Modifier: break;
       case Editing: handle_editing_key(key.getEditing()); break;
       case Compose_pending: _recv.set_compose_pending(true); break;
-      case Slider: handle_slider(key.getSlider(), key.getSliderRepeat()); break;
+      case Slider: handle_slider(key.getSlider(), key.getSliderRepeat(), false); break;
       case Macro: evaluate_macro(key.getMacro()); break;
     }
     update_meta_state(old_mods);
@@ -261,7 +266,7 @@ public final class KeyEventHandler
   }
 
   /** [r] might be negative, in which case the direction is reversed. */
-  void handle_slider(KeyValue.Slider s, int r)
+  void handle_slider(KeyValue.Slider s, int r, boolean key_down)
   {
     switch (s)
     {
@@ -269,8 +274,8 @@ public final class KeyEventHandler
       case Cursor_right: move_cursor(r); break;
       case Cursor_up: move_cursor_vertical(-r); break;
       case Cursor_down: move_cursor_vertical(r); break;
-      case Selection_cursor_left: move_cursor_sel(r, true); break;
-      case Selection_cursor_right: move_cursor_sel(r, false); break;
+      case Selection_cursor_left: move_cursor_sel(r, true, key_down); break;
+      case Selection_cursor_right: move_cursor_sel(r, false, key_down); break;
     }
   }
 
@@ -310,7 +315,7 @@ public final class KeyEventHandler
 
   /** Move one of the two side of a selection. If [sel_left] is true, the left
       position is moved, otherwise the right position is moved. */
-  void move_cursor_sel(int d, boolean sel_left)
+  void move_cursor_sel(int d, boolean sel_left, boolean key_down)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
@@ -320,10 +325,23 @@ public final class KeyEventHandler
     {
       int sel_start = et.selectionStart;
       int sel_end = et.selectionEnd;
-      if (sel_left == (sel_start <= sel_end))
-        sel_start += d;
-      else
-        sel_end += d;
+      // Reorder the selection when the slider has just been pressed. The
+      // selection might have been reversed if one end crossed the other end
+      // with a previous slider.
+      if (key_down && sel_start > sel_end)
+      {
+        sel_start = et.selectionEnd;
+        sel_end = et.selectionStart;
+      }
+      do
+      {
+        if (sel_left)
+          sel_start += d;
+        else
+          sel_end += d;
+        // Move the cursor twice if moving it once would make the selection
+        // empty and stop selection mode.
+      } while (sel_start == sel_end);
       if (conn.setSelection(sel_start, sel_end))
         return; // Fallback to sending key events if [setSelection] failed
     }
