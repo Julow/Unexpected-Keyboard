@@ -14,7 +14,7 @@
     <key width="1.09" key0="ш" key2="€" key3="{" key4="}"/>
   </row>
   <row>
-    <key width="1.09" key0="а" key1="tab" key2="`"/>
+    <key width="1.09" key0="а" key1="tab"/>
     <key width="1.09" key0="с"/>
     <key width="1.09" key0="д"/>
     <key width="1.09" key0="ф"/>
@@ -32,7 +32,7 @@
     <key key0="џ"/>
     <key key0="ц"/>
     <key key0="в" key2="&lt;" key3="."/>
-    <key key0="б" key2=">" key3="."/>
+    <key key0="б" key2=">" key3=","/>
     <key key0="н" key2="\?" key3="/"/>
     <key key0="м" key2=":" key3=";"/>
     <key key0="ѓ" key2="`" key3="'"/>
