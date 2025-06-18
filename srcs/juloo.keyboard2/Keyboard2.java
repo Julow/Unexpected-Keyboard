@@ -38,6 +38,7 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
+  private int _lastInputType = 0;
   public int actionId; // Action performed by the Action key.
   private Handler _handler;
 
@@ -122,6 +123,46 @@ public class Keyboard2 extends InputMethodService
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
     _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
+  }
+
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    int inputClass = _lastInputType & InputType.TYPE_MASK_CLASS;
+    InputConnection conn = getCurrentInputConnection();
+    if (conn == null || !isInputViewShown() || inputClass != InputType.TYPE_CLASS_TEXT) {
+      return super.onKeyDown(keyCode, event);
+    }
+
+    int orientation = getResources().getConfiguration().orientation;
+    int rotation = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+
+    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+      if (_keyeventhandler != null) {
+        if (orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE && rotation == Surface.ROTATION_90) {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_LEFT); 
+        } else {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_RIGHT);
+        }
+      }
+      return true;
+    } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+      if (_keyeventhandler != null) {
+        if (orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE && rotation == Surface.ROTATION_90) {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_RIGHT);
+        } else {
+          _keyeventhandler.send_key_down_up(KeyEvent.KEYCODE_DPAD_LEFT);
+        }
+      }
+      return true;
+    }
+    return super.onKeyDown(keyCode, event);
+  }
+
+  @Override
+  public boolean onKeyUp(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)
+      return true;
+    return super.onKeyUp(keyCode, event);
   }
 
   @Override
@@ -278,6 +319,7 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
+    _lastInputType = info.inputType;
     refresh_config();
     refresh_action_label(info);
     _currentSpecialLayout = refresh_special_layout(info);
