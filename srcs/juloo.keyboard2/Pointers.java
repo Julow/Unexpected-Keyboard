@@ -108,7 +108,10 @@ public final class Pointers implements Handler.Callback
     {
       // No existing pointer, latch the key.
       if (latched)
+      {
         add_fake_pointer(key, kv, lock);
+        _handler.onPointerFlagsChanged(false);
+      }
     }
     else if ((ptr.flags & FLAG_P_FAKE) == 0)
     {} // Key already latched but not by a fake ptr, do nothing.
@@ -118,6 +121,7 @@ public final class Pointers implements Handler.Callback
       removePtr(ptr);
       if (latched)
         add_fake_pointer(key, kv, lock);
+      _handler.onPointerFlagsChanged(false);
     }
     else if ((ptr.flags & FLAG_P_LOCKED) != 0)
     {} // Existing ptr is locked but [lock] is false, do not continue.
