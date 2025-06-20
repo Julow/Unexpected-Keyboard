@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Поведение клавиши переключения клавиатуры</string>
     <string name="pref_vibrate_custom">Настройка вибрации</string>
     <string name="pref_vibrate_duration_title">Интенсивность вибрации</string>
-    <string name="pref_pin_entry_enabled_title">Закрепить раскладку</string>
-    <string name="pref_pin_entry_enabled_summary">При вводе чисел, дат и телефонных номеров</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Стиль</string>
     <string name="pref_margin_bottom_title">Нижняя граница поля</string>
     <string name="pref_keyboard_height_title">Высота клавиатуры</string>

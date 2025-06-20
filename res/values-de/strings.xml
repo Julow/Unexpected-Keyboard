@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Verhalten der Tastaturumschalttaste</string>
     <string name="pref_vibrate_custom">Benutzerdefinierte Vibration</string>
     <string name="pref_vibrate_duration_title">Vibrationsstärke</string>
-    <string name="pref_pin_entry_enabled_title">PIN-Eingabe-Layout</string>
-    <string name="pref_pin_entry_enabled_summary">Für die Nummern-, Datums- und Telefonnummern-Eingabe</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Design</string>
     <string name="pref_margin_bottom_title">Unterer Abstand</string>
     <string name="pref_keyboard_height_title">Höhe der Tastatur</string>

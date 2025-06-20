@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">切换键盘按钮的行为</string>
     <string name="pref_vibrate_custom">自定义振动</string>
     <string name="pref_vibrate_duration_title">振动强度</string>
-    <string name="pref_pin_entry_enabled_title">数字输入布局</string>
-    <string name="pref_pin_entry_enabled_summary">输入数字、日期与电话号码时</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">样式</string>
     <string name="pref_margin_bottom_title">键盘下边距</string>
     <string name="pref_keyboard_height_title">键盘高度</string>

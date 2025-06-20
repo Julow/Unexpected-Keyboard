@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Działanie klawisza przełączającego klawiaturę</string>
     <string name="pref_vibrate_custom">Własna wibracja</string>
     <string name="pref_vibrate_duration_title">Intensywność wibracji</string>
-    <string name="pref_pin_entry_enabled_title">Układ klawiatury PIN</string>
-    <string name="pref_pin_entry_enabled_summary">Podczas wpisywania liczb, dat i numerów telefonu</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Styl</string>
     <string name="pref_margin_bottom_title">Margines dolny</string>
     <string name="pref_keyboard_height_title">Wysokość klawiatury</string>
