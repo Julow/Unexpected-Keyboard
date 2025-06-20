@@ -227,17 +227,11 @@ public final class KeyEventHandler
   @SuppressLint("InlinedApi")
   void handle_editing_key(KeyValue.Editing ev)
   {
-    CharSequence t = "";
-    if(ev == KeyValue.Editing.COPY || ev == KeyValue.Editing.CUT) {
-      InputConnection conn = _recv.getCurrentInputConnection();
-      if (conn != null) t = conn.getSelectedText(0); //null if no text is selected
-    }
-
     switch (ev)
     {
-      case COPY: if(t != null) send_context_menu_action(android.R.id.copy); break;
+      case COPY: if(is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
       case PASTE: send_context_menu_action(android.R.id.paste); break;
-      case CUT: if(t != null) send_context_menu_action(android.R.id.cut); break;
+      case CUT: if(is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
       case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
       case SHARE: send_context_menu_action(android.R.id.shareText); break;
       case PASTE_PLAIN: send_context_menu_action(android.R.id.pasteAsPlainText); break;
@@ -452,6 +446,13 @@ public final class KeyEventHandler
     // Notify the receiver as Android's [onUpdateSelection] is not triggered.
     if (conn.setSelection(curs, curs));
       _recv.selection_state_changed(false);
+  }
+
+  boolean is_selection_not_empty()
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null) return false;
+    return (conn.getSelectedText(0) != null);
   }
 
   public static interface IReceiver
