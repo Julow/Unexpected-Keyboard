@@ -14,17 +14,17 @@
     <key key0="פ" key2="0" key3="b)" key4="rlm"/>
     <key key0="backspace" key2="delete"/>
   </row>
-  <row>
-    <key key0="ש" key2="`" key1="loc tab" key3="sindot_placeholder" key4="shindot_placeholder" width="1.333"/>
-    <key key0="ד" key1="~" width="1.0333"/>
-    <key key0="ג" key1="geresh" key2="gershayim" width="1.0333"/>
-    <key key0="כ" width="1.0333"/>
-    <key key0="ע" width="1.0333"/>
-    <key key0="י" key2="-" key3="_" key4="maqaf" width="1.0333"/>
-    <key key0="ח" key2="=" key3="+" width="1.0333"/>
-    <key key0="ל" key2="b[" key3="b{" width="1.0333"/>
-    <key key0="ך" key2="b]" key3="b}" width="1.0333"/>
-    <key key0="ף" key2="," key3="&quot;" key1=":" width="1.4006"/>
+  <row scale="11">
+    <key key0="ש" key2="`" key1="loc tab" key3="sindot_placeholder" key4="shindot_placeholder" width="1.30"/>
+    <key key0="ד" key1="~"/>
+    <key key0="ג" key1="geresh" key2="gershayim"/>
+    <key key0="כ"/>
+    <key key0="ע"/>
+    <key key0="י" key2="-" key3="_" key4="maqaf"/>
+    <key key0="ח" key2="=" key3="+"/>
+    <key key0="ל" key2="b[" key3="b{"/>
+    <key key0="ך" key2="b]" key3="b}"/>
+    <key key0="ף" key2="," key3="&quot;" key1=":" width="1.35"/>
   </row>
   <row>
     <key key0="\\" key1="|" key2="shift" key3="loc capslock"/>

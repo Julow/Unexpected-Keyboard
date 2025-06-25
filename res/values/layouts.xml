@@ -20,6 +20,7 @@
     <item>cyrl_jcuken_kk</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
+    <item>cyrl_lynyertdz_mk</item>
     <item>cyrl_lynyertz_sr</item>
     <item>cyrl_ueishsht</item>
     <item>cyrl_yaverti</item>
@@ -105,6 +106,7 @@
     <item>ЙЦУКЕН (Қазақша)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>ЙЦУКЕН (Українська)</item>
+    <item>ЉЊЕРТЅ (Македонски)</item>
     <item>ЉЊЕРТЗ (Српски)</item>
     <item>УЕИШЩ (Български, БДС)</item>
     <item>ЯВЕРТЪ</item>
@@ -190,6 +192,7 @@
     <item>@xml/cyrl_jcuken_kk</item>
     <item>@xml/cyrl_jcuken_ru</item>
     <item>@xml/cyrl_jcuken_uk</item>
+    <item>@xml/cyrl_lynyertdz_mk</item>
     <item>@xml/cyrl_lynyertz_sr</item>
     <item>@xml/cyrl_ueishsht</item>
     <item>@xml/cyrl_yaverti</item>

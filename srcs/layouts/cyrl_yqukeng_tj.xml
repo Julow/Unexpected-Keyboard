@@ -26,17 +26,17 @@
     <key key0="ж" key7="0" />
     <key key0="э" key7="\?" key3="/" />
   </row>
-  <row>
-    <key width="1.18" key0="shift" key2="loc capslock" />
-    <key width="0.96" key0="я" key7="`" key8=";" />
-    <key width="0.96" key0="ч" key7="*" key8=":" />
-    <key width="0.96" key0="с"  key7="&amp;" key8="\#" />
-    <key width="0.96" key0="м" key7="|" key8="\\" />
-    <key width="0.96" key0="и" key7="~" />
-    <key width="0.96" key0="т" key7="ц" />
-    <key width="0.96" key0="ӣ" key3="&lt;" key2="&gt;" />
-    <key width="0.96" key0="б" key7="ъ" key8="ы" />
-    <key width="0.96" key0="ю" key7="&quot;" key8="'"/>
-    <key width="1.18" key0="." key7="," />
+  <row scale="11">
+    <key width="1.22" key0="shift" key2="loc capslock" />
+    <key key0="я" key7="`" key8=";" />
+    <key key0="ч" key7="*" key8=":" />
+    <key key0="с"  key7="&amp;" key8="\#" />
+    <key key0="м" key7="|" key8="\\" />
+    <key key0="и" key7="~" />
+    <key key0="т" key7="ц" />
+    <key key0="ӣ" key3="&lt;" key2="&gt;" />
+    <key key0="б" key7="ъ" key8="ы" />
+    <key key0="ю" key7="&quot;" key8="'"/>
+    <key width="1.22" key0="." key7="," />
   </row>
 </keyboard>

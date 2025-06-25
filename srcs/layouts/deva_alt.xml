@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard name="देवनागरी (हिंदी)-2" script="devanagari">
-  <row>
-    <key shift="0.35" width="0.9" c="क" nw="ख" ne="घ" sw="ङ"  se="ग"/>
-    <key              width="0.9" c="च" nw="छ" ne="झ" sw="ञ"  se="ज"/>
-    <key              width="0.9" c="ट" nw="ठ" ne="ढ" sw="ण"  se="ड" anticircle="७" indication="७"/>
-    <key              width="0.9" c="त" nw="थ" ne="ध" sw="न"  se="द" anticircle="८" indication="८"/>
-    <key              width="0.9" c="प" nw="फ" ne="भ" sw="म"  se="ब" anticircle="९" indication="९"/>
-    <key              width="0.9" c="र" nw="ज्ञ" ne="ल" sw="य"  se="व"/>
-    <key              width="0.9" c="ह" nw="श" ne="ळ" sw="स"  se="ष"/>
+  <row scale="6.6">
+    <key shift="0.35" c="क" nw="ख" ne="घ" sw="ङ"  se="ग"/>
+    <key              c="च" nw="छ" ne="झ" sw="ञ"  se="ज"/>
+    <key              c="ट" nw="ठ" ne="ढ" sw="ण"  se="ड" anticircle="७" indication="७"/>
+    <key              c="त" nw="थ" ne="ध" sw="न"  se="द" anticircle="८" indication="८"/>
+    <key              c="प" nw="फ" ne="भ" sw="म"  se="ब" anticircle="९" indication="९"/>
+    <key              c="र" nw="ज्ञ" ne="ल" sw="य"  se="व"/>
+    <key              c="ह" nw="श" ne="ळ" sw="स"  se="ष"/>
   </row>
-  <row>
-    <key shift="0.35" width="0.9" c="ा" nw="अ" ne="आ"/>
-    <key              width="0.9" c="ि" nw="इ"/>
-    <key              width="0.9" c="ी" nw="ई" anticircle="४" indication="४"/>
-    <key              width="0.9" c="ु" nw="उ" ne="ऊ" se="ू" anticircle="५" indication="५"/>
-    <key              width="0.9" c="े" nw="ए" ne="ऋ" se="ृ" anticircle="६" indication="६"/>
-    <key              width="0.9" c="ै" nw="ऐ" ne="ऌ" se="ॢ"/>
-    <key              width="0.9" c="ो" nw="ओ" ne="औ" se="ौ"/>
+  <row scale="6.6">
+    <key shift="0.35" c="ा" nw="अ" ne="आ"/>
+    <key              c="ि" nw="इ"/>
+    <key              c="ी" nw="ई" anticircle="४" indication="४"/>
+    <key              c="ु" nw="उ" ne="ऊ" se="ू" anticircle="५" indication="५"/>
+    <key              c="े" nw="ए" ne="ऋ" se="ृ" anticircle="६" indication="६"/>
+    <key              c="ै" nw="ऐ" ne="ऌ" se="ॢ"/>
+    <key              c="ो" nw="ओ" ne="औ" se="ौ"/>
   </row>
   <row>
     <key c="ऽ" se="\@"/>
