@@ -8,7 +8,7 @@
     <string name="pref_portrait">Portre modunda</string>
     <string name="pref_landscape">Manzara modunda</string>
     <string name="pref_category_layout">Tuş düzeni</string>
-    <string name="pref_label_brightness">Adjust label brightness</string>
+    <string name="pref_label_brightness">Etiket parlaklığını ayarla</string>
     <string name="pref_keyboard_opacity">Klavye arkaplanı opaklığını ayarla</string>
     <string name="pref_key_opacity">Tuş opaklığını ayarla</string>
     <string name="pref_key_activated_opacity">Tuşa basıldığındaki opaklığı ayarla</string>
@@ -91,7 +91,7 @@
     <string name="launcher_button_imesettings">Ayarlarda aktif et</string>
     <string name="launcher_button_imepicker">Klavye Seç</string>
     <string name="launcher_description">Bu uygulama bir sanal klavye uygulamasıdır. Aşağıdaki butona basarak sistem ayarlarında etkinleştiriniz.</string>
-    <string name="launcher_sourcecode">Bu uygulama ücretsiz ve açık kaynaklıdır. Kaynak koduna erişmek veya bir hata raporlamak için GitHub</string>
+    <string name="launcher_sourcecode">Bu uygulama ücretsiz ve açık kaynaklıdır. Kaynak koduna erişmek veya bir hata raporlamak için GitHub\'a ulaşabilirsiniz.</string>
     <string name="launcher_tryhere">Ayarlardan aktif ettikten sonra klavyeyi burada test edebilirsin:</string>
     <string name="launcher_tryhere_hint">Burada dene</string>
     <string name="key_descr_capslock">CapsLock</string>
@@ -124,8 +124,13 @@
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
   <string name="clipboard_history_heading">Son kopyalanan metin</string>
     <string name="clipboard_pin_heading">Sabitlendi</string>
-    <string name="clipboard_remove_confirm">Bu sabitlemeyi sil</string>
+    <string name="clipboard_remove_confirm">Bu panodan silinsin mi?</string>
     <string name="clipboard_remove_confirmed">Evet</string>
-    <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="pref_theme_e_rosepine">Gül Çamı(Rosé Pine)</string>
     <string name="key_descr_dead_key">Boş tuş</string>
+    <string name="key_descr_nnbsp">Dar kırılmaz boşluk</string>
+    <string name="key_descr_nbsp">Kırılmaz boşluk</string>
+    <string name="key_descr_zwnj">Sıfır genişlikte birleştirmeyen</string>
+    <string name="key_descr_zwj">Sıfır genişlikli birleştirici</string>
+    <string name="key_descr_combining">Aksanları birleştir</string>
 </resources>
