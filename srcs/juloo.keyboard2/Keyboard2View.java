@@ -267,20 +267,8 @@ public class Keyboard2View extends View
   public void onMeasure(int wSpec, int hSpec)
   {
     int width;
-    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
-    // and keyboard is allowed do draw behind status/navigation bars
-    if (VERSION.SDK_INT >= 35)
-    {
-      WindowMetrics metrics =
-        ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
-        .getCurrentWindowMetrics();
-      width = metrics.getBounds().width();
-    }
-    else
-    {
-      DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-      width = dm.widthPixels;
-    }
+    DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+    width = dm.widthPixels;
     _marginLeft = Math.max(_config.horizontal_margin, _insets_left);
     _marginRight = Math.max(_config.horizontal_margin, _insets_right);
     _marginBottom = _config.margin_bottom + _insets_bottom;
@@ -332,7 +320,6 @@ public class Keyboard2View extends View
     _insets_left = insets.left;
     _insets_right = insets.right;
     _insets_bottom = insets.bottom;
-    // insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
     return WindowInsets.CONSUMED;
   }
 
