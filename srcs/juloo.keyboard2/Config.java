@@ -12,7 +12,6 @@ import java.util.Map;
 import juloo.keyboard2.prefs.CustomExtraKeysPreference;
 import juloo.keyboard2.prefs.ExtraKeysPreference;
 import juloo.keyboard2.prefs.LayoutsPreference;
-import juloo.keyboard2.NumberLayout;
 
 public final class Config
 {
