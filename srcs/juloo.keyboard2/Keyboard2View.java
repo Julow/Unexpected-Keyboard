@@ -47,6 +47,9 @@ public class Keyboard2View extends View
   private float _marginRight;
   private float _marginLeft;
   private float _marginBottom;
+  private int _insets_left = 0;
+  private int _insets_right = 0;
+  private int _insets_bottom = 0;
 
   private Theme _theme;
   private Theme.Computed _tc;
@@ -264,9 +267,6 @@ public class Keyboard2View extends View
   public void onMeasure(int wSpec, int hSpec)
   {
     int width;
-    int insets_left = 0;
-    int insets_right = 0;
-    int insets_bottom = 0;
     // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
     // and keyboard is allowed do draw behind status/navigation bars
     if (VERSION.SDK_INT >= 35)
@@ -275,24 +275,15 @@ public class Keyboard2View extends View
         ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
         .getCurrentWindowMetrics();
       width = metrics.getBounds().width();
-      WindowInsets wi = metrics.getWindowInsets();
-      int insets_types =
-          WindowInsets.Type.systemBars()
-          | WindowInsets.Type.displayCutout()
-          | WindowInsets.Type.mandatorySystemGestures();
-      Insets insets = wi.getInsets(insets_types);
-      insets_left = insets.left;
-      insets_right = insets.right;
-      insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
     }
     else
     {
       DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
       width = dm.widthPixels;
     }
-    _marginLeft = Math.max(_config.horizontal_margin, insets_left);
-    _marginRight = Math.max(_config.horizontal_margin, insets_right);
-    _marginBottom = _config.margin_bottom + insets_bottom;
+    _marginLeft = Math.max(_config.horizontal_margin, _insets_left);
+    _marginRight = Math.max(_config.horizontal_margin, _insets_right);
+    _marginBottom = _config.margin_bottom + _insets_bottom;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
     _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
     // Compute the size of labels based on the width or the height of keys. The
@@ -326,6 +317,23 @@ public class Keyboard2View extends View
           bottom - (int)_marginBottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
+  }
+
+  @Override
+  public WindowInsets onApplyWindowInsets(WindowInsets wi)
+  {
+    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams] for SDK_INT >= 35.
+    if (VERSION.SDK_INT < 35)
+      return wi;
+    int insets_types =
+      WindowInsets.Type.systemBars()
+      | WindowInsets.Type.displayCutout();
+    Insets insets = wi.getInsets(insets_types);
+    _insets_left = insets.left;
+    _insets_right = insets.right;
+    _insets_bottom = insets.bottom;
+    // insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
+    return WindowInsets.CONSUMED;
   }
 
   /** Horizontal and vertical position of the 9 indexes. */
