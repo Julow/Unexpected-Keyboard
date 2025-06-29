@@ -284,21 +284,7 @@ public class Keyboard2View extends View
       Insets insets = wi.getInsets(insets_types);
       insets_left = insets.left;
       insets_right = insets.right;
-      // On API 35, the keyboard is allowed to draw under the
-      // button-navigation bar but on lower APIs, it must be discounted from
-      // the width.
-      if (VERSION.SDK_INT < 35)
-      {
-        Insets nav_insets = wi.getInsets(WindowInsets.Type.navigationBars());
-        width -= nav_insets.left + nav_insets.right;
-        insets_left -= nav_insets.left;
-        insets_right -= nav_insets.right;
-      }
-      // [insets.bottom] doesn't take into account the buttons that appear in
-      // the gesture navigation bar when the IME is showing so ensure a minimum
-      // of margin is added.
-      if (VERSION.SDK_INT >= 35)
-        insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
+      insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
     }
     else
     {
