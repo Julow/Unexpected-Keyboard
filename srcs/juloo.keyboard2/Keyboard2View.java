@@ -277,10 +277,9 @@ public class Keyboard2View extends View
       width = metrics.getBounds().width();
       WindowInsets wi = metrics.getWindowInsets();
       int insets_types =
-          WindowInsets.Type.statusBars()
+          WindowInsets.Type.systemBars()
           | WindowInsets.Type.displayCutout()
-          | WindowInsets.Type.mandatorySystemGestures()
-          | WindowInsets.Type.navigationBars();
+          | WindowInsets.Type.mandatorySystemGestures();
       Insets insets = wi.getInsets(insets_types);
       insets_left = insets.left;
       insets_right = insets.right;
