@@ -84,4 +84,14 @@
     <item>4</item>
     <item>12</item>
   </string-array>
+  <string-array name="pref_number_entry_entries">
+    <item>@string/pref_number_entry_layout_pin</item>
+    <item>@string/pref_number_entry_layout_number</item>
+    <item>@string/pref_number_entry_layout_normal</item>
+  </string-array>
+  <string-array name="pref_number_entry_values">
+    <item>pin</item>
+    <item>number</item>
+    <item>normal</item>
+  </string-array>
 </resources>

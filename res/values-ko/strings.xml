@@ -49,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">키보드 전환 키의 동작 방식입니다.</string>
     <string name="pref_vibrate_custom">사용자 정의 진동</string>
     <string name="pref_vibrate_duration_title">진동 강도</string>
-    <string name="pref_pin_entry_enabled_title">Pin 입력 레이아웃</string>
-    <string name="pref_pin_entry_enabled_summary">숫자를 입력할 때, 날짜와 전화번호를 입력할 때 해당 레이아웃이 사용됩니다.</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">스타일</string>
     <string name="pref_margin_bottom_title">아래 넓이</string>
     <string name="pref_keyboard_height_title">키보드 높이</string>
