@@ -6,9 +6,6 @@
   <dimen name="emoji_text_size">28dp</dimen>
   <dimen name="clipboard_view_height">300dp</dimen>
   <dimen name="pref_button_size">28dp</dimen>
-  <!-- Margin needed to accomodate the gesture nav bar on Android 15. Found in
-  [core/res/res/values/dimens.xml]. -->
-  <dimen name="bottom_inset_min">48dp</dimen>
   <!-- Will be overwritten automatically by Gradle for the debug build variant -->
   <bool name="debug_logs">false</bool>
 </resources>
