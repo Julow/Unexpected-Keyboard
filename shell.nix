@@ -5,11 +5,11 @@
 
 let
   jdk = pkgs.openjdk17;
-  build_tools_version = "33.0.1";
+  build_tools_version = "34.0.0";
 
   android = pkgs.androidenv.composeAndroidPackages {
     buildToolsVersions = [ build_tools_version ];
-    platformVersions = [ "34" ];
+    platformVersions = [ "35" ];
     abiVersions = [ "armeabi-v7a" ];
     inherit repoJson;
   };

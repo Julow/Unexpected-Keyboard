@@ -5,7 +5,9 @@
     <string name="short_description">Lekka i dbająca o prywatność klawiatura wirtualna dla Androida.</string>
     <string name="store_description">Główną cechą tej klawiatury jest możliwość wprowadzania więcej znaków poprzez przesuwanie po klawiszach do ich rogów.\n\nTa aplikacja została pierwotnie zaprojektowana z myślą o programistach używających Termuxa.\nObecnie nadaje się doskonale do codziennego użytku.\n\nAplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źródłowy jest dostępny publicznie.</string>
     <string name="pref_portrait">W widoku pionowym</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">W widoku poziomym</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Układ</string>
     <string name="pref_label_brightness">Dostosuj jasność znaków</string>
     <string name="pref_keyboard_opacity">Nieprzezroczystość tła klawiatury</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Działanie klawisza przełączającego klawiaturę</string>
     <string name="pref_vibrate_custom">Własna wibracja</string>
     <string name="pref_vibrate_duration_title">Intensywność wibracji</string>
-    <string name="pref_pin_entry_enabled_title">Układ klawiatury PIN</string>
-    <string name="pref_pin_entry_enabled_summary">Podczas wpisywania liczb, dat i numerów telefonu</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Styl</string>
     <string name="pref_margin_bottom_title">Margines dolny</string>
     <string name="pref_keyboard_height_title">Wysokość klawiatury</string>

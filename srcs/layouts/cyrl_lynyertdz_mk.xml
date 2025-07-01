@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<keyboard name="ЉЊЕРТЅ (Македонски)" script="cyrillic">
+  <row scale="11">
+    <key key0="љ" key2="1" key4="esc"/>
+    <key key0="њ" key1="~" key2="2" key3="\@"/>
+    <key key0="е" key1="!" key2="3" key3="\#" key4="ѐ"/>
+    <key key0="р" key2="4" key3="$"/>
+    <key key0="т" key2="5" key3="%"/>
+    <key key0="ѕ" key2="6" key3="^"/>
+    <key key0="у" key2="7" key3="&amp;"/>
+    <key key0="и" key2="8" key3="*" key4="ѝ"/>
+    <key key0="о" key2="9" key3="(" key4=")"/>
+    <key key0="п" key2="0" key3="[" key4="]"/>
+    <key key0="ш" key2="€" key3="{" key4="}"/>
+  </row>
+  <row scale="11">
+    <key key0="а" key1="tab"/>
+    <key key0="с"/>
+    <key key0="д"/>
+    <key key0="ф"/>
+    <key key0="г"/>
+    <key key0="х"/>
+    <key key0="ј"/>
+    <key key0="к"/>
+    <key key0="л" key2="|" key3="\\"/>
+    <key key0="ч" key2="-" key3="_"/>
+    <key key0="ќ" key2="=" key3="+"/>
+  </row>
+  <row scale="11">
+    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key key0="з"/>
+    <key key0="џ"/>
+    <key key0="ц"/>
+    <key key0="в" key2="&lt;" key3="."/>
+    <key key0="б" key2="&gt;" key3=","/>
+    <key key0="н" key2="\?" key3="/"/>
+    <key key0="м" key2=":" key3=";"/>
+    <key key0="ѓ" key2="`" key3="'"/>
+    <key key0="ж" key2="“" key3="„"/>
+    <key width="1.5" key0="backspace" key2="delete"/>
+  </row>
+</keyboard>
+

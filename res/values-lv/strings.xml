@@ -5,7 +5,9 @@
     <string name="short_description">Mazizmēra un privātumu ievērojoša virtuālā Android tastatūra.</string>
     <string name="store_description">Galvenā iezīme ir iespēja ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.\n\nŠī lietotne sākotnēji tika izstrādāta programmētājiem, kas izmanto Termux.\nTagad lieliski piemērota izmantošanai ikdienā.\n\nŠī lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.</string>
     <string name="pref_portrait">Stateniski</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">Guleniski</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Izkārtojums</string>
     <string name="pref_label_brightness">Pielāgot iezīmju spilgtumu</string>
     <string name="pref_keyboard_opacity">Pielāgot tastatūras fona necaurredzamību</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Tastatūras pārslēgšanas taustiņa uzvedība</string>
     <string name="pref_vibrate_custom">Pielāgota trīcēšana</string>
     <string name="pref_vibrate_duration_title">Trīcēšanas stiprums</string>
-    <string name="pref_pin_entry_enabled_title">Piespraust ievadīšanas izkārtojumu</string>
-    <string name="pref_pin_entry_enabled_summary">Kad ievada skaitļus, datumus un tālruņa numurus</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Izskata pielāgojumi</string>
     <string name="pref_margin_bottom_title">Apakšējā apmale</string>
     <string name="pref_keyboard_height_title">Tastatūras augstums</string>

@@ -7,30 +7,17 @@ arab_pc_hindu: Layout includes some ASCII punctuation but not all, missing: !, '
 arab_pc_ir: Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
 beng_national: Layout includes some ASCII punctuation but not all, missing: $
 beng_provat: Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
+cyrl_lynyertdz_mk: Layout includes some ASCII punctuation but not all, missing: "
 cyrl_yaverti: Layout includes some ASCII punctuation but not all, missing: ~
-cyrl_yqukeng_tj: These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
 cyrl_yxukeng_os: Layout includes some ASCII punctuation but not all, missing: ", #, $, &, ', @, [, ], ~
-cyrl_yxukeng_os: These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
 deva_alt: Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
-deva_alt: Layout doesn't define some important keys, missing: delete
-deva_inscript: Duplicate keys: ।
 deva_inscript: Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
-deva_phonetic_in: Duplicate keys: ट
-grek_qwerty: Duplicate keys: ;
-guj_phonetic_in: Duplicate keys: ટ, ડ
 hebr_1_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 hebr_2_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 kann_kannada: Layout includes some ASCII punctuation but not all, missing: #, $, %, (, ), *, +, /, <, =, >, [, \, ], ^, `, {, |, }, ~
-latn_bepo_fr: Missing important key, missing: loc capslock
-latn_bone: Missing important key, missing: loc capslock
 latn_colemak: Some keys contain whitespaces, unexpected:  ́
 latn_dvorak: Missing important key, missing: loc capslock
 latn_neo2: Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
-latn_qwerty_se: Duplicate keys: !, ', ,, -, ., ?
-latn_qwerty_tly: Duplicate keys: a, c, j, q
-latn_qwerty_tly: Missing programming keys, missing: loc esc, loc tab
 latn_qwertz_cz_multifunctional: Layout includes some ASCII punctuation but not all, missing: `
 latn_qwertz_sk: Layout includes some ASCII punctuation but not all, missing: `
-urdu_phonetic_ur: Duplicate keys:  
 urdu_phonetic_ur: Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
-urdu_phonetic_ur: Some keys contain whitespaces, unexpected:  

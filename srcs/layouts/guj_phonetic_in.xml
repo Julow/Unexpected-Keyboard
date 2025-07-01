@@ -5,7 +5,7 @@
     <key key0="ડ" key1="~" key2="2" key3="\@" key4="\#"/>
     <key key0="ે" key1="એ" key2="3" key3="$" key4="૱"/>
     <key key0="ર" key1="ઋ" key2="4" key3="ૃ" key4="₹"/>
-    <key key0="ત" key1="ટ" key2="5" key3="%"/>
+    <key key0="ત" key2="5" key3="%"/>
     <key key0="ય" key2="6" key3="^"/>
     <key key0="ુ" key1="ઉ" key2="7" key3="&amp;"/>
     <key key0="િ" key1="ઇ" key2="8" key3="*" key4="ઁ"/>
@@ -15,7 +15,7 @@
   <row>
     <key shift="0.5" key0="ા" key1="loc tab" key3="અ"/>
     <key key0="સ" key1="“" key4="”"/>
-    <key key0="દ" key1="ડ"/>
+    <key key0="દ"/>
     <key key0="્" key1="ૠ" key3="ૄ"/>
     <key key0="ગ" key2="-" key3="_"/>
     <key key0="હ" key2="=" key3="+"/>

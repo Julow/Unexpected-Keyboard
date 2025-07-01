@@ -42,9 +42,14 @@ public class Keyboard2View extends View
   private Config _config;
 
   private float _keyWidth;
+  private float _mainLabelSize;
+  private float _subLabelSize;
   private float _marginRight;
   private float _marginLeft;
   private float _marginBottom;
+  private int _insets_left = 0;
+  private int _insets_right = 0;
+  private int _insets_bottom = 0;
 
   private Theme _theme;
   private Theme.Computed _tc;
@@ -227,7 +232,7 @@ public class Keyboard2View extends View
       return null;
     for (KeyboardData.Row row : _keyboard.rows)
     {
-      y += (row.shift + row.height) * _config.keyHeight;
+      y += (row.shift + row.height) * _tc.row_height;
       if (ty < y)
         return row;
     }
@@ -262,54 +267,25 @@ public class Keyboard2View extends View
   public void onMeasure(int wSpec, int hSpec)
   {
     int width;
-    int insets_left = 0;
-    int insets_right = 0;
-    int insets_bottom = 0;
-    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams].
-    // and keyboard is allowed do draw behind status/navigation bars
-    if (VERSION.SDK_INT >= 35)
-    {
-      WindowMetrics metrics =
-        ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE))
-        .getCurrentWindowMetrics();
-      width = metrics.getBounds().width();
-      WindowInsets wi = metrics.getWindowInsets();
-      int insets_types =
-          WindowInsets.Type.statusBars()
-          | WindowInsets.Type.displayCutout()
-          | WindowInsets.Type.mandatorySystemGestures()
-          | WindowInsets.Type.navigationBars();
-      Insets insets = wi.getInsets(insets_types);
-      insets_left = insets.left;
-      insets_right = insets.right;
-      // On API 35, the keyboard is allowed to draw under the
-      // button-navigation bar but on lower APIs, it must be discounted from
-      // the width.
-      if (VERSION.SDK_INT < 35)
-      {
-        Insets nav_insets = wi.getInsets(WindowInsets.Type.navigationBars());
-        width -= nav_insets.left + nav_insets.right;
-        insets_left -= nav_insets.left;
-        insets_right -= nav_insets.right;
-      }
-      // [insets.bottom] doesn't take into account the buttons that appear in
-      // the gesture navigation bar when the IME is showing so ensure a minimum
-      // of margin is added.
-      if (VERSION.SDK_INT >= 35)
-        insets_bottom = Math.max(insets.bottom, _config.bottomInsetMin);
-    }
-    else
-    {
-      DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-      width = dm.widthPixels;
-    }
-    _marginLeft = Math.max(_config.horizontal_margin, insets_left);
-    _marginRight = Math.max(_config.horizontal_margin, insets_right);
-    _marginBottom = _config.margin_bottom + insets_bottom;
+    DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+    width = dm.widthPixels;
+    _marginLeft = Math.max(_config.horizontal_margin, _insets_left);
+    _marginRight = Math.max(_config.horizontal_margin, _insets_right);
+    _marginBottom = _config.margin_bottom + _insets_bottom;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
-    _tc = new Theme.Computed(_theme, _config, _keyWidth);
+    _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
+    // Compute the size of labels based on the width or the height of keys. The
+    // margin around keys is taken into account. Keys normal aspect ratio is
+    // assumed to be 3/2. It's generally more, the width computation is useful
+    // when the keyboard is unusually high.
+    float labelBaseSize = Math.min(
+        _tc.row_height - _tc.vertical_margin,
+        _keyWidth * 3/2 - _tc.horizontal_margin
+        ) * _config.characterSize;
+    _mainLabelSize = labelBaseSize * _config.labelTextSize;
+    _subLabelSize = labelBaseSize * _config.sublabelTextSize;
     int height =
-      (int)(_config.keyHeight * _keyboard.keysHeight
+      (int)(_tc.row_height * _keyboard.keysHeight
           + _config.marginTop + _marginBottom);
     setMeasuredDimension(width, height);
   }
@@ -329,6 +305,22 @@ public class Keyboard2View extends View
           bottom - (int)_marginBottom);
       setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
     }
+  }
+
+  @Override
+  public WindowInsets onApplyWindowInsets(WindowInsets wi)
+  {
+    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams] for SDK_INT >= 35.
+    if (VERSION.SDK_INT < 35)
+      return wi;
+    int insets_types =
+      WindowInsets.Type.systemBars()
+      | WindowInsets.Type.displayCutout();
+    Insets insets = wi.getInsets(insets_types);
+    _insets_left = insets.left;
+    _insets_right = insets.right;
+    _insets_bottom = insets.bottom;
+    return WindowInsets.CONSUMED;
   }
 
   /** Horizontal and vertical position of the 9 indexes. */
@@ -352,9 +344,9 @@ public class Keyboard2View extends View
     float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {
-      y += row.shift * _config.keyHeight;
+      y += row.shift * _tc.row_height;
       float x = _marginLeft + _tc.margin_left;
-      float keyH = row.height * _config.keyHeight - _tc.vertical_margin;
+      float keyH = row.height * _tc.row_height - _tc.vertical_margin;
       for (KeyboardData.Key k : row.keys)
       {
         x += k.shift * _keyWidth;
@@ -372,7 +364,7 @@ public class Keyboard2View extends View
         drawIndication(canvas, k, x, y, keyW, keyH, _tc);
         x += _keyWidth * k.width;
       }
-      y += row.height * _config.keyHeight;
+      y += row.height * _tc.row_height;
     }
   }
 
@@ -440,7 +432,7 @@ public class Keyboard2View extends View
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
-    float textSize = scaleTextSize(kv, _config.labelTextSize, keyH);
+    float textSize = scaleTextSize(kv, true);
     Paint p = tc.label_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), labelColor(kv, isKeyDown, false), textSize);
     canvas.drawText(kv.getString(), x, (keyH - p.ascent() - p.descent()) / 2f + y, p);
   }
@@ -454,7 +446,7 @@ public class Keyboard2View extends View
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
-    float textSize = scaleTextSize(kv, _config.sublabelTextSize, keyH);
+    float textSize = scaleTextSize(kv, false);
     Paint p = tc.sublabel_paint(kv.hasFlagsAny(KeyValue.FLAG_KEY_FONT), labelColor(kv, isKeyDown, true), textSize, a);
     float subPadding = _config.keyPadding;
     if (v == Vertical.CENTER)
@@ -479,14 +471,15 @@ public class Keyboard2View extends View
     if (k.indication == null || k.indication.equals(""))
       return;
     Paint p = tc.indication_paint;
-    p.setTextSize(keyH * _config.sublabelTextSize * _config.characterSize);
+    p.setTextSize(_subLabelSize);
     canvas.drawText(k.indication, 0, k.indication.length(),
         x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
-  private float scaleTextSize(KeyValue k, float rel_size, float keyH)
+  private float scaleTextSize(KeyValue k, boolean main_label)
   {
     float smaller_font = k.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
-    return keyH * rel_size * smaller_font * _config.characterSize;
+    float label_size = main_label ? _mainLabelSize : _subLabelSize;
+    return label_size * smaller_font;
   }
 }

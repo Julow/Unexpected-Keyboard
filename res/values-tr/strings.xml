@@ -5,7 +5,9 @@
     <string name="short_description">Android için hafif ve güvenlik odaklı bir sanal klavye uygulaması.</string>
     <string name="store_description">Bu uygulama özünde tuşların kenarlarından kaydırarak daha fazla karakter yazabilmek amacıyla geliştirildi.\n\nBu uygulama aslında Termux kullanıcıları için geliştirildi.\nArtık gündelik kullanım için de uygun.\n\nBu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz.</string>
     <string name="pref_portrait">Portre modunda</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">Manzara modunda</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Tuş düzeni</string>
     <string name="pref_label_brightness">Adjust label brightness</string>
     <string name="pref_keyboard_opacity">Klavye arkaplanı opaklığını ayarla</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Klavye değistirme tuşunun davranışını belirler</string>
     <string name="pref_vibrate_custom">Özel titreşim</string>
     <string name="pref_vibrate_duration_title">Titreşim yoğunluğu</string>
-    <string name="pref_pin_entry_enabled_title">NumPad</string>
-    <string name="pref_pin_entry_enabled_summary">Sayıları, tarihleri ve telefon numaralarını yazarken</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Tarz</string>
     <string name="pref_margin_bottom_title">Alt boşluk</string>
     <string name="pref_keyboard_height_title">Klavye yüksekliği</string>

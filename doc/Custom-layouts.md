@@ -52,8 +52,10 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 * `locale_extra_keys`: Whether Unexpected should add language-dependent extra keys from [method.xml](../res/xml/method.xml) to this layout. It accepts `true` or `false`, and defaults to `true`. To disable these automatic additions, specify `locale_extra_keys="false"`.
 
 ## Row
-The `<row>`...`</row>` pair encloses one row on the keyboard. It has only one optional property:
+The `<row>`...`</row>` pair encloses one row on the keyboard. It has the following optional property:
 * `height`: The height of the row: a positive floating-point value.
+
+* `scale`: A positive floating-point value. If present, scale the width of each key so that the total is equal to the specified value, in key width unit.
 
 A row's default height is 1.0 (one quarter of the keyboard height specified on the Settings menu). The `height` property makes the row taller or shorter than this. For example, if you define a 5-row keyboard but one row has `height="0.7"`, then the keyboard's total height is 4.7 units. If the total is different from 4.0, the keyboard will be taller or shorter than that specified in Settings.
 
