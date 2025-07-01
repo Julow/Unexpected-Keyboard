@@ -72,7 +72,7 @@
     <string name="pref_theme_e_monet">Monet (Systemowy)</string>
     <string name="pref_theme_e_monetlight">Monet (Jasny)</string>
     <string name="pref_theme_e_monetdark">Monet (Ciemny)</string>
-    <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
+    <string name="pref_theme_e_rosepine">Rosé Pine</string>
     <string name="pref_swipe_dist_e_very_short">Bardzo mała</string>
     <string name="pref_swipe_dist_e_short">Mała</string>
     <string name="pref_swipe_dist_e_default">Normalna</string>
@@ -86,7 +86,7 @@
     <string name="pref_circle_sensitivity_title">Czułość gestu koła</string>
     <string name="pref_circle_sensitivity_e_high">Wysoka</string>
     <string name="pref_circle_sensitivity_e_medium">Średnia</string>
-    <string name="pref_circle_sensitivity_e_low">Mała</string>
+    <string name="pref_circle_sensitivity_e_low">Niska</string>
     <string name="pref_circle_sensitivity_e_disabled">Wyłączona</string>
     <string name="key_action_next">Dalej</string>
     <string name="key_action_done">OK</string>
@@ -121,12 +121,12 @@
     <string name="key_descr_home">Home</string>
     <string name="key_descr_end">End</string>
     <string name="key_descr_clipboard">Zarządzanie schowkiem</string>
-    <!-- <string name="key_descr_combining">Combining diacritic</string> -->
-    <!-- <string name="key_descr_dead_key">Dead key</string> -->
-    <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
-    <!-- <string name="key_descr_zwnj">Zero width non-joiner</string> -->
-    <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
-    <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
+    <string name="key_descr_combining">Składający znak diakrytyczny</string>
+    <string name="key_descr_dead_key">Martwy klawisz</string>
+    <string name="key_descr_zwj">Łącznik zerowej szerokości (ZWJ)</string>
+    <string name="key_descr_zwnj">Rozdzielający łącznik zerowej szerokości (ZWNJ)</string>
+    <string name="key_descr_nbsp">Spacja niełamiąca</string>
+    <string name="key_descr_nnbsp">Wąska spacja niełamiąca</string>
     <!-- <string name="key_descr_delete_word">Delete a word</string> -->
     <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
     <!-- <string name="key_descr_gesture">Gesture</string> -->

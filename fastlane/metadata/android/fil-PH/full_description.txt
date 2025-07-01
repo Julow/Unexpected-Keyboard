@@ -1,0 +1,6 @@
+Ang pangunahing feature ay maaari kang mag-type ng mas marami pang karakter sa pag-swipe sa gilid ng mga key.
+
+Noong simula, ginawa itong application para sa mga programmer sa na nagte-Termux.
+Ngayo'y perpekto na sa pang-araw-araw.
+
+Walang ads, hindi nagne-network request at Open Source ang application na ito.
