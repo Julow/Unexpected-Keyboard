@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="ЈЦУКЕН (Всисловѣнск)" script="cyrillic">
+  <row>
+    <key key0="ј" key1="ꙇ" key2="1" key3="!" key4="combining_payerok" />
+    <key key0="ц" key1="ѕ" key2="2" key3="&quot;" key4="\@" />
+    <key key0="у" key1="ꙋ" key2="3" key4="combining_acute" />
+    <key key0="к" key1="ѯ" key2="4" key3="$" key4="combining_palatalization" />
+    <key key0="е" key1="є" key2="5" key3="%" key4="\#" />
+    <key key0="н" key1="њ" key2="6" key3="\?" />
+    <key key0="г" key1="ґ" key2="7" key3="(" key4="&amp;" />
+    <key key0="ш" key1="щ" key2="8" key3=")" key4="«" />
+    <key key0="і" key1="ї" key2="9" key3=":" key4="»" />
+    <key key0="з" key1="ꙁ" key2="0" key3="{" key4="}" />
+    <key key0="х" key1="ѹ" key2="ъ" key3="[" key4="]" />
+  </row>
+  <row>
+    <key key0="ф" key1="ѳ" key2="`" key3="ꙟ" key4="combining_vertical_tilde" />
+    <key key0="ы" key1="э" key2="ё" key3="ꙏ" key4="combining_slavonic_dasia" />
+    <key key0="в" key1="ѵ" key2="ѷ" key3="ў" key4="combining_slavonic_psili" />
+    <key key0="а" key1="ѻ" key2="ѐ" key3="ѥ" key4="combining_circonflexe" />
+    <key key0="п" key1="ѱ" key2="ѓ" key3="ꙓ" key4="combining_trema" />
+    <key key0="р" key1="ѽ" key2="ꙅ" key3="ꙑ" key4="combining_pokrytie" />
+    <key key0="о" key1="ѡ" key2="ꙍ" key3="ꙕ" key4="ѫ" />
+    <key key0="л" key1="љ" key3="ꙃ" key4="₽" />
+    <key key0="д" key1="ꙉ" key2="-" key3="_" key4="҂" />
+    <key key0="ж" key1="җ" key2="=" key3="+" key4="ҩ" />
+    <key key0="ѣ" key1="ԑ" key2="/" key3="\\" key4="|" />
+  </row>
+  <row>
+    <key width="1.18" key0="shift" key2="loc capslock" key3="loc tab" key4="loc esc"
+ />
+    <key width="0.96" key0="я" key1="ꙗ" key2="ꙝ" key4="combining_titlo" />
+    <key width="0.96" key0="ч" key1="ћ" key2="ќ" key4="combining_grave" />
+    <key width="0.96" key0="с" key1="џ" key2="꙾" key3="ꙿ" key4="combining_kavyka" />
+    <key width="0.96" key0="м" key1="ꙙ" key2="ѭ" key3="*" key4="combining_vzmet" />
+    <key width="0.96" key0="и" key1="й" key2="ѝ" key3="." />
+    <key width="0.96" key0="т" key1="ѿ" key2=";" key3="," />
+    <key width="0.96" key0="ь" key1="ѧ" key2="&lt;" key3="⁙" />
+    <key width="0.96" key0="б" key1="ђ" key2="&gt;" key3="⁘" />
+    <key width="0.96" key0="ю" key1="ꙛ" key2="·" key3="⁖"/>
+    <key width="1.18" key0="backspace" key2="delete"/>
+  </row>
+</keyboard>

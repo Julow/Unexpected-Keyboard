@@ -17,6 +17,7 @@
     <item>beng_national</item>
     <item>beng_provat</item>
     <item>cyrl_fcuzhen_mn</item>
+    <item>cyrl_jcuken_as</item>
     <item>cyrl_jcuken_kk</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
@@ -103,6 +104,7 @@
     <item>বাংলা (জাতীয়)</item>
     <item>বাংলা (প্রভাত)</item>
     <item>ФЦУЖЭН (Монгол)</item>
+    <item>ЈЦУКЕН (Всисловѣнск)</item>
     <item>ЙЦУКЕН (Қазақша)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>ЙЦУКЕН (Українська)</item>
@@ -189,6 +191,7 @@
     <item>@xml/beng_national</item>
     <item>@xml/beng_provat</item>
     <item>@xml/cyrl_fcuzhen_mn</item>
+    <item>@xml/cyrl_jcuken_as</item>
     <item>@xml/cyrl_jcuken_kk</item>
     <item>@xml/cyrl_jcuken_ru</item>
     <item>@xml/cyrl_jcuken_uk</item>
