@@ -1,0 +1,6 @@
+La principale funzionalita` e' che si possono digitare caratteri aggiuntivi scorrendo sui tasti verso gli angoli.
+.
+Questa app e' stata inizialmente progettata per i programmatori che usavano Termux.
+Oggi e' perfetta per l'utilizzo quotidiano,
+.
+Questa app non contiene pubblicita`, non genera chiamate di rete ed e' Open Source.
