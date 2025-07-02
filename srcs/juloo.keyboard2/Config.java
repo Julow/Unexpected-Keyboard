@@ -168,7 +168,7 @@ public final class Config
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
-    selected_number_layout = NumberLayout.valueOf(_prefs.getString("number_entry_layout",  "pin").toUpperCase());
+    selected_number_layout = NumberLayout.of_string(_prefs.getString("number_entry_layout", "pin"));
     current_layout_portrait = _prefs.getInt("current_layout_portrait", 0);
     current_layout_landscape = _prefs.getInt("current_layout_landscape", 0);
     current_layout_unfolded_portrait = _prefs.getInt("current_layout_unfolded_portrait", 0);
