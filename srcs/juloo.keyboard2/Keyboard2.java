@@ -316,6 +316,7 @@ public class Keyboard2 extends InputMethodService
       // Allow to draw behind system bars
       wattrs.setFitInsetsTypes(0);
       window.setDecorFitsSystemWindows(false);
+      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
     }
     updateLayoutHeightOf(window, ViewGroup.LayoutParams.MATCH_PARENT);
     final View inputArea = window.findViewById(android.R.id.inputArea);
