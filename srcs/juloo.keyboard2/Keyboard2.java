@@ -315,6 +315,7 @@ public class Keyboard2 extends InputMethodService
         WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
       // Allow to draw behind system bars
       wattrs.setFitInsetsTypes(0);
+      window.setAttributes(wattrs);
       window.setDecorFitsSystemWindows(false);
       window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
     }
