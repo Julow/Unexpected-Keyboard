@@ -43,8 +43,10 @@
     <string name="pref_lock_double_tap_title">Double tap on shift for caps lock</string>
     <string name="pref_lock_double_tap_summary">You can lock any modifier by holding it</string>
     <string name="pref_category_behavior">Behavior</string>
-    <string name="pref_autocapitalisation_title">Automatic capitalisation</string>
+    <string name="pref_autocapitalisation_title">Automatic capitalisation</string>move_cursor_with_volume
     <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string>
+    <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string>
+    <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string>
     <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string>
     <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string>
     <string name="pref_vibrate_custom">Custom vibration</string>
