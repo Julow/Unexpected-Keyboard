@@ -50,7 +50,7 @@
     <string name="pref_vibrate_custom">𐑒𐑳𐑕𐑑𐑩𐑥 𐑝𐑲𐑚𐑮𐑱𐑖𐑩𐑯</string>
     <string name="pref_vibrate_duration_title">𐑝𐑲𐑚𐑮𐑱𐑖𐑩𐑯 𐑦𐑯𐑑𐑧𐑯𐑕𐑦𐑑𐑦</string>
     <string name="pref_number_entry_title">𐑤𐑱𐑬𐑑 𐑢𐑧𐑯 𐑑𐑲𐑐𐑦𐑙 𐑯𐑳𐑥𐑚𐑼𐑟, 𐑛𐑱𐑑𐑕, 𐑯 𐑓𐑴𐑯 𐑯𐑳𐑥𐑚𐑼𐑟</string>
-    <string name="pref_number_entry_layout_pin">·𐑐𐑦𐑯 𐑧𐑯𐑑𐑮𐑦</string>
+    <string name="pref_number_entry_layout_pin">𐑐𐑦𐑯 𐑧𐑯𐑑𐑮𐑦</string>
     <string name="pref_number_entry_layout_number">𐑯𐑳𐑥𐑚𐑼 𐑐𐑱𐑯</string>
     <string name="pref_number_entry_layout_normal">𐑿𐑟 𐑞 𐑥𐑱𐑯 𐑤𐑱𐑬𐑑</string>
     <string name="pref_category_style">𐑕𐑑𐑲𐑤</string>
@@ -69,9 +69,9 @@
     <string name="pref_theme_e_epaper">𐑰𐑐𐑱𐑐𐑼</string>
     <string name="pref_theme_e_desert">𐑛𐑧𐑟𐑼𐑑</string>
     <string name="pref_theme_e_jungle">𐑡𐑳𐑙𐑜𐑩𐑤</string>
-    <string name="pref_theme_e_monet">𐑥𐑴𐑯𐑧 (𐑕𐑦𐑕𐑑𐑩𐑥)</string>
-    <string name="pref_theme_e_monetlight">𐑥𐑴𐑯𐑧 (𐑤𐑲𐑑)</string>
-    <string name="pref_theme_e_monetdark">𐑥𐑴𐑯𐑧 (𐑛𐑸𐑒)</string>
+    <string name="pref_theme_e_monet">·𐑥𐑴𐑯𐑱 (𐑕𐑦𐑕𐑑𐑩𐑥)</string>
+    <string name="pref_theme_e_monetlight">·𐑥𐑴𐑯𐑱 (𐑤𐑲𐑑)</string>
+    <string name="pref_theme_e_monetdark">·𐑥𐑴𐑯𐑱 (𐑛𐑸𐑒)</string>
     <string name="pref_theme_e_rosepine">𐑮𐑴𐑟𐑱 𐑐𐑲𐑯</string>
     <string name="pref_swipe_dist_e_very_short">𐑝𐑧𐑮𐑦 𐑖𐑹𐑑</string>
     <string name="pref_swipe_dist_e_short">𐑖𐑹𐑑</string>
