@@ -41,12 +41,7 @@ public final class KeyEventHandler
   public void started(EditorInfo info)
   {
     _autocap.started(info, _recv.getCurrentInputConnection());
-    // Workaround a bug in Acode, which answers to [getExtractedText] but do
-    // not react to [setSelection] while returning [true].
-    // Note: Using & to workaround a bug in Acode, which sets several
-    // variations at once.
-    _move_cursor_force_fallback = (info.inputType & InputType.TYPE_MASK_VARIATION &
-      InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0;
+    _move_cursor_force_fallback = should_move_cursor_force_fallback(info);
   }
 
   /** Selection has been updated. */
@@ -471,6 +466,17 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null) return false;
     return (conn.getSelectedText(0) != null);
+  }
+
+  /** Workaround some apps which answers to [getExtractedText] but do not react
+      to [setSelection] while returning [true]. */
+  boolean should_move_cursor_force_fallback(EditorInfo info)
+  {
+    // This catch Acode: which sets several variations at once.
+    if ((info.inputType & InputType.TYPE_MASK_VARIATION & InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0)
+      return true;
+    // Godot editor: Doesn't handle setSelection() but returns true.
+    return info.packageName.startsWith("org.godotengine.editor");
   }
 
   public static interface IReceiver
