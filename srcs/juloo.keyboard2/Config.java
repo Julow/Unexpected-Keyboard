@@ -81,6 +81,7 @@ public final class Config
   int current_layout_landscape;
   int current_layout_unfolded_portrait;
   int current_layout_unfolded_landscape;
+  public boolean move_cursor_with_volume = true;
 
   private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h, Boolean foldableUnfolded)
   {
@@ -110,6 +111,7 @@ public final class Config
     orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     foldable_unfolded = foldableUnfolded;
 
+    move_cursor_with_volume = _prefs.getBoolean("move_cursor_with_volume", false);
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
