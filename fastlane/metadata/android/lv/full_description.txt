@@ -1,6 +1,6 @@
-Galvenā iezīme ir iespēja ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.
+Galvenā tastatūras iespēja ir viegli ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.
 
-Šī lietotne sākotnēji tika izstrādāta programmētājiem, kas izmanto Termux.
-Tagad lieliski piemērota izmantošanai ikdienā.
+Sākotnēji šī lietotne tika izstrādāta programmētājiem, kas izmanto Termux.
+Tagad tā lieliski piemērota ikdienas lietošanai.
 
-Šī lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.
+Lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.

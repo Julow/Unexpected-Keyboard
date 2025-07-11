@@ -1,0 +1,6 @@
+De belangrijkste functie is dat je meer tekens kunt typen door de toetsen naar de hoeken te vegen.
+
+Deze applicatie is oorspronkelijk ontworpen voor programmeurs die Termux gebruiken.
+Nu perfect voor dagelijks gebruik.
+
+Deze applicatie bevat geen advertenties, doet geen netwerkverzoeken en is Open Source.

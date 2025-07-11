@@ -94,14 +94,23 @@ public class Theme
     public final float horizontal_margin;
     public final float margin_top;
     public final float margin_left;
+    public final float row_height;
     public final Paint indication_paint;
 
     public final Key key;
     public final Key key_activated;
 
-    public Computed(Theme theme, Config config, float keyWidth)
+    public Computed(Theme theme, Config config, float keyWidth, KeyboardData layout)
     {
-      vertical_margin = config.key_vertical_margin * config.keyHeight;
+      // Rows height is proportional to the keyboard height, meaning it doesn't
+      // change for layouts with more or less rows. 3.95 is the usual height of
+      // a layout in KeyboardData unit. The keyboard will be higher if the
+      // layout has more rows and smaller if it has less because rows stay the
+      // same height.
+      row_height = Math.min(
+          config.screenHeightPixels * config.keyboardHeightPercent / 100 / 3.95f,
+          config.screenHeightPixels / layout.keysHeight);
+      vertical_margin = config.key_vertical_margin * row_height;
       horizontal_margin = config.key_horizontal_margin * keyWidth;
       // Add half of the key margin on the left and on the top as it's also
       // added on the right and on the bottom of every keys.

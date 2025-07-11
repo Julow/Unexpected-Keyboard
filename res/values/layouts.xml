@@ -17,9 +17,11 @@
     <item>beng_national</item>
     <item>beng_provat</item>
     <item>cyrl_fcuzhen_mn</item>
+    <item>cyrl_jcuken_as</item>
     <item>cyrl_jcuken_kk</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
+    <item>cyrl_lynyertdz_mk</item>
     <item>cyrl_lynyertz_sr</item>
     <item>cyrl_ueishsht</item>
     <item>cyrl_yaverti</item>
@@ -54,6 +56,7 @@
     <item>latn_qwerty_gb</item>
     <item>latn_qwerty_haw</item>
     <item>latn_qwerty_hu</item>
+    <item>latn_qwerty_is</item>
     <item>latn_qwerty_jp</item>
     <item>latn_qwerty_kk</item>
     <item>latn_qwerty_lt</item>
@@ -101,9 +104,11 @@
     <item>বাংলা (জাতীয়)</item>
     <item>বাংলা (প্রভাত)</item>
     <item>ФЦУЖЭН (Монгол)</item>
+    <item>ЈЦУКЕН (Всисловѣнск)</item>
     <item>ЙЦУКЕН (Қазақша)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>ЙЦУКЕН (Українська)</item>
+    <item>ЉЊЕРТЅ (Македонски)</item>
     <item>ЉЊЕРТЗ (Српски)</item>
     <item>УЕИШЩ (Български, БДС)</item>
     <item>ЯВЕРТЪ</item>
@@ -138,6 +143,7 @@
     <item>QWERTY (UK)</item>
     <item>QWERTY (Hawaiian)</item>
     <item>QWERTY (Magyar)</item>
+    <item>QWERTY (Íslenska)</item>
     <item>QWERTY (Japan)</item>
     <item>QWERTY (Qazaqşa)</item>
     <item>QWERTY (Lietuviškai)</item>
@@ -185,9 +191,11 @@
     <item>@xml/beng_national</item>
     <item>@xml/beng_provat</item>
     <item>@xml/cyrl_fcuzhen_mn</item>
+    <item>@xml/cyrl_jcuken_as</item>
     <item>@xml/cyrl_jcuken_kk</item>
     <item>@xml/cyrl_jcuken_ru</item>
     <item>@xml/cyrl_jcuken_uk</item>
+    <item>@xml/cyrl_lynyertdz_mk</item>
     <item>@xml/cyrl_lynyertz_sr</item>
     <item>@xml/cyrl_ueishsht</item>
     <item>@xml/cyrl_yaverti</item>
@@ -222,6 +230,7 @@
     <item>@xml/latn_qwerty_gb</item>
     <item>@xml/latn_qwerty_haw</item>
     <item>@xml/latn_qwerty_hu</item>
+    <item>@xml/latn_qwerty_is</item>
     <item>@xml/latn_qwerty_jp</item>
     <item>@xml/latn_qwerty_kk</item>
     <item>@xml/latn_qwerty_lt</item>

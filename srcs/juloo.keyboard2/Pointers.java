@@ -108,7 +108,10 @@ public final class Pointers implements Handler.Callback
     {
       // No existing pointer, latch the key.
       if (latched)
+      {
         add_fake_pointer(key, kv, lock);
+        _handler.onPointerFlagsChanged(false);
+      }
     }
     else if ((ptr.flags & FLAG_P_FAKE) == 0)
     {} // Key already latched but not by a fake ptr, do nothing.
@@ -118,6 +121,7 @@ public final class Pointers implements Handler.Callback
       removePtr(ptr);
       if (latched)
         add_fake_pointer(key, kv, lock);
+      _handler.onPointerFlagsChanged(false);
     }
     else if ((ptr.flags & FLAG_P_LOCKED) != 0)
     {} // Existing ptr is locked but [lock] is false, do not continue.
@@ -306,7 +310,6 @@ public final class Pointers implements Handler.Callback
           // Start sliding mode
           if (new_value.getKind() == KeyValue.Kind.Slider)
             startSliding(ptr, x, y, dx, dy, new_value);
-          _handler.onPointerDown(new_value, true);
         }
 
       }
@@ -469,7 +472,7 @@ public final class Pointers implements Handler.Callback
     stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
     ptr.sliding = new Sliding(x, y, dirx, diry, kv.getSlider());
-    _handler.onPointerHold(kv, ptr.modifiers);
+    _handler.onPointerDown(kv, true);
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
@@ -605,6 +608,10 @@ public final class Pointers implements Handler.Callback
     static final float SPEED_SMOOTHING = 0.7f;
     /** Avoid absurdly large values. */
     static final float SPEED_MAX = 4.f;
+    /** Make vertical sliders slower. The intention is to make the up/down
+        slider slower, as we have less visibility and do smaller movements in
+        that direction. */
+    static final float SPEED_VERTICAL_MULT = 0.5f;
 
     public void onTouchMove(Pointer ptr, float x, float y)
     {
@@ -618,8 +625,9 @@ public final class Pointers implements Handler.Callback
           return;
         last_move_ms = System.currentTimeMillis();
       }
-      d += ((x - last_x) * direction_x + (y - last_y) * direction_y)
-        * speed / _config.slide_step_px;
+      d += ((x - last_x) * speed * direction_x
+          + (y - last_y) * speed * SPEED_VERTICAL_MULT * direction_y)
+        / _config.slide_step_px;
       update_speed(travelled, x, y);
       // Send an event when [abs(d)] exceeds [1].
       int d_ = (int)d;

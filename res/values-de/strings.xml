@@ -5,7 +5,9 @@
     <string name="short_description">Eine schlanke, datenschutzfreundliche Bildschirmtastatur für Android.</string>
     <string name="store_description">Diese Tastatur zeichnet sich dadurch aus, dass man zusätzliche Zeichen durch Wischgesten in Richtung der Tastenecken eingeben kann.\n\nDie Anwendung wurde ursprünglich für das Programmieren in Termux entwickelt.\nMittlerweile ist sie auch für den täglichen Gebrauch perfekt geeignet.\n\nDiese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quelloffen.</string>
     <string name="pref_portrait">Im Hochformatmodus</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">Im Querformatmodus</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Layout</string>
     <string name="pref_label_brightness">Helligkeit der Beschriftung anpassen</string>
     <string name="pref_keyboard_opacity">Deckkraft des Tastaturhintergrunds anpassen</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Verhalten der Tastaturumschalttaste</string>
     <string name="pref_vibrate_custom">Benutzerdefinierte Vibration</string>
     <string name="pref_vibrate_duration_title">Vibrationsstärke</string>
-    <string name="pref_pin_entry_enabled_title">PIN-Eingabe-Layout</string>
-    <string name="pref_pin_entry_enabled_summary">Für die Nummern-, Datums- und Telefonnummern-Eingabe</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Design</string>
     <string name="pref_margin_bottom_title">Unterer Abstand</string>
     <string name="pref_keyboard_height_title">Höhe der Tastatur</string>
