@@ -7,7 +7,6 @@ arab_pc_hindu: Layout includes some ASCII punctuation but not all, missing: !, '
 arab_pc_ir: Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
 beng_national: Layout includes some ASCII punctuation but not all, missing: $
 beng_provat: Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
-cyrl_jcuken_as: Layout includes some ASCII punctuation but not all, missing: ', ^, ~
 cyrl_jcuken_as: Layout contains unknown keys: combining_acute
 cyrl_lynyertdz_mk: Layout includes some ASCII punctuation but not all, missing: "
 cyrl_yaverti: Layout includes some ASCII punctuation but not all, missing: ~
