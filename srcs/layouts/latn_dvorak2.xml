@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="Dvorak" script="latin">
+  <row>
+    <key width="1.2" key0="shift" key7="esc" key4="delete"/>
+    <key width="0.9" key0="." key1="&quot;" key4="'" />
+    <key key0="p" key1="!" key2="loc accent_ring" key3="f11_placeholder" key4="," />
+    <key key0="y" key1="loc accent_grave" key3="f12_placeholder" key1="&lt;" key4="&gt;" />
+    <key key0="f" key3="loc €" key7="$" key8="%" />
+    <key key0="g" key7="=" key8="+" />
+    <key key0="c" key3="(" key2=")" key1="loc accent_trema" key4="loc accent_circonflexe" />
+    <key key0="r" key3="{" key2="}" />
+    <key key0="l" key4="loc £" key3="[" key2="]" />
+    <key width="0.9" key0="backspace" key7="\?" key3="/" />
+  </row>
+  <row>
+    <key key0="a" key2="loc accent_caron" key7="1" key3="loc å" key4="\#" />
+    <key key0="o" key2="loc accent_macron" key7="2" key3="loc accent_ogonek" />
+    <key key0="e" key7="3" key3="loc accent_dot_above" />
+    <key key0="u" key2="loc æ" key7="4" key3="loc accent_double_aigu" />
+    <key key0="i" key7="5" key8="|" />
+    <key key0="d" key7="6" key8="loc ð" />
+    <key key0="h" key7="7" key8="loc ȝ" />
+    <key key0="t" key7="8" key8="loc þ" />
+    <key key0="n" key7="9" key8="\\" />
+    <key key0="s" key7="0" key4="loc ß" key3="tab" />
+  </row>
+  <row>
+    <key key0=";" key7=":" />
+    <key key0="q" key1="loc accent_tilde" key7="~" key8="^" />
+    <key key0="j" key1="loc accent_aigu" />
+    <key key0="k" key1="loc ø" />
+    <key key0="x" key1="loc accent_cedille"/>
+    <key key0="b"/>
+    <key key0="m" key7="`" key8="&amp;" />
+    <key key0="w" key8="loc ƿ" />
+    <key key0="v" key8="\@" key7="*" />
+    <key key0="z" key7="-" key3="_"/>
+  </row>
+</keyboard>
