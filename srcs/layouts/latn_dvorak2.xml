@@ -4,7 +4,7 @@
     <key width="1.2" key0="shift" key7="esc" key4="delete"/>
     <key width="0.9" key0="." key1="&quot;" key4="'" />
     <key key0="p" key1="!" key2="loc accent_ring" key3="f11_placeholder" key4="," />
-    <key key0="y" key1="loc accent_grave" key3="f12_placeholder" key1="&lt;" key4="&gt;" />
+    <key key0="y" key2="loc accent_grave" key3="f12_placeholder" key1="&lt;" key4="&gt;" />
     <key key0="f" key3="loc €" key7="$" key8="%" />
     <key key0="g" key7="=" key8="+" />
     <key key0="c" key3="(" key2=")" key1="loc accent_trema" key4="loc accent_circonflexe" />
