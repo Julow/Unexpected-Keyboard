@@ -223,8 +223,8 @@
   "с": "ѕ",
   "л": "ԯ",
   "ԓ": "ԯ",
-  "\ua67d": "\u0483",
-  "\u0487": "\ua66f",
+  "\ua67d": "combining_cyrillic_titlo", // combining_cyrillic_payerok
+  "\u0487": "combining_cyrillic_vzmet", // combining_cyrillic_pokrytie
   "ӈ": "ԩ",
 
   // Arabic
@@ -235,6 +235,7 @@
   "ر": "ڕ",
   "ب": "ٮ",
   "ه": "ھ",
+  "ھ": "ه",
   "ث": "پ",
   "ز": "ژ",
   "غ": "گ",
