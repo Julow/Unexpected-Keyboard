@@ -276,11 +276,11 @@ public class Keyboard2View extends View
     _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
     // Compute the size of labels based on the width or the height of keys. The
     // margin around keys is taken into account. Keys normal aspect ratio is
-    // assumed to be 3/2. It's generally more, the width computation is useful
-    // when the keyboard is unusually high.
+    // assumed to be 3/2 for a 10 columns layout. It's generally more, the
+    // width computation is useful when the keyboard is unusually high.
     float labelBaseSize = Math.min(
         _tc.row_height - _tc.vertical_margin,
-        _keyWidth * 3/2 - _tc.horizontal_margin
+        (width / 10 - _tc.horizontal_margin) * 3/2
         ) * _config.characterSize;
     _mainLabelSize = labelBaseSize * _config.labelTextSize;
     _subLabelSize = labelBaseSize * _config.sublabelTextSize;
