@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">挙動</string>
     <string name="pref_autocapitalisation_title">自動大文字化</string>
     <string name="pref_autocapitalisation_summary">文章の先頭でShiftキーを自動入力</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">最後に使用したキーボードに切替</string>
     <string name="pref_switch_input_immediate_summary">キーボード切替キーの挙動</string>
     <string name="pref_vibrate_custom">キーボード独自の振動設定</string>

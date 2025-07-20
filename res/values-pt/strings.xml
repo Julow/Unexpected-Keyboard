@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">Comportamento</string>
     <string name="pref_autocapitalisation_title">Capitalização automática</string>
     <string name="pref_autocapitalisation_summary">Aciona o shift no início de cada frase</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">Alternar para o último teclado usado</string>
     <string name="pref_switch_input_immediate_summary">Comportamento da tecla de troca de teclado</string>
     <string name="pref_vibrate_custom">Vibração personalizada</string>

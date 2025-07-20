@@ -22,6 +22,7 @@
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_behavior">
     <CheckBoxPreference android:key="autocapitalisation" android:title="@string/pref_autocapitalisation_title" android:summary="@string/pref_autocapitalisation_summary" android:defaultValue="true"/>
+    <CheckBoxPreference android:key="move_cursor_with_volume" android:title="@string/pref_move_cursor_with_volume_title" android:summary="@string/pref_move_cursor_with_volume_title" android:defaultValue="false"/>
     <CheckBoxPreference android:key="switch_input_immediate" android:title="@string/pref_switch_input_immediate_title" android:summary="@string/pref_switch_input_immediate_summary" android:defaultValue="false"/>
     <CheckBoxPreference android:key="vibrate_custom" android:title="@string/pref_vibrate_custom" android:defaultValue="false"/>
     <juloo.keyboard2.prefs.IntSlideBarPreference android:dependency="vibrate_custom" android:key="vibrate_duration" android:title="@string/pref_vibrate_duration_title" android:summary="%sms" android:defaultValue="20" min="0" max="100"/>

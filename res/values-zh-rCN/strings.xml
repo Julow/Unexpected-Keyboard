@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">行为</string>
     <string name="pref_autocapitalisation_title">句首自动大写</string>
     <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">切换到最近使用的键盘</string>
     <string name="pref_switch_input_immediate_summary">切换键盘按钮的行为</string>
     <string name="pref_vibrate_custom">自定义振动</string>

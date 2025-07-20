@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">Поведінка</string>
     <string name="pref_autocapitalisation_title">Автоматичне введення великих літер</string>
     <string name="pref_autocapitalisation_summary">Натиснути Shift на початку речення</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">Перейти до останньої використаної клавіатури</string>
     <string name="pref_switch_input_immediate_summary">Поведінка клавіші перемикання клавіатури</string>
     <string name="pref_vibrate_custom">Спеціальна вібрація</string>

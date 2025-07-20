@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">Zachowanie</string>
     <string name="pref_autocapitalisation_title">Automatyczne wielkie litery</string>
     <string name="pref_autocapitalisation_summary">Naciśnij Shift na początku zdania</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">Przełącz na ostatnio używaną klawiaturę</string>
     <string name="pref_switch_input_immediate_summary">Działanie klawisza przełączającego klawiaturę</string>
     <string name="pref_vibrate_custom">Własna wibracja</string>

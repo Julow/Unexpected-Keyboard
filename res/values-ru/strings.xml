@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">Поведение</string>
     <string name="pref_autocapitalisation_title">Автоматическая смена регистра</string>
     <string name="pref_autocapitalisation_summary">Автоматическое нажатие Shift в начале каждого предложения</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">Активировать предыдущую клавиатуру</string>
     <string name="pref_switch_input_immediate_summary">Поведение клавиши переключения клавиатуры</string>
     <string name="pref_vibrate_custom">Настройка вибрации</string>

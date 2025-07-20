@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">Perilaku</string>
     <string name="pref_autocapitalisation_title">Kapitalisasi Otomatis</string>
     <string name="pref_autocapitalisation_summary">Tekan shift di awal kalimat</string>
+    <string name="pref_move_cursor_with_volume_title">Gerakkan kursor dengan tombol volume</string>
+    <string name="pref_move_cursor_with_volume_summary">Aktifkan gerakan kursor kiri/kanan menggunakan tombol volume</string>
     <string name="pref_switch_input_immediate_title">Beralih ke keyboard yang terakhir digunakan</string>
     <string name="pref_switch_input_immediate_summary">Perilaku tombol penggantian keyboard</string>
     <string name="pref_vibrate_custom">Getaran kustom</string>

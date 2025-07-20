@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">Ugali</string>
     <string name="pref_autocapitalisation_title">Automatikong pagkakapitalisa</string>
     <string name="pref_autocapitalisation_summary">Mag-Shift sa simula ng pangungusap</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">Lumipat sa huling ginamit na keyboard</string>
     <string name="pref_switch_input_immediate_summary">Ugali ng key sa pagpapalit ng keyboard</string>
     <string name="pref_vibrate_custom">Custom na vibration</string>

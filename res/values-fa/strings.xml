@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">ٰرفتار</string>
     <string name="pref_autocapitalisation_title">بزرگسازی خودکار</string>
     <string name="pref_autocapitalisation_summary">در شروع جملات دگرساز را فشار دهید</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">انتقال به آخرین صفحه کلید استفاده شده</string>
     <string name="pref_switch_input_immediate_summary">رفتار کلید تغییردهنده صفحه کلید</string>
     <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->

@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">Chování</string>
     <string name="pref_autocapitalisation_title">Automatická kapitalizace</string>
     <string name="pref_autocapitalisation_summary">Stiskne Shift na začátku věty</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">Přepnout na posledně užívanou klávesnici</string>
     <string name="pref_switch_input_immediate_summary">Jak bude klávesa pro přepnutí klávesnice reagovat</string>
     <string name="pref_vibrate_custom">Vlastní vibrace</string>
