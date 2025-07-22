@@ -310,6 +310,7 @@ public final class Pointers implements Handler.Callback
           // Start sliding mode
           if (new_value.getKind() == KeyValue.Kind.Slider)
             startSliding(ptr, x, y, dx, dy, new_value);
+          _handler.onPointerDown(new_value, true);
         }
 
       }
