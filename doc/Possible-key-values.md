@@ -141,6 +141,20 @@ Value   | Meaning
 `rlm`   | Right-to-left mark.
 `b(`, `b)`, `b[`, `b]`, `b{`, `b}`, `blt`, `bgt` | Sends the bracket characters, but with mirrored key legends for right-to-left languages. (`blt` and `bgt` print `<` and `>` respectively.)
 
+## Arabic
+These are the diacritics for Arabic
+
+Value | Meaning
+:------ | :------
+`combining_fatha` | َ
+`combining_dammah` | ُ
+`combining_kasra` | ِ
+`combining_sukun` | ْ
+`combining_shaddah` | ّ
+`combining_hamza_above` | ٔ
+`combining_hamza_below` | ٕ
+
+
 ## Hebrew
 Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
 
