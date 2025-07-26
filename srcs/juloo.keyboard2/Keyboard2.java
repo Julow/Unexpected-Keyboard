@@ -295,6 +295,7 @@ public class Keyboard2 extends InputMethodService
       ((ViewGroup)parent).removeView(v);
     super.setInputView(v);
     updateSoftInputWindowLayoutParams();
+    v.requestApplyInsets();
   }
 
 
