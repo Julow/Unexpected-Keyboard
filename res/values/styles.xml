@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- Candidates view -->
+  <style name="candidates_item">
+    <item name="android:gravity">center</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:textColor">?attr/colorLabel</item>
+  </style>
   <!-- Emoji pane -->
   <style name="emojiTypeButton">
     <item name="android:padding">1px</item>

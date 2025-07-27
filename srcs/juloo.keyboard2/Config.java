@@ -66,6 +66,7 @@ public final class Config
   // Dynamically set
   /** Configuration options implied by the connected editor. */
   public EditorConfig editor_config;
+  public boolean should_show_candidates_view;
   public boolean shouldOfferVoiceTyping;
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
@@ -93,6 +94,7 @@ public final class Config
     // from prefs
     refresh(res, foldableUnfolded);
     // initialized later
+    should_show_candidates_view = false;
     shouldOfferVoiceTyping = false;
     extra_keys_subtype = null;
     handler = h;
@@ -290,6 +292,7 @@ public final class Config
     public void key_down(KeyValue value, boolean is_swipe);
     public void key_up(KeyValue value, Pointers.Modifiers mods);
     public void mods_changed(Pointers.Modifiers mods);
+    public void suggestion_entered(String text);
   }
 
   /** Config migrations. */
