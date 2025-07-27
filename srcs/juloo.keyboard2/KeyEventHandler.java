@@ -112,6 +112,12 @@ public final class KeyEventHandler
   }
 
   @Override
+  public void suggestion_entered(String text)
+  {
+    // TODO
+  }
+
+  @Override
   public void paste_from_clipboard_pane(String content)
   {
     send_text(content);

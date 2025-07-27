@@ -30,7 +30,10 @@ import juloo.keyboard2.prefs.LayoutsPreference;
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+  /** The view containing the keyboard and candidates view. */
+  private ViewGroup _container_view;
   private Keyboard2View _keyboardView;
+  private CandidatesView _candidates_view;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
@@ -117,9 +120,8 @@ public class Keyboard2 extends InputMethodService
     Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
-    _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
-    _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
+    create_keyboard_view();
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
     _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
   }
@@ -129,6 +131,13 @@ public class Keyboard2 extends InputMethodService
     super.onDestroy();
 
     _foldStateTracker.close();
+  }
+
+  private void create_keyboard_view()
+  {
+    _container_view = (ViewGroup)inflate_view(R.layout.keyboard);
+    _keyboardView = (Keyboard2View)_container_view.findViewById(R.id.keyboard_view);
+    _candidates_view = (CandidatesView)_container_view.findViewById(R.id.candidates_view);
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -240,6 +249,13 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  private void refresh_candidates_view(EditorInfo info)
+  {
+    boolean should_show = CandidatesView.should_show(info);
+    _config.should_show_candidates_view = should_show;
+    _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
+  }
+
   /** Might re-create the keyboard view. [_keyboardView.setKeyboard()] and
       [setInputView()] must be called soon after. */
   private void refresh_config()
@@ -250,11 +266,13 @@ public class Keyboard2 extends InputMethodService
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
-      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+      create_keyboard_view();
       _emojiPane = null;
       _clipboard_pane = null;
-      setInputView(_keyboardView);
+      setInputView(_container_view);
     }
+    // Set keyboard background opacity
+    _container_view.getBackground().setAlpha(_config.keyboardOpacity);
     _keyboardView.reset();
   }
 
@@ -280,10 +298,11 @@ public class Keyboard2 extends InputMethodService
   {
     refresh_config();
     refresh_action_label(info);
+    refresh_candidates_view(info);
     _currentSpecialLayout = refresh_special_layout(info);
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(info);
-    setInputView(_keyboardView);
+    setInputView(_container_view);
     Logs.debug_startup_input_view(info, _config);
   }
 
@@ -297,7 +316,6 @@ public class Keyboard2 extends InputMethodService
     updateSoftInputWindowLayoutParams();
     v.requestApplyInsets();
   }
-
 
   @Override
   public void updateFullscreenMode() {
