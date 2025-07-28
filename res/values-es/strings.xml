@@ -25,8 +25,8 @@
     <string name="pref_number_row_title">Mostrar fila de números</string>
     <string name="pref_number_row_summary">Agrega la fila numérica a la parte superior del teclado si el teclado numérico está oculto</string>
     <string name="pref_numpad_layout">Diseño del teclado numérico</string>
-    <string name="pref_numpad_layout_e_high_first">Dígitos descendientes</string>
-    <string name="pref_numpad_layout_e_low_first">Dígitos ascendientes</string>
+    <string name="pref_numpad_layout_e_high_first">Dígitos descendentes</string>
+    <string name="pref_numpad_layout_e_low_first">Dígitos ascendentes</string>
     <string name="pref_extra_keys_title">Agregar teclas</string>
     <string name="pref_extra_keys_custom">Agregar teclas personalizadas</string>
     <string name="pref_extra_keys_internal">Selecciona teclas para agregar al teclado</string>
@@ -93,7 +93,7 @@
     <string name="launcher_description">Esta aplicación es un teclado virtual. Presiona el botón de abajo para ir a Ajustes y habilitar Unexpected Keyboard.</string>
     <string name="launcher_sourcecode">Esta es una aplicación gratuita, libre y de código abierto. Puedes encontrar el código fuente o reportar errores en GitHub.</string>
     <string name="launcher_tryhere">Tras habilitarlo, puedes probar el teclado en este campo:</string>
-    <string name="launcher_tryhere_hint">Intentar aquí</string>
+    <string name="launcher_tryhere_hint">Probar aquí</string>
     <string name="key_descr_capslock">Bloq Mayús</string>
     <string name="key_descr_compose">Componer</string>
     <string name="key_descr_switch_greekmath">Símb. griegos y matemáticos</string>
@@ -115,7 +115,7 @@
     <string name="key_descr_page_down">Re Pág</string>
     <string name="key_descr_home">Inicio</string>
     <string name="key_descr_end">Fin</string>
-    <string name="key_descr_clipboard">Arreglar portapapeles</string>
+    <string name="key_descr_clipboard">Administrador del portapapeles</string>
     <!-- <string name="key_descr_combining">Combining diacritic</string> -->
   <!-- <string name="key_descr_dead_key">Dead key</string> -->
   <!-- <string name="key_descr_zwj">Zero width joiner</string> -->
@@ -123,7 +123,14 @@
   <!-- <string name="key_descr_nbsp">Non-breaking space</string> -->
   <!-- <string name="key_descr_nnbsp">Narrow non-breaking space</string> -->
   <string name="clipboard_history_heading">Textos recién copiados</string>
-    <string name="clipboard_pin_heading">Pegado</string>
+    <string name="clipboard_pin_heading">Fijado</string>
     <string name="clipboard_remove_confirm">¿Sacar este portapapeles?</string>
     <string name="clipboard_remove_confirmed">Sí</string>
+    <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="key_descr_dead_key">Tecla inerte</string>
+    <string name="key_descr_combining">Diacrítico de combinación</string>
+    <string name="key_descr_zwj">Unión de ancho cero</string>
+    <string name="key_descr_zwnj">No unión de ancho cero</string>
+    <string name="key_descr_nbsp">Espacio duro</string>
+    <string name="key_descr_nnbsp">Espacio duro fino</string>
 </resources>
