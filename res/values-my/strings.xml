@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="app_name_release">Unexpected Keyboard</string>
+    <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
+    <string name="short_description">Android အတွက် သေးငယ်ပေါ့ပါးပြီးကိုယ်ရေးကိုယ်တာလုံခြုံမှုဆိုင်ရာအထူးဦးစား‌ပေးထားသည့်ကီးဘုတ်ဆော့ဝဲ</string>
+    <string name="store_description">အဓိကလုပ်‌‌ဆောင်မှုကတော့လျင်မြန်စွာစာလုံးရေများများရိုက်ရလွယ်ကူစေရန်ဖိဆွဲလိုက်ရုံဖြင့်အက္ခရာများကိုပြောင်းလဲရိုက်နိုင်ခြင်းပါပဲ။\n\nဒီအပ်ပလီကေးရှင်းရဲ့ကနဦးရည်ရွယ်ချက်ကတော့ ပရိုဂရမ်မာတွေ Termux မှာအသုံးပြုဖို့ဖန်တီးခဲ့ခြင်းဖြစ်ပါတယ်။\nအခုတော့ Termux သာမကပဲနိစ္စဓူ၀ကိစ္စများအတွက်အသုံးပြုနိုင်ပါပြီ။\n\nဤအပ်ပလီကေးရှင်းတွင်မည်သည့်ကြော်ငြာ၊ အင်တာနက်ကွန်နက်ရှင်ချိတ်ဆက်မှုဆိုင်ရာများမပါ၀င်သလို Open source လည်းဖြစ်ပါတယ်။</string>
+    <string name="settings_activity_label">Unexpected Keyboard အပြင်အဆင်</string>
+    <string name="pref_portrait">ဒေါင်လိုက်ပုံစံတွင်</string>
+    <string name="pref_landscape">အလျားလိုက်ပုံစံတွင်</string>
+    <string name="pref_category_layout">အလွှာအပြင်ဆင်</string>
+    <string name="pref_label_brightness">ခေါင်းစီးစာသားအလင်းအမှောင်ပြင်ဆင်ခြင်း</string>
+    <string name="pref_keyboard_opacity">ကီးဘုတ်နောက်ခံမြင်ကွင်းအလင်းအမှိန်ချိန်ညှိရန်</string>
+    <string name="pref_key_opacity">ကီးဘုတ်ခလုတ်အလင်းအမှိန်ချိန်ညှိရန်</string>
+    <string name="pref_key_activated_opacity">ဖိထားသည့်ကီးဘုတ်ခလုတ်အလင်းအမှိန်ချိန်ညှိရန်</string>
+    <string name="pref_layout_e_system">စနစ်ပိုင်းဆိုင်ရာချိန်ညှိချက်များ</string>
+    <string name="pref_layout_e_custom">မိမိစိတ်ကြိုက်အဆင်အပြင်</string>
+</resources>
