@@ -14,4 +14,21 @@
     <string name="pref_key_activated_opacity">ဖိထားသည့်ကီးဘုတ်ခလုတ်အလင်းအမှိန်ချိန်ညှိရန်</string>
     <string name="pref_layout_e_system">စနစ်ပိုင်းဆိုင်ရာချိန်ညှိချက်များ</string>
     <string name="pref_layout_e_custom">မိမိစိတ်ကြိုက်အဆင်အပြင်</string>
+    <string name="pref_number_row_summary">နံပါတ်ပြားမပါရှိသောအခါ ကီးဘုတ်၏ထိပ်တွင် နံပါတ်အတန်းတစ်ခုထည့်ပါ။</string>
+    <string name="pref_show_numpad_always">အမြဲ</string>
+    <string name="pref_show_numpad_never">ဘယ်တော့မှ</string>
+    <string name="pref_show_numpad_landscape">အလျားစောင်း မုဒ်တွင်သာ</string>
+    <string name="pref_number_row_title">ကီးဘုတ်မှာ ဂဏန်းတန်းကို ပြပါ</string>
+    <string name="pref_numpad_layout">နံပါတ်ခလုတ်ပုံစံ</string>
+    <string name="pref_numpad_layout_e_high_first">ဂဏန်းများစွာကို ရှေ့ဆုံးတွင်ထားပါ</string>
+    <string name="pref_numpad_layout_e_low_first">ဂဏန်းနည်းနည်းကို ရှေ့ဆုံးတွင်ထားပါ</string>
+    <string name="pref_extra_keys_title">ကီးဘုတ်တွင် ခလုတ်များထည့်ပါ</string>
+    <string name="pref_extra_keys_custom">စိတ်ကြိုက်သောခလုတ်များကိုထည့်ပါ</string>
+    <string name="pref_extra_keys_internal">ကီးဘုတ်တွင်ထည့်ရန် ခလုတ်များကိုရွေးပါ</string>
+    <string name="pref_category_typing">စာရိုက်ခြင်း</string>
+    <string name="pref_swipe_dist_title">ပွတ်ဆွဲအကွာအဝေး</string>
+    <string name="pref_swipe_dist_summary">ခလုတ်များ၏ထောင့်များမှ အက္ခရာများ၏ အကွာအဝေး (%s)</string>
+    <string name="pref_long_timeout_title">ကြာကြာဖိထားချိန်</string>
+    <string name="pref_long_interval_title">ခလုတ်ပြန်ရိုက်ကြားကာလ</string>
+    <string name="pref_keyrepeat_enabled">ကြာကြာဖိထားပါက ခလုတ်ကို ထပ်ခါတလဲလဲရိုက်ပါ</string>
 </resources>
