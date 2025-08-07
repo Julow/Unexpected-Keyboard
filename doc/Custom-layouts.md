@@ -6,7 +6,7 @@ We recommend you keep your work in a file outside Unexpected Keyboard (named som
 Put initial contents into your file in one of these ways:
 * Copypaste the code Unexpected displays for _Custom layout_.
 * Make a copy of one of the built-in layouts found in [`/srcs/layouts`](https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts).
-* Use the [web-based editor](https://unexpected-keyboard-layout-editor.lixquid.com/). Interact with this web page to define keys and swipes and move keys to desired positions, and it will write the XML code for you. You can make the web page put the XML in a text file or copy it to the clipboard.
+* Use the [web-based editor](https://domportera.github.io/app-unexpected-keyboard-layout-editor/). Interact with this web page to define keys and swipes and move keys to desired positions, and it will write the XML code for you. You can make the web page put the XML in a text file or copy it to the clipboard.
 
 When you have prepared suitable XML code in one of these ways, copy it to the clipboard and paste it into Unexpected Keyboard.
 
