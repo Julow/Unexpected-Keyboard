@@ -473,7 +473,6 @@ public final class Pointers implements Handler.Callback
     stopLongPress(ptr);
     ptr.flags |= FLAG_P_SLIDING;
     ptr.sliding = new Sliding(x, y, dirx, diry, kv.getSlider());
-    _handler.onPointerDown(kv, true);
   }
 
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
