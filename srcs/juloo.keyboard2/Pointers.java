@@ -621,7 +621,7 @@ public final class Pointers implements Handler.Callback
       float travelled = Math.abs(x - last_x) + Math.abs(y - last_y);
       if (last_move_ms == -1)
       {
-        if (travelled < _config.swipe_dist_px)
+        if (travelled < (_config.swipe_dist_px + _config.slide_step_px))
           return;
         last_move_ms = System.currentTimeMillis();
       }
