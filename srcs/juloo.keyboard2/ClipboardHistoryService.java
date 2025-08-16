@@ -5,8 +5,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build.VERSION;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public final class ClipboardHistoryService
 {
@@ -50,8 +52,6 @@ public final class ClipboardHistoryService
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
   public static final int MAX_HISTORY_SIZE = 6;
-  /** Time in ms until history entries expire. */
-  public static final long HISTORY_TTL_MS = 5 * 60 * 1000;
 
   static ClipboardHistoryService _service = null;
   static ClipboardPasteCallback _paste_callback = null;
@@ -150,6 +150,10 @@ public final class ClipboardHistoryService
     }
   }
 
+  int get_history_ttl_minutes() {
+    return Config.globalConfig().clipboard_history_duration;
+  }
+
   final class SystemListener implements ClipboardManager.OnPrimaryClipChangedListener
   {
     public SystemListener() {}
@@ -171,7 +175,7 @@ public final class ClipboardHistoryService
     public HistoryEntry(String c)
     {
       content = c;
-      expiry_timestamp = System.currentTimeMillis() + HISTORY_TTL_MS;
+      expiry_timestamp = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(_service.get_history_ttl_minutes());
     }
   }
 

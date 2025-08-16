@@ -70,6 +70,7 @@ public final class Config
   public boolean borderConfig;
   public int circle_sensitivity;
   public boolean clipboard_history_enabled;
+  public int clipboard_history_duration;
 
   // Dynamically set
   public boolean shouldOfferVoiceTyping;
@@ -180,6 +181,7 @@ public final class Config
     current_layout_wide = _prefs.getInt("current_layout_landscape", 0);
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
+    clipboard_history_duration = _prefs.getInt("clipboard_history_duration", 5);
 
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
