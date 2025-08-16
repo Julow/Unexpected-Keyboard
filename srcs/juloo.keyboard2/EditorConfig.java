@@ -26,6 +26,11 @@ public final class EditorConfig
   // Whether caps state should be updated right away.
   public boolean caps_initially_updated = false;
 
+  /** CurrentlyTypedWord. */
+  public CharSequence initial_text_before_cursor = null;
+  public int initial_sel_start;
+  public int initial_sel_end;
+
   public EditorConfig() {}
 
   public void refresh(EditorInfo info, Resources res)
@@ -66,6 +71,10 @@ public final class EditorConfig
     caps_mode = info.inputType & TextUtils.CAP_MODE_SENTENCES;
     caps_initially_enabled = (info.initialCapsMode != 0);
     caps_initially_updated = caps_should_update_state(info);
+    /* CurrentlyTypedWord */
+    initial_text_before_cursor = info.getInitialTextBeforeCursor(10, 0);
+    initial_sel_start = info.initialSelStart;
+    initial_sel_end = info.initialSelEnd;
   }
 
   String actionLabel_of_imeAction(int action, Resources res)
