@@ -392,7 +392,7 @@ public class Keyboard2 extends InputMethodService
   public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
   {
     super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
-    _keyeventhandler.selection_updated(oldSelStart, newSelStart);
+    _keyeventhandler.selection_updated(oldSelStart, newSelStart, newSelEnd);
     if ((oldSelStart == oldSelEnd) != (newSelStart == newSelEnd))
       _keyboardView.set_selection_state(newSelStart != newSelEnd);
   }
@@ -526,6 +526,11 @@ public class Keyboard2 extends InputMethodService
     public Handler getHandler()
     {
       return _handler;
+    }
+
+    public void set_suggestions(List<String> suggestions)
+    {
+      _candidates_view.set_candidates(suggestions);
     }
   }
 

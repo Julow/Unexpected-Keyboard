@@ -14,10 +14,13 @@ import java.util.Iterator;
 
 public final class KeyEventHandler
   implements Config.IKeyEventHandler,
-             ClipboardHistoryService.ClipboardPasteCallback
+             ClipboardHistoryService.ClipboardPasteCallback,
+             CurrentlyTypedWord.Callback
 {
   IReceiver _recv;
   Autocapitalisation _autocap;
+  Suggestions _suggestions;
+  CurrentlyTypedWord _typedword;
   /** State of the system modifiers. It is updated whether a modifier is down
       or up and a corresponding key event is sent. */
   Pointers.Modifiers _mods;
@@ -35,19 +38,24 @@ public final class KeyEventHandler
     _autocap = new Autocapitalisation(recv.getHandler(),
         this.new Autocapitalisation_callback());
     _mods = Pointers.Modifiers.EMPTY;
+    _suggestions = new Suggestions(recv);
+    _typedword = new CurrentlyTypedWord(this);
   }
 
   /** Editing just started. */
   public void started(EditorInfo info)
   {
-    _autocap.started(info, _recv.getCurrentInputConnection());
+    InputConnection ic = _recv.getCurrentInputConnection();
+    _autocap.started(info, ic);
+    _typedword.started(info, ic);
     _move_cursor_force_fallback = should_move_cursor_force_fallback(info);
   }
 
   /** Selection has been updated. */
-  public void selection_updated(int oldSelStart, int newSelStart)
+  public void selection_updated(int oldSelStart, int newSelStart, int newSelEnd)
   {
     _autocap.selection_updated(oldSelStart, newSelStart);
+    _typedword.selection_updated(oldSelStart, newSelStart, newSelEnd);
   }
 
   /** A key is being pressed. There will not necessarily be a corresponding
@@ -121,6 +129,12 @@ public final class KeyEventHandler
   public void paste_from_clipboard_pane(String content)
   {
     send_text(content);
+  }
+
+  @Override
+  public void currently_typed_word(String word)
+  {
+    _suggestions.currently_typed_word(word);
   }
 
   /** Update [_mods] to be consistent with the [mods], sending key events if
@@ -212,13 +226,14 @@ public final class KeyEventHandler
       _autocap.event_sent(eventCode, metaState);
   }
 
-  void send_text(CharSequence text)
+  void send_text(String text)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
     conn.commitText(text, 1);
     _autocap.typed(text);
+    _typedword.typed(text);
   }
 
   /** See {!InputConnection.performContextMenuAction}. */
@@ -485,7 +500,7 @@ public final class KeyEventHandler
     return info.packageName.startsWith("org.godotengine.editor");
   }
 
-  public static interface IReceiver
+  public static interface IReceiver extends Suggestions.Callback
   {
     public void handle_event_key(KeyValue.Event ev);
     public void set_shift_state(boolean state, boolean lock);
