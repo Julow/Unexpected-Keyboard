@@ -94,4 +94,14 @@
     <item>number</item>
     <item>normal</item>
   </string-array>
+  <string-array name="pref_slider_sensitivity_entries">
+    <item>@string/pref_slider_sensitivity_slow</item>
+    <item>@string/pref_slider_sensitivity_medium</item>
+    <item>@string/pref_slider_sensitivity_fast</item>
+  </string-array>
+  <string-array name="pref_slider_sensitivity_values">
+    <item>60</item>
+    <item>30</item>
+    <item>15</item>
+  </string-array>
 </resources>
