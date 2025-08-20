@@ -135,7 +135,4 @@
     <string name="clipboard_remove_confirm">Supprimer ce presse-papiers ?</string>
     <string name="clipboard_remove_confirmed">Oui</string>
     <string name="toast_no_voice_input">Pas d\'application de saisie vocale</string>
-    <!-- <string name="pref_category_clipboard">Clipboard</string> -->
-    <!-- <string name="pref_clipboard_history_duration">Clipboard memory duration</string> -->
-    <!-- <string name="pref_clipboard_history_duration_value">%s min</string> -->
 </resources>
