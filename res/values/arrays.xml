@@ -42,6 +42,7 @@
     <item>@string/pref_theme_e_monetlight</item>
     <item>@string/pref_theme_e_monetdark</item>
     <item>@string/pref_theme_e_rosepine</item>
+    <item>@string/pref_theme_e_everforestlight</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
@@ -57,6 +58,7 @@
     <item>monetlight</item>
     <item>monetdark</item>
     <item>rosepine</item>
+    <item>everforestlight</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
