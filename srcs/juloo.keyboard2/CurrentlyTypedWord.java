@@ -19,11 +19,14 @@ public final class CurrentlyTypedWord
       the editor. */
   int _cursor;
 
-  int refresh_count = 0;
-
   public CurrentlyTypedWord(Callback cb)
   {
     _callback = cb;
+  }
+
+  public String get()
+  {
+    return _w.toString();
   }
 
   public void started(EditorInfo info, InputConnection ic)
@@ -55,7 +58,7 @@ public final class CurrentlyTypedWord
 
   private void callback()
   {
-    _callback.currently_typed_word(_w.toString() + refresh_count);
+    _callback.currently_typed_word(_w.toString());
   }
 
   /** Estimate the currently typed word after [chars] has been typed. */
@@ -86,7 +89,6 @@ public final class CurrentlyTypedWord
     _enabled = true;
     if (has_selection)
       return;
-    refresh_count++;
     type_chars(text_before_cursor.toString());
     callback();
   }

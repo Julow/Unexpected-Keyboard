@@ -122,7 +122,7 @@ public final class KeyEventHandler
   @Override
   public void suggestion_entered(String text)
   {
-    // TODO
+    replace_text_before_cursor(_typedword.get().length(), text + " ");
   }
 
   @Override
@@ -234,6 +234,19 @@ public final class KeyEventHandler
     conn.commitText(text, 1);
     _autocap.typed(text);
     _typedword.typed(text);
+  }
+
+  void replace_text_before_cursor(int remove_length, String new_text)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    conn.beginBatchEdit();
+    conn.deleteSurroundingText(remove_length, 0);
+    conn.commitText(new_text, 1);
+    conn.endBatchEdit();
+    _autocap.typed(new_text);
+    _typedword.typed(new_text);
   }
 
   /** See {!InputConnection.performContextMenuAction}. */
