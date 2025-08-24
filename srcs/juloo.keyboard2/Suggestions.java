@@ -16,9 +16,18 @@ public final class Suggestions
 
   public void currently_typed_word(String word)
   {
-    // TODO
-    _callback.set_suggestions(Arrays.asList(word));
+    if (word.equals(""))
+    {
+      _callback.set_suggestions(NO_SUGGESTIONS);
+    }
+    else
+    {
+      // TODO
+      _callback.set_suggestions(Arrays.asList(word));
+    }
   }
+
+  static final List<String> NO_SUGGESTIONS = Arrays.asList();
 
   public static interface Callback
   {
