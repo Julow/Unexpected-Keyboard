@@ -134,7 +134,12 @@ This means that when the Fn modifier is on, the key `before` is changed into `af
 ```
 This means that when the Ctrl modifier is on, the key `before` is changed into `after`. The `<ctrl />` mapping is special in that the Ctrl modifier is applied to `after` after the mapping.
 
-The clockwise circle and the round-trip gestures are affected by both `<shift />` and `<fn />` mappings. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
+```xml
+  <gesture a="before" b="after"/>
+```
+Change the result of the clockwise circle and the round-trip gestures for the key denoted by `before`.
+
+The clockwise circle and the round-trip gestures are also affected by `<shift />` and `<fn />` mappings. If no `<gesture />` mappings are set, the Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
 
 ### Examples
 ① Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following mapping: 
