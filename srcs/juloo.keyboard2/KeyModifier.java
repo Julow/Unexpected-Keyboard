@@ -367,7 +367,14 @@ public final class KeyModifier
   /** Modify a key affected by a round-trip or a clockwise circle gesture. */
   private static KeyValue apply_gesture(KeyValue k)
   {
-    KeyValue modified = apply_shift(k);
+    KeyValue modified;
+    if (_modmap != null)
+    {
+      modified = _modmap.get(Modmap.M.Gesture, k);
+      if (modified != null)
+        return modified;
+    }
+    modified = apply_shift(k);
     if (modified != null && !modified.equals(k))
       return modified;
     modified = apply_fn(k);

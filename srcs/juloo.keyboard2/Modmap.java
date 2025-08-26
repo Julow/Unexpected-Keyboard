@@ -7,7 +7,7 @@ import java.util.TreeMap;
 /** Stores key combinations that are applied by [KeyModifier]. */
 public final class Modmap
 {
-  public enum M { Shift, Fn, Ctrl }
+  public enum M { Shift, Fn, Ctrl, Gesture }
 
   Map<KeyValue, KeyValue>[] _map;
 

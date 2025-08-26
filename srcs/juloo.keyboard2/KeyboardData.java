@@ -570,8 +570,9 @@ public final class KeyboardData
         case "shift": m = Modmap.M.Shift; break;
         case "fn": m = Modmap.M.Fn; break;
         case "ctrl": m = Modmap.M.Ctrl; break;
+        case "gesture": m = Modmap.M.Gesture; break;
         default:
-          throw error(parser, "Expecting tag <shift> or <fn>, got <" +
+          throw error(parser, "Expecting tag <shift>, <fn> or <gesture> but got <" +
               parser.getName() + ">");
       }
       parse_modmap_mapping(parser, mm, m);
