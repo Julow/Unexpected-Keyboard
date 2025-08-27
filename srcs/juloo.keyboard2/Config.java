@@ -256,6 +256,8 @@ public final class Config
         return R.style.MonetDark;
       case "rosepine": return R.style.RosePine;
       case "everforestlight": return R.style.EverforestLight;
+      case "cobalt": return R.style.Cobalt;
+      case "pine": return R.style.Pine;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
