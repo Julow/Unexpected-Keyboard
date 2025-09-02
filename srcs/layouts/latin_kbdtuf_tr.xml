@@ -1,5 +1,9 @@
-<?xml version="1.1" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.2" encoding="UTF-8" standalone="yes"?>
 <keyboard name="Turkish F Layout" script="latin">
+  <modmap>
+    <shift a="i" b="İ" />
+    <shift a="ı" b="I" />
+  </modmap>
   <row>
     <key key0="f" key2="1" key4="esc"/>
     <key key0="g" key1="~" key2="2" key3="\@"/>
