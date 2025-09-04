@@ -45,6 +45,8 @@
     <string name="pref_category_behavior">동작</string>
     <string name="pref_autocapitalisation_title">자동 대문자 전환</string>
     <string name="pref_autocapitalisation_summary">문장의 시작에서 Shift 키를 눌러 대문자로 전환합니다.</string>
+    <!-- <string name="pref_move_cursor_with_volume_title">Move cursor with volume key</string> -->
+    <!-- <string name="pref_move_cursor_with_volume_summary">Enable moving the cursor left/right using the volume keys</string> -->
     <string name="pref_switch_input_immediate_title">마지막으로 사용한 키보드로 전환</string>
     <string name="pref_switch_input_immediate_summary">키보드 전환 키의 동작 방식입니다.</string>
     <string name="pref_vibrate_custom">사용자 정의 진동</string>

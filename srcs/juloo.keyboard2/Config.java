@@ -65,6 +65,7 @@ public final class Config
   public float characterSize; // Ratio
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
+  public boolean move_cursor_with_volume = false;
   public boolean switch_input_immediate;
   public NumberLayout selected_number_layout;
   public boolean borderConfig;
@@ -117,6 +118,7 @@ public final class Config
     orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     foldable_unfolded = foldableUnfolded;
 
+    move_cursor_with_volume = _prefs.getBoolean("move_cursor_with_volume", false);
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
