@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<juloo.keyboard2.Keyboard2View xmlns:android="http://schemas.android.com/apk/res/android" android:hardwareAccelerated="false" android:background="?attr/colorKeyboard"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:hardwareAccelerated="false" android:background="#00000000">
+  <HorizontalScrollView
+    android:id="@+id/autofill_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone">
+    <LinearLayout
+      android:id="@+id/autofill_suggestions"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="4dp"
+      android:orientation="horizontal" />
+  </HorizontalScrollView>
+  <juloo.keyboard2.Keyboard2View android:id="@+id/keyboard_view" android:layout_width="fill_parent" android:layout_height="wrap_content" android:background="?attr/colorKeyboard"/>
+</LinearLayout>

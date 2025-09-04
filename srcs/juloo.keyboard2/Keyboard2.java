@@ -1,24 +1,39 @@
 package juloo.keyboard2;
 
+import static juloo.keyboard2.Logs.TAG;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
+import android.os.Build;
 import android.os.Build.VERSION;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.InputType;
 import android.util.Log;
 import android.util.LogPrinter;
+import android.util.Size;
+import android.util.TypedValue;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InlineSuggestion;
+import android.view.inputmethod.InlineSuggestionsRequest;
+import android.view.inputmethod.InlineSuggestionsResponse;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.inline.InlinePresentationSpec;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.autofill.inline.UiVersions;
+import androidx.autofill.inline.v1.InlineSuggestionUi;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +45,10 @@ import juloo.keyboard2.prefs.LayoutsPreference;
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+  private View _keyboardViewParent = null;
   private Keyboard2View _keyboardView;
+  private HorizontalScrollView _autofillContainer;
+  private LinearLayout _autofillSuggestions;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
@@ -117,11 +135,18 @@ public class Keyboard2 extends InputMethodService
     Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
-    _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+    inflate_keyboardView();
     _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
     _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
+  }
+
+  private void inflate_keyboardView() {
+    _keyboardViewParent = inflate_view(R.layout.keyboard);
+    _autofillContainer = _keyboardViewParent.findViewById(R.id.autofill_container);
+    _autofillSuggestions = _keyboardViewParent.findViewById(R.id.autofill_suggestions);
+    _keyboardView = _keyboardViewParent.findViewById(R.id.keyboard_view);
   }
 
   @Override
@@ -250,10 +275,10 @@ public class Keyboard2 extends InputMethodService
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
-      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+      inflate_keyboardView();
       _emojiPane = null;
       _clipboard_pane = null;
-      setInputView(_keyboardView);
+      setInputView(_keyboardViewParent);
     }
     _keyboardView.reset();
   }
@@ -283,7 +308,7 @@ public class Keyboard2 extends InputMethodService
     _currentSpecialLayout = refresh_special_layout(info);
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(info);
-    setInputView(_keyboardView);
+    setInputView(_keyboardViewParent);
     Logs.debug_startup_input_view(info, _config);
   }
 
@@ -436,7 +461,7 @@ public class Keyboard2 extends InputMethodService
 
         case SWITCH_BACK_EMOJI:
         case SWITCH_BACK_CLIPBOARD:
-          setInputView(_keyboardView);
+          setInputView(_keyboardViewParent);
           break;
 
         case CHANGE_METHOD_PICKER:
@@ -519,5 +544,63 @@ public class Keyboard2 extends InputMethodService
   private View inflate_view(int layout)
   {
     return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.R)
+  @Nullable
+  @Override
+  public InlineSuggestionsRequest onCreateInlineSuggestionsRequest(@NonNull Bundle uiExtras)
+  {
+    Size smallestSize = new Size(0, 0);
+    Size biggestSize = new Size(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+    UiVersions.StylesBuilder stylesBuilder = UiVersions.newStylesBuilder();
+
+    InlineSuggestionUi.Style style = InlineSuggestionUi.newStyleBuilder().build();
+    stylesBuilder.addStyle(style);
+
+    Bundle stylesBundle = stylesBuilder.build();
+    InlinePresentationSpec spec =
+            new InlinePresentationSpec.Builder(smallestSize, biggestSize)
+                    .setStyle(stylesBundle)
+                    .build();
+
+    List<InlinePresentationSpec> specList = new ArrayList<>();
+    specList.add(spec);
+
+    InlineSuggestionsRequest.Builder builder = new InlineSuggestionsRequest.Builder(specList);
+
+    return builder.setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
+            .build();
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.R)
+  @Override
+  public boolean onInlineSuggestionsResponse(@NonNull InlineSuggestionsResponse response)
+  {
+    List<InlineSuggestion> inlineSuggestions = response.getInlineSuggestions();
+
+    float height =
+            TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
+    Size autofillSize = new Size(ViewGroup.LayoutParams.WRAP_CONTENT, ((int) height));
+
+    _autofillSuggestions.removeAllViews();
+
+    for (InlineSuggestion inlineSuggestion : inlineSuggestions) {
+      try {
+        inlineSuggestion.inflate(
+                this,
+                autofillSize,
+                getMainExecutor(),
+                inlineContentView -> {
+                  _autofillContainer.setVisibility(View.VISIBLE);
+                  _autofillSuggestions.addView(inlineContentView);
+                });
+      } catch (Exception e) {
+        Log.e(TAG, "onInlineSuggestionsResponse - inlineSuggestion.infLate - " + e);
+      }
+    }
+    return true;
   }
 }
