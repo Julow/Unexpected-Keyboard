@@ -15,6 +15,9 @@ deva_inscript: Layout includes some ASCII punctuation but not all, missing: ", $
 hebr_1_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 hebr_2_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 kann_kannada: Layout includes some ASCII punctuation but not all, missing: #, $, %, (, ), *, +, /, <, =, >, [, \, ], ^, `, {, |, }, ~
+latin_kbdtuf_tr: Layout includes some ASCII punctuation but not all, missing: $
+latin_kbdtuf_tr: These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
+latin_kbdtuf_tr: Missing programming keys, missing: loc esc, loc tab
 latn_colemak: Some keys contain whitespaces, unexpected:  ́
 latn_dvorak: Missing important key, missing: loc capslock
 latn_neo2: Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
