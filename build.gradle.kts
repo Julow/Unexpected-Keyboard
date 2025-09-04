@@ -95,22 +95,16 @@ android {
 }
 
 val buildKeyboardFont by tasks.registering(Exec::class) {
-  doFirst {
-    println("\nBuilding assets/special_font.ttf")
-    mkdir(layout.buildDirectory)
-  }
-  workingDir = projectDir.resolve("srcs/special_font")
-  val svgFiles = workingDir.listFiles()!!.filter {
+  val `in` = projectDir.resolve("srcs/special_font")
+  val out = layout.projectDirectory.file("assets/special_font.ttf")
+  inputs.dir(`in`)
+  outputs.file(out)
+  doFirst { println("\nBuilding assets/special_font.ttf") }
+  workingDir = `in`
+  val svgFiles = `in`.listFiles()!!.filter {
     it.isFile && it.name.endsWith(".svg")
   }.toTypedArray()
-  val output = layout.buildDirectory.file("special_font.ttf")
-  commandLine("fontforge", "-lang=ff", "-script", "build.pe", output.get().asFile.absolutePath, *svgFiles)
-  doLast {
-    copy {
-      from(output)
-      into("assets")
-    }
-  }
+  commandLine("fontforge", "-lang=ff", "-script", "build.pe", out.asFile.absolutePath, *svgFiles)
 }
 
 val genEmojis by tasks.registering(Exec::class) {
@@ -120,30 +114,38 @@ val genEmojis by tasks.registering(Exec::class) {
 }
 
 val genLayoutsList by tasks.registering(Exec::class) {
+  inputs.dir(projectDir.resolve("srcs/layouts"))
+  outputs.file(projectDir.resolve("res/values/layouts.xml"))
   doFirst { println("\nGenerating res/values/layouts.xml") }
   workingDir = projectDir
   commandLine("python", "gen_layouts.py")
 }
 
 val checkKeyboardLayouts by tasks.registering(Exec::class) {
+  inputs.dir(projectDir.resolve("srcs/layouts"))
+  inputs.file(projectDir.resolve("srcs/juloo.keyboard2/KeyValue.java"))
+  outputs.file(projectDir.resolve("check_layout.output"))
   doFirst { println("\nChecking layouts") }
   workingDir = projectDir
   commandLine("python", "check_layout.py")
 }
 
 val compileComposeSequences by tasks.registering(Exec::class) {
-  val out = "srcs/juloo.keyboard2/ComposeKeyData.java"
+  val `in` = projectDir.resolve("srcs/compose")
+  val out = projectDir.resolve("srcs/juloo.keyboard2/ComposeKeyData.java")
+  inputs.dir(`in`)
+  outputs.file(out)
   doFirst { println("\nGenerating $out") }
-  val sequences = projectDir.resolve("srcs/compose").listFiles {
+  val sequences = `in`.listFiles {
     !it.name.endsWith(".py") && !it.name.endsWith(".md")
   }!!.map { it.absolutePath }.toTypedArray()
   workingDir = projectDir
-  commandLine("python", "srcs/compose/compile.py", *sequences)
-  standardOutput = FileOutputStream("${projectDir}/${out}")
+  commandLine("python", `in`.resolve("compile.py").absolutePath, *sequences)
+  doFirst { standardOutput = FileOutputStream(out) }
 }
 
 tasks.withType(Test::class).configureEach {
-  dependsOn(genLayoutsList, checkKeyboardLayouts, compileComposeSequences)
+  dependsOn(genEmojis, genLayoutsList, checkKeyboardLayouts, compileComposeSequences)
 }
 
 val initDebugKeystore by tasks.registering(Exec::class) {
