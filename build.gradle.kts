@@ -136,7 +136,7 @@ val compileComposeSequences by tasks.registering(Exec::class) {
   inputs.dir(`in`)
   outputs.file(out)
   doFirst { println("\nGenerating $out") }
-  val sequences = `in`.listFiles().filter {
+  val sequences = `in`.listFiles { it: File ->
     !it.name.endsWith(".py") && !it.name.endsWith(".md")
   }!!.map { it.absolutePath }.toTypedArray()
   workingDir = projectDir
