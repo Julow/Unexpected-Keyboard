@@ -22,21 +22,21 @@
     <key key0="р" key7="6" />
     <key key0="о" key7="7" key8="ѡ" />
     <key key0="л" key7="8" />
-    <key key0="д" key7="9" key8="f11_placeholder" />
-    <key key0="ж" key7="0" key8="f12_placeholder" />
+    <key key0="д" key7="9" />
+    <key key0="ж" key7="0" />
     <key key0="э" key7="/" key8="|" />
   </row>
-  <row>
-    <key width="1.18" key0="shift" />
-    <key width="0.96" key0="ꙗ" key7="combining_breve" key8=";" />
-    <key width="0.96" key0="ч" key7="combining_pokrytie" key8=":" />
-    <key width="0.96" key0="с" key7="combining_inverted_breve" key8="`" />
-    <key width="0.96" key0="м" key7="ѭ" />
-    <key width="0.96" key0="и" key7="combining_vertical_tilde" key8="-" />
-    <key width="0.96" key0="т" key7="\?" key8="\\" />
-    <key width="0.96" key0="ц" key3="&lt;" key2="&gt;" />
-    <key width="0.96" key0="б" key3="(" key2=")" />
-    <key width="0.96" key0="ю" key3="{" key2="}" />
-    <key width="1.18" key0="." key7="," key8="_" />
+  <row scale="11">
+    <key width="1.22" key0="shift" />
+    <key key0="ꙗ" key7="combining_breve" key8=";" />
+    <key key0="ч" key7="combining_pokrytie" key8=":" />
+    <key key0="с" key7="combining_inverted_breve" key8="`" />
+    <key key0="м" key7="ѭ" />
+    <key key0="и" key7="combining_vertical_tilde" key8="-" />
+    <key key0="т" key7="\?" key8="\\" />
+    <key key0="ц" key3="&lt;" key2="&gt;" />
+    <key key0="б" key3="(" key2=")" />
+    <key key0="ю" key3="{" key2="}" />
+    <key width="1.22" key0="." key7="," key8="_" />
   </row>
 </keyboard>

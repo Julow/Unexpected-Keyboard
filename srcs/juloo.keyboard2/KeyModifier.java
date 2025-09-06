@@ -368,6 +368,13 @@ public final class KeyModifier
   private static KeyValue apply_gesture(KeyValue k)
   {
     KeyValue modified = apply_shift(k);
+    if (_modmap != null)
+    {
+      modified = _modmap.get(Modmap.M.Fn, k);
+      if (modified != null)
+        return modified;
+    }
+    modified = apply_shift(k);
     if (modified != null && !modified.equals(k))
       return modified;
     modified = apply_fn(k);

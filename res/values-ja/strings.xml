@@ -5,7 +5,9 @@
     <string name="short_description">軽量でプライバシーに配慮したAndroid用仮想キーボード</string>
     <string name="store_description">このキーボードは、キーの角をスワイプすることで様々なキーを入力できます。\n\nこのアプリは元々はTermuxでのプログラミング用に設計されました。\nしかし、今では普段の入力にも適しています。\nPCキーボードでの半角入力を再現しています。日本語入力、変換は出来ません。\n\nこのアプリは広告を含まず、インターネットに接続せず、そしてオープンソースです。</string>
     <string name="pref_portrait">縦向き</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">横向き</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">レイアウト</string>
     <string name="pref_label_brightness">文字の明るさ</string>
     <string name="pref_keyboard_opacity">背景の不透明度</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">キーボード切替キーの挙動</string>
     <string name="pref_vibrate_custom">キーボード独自の振動設定</string>
     <string name="pref_vibrate_duration_title">振動の時間</string>
-    <string name="pref_pin_entry_enabled_title">PIN入力</string>
-    <string name="pref_pin_entry_enabled_summary">数字・日付・電話番号入力時</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">表示</string>
     <string name="pref_margin_bottom_title">下の余白</string>
     <string name="pref_keyboard_height_title">キーボードの高さ</string>

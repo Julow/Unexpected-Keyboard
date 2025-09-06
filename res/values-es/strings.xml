@@ -5,7 +5,9 @@
     <string name="short_description">Un teclado virtual ligero para Android consciente de su privacidad.</string>
     <string name="store_description">La característica principal es que hay acceso a más caractéres deslizando hacia las esquinas de las teclas.\n\nEsta aplicación fue originalmente diseñada para programadores que usaran Termux.\nAhora es perfecta para uso cotidiano.\n\nLa misma no contiene ningún anuncio/publicidad, no realiza peticiones de red y es de Fuente Abierta.</string>
     <string name="pref_portrait">En modo vertical</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">En modo horizontal</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Distribución</string>
     <string name="pref_label_brightness">Ajustar brillo de etiqueta</string>
     <string name="pref_keyboard_opacity">Ajustar opacidad del fondo del teclado</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Comportamiento de la tecla para cambiar diseño</string>
     <string name="pref_vibrate_custom">Vibración personalizada</string>
     <string name="pref_vibrate_duration_title">Intensidad de vibración</string>
-    <string name="pref_pin_entry_enabled_title">Diseño de introducción de PIN</string>
-    <string name="pref_pin_entry_enabled_summary">Para escribir cifras, fechas y números telefónicos</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Estilo</string>
     <string name="pref_margin_bottom_title">Margen inferior</string>
     <string name="pref_keyboard_height_title">Altura del teclado</string>
@@ -128,7 +132,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Textos recién copiados</string>
     <string name="clipboard_pin_heading">Pegado</string>
-    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
+    <string name="clipboard_remove_confirm">¿Sacar este portapapeles?</string>
     <string name="clipboard_remove_confirmed">Sí</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

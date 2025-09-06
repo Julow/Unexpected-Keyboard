@@ -114,7 +114,7 @@
 	-->
 	<row>
 		<!--left side-->
-		<key width="1.5" key0="shift"
+		<key width="1.5" key0="shift" ne="loc capslock"
 		              se="\#"/>
 		<key key0="f" se="$"/>
 		<key key0="v" se="|"/>

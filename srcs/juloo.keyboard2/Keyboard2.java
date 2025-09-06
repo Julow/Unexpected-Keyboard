@@ -43,6 +43,8 @@ public class Keyboard2 extends InputMethodService
 
   private Config _config;
 
+  private FoldStateTracker _foldStateTracker;
+
   /** Layout currently visible before it has been modified. */
   KeyboardData current_layout_unmodified()
   {
@@ -111,13 +113,22 @@ public class Keyboard2 extends InputMethodService
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
     _keyeventhandler = new KeyEventHandler(this.new Receiver());
-    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler);
+    _foldStateTracker = new FoldStateTracker(this);
+    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
     _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
     _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
+    _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    _foldStateTracker.close();
   }
 
   private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
@@ -234,7 +245,7 @@ public class Keyboard2 extends InputMethodService
   private void refresh_config()
   {
     int prev_theme = _config.theme;
-    _config.refresh(getResources());
+    _config.refresh(getResources(), _foldStateTracker.isUnfolded());
     refreshSubtypeImm();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
@@ -254,9 +265,9 @@ public class Keyboard2 extends InputMethodService
       case InputType.TYPE_CLASS_NUMBER:
       case InputType.TYPE_CLASS_PHONE:
       case InputType.TYPE_CLASS_DATETIME:
-        if (_config.pin_entry_enabled)
+        if (_config.selected_number_layout == NumberLayout.PIN)
           return loadPinentry(R.xml.pin);
-        else
+        else if (_config.selected_number_layout == NumberLayout.NUMBER)
           return loadNumpad(R.xml.numeric);
       default:
         break;
@@ -284,6 +295,7 @@ public class Keyboard2 extends InputMethodService
       ((ViewGroup)parent).removeView(v);
     super.setInputView(v);
     updateSoftInputWindowLayoutParams();
+    v.requestApplyInsets();
   }
 
 
@@ -304,6 +316,7 @@ public class Keyboard2 extends InputMethodService
         WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
       // Allow to draw behind system bars
       wattrs.setFitInsetsTypes(0);
+      window.setDecorFitsSystemWindows(false);
     }
     updateLayoutHeightOf(window, ViewGroup.LayoutParams.MATCH_PARENT);
     final View inputArea = window.findViewById(android.R.id.inputArea);

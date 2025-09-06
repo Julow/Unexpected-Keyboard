@@ -5,7 +5,9 @@
     <string name="short_description">Bàn phím ảo gọn nhẹ và tôn trọng quyền riêng tư cho Android.</string>
     <string name="store_description">Chức năng chính là dễ dàng gõ nhiều ký tự bằng cách kéo phím về góc của nó.\n\nỨng dụng này ban đầu được thiết kế cho các lập trình viên dùng Termux.\nBây giờ đã hoàn hảo cho việc sử dụng hàng ngày.\n\nỨng dụng này không chứa quảng cáo, không cần đến mạng, và có mã nguồn mở.</string>
     <string name="pref_portrait">Trong chế độ chân dung</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">Trong chế độ phong cảnh</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Bố cục</string>
     <string name="pref_label_brightness">Tùy chỉnh độ sáng của phím</string>
     <string name="pref_keyboard_opacity">Tùy chỉnh độ trong suốt của bàn phím</string>
@@ -47,8 +49,10 @@
     <!-- <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string> -->
     <!-- <string name="pref_vibrate_custom">Custom vibration</string> -->
     <!-- <string name="pref_vibrate_duration_title">Vibration intensity</string> -->
-    <!-- <string name="pref_pin_entry_enabled_title">Pin entry layout</string> -->
-    <!-- <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Kiểu cách</string>
     <string name="pref_margin_bottom_title">Căn lề dưới</string>
     <string name="pref_keyboard_height_title">Chiều cao bàn phím</string>

@@ -1,1 +1,1 @@
-Mazizmēra un privātumu ievērojoša virtuālā Android tastatūra.
+Mazizmēra virtuālā Android tastatūra, kurai rūp privātums.
