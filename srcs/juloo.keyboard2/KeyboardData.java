@@ -325,7 +325,7 @@ public final class KeyboardData
       float kw = 0.f;
       for (Key k : keys_) kw += k.width + k.shift;
       keys = keys_;
-      height = Math.max(h, 0.5f);
+      height = Math.max(h, keys_.size() == 0 ? 0.0f : 0.5f);
       shift = Math.max(s, 0f);
       keysWidth = kw;
     }
