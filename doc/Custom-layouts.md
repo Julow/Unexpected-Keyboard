@@ -59,6 +59,8 @@ The `<row>`...`</row>` pair encloses one row on the keyboard. It has the followi
 
 A row's default height is 1.0 (one quarter of the keyboard height specified on the Settings menu). The `height` property makes the row taller or shorter than this. For example, if you define a 5-row keyboard but one row has `height="0.7"`, then the keyboard's total height is 4.7 units. If the total is different from 4.0, the keyboard will be taller or shorter than that specified in Settings.
 
+(A row of keys is drawn with a minimum height of 0.5 even if you specify a smaller value for `height`. There is no such minimum for a row without keys, such as a spacer row.)
+
 ## Key
 The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. What the key does is defined by optional properties.
 
