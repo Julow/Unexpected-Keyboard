@@ -126,4 +126,6 @@
     <string name="clipboard_pin_heading">고정</string>
     <string name="clipboard_remove_confirm">이 클립보드를 제거하시겠습니까?</string>
     <string name="clipboard_remove_confirmed">예</string>
+    <string name="app_name_debug">Unexpected Keyboard (디버그)</string>
+    <string name="pref_theme_e_rosepine">로제파인</string>
 </resources>
