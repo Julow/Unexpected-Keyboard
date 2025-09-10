@@ -89,8 +89,6 @@ android {
   }
 
   lintOptions {
-    // Translation are already checked by 'syncTranslations'
-    disable 'MissingTranslation'
   }
 }
 
@@ -121,7 +119,6 @@ tasks.register('genEmojis') {
 tasks.withType(Test).configureEach {
   dependsOn 'genLayoutsList'
   dependsOn 'checkKeyboardLayouts'
-  dependsOn 'syncTranslations'
   dependsOn 'compileComposeSequences'
 }
 
@@ -138,14 +135,6 @@ tasks.register('checkKeyboardLayouts') {
   exec {
     workingDir = projectDir
     commandLine("python", "check_layout.py")
-  }
-}
-
-tasks.register('syncTranslations') {
-  println "\nUpdating translations"
-  exec {
-    workingDir = projectDir
-    commandLine "python", "sync_translations.py"
   }
 }
 

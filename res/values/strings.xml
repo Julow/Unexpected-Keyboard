@@ -73,6 +73,7 @@
     <string name="pref_theme_e_monetlight">Monet (Light)</string>
     <string name="pref_theme_e_monetdark">Monet (Dark)</string>
     <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="pref_theme_e_everforestlight">Everforest Light</string>
     <string name="pref_swipe_dist_e_very_short">Very short</string>
     <string name="pref_swipe_dist_e_short">Short</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
@@ -88,6 +89,10 @@
     <string name="pref_circle_sensitivity_e_medium">Medium</string>
     <string name="pref_circle_sensitivity_e_low">Low</string>
     <string name="pref_circle_sensitivity_e_disabled">Disabled</string>
+    <string name="pref_slider_sensitivity_title">Space bar slider sensitivity</string>
+    <string name="pref_slider_sensitivity_slow">Slow</string>
+    <string name="pref_slider_sensitivity_medium">Medium</string>
+    <string name="pref_slider_sensitivity_fast">Fast</string>
     <string name="key_action_next">Next</string>
     <string name="key_action_done">Done</string>
     <string name="key_action_go">Go</string>

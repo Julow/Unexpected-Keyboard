@@ -145,7 +145,8 @@ public final class Config
     float swipe_scaling = Math.min(dm.widthPixels, dm.heightPixels) / 10.f * dpi_ratio;
     float swipe_dist_value = Float.valueOf(_prefs.getString("swipe_dist", "15"));
     swipe_dist_px = swipe_dist_value / 25.f * swipe_scaling;
-    slide_step_px = 0.4f * swipe_scaling;
+    float slider_sensitivity = Float.valueOf(_prefs.getString("slider_sensitivity", "30")) / 100.f;
+    slide_step_px = slider_sensitivity * swipe_scaling;
     vibrate_custom = _prefs.getBoolean("vibrate_custom", false);
     vibrate_duration = _prefs.getInt("vibrate_duration", 20);
     longPressTimeout = _prefs.getInt("longpress_timeout", 600);
@@ -256,6 +257,7 @@ public final class Config
           return R.style.MonetLight;
         return R.style.MonetDark;
       case "rosepine": return R.style.RosePine;
+      case "everforestlight": return R.style.EverforestLight;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
