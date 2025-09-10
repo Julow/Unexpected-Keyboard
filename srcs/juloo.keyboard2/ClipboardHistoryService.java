@@ -174,7 +174,12 @@ public final class ClipboardHistoryService
     public HistoryEntry(String c)
     {
       content = c;
-      expiry_timestamp = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(_service.get_history_ttl_minutes());
+        final int historyTtlMinutes = _service.get_history_ttl_minutes();
+        if (historyTtlMinutes >= 0) {
+            expiry_timestamp = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(historyTtlMinutes);
+        } else {
+            expiry_timestamp = Long.MAX_VALUE;
+        }
     }
   }
 
