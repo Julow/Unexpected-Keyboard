@@ -239,7 +239,7 @@
  </style>
  <style name="Cobalt" parent="BaseTheme">
     <item name="android:isLightTheme">false</item>
-    <item name="colorKeyboard">#1d181d</item>
+    <item name="colorKeyboard">#000000</item>
     <item name="colorKey">?colorKeyboard</item>
     <item name="colorKeyActivated">#78bfff</item>
     <item name="colorLabel">#95c9ff</item>
@@ -258,7 +258,7 @@
  </style>
  <style name="Pine" parent="BaseTheme">
     <item name="android:isLightTheme">false</item>
-    <item name="colorKeyboard">#1c190e</item>
+    <item name="colorKeyboard">#000000</item>
     <item name="colorKey">?colorKeyboard</item>
     <item name="colorKeyActivated">#74cc8a</item>
     <item name="colorLabel">#91d7a6</item>
