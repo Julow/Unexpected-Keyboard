@@ -275,4 +275,24 @@
     <item name="emoji_color">?colorLabel</item>
     <item name="clipboard_divider_color">?colorKey</item>
  </style>
+ <style name="ePaperBlack" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#000000</item>
+    <item name="colorKey">?colorKeyboard</item>
+    <item name="colorKeyActivated">#ffffff</item>
+    <item name="colorLabel">#ffffff</item>
+    <item name="colorLabelActivated">?colorKey</item>
+    <item name="colorLabelLocked">#f7ff9b</item>
+    <item name="colorSubLabel">?colorLabel</item>
+    <item name="keyBorderWidth">2dp</item>
+    <item name="keyBorderWidthActivated">5dp</item>
+    <item name="keyBorderColorLeft">#ffffff</item>
+    <item name="keyBorderColorTop">#ffffff</item>
+    <item name="keyBorderColorRight">#ffffff</item>
+    <item name="keyBorderColorBottom">#ffffff</item>
+    <item name="emoji_button_bg">?colorKeyboard</item>
+    <item name="emoji_color">?colorLabel</item>
+    <item name="clipboard_divider_color">?colorLabel</item>
+    <item name="clipboard_divider_height">2dp</item>
+ </style>
 </resources>
