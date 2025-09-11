@@ -45,6 +45,7 @@
     <item>@string/pref_theme_e_everforestlight</item>
     <item>@string/pref_theme_e_cobalt</item>
     <item>@string/pref_theme_e_pine</item>
+    <item>@string/pref_theme_e_epaperblack</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
@@ -63,6 +64,7 @@
     <item>everforestlight</item>
     <item>cobalt</item>
     <item>pine</item>
+    <item>epaperblack</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
