@@ -282,9 +282,9 @@
     <item name="colorKeyActivated">#ffffff</item>
     <item name="colorLabel">#ffffff</item>
     <item name="colorLabelActivated">?colorKey</item>
-    <item name="colorLabelLocked">#f7ff9b</item>
+    <item name="colorLabelLocked">#f5060b</item>
     <item name="colorSubLabel">?colorLabel</item>
-    <item name="keyBorderWidth">2dp</item>
+    <item name="keyBorderWidth">1dp</item>
     <item name="keyBorderWidthActivated">5dp</item>
     <item name="keyBorderColorLeft">#ffffff</item>
     <item name="keyBorderColorTop">#ffffff</item>
