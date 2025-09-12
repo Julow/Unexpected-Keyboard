@@ -74,6 +74,9 @@
     <string name="pref_theme_e_monetdark">Monet (Dark)</string>
     <string name="pref_theme_e_rosepine">Rosé Pine</string>
     <string name="pref_theme_e_everforestlight">Everforest Light</string>
+    <string name="pref_theme_e_cobalt">Cobalt</string>
+    <string name="pref_theme_e_pine">Pine</string>
+    <string name="pref_theme_e_epaperblack">ePaper Black</string>
     <string name="pref_swipe_dist_e_very_short">Very short</string>
     <string name="pref_swipe_dist_e_short">Short</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
