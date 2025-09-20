@@ -60,7 +60,7 @@
     <string name="pref_theme_e_black">Negro</string>
     <string name="pref_theme_e_altblack">Negro alternativo</string>
     <string name="pref_theme_e_white">Blanco</string>
-    <string name="pref_theme_e_epaper">ePaper</string>
+    <string name="pref_theme_e_epaper">Tinta electrónica</string>
     <string name="pref_theme_e_desert">Desierto</string>
     <string name="pref_theme_e_jungle">Selva</string>
     <string name="pref_theme_e_monet">Monet (de sistema)</string>
