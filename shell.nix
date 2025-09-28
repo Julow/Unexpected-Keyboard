@@ -5,7 +5,7 @@
 
 let
   jdk = pkgs.openjdk17;
-  build_tools_version = "34.0.0";
+  build_tools_version = "35.0.0";
 
   android = pkgs.androidenv.composeAndroidPackages {
     buildToolsVersions = [ build_tools_version ];
