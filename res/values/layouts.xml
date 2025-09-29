@@ -38,6 +38,7 @@
     <item>hebr_1_il</item>
     <item>hebr_2_il</item>
     <item>kann_kannada</item>
+    <item>latin_kbdtuf_tr</item>
     <item>latn_azerty_be</item>
     <item>latn_azerty_fr</item>
     <item>latn_bepo_fr</item>
@@ -125,6 +126,7 @@
     <item>Hebrew 1</item>
     <item>Hebrew 2</item>
     <item>ಕನ್ನಡ - Kannada</item>
+    <item>Turkish F</item>
     <item>AZERTY (Belgian)</item>
     <item>AZERTY (Français)</item>
     <item>BEPO (Français)</item>
@@ -212,6 +214,7 @@
     <item>@xml/hebr_1_il</item>
     <item>@xml/hebr_2_il</item>
     <item>@xml/kann_kannada</item>
+    <item>@xml/latin_kbdtuf_tr</item>
     <item>@xml/latn_azerty_be</item>
     <item>@xml/latn_azerty_fr</item>
     <item>@xml/latn_bepo_fr</item>
