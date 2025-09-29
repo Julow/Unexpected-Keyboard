@@ -587,8 +587,10 @@ public class Keyboard2 extends InputMethodService
 
     _autofillSuggestions.removeAllViews();
 
-    for (InlineSuggestion inlineSuggestion : inlineSuggestions) {
-      try {
+    for (InlineSuggestion inlineSuggestion : inlineSuggestions)
+    {
+      try
+      {
         inlineSuggestion.inflate(
                 this,
                 autofillSize,
@@ -597,7 +599,9 @@ public class Keyboard2 extends InputMethodService
                   _autofillContainer.setVisibility(View.VISIBLE);
                   _autofillSuggestions.addView(inlineContentView);
                 });
-      } catch (Exception e) {
+      }
+      catch (Exception e)
+      {
         Log.e(TAG, "onInlineSuggestionsResponse - inlineSuggestion.infLate - " + e);
       }
     }
