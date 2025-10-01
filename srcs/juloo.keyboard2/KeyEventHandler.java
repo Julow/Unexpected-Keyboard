@@ -35,11 +35,12 @@ public final class KeyEventHandler
   public KeyEventHandler(IReceiver recv)
   {
     _recv = recv;
-    _autocap = new Autocapitalisation(recv.getHandler(),
+    Handler handler = recv.getHandler();
+    _autocap = new Autocapitalisation(handler,
         this.new Autocapitalisation_callback());
     _mods = Pointers.Modifiers.EMPTY;
     _suggestions = new Suggestions(recv);
-    _typedword = new CurrentlyTypedWord(this);
+    _typedword = new CurrentlyTypedWord(handler, this);
   }
 
   /** Editing just started. */
@@ -223,7 +224,10 @@ public final class KeyEventHandler
           metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
           KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
     if (eventAction == KeyEvent.ACTION_UP)
+    {
       _autocap.event_sent(eventCode, metaState);
+      _typedword.event_sent(eventCode, metaState);
+    }
   }
 
   void send_text(String text)

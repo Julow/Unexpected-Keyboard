@@ -1,5 +1,7 @@
 package juloo.keyboard2;
 
+import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import java.util.List;
@@ -8,11 +10,18 @@ import java.util.List;
 public final class CurrentlyTypedWord
 {
   InputConnection _ic = null;
+  Handler _handler;
   Callback _callback;
 
+  /** The currently typed word. */
   StringBuilder _w = new StringBuilder();
+  /** This can be disabled if the editor doesn't support looking at the text
+      before the cursor. */
   boolean _enabled = false;
+  /** The current word is empty while the selection is ongoing. */
   boolean _has_selection = false;
+  /** Used to avoid concurrent refreshes in [delayed_refresh()]. */
+  boolean _refresh_pending = false;
 
   /** The estimated cursor position. Used to avoid expensive IPC calls when the
       typed word can be estimated locally with [typed]. When the cursor
@@ -20,8 +29,9 @@ public final class CurrentlyTypedWord
       the editor. */
   int _cursor;
 
-  public CurrentlyTypedWord(Callback cb)
+  public CurrentlyTypedWord(Handler h, Callback cb)
   {
+    _handler = h;
     _callback = cb;
   }
 
@@ -61,13 +71,20 @@ public final class CurrentlyTypedWord
     _cursor = newSelStart;
   }
 
-  private void callback()
+  public void event_sent(int code, int meta)
+  {
+    if (!_enabled)
+      return;
+    delayed_refresh();
+  }
+
+  void callback()
   {
     _callback.currently_typed_word(_w.toString());
   }
 
   /** Estimate the currently typed word after [chars] has been typed. */
-  private void type_chars(String s)
+  void type_chars(String s)
   {
     int len = s.length();
     for (int i = 0; i < len;)
@@ -83,8 +100,9 @@ public final class CurrentlyTypedWord
   }
 
   /** Refresh the current word by immediately querying the editor. */
-  private void refresh_current_word()
+  void refresh_current_word()
   {
+    _refresh_pending = false;
     if (_has_selection)
       set_current_word("");
     else
@@ -92,7 +110,7 @@ public final class CurrentlyTypedWord
   }
 
   /** Refresh the current word by immediately querying the editor. */
-  private void set_current_word(CharSequence text_before_cursor)
+  void set_current_word(CharSequence text_before_cursor)
   {
     if (text_before_cursor == null)
     {
@@ -103,6 +121,23 @@ public final class CurrentlyTypedWord
     type_chars(text_before_cursor.toString());
     callback();
   }
+
+  /** Wait some time to let the editor finishes reacting to changes and call
+      [refresh_current_word]. */
+  void delayed_refresh()
+  {
+    _refresh_pending = true;
+    _handler.postDelayed(delayed_refresh_run, 50);
+  }
+
+  Runnable delayed_refresh_run = new Runnable()
+  {
+    public void run()
+    {
+      if (_refresh_pending)
+        refresh_current_word();
+    }
+  };
 
   public static interface Callback
   {
