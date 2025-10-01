@@ -12,6 +12,7 @@ public final class CurrentlyTypedWord
 
   StringBuilder _w = new StringBuilder();
   boolean _enabled = false;
+  boolean _has_selection = false;
 
   /** The estimated cursor position. Used to avoid expensive IPC calls when the
       typed word can be estimated locally with [typed]. When the cursor
@@ -32,15 +33,18 @@ public final class CurrentlyTypedWord
   public void started(EditorInfo info, InputConnection ic)
   {
     _ic = ic;
-    refresh_current_word(info.getInitialTextBeforeCursor(10, 0),
-        info.initialSelStart != info.initialSelEnd);
+    _enabled = true;
+    _has_selection = info.initialSelStart != info.initialSelEnd;
     _cursor = info.initialSelStart;
+    if (!_has_selection)
+      set_current_word(info.getInitialTextBeforeCursor(10, 0));
   }
 
   public void typed(String s)
   {
     if (!_enabled)
       return;
+    _has_selection = false;
     type_chars(s);
     callback();
   }
@@ -49,10 +53,11 @@ public final class CurrentlyTypedWord
   {
     // Avoid the expensive [refresh_current_word] call when [typed] was called
     // before.
-    if (!_enabled || newSelStart == _cursor)
+    boolean new_has_sel = newSelStart != newSelEnd;
+    if (!_enabled || (newSelStart == _cursor && new_has_sel == _has_selection))
       return;
-    refresh_current_word(_ic.getTextBeforeCursor(10, 0),
-        newSelStart != newSelEnd);
+    _has_selection = new_has_sel;
+    refresh_current_word();
     _cursor = newSelStart;
   }
 
@@ -77,18 +82,24 @@ public final class CurrentlyTypedWord
     }
   }
 
-  /** Set [_enabled]. */
-  private void refresh_current_word(CharSequence text_before_cursor, boolean has_selection)
+  /** Refresh the current word by immediately querying the editor. */
+  private void refresh_current_word()
   {
-    _w.setLength(0);
-    if (_ic == null || text_before_cursor == null)
+    if (_has_selection)
+      set_current_word("");
+    else
+      set_current_word(_ic.getTextBeforeCursor(10, 0));
+  }
+
+  /** Refresh the current word by immediately querying the editor. */
+  private void set_current_word(CharSequence text_before_cursor)
+  {
+    if (text_before_cursor == null)
     {
       _enabled = false;
       return;
     }
-    _enabled = true;
-    if (has_selection)
-      return;
+    _w.setLength(0);
     type_chars(text_before_cursor.toString());
     callback();
   }
