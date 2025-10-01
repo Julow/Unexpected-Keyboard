@@ -1,8 +1,6 @@
 package juloo.keyboard2;
 
-import static juloo.keyboard2.Logs.TAG;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
@@ -12,13 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.InputType;
-import android.util.Log;
-import android.util.LogPrinter;
-import android.util.Size;
-import android.util.TypedValue;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InlineSuggestion;
 import android.view.inputmethod.InlineSuggestionsRequest;
 import android.view.inputmethod.InlineSuggestionsResponse;
 import android.view.inputmethod.InputConnection;
@@ -26,20 +19,13 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.inline.InlinePresentationSpec;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.autofill.inline.UiVersions;
-import androidx.autofill.inline.v1.InlineSuggestionUi;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import juloo.keyboard2.prefs.LayoutsPreference;
 
 public class Keyboard2 extends InputMethodService
@@ -47,8 +33,7 @@ public class Keyboard2 extends InputMethodService
 {
   private View _keyboardViewParent = null;
   private Keyboard2View _keyboardView;
-  private HorizontalScrollView _autofillContainer;
-  private LinearLayout _autofillSuggestions;
+  private InlineAutofill _inlineAutofill;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
@@ -135,6 +120,7 @@ public class Keyboard2 extends InputMethodService
     Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
+    _inlineAutofill = new InlineAutofill();
     inflate_keyboardView();
     _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
@@ -144,8 +130,7 @@ public class Keyboard2 extends InputMethodService
 
   private void inflate_keyboardView() {
     _keyboardViewParent = inflate_view(R.layout.keyboard);
-    _autofillContainer = _keyboardViewParent.findViewById(R.id.autofill_container);
-    _autofillSuggestions = _keyboardViewParent.findViewById(R.id.autofill_suggestions);
+    _inlineAutofill.onInflate(_keyboardViewParent);
     _keyboardView = _keyboardViewParent.findViewById(R.id.keyboard_view);
   }
 
@@ -551,60 +536,13 @@ public class Keyboard2 extends InputMethodService
   @Override
   public InlineSuggestionsRequest onCreateInlineSuggestionsRequest(@NonNull Bundle uiExtras)
   {
-    Size smallestSize = new Size(0, 0);
-    Size biggestSize = new Size(Integer.MAX_VALUE, Integer.MAX_VALUE);
-
-    UiVersions.StylesBuilder stylesBuilder = UiVersions.newStylesBuilder();
-
-    InlineSuggestionUi.Style style = InlineSuggestionUi.newStyleBuilder().build();
-    stylesBuilder.addStyle(style);
-
-    Bundle stylesBundle = stylesBuilder.build();
-    InlinePresentationSpec spec =
-            new InlinePresentationSpec.Builder(smallestSize, biggestSize)
-                    .setStyle(stylesBundle)
-                    .build();
-
-    List<InlinePresentationSpec> specList = new ArrayList<>();
-    specList.add(spec);
-
-    InlineSuggestionsRequest.Builder builder = new InlineSuggestionsRequest.Builder(specList);
-
-    return builder.setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
-            .build();
+    return _inlineAutofill.onCreateInlineSuggestionsRequest(uiExtras);
   }
 
   @RequiresApi(api = Build.VERSION_CODES.R)
   @Override
   public boolean onInlineSuggestionsResponse(@NonNull InlineSuggestionsResponse response)
   {
-    List<InlineSuggestion> inlineSuggestions = response.getInlineSuggestions();
-
-    float height =
-            TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
-    Size autofillSize = new Size(ViewGroup.LayoutParams.WRAP_CONTENT, ((int) height));
-
-    _autofillSuggestions.removeAllViews();
-
-    for (InlineSuggestion inlineSuggestion : inlineSuggestions)
-    {
-      try
-      {
-        inlineSuggestion.inflate(
-                this,
-                autofillSize,
-                getMainExecutor(),
-                inlineContentView -> {
-                  _autofillContainer.setVisibility(View.VISIBLE);
-                  _autofillSuggestions.addView(inlineContentView);
-                });
-      }
-      catch (Exception e)
-      {
-        Log.e(TAG, "onInlineSuggestionsResponse - inlineSuggestion.infLate - " + e);
-      }
-    }
-    return true;
+    return _inlineAutofill.onInlineSuggestionsResponse(this, response);
   }
 }
