@@ -132,6 +132,7 @@ public class Keyboard2 extends InputMethodService
     _keyboardViewParent = inflate_view(R.layout.keyboard);
     _inlineAutofill.onInflate(_keyboardViewParent);
     _keyboardView = _keyboardViewParent.findViewById(R.id.keyboard_view);
+    _keyboardViewParent.getBackground().setAlpha(_config.keyboardOpacity);
   }
 
   @Override
