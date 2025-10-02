@@ -35,7 +35,6 @@ public class InlineAutofill {
   {
     _autofillContainer = keyboardViewParent.findViewById(R.id.autofill_container);
     _autofillSuggestions = keyboardViewParent.findViewById(R.id.autofill_suggestions);
-    _autofillContainer.setVisibility(View.GONE);
   }
 
   @Nullable
@@ -68,7 +67,7 @@ public class InlineAutofill {
     Size autofillSize = new Size(ViewGroup.LayoutParams.WRAP_CONTENT, ((int) height));
 
     _autofillSuggestions.removeAllViews();
-    if (!inlineSuggestions.isEmpty()) _autofillContainer.setVisibility(View.VISIBLE);
+    _autofillContainer.setVisibility(inlineSuggestions.isEmpty() ? View.GONE : View.VISIBLE);
 
     for (InlineSuggestion inlineSuggestion : inlineSuggestions)
     {
