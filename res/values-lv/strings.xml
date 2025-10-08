@@ -5,8 +5,8 @@
     <string name="short_description">Mazizmēra virtuālā Android tastatūra, kurai rūp privātums.</string>
     <string name="store_description">Galvenā tastatūras iespēja ir viegli ievadīt vairāk rakstzīmju ar pavilkšanu uz taustiņu stūriem.\n\nSākotnēji šī lietotne tika izstrādāta programmētājiem, kas izmanto Termux.\nTagad tā lieliski piemērota ikdienas lietošanai.\n\nLietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.</string>
     <string name="settings_activity_label">Unexpected Keyboard iestatījumi</string>
-    <string name="pref_portrait">Vertikāli</string>
-    <string name="pref_landscape">Horizontāli</string>
+    <string name="pref_portrait">Stateniskajā novietojumā</string>
+    <string name="pref_landscape">Guleniskajā novietojumā</string>
     <string name="pref_category_layout">Izkārtojums</string>
     <string name="pref_label_brightness">Pielāgot iezīmju spilgtumu</string>
     <string name="pref_keyboard_opacity">Pielāgot tastatūras fona necaurredzamību</string>
@@ -20,7 +20,7 @@
     <string name="pref_custom_layout_title">Pielāgots izkārtojums</string>
     <string name="pref_show_numpad_title">Rādīt ciparnīcu</string>
     <string name="pref_show_numpad_never">Nekad</string>
-    <string name="pref_show_numpad_landscape">Tikai horizontālajā stāvoklī</string>
+    <string name="pref_show_numpad_landscape">Tikai līmeniskajā novietojumā</string>
     <string name="pref_show_numpad_always">Vienmēr</string>
     <string name="pref_number_row_title">Rādīt ciparu rindu</string>
     <string name="pref_number_row_summary">Pievienot ciparu rindu virs tastatūras, kad ciparnīca ir paslēpta</string>
@@ -50,7 +50,7 @@
     <string name="pref_category_style">Izskata pielāgojumi</string>
     <string name="pref_margin_bottom_title">Apakšējā apmale</string>
     <string name="pref_keyboard_height_title">Tastatūras augstums</string>
-    <string name="pref_horizontal_margin_title">Horizontālā apmale</string>
+    <string name="pref_horizontal_margin_title">Līmeniskā apmale</string>
     <string name="pref_character_size_title">Iezīmes izmērs</string>
     <string name="pref_character_size_summary">Tastatūrā attēloto rakstzīmju izmērs (%.2fx)</string>
     <string name="pref_theme">Izskats</string>
@@ -72,8 +72,8 @@
     <string name="pref_swipe_dist_e_default">Vidējs</string>
     <string name="pref_swipe_dist_e_far">Tāls</string>
     <string name="pref_swipe_dist_e_very_far">Ļoti tāls</string>
-    <string name="pref_key_horizontal_space">Horizontālais attālums starp taustiņiem</string>
-    <string name="pref_key_vertical_space">Vertikālais attālums starp taustiņiem</string>
+    <string name="pref_key_horizontal_space">Līmeniskais attālums starp taustiņiem</string>
+    <string name="pref_key_vertical_space">Stateniskais attālums starp taustiņiem</string>
     <string name="pref_border_config_title">Pielāgot apmales</string>
     <string name="pref_border_width_title">Apmales platums</string>
     <string name="pref_corners_radius_title">Stūru rādiuss</string>
