@@ -5,7 +5,9 @@
     <string name="short_description">Легка та конфіденційна віртуальна клавіатура для Android.</string>
     <string name="store_description">Головна особливість полягає в тому, що ви можете вводити більше символів, проводячи клавіші до кутів.\n\nЦя програма спочатку була розроблена для програмістів, які використовують Termux.\nТепер ідеально підходить для щоденного використання.\n\nЦя програма не містить реклами, не надсилає жодних мережевих запитів і має відкритий код.</string>
     <string name="pref_portrait">У портретному режимі</string>
+    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">У альбомному режимі</string>
+    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Макет</string>
     <string name="pref_label_brightness">Налаштувати яскравість символів</string>
     <string name="pref_keyboard_opacity">Налаштувати прозорість фону клавіатури</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Поведінка клавіші перемикання клавіатури</string>
     <string name="pref_vibrate_custom">Спеціальна вібрація</string>
     <string name="pref_vibrate_duration_title">Інтенсивність вібрації</string>
-    <string name="pref_pin_entry_enabled_title">Макет введення PIN-коду</string>
-    <string name="pref_pin_entry_enabled_summary">При наборі чисел, дат і номерів телефонів</string>
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
+    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
+    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Стиль</string>
     <string name="pref_margin_bottom_title">Поле знизу</string>
     <string name="pref_keyboard_height_title">Висота клавіатури</string>
@@ -128,7 +132,7 @@
     <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Нещодавно скопійований текст</string>
     <string name="clipboard_pin_heading">Закріплено</string>
-    <!-- <string name="clipboard_remove_confirm">Remove this clipboard item?</string> -->
+    <string name="clipboard_remove_confirm">Видалити цей буфер обміну?</string>
     <string name="clipboard_remove_confirmed">Так</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

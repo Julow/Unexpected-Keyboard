@@ -42,6 +42,10 @@
     <item>@string/pref_theme_e_monetlight</item>
     <item>@string/pref_theme_e_monetdark</item>
     <item>@string/pref_theme_e_rosepine</item>
+    <item>@string/pref_theme_e_everforestlight</item>
+    <item>@string/pref_theme_e_cobalt</item>
+    <item>@string/pref_theme_e_pine</item>
+    <item>@string/pref_theme_e_epaperblack</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
@@ -57,6 +61,10 @@
     <item>monetlight</item>
     <item>monetdark</item>
     <item>rosepine</item>
+    <item>everforestlight</item>
+    <item>cobalt</item>
+    <item>pine</item>
+    <item>epaperblack</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
@@ -84,4 +92,36 @@
     <item>4</item>
     <item>12</item>
   </string-array>
+  <string-array name="pref_number_entry_entries">
+    <item>@string/pref_number_entry_layout_pin</item>
+    <item>@string/pref_number_entry_layout_number</item>
+    <item>@string/pref_number_entry_layout_normal</item>
+  </string-array>
+  <string-array name="pref_number_entry_values">
+    <item>pin</item>
+    <item>number</item>
+    <item>normal</item>
+  </string-array>
+  <string-array name="pref_slider_sensitivity_entries">
+    <item>@string/pref_slider_sensitivity_slow</item>
+    <item>@string/pref_slider_sensitivity_medium</item>
+    <item>@string/pref_slider_sensitivity_fast</item>
+  </string-array>
+  <string-array name="pref_slider_sensitivity_values">
+    <item>60</item>
+    <item>30</item>
+    <item>15</item>
+  </string-array>
+    <string-array name="pref_clipboard_duration_entries">
+        <item>@string/pref_clipboard_history_duration_1</item>
+        <item>@string/pref_clipboard_history_duration_5</item>
+        <item>@string/pref_clipboard_history_duration_30</item>
+        <item>@string/pref_clipboard_history_duration_stop</item>
+    </string-array>
+    <string-array name="pref_clipboard_duration_values">
+        <item>1</item>
+        <item>5</item>
+        <item>30</item>
+        <item>-1</item>
+    </string-array>
 </resources>

@@ -5,7 +5,9 @@
     <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string>
     <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads, doesn\'t make any network requests and is Open Source.</string>
     <string name="pref_portrait">In portrait mode</string>
+    <string name="pref_portrait_unfolded">In portrait mode unfolded</string>
     <string name="pref_landscape">In landscape mode</string>
+    <string name="pref_landscape_unfolded">In landscape mode unfolded</string>
     <string name="pref_category_layout">Layout</string>
     <string name="pref_label_brightness">Adjust label brightness</string>
     <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string>
@@ -47,8 +49,10 @@
     <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string>
     <string name="pref_vibrate_custom">Custom vibration</string>
     <string name="pref_vibrate_duration_title">Vibration intensity</string>
-    <string name="pref_pin_entry_enabled_title">Pin entry layout</string>
-    <string name="pref_pin_entry_enabled_summary">When typing numbers, dates and phone numbers</string>
+    <string name="pref_number_entry_title">Layout when typing numbers, dates, and phone numbers</string>
+    <string name="pref_number_entry_layout_pin">PIN Entry</string>
+    <string name="pref_number_entry_layout_number">Number pane</string>
+    <string name="pref_number_entry_layout_normal">Use the main layout</string>
     <string name="pref_category_style">Style</string>
     <string name="pref_margin_bottom_title">Margin bottom</string>
     <string name="pref_keyboard_height_title">Keyboard height</string>
@@ -69,6 +73,10 @@
     <string name="pref_theme_e_monetlight">Monet (Light)</string>
     <string name="pref_theme_e_monetdark">Monet (Dark)</string>
     <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="pref_theme_e_everforestlight">Everforest Light</string>
+    <string name="pref_theme_e_cobalt">Cobalt</string>
+    <string name="pref_theme_e_pine">Pine</string>
+    <string name="pref_theme_e_epaperblack">ePaper Black</string>
     <string name="pref_swipe_dist_e_very_short">Very short</string>
     <string name="pref_swipe_dist_e_short">Short</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
@@ -84,6 +92,10 @@
     <string name="pref_circle_sensitivity_e_medium">Medium</string>
     <string name="pref_circle_sensitivity_e_low">Low</string>
     <string name="pref_circle_sensitivity_e_disabled">Disabled</string>
+    <string name="pref_slider_sensitivity_title">Space bar slider sensitivity</string>
+    <string name="pref_slider_sensitivity_slow">Slow</string>
+    <string name="pref_slider_sensitivity_medium">Medium</string>
+    <string name="pref_slider_sensitivity_fast">Fast</string>
     <string name="key_action_next">Next</string>
     <string name="key_action_done">Done</string>
     <string name="key_action_go">Go</string>
@@ -131,4 +143,10 @@
     <string name="clipboard_remove_confirm">Remove this clipboard item?</string>
     <string name="clipboard_remove_confirmed">Yes</string>
     <string name="toast_no_voice_input">No voice typing app installed</string>
+    <string name="pref_category_clipboard">Clipboard</string>
+    <string name="pref_clipboard_history_duration">Clipboard memory duration</string>
+    <string name="pref_clipboard_history_duration_1">At most 1 minute</string>
+    <string name="pref_clipboard_history_duration_5">At most 5 minutes</string>
+    <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
+    <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
 </resources>

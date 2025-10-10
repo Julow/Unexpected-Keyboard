@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import sys, os, glob
+import sys, os, glob, re
 
 layout_file_name = 0
 warnings = []
@@ -14,6 +14,9 @@ KEY_ATTRIBUTES = set([
     "key0", "key1", "key2", "key3", "key4", "key5", "key6", "key7", "key8",
     "c", "nw", "ne", "sw", "se", "w", "e", "n", "s"
     ])
+
+# Keys defined in KeyValue.java
+known_keys = set()
 
 def warn(msg):
     global warnings
@@ -103,6 +106,23 @@ def check_layout(layout):
     if root.get("script") == None:
         warn("Layout doesn't specify a script.")
 
+    keys_without_loc = set(( k.removeprefix("loc ") for k in keys ))
+    # Keys with a len under 3 are often composed characters
+    special_keys = set(( k for k in keys_without_loc if len(k) > 3 and ":" not in k ))
+    unknown = special_keys.difference(known_keys)
+    if len(unknown) > 0:
+        warn("Layout contains unknown keys: %s" % key_list_str(unknown))
+
+# Fill 'known_keys', which is used for some checks
+def parse_known_keys():
+    global known_keys
+    with open("srcs/juloo.keyboard2/KeyValue.java", "r", encoding="utf-8") as f:
+        known_keys = set(
+                ( m.group(1) for m in re.finditer('case "([^"]+)":', f.read()) )
+                )
+
+parse_known_keys()
+
 for fname in sorted(glob.glob("srcs/layouts/*.xml")):
     layout_id, _ = os.path.splitext(os.path.basename(fname))
     if layout_id in KNOWN_NOT_LAYOUT:
@@ -114,6 +134,6 @@ for fname in sorted(glob.glob("srcs/layouts/*.xml")):
     else:
         check_layout(layout)
 
-with open("check_layout.output", "w") as out:
+with open("check_layout.output", "w", encoding="utf-8") as out:
     for w in warnings:
         print(w, file=out)

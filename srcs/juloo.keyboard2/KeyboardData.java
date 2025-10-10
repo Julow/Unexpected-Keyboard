@@ -325,7 +325,7 @@ public final class KeyboardData
       float kw = 0.f;
       for (Key k : keys_) kw += k.width + k.shift;
       keys = keys_;
-      height = Math.max(h, 0.5f);
+      height = Math.max(h, keys_.size() == 0 ? 0.0f : 0.5f);
       shift = Math.max(s, 0f);
       keysWidth = kw;
     }
@@ -336,9 +336,13 @@ public final class KeyboardData
       int status;
       float h = attribute_float(parser, "height", 1f);
       float shift = attribute_float(parser, "shift", 0f);
+      float scale = attribute_float(parser, "scale", 0f);
       while (expect_tag(parser, "key"))
         keys.add(Key.parse(parser));
-      return new Row(keys, h, shift);
+      Row row = new Row(keys, h, shift);
+      if (scale > 0f)
+        row = row.updateWidth(scale);
+      return row;
     }
 
     public Row copy()

@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import glob, os
+import glob, os, sys
 
 # Edit every strings.xml files:
 # - Add missing translation as comments
@@ -14,11 +14,14 @@ VALUE_DIR_TO_METADATA = {
         "en": "en-US",
         "es": "es-ES",
         "fa": "fa-IR",
+        "fil": "fil",
         "fr": "fr-FR",
+        "in": "id",
         "it": "it-IT",
         "ja": "ja-JP",
         "ko": "ko-KR",
         "lv": "lv",
+        "nl": "nl-NL",
         "pl": "pl-PL",
         "pt": "pt-BR",
         "ro": "ro",
@@ -83,6 +86,10 @@ def sync_metadata(value_dir, strings):
     sync_meta_file("title.txt", ("app_name_release", None))
     sync_meta_file("short_description.txt", ("short_description", None))
     sync_meta_file("full_description.txt", ("store_description", None))
+
+if len(sys.argv) < 2 or sys.argv[1] != "sync":
+    print("Syncing of translation files is no longer needed. Run with 'sync_translation.py sync' to do it anyway.")
+    exit(1)
 
 baseline = parse_strings_file("res/values/strings.xml")
 

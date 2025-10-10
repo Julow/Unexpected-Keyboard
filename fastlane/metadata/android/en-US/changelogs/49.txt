@@ -1,0 +1,6 @@
+Better support for foldable devices
+Added layouts
+Improved selection mode
+Bug fixes and many other improvements
+
+Huge thanks to the contributors: @alotbsol555, @bergentroll, @dacc9, @HaleyHalcyon, @Jaoheah, @jorexdeveloper, @malbajun, @matejdro, @Spike-from-NH, @tenextractor

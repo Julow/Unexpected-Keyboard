@@ -5,20 +5,12 @@
 
 let
   jdk = pkgs.openjdk17;
-  build_tools_version = "33.0.1";
+  build_tools_version = "35.0.0";
 
   android = pkgs.androidenv.composeAndroidPackages {
     buildToolsVersions = [ build_tools_version ];
-    platformVersions = [ "34" ];
+    platformVersions = [ "35" ];
     abiVersions = [ "armeabi-v7a" ];
-    inherit repoJson;
-  };
-
-  # Ensure we have the needed system images
-  repoJson = pkgs.fetchurl {
-    url =
-      "https://raw.githubusercontent.com/NixOS/nixpkgs/ebc7402410a3ce2d25622137c190d4ab83945c10/pkgs/development/mobile/androidenv/repo.json";
-    hash = "sha256-4/0FMyxM+7d66qfhlY3A10RIe6j6VrW8DIilH2eQyzc=";
   };
 
   emulators = let
@@ -27,7 +19,6 @@ let
         name = "emulator_api${platformVersion}";
         inherit platformVersion abiVersion systemImageType;
         androidAvdFlags = "--device ${device}";
-        sdkExtraArgs = { inherit repoJson; };
       };
     # Allow to install several emulators in the same environment
     link_emulator = version_name: args: {

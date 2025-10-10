@@ -173,12 +173,12 @@ Remove the `<!--` and `-->` parts and change the text.
 
 ### Adding a translation
 
+The preferred method for translating the app is to use Weblate:
+https://hosted.weblate.org/engage/unexpected-keyboard/
+
 The `res/values-<language_tag>/strings.xml` file must be created by copying the
 default translation in `res/values/strings.xml`, which contain the structure of
 the file and the English strings.
-
-To check that `strings.xml` is formatted correctly, run
-`python sync_translations.py`. This will modify your files.
 
 Store descriptions in `fastlane/metadata/android/` are updated automatically.
 Translating changelogs is not useful.

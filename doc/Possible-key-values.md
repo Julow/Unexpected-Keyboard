@@ -40,13 +40,12 @@ To get this character... | ...you can type
 :---- | :------
 A literal newline character, which is different from `enter` and `action` in certain apps. | `\n`
 A literal tab character, which is different from `tab` in certain apps. | `\t`
-`\` | `\\`
 `&` | `&amp;`
 `<` | `&lt;`
 `>` | `&gt;`
 `"` | `&quot;`
 
-The characters `?`, `#`, and `@` do not need to be escaped when writing custom layouts. Internally, they can be escaped by prepending backslash (by typing `\?`, `\#`, and `\@`).
+The characters `\` (unless followed by n or t), `?`, `#`, and `@` do not need to be escaped when writing custom layouts. When writing a layout to be included in the app (in [srcs/layouts](https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/layouts)), they are represented by typing `\\`, `\?`, `\#`, and `\@`.
 
 The characters `,` and `:` can be escaped in a key value, using single quotes. For example, this macro defines a key with legend `http` that sends a string containing `:`: `<key c="http:home,'https://'" />` For simplicity, `,` and `:` cannot be escaped in the key legend.
 
@@ -141,6 +140,20 @@ Value   | Meaning
 `lrm`   | Left-to-right mark.
 `rlm`   | Right-to-left mark.
 `b(`, `b)`, `b[`, `b]`, `b{`, `b}`, `blt`, `bgt` | Sends the bracket characters, but with mirrored key legends for right-to-left languages. (`blt` and `bgt` print `<` and `>` respectively.)
+
+## Arabic
+These are the diacritics for Arabic
+
+Value | Meaning
+:------ | :------
+`combining_fatha` | َ
+`combining_dammah` | ُ
+`combining_kasra` | ِ
+`combining_sukun` | ْ
+`combining_shaddah` | ّ
+`combining_hamza_above` | ٔ
+`combining_hamza_below` | ٕ
+
 
 ## Hebrew
 Keys ending in `_placeholder` are normally hidden unless the Fn key is pressed.
