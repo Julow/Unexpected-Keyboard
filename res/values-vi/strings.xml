@@ -121,7 +121,7 @@
     <string name="launcher_sourcecode">Đây là một ứng dụng mã nguồn mở và miễn phí. Bạn có thể tìm đọc mã nguồn hoặc báo cáo lỗi tại Github.</string>
     <string name="launcher_tryhere">Sau khi đã cấp phép, bạn có thể thử bàn phím ở đây:</string>
     <string name="launcher_tryhere_hint">Nhấn vào để thử</string>
-    <string name="key_descr_capslock">Caps Lock</string>
+    <string name="key_descr_capslock">Khóa In Hoa</string>
     <string name="key_descr_compose">Compose - Kích hoạt kí tự đặc biệt</string>
     <string name="key_descr_switch_greekmath">Bố cục kí hiệu la mã và toán học</string>
     <string name="key_descr_change_method">Chọn app bàn phím</string>
@@ -153,6 +153,6 @@
     <string name="clipboard_pin_heading">Đã ghim</string>
     <string name="clipboard_remove_confirm">Xóa khỏi bộ nhớ tạm?</string>
     <string name="clipboard_remove_confirmed">Xác nhận</string>
-    <string name="pref_theme_e_desert">Desert</string>
-    <string name="pref_theme_e_jungle">Jungle</string>
+    <string name="pref_theme_e_desert">Sa mạc</string>
+    <string name="pref_theme_e_jungle">Rừng rậm</string>
 </resources>
