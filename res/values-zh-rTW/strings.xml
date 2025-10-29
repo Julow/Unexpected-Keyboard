@@ -1,3 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="app_name_release">Unexpected Keyboard</string>
+    <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
+    <string name="short_description">為Android打造的輕量、注重隱私的虛擬鍵盤。</string>
+    <string name="store_description">你能透過往按鍵角落滑動來輸入更多字元。\n\n該軟體原先被設計給Termux使用者使用。\n現在已完善並可日用。\n\n該軟體無廣告，亦不會使用網路權限，並且開源。</string>
+    <string name="settings_activity_label">Unexpected Keyboard 設定</string>
+    <string name="pref_portrait">直向熒幕模式</string>
+    <string name="pref_landscape">橫向熒幕模式</string>
+    <string name="pref_category_layout">佈局</string>
+    <string name="pref_label_brightness">調整標籤亮度</string>
+    <string name="pref_keyboard_opacity">調整鍵盤背景透明度</string>
+    <string name="pref_key_opacity">調整按鍵透明度</string>
+    <string name="pref_key_activated_opacity">調整按下按鍵的透明度</string>
+    <string name="pref_layout_e_system">系統設定</string>
+    <string name="pref_layout_e_custom">自訂佈局</string>
+    <string name="pref_layouts_add">新增備用佈局</string>
+    <string name="pref_layouts_item">佈局 %1$d: %2$s</string>
+    <string name="pref_layouts_remove_custom">移除佈局</string>
+    <string name="pref_custom_layout_title">自訂佈局</string>
+    <string name="pref_show_numpad_title">顯示數字小鍵盤</string>
+    <string name="pref_show_numpad_never">從不</string>
+    <string name="pref_show_numpad_landscape">僅在橫向模式時</string>
+    <string name="pref_show_numpad_always">總是</string>
+    <string name="pref_number_row_title">顯示數字列</string>
+    <string name="pref_number_row_summary">在數字小鍵盤隱藏的時候在鍵盤上顯示數字列</string>
+    <string name="pref_numpad_layout">數字小鍵盤佈局</string>
+    <string name="pref_numpad_layout_e_high_first">高精度數字優先</string>
+    <string name="pref_numpad_layout_e_low_first">低精度數字優先</string>
+    <string name="pref_extra_keys_title">往鍵盤上新增按鍵</string>
+    <string name="pref_extra_keys_custom">新增自訂按鍵</string>
+    <string name="pref_extra_keys_internal">選取要新增至鍵盤的按鍵</string>
+    <string name="pref_category_typing">輸入</string>
+    <string name="pref_swipe_dist_title">滑動距離</string>
+    <string name="pref_swipe_dist_summary">按鍵角落字元間距 (%s)</string>
+    <string name="pref_long_timeout_title">長按時間長度</string>
+    <string name="pref_long_interval_title">按鍵重複間隔</string>
+    <string name="pref_keyrepeat_enabled">長按按鍵重複</string>
+    <string name="pref_lock_double_tap_title">按兩下Shift開啟大寫鎖定</string>
+</resources>
