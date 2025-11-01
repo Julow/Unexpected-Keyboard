@@ -55,7 +55,7 @@ public final class LayoutModifier
     // 'extra_keys_keyset' reflects changes made to 'extra_keys'
     Set<KeyValue> extra_keys_keyset = extra_keys.keySet();
     // 'kw_keys' contains the keys present on the layout without any extra keys
-    Set<KeyValue> kw_keys = kw.getKeys().keySet();
+    final Set<KeyValue> kw_keys = kw.getKeys().keySet();
     if (globalConfig.extra_keys_subtype != null && kw.locale_extra_keys)
     {
       Set<KeyValue> present = new HashSet<KeyValue>(kw_keys);
@@ -70,7 +70,7 @@ public final class LayoutModifier
           return null;
         if (remove_keys.contains(key))
           return null;
-        return modify_key(key);
+        return modify_key(key, kw_keys);
       }
     });
     if (added_numpad != null)
@@ -89,6 +89,7 @@ public final class LayoutModifier
       the main layout's script. */
   public static KeyboardData modify_numpad(KeyboardData kw, KeyboardData main_kw)
   {
+    final Set<KeyValue> numpad_keys = kw.getKeys().keySet();
     final int map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
     return kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
@@ -110,7 +111,7 @@ public final class LayoutModifier
               return key.withChar(c);
             return key; // Don't fallback into [modify_key]
         }
-        return modify_key(key);
+        return modify_key(key, numpad_keys);
       }
     });
   }
@@ -147,7 +148,7 @@ public final class LayoutModifier
 
   /** Modify keys on the main layout and on the numpad according to the config.
    */
-  static KeyValue modify_key(KeyValue orig)
+  static KeyValue modify_key(KeyValue orig, Set<KeyValue> kw_keys)
   {
     switch (orig.getKind())
     {
@@ -167,6 +168,11 @@ public final class LayoutModifier
           case SWITCH_FORWARD:
             return (globalConfig.layouts.size() > 1) ? orig : null;
           case SWITCH_BACKWARD:
+            if (globalConfig.layouts.size() < 1)
+              return null;
+            // Only remove switch_backward if switch_forward is not present
+            if (!kw_keys.contains(KeyValue.getKeyByName("switch_forward")))
+              return orig;
             return (globalConfig.layouts.size() > 2) ? orig : null;
           case SWITCH_VOICE_TYPING:
           case SWITCH_VOICE_TYPING_CHOOSER:
