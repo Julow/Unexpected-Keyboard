@@ -74,6 +74,9 @@
     <string name="pref_theme_e_monetdark">Monet (Dark)</string>
     <string name="pref_theme_e_rosepine">Rosé Pine</string>
     <string name="pref_theme_e_everforestlight">Everforest Light</string>
+    <string name="pref_theme_e_cobalt">Cobalt</string>
+    <string name="pref_theme_e_pine">Pine</string>
+    <string name="pref_theme_e_epaperblack">ePaper Black</string>
     <string name="pref_swipe_dist_e_very_short">Very short</string>
     <string name="pref_swipe_dist_e_short">Short</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
@@ -140,4 +143,10 @@
     <string name="clipboard_remove_confirm">Remove this clipboard item?</string>
     <string name="clipboard_remove_confirmed">Yes</string>
     <string name="toast_no_voice_input">No voice typing app installed</string>
+    <string name="pref_category_clipboard">Clipboard</string>
+    <string name="pref_clipboard_history_duration">Clipboard memory duration</string>
+    <string name="pref_clipboard_history_duration_1">At most 1 minute</string>
+    <string name="pref_clipboard_history_duration_5">At most 5 minutes</string>
+    <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
+    <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
 </resources>

@@ -9,10 +9,6 @@ jobs:
   Build-Apk:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu' # See 'Supported distributions' for available options
-        java-version: '17'
     - name: Checkout repo
       uses: actions/checkout@v4
     - name: Restore debug keystore from GitHub Secrets
@@ -28,15 +24,19 @@ jobs:
                 gpg -d --passphrase "debug0" --batch "debug.keystore.asc" > "debug.keystore"
             fi
         fi
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
     - name: Build debug APK
-      uses: gradle/gradle-build-action@v3
+      run: ./gradlew assembleDebug
       env:
         DEBUG_KEYSTORE: "debug.keystore"
         DEBUG_KEYSTORE_PASSWORD: debug0
         DEBUG_KEY_ALIAS: debug
         DEBUG_KEY_PASSWORD: debug0
-      with:
-        arguments: assembleDebug
     - name: Artifact naming
       run: |
         artifact="${{github.repository_owner}} ${{github.ref_name}}"

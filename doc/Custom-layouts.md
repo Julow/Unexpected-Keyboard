@@ -59,6 +59,8 @@ The `<row>`...`</row>` pair encloses one row on the keyboard. It has the followi
 
 A row's default height is 1.0 (one quarter of the keyboard height specified on the Settings menu). The `height` property makes the row taller or shorter than this. For example, if you define a 5-row keyboard but one row has `height="0.7"`, then the keyboard's total height is 4.7 units. If the total is different from 4.0, the keyboard will be taller or shorter than that specified in Settings.
 
+(A row of keys is drawn with a minimum height of 0.5 even if you specify a smaller value for `height`. There is no such minimum for a row without keys, such as a spacer row.)
+
 ## Key
 The `<key />` tag defines a key on the keyboard. Its position in the sequence of keys inside `<row>`...`</row>` indicates its position in the row from left to right. What the key does is defined by optional properties.
 
@@ -134,7 +136,7 @@ This means that when the Fn modifier is on, the key `before` is changed into `af
 ```
 This means that when the Ctrl modifier is on, the key `before` is changed into `after`. The `<ctrl />` mapping is special in that the Ctrl modifier is applied to `after` after the mapping.
 
-The clockwise circle and the round-trip gestures are affected by both `<shift />` and `<fn />` mappings. The Shift mappings are used first and if that did not modify the key, the Fn mappings are used instead.
+The clockwise circle and the round-trip gestures are affected by the `<fn />` mappings. Otherwise, they are defined by the Shift mappings (including the `<shift />` mappings), then, if that did not modify the key, the builtin Fn mappings are used instead.
 
 ### Examples
 ① Turkish keyboards use the Latin alphabet, but when "i" is shifted, it should produce "İ". This is achieved with the following mapping: 
