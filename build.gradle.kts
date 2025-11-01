@@ -120,6 +120,7 @@ val genLayoutsList by tasks.registering(Exec::class) {
   workingDir = projectDir
   commandLine("python", "gen_layouts.py")
 }
+tasks.get("preBuild").mustRunAfter(genLayoutsList)
 
 val checkKeyboardLayouts by tasks.registering(Exec::class) {
   inputs.dir(projectDir.resolve("srcs/layouts"))
