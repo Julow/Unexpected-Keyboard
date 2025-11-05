@@ -60,7 +60,7 @@
     <string name="pref_theme_e_black">Чорна</string>
     <string name="pref_theme_e_altblack">Альтернативний чорний</string>
     <string name="pref_theme_e_white">Біла</string>
-    <string name="pref_theme_e_epaper">ePaper</string>
+    <string name="pref_theme_e_epaper">Електронний папір</string>
     <string name="pref_theme_e_desert">Пустеля</string>
     <string name="pref_theme_e_jungle">Джунглі</string>
     <string name="pref_theme_e_monet">Моне (Системна)</string>
@@ -95,7 +95,7 @@
     <string name="launcher_tryhere">Після ввімкнення ви можете спробувати клавіатуру тут:</string>
     <string name="launcher_tryhere_hint">Спробуйте тут</string>
     <string name="key_descr_capslock">Caps lock</string>
-    <string name="key_descr_compose">Compose</string>
+    <string name="key_descr_compose">Скомпонувати</string>
     <string name="key_descr_switch_greekmath">Грецькі та математичні символи</string>
     <string name="key_descr_change_method">Переключити клавіатуру</string>
     <string name="key_descr_voice_typing">Голосове введення</string>
