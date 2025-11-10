@@ -120,7 +120,6 @@ val genLayoutsList by tasks.registering(Exec::class) {
   workingDir = projectDir
   commandLine("python", "gen_layouts.py")
 }
-tasks.get("preBuild").mustRunAfter(genLayoutsList)
 
 val checkKeyboardLayouts by tasks.registering(Exec::class) {
   inputs.dir(projectDir.resolve("srcs/layouts"))
@@ -146,7 +145,7 @@ val compileComposeSequences by tasks.registering(Exec::class) {
 }
 
 tasks.withType(Test::class).configureEach {
-  dependsOn(genEmojis, genLayoutsList, checkKeyboardLayouts, compileComposeSequences)
+  dependsOn(genLayoutsList, checkKeyboardLayouts, compileComposeSequences)
 }
 
 val initDebugKeystore by tasks.registering(Exec::class) {
@@ -169,5 +168,10 @@ val copyLayoutDefinitions by  tasks.registering(Copy::class) {
 }
 
 tasks.named("preBuild") {
-  dependsOn(initDebugKeystore, copyRawQwertyUS, copyLayoutDefinitions, compileComposeSequences)
+  dependsOn(initDebugKeystore, copyRawQwertyUS, copyLayoutDefinitions)
+  // 'mustRunAfter' defines ordering between tasks (which is required by
+  // Gradle) but doesn't create a dependency. These rules update files that are
+  // checked in the repository that don't need to be updated during regular
+  // builds.
+  mustRunAfter(genEmojis, genLayoutsList, compileComposeSequences)
 }
