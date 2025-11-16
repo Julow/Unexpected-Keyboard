@@ -112,6 +112,7 @@ public class Keyboard2 extends InputMethodService
   public void onCreate()
   {
     super.onCreate();
+    Dictionary.init(getResources());
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
     _keyeventhandler = new KeyEventHandler(this.new Receiver());
