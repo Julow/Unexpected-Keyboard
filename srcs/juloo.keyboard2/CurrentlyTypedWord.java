@@ -63,12 +63,13 @@ public final class CurrentlyTypedWord
   {
     // Avoid the expensive [refresh_current_word] call when [typed] was called
     // before.
-    boolean new_has_sel = newSelStart != newSelEnd;
-    if (!_enabled || (newSelStart == _cursor && new_has_sel == _has_selection))
-      return;
-    _has_selection = new_has_sel;
-    refresh_current_word();
-    _cursor = newSelStart;
+    return;
+    // boolean new_has_sel = newSelStart != newSelEnd;
+    // if (!_enabled || (newSelStart == _cursor && new_has_sel == _has_selection))
+    //   return;
+    // _has_selection = new_has_sel;
+    // refresh_current_word();
+    // _cursor = newSelStart;
   }
 
   public void event_sent(int code, int meta)
