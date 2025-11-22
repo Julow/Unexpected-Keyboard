@@ -27,13 +27,19 @@ android {
   sourceSets {
     named("main") {
       manifest.srcFile("AndroidManifest.xml")
-      java.srcDirs("srcs/juloo.keyboard2")
+      java.srcDirs("srcs/juloo.keyboard2", "vendor/cdict/java/juloo.cdict")
       res.srcDirs("res", "build/generated-resources")
       assets.srcDirs("assets")
     }
 
     named("test") {
       java.srcDirs("test")
+    }
+  }
+
+  externalNativeBuild {
+    ndkBuild {
+      path = file("vendor/Android.mk")
     }
   }
 
