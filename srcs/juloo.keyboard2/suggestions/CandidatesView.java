@@ -1,4 +1,4 @@
-package juloo.keyboard2;
+package juloo.keyboard2.suggestions;
 
 import android.content.Context;
 import android.text.InputType;
@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import juloo.keyboard2.Config;
+import juloo.keyboard2.R;
+import juloo.keyboard2.dict.Dictionary;
 
 public class CandidatesView extends LinearLayout
 {
