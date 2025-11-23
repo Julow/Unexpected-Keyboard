@@ -67,8 +67,8 @@ public final class CurrentlyTypedWord
     if (!_enabled || (newSelStart == _cursor && new_has_sel == _has_selection))
       return;
     _has_selection = new_has_sel;
-    refresh_current_word();
     _cursor = newSelStart;
+    refresh_current_word();
   }
 
   public void event_sent(int code, int meta)
@@ -118,7 +118,9 @@ public final class CurrentlyTypedWord
       return;
     }
     _w.setLength(0);
+    int saved_cursor = _cursor;
     type_chars(text_before_cursor.toString());
+    _cursor = saved_cursor;
     callback();
   }
 
