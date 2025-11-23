@@ -9,6 +9,7 @@ import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import java.util.Iterator;
+import juloo.keyboard2.suggestions.Suggestions;
 
 public final class KeyEventHandler
   implements Config.IKeyEventHandler,

@@ -1,8 +1,9 @@
-package juloo.keyboard2;
+package juloo.keyboard2.suggestions;
 
 import java.util.Arrays;
 import java.util.List;
 import juloo.cdict.Cdict;
+import juloo.keyboard2.dict.Dictionary;
 
 /** Keep track of the word being typed and provide suggestions for
     [CandidatesView]. */

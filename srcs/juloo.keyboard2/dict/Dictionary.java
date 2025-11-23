@@ -1,9 +1,10 @@
-package juloo.keyboard2;
+package juloo.keyboard2.dict;
 
 import android.content.res.Resources;
 import java.io.IOException;
 import java.io.InputStream;
 import juloo.cdict.Cdict;
+import juloo.keyboard2.R;
 
 public final class Dictionary
 {
