@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" style="@style/dictionaryDownloadItem">
+  <TextView android:id="@+id/dictionary_download_locale" style="@style/dictionaryDownloadText"/>
+  <View android:id="@+id/dictionary_download_button" style="@style/dictionaryDownloadButton"/>
+</LinearLayout>

@@ -8,6 +8,8 @@ import android.util.TypedValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import juloo.cdict.Cdict;
+import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.prefs.CustomExtraKeysPreference;
 import juloo.keyboard2.prefs.ExtraKeysPreference;
 import juloo.keyboard2.prefs.LayoutsPreference;
@@ -80,8 +82,8 @@ public final class Config
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
-
-  public final IKeyEventHandler handler;
+  public Cdict current_dictionary = null; // Might be 'null'.
+  public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;
   public boolean wide_screen = false;
@@ -90,7 +92,8 @@ public final class Config
   int current_layout_narrow;
   int current_layout_wide;
 
-  private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h, Boolean foldableUnfolded)
+  private Config(SharedPreferences prefs, Resources res,
+      Boolean foldableUnfolded, Dictionaries dicts)
   {
     _prefs = prefs;
     editor_config = new EditorConfig();
@@ -100,18 +103,17 @@ public final class Config
     labelTextSize = 0.33f;
     sublabelTextSize = 0.22f;
     // from prefs
-    refresh(res, foldableUnfolded);
+    refresh(res, foldableUnfolded, dicts);
     // initialized later
     should_show_candidates_view = false;
     shouldOfferVoiceTyping = false;
     extra_keys_subtype = null;
-    handler = h;
   }
 
   /*
    ** Reload prefs
    */
-  public void refresh(Resources res, Boolean foldableUnfolded)
+  public void refresh(Resources res, Boolean foldableUnfolded, Dictionaries dicts)
   {
     DisplayMetrics dm = res.getDisplayMetrics();
     orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
@@ -185,6 +187,27 @@ public final class Config
 
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
+    refresh_current_dictionary(dicts);
+  }
+
+  public void refresh_current_dictionary(Dictionaries dicts)
+  {
+    current_dictionary = null;
+    /* Pick the first dictionary that loads.
+       TODO: Use the dictionary that matches the current locale. */
+    for (String d : dicts.get_installed())
+    {
+      try
+      {
+        Logs.debug("Loading dictionary " + d);
+        current_dictionary = dicts.load(d);
+        break;
+      }
+      catch (Exception e)
+      {
+        Logs.exn("Failed to load dictionary " + d, e);
+      }
+    }
   }
 
   public int get_current_layout()
@@ -271,10 +294,10 @@ public final class Config
   private static Config _globalConfig = null;
 
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
-      IKeyEventHandler handler, Boolean foldableUnfolded)
+      Boolean foldableUnfolded, Dictionaries dicts)
   {
     migrate(prefs);
-    _globalConfig = new Config(prefs, res, handler, foldableUnfolded);
+    _globalConfig = new Config(prefs, res, foldableUnfolded, dicts);
     LayoutModifier.init(_globalConfig, res);
   }
 
