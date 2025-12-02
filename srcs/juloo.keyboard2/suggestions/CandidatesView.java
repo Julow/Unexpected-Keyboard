@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.R;
-import juloo.keyboard2.dict.Dictionary;
+import juloo.keyboard2.dict.Dictionaries;
 
 public class CandidatesView extends LinearLayout
 {

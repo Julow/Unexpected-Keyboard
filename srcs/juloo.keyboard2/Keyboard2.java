@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import juloo.keyboard2.dict.Dictionary;
+import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 
@@ -41,6 +41,7 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _localeTextLayout;
   /** Installed and current locales. */
   private DeviceLocales _device_locales;
+  private Dictionaries _dictionaries;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   private Handler _handler;
@@ -114,14 +115,16 @@ public class Keyboard2 extends InputMethodService
   public void onCreate()
   {
     super.onCreate();
-    Dictionary.init(getResources());
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
-    _keyeventhandler = new KeyEventHandler(this.new Receiver());
     _foldStateTracker = new FoldStateTracker(this);
-    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
-    prefs.registerOnSharedPreferenceChangeListener(this);
+    _dictionaries = new Dictionaries(this);
+    Config.initGlobalConfig(prefs, getResources(),
+        _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
+    _keyeventhandler = new KeyEventHandler(this.new Receiver(), _config);
+    _config.handler = _keyeventhandler;
+    prefs.registerOnSharedPreferenceChangeListener(this);
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
     refreshSubtypeImm();
     create_keyboard_view();
@@ -176,7 +179,7 @@ public class Keyboard2 extends InputMethodService
   private void refresh_config()
   {
     int prev_theme = _config.theme;
-    _config.refresh(getResources(), _foldStateTracker.isUnfolded());
+    _config.refresh(getResources(), _foldStateTracker.isUnfolded(), _dictionaries);
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
