@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import juloo.keyboard2.dict.Dictionaries;
+import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 
@@ -238,6 +239,7 @@ public class Keyboard2 extends InputMethodService
     // Set keyboard background opacity
     _container_view.getBackground().setAlpha(_config.keyboardOpacity);
     _keyboardView.reset();
+    _candidates_view.refresh_status();
   }
 
   private KeyboardData refresh_special_layout()
@@ -378,6 +380,19 @@ public class Keyboard2 extends InputMethodService
     return false;
   }
 
+  /** Called from [onClick] attributes. */
+  public void launch_dictionaries_activity(View v)
+  {
+    start_activity(DictionariesActivity.class);
+  }
+
+  void start_activity(Class cls)
+  {
+    Intent intent = new Intent(this, cls);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
+  }
+
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver
   {
@@ -386,9 +401,7 @@ public class Keyboard2 extends InputMethodService
       switch (ev)
       {
         case CONFIG:
-          Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
-          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          startActivity(intent);
+          start_activity(SettingsActivity.class);
           break;
 
         case SWITCH_TEXT:
