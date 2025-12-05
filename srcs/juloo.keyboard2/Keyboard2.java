@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import juloo.keyboard2.dict.Dictionaries;
+import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 
@@ -171,6 +172,8 @@ public class Keyboard2 extends InputMethodService
   private void refresh_candidates_view()
   {
     boolean should_show = _config.editor_config.should_show_candidates_view;
+    if (should_show)
+      _candidates_view.refresh_status();
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -332,6 +335,19 @@ public class Keyboard2 extends InputMethodService
     return false;
   }
 
+  /** Called from [onClick] attributes. */
+  public void launch_dictionaries_activity(View v)
+  {
+    start_activity(DictionariesActivity.class);
+  }
+
+  void start_activity(Class cls)
+  {
+    Intent intent = new Intent(this, cls);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
+  }
+
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver
   {
@@ -340,9 +356,7 @@ public class Keyboard2 extends InputMethodService
       switch (ev)
       {
         case CONFIG:
-          Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
-          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          startActivity(intent);
+          start_activity(SettingsActivity.class);
           break;
 
         case SWITCH_TEXT:
