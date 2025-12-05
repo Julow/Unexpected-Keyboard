@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -120,8 +121,11 @@ public class DictionaryListView extends LinearLayout
     {
       view = View.inflate(ctx, R.layout.dictionary_download_item, null);
       desc = d;
+      float size_mb = d.size / 1048576.f;
       ((TextView)view.findViewById(R.id.dictionary_download_locale))
         .setText(ctx.getString(d.name_resource));
+      ((TextView)view.findViewById(R.id.dictionary_download_size))
+        .setText(NumberFormat.getInstance().format(size_mb) + "MB");
       download_button = view.findViewById(R.id.dictionary_download_button);
       download_button.setOnClickListener(on_click);
     }

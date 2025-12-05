@@ -93,28 +93,37 @@
     <item name="android:orientation">horizontal</item>
   </style>
   <!-- Dictionaries activity -->
-  <style name="dictionaryListView">
+  <style name="dictionary_list_view">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginVertical">24dp</item>
   </style>
-  <style name="dictionaryDownloadItem">
+  <style name="dictionary_download_item">
     <item name="android:orientation">horizontal</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginVertical">8dp</item>
-    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingHorizontal">48dp</item>
   </style>
-  <style name="dictionaryDownloadText">
+  <style name="dictionary_download_locale">
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginHorizontal">48dp</item>
+    <item name="android:textSize">16sp</item>
   </style>
-  <style name="dictionaryDownloadButton">
+  <style name="dictionary_download_size">
+    <item name="android:layout_weight">0</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginRight">8dp</item>
+    <item name="android:textSize">12sp</item>
+  </style>
+  <style name="dictionary_download_button">
     <item name="android:layout_width">24dp</item>
     <item name="android:layout_height">24dp</item>
-    <item name="android:layout_marginHorizontal">48dp</item>
+    <item name="android:backgroundTint">@android:color/primary_text_dark</item>
+    <item name="android:backgroundTintMode">src_in</item>
   </style>
   <style name="appTheme" parent="@android:style/Theme.Material.Light"/>
   <style name="settingsTheme" parent="appTheme">
