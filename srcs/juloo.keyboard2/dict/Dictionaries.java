@@ -28,7 +28,8 @@ public final class Dictionaries
   /** Load an installed dictionary. Return [null] if the requested dictionary
       is not installed. Throws [IOException] if the dictionary couldn't be
       loaded. */
-  public Cdict load(String dict_name) throws IOException
+  public Cdict load(String dict_name)
+      throws IOException, Cdict.ConstructionError
   {
     if (!_installed_dictionaries.contains(dict_name))
       return null;
