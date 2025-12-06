@@ -6,7 +6,7 @@ public enum SupportedDictionaries
 {
   /** Enumeration of the supported dictionaries. */
 
-  FR("fr", R.string.dict_name_fr, 1168721);
+  FR("fr", R.string.dict_name_fr, 871626);
 
   /** Associated information. */
 
