@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.Logs;
@@ -156,8 +157,11 @@ public class DictionaryListView extends LinearLayout
   {
     try
     {
+      // Remote files are compressed with gzip at rest. Do not use server side
+      // compression and force decompression.
       URLConnection con = url_of_dictionary(desc).openConnection();
-      byte[] data = Utils.read_all_bytes(con.getInputStream());
+      con.setRequestProperty("Accept-Encoding", "identity");
+      byte[] data = Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
       Cdict.of_bytes(data); // Check that the dictionary can load.
       _dictionaries.install(desc.internal_name(), data);
       return true;
