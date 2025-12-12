@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_release">صفحه کلید غیرمنتظره</string>
-    <string name="app_name_debug">صفحه کلید غیرمنتظره</string>
+    <string name="app_name_release">صفحه‌کلید غیرمنتظره</string>
+    <string name="app_name_debug">صفحه‌کلید غیرمنتظره (دیباگ كردن)</string>
     <!-- <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string> -->
   <!-- <string name="store_description">"The main feature is that you can type more characters by swiping the keys towards the corners.
 
@@ -43,7 +43,7 @@ This application contains no ads, doesn't make any network requests and is Open 
     <!-- <string name="pref_keyrepeat_enabled">Key repeat on long press</string> -->
   <string name="pref_lock_double_tap_title">دوبار ضربه روی دگرساز برای فعال شدن کپس لاک</string>
     <string name="pref_lock_double_tap_summary">شما میتوانید قفل کنید هر میانبری را با نگه داشتن آن</string>
-    <string name="pref_category_behavior">ٰرفتار</string>
+    <string name="pref_category_behavior">رفتار</string>
     <string name="pref_autocapitalisation_title">بزرگسازی خودکار</string>
     <string name="pref_autocapitalisation_summary">در شروع جملات دگرساز را فشار دهید</string>
     <string name="pref_switch_input_immediate_title">انتقال به آخرین صفحه کلید استفاده شده</string>
@@ -98,8 +98,8 @@ This application contains no ads, doesn't make any network requests and is Open 
   <string name="launcher_description">این برنامه یک صفحه کلید مجازی است. با کلیک روی گزینه زیر به تنظیمات سامانه بروید و صفحه کلید غیرمنتظره را فعال کنید.</string>
     <string name="launcher_sourcecode">این یک برنامه متن باز و آزاد است. شما می‌توانید کد منبع را در گیتهاب پیدا کرده و نیز باگ‌ها را گزارش کنید.</string>
     <string name="launcher_tryhere">بعد از فعالسازی، صفحه کلید را اینجا امتحان کنید:</string>
-    <string name="short_description">صفحه کلید مجازی سبک و با حفظ حریم خصوصی برای اندروید.</string>
-    <string name="store_description">ویژگی اصلی این است که می‌توانید با کشیدن کلیدها به سمت گوشه‌ها، نویسه های (کاراکترهای) بیشتری تایپ کنید.\nاین برنامه در ابتدا برای برنامه‌نویسانی که از Termux استفاده می‌کنند طراحی شده بود.\nاکنون برای استفاده روزمره عالی است.\nاین برنامه هیچ تبلیغاتی ندارد، هیچ درخواست شبکه‌ای انجام نمی‌دهد و متن‌باز است.</string>
+    <string name="short_description">صفحه‌کلید مجازی سبک و با حفظ حریم خصوصی برای اندروید.</string>
+    <string name="store_description">ویژگی اصلی این است که می‌توانید با کشیدن کلیدها به سمت گوشه‌ها، نویسه های (کاراکترهای) بیشتری تایپ کنید.\n\nاین برنامه در ابتدا برای برنامه‌نویسانی که از Termux استفاده می‌کنند طراحی شده بود.\n\nاکنون برای استفاده روزمره عالی است.\nاین برنامه هیچ تبلیغاتی ندارد، هیچ درخواست شبکه‌ای انجام نمی‌دهد و متن‌باز است.</string>
     <string name="pref_layouts_add">افزودن چیدمان جایگزین</string>
     <string name="pref_layouts_remove_custom">حذف چیدمان</string>
     <string name="pref_extra_keys_custom">افزودن کلیدهای سفارشی</string>
@@ -109,7 +109,26 @@ This application contains no ads, doesn't make any network requests and is Open 
     <string name="pref_vibrate_custom">لرزش سفارشی</string>
     <string name="pref_vibrate_duration_title">شدت لرزش</string>
     <string name="pref_pin_entry_enabled_summary">هنگام وارد کردن اعداد، تاریخ ها و شماره های تلفن</string>
-    <string name="pref_theme_e_desert">غیر فعال کردن</string>
+    <string name="pref_theme_e_desert">کویر</string>
     <string name="pref_border_config_title">سفارشی سازی حاشیه ها</string>
     <string name="pref_border_width_title">ضخامت حاشیه</string>
+    <string name="pref_layouts_item">چیدمان %1$d: %2$s</string>
+    <string name="pref_pin_entry_enabled_title">چیدمان ورودی پین</string>
+    <string name="pref_theme_e_jungle">جنگل</string>
+    <string name="pref_theme_e_monet">مونه (سیستم)</string>
+    <string name="pref_theme_e_monetlight">مونه (روشن)</string>
+    <string name="pref_theme_e_monetdark">مونه (تاریک)</string>
+    <string name="pref_theme_e_rosepine">رُزه کاج</string>
+    <string name="pref_corners_radius_title">شعاع گوشه</string>
+    <string name="pref_circle_sensitivity_title">حساسیت به ژست دایره‌ای</string>
+    <string name="pref_circle_sensitivity_e_high">بزرگ</string>
+    <string name="pref_circle_sensitivity_e_medium">متوسط</string>
+    <string name="pref_circle_sensitivity_e_low">کوچک</string>
+    <string name="pref_circle_sensitivity_e_disabled">غیرفعال‌شده</string>
+    <string name="launcher_button_imepicker">برگزیدن صفحه‌کلید</string>
+    <string name="launcher_tryhere_hint">آزمودن اینجا</string>
+    <string name="key_descr_capslock">با حالت حروف بزرگ</string>
+    <string name="key_descr_compose">نوشتن</string>
+    <string name="key_descr_switch_greekmath">نمادهای یونانی و ریاضی</string>
+    <string name="key_descr_change_method">تغییر صفحه‌کلید</string>
 </resources>
