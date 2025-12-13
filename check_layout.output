@@ -5,10 +5,15 @@ arab_pc_ckb: Layout includes some ASCII punctuation but not all, missing: ", %, 
 arab_pc_ckb_fa: Layout includes some ASCII punctuation but not all, missing: ", #, $, %, &, ', ,, /, ;, ?, @, \, ^, `, |, ~
 arab_pc_hindu: Layout includes some ASCII punctuation but not all, missing: !, ', +, ;, ?, \, |
 arab_pc_ir: Layout includes some ASCII punctuation but not all, missing: ", %, ', ,, /, ;, <, =, >, ?, [, \, ], `, {, |, }
+armn_cpbsmo: Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', *, +, <, =, >, ?, @, [, ], ^, `, {, }, ~
+armn_kvertc: Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', *, +, <, =, >, ?, @, [, ], ^, `, {, }, ~
 beng_national: Layout includes some ASCII punctuation but not all, missing: $
 beng_provat: Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
+cyrl_jcuken_ru: Layout includes some ASCII punctuation but not all, missing: #, $, &, ', *, <, >, @, [, ], ^, `, {, }, ~
+cyrl_jiuken: Layout includes some ASCII punctuation but not all, missing: #, $, &, ', *, +, <, =, >, @, [, ], ^, _, `, {, }, ~
 cyrl_lynyertdz_mk: Layout includes some ASCII punctuation but not all, missing: "
 cyrl_yaverti: Layout includes some ASCII punctuation but not all, missing: ~
+cyrl_yawerty: Layout includes some ASCII punctuation but not all, missing: #, $, &, ', *, <, >, @, [, ], ^, `, {, }, ~
 cyrl_yxukeng_os: Layout includes some ASCII punctuation but not all, missing: ", #, $, &, ', @, [, ], ~
 deva_alt: Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
 deva_inscript: Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
@@ -23,4 +28,5 @@ latn_dvorak: Missing important key, missing: loc capslock
 latn_neo2: Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
 latn_qwertz_cz_multifunctional: Layout includes some ASCII punctuation but not all, missing: `
 latn_qwertz_sk: Layout includes some ASCII punctuation but not all, missing: `
+latn_qzerty: Layout includes some ASCII punctuation but not all, missing: #, $, \, `, ~
 urdu_phonetic_ur: Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
