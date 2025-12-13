@@ -11,8 +11,7 @@ import android.service.quicksettings.TileService;
 /**
  * Quick Settings tile (minimum stub version).
  *
- * This version only toggles a preference and opens overlay permission settings.
- * It does NOT start the overlay service yet (we'll wire that up after adding AlwaysOnOverlayService).
+ * Toggle always-on overlay mode. If overlay permission is missing, opens the permission screen.
  */
 public final class AlwaysOnTileService extends TileService
 {
@@ -70,12 +69,12 @@ public final class AlwaysOnTileService extends TileService
       }
 
       setEnabled(true);
-      // TODO: AlwaysOnOverlayService.start(this);
+      AlwaysOnOverlayService.start(this);
     }
     else
     {
       setEnabled(false);
-      // TODO: AlwaysOnOverlayService.stop(this);
+      AlwaysOnOverlayService.stop(this);
     }
 
     updateTileState();
