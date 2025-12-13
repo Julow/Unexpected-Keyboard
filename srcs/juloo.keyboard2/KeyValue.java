@@ -312,8 +312,11 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public String toString()
   {
-    int value = _code & VALUE_BITS;
-    return "[KeyValue " + getKind().toString() + "+" + getFlags() + "+" + value + " \"" + getString() + "\"]";
+    StringBuilder b = new StringBuilder()
+      .append(getKind().name()).append(":").append(getString());
+    if (_payload instanceof Describe)
+      b.append(":").append(((Describe)_payload).describe());
+    return b.toString();
   }
 
   private KeyValue(Comparable p, int kind, int value, int flags)
@@ -817,7 +820,14 @@ public final class KeyValue implements Comparable<KeyValue>
       throw new RuntimeException("Assertion failure");
   }
 
-  public static enum Slider
+  public static interface Describe
+  {
+    /** Describe the payload content, without the symbol.
+        Used for printing in tests. */
+    public String describe();
+  }
+
+  public static enum Slider implements Describe
   {
     Cursor_left(0xE008),
     Cursor_right(0xE006),
@@ -835,9 +845,12 @@ public final class KeyValue implements Comparable<KeyValue>
 
     @Override
     public String toString() { return symbol; }
+
+    @Override
+    public String describe() { return name(); }
   };
 
-  public static final class Macro implements Comparable<Macro>
+  public static final class Macro implements Comparable<Macro>, Describe
   {
     public final KeyValue[] keys;
     private final String _symbol;
@@ -848,7 +861,19 @@ public final class KeyValue implements Comparable<KeyValue>
       _symbol = sym_;
     }
 
+    @Override
     public String toString() { return _symbol; }
+
+    @Override
+    public String describe()
+    {
+      StringBuilder b = new StringBuilder();
+      if (keys.length > 0)
+        b.append(keys[0].toString());
+      for (int i = 1; i < keys.length; i++)
+        b.append(",").append(keys[i].toString());
+      return b.toString();
+    }
 
     @Override
     public int compareTo(Macro snd)
