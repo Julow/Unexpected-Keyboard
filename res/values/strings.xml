@@ -149,4 +149,6 @@
     <string name="pref_clipboard_history_duration_5">At most 5 minutes</string>
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
     <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
+    <string name="qs_always_on_label">Always-on keyboard</string>
+    <string name="qs_always_on_missing_permission">Please allow “Display over other apps”</string>
 </resources>
