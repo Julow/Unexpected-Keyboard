@@ -18,19 +18,15 @@ import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.KeyEvent;
+import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-/**
- * Foreground service that displays a persistent bottom overlay containing a Keyboard2View.
- *
- * This version forwards key events to the active IME via ImeBridgeService so that
- * typing works in focused editors.
- */
 public final class AlwaysOnOverlayService extends Service
 {
   public static final String ACTION_START = "juloo.keyboard2.action.ALWAYS_ON_OVERLAY_START";
@@ -42,13 +38,18 @@ public final class AlwaysOnOverlayService extends Service
   private static final int NOTIF_ID = 4242;
 
   private WindowManager _wm;
+  private WindowManager.LayoutParams _lp;
   private View _overlayView;
 
   private android.content.SharedPreferences _prefs;
 
-  // Bridge to IME process (default app process)
+  // Bridge (default process, where IME runs)
   private Messenger _imeBridge = null;
   private boolean _bridgeBound = false;
+
+  // Overlay panes
+  private View _keyboardPane = null;
+  private ViewGroup _clipboardPane = null;
 
   private final ServiceConnection _bridgeConn = new ServiceConnection()
   {
@@ -125,7 +126,7 @@ public final class AlwaysOnOverlayService extends Service
 
     ensureConfigInitialized();
     startForeground(NOTIF_ID, buildNotification());
-    showOverlayIfNeeded();
+    showKeyboardPane();
 
     return START_STICKY;
   }
@@ -148,7 +149,6 @@ public final class AlwaysOnOverlayService extends Service
     }
     catch (Exception ignored)
     {
-      // Best-effort; without bridge, keys won't reach editors.
       _bridgeBound = false;
       _imeBridge = null;
     }
@@ -158,10 +158,7 @@ public final class AlwaysOnOverlayService extends Service
   {
     if (!_bridgeBound)
       return;
-    try
-    {
-      unbindService(_bridgeConn);
-    }
+    try { unbindService(_bridgeConn); }
     catch (Exception ignored) {}
     _bridgeBound = false;
     _imeBridge = null;
@@ -172,56 +169,39 @@ public final class AlwaysOnOverlayService extends Service
     if (Config.globalConfig() != null)
       return;
 
-    // Use a handler that forwards to ImeBridgeService
+    // Important: set handler BEFORE inflating Keyboard2View
     Config.IKeyEventHandler handler = new OverlayKeyEventHandler();
-
     boolean unfolded = false;
     Config.initGlobalConfig(_prefs, getResources(), handler, unfolded);
+
+    // Enable clipboard pane "paste" in overlay process by wiring its callback to the bridge
+    ClipboardHistoryService.on_startup(this, new ClipboardHistoryService.ClipboardPasteCallback() {
+      @Override
+      public void paste_from_clipboard_pane(String content)
+      {
+        sendCommitText(content);
+      }
+    });
   }
 
-  private void showOverlayIfNeeded()
+  private Context themedContext()
   {
-    if (_overlayView != null)
-      return;
-
     Config cfg = Config.globalConfig();
-    Context themed = new ContextThemeWrapper(this, cfg.theme);
-    View v = View.inflate(themed, R.layout.keyboard, null);
-
-    if (v instanceof Keyboard2View)
-    {
-      Keyboard2View kv = (Keyboard2View)v;
-      kv.setKeyboard(resolveDefaultLayout(cfg));
-    }
-
-    WindowManager.LayoutParams lp = buildLayoutParams();
-    _wm.addView(v, lp);
-    _overlayView = v;
-
-    _overlayView.requestApplyInsets();
+    return new ContextThemeWrapper(this, cfg.theme);
   }
 
-  private void hideOverlay()
+  private void ensureLayoutParams()
   {
-    if (_overlayView == null)
+    if (_lp != null)
       return;
-    try
-    {
-      _wm.removeViewImmediate(_overlayView);
-    }
-    catch (Exception ignored) {}
-    _overlayView = null;
-  }
 
-  private WindowManager.LayoutParams buildLayoutParams()
-  {
     final int type;
     if (Build.VERSION.SDK_INT >= 26)
       type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
     else
       type = WindowManager.LayoutParams.TYPE_PHONE;
 
-    WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+    _lp = new WindowManager.LayoutParams(
         WindowManager.LayoutParams.MATCH_PARENT,
         WindowManager.LayoutParams.WRAP_CONTENT,
         type,
@@ -230,16 +210,65 @@ public final class AlwaysOnOverlayService extends Service
             | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
         PixelFormat.TRANSLUCENT
     );
+    _lp.gravity = Gravity.BOTTOM;
+    _lp.setTitle("AlwaysOnKeyboardOverlay");
+  }
 
-    lp.gravity = Gravity.BOTTOM;
-    lp.setTitle("AlwaysOnKeyboardOverlay");
-    return lp;
+  private void setOverlayContent(View v)
+  {
+    ensureLayoutParams();
+
+    if (_overlayView == v)
+      return;
+
+    if (_overlayView != null)
+    {
+      try { _wm.removeViewImmediate(_overlayView); }
+      catch (Exception ignored) {}
+      _overlayView = null;
+    }
+
+    _wm.addView(v, _lp);
+    _overlayView = v;
+    v.requestApplyInsets();
+  }
+
+  private void showKeyboardPane()
+  {
+    if (_keyboardPane == null)
+    {
+      View v = View.inflate(themedContext(), R.layout.keyboard, null);
+      if (v instanceof Keyboard2View)
+      {
+        Keyboard2View kv = (Keyboard2View)v;
+        kv.setKeyboard(resolveDefaultLayout(Config.globalConfig()));
+      }
+      _keyboardPane = v;
+    }
+    setOverlayContent(_keyboardPane);
+  }
+
+  private void showClipboardPane()
+  {
+    if (_clipboardPane == null)
+    {
+      _clipboardPane = (ViewGroup)View.inflate(themedContext(), R.layout.clipboard_pane, null);
+    }
+    setOverlayContent(_clipboardPane);
+  }
+
+  private void hideOverlay()
+  {
+    if (_overlayView == null)
+      return;
+    try { _wm.removeViewImmediate(_overlayView); }
+    catch (Exception ignored) {}
+    _overlayView = null;
   }
 
   private KeyboardData resolveDefaultLayout(Config cfg)
   {
     KeyboardData layout = null;
-
     try
     {
       int idx = cfg.get_current_layout();
@@ -251,20 +280,13 @@ public final class AlwaysOnOverlayService extends Service
     if (layout == null)
       layout = KeyboardData.load(getResources(), R.xml.latn_qwerty_us);
 
-    try
-    {
-      return LayoutModifier.modify_layout(layout);
-    }
-    catch (Exception ignored)
-    {
-      return layout;
-    }
+    try { return LayoutModifier.modify_layout(layout); }
+    catch (Exception ignored) { return layout; }
   }
 
   private Notification buildNotification()
   {
     ensureNotifChannel();
-
     Intent open = new Intent(this, SettingsActivity.class);
     open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -313,10 +335,7 @@ public final class AlwaysOnOverlayService extends Service
 
     Message m = Message.obtain(null, ImeBridgeService.MSG_COMMIT_TEXT);
     m.setData(b);
-    try
-    {
-      _imeBridge.send(m);
-    }
+    try { _imeBridge.send(m); }
     catch (RemoteException ignored) {}
   }
 
@@ -331,10 +350,7 @@ public final class AlwaysOnOverlayService extends Service
 
     Message m = Message.obtain(null, ImeBridgeService.MSG_SEND_KEY_DOWN_UP);
     m.setData(b);
-    try
-    {
-      _imeBridge.send(m);
-    }
+    try { _imeBridge.send(m); }
     catch (RemoteException ignored) {}
   }
 
@@ -348,27 +364,66 @@ public final class AlwaysOnOverlayService extends Service
 
     Message m = Message.obtain(null, ImeBridgeService.MSG_CONTEXT_MENU);
     m.setData(b);
-    try
-    {
-      _imeBridge.send(m);
-    }
+    try { _imeBridge.send(m); }
     catch (RemoteException ignored) {}
+  }
+
+  private static int metaStateFromMods(Pointers.Modifiers mods)
+  {
+    int ms = 0;
+    if (mods == null) return 0;
+
+    if (mods.has(KeyValue.Modifier.SHIFT))
+      ms |= KeyEvent.META_SHIFT_ON | KeyEvent.META_SHIFT_LEFT_ON;
+    if (mods.has(KeyValue.Modifier.CTRL))
+      ms |= KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON;
+    if (mods.has(KeyValue.Modifier.ALT))
+      ms |= KeyEvent.META_ALT_ON | KeyEvent.META_ALT_LEFT_ON;
+    if (mods.has(KeyValue.Modifier.META))
+      ms |= KeyEvent.META_META_ON | KeyEvent.META_META_LEFT_ON;
+
+    return ms;
+  }
+
+  private static boolean hasNonShiftMeta(int metaState)
+  {
+    int nonShift = KeyEvent.META_CTRL_ON | KeyEvent.META_ALT_ON | KeyEvent.META_META_ON;
+    return (metaState & nonShift) != 0;
+  }
+
+  private static int keyCodeForChar(char c)
+  {
+    if (c >= 'a' && c <= 'z') return KeyEvent.KEYCODE_A + (c - 'a');
+    if (c >= 'A' && c <= 'Z') return KeyEvent.KEYCODE_A + (c - 'A');
+    if (c >= '0' && c <= '9') return KeyEvent.KEYCODE_0 + (c - '0');
+
+    switch (c)
+    {
+      case ' ': return KeyEvent.KEYCODE_SPACE;
+      case '\n': return KeyEvent.KEYCODE_ENTER;
+      case '\t': return KeyEvent.KEYCODE_TAB;
+      case ',': return KeyEvent.KEYCODE_COMMA;
+      case '.': return KeyEvent.KEYCODE_PERIOD;
+      case '/': return KeyEvent.KEYCODE_SLASH;
+      case ';': return KeyEvent.KEYCODE_SEMICOLON;
+      case '\'': return KeyEvent.KEYCODE_APOSTROPHE;
+      case '\\': return KeyEvent.KEYCODE_BACKSLASH;
+      case '-': return KeyEvent.KEYCODE_MINUS;
+      case '=': return KeyEvent.KEYCODE_EQUALS;
+      case '[': return KeyEvent.KEYCODE_LEFT_BRACKET;
+      case ']': return KeyEvent.KEYCODE_RIGHT_BRACKET;
+      case '`': return KeyEvent.KEYCODE_GRAVE;
+      default: return 0;
+    }
   }
 
   private final class OverlayKeyEventHandler implements Config.IKeyEventHandler
   {
     @Override
-    public void key_down(KeyValue value, boolean is_swipe)
-    {
-      // no-op
-    }
+    public void key_down(KeyValue value, boolean is_swipe) {}
 
     @Override
-    public void mods_changed(Pointers.Modifiers mods)
-    {
-      // We keep it simple for now: do not forward modifier key-down/up events.
-      // Most normal typing is already resolved by KeyModifier before key_up().
-    }
+    public void mods_changed(Pointers.Modifiers mods) {}
 
     @Override
     public void key_up(KeyValue value, Pointers.Modifiers mods)
@@ -376,18 +431,33 @@ public final class AlwaysOnOverlayService extends Service
       if (value == null)
         return;
 
+      final int meta = metaStateFromMods(mods);
+
       switch (value.getKind())
       {
-        case Char:
-          sendCommitText(String.valueOf(value.getChar()));
+        case Char: {
+          char c = value.getChar();
+          // If Ctrl/Alt/Meta is active, send key events (needed for Ctrl+C/V, etc.)
+          if (hasNonShiftMeta(meta))
+          {
+            int kc = keyCodeForChar(c);
+            if (kc != 0)
+            {
+              sendKeyDownUp(kc, meta);
+              return;
+            }
+          }
+          sendCommitText(String.valueOf(c));
           return;
+        }
 
         case String:
+          // If you want Ctrl+... with strings, you can enhance later.
           sendCommitText(value.getString());
           return;
 
         case Keyevent:
-          sendKeyDownUp(value.getKeyevent(), 0);
+          sendKeyDownUp(value.getKeyevent(), meta);
           return;
 
         case Editing:
@@ -399,17 +469,42 @@ public final class AlwaysOnOverlayService extends Service
           return;
 
         case Event:
-          if (value.getEvent() == KeyValue.Event.CONFIG)
-          {
-            Intent i = new Intent(AlwaysOnOverlayService.this, SettingsActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
-          }
+          handleEvent(value.getEvent());
           return;
 
         default:
-          // Ignore Macro/Compose/Modifiers/etc in this minimal bridge
           return;
+      }
+    }
+
+    private void handleEvent(KeyValue.Event e)
+    {
+      switch (e)
+      {
+        case SWITCH_CLIPBOARD:
+          showClipboardPane();
+          break;
+
+        case SWITCH_BACK_CLIPBOARD:
+          showKeyboardPane();
+          break;
+
+        case CONFIG: {
+          Intent i = new Intent(AlwaysOnOverlayService.this, SettingsActivity.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          startActivity(i);
+          break;
+        }
+
+        case CHANGE_METHOD_PICKER: {
+          InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+          if (imm != null) imm.showInputMethodPicker();
+          break;
+        }
+
+        default:
+          // Keep minimal
+          break;
       }
     }
 
@@ -476,7 +571,7 @@ public final class AlwaysOnOverlayService extends Service
 
         case Selection_cursor_left:
         case Selection_cursor_right:
-          // Keep minimal: ignore selection sliders for now
+          // minimal: ignore selection sliders for now
           break;
       }
     }
