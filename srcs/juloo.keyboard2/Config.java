@@ -73,12 +73,9 @@ public final class Config
   public int clipboard_history_duration;
 
   // Dynamically set
+  /** Configuration options implied by the connected editor. */
+  public EditorConfig editor_config;
   public boolean shouldOfferVoiceTyping;
-  public String actionLabel; // Might be 'null'
-  public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
-  public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
-  /** Whether selection mode turns on automatically when text is selected. */
-  public boolean selection_mode_enabled = true;
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
@@ -95,6 +92,7 @@ public final class Config
   private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h, Boolean foldableUnfolded)
   {
     _prefs = prefs;
+    editor_config = new EditorConfig();
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
@@ -104,9 +102,6 @@ public final class Config
     refresh(res, foldableUnfolded);
     // initialized later
     shouldOfferVoiceTyping = false;
-    actionLabel = null;
-    actionId = 0;
-    swapEnterActionKey = false;
     extra_keys_subtype = null;
     handler = h;
   }
