@@ -30,6 +30,14 @@ import juloo.keyboard2.prefs.LayoutsPreference;
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+  private static volatile Keyboard2 sInstance = null;
+
+  /** Returns the current IME instance if it exists, otherwise null. */
+  public static Keyboard2 peekInstance()
+  {
+    return sInstance;
+  }
+
   private Keyboard2View _keyboardView;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
@@ -110,6 +118,8 @@ public class Keyboard2 extends InputMethodService
   public void onCreate()
   {
     super.onCreate();
+    sInstance = this;
+
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
     _keyeventhandler = new KeyEventHandler(this.new Receiver());
@@ -126,6 +136,9 @@ public class Keyboard2 extends InputMethodService
 
   @Override
   public void onDestroy() {
+    if (sInstance == this)
+      sInstance = null;
+
     super.onDestroy();
 
     _foldStateTracker.close();
