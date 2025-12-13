@@ -195,19 +195,26 @@ public final class Config
     current_dictionary = null;
     /* Pick the first dictionary that loads.
        TODO: Use the dictionary that matches the current locale. */
-    for (String d : dicts.get_installed())
+    for (String dname : dicts.get_installed())
     {
       try
       {
-        Logs.debug("Loading dictionary " + d);
-        current_dictionary = dicts.load(d);
-        break;
+        Logs.debug("Loading dictionary " + dname);
+        for (Cdict d : dicts.load(dname))
+        {
+          if (d.name.equals("main"))
+          {
+            current_dictionary = d;
+            return;
+          }
+        }
       }
       catch (Exception e)
       {
-        Logs.exn("Failed to load dictionary " + d, e);
+        Logs.exn("Failed to load dictionary " + dname, e);
       }
     }
+    Logs.debug("Failed load any dictionary");
   }
 
   public int get_current_layout()
