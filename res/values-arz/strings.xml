@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (تصحيح الأخطاء)</string>
     <string name="short_description">لوحة مفاتيح افتراضية خفيفة ومُراعية للخصوصية لنظام آندرويد.</string>
-    <string name="store_description">الميزة الرئيسة هي أنه يُمكنك كتابة المزيد من الأحرف عن طريق تمرير المفاتيح نحو الزوايا.\n\nهذا التطبيق كان مصمَّمًا أصلاً للمُبرمجين الذين يستخدمون طرفية Termux.\nالآن صار مثاليًا للاستخدام اليومي.\n\nهذا التطبيق لا يحتوي على إعلانات، لا يقوم بأيّ طلبات شبكة، وكما أنّه مفتوح المصدر.</string>
+    <string name="store_description">الميزة الرئيسة هي أنه يُمكنك كتابة المزيد من الأحرف عن طريق تمرير المفاتيح نحو الزوايا.\n\nهذا التطبيق كان مصمَّمًا للمُبرمجين الذين يستخدمون طرفية Termux.\nالآن صار مثاليًا للاستخدام اليومي.\n\nهذا التطبيق لا يحتوي على إعلانات، ولا يقوم بأيّ طلبات شبكة، وكما أنّه مفتوح المصدر.</string>
     <string name="settings_activity_label">إعدادات Unexpected Keyboard</string>
     <string name="pref_portrait">في الوضع اللوحي</string>
     <string name="pref_landscape">في الوضع الأفقي</string>
