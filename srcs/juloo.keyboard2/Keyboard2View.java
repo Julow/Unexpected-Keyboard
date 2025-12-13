@@ -94,6 +94,8 @@ public class Keyboard2View extends View
       return;
     // The intermediate Window is a [Dialog].
     Window w = getParentWindow(context);
+    if (w == null)
+      return;
     w.setNavigationBarColor(_theme.colorNavBar);
     if (VERSION.SDK_INT < 26)
       return;
