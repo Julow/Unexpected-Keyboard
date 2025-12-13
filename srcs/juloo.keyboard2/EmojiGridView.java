@@ -36,7 +36,6 @@ public class EmojiGridView extends GridView
   {
     super(context, attrs);
     Emoji.init(context.getResources());
-    migrateOldPrefs(); // TODO: Remove at some point in future
     setOnItemClickListener(this);
     loadLastUsed();
     setEmojiGroup((_lastUsed.size() == 0) ? 0 : GROUP_LAST_USE);
@@ -108,37 +107,6 @@ public class EmojiGridView extends GridView
   SharedPreferences emojiSharedPreferences()
   {
     return getContext().getSharedPreferences("emoji_last_use", Context.MODE_PRIVATE);
-  }
-
-  private void migrateOldPrefs()
-  {
-    final String MIGRATION_CHECK_KEY = "MIGRATION_COMPLETE";
-
-    SharedPreferences prefs;
-    try { prefs = emojiSharedPreferences(); }
-    catch (Exception e) { return; }
-
-    Set<String> lastUsed = prefs.getStringSet(LAST_USE_PREF, null);
-    if (lastUsed != null && !prefs.getBoolean(MIGRATION_CHECK_KEY, false))
-    {
-      SharedPreferences.Editor edit = prefs.edit();
-      edit.clear();
-
-      Set<String> lastUsedNew = new HashSet<>();
-      for (String entry : lastUsed)
-      {
-        String[] data = entry.split("-", 2);
-        try
-        {
-          lastUsedNew.add(Integer.parseInt(data[0]) + "-" + Emoji.mapOldNameToValue(data[1]));
-        }
-        catch (IllegalArgumentException ignored) {}
-      }
-      edit.putStringSet(LAST_USE_PREF, lastUsedNew);
-
-      edit.putBoolean(MIGRATION_CHECK_KEY, true);
-      edit.apply();
-    }
   }
 
   static class EmojiView extends TextView
