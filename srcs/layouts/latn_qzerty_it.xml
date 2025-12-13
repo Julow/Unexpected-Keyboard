@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<keyboard name="QZERTY" script="latin">
+<keyboard name="QZERTY (Italiano)" script="latin">
   <row>
     <key c="q" ne="1" se="loc esc"/>
     <key c="z" nw="loc €" ne="2" sw="&amp;"/>
