@@ -11,6 +11,8 @@ let
     buildToolsVersions = [ build_tools_version ];
     platformVersions = [ "35" ];
     abiVersions = [ "armeabi-v7a" ];
+    includeNDK = true;
+    ndkVersion = "27.0.12077973";
   };
 
   emulators = let
