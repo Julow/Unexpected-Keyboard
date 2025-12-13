@@ -147,8 +147,9 @@ public class Keyboard2View extends View
   /** Called from [Keybard2.onUpdateSelection].  */
   public void set_selection_state(boolean selection_state)
   {
-    set_fake_ptr_latched(KeyboardData.Key.EMPTY,
-        KeyValue.getKeyByName("selection_mode"), selection_state, true);
+    if (_config.selection_mode_enabled)
+      set_fake_ptr_latched(KeyboardData.Key.EMPTY,
+          KeyValue.getKeyByName("selection_mode"), selection_state, true);
   }
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)

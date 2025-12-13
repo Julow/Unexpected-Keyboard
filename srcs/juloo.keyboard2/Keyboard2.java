@@ -240,6 +240,13 @@ public class Keyboard2 extends InputMethodService
     }
   }
 
+  private void refresh_config_editor(EditorInfo info)
+  {
+    int inputType = info.inputType & InputType.TYPE_MASK_CLASS;
+    // Editors with [TYPE_NULL] are for example Termux and Emacs.
+    _config.selection_mode_enabled = inputType != InputType.TYPE_NULL;
+  }
+
   /** Might re-create the keyboard view. [_keyboardView.setKeyboard()] and
       [setInputView()] must be called soon after. */
   private void refresh_config()
@@ -280,6 +287,7 @@ public class Keyboard2 extends InputMethodService
   {
     refresh_config();
     refresh_action_label(info);
+    refresh_config_editor(info);
     _currentSpecialLayout = refresh_special_layout(info);
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(info);
