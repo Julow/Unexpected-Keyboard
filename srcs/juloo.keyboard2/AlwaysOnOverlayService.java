@@ -78,11 +78,17 @@ public final class AlwaysOnOverlayService extends Service
       ctx.startService(i);
   }
 
+  /**
+   * Hard stop: more reliable than sending an ACTION_STOP intent on some OEM ROMs.
+   * (Cleanup happens in onDestroy.)
+   */
   public static void stop(Context ctx)
   {
-    Intent i = new Intent(ctx, AlwaysOnOverlayService.class);
-    i.setAction(ACTION_STOP);
-    ctx.startService(i);
+    try
+    {
+      ctx.stopService(new Intent(ctx, AlwaysOnOverlayService.class));
+    }
+    catch (Exception ignored) {}
   }
 
   @Override
@@ -97,7 +103,9 @@ public final class AlwaysOnOverlayService extends Service
   @Override
   public void onDestroy()
   {
+    // Ensure overlay + notification are always cleared even on hard stop
     hideOverlay();
+    try { stopForeground(true); } catch (Exception ignored) {}
     unbindImeBridge();
     super.onDestroy();
   }
@@ -107,22 +115,33 @@ public final class AlwaysOnOverlayService extends Service
   {
     String action = (intent == null) ? null : intent.getAction();
 
+    // Graceful stop path (optional; hard stop uses stopService())
     if (ACTION_STOP.equals(action))
     {
       _prefs.edit().putBoolean(PREF_ALWAYS_ON_OVERLAY, false).apply();
       hideOverlay();
-      stopForeground(true);
+      try { stopForeground(true); } catch (Exception ignored) {}
       stopSelf();
       return START_NOT_STICKY;
     }
 
-    _prefs.edit().putBoolean(PREF_ALWAYS_ON_OVERLAY, true).apply();
+    // IMPORTANT: do NOT force-enable the pref here.
+    // The Tile is the single source of truth for PREF_ALWAYS_ON_OVERLAY.
+    if (!_prefs.getBoolean(PREF_ALWAYS_ON_OVERLAY, false))
+    {
+      // Prevent "zombie restart" when system restarts service with a null intent
+      stopSelf();
+      return START_NOT_STICKY;
+    }
 
     if (!Settings.canDrawOverlays(this))
     {
       stopSelf();
       return START_NOT_STICKY;
     }
+
+    // Ensure bridge is bound each start (2nd start may have lost binder)
+    bindImeBridge();
 
     ensureConfigInitialized();
     startForeground(NOTIF_ID, buildNotification());
@@ -169,12 +188,12 @@ public final class AlwaysOnOverlayService extends Service
     if (Config.globalConfig() != null)
       return;
 
-    // Important: set handler BEFORE inflating Keyboard2View
+    // Set handler BEFORE inflating Keyboard2View
     Config.IKeyEventHandler handler = new OverlayKeyEventHandler();
     boolean unfolded = false;
     Config.initGlobalConfig(_prefs, getResources(), handler, unfolded);
 
-    // Enable clipboard pane "paste" in overlay process by wiring its callback to the bridge
+    // Wire clipboard pane "paste" to the bridge
     ClipboardHistoryService.on_startup(this, new ClipboardHistoryService.ClipboardPasteCallback() {
       @Override
       public void paste_from_clipboard_pane(String content)
@@ -287,6 +306,7 @@ public final class AlwaysOnOverlayService extends Service
   private Notification buildNotification()
   {
     ensureNotifChannel();
+
     Intent open = new Intent(this, SettingsActivity.class);
     open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -328,7 +348,11 @@ public final class AlwaysOnOverlayService extends Service
     if (text == null || text.length() == 0)
       return;
     if (_imeBridge == null)
+    {
+      // Try to reconnect
+      bindImeBridge();
       return;
+    }
 
     Bundle b = new Bundle();
     b.putString("text", text);
@@ -342,7 +366,10 @@ public final class AlwaysOnOverlayService extends Service
   private void sendKeyDownUp(int keyCode, int metaState)
   {
     if (_imeBridge == null)
+    {
+      bindImeBridge();
       return;
+    }
 
     Bundle b = new Bundle();
     b.putInt("keyCode", keyCode);
@@ -357,7 +384,10 @@ public final class AlwaysOnOverlayService extends Service
   private void sendContextMenu(int id)
   {
     if (_imeBridge == null)
+    {
+      bindImeBridge();
       return;
+    }
 
     Bundle b = new Bundle();
     b.putInt("id", id);
@@ -437,7 +467,6 @@ public final class AlwaysOnOverlayService extends Service
       {
         case Char: {
           char c = value.getChar();
-          // If Ctrl/Alt/Meta is active, send key events (needed for Ctrl+C/V, etc.)
           if (hasNonShiftMeta(meta))
           {
             int kc = keyCodeForChar(c);
@@ -452,7 +481,6 @@ public final class AlwaysOnOverlayService extends Service
         }
 
         case String:
-          // If you want Ctrl+... with strings, you can enhance later.
           sendCommitText(value.getString());
           return;
 
@@ -503,7 +531,6 @@ public final class AlwaysOnOverlayService extends Service
         }
 
         default:
-          // Keep minimal
           break;
       }
     }
@@ -571,7 +598,6 @@ public final class AlwaysOnOverlayService extends Service
 
         case Selection_cursor_left:
         case Selection_cursor_right:
-          // minimal: ignore selection sliders for now
           break;
       }
     }
