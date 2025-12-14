@@ -250,7 +250,7 @@ public final class AlwaysOnOverlayService extends Service
     if (_root == null) return;
 
     // Detach from any parent (should only be _root, but be defensive)
-    ViewParent p = child.getParent();
+    android.view.ViewParent p = child.getParent();
     if (p instanceof ViewGroup)
       ((ViewGroup)p).removeView(child);
 
