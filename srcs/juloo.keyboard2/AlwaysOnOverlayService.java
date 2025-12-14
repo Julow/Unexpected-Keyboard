@@ -20,8 +20,8 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
@@ -78,7 +78,6 @@ public final class AlwaysOnOverlayService extends Service
 
   public static void stop(Context ctx)
   {
-    // Hard stop is most reliable on OEM ROMs
     try { ctx.stopService(new Intent(ctx, AlwaysOnOverlayService.class)); }
     catch (Exception ignored) {}
   }
@@ -104,7 +103,7 @@ public final class AlwaysOnOverlayService extends Service
       return START_NOT_STICKY;
     }
 
-    // Tile is source of truth: if pref is off, never show overlay (prevents zombie restarts)
+    // Tile is source of truth: prevents zombie restarts
     if (!_prefs.getBoolean(PREF_ALWAYS_ON_OVERLAY, false))
     {
       stopSelf();
@@ -117,12 +116,14 @@ public final class AlwaysOnOverlayService extends Service
       return START_NOT_STICKY;
     }
 
-    // Re-bind each start (2nd start may have lost binder)
+    // Re-bind each start
     bindImeBridge();
 
-    ensureConfigInitialized();
-    startForeground(NOTIF_ID, buildNotification());
+    // IMPORTANT: always re-init config+handler in overlay process.
+    // MIUI may keep :alwayson process alive; stale Config.handler causes SWITCH_* to stop working.
+    initConfigEveryStart();
 
+    startForeground(NOTIF_ID, buildNotification());
     ensureRootAttached();
     showKeyboardPane();
 
@@ -142,7 +143,7 @@ public final class AlwaysOnOverlayService extends Service
 
   private void cleanupAndStop()
   {
-    // Hide first (in case remove fails on MIUI, user won't be stuck with a visible overlay)
+    // Hide first: even if remove fails, user isn't stuck visually
     if (_root != null)
     {
       try {
@@ -151,7 +152,6 @@ public final class AlwaysOnOverlayService extends Service
       } catch (Exception ignored) {}
     }
 
-    // Remove the ONE root window (no per-pane removeView ever)
     if (_root != null)
     {
       try { _wm.removeViewImmediate(_root); }
@@ -223,21 +223,15 @@ public final class AlwaysOnOverlayService extends Service
 
     if (_root == null)
     {
-      _root = new FrameLayout(themedContext());
+      // Root itself doesn't need themed context; children will be themed.
+      _root = new FrameLayout(this);
       _root.setLayoutParams(new FrameLayout.LayoutParams(
           ViewGroup.LayoutParams.MATCH_PARENT,
           ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
-    // If already attached, addView will throw; ignore
-    try
-    {
-      _wm.addView(_root, _lp);
-    }
-    catch (Exception ignored)
-    {
-      // Likely already attached; that's fine.
-    }
+    try { _wm.addView(_root, _lp); }
+    catch (Exception ignored) {}
 
     try {
       _root.setAlpha(1f);
@@ -249,7 +243,6 @@ public final class AlwaysOnOverlayService extends Service
   {
     if (_root == null) return;
 
-    // Detach from any parent (should only be _root, but be defensive)
     android.view.ViewParent p = child.getParent();
     if (p instanceof ViewGroup)
       ((ViewGroup)p).removeView(child);
@@ -263,15 +256,21 @@ public final class AlwaysOnOverlayService extends Service
     _root.invalidate();
   }
 
-  private void ensureConfigInitialized()
+  /**
+   * Force re-init Config on every start to avoid stale handler state in the overlay process.
+   */
+  private void initConfigEveryStart()
   {
-    if (Config.globalConfig() != null)
-      return;
-
     Config.IKeyEventHandler handler = new OverlayKeyEventHandler();
     boolean unfolded = false;
     Config.initGlobalConfig(_prefs, getResources(), handler, unfolded);
 
+    // Recreate panes using the new themed context/config
+    _keyboardPane = null;
+    _clipboardPane = null;
+    _emojiPane = null;
+
+    // Ensure clipboard paste in overlay uses the current bridge
     ClipboardHistoryService.on_startup(this, new ClipboardHistoryService.ClipboardPasteCallback() {
       @Override public void paste_from_clipboard_pane(String content)
       {
