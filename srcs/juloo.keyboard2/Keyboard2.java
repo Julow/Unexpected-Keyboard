@@ -38,7 +38,6 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _localeTextLayout;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
-  public int actionId; // Action performed by the Action key.
   private Handler _handler;
 
   private Config _config;
@@ -202,44 +201,6 @@ public class Keyboard2 extends InputMethodService
     _localeTextLayout = default_layout;
   }
 
-  private String actionLabel_of_imeAction(int action)
-  {
-    int res;
-    switch (action)
-    {
-      case EditorInfo.IME_ACTION_NEXT: res = R.string.key_action_next; break;
-      case EditorInfo.IME_ACTION_DONE: res = R.string.key_action_done; break;
-      case EditorInfo.IME_ACTION_GO: res = R.string.key_action_go; break;
-      case EditorInfo.IME_ACTION_PREVIOUS: res = R.string.key_action_prev; break;
-      case EditorInfo.IME_ACTION_SEARCH: res = R.string.key_action_search; break;
-      case EditorInfo.IME_ACTION_SEND: res = R.string.key_action_send; break;
-      case EditorInfo.IME_ACTION_UNSPECIFIED:
-      case EditorInfo.IME_ACTION_NONE:
-      default: return null;
-    }
-    return getResources().getString(res);
-  }
-
-  private void refresh_action_label(EditorInfo info)
-  {
-    // First try to look at 'info.actionLabel', if it isn't set, look at
-    // 'imeOptions'.
-    if (info.actionLabel != null)
-    {
-      _config.actionLabel = info.actionLabel.toString();
-      actionId = info.actionId;
-      _config.swapEnterActionKey = false;
-    }
-    else
-    {
-      int action = info.imeOptions & EditorInfo.IME_MASK_ACTION;
-      _config.actionLabel = actionLabel_of_imeAction(action); // Might be null
-      actionId = action;
-      _config.swapEnterActionKey =
-        (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0;
-    }
-  }
-
   /** Might re-create the keyboard view. [_keyboardView.setKeyboard()] and
       [setInputView()] must be called soon after. */
   private void refresh_config()
@@ -258,19 +219,15 @@ public class Keyboard2 extends InputMethodService
     _keyboardView.reset();
   }
 
-  private KeyboardData refresh_special_layout(EditorInfo info)
+  private KeyboardData refresh_special_layout()
   {
-    switch (info.inputType & InputType.TYPE_MASK_CLASS)
+    if (_config.editor_config.numeric_layout)
     {
-      case InputType.TYPE_CLASS_NUMBER:
-      case InputType.TYPE_CLASS_PHONE:
-      case InputType.TYPE_CLASS_DATETIME:
-        if (_config.selected_number_layout == NumberLayout.PIN)
-          return loadPinentry(R.xml.pin);
-        else if (_config.selected_number_layout == NumberLayout.NUMBER)
-          return loadNumpad(R.xml.numeric);
-      default:
-        break;
+      switch (_config.selected_number_layout)
+      {
+        case PIN: return loadPinentry(R.xml.pin);
+        case NUMBER: return loadNumpad(R.xml.numeric);
+      }
     }
     return null;
   }
@@ -278,11 +235,11 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
+    _config.editor_config.refresh(info, getResources());
     refresh_config();
-    refresh_action_label(info);
-    _currentSpecialLayout = refresh_special_layout(info);
+    _currentSpecialLayout = refresh_special_layout();
     _keyboardView.setKeyboard(current_layout());
-    _keyeventhandler.started(info);
+    _keyeventhandler.started(_config);
     setInputView(_keyboardView);
     Logs.debug_startup_input_view(info, _config);
   }
@@ -453,7 +410,7 @@ public class Keyboard2 extends InputMethodService
         case ACTION:
           InputConnection conn = getCurrentInputConnection();
           if (conn != null)
-            conn.performEditorAction(actionId);
+            conn.performEditorAction(_config.editor_config.actionId);
           break;
 
         case SWITCH_FORWARD:
