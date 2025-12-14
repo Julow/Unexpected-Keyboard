@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -45,11 +46,13 @@ public final class AlwaysOnOverlayService extends Service
   private Messenger _imeBridge = null;
   private boolean _bridgeBound = false;
 
-  // Panes we may attach to WindowManager (track ALL to prevent leaks)
-  private View _keyboardPane = null;          // R.layout.keyboard (Keyboard2View)
-  private ViewGroup _clipboardPane = null;    // R.layout.clipboard_pane
-  private ViewGroup _emojiPane = null;        // R.layout.emoji_pane (optional)
-  private View _currentAttached = null;       // what we *think* is attached now
+  // The ONLY view ever added to WindowManager
+  private FrameLayout _root = null;
+
+  // Panes (children inside _root)
+  private View _keyboardPane = null;          // Keyboard2View
+  private ViewGroup _clipboardPane = null;    // clipboard_pane
+  private ViewGroup _emojiPane = null;        // emoji_pane
 
   private final ServiceConnection _bridgeConn = new ServiceConnection()
   {
@@ -75,7 +78,7 @@ public final class AlwaysOnOverlayService extends Service
 
   public static void stop(Context ctx)
   {
-    // Hard stop is more reliable on OEM ROMs
+    // Hard stop is most reliable on OEM ROMs
     try { ctx.stopService(new Intent(ctx, AlwaysOnOverlayService.class)); }
     catch (Exception ignored) {}
   }
@@ -86,7 +89,7 @@ public final class AlwaysOnOverlayService extends Service
     super.onCreate();
     _wm = (WindowManager)getSystemService(WINDOW_SERVICE);
     _prefs = DirectBootAwarePreferences.get_shared_preferences(this);
-    bindImeBridge(); // best-effort
+    bindImeBridge();
   }
 
   @Override
@@ -94,7 +97,6 @@ public final class AlwaysOnOverlayService extends Service
   {
     String action = (intent == null) ? null : intent.getAction();
 
-    // Optional graceful stop path (even though Tile uses stopService)
     if (ACTION_STOP.equals(action))
     {
       _prefs.edit().putBoolean(PREF_ALWAYS_ON_OVERLAY, false).apply();
@@ -102,7 +104,7 @@ public final class AlwaysOnOverlayService extends Service
       return START_NOT_STICKY;
     }
 
-    // Do NOT force-enable pref here. Tile is source of truth.
+    // Tile is source of truth: if pref is off, never show overlay (prevents zombie restarts)
     if (!_prefs.getBoolean(PREF_ALWAYS_ON_OVERLAY, false))
     {
       stopSelf();
@@ -115,11 +117,13 @@ public final class AlwaysOnOverlayService extends Service
       return START_NOT_STICKY;
     }
 
-    // Re-bind every time: 2nd start may have lost binder
+    // Re-bind each start (2nd start may have lost binder)
     bindImeBridge();
 
     ensureConfigInitialized();
     startForeground(NOTIF_ID, buildNotification());
+
+    ensureRootAttached();
     showKeyboardPane();
 
     return START_STICKY;
@@ -128,7 +132,7 @@ public final class AlwaysOnOverlayService extends Service
   @Override
   public void onDestroy()
   {
-    cleanupAndStop(); // idempotent
+    cleanupAndStop();
     super.onDestroy();
   }
 
@@ -138,13 +142,26 @@ public final class AlwaysOnOverlayService extends Service
 
   private void cleanupAndStop()
   {
-    // Remove ALL possible attached views (fix “poisoned clipboard button” leak)
-    removeViewQuietly(_currentAttached);
-    removeViewQuietly(_keyboardPane);
-    removeViewQuietly(_clipboardPane);
-    removeViewQuietly(_emojiPane);
+    // Hide first (in case remove fails on MIUI, user won't be stuck with a visible overlay)
+    if (_root != null)
+    {
+      try {
+        _root.setVisibility(View.GONE);
+        _root.setAlpha(0f);
+      } catch (Exception ignored) {}
+    }
 
-    _currentAttached = null;
+    // Remove the ONE root window (no per-pane removeView ever)
+    if (_root != null)
+    {
+      try { _wm.removeViewImmediate(_root); }
+      catch (Exception ignored) {}
+    }
+
+    _root = null;
+    _keyboardPane = null;
+    _clipboardPane = null;
+    _emojiPane = null;
 
     try { stopForeground(true); } catch (Exception ignored) {}
 
@@ -171,12 +188,6 @@ public final class AlwaysOnOverlayService extends Service
     try { unbindService(_bridgeConn); } catch (Exception ignored) {}
     _bridgeBound = false;
     _imeBridge = null;
-  }
-
-  private void removeViewQuietly(View v)
-  {
-    if (v == null) return;
-    try { _wm.removeViewImmediate(v); } catch (Exception ignored) {}
   }
 
   private void ensureLayoutParams()
@@ -206,27 +217,50 @@ public final class AlwaysOnOverlayService extends Service
     return new ContextThemeWrapper(this, cfg.theme);
   }
 
-  private void attachPane(View v)
+  private void ensureRootAttached()
   {
     ensureLayoutParams();
 
-    // Defensive: if this view was leaked/left attached, try to remove first
-    removeViewQuietly(v);
+    if (_root == null)
+    {
+      _root = new FrameLayout(themedContext());
+      _root.setLayoutParams(new FrameLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT));
+    }
 
-    // Remove current attached view (also defensive: try removing known panes)
-    removeViewQuietly(_currentAttached);
-
+    // If already attached, addView will throw; ignore
     try
     {
-      _wm.addView(v, _lp);
-      _currentAttached = v;
-      v.requestApplyInsets();
+      _wm.addView(_root, _lp);
     }
     catch (Exception ignored)
     {
-      // If add fails, try to keep state consistent
-      _currentAttached = null;
+      // Likely already attached; that's fine.
     }
+
+    try {
+      _root.setAlpha(1f);
+      _root.setVisibility(View.VISIBLE);
+    } catch (Exception ignored) {}
+  }
+
+  private void setRootContent(View child)
+  {
+    if (_root == null) return;
+
+    // Detach from any parent (should only be _root, but be defensive)
+    ViewParent p = child.getParent();
+    if (p instanceof ViewGroup)
+      ((ViewGroup)p).removeView(child);
+
+    _root.removeAllViews();
+    _root.addView(child, new FrameLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT));
+
+    _root.requestLayout();
+    _root.invalidate();
   }
 
   private void ensureConfigInitialized()
@@ -252,26 +286,24 @@ public final class AlwaysOnOverlayService extends Service
     {
       View v = View.inflate(themedContext(), R.layout.keyboard, null);
       if (v instanceof Keyboard2View)
-      {
         ((Keyboard2View)v).setKeyboard(resolveTextLayoutModified(Config.globalConfig()));
-      }
       _keyboardPane = v;
     }
-    attachPane(_keyboardPane);
+    setRootContent(_keyboardPane);
   }
 
   private void showClipboardPane()
   {
     if (_clipboardPane == null)
       _clipboardPane = (ViewGroup)View.inflate(themedContext(), R.layout.clipboard_pane, null);
-    attachPane(_clipboardPane);
+    setRootContent(_clipboardPane);
   }
 
   private void showEmojiPane()
   {
     if (_emojiPane == null)
       _emojiPane = (ViewGroup)View.inflate(themedContext(), R.layout.emoji_pane, null);
-    attachPane(_emojiPane);
+    setRootContent(_emojiPane);
   }
 
   private KeyboardData resolveTextLayoutUnmodified(Config cfg)
@@ -306,6 +338,7 @@ public final class AlwaysOnOverlayService extends Service
   private Notification buildNotification()
   {
     ensureNotifChannel();
+
     Intent open = new Intent(this, SettingsActivity.class);
     open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -396,7 +429,6 @@ public final class AlwaysOnOverlayService extends Service
     if (c >= 'a' && c <= 'z') return KeyEvent.KEYCODE_A + (c - 'a');
     if (c >= 'A' && c <= 'Z') return KeyEvent.KEYCODE_A + (c - 'A');
     if (c >= '0' && c <= '9') return KeyEvent.KEYCODE_0 + (c - '0');
-
     switch (c)
     {
       case ' ': return KeyEvent.KEYCODE_SPACE;
@@ -457,19 +489,11 @@ public final class AlwaysOnOverlayService extends Service
     {
       switch (e)
       {
-        case SWITCH_CLIPBOARD:
-          showClipboardPane();
-          break;
-        case SWITCH_BACK_CLIPBOARD:
-          showKeyboardPane();
-          break;
+        case SWITCH_CLIPBOARD: showClipboardPane(); break;
+        case SWITCH_BACK_CLIPBOARD: showKeyboardPane(); break;
 
-        case SWITCH_EMOJI:
-          showEmojiPane();
-          break;
-        case SWITCH_BACK_EMOJI:
-          showKeyboardPane();
-          break;
+        case SWITCH_EMOJI: showEmojiPane(); break;
+        case SWITCH_BACK_EMOJI: showKeyboardPane(); break;
 
         case SWITCH_NUMERIC: {
           Config cfg = Config.globalConfig();
@@ -485,16 +509,6 @@ public final class AlwaysOnOverlayService extends Service
           setMainKeyboardLayout(resolveTextLayoutModified(Config.globalConfig()));
           showKeyboardPane();
           break;
-
-        case SWITCH_GREEKMATH: {
-          Config cfg = Config.globalConfig();
-          KeyboardData base = resolveTextLayoutUnmodified(cfg);
-          KeyboardData gm = LayoutModifier.modify_numpad(
-              KeyboardData.load(getResources(), R.xml.greekmath), base);
-          setMainKeyboardLayout(gm);
-          showKeyboardPane();
-          break;
-        }
 
         case CONFIG: {
           Intent i = new Intent(AlwaysOnOverlayService.this, SettingsActivity.class);
