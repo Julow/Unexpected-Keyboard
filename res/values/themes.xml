@@ -230,7 +230,7 @@
     <item name="colorLabel">#5c6a72</item>
     <item name="colorLabelActivated">#828812</item>
     <item name="colorLabelLocked">#325e64</item>
-    <item name="colorSubLabel">#7b8478</item>
+    <item name="colorSubLabel">5c6a72</item>
     <item name="keyBorderWidth">0.0dip</item>
     <item name="keyBorderWidthActivated">0.0dip</item>
     <item name="emoji_button_bg">?colorKeyActivated</item>
