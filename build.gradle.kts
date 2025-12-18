@@ -64,7 +64,6 @@ android {
       isMinifyEnabled = true
       isShrinkResources = true
       isDebuggable = false
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
       resValue("string", "app_name", "@string/app_name_release")
       signingConfig = signingConfigs["release"]
     }
@@ -77,14 +76,6 @@ android {
       resValue("string", "app_name", "@string/app_name_debug")
       resValue("bool", "debug_logs", "true")
       signingConfig = signingConfigs["debug"]
-    }
-  }
-
-  // Name outputs after the application ID.
-  android.applicationVariants.forEach { variant ->
-    variant.outputs.forEach {
-      it as BaseVariantOutputImpl
-      it.outputFileName = "${variant.applicationId}.apk"
     }
   }
 
@@ -161,7 +152,7 @@ val copyRawQwertyUS by tasks.registering(Copy::class) {
   into("build/generated-resources/raw")
 }
 
-val copyLayoutDefinitions by  tasks.registering(Copy::class) {
+val copyLayoutDefinitions by tasks.registering(Copy::class) {
   from("srcs/layouts")
   include("*.xml")
   into("build/generated-resources/xml")
