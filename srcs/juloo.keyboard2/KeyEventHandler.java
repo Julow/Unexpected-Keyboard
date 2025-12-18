@@ -3,10 +3,8 @@ package juloo.keyboard2;
 import android.annotation.SuppressLint;
 import android.os.Looper;
 import android.os.Handler;
-import android.text.InputType;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
@@ -38,10 +36,11 @@ public final class KeyEventHandler
   }
 
   /** Editing just started. */
-  public void started(EditorInfo info)
+  public void started(Config conf)
   {
-    _autocap.started(info, _recv.getCurrentInputConnection());
-    _move_cursor_force_fallback = should_move_cursor_force_fallback(info);
+    _autocap.started(conf, _recv.getCurrentInputConnection());
+    _move_cursor_force_fallback =
+      conf.editor_config.should_move_cursor_force_fallback;
   }
 
   /** Selection has been updated. */
@@ -466,17 +465,6 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null) return false;
     return (conn.getSelectedText(0) != null);
-  }
-
-  /** Workaround some apps which answers to [getExtractedText] but do not react
-      to [setSelection] while returning [true]. */
-  boolean should_move_cursor_force_fallback(EditorInfo info)
-  {
-    // This catch Acode: which sets several variations at once.
-    if ((info.inputType & InputType.TYPE_MASK_VARIATION & InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0)
-      return true;
-    // Godot editor: Doesn't handle setSelection() but returns true.
-    return info.packageName.startsWith("org.godotengine.editor");
   }
 
   public static interface IReceiver
