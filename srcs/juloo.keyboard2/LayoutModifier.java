@@ -149,6 +149,7 @@ public final class LayoutModifier
    */
   static KeyValue modify_key(KeyValue orig)
   {
+    EditorConfig ec = globalConfig.editor_config;
     switch (orig.getKind())
     {
       case Event:
@@ -159,11 +160,12 @@ public final class LayoutModifier
               return KeyValue.getKeyByName("change_method_prev");
             break;
           case ACTION:
-            if (globalConfig.actionLabel == null)
+            String action_label = ec.actionLabel;
+            if (action_label == null)
               return null; // Remove the action key
-            if (globalConfig.swapEnterActionKey)
+            if (ec.swapEnterActionKey)
               return KeyValue.getKeyByName("enter");
-            return KeyValue.makeActionKey(globalConfig.actionLabel);
+            return KeyValue.makeActionKey(action_label);
           case SWITCH_FORWARD:
             return (globalConfig.layouts.size() > 1) ? orig : null;
           case SWITCH_BACKWARD:
@@ -177,8 +179,8 @@ public final class LayoutModifier
         switch (orig.getKeyevent())
         {
           case KeyEvent.KEYCODE_ENTER:
-            if (globalConfig.swapEnterActionKey && globalConfig.actionLabel != null)
-              return KeyValue.makeActionKey(globalConfig.actionLabel);
+            if (ec.swapEnterActionKey && ec.actionLabel != null)
+              return KeyValue.makeActionKey(ec.actionLabel);
             break;
         }
         break;
