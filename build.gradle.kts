@@ -83,6 +83,14 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+
+  lint {
+    // This file contains the current linting errors. It is updated with
+    //  gradle updateLintBaseline
+    baseline = file("lint-baseline.xml")
+    disable.add("MissingTranslation")
+    disable.add("MissingClass")
+  }
 }
 
 val buildKeyboardFont by tasks.registering(Exec::class) {

@@ -1,0 +1,1937 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.13.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.13.0)" variant="all" version="8.13.0">
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="      .commit();"
+        errorLine2="       ~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/ClipboardPinView.java"
+            line="89"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="    _prefs.edit().putBoolean(&quot;clipboard_history_enabled&quot;, e).commit();"
+        errorLine2="                                                             ~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Config.java"
+            line="210"
+            column="62"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 30 (current min is 21): `android.content.pm.PackageManager#FEATURE_SENSOR_HINGE_ANGLE`"
+        errorLine1="        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_HINGE_ANGLE);"
+        errorLine2="                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/FoldStateTracker.java"
+            line="27"
+            column="61"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginHorizontal` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginHorizontal&quot;>14dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="24"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginVertical` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginVertical&quot;>14dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="25"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginHorizontal` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginHorizontal&quot;>6dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="30"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:fontWeight` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:fontWeight&quot;>700&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="34"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginHorizontal` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginHorizontal&quot;>2dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="47"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginVertical` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginVertical&quot;>8dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="55"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginHorizontal` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginHorizontal&quot;>16dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="56"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginHorizontal` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginHorizontal&quot;>20dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="68"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:layout_marginVertical` requires API level 26 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:layout_marginVertical&quot;>16dp&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="78"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:style/Theme.DeviceDefault.DayNight` requires API level 29 (current min is 21)"
+        errorLine1="  &lt;style name=&quot;appTheme&quot; parent=&quot;@android:style/Theme.DeviceDefault.DayNight&quot;/>"
+        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="82"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:forceDarkAllowed` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:forceDarkAllowed&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="39"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="53"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>true&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="68"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="86"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>true&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="108"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>true&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="127"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>true&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="147"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>true&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="165"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>true&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="183"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_100` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorKeyboard&quot;>@android:color/system_neutral1_100&lt;/item>"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="184"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_50` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorKey&quot;>@android:color/system_neutral1_50&lt;/item>"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="185"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_800` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorLabel&quot;>@android:color/system_neutral1_800&lt;/item>"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="187"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_accent1_400` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorLabelActivated&quot;>@android:color/system_accent1_400&lt;/item>"
+        errorLine2="                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="188"
+            column="38"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_accent1_600` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorLabelLocked&quot;>@android:color/system_accent1_600&lt;/item>"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="189"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_500` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorSubLabel&quot;>@android:color/system_neutral1_500&lt;/item>"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="190"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="195"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_900` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorKeyboard&quot;>@android:color/system_neutral1_900&lt;/item>"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="196"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_800` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorKey&quot;>@android:color/system_neutral1_800&lt;/item>"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="197"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_0` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorLabel&quot;>@android:color/system_neutral1_0&lt;/item>"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="199"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_accent1_400` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorLabelActivated&quot;>@android:color/system_accent1_400&lt;/item>"
+        errorLine2="                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="200"
+            column="38"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_accent1_600` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorLabelLocked&quot;>@android:color/system_accent1_600&lt;/item>"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="201"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`@android:color/system_neutral1_400` requires API level 31 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;colorSubLabel&quot;>@android:color/system_neutral1_400&lt;/item>"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="202"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="207"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>true&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="226"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="241"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="260"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:isLightTheme` requires API level 29 (current min is 21)"
+        errorLine1="    &lt;item name=&quot;android:isLightTheme&quot;>false&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="279"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="SuspiciousIndentation"
+        message="Suspicious indentation: This is indented but is not nested under the previous expression (`if (conn.setSelectio`...)"
+        errorLine1="      _recv.selection_state_changed(false);"
+        errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/KeyEventHandler.java"
+            line="460"
+            column="7"/>
+        <location
+            file="srcs/juloo.keyboard2/KeyEventHandler.java"
+            line="459"
+            column="5"
+            message="Previous statement here"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `directBootAware` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="    &lt;service android:name=&quot;juloo.keyboard2.Keyboard2&quot; android:label=&quot;@string/app_name&quot; android:permission=&quot;android.permission.BIND_INPUT_METHOD&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
+        errorLine2="                                                                                                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="7"
+            column="170"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `directBootAware` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="    &lt;activity android:name=&quot;juloo.keyboard2.SettingsActivity&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:label=&quot;@string/app_name&quot; android:theme=&quot;@style/settingsTheme&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
+        errorLine2="                                                                                                                                                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="14"
+            column="192"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `directBootAware` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="    &lt;activity android:name=&quot;juloo.keyboard2.LauncherActivity&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:theme=&quot;@style/appTheme&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
+        errorLine2="                                                                                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="20"
+            column="154"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#fc2a2a2a&quot; android:pathData=&quot;M549.19,211.58L838.49,211.58A66.72 66.72 0 0 1 905.21,278.30L905.21,731.23A66.72 66.72 0 0 1 838.49,797.95L549.19,797.95A66.72 66.72 0 0 1 482.47,731.23L482.47,278.30A66.72 66.72 0 0 1 549.19,211.58zM38.60,272.97L38.60,725.90A66.72 66.72 0 0 0 105.32,792.62L394.62,792.62A66.72 66.72 0 0 0 461.34,725.90L461.34,272.97A66.72 66.72 0 0 0 394.62,206.25L105.32,206.25A66.72 66.72 0 0 0 38.60,272.97z&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;round&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="3"
+            column="515"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#ffffffff&quot; android:pathData=&quot;M662.14,510.10L662.14,648.69&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;square&quot; android:strokeLineJoin=&quot;miter&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="4"
+            column="213"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M662.14,531.42C778.39,456.79,778.39,659.35,662.14,595.39&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;miter&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="5"
+            column="240"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M852.37,264.89C869.88,264.89,884.07,286.37,884.07,312.86C884.07,339.36,869.88,360.84,852.37,360.84C834.86,360.84,820.66,339.36,820.66,312.86C820.66,286.37,834.86,264.89,852.37,264.89z&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;miter&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="6"
+            column="367"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M514.18,659.35Q545.88,712.66,514.18,776.63&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;miter&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="7"
+            column="226"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M254.75,520.69C281.29,520.69,302.81,542.19,302.81,568.70C302.81,595.21,281.29,616.71,254.75,616.71C228.21,616.71,206.69,595.21,206.69,568.70C206.69,542.19,228.21,520.69,254.75,520.69z&quot; android:strokeColor=&quot;#fffdfdfd&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;miter&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="8"
+            column="367"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M403.36,265.80C417.87,265.80,429.63,277.53,429.63,292.00C429.63,306.46,417.87,318.19,403.36,318.19C388.86,318.19,377.09,306.46,377.09,292.00C377.09,277.53,388.86,265.80,403.36,265.80z&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;miter&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="9"
+            column="367"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#fc2a2a2a&quot; android:pathData=&quot;M337.82,845.92L627.12,845.92A66.72 66.72 0 0 1 693.84,912.64L693.84,1365.58A66.72 66.72 0 0 1 627.12,1432.29L337.82,1432.29A66.72 66.72 0 0 1 271.11,1365.58L271.11,912.64A66.72 66.72 0 0 1 337.82,845.92zM-183.33,901.98L-183.33,1354.91A66.72 66.72 0 0 0 -116.62,1421.63L172.69,1421.63A66.72 66.72 0 0 0 239.40,1354.91L239.40,901.98A66.72 66.72 0 0 0 172.69,835.26L-116.62,835.26A66.72 66.72 0 0 0 -183.33,901.98zM-183.33,901.98L-183.33,1354.91A66.72 66.72 0 0 0 -116.62,1421.63L172.69,1421.63A66.72 66.72 0 0 0 239.40,1354.91L239.40,901.98A66.72 66.72 0 0 0 172.69,835.26L-116.62,835.26A66.72 66.72 0 0 0 -183.33,901.98z&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;round&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="10"
+            column="739"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M397.93,360.84L429.63,296.87&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;round&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="11"
+            column="212"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M651.57,883.24L651.57,968.53&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;round&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="12"
+            column="212"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;path android:fillColor=&quot;#00ffffff&quot; android:pathData=&quot;M197.13,883.24Q207.70,883.24,207.70,893.90L207.70,936.54Q218.26,947.21,207.70,957.87L207.70,968.53&quot; android:strokeColor=&quot;#ffffffff&quot; android:strokeWidth=&quot;20.380417&quot; android:strokeLineCap=&quot;round&quot; android:strokeLineJoin=&quot;round&quot; android:fillType=&quot;nonZero&quot;/>"
+        errorLine2="                                                                                                                                                                                                                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/drawable/ic_launcher_foreground.xml"
+            line="13"
+            column="282"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;en&quot; android:imeSubtypeLocale=&quot;en&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="5"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ar&quot; android:imeSubtypeLocale=&quot;ar&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=arabic,default_layout=arab_pc_hindu&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="6"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ar&quot; android:imeSubtypeLocale=&quot;ar_TN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=arabic,default_layout=arab_pc&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="7"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ay&quot; android:imeSubtypeLocale=&quot;ay_AM&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=armenian,default_layout=armenian_ph_am&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="8"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;az&quot; android:imeSubtypeLocale=&quot;az_AZ&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_az,extra_keys=accent_trema:ü:ö@w|accent_cedille:ç:ş@s|ğ@g|ı@k|ə@l&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="9"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;be&quot; android:imeSubtypeLocale=&quot;be_BY&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=cyrillic,default_layout=cyrl_jcuken_ru,extra_keys=ґ|є|і|ї|ў&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="10"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;bg&quot; android:imeSubtypeLocale=&quot;bg_BG&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=cyrillic,default_layout=cyrl_ueishsht,extra_keys=€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="11"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;bn&quot; android:imeSubtypeLocale=&quot;bn_BD&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us,extra_keys=৳&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="12"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;cs&quot; android:imeSubtypeLocale=&quot;cs_CZ&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwertz_cz,extra_keys=accent_aigu:á:é:í:ó:ú:ý@d|accent_ring:ů@s|accent_caron:č:ě:ň:ř:š:ž:ď:ť@f&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="13"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;cy&quot; android:imeSubtypeLocale=&quot;cy_GB&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_cy&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="14"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;da&quot; android:imeSubtypeLocale=&quot;da_DK&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_da,extra_keys=€|æ|å|ø&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="15"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;de&quot; android:imeSubtypeLocale=&quot;de_DE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwertz_de,extra_keys=accent_trema:ä:ö:ü@u|ß|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="16"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;de-BE&quot; android:imeSubtypeLocale=&quot;de_BE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_azerty_be,extra_keys=accent_grave:è@f|accent_aigu:á:é:í:ó:ú:ý:j́@d|accent_circonflexe:ê@f|accent_cedille:ç@c|accent_trema@u|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="17"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;el&quot; android:imeSubtypeLocale=&quot;el&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=grek_qwerty,extra_keys=£@l|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="18"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;en&quot; android:imeSubtypeLocale=&quot;en_NG&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us,extra_keys=₦&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="19"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;en-AU&quot; android:imeSubtypeLocale=&quot;en_AU&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="20"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;en-CA&quot; android:imeSubtypeLocale=&quot;en_CA&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="21"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;en-GB&quot; android:imeSubtypeLocale=&quot;en_GB&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_gb,extra_keys=£@l&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="22"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;en-IN&quot; android:imeSubtypeLocale=&quot;en_IN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="23"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;en-US&quot; android:imeSubtypeLocale=&quot;en_US&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="24"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;es&quot; android:imeSubtypeLocale=&quot;es_ES&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_es,extra_keys=accent_aigu:á:é:í:ó:ú@d|accent_tilde:ñ@n|accent_grave@f|accent_trema@u|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="25"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;et&quot; android:imeSubtypeLocale=&quot;et_EE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_et,extra_keys=accent_trema:ä:ö:ü@u|accent_tilde:õ@o|accent_caron:š:ž@s|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="26"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;fa&quot; android:imeSubtypeLocale=&quot;fa_IR&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;default_layout=arab_pc_ir&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="27"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;fr-BE&quot; android:imeSubtypeLocale=&quot;fr_BE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_azerty_be,extra_keys=accent_grave:à:è:ù@f|accent_aigu:é@d|accent_circonflexe:ê:û@f|accent_cedille:ç@c|accent_trema@u|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="28"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;fr-CA&quot; android:imeSubtypeLocale=&quot;fr_CA&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_azerty_fr,extra_keys=accent_grave:à:è:ù@f|accent_aigu:é@d|accent_circonflexe:â:ê:ô:û@f|accent_cedille:ç@c|accent_trema:ë:ï:ü:ÿ@u&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="29"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;fr-CH&quot; android:imeSubtypeLocale=&quot;fr_CH&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwertz_fr_ch,extra_keys=accent_grave:à:è:ù@f|accent_aigu:é@d|accent_circonflexe:â:ê:ô:û@o|accent_cedille:ç@c|accent_trema:ë:ï:ü:ÿ@u|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="30"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;fr-FR&quot; android:imeSubtypeLocale=&quot;fr_FR&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_azerty_fr,extra_keys=accent_grave:à:è:ù@d|accent_aigu:é@d|accent_circonflexe:â:ê:ô:û@o|accent_cedille:ç@c|accent_trema:ë:ï:ü@l|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="31"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ga&quot; android:imeSubtypeLocale=&quot;ga_IE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_ga,extra_keys=accent_aigu:á:é:í:ó:ú@k|accent_dot_above@l&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="32"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ha&quot; android:imeSubtypeLocale=&quot;ha_NG&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us,extra_keys=₦|ɓ|ɗ|ƙ|’|ƴ|r̃&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="33"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;haw&quot; android:imeSubtypeLocale=&quot;haw_US&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_haw,extra_keys=ʻ@l|accent_macron:ā:ē:ī:ō:ū@m&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="34"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;he&quot; android:imeSubtypeLocale=&quot;he_IL&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=hebrew,default_layout=hebr_1_il,extra_keys=₪@r|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="35"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;hi&quot; android:imeSubtypeLocale=&quot;hi_IN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=devanagari,default_layout=deva_inscript,extra_keys=₹&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="36"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;hu&quot; android:imeSubtypeLocale=&quot;hu_HU&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwertz_hu,extra_keys=accent_aigu:á:é:í:ó:ú@d|accent_trema:ö:ü@u|accent_ogonek@s|accent_double_aigu:ő:ű@k|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="37"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ig&quot; android:imeSubtypeLocale=&quot;ig_NG&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us,extra_keys=₦|ṅ|ọ|ụ&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="38"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;is&quot; android:imeSubtypeLocale=&quot;is_IS&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_is,extra_keys=ð|þ|æ|accent_trema:ö@o|accent_aigu:á:é:í:ó:ú:ý@d|accent_circonflexe|accent_ring|accent_grave&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="39"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;it&quot; android:imeSubtypeLocale=&quot;it_IT&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us,extra_keys=accent_grave:à:è:ì:ò:ù@f|accent_aigu:é:ó@d|accent_circonflexe:î@f|€|ə&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="40"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ka-GE&quot; android:imeSubtypeLocale=&quot;ka_GE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=georgian_mes&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="41"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;kk&quot; android:imeSubtypeLocale=&quot;kk_KZ&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=cyrl_jcuken_kk&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="42"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;kn&quot; android:imeSubtypeLocale=&quot;kn_IN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=kannada,default_layout=kann_kannada&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="43"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ko&quot; android:imeSubtypeLocale=&quot;ko_KR&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=hangul,default_layout=latn_qwerty_us&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="44"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;lt&quot; android:imeSubtypeLocale=&quot;lt_LT&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_lt,extra_keys=accent_ogonek:ą:ę:į:ų@s|accent_caron:č:š:ž@f|accent_dot_above:ė@s|accent_macron:ū@o|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="45"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;lv&quot; android:imeSubtypeLocale=&quot;lv_LV&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_lv,extra_keys=accent_macron:ā:ē:ī:ū@o|accent_caron:č:š:ž@f|accent_ogonek:ķ:ļ:ņ@s|accent_cedille:ģ@c|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="46"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;mk&quot; android:imeSubtypeLocale=&quot;mk&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=cyrillic,default_layout=cyrl_lynyertdz_mk,extra_keys=ѕ|ѓ|ќ|ѝ|ѐ|љ|њ|џ|„|“|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="47"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;mn&quot; android:imeSubtypeLocale=&quot;mn_MN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=cyrillic,default_layout=cyrl_fcuzhen_mn,extra_keys=ү|ө&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="48"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;mr&quot; android:imeSubtypeLocale=&quot;mr_IN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=devanagari,default_layout=deva_inscript,extra_keys=₹&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="49"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;mt&quot; android:imeSubtypeLocale=&quot;mt_MT&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_mt,extra_keys=accent_grave:à:è:ì:ò:ù|accent_dot_above:ċ:ż:ġ|ħ&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="50"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ne&quot; android:imeSubtypeLocale=&quot;ne_NE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=devanagari,default_layout=deva_inscript,extra_keys=₹&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="51"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;nl-BE&quot; android:imeSubtypeLocale=&quot;nl_BE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_azerty_be,extra_keys=accent_grave:è@f|accent_aigu:á:é:í:ó:ú:ý:j́@d|accent_circonflexe:ê@f|accent_cedille:ç@c|accent_trema@u|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="52"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;no&quot; android:imeSubtypeLocale=&quot;no_NO&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us,extra_keys=€|æ@a|å@a|ø@o|accent_aigu:é:ó@d|accent_grave:è:ò:ù@f|accent_circonflexe:ê:ô@f&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="53"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;pl&quot; android:imeSubtypeLocale=&quot;pl_PL&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_pl&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="54"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;pt&quot; android:imeSubtypeLocale=&quot;pt_BR&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_pt,extra_keys=accent_aigu:á:é:í:ó:ú@d|accent_cedille:ç@c|accent_circonflexe:â:ê:ô@f|accent_grave:à:ò@f|accent_tilde:ã:õ@n|€|ª|º&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="55"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ro&quot; android:imeSubtypeLocale=&quot;ro_RO&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_ro,extra_keys=ă|â|î|ș|ț|€|$&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="56"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ru&quot; android:imeSubtypeLocale=&quot;ru_RU&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=cyrl_jcuken_ru&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="57"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;si&quot; android:imeSubtypeLocale=&quot;si_LK&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=sinhala,default_layout=sinhala_phonetic,extra_keys=₨&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="58"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;sk&quot; android:imeSubtypeLocale=&quot;sk_SK&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwertz_sk,extra_keys=accent_caron:ě:ř:ž:š:č:ň:ď:ľ:ť@f|accent_ring:ů@s|accent_circonflexe:ô@f|accent_trema:ä:ü:ö@u|accent_aigu:á:é:í:ó:ú:ŕ:ś:ĺ:ý@d&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="59"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;sq&quot; android:imeSubtypeLocale=&quot;sq_AL&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwertz_sq&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="60"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;sr&quot; android:imeSubtypeLocale=&quot;sr_&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=cyrl_lynyertz_sr&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="61"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;sv&quot; android:imeSubtypeLocale=&quot;sv_SE&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_se,extra_keys=accent_aigu:á@d|accent_trema:ä:ö@o|accent_ring:å@s|€&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="62"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;ta&quot; android:imeSubtypeLocale=&quot;ta_IN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=tamil,default_layout=tamil_default&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="63"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;tly&quot; android:imeSubtypeLocale=&quot;tly_AZ&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_tly,extra_keys=á|ú|â|ê|ı|š|ž&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="64"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;tly&quot; android:imeSubtypeLocale=&quot;tly_IR&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;default_layout=arab_hamvaj_tly&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="65"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;tr&quot; android:imeSubtypeLocale=&quot;tr_TR&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_tr,extra_keys=accent_cedille:ç:ş@c|accent_trema:ö:ü@u|accent_circonflexe:â:î:û@f|₺|ı|ğ&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="66"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;uk&quot; android:imeSubtypeLocale=&quot;uk_UA&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=cyrillic,default_layout=cyrl_jcuken_uk,extra_keys=ґ|є|і|ї|₴&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="67"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;uz&quot; android:imeSubtypeLocale=&quot;uz_UZ&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_uz,extra_keys=ʻ|ʼ&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="68"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;vi&quot; android:imeSubtypeLocale=&quot;vi_VN&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_vi&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="69"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `languageTag` is only used in API level 24 and higher (current min is 21)"
+        errorLine1="  &lt;subtype android:label=&quot;%s&quot; android:languageTag=&quot;yo&quot; android:imeSubtypeLocale=&quot;yo_NG&quot; android:imeSubtypeMode=&quot;keyboard&quot; android:isAsciiCapable=&quot;true&quot; android:imeSubtypeExtraValue=&quot;script=latin,default_layout=latn_qwerty_us,extra_keys=₦|ẹ|ọ|ṣ&quot;/>"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/xml/method.xml"
+            line="70"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="    &lt;activity android:name=&quot;juloo.keyboard2.SettingsActivity&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:label=&quot;@string/app_name&quot; android:theme=&quot;@style/settingsTheme&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
+        errorLine2="                                                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="14"
+            column="98"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.13.0 is available: 8.13.2"
+        errorLine1="  id(&quot;com.android.application&quot;) version &quot;8.13.0&quot;"
+        errorLine2="                                        ~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="5"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.window:window-java than 1.3.0 is available: 1.5.1"
+        errorLine1="  implementation(&quot;androidx.window:window-java:1.3.0&quot;)"
+        errorLine2="                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="9"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core than 1.16.0 is available: 1.17.0"
+        errorLine1="  implementation(&quot;androidx.core:core:1.16.0&quot;)"
+        errorLine2="                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="10"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of `compileSdkVersion` than 35 is available: 36"
+        errorLine1="  compileSdkVersion = &quot;android-35&quot;"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="16"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="SpUsage"
+        message="Should use &quot;`sp`&quot; instead of &quot;`dp`&quot; for text sizes"
+        errorLine1="    &lt;item name=&quot;android:textSize&quot;>18dp&lt;/item>"
+        errorLine2="                                  ~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="10"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SpUsage"
+        message="Should use &quot;`sp`&quot; instead of &quot;`dp`&quot; for text sizes"
+        errorLine1="    &lt;item name=&quot;android:textSize&quot;>16dp&lt;/item>"
+        errorLine2="                                  ~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="26"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SpUsage"
+        message="Should use &quot;`sp`&quot; instead of &quot;`dp`&quot; for text sizes"
+        errorLine1="    &lt;item name=&quot;android:textSize&quot;>14dp&lt;/item>"
+        errorLine2="                                  ~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="33"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SpUsage"
+        message="Should use &quot;`sp`&quot; instead of &quot;`dp`&quot; for text sizes"
+        errorLine1="    &lt;item name=&quot;android:textSize&quot;>18dp&lt;/item>"
+        errorLine2="                                  ~~~~">
+        <location
+            file="res/values/styles.xml"
+            line="72"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="UseRequiresApi"
+        message="Use `@RequiresApi(24) instead of `@TargetApi` to propagate the requirement to users of `DirectBootAwarePreferences`"
+        errorLine1="@TargetApi(24)"
+        errorLine2="~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
+            line="11"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UseRequiresApi"
+        message="Use `@RequiresApi(12) instead of `@TargetApi` to propagate the requirement to callers of `extra_keys_of_subtype`"
+        errorLine1="  @TargetApi(12)"
+        errorLine2="  ~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2.java"
+            line="142"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="UseRequiresApi"
+        message="Use `@RequiresApi(12) instead of `@TargetApi` to propagate the requirement to callers of `defaultSubtypes`"
+        errorLine1="  @TargetApi(12)"
+        errorLine2="  ~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2.java"
+            line="165"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="UseRequiresApi"
+        message="Use `@RequiresApi(28) instead of `@TargetApi` to propagate the requirement to users of `Tryhere_OnUnhandledKeyEventListener`"
+        errorLine1="  @TargetApi(28)"
+        errorLine2="  ~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/LauncherActivity.java"
+            line="106"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="Did you mean &quot;hebr_!&quot; instead of &quot;hebr_1&quot;?"
+        errorLine1="    &lt;item>hebr_1_il&lt;/item>"
+        errorLine2="          ~~~~~~">
+        <location
+            file="res/values/layouts.xml"
+            line="41"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;piu&quot; is a common misspelling; did you mean &quot;più&quot;?"
+        errorLine1="    &lt;string name=&quot;pref_numpad_layout_e_high_first&quot;>Prima i numeri piu` alti&lt;/string>"
+        errorLine2="                                                                  ~~~">
+        <location
+            file="res/values-it/strings.xml"
+            line="32"
+            column="67"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;piu&quot; is a common misspelling; did you mean &quot;più&quot;?"
+        errorLine1="    &lt;string name=&quot;pref_numpad_layout_e_low_first&quot;>Prima i numeri piu` bassi&lt;/string>"
+        errorLine2="                                                                 ~~~">
+        <location
+            file="res/values-it/strings.xml"
+            line="33"
+            column="66"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Kağıt&quot; is a common misspelling; did you mean &quot;Kâğıt&quot;?"
+        errorLine1="    &lt;string name=&quot;pref_theme_e_epaper&quot;>E-Kağıt&lt;/string>"
+        errorLine2="                                         ~~~~~">
+        <location
+            file="res/values-tr/strings.xml"
+            line="69"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="Did you mean &quot;Pos!&quot; instead of &quot;Pos1&quot;?"
+        errorLine1="    &lt;string name=&quot;key_descr_home&quot;>Pos1&lt;/string>"
+        errorLine2="                                  ~~~~">
+        <location
+            file="res/values-de/strings.xml"
+            line="121"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="DrawAllocation"
+        message="Avoid object allocations during draw operations: Use `Canvas.getClipBounds(Rect)` instead of `Canvas.getClipBounds()` which allocates a temporary `Rect`"
+        errorLine1="      Rect clip_bounds = canvas.getClipBounds();"
+        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/CustomLayoutEditDialog.java"
+            line="108"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="DrawAllocation"
+        message="Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
+        errorLine1="    _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2View.java"
+            line="278"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="DrawAllocation"
+        message="Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
+        errorLine1="      Rect keyboard_area = new Rect("
+        errorLine2="                           ^">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2View.java"
+            line="303"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 21"
+        errorLine1="    if (VERSION.SDK_INT &lt;= 11)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/ClipboardHistoryService.java"
+            line="25"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `VERSION.SDK_INT &lt; 24` is never true here"
+        errorLine1="    if (VERSION.SDK_INT &lt; 24)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
+            line="21"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="    if (VERSION.SDK_INT >= 24)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
+            line="35"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 12"
+        errorLine1="  @TargetApi(12)"
+        errorLine2="  ~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2.java"
+            line="142"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 12"
+        errorLine1="  @TargetApi(12)"
+        errorLine2="  ~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2.java"
+            line="165"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 21"
+        errorLine1="    if (VERSION.SDK_INT >= 12)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2.java"
+            line="187"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 21"
+        errorLine1="    if (VERSION.SDK_INT &lt; 21)"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/Keyboard2View.java"
+            line="93"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 21"
+        errorLine1="      if (VERSION.SDK_INT >= 14)"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/VoiceImeSwitcher.java"
+            line="143"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-night`.">
+        <location
+            file="res/values-night-v21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values`.">
+        <location
+            file="res/values-v21"/>
+    </issue>
+
+    <issue
+        id="UseCompoundDrawables"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
+        errorLine1="    &lt;LinearLayout style=&quot;@style/anim_box&quot;>"
+        errorLine2="     ~~~~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="7"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="UseCompoundDrawables"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
+        errorLine1="    &lt;LinearLayout style=&quot;@style/anim_box&quot;>"
+        errorLine2="     ~~~~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="11"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="UseCompoundDrawables"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
+        errorLine1="    &lt;LinearLayout style=&quot;@style/anim_box&quot;>"
+        errorLine2="     ~~~~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="15"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?attr/colorKeyboard` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
+        errorLine1="&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:orientation=&quot;vertical&quot; android:background=&quot;?attr/colorKeyboard&quot; android:hardwareAccelerated=&quot;false&quot;>"
+        errorLine2="                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/clipboard_pane.xml"
+            line="2"
+            column="105"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?attr/colorKeyboard` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
+        errorLine1="&lt;juloo.keyboard2.Keyboard2View xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:hardwareAccelerated=&quot;false&quot; android:background=&quot;?attr/colorKeyboard&quot;/>"
+        errorLine2="                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/keyboard.xml"
+            line="2"
+            column="127"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.app_name_release` appears to be unused"
+        errorLine1="    &lt;string name=&quot;app_name_release&quot;>Unexpected Keyboard&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="3"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.app_name_debug` appears to be unused"
+        errorLine1="    &lt;string name=&quot;app_name_debug&quot;>Unexpected Keyboard (Debug)&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="4"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.short_description` appears to be unused"
+        errorLine1="    &lt;string name=&quot;short_description&quot;>Lightweight and privacy-conscious virtual keyboard for Android.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="5"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.store_description` appears to be unused"
+        errorLine1="    &lt;string name=&quot;store_description&quot;>The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads, doesn\&apos;t make any network requests and is Open Source.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="6"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.pref_number_row_summary` appears to be unused"
+        errorLine1="    &lt;string name=&quot;pref_number_row_summary&quot;>Add a number row at the top of the keyboard when the numpad is hidden&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="30"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.emoji_key_bg` appears to be unused"
+        errorLine1="    &lt;item name=&quot;emoji_key_bg&quot; type=&quot;color&quot;>?attr/emoji_button_bg&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="47"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.emoji_key_text` appears to be unused"
+        errorLine1="    &lt;item name=&quot;emoji_key_text&quot; type=&quot;color&quot;>?attr/colorLabel&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="48"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.clipboard_divider_color` appears to be unused"
+        errorLine1="    &lt;item name=&quot;clipboard_divider_color&quot; type=&quot;color&quot;>?attr/colorKey&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="49"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.emoji_button_bg` appears to be unused"
+        errorLine1="    &lt;item name=&quot;emoji_button_bg&quot; type=&quot;color&quot;>#202020&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="64"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.emoji_color` appears to be unused"
+        errorLine1="    &lt;item name=&quot;emoji_color&quot; type=&quot;color&quot;>#ffffff&lt;/item>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/themes.xml"
+            line="65"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="      &lt;ImageView style=&quot;@style/anim&quot; android:id=&quot;@+id/launcher_anim_swipe&quot; android:background=&quot;@drawable/doc_key_u&quot; android:src=&quot;@drawable/doc_anim_swipe&quot;/>"
+        errorLine2="       ~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="8"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="      &lt;ImageView style=&quot;@style/anim&quot; android:id=&quot;@+id/launcher_anim_circle&quot; android:background=&quot;@drawable/doc_key_g&quot; android:src=&quot;@drawable/doc_anim_circle&quot;/>"
+        errorLine2="       ~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="12"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="      &lt;ImageView style=&quot;@style/anim&quot; android:id=&quot;@+id/launcher_anim_round_trip&quot; android:background=&quot;@drawable/doc_key_g&quot; android:src=&quot;@drawable/doc_anim_round_trip&quot;/>"
+        errorLine2="       ~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="16"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="  &lt;EditText android:id=&quot;@+id/text&quot; android:inputType=&quot;text&quot; android:importantForAutofill=&quot;no&quot; android:layout_width=&quot;fill_parent&quot; android:layout_height=&quot;wrap_content&quot; android:layout_margin=&quot;10dp&quot;/>"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/dialog_edit_text.xml"
+            line="3"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;7&quot;, should use `@string` resource"
+        errorLine1="      &lt;TextView style=&quot;@style/anim_text&quot; android:text=&quot;7&quot;/>"
+        errorLine2="                                         ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="9"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;G&quot;, should use `@string` resource"
+        errorLine1="      &lt;TextView style=&quot;@style/anim_text&quot; android:text=&quot;G&quot;/>"
+        errorLine2="                                         ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="13"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;–&quot;, should use `@string` resource"
+        errorLine1="      &lt;TextView style=&quot;@style/anim_text&quot; android:text=&quot;–&quot;/>"
+        errorLine2="                                         ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="17"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;https://github.com/Julow/Unexpected-Keyboard&quot;, should use `@string` resource"
+        errorLine1="    &lt;TextView style=&quot;@style/paragraph&quot; android:text=&quot;https://github.com/Julow/Unexpected-Keyboard&quot; android:autoLink=&quot;web&quot; android:linksClickable=&quot;true&quot;/>"
+        errorLine2="                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/launcher_activity.xml"
+            line="22"
+            column="40"/>
+    </issue>
+
+</issues>
