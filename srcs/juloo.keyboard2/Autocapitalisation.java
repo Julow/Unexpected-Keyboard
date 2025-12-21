@@ -2,8 +2,6 @@ package juloo.keyboard2;
 
 import android.os.Handler;
 import android.text.InputType;
-import android.text.TextUtils;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 
@@ -22,10 +20,6 @@ public final class Autocapitalisation
   /** Keep track of the cursor to recognize cursor movements from typing. */
   int _cursor;
 
-  static int SUPPORTED_CAPS_MODES =
-    InputType.TYPE_TEXT_FLAG_CAP_SENTENCES |
-    InputType.TYPE_TEXT_FLAG_CAP_WORDS;
-
   public Autocapitalisation(Handler h, Callback cb)
   {
     _handler = h;
@@ -37,18 +31,19 @@ public final class Autocapitalisation
    * [started] does initialisation work and must be called before any other
    * event.
    */
-  public void started(EditorInfo info, InputConnection ic)
+  public void started(Config config, InputConnection ic)
   {
     _ic = ic;
-    _caps_mode = info.inputType & TextUtils.CAP_MODE_SENTENCES;
-    if (!Config.globalConfig().autocapitalisation || _caps_mode == 0)
+    EditorConfig ec = config.editor_config;
+    if (!config.autocapitalisation || ec.caps_mode == 0)
     {
       _enabled = false;
       return;
     }
     _enabled = true;
-    _should_enable_shift = (info.initialCapsMode != 0);
-    _should_update_caps_mode = started_should_update_state(info.inputType);
+    _caps_mode = ec.caps_mode;
+    _should_enable_shift = ec.caps_initially_enabled;
+    _should_update_caps_mode = ec.caps_initially_updated;
     callback_now(true);
   }
 
@@ -173,28 +168,6 @@ public final class Autocapitalisation
     switch (c)
     {
       case ' ':
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  /** Whether the caps state should be updated when input starts. [inputType]
-      is the field from the editor info object. */
-  boolean started_should_update_state(int inputType)
-  {
-    int class_ = inputType & InputType.TYPE_MASK_CLASS;
-    int variation = inputType & InputType.TYPE_MASK_VARIATION;
-    if (class_ != InputType.TYPE_CLASS_TEXT)
-      return false;
-    switch (variation)
-    {
-      case InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE:
-      case InputType.TYPE_TEXT_VARIATION_NORMAL:
-      case InputType.TYPE_TEXT_VARIATION_PERSON_NAME:
-      case InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE:
-      case InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT:
-      case InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT:
         return true;
       default:
         return false;

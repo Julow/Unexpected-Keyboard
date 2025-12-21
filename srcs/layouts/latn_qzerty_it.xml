@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<keyboard name="QZERTY (Italiano)" script="latin">
+  <row>
+    <key c="q" ne="1" se="loc esc"/>
+    <key c="z" nw="loc €" ne="2" sw="&amp;"/>
+    <key c="e" nw="é" ne="3" sw="è" se="ē"/>
+    <key c="r" nw="&quot;" ne="4" sw="'"/>
+    <key c="t" ne="5" sw="(" se=")"/>
+    <key c="y" ne="6" sw="_" se="ȳ"/>
+    <key c="u" nw="ù" ne="7" sw="ū"/>
+    <key c="i" nw="ì" ne="8" sw="^" se="ī"/>
+    <key c="o" nw="ò" ne="9" sw="°" se="ō"/>
+    <key c="p" ne="0"/>
+  </row>
+  <row>
+    <key c="a" nw="loc tab" ne="à" se="ā"/>
+    <key c="s"/>
+    <key c="d"/>
+    <key c="f"/>
+    <key c="g" sw="{" se="}"/>
+    <key c="h" sw="[" se="]"/>
+    <key c="j" ne="+" sw="-"/>
+    <key c="k" ne="="/>
+    <key c="l" ne="%" sw="\@"/>
+    <key c="m" ne="·" sw="*"/>
+  </row>
+  <row>
+    <key width="2" c="shift" ne="loc capslock"/>
+    <key c="w" sw="&lt;" se="&gt;"/>
+    <key c="x"/>
+    <key c="c" ne="ç" sw="," se="\?"/>
+    <key c="v" sw=";" se="."/>
+    <key c="b" sw=":" se="/"/>
+    <key c="n" nw="loc accent_tilde" ne="|" se="!"/>
+    <key width="2" c="backspace" ne="delete"/>
+  </row>
+</keyboard>
