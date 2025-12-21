@@ -2,36 +2,36 @@
 <issues format="6" by="lint 8.13.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.13.0)" variant="all" version="8.13.0">
 
     <issue
-        id="ApplySharedPref"
-        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
-        errorLine1="      .commit();"
-        errorLine2="       ~~~~~~~~">
+        id="NewApi"
+        message="Call requires API level 24 (current min is 21): `android.preference.PreferenceManager#getDefaultSharedPreferencesName`"
+        errorLine1="      PreferenceManager.getDefaultSharedPreferencesName(context);"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="srcs/juloo.keyboard2/ClipboardPinView.java"
-            line="89"
-            column="8"/>
+            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
+            line="40"
+            column="25"/>
     </issue>
 
     <issue
-        id="ApplySharedPref"
-        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
-        errorLine1="    _prefs.edit().putBoolean(&quot;clipboard_history_enabled&quot;, e).commit();"
-        errorLine2="                                                             ~~~~~~~~">
+        id="NewApi"
+        message="Call requires API level 24 (current min is 21): `android.content.Context#createDeviceProtectedStorageContext`"
+        errorLine1="    return context.createDeviceProtectedStorageContext()"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="srcs/juloo.keyboard2/Config.java"
-            line="210"
+            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
+            line="41"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Class requires API level 28 (current min is 21): `android.view.View.OnUnhandledKeyEventListener`"
+        errorLine1="  final class Tryhere_OnUnhandledKeyEventListener implements View.OnUnhandledKeyEventListener"
+        errorLine2="                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="srcs/juloo.keyboard2/LauncherActivity.java"
+            line="105"
             column="62"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 30 (current min is 21): `android.content.pm.PackageManager#FEATURE_SENSOR_HINGE_ANGLE`"
-        errorLine1="        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_HINGE_ANGLE);"
-        errorLine2="                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/FoldStateTracker.java"
-            line="27"
-            column="61"/>
     </issue>
 
     <issue
@@ -131,17 +131,6 @@
             file="res/values/styles.xml"
             line="78"
             column="11"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="`@android:style/Theme.DeviceDefault.DayNight` requires API level 29 (current min is 21)"
-        errorLine1="  &lt;style name=&quot;appTheme&quot; parent=&quot;@android:style/Theme.DeviceDefault.DayNight&quot;/>"
-        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/styles.xml"
-            line="82"
-            column="26"/>
     </issue>
 
     <issue
@@ -442,22 +431,6 @@
     </issue>
 
     <issue
-        id="SuspiciousIndentation"
-        message="Suspicious indentation: This is indented but is not nested under the previous expression (`if (conn.setSelectio`...)"
-        errorLine1="      _recv.selection_state_changed(false);"
-        errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/KeyEventHandler.java"
-            line="460"
-            column="7"/>
-        <location
-            file="srcs/juloo.keyboard2/KeyEventHandler.java"
-            line="459"
-            column="5"
-            message="Previous statement here"/>
-    </issue>
-
-    <issue
         id="UnusedAttribute"
         message="Attribute `directBootAware` is only used in API level 24 and higher (current min is 21)"
         errorLine1="    &lt;service android:name=&quot;juloo.keyboard2.Keyboard2&quot; android:label=&quot;@string/app_name&quot; android:permission=&quot;android.permission.BIND_INPUT_METHOD&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
@@ -471,12 +444,12 @@
     <issue
         id="UnusedAttribute"
         message="Attribute `directBootAware` is only used in API level 24 and higher (current min is 21)"
-        errorLine1="    &lt;activity android:name=&quot;juloo.keyboard2.SettingsActivity&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:label=&quot;@string/app_name&quot; android:theme=&quot;@style/settingsTheme&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
-        errorLine2="                                                                                                                                                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="    &lt;activity android:name=&quot;juloo.keyboard2.SettingsActivity&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:theme=&quot;@style/settingsTheme&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
+        errorLine2="                                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="AndroidManifest.xml"
             line="14"
-            column="192"/>
+            column="159"/>
     </issue>
 
     <issue
@@ -1338,17 +1311,6 @@
     </issue>
 
     <issue
-        id="RedundantLabel"
-        message="Redundant label can be removed"
-        errorLine1="    &lt;activity android:name=&quot;juloo.keyboard2.SettingsActivity&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:label=&quot;@string/app_name&quot; android:theme=&quot;@style/settingsTheme&quot; android:exported=&quot;true&quot; android:directBootAware=&quot;true&quot;>"
-        errorLine2="                                                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="AndroidManifest.xml"
-            line="14"
-            column="98"/>
-    </issue>
-
-    <issue
         id="AndroidGradlePluginVersion"
         message="A newer version of com.android.application than 8.13.0 is available: 8.13.2"
         errorLine1="  id(&quot;com.android.application&quot;) version &quot;8.13.0&quot;"
@@ -1434,50 +1396,6 @@
             file="res/values/styles.xml"
             line="72"
             column="35"/>
-    </issue>
-
-    <issue
-        id="UseRequiresApi"
-        message="Use `@RequiresApi(24) instead of `@TargetApi` to propagate the requirement to users of `DirectBootAwarePreferences`"
-        errorLine1="@TargetApi(24)"
-        errorLine2="~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
-            line="11"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="UseRequiresApi"
-        message="Use `@RequiresApi(12) instead of `@TargetApi` to propagate the requirement to callers of `extra_keys_of_subtype`"
-        errorLine1="  @TargetApi(12)"
-        errorLine2="  ~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/Keyboard2.java"
-            line="142"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UseRequiresApi"
-        message="Use `@RequiresApi(12) instead of `@TargetApi` to propagate the requirement to callers of `defaultSubtypes`"
-        errorLine1="  @TargetApi(12)"
-        errorLine2="  ~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/Keyboard2.java"
-            line="165"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UseRequiresApi"
-        message="Use `@RequiresApi(28) instead of `@TargetApi` to propagate the requirement to users of `Tryhere_OnUnhandledKeyEventListener`"
-        errorLine1="  @TargetApi(28)"
-        errorLine2="  ~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/LauncherActivity.java"
-            line="106"
-            column="3"/>
     </issue>
 
     <issue
@@ -1581,56 +1499,12 @@
 
     <issue
         id="ObsoleteSdkInt"
-        message="Unnecessary; `VERSION.SDK_INT &lt; 24` is never true here"
-        errorLine1="    if (VERSION.SDK_INT &lt; 24)"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
-            line="21"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 24"
-        errorLine1="    if (VERSION.SDK_INT >= 24)"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/DirectBootAwarePreferences.java"
-            line="35"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 12"
-        errorLine1="  @TargetApi(12)"
-        errorLine2="  ~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/Keyboard2.java"
-            line="142"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 12"
-        errorLine1="  @TargetApi(12)"
-        errorLine2="  ~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/Keyboard2.java"
-            line="165"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
         message="Unnecessary; `SDK_INT` is always >= 21"
         errorLine1="    if (VERSION.SDK_INT >= 12)"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="srcs/juloo.keyboard2/Keyboard2.java"
-            line="187"
+            line="184"
             column="9"/>
     </issue>
 
@@ -1654,20 +1528,6 @@
             file="srcs/juloo.keyboard2/VoiceImeSwitcher.java"
             line="143"
             column="11"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-night`.">
-        <location
-            file="res/values-night-v21"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values`.">
-        <location
-            file="res/values-v21"/>
     </issue>
 
     <issue
@@ -1880,14 +1740,14 @@
     </issue>
 
     <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="  &lt;EditText android:id=&quot;@+id/text&quot; android:inputType=&quot;text&quot; android:importantForAutofill=&quot;no&quot; android:layout_width=&quot;fill_parent&quot; android:layout_height=&quot;wrap_content&quot; android:layout_margin=&quot;10dp&quot;/>"
-        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        id="HardcodedText"
+        message="Hardcoded string &quot;Custom&quot;, should use `@string` resource"
+        errorLine1="  &lt;EditText android:id=&quot;@+id/text&quot; android:hint=&quot;Custom&quot; android:inputType=&quot;text&quot; android:importantForAutofill=&quot;no&quot; android:layout_width=&quot;fill_parent&quot; android:layout_height=&quot;wrap_content&quot; android:layout_margin=&quot;10dp&quot;/>"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/dialog_edit_text.xml"
             line="3"
-            column="3"/>
+            column="36"/>
     </issue>
 
     <issue

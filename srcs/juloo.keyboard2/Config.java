@@ -207,7 +207,7 @@ public final class Config
   public void set_clipboard_history_enabled(boolean e)
   {
     clipboard_history_enabled = e;
-    _prefs.edit().putBoolean("clipboard_history_enabled", e).commit();
+    _prefs.edit().putBoolean("clipboard_history_enabled", e).apply();
   }
 
   private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)
