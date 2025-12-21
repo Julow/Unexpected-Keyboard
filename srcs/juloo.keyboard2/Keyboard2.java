@@ -1,36 +1,39 @@
 package juloo.keyboard2;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
+import android.os.Build;
 import android.os.Build.VERSION;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.InputType;
-import android.util.Log;
-import android.util.LogPrinter;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InlineSuggestionsRequest;
+import android.view.inputmethod.InlineSuggestionsResponse;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import java.util.AbstractMap.SimpleEntry;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import juloo.keyboard2.prefs.LayoutsPreference;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+  private View _keyboardViewParent = null;
   private Keyboard2View _keyboardView;
+  private InlineAutofill _inlineAutofill;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
@@ -116,11 +119,19 @@ public class Keyboard2 extends InputMethodService
     Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
-    _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+    _inlineAutofill = new InlineAutofill();
+    inflate_keyboardView();
     _keyboardView.reset();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
     _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
+  }
+
+  private void inflate_keyboardView() {
+    _keyboardViewParent = inflate_view(R.layout.keyboard);
+    _inlineAutofill.onInflate(_keyboardViewParent);
+    _keyboardView = _keyboardViewParent.findViewById(R.id.keyboard_view);
+    _keyboardViewParent.getBackground().setAlpha(_config.keyboardOpacity);
   }
 
   @Override
@@ -211,10 +222,10 @@ public class Keyboard2 extends InputMethodService
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
-      _keyboardView = (Keyboard2View)inflate_view(R.layout.keyboard);
+      inflate_keyboardView();
       _emojiPane = null;
       _clipboard_pane = null;
-      setInputView(_keyboardView);
+      setInputView(_keyboardViewParent);
     }
     _keyboardView.reset();
   }
@@ -240,7 +251,7 @@ public class Keyboard2 extends InputMethodService
     _currentSpecialLayout = refresh_special_layout();
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
-    setInputView(_keyboardView);
+    setInputView(_keyboardViewParent);
     Logs.debug_startup_input_view(info, _config);
   }
 
@@ -393,7 +404,7 @@ public class Keyboard2 extends InputMethodService
 
         case SWITCH_BACK_EMOJI:
         case SWITCH_BACK_CLIPBOARD:
-          setInputView(_keyboardView);
+          setInputView(_keyboardViewParent);
           break;
 
         case CHANGE_METHOD_PICKER:
@@ -476,5 +487,20 @@ public class Keyboard2 extends InputMethodService
   private View inflate_view(int layout)
   {
     return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.R)
+  @Nullable
+  @Override
+  public InlineSuggestionsRequest onCreateInlineSuggestionsRequest(@NonNull Bundle uiExtras)
+  {
+    return _inlineAutofill.onCreateInlineSuggestionsRequest(uiExtras);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.R)
+  @Override
+  public boolean onInlineSuggestionsResponse(@NonNull InlineSuggestionsResponse response)
+  {
+    return _inlineAutofill.onInlineSuggestionsResponse(this, response);
   }
 }

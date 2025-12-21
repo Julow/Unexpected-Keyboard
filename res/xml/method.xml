@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<input-method xmlns:android="http://schemas.android.com/apk/res/android" android:settingsActivity="juloo.keyboard2.SettingsActivity" android:supportsSwitchingToNextInputMethod="true">
+<input-method xmlns:android="http://schemas.android.com/apk/res/android" android:settingsActivity="juloo.keyboard2.SettingsActivity" android:supportsInlineSuggestions="true" android:supportsSwitchingToNextInputMethod="true">
   <!-- The first entry of the list makes latn_qwerty_us the default layout for
        unrecognized locales. -->
   <subtype android:label="%s" android:languageTag="en" android:imeSubtypeLocale="en" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_us"/>

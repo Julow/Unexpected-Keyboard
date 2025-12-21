@@ -8,6 +8,7 @@ plugins {
 dependencies {
   implementation("androidx.window:window-java:1.3.0")
   implementation("androidx.core:core:1.16.0")
+  implementation("androidx.autofill:autofill:1.3.0")
   testImplementation("junit:junit:4.13.2")
 }
 
