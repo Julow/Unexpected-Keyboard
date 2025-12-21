@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">가로 모드에서만</string>
     <string name="pref_show_numpad_always">항상</string>
     <string name="pref_number_row_title">숫자 열 표시</string>
-    <string name="pref_number_row_summary">NumPad이 숨겨진 경우 키보드 상단에 숫자 행을 추가합니다.</string>
     <string name="pref_numpad_layout">NumPad 레이아웃</string>
     <string name="pref_numpad_layout_e_high_first">높은 자리수 우선</string>
     <string name="pref_numpad_layout_e_low_first">낮은 자리수 우선</string>

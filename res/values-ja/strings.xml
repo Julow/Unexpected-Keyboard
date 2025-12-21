@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">横向きの時は表示</string>
     <string name="pref_show_numpad_always">表示する</string>
     <string name="pref_number_row_title">数字の行を表示</string>
-    <string name="pref_number_row_summary">テンキーが非表示の場合最上段に数字の行を追加します</string>
     <string name="pref_numpad_layout">テンキーのレイアウト</string>
     <string name="pref_numpad_layout_e_high_first">大きい数字を上に</string>
     <string name="pref_numpad_layout_e_low_first">小さい数字を上に</string>

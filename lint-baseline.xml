@@ -1416,7 +1416,7 @@
         errorLine2="                                                                  ~~~">
         <location
             file="res/values-it/strings.xml"
-            line="32"
+            line="31"
             column="67"/>
     </issue>
 
@@ -1427,7 +1427,7 @@
         errorLine2="                                                                 ~~~">
         <location
             file="res/values-it/strings.xml"
-            line="33"
+            line="32"
             column="66"/>
     </issue>
 
@@ -1438,7 +1438,7 @@
         errorLine2="                                         ~~~~~">
         <location
             file="res/values-tr/strings.xml"
-            line="69"
+            line="68"
             column="42"/>
     </issue>
 
@@ -1449,7 +1449,7 @@
         errorLine2="                                  ~~~~">
         <location
             file="res/values-de/strings.xml"
-            line="121"
+            line="120"
             column="35"/>
     </issue>
 
@@ -1626,17 +1626,6 @@
         <location
             file="res/values/strings.xml"
             line="6"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.pref_number_row_summary` appears to be unused"
-        errorLine1="    &lt;string name=&quot;pref_number_row_summary&quot;>Add a number row at the top of the keyboard when the numpad is hidden&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/strings.xml"
-            line="30"
             column="13"/>
     </issue>
 

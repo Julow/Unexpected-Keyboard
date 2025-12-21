@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Chỉ trong chế độ phong cảnh</string>
     <string name="pref_show_numpad_always">Luôn luôn</string>
     <string name="pref_number_row_title">Hiện số dòng</string>
-    <string name="pref_number_row_summary">Hiện số dòng trên đầu bàn phím khi NumPad ẩn</string>
     <string name="pref_numpad_layout">Bố cục NumPad</string>
     <string name="pref_numpad_layout_e_high_first">Số lớn nhất trước</string>
     <string name="pref_numpad_layout_e_low_first">Số nhỏ nhất trước</string>
