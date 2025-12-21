@@ -18,6 +18,7 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
 import java.util.Arrays;
+import java.util.List;
 
 public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
@@ -292,6 +293,8 @@ public class Keyboard2View extends View
     setMeasuredDimension(width, height);
   }
 
+  Rect _cached_exclusion_rect = new Rect();
+  List<Rect> _cached_exclusion_rects = Arrays.asList(_cached_exclusion_rect);
   @Override
   public void onLayout(boolean changed, int left, int top, int right, int bottom)
   {
@@ -300,12 +303,12 @@ public class Keyboard2View extends View
     if (VERSION.SDK_INT >= 29)
     {
       // Disable the back-gesture on the keyboard area
-      Rect keyboard_area = new Rect(
+      _cached_exclusion_rect.set(
           left + (int)_marginLeft,
           top + (int)_config.marginTop,
           right - (int)_marginRight,
           bottom - (int)_marginBottom);
-      setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
+      setSystemGestureExclusionRects(_cached_exclusion_rects);
     }
   }
 

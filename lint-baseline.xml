@@ -1455,35 +1455,13 @@
 
     <issue
         id="DrawAllocation"
-        message="Avoid object allocations during draw operations: Use `Canvas.getClipBounds(Rect)` instead of `Canvas.getClipBounds()` which allocates a temporary `Rect`"
-        errorLine1="      Rect clip_bounds = canvas.getClipBounds();"
-        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="srcs/juloo.keyboard2/CustomLayoutEditDialog.java"
-            line="108"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="DrawAllocation"
         message="Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
         errorLine1="    _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);"
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="srcs/juloo.keyboard2/Keyboard2View.java"
-            line="278"
+            line="279"
             column="11"/>
-    </issue>
-
-    <issue
-        id="DrawAllocation"
-        message="Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
-        errorLine1="      Rect keyboard_area = new Rect("
-        errorLine2="                           ^">
-        <location
-            file="srcs/juloo.keyboard2/Keyboard2View.java"
-            line="303"
-            column="28"/>
     </issue>
 
     <issue
@@ -1515,7 +1493,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="srcs/juloo.keyboard2/Keyboard2View.java"
-            line="93"
+            line="94"
             column="9"/>
     </issue>
 
