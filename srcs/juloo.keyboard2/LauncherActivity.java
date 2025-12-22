@@ -1,6 +1,5 @@
 package juloo.keyboard2;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
@@ -103,7 +102,6 @@ public class LauncherActivity extends Activity implements Handler.Callback
     return (Animatable)img.getDrawable();
   }
 
-  @TargetApi(28)
   final class Tryhere_OnUnhandledKeyEventListener implements View.OnUnhandledKeyEventListener
   {
     public boolean onUnhandledKeyEvent(View v, KeyEvent ev)

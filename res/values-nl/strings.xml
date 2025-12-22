@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Alleen in liggende stand</string>
     <string name="pref_show_numpad_always">Altijd</string>
     <string name="pref_number_row_title">Toon getallenrij</string>
-    <string name="pref_number_row_summary">Voeg getallenrij toe aan de bovenkant van het toetsenbord als het Num-Pad verborgen is</string>
     <string name="pref_numpad_layout">NumPad lay-out</string>
     <string name="pref_numpad_layout_e_high_first">Hoogste cijfers eerst</string>
     <string name="pref_numpad_layout_e_low_first">Laagste cijfers eerst</string>

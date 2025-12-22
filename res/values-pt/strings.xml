@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Somente no modo paisagem</string>
     <string name="pref_show_numpad_always">Sempre</string>
     <string name="pref_number_row_title">Mostrar fileira de números</string>
-    <string name="pref_number_row_summary">Adicionar uma linha de números no topo do teclado quando o teclado numérico estiver oculto</string>
     <string name="pref_numpad_layout">Layout do teclado numérico</string>
     <string name="pref_numpad_layout_e_high_first">Dígitos maiores primeiro</string>
     <string name="pref_numpad_layout_e_low_first">Dígitos menores primeiro</string>

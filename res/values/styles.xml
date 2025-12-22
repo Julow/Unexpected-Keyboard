@@ -79,7 +79,7 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:orientation">horizontal</item>
   </style>
-  <style name="appTheme" parent="@android:style/Theme.DeviceDefault.DayNight"/>
+  <style name="appTheme" parent="@android:style/Theme.Material.Light"/>
   <style name="settingsTheme" parent="appTheme">
     <!-- Setting this in the activity theme so it propagate to nested
          preference screens. -->

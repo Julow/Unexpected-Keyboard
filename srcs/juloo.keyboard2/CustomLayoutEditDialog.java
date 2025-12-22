@@ -96,6 +96,9 @@ public class CustomLayoutEditDialog
       _on_change_listener = l;
     }
 
+    /** A mutable Rect object that is used during onDraw. */
+    Rect _clip_bounds = new Rect();
+
     @Override
     protected void onDraw(Canvas canvas)
     {
@@ -105,17 +108,17 @@ public class CustomLayoutEditDialog
       setPadding((int)(((int)Math.log10(line_count) + 1 + 1) * digit_width), 0, 0, 0);
       super.onDraw(canvas);
       _ln_paint.setColor(getPaint().getColor());
-      Rect clip_bounds = canvas.getClipBounds();
+      canvas.getClipBounds(_clip_bounds);
       Layout layout = getLayout();
-      int offset = clip_bounds.left + (int)(digit_width / 2.f);
-      int line = layout.getLineForVertical(clip_bounds.top);
+      int offset = _clip_bounds.left + (int)(digit_width / 2.f);
+      int line = layout.getLineForVertical(_clip_bounds.top);
       int skipped = line;
       while (line < line_count)
       {
         int baseline = getLineBounds(line, null);
         canvas.drawText(String.valueOf(line), offset, baseline, _ln_paint);
         line++;
-        if (baseline >= clip_bounds.bottom)
+        if (baseline >= _clip_bounds.bottom)
           break;
       }
     }

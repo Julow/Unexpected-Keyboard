@@ -6,19 +6,19 @@
     <Button style="@style/paragraph" android:text="@string/launcher_button_imepicker" android:onClick="launch_imepicker" android:layout_width="wrap_content"/>
     <LinearLayout style="@style/anim_box">
       <ImageView style="@style/anim" android:id="@+id/launcher_anim_swipe" android:background="@drawable/doc_key_u" android:src="@drawable/doc_anim_swipe"/>
-      <TextView style="@style/anim_text" android:text="7"/>
+      <TextView style="@style/anim_text" android:text="@string/launcher_anim_7"/>
     </LinearLayout>
     <LinearLayout style="@style/anim_box">
       <ImageView style="@style/anim" android:id="@+id/launcher_anim_circle" android:background="@drawable/doc_key_g" android:src="@drawable/doc_anim_circle"/>
-      <TextView style="@style/anim_text" android:text="G"/>
+      <TextView style="@style/anim_text" android:text="@string/launcher_anim_g"/>
     </LinearLayout>
     <LinearLayout style="@style/anim_box">
       <ImageView style="@style/anim" android:id="@+id/launcher_anim_round_trip" android:background="@drawable/doc_key_g" android:src="@drawable/doc_anim_round_trip"/>
-      <TextView style="@style/anim_text" android:text="–"/>
+      <TextView style="@style/anim_text" android:text="@string/launcher_anim_dash"/>
     </LinearLayout>
     <TextView android:id="@+id/launcher_tryhere_text" style="@style/paragraph" android:text="@string/launcher_tryhere"/>
     <EditText android:id="@+id/launcher_tryhere_area" style="@style/paragraph" android:inputType="text" android:hint="@string/launcher_tryhere_hint" android:importantForAutofill="no"/>
     <TextView style="@style/paragraph" android:text="@string/launcher_sourcecode"/>
-    <TextView style="@style/paragraph" android:text="https://github.com/Julow/Unexpected-Keyboard" android:autoLink="web" android:linksClickable="true"/>
+    <TextView style="@style/paragraph" android:text="@string/launcher_repo_url" android:autoLink="web" android:linksClickable="true"/>
   </LinearLayout>
 </ScrollView>

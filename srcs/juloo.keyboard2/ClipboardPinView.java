@@ -86,7 +86,7 @@ public final class ClipboardPinView extends NonScrollListView
       arr.put(entries.get(i));
     store.edit()
       .putString(PERSIST_PREF, arr.toString())
-      .commit();
+      .apply();
   }
 
   class ClipboardPinEntriesAdapter extends BaseAdapter

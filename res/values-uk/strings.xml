@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Тільки в альбомному режимі</string>
     <string name="pref_show_numpad_always">Завжди</string>
     <string name="pref_number_row_title">Показувати рядок чисел</string>
-    <string name="pref_number_row_summary">Додати рядок чисел у верхній частині клавіатури, коли числову клавіатуру приховано</string>
     <string name="pref_numpad_layout">Макет числової клавіатури</string>
     <string name="pref_numpad_layout_e_high_first">Від найбільшої цифри</string>
     <string name="pref_numpad_layout_e_low_first">Від найменшої цифри</string>

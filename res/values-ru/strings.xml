@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Только в ландшафтном режиме</string>
     <string name="pref_show_numpad_always">Всегда</string>
     <string name="pref_number_row_title">Показывать цифры</string>
-    <string name="pref_number_row_summary">Добавить ряд цифр над клавиатурой, когда цифровой блок не активен</string>
     <string name="pref_numpad_layout">Раскладка цифрового блока</string>
     <string name="pref_numpad_layout_e_high_first">Старшие цифры сверху</string>
     <string name="pref_numpad_layout_e_low_first">Младшие цифры сверху</string>

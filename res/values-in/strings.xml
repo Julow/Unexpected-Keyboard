@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Hanya dalam mode lanskap</string>
     <string name="pref_show_numpad_always">Selalu</string>
     <string name="pref_number_row_title">Tampilkan baris nomor</string>
-    <string name="pref_number_row_summary">Menambahkan baris angka di bagian atas keyboard saat numpad disembunyikan</string>
     <string name="pref_numpad_layout">Tata letak NumPad</string>
     <string name="pref_numpad_layout_e_high_first">digit tinggi dulu</string>
     <string name="pref_numpad_layout_e_low_first">digit rendah dulu</string>
