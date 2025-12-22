@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Solo en modo horizontal</string>
     <string name="pref_show_numpad_always">Siempre</string>
     <string name="pref_number_row_title">Mostrar fila de números</string>
-    <string name="pref_number_row_summary">Agrega la fila numérica a la parte superior del teclado si el teclado numérico está oculto</string>
     <string name="pref_numpad_layout">Diseño del teclado numérico</string>
     <string name="pref_numpad_layout_e_high_first">Dígitos descendientes</string>
     <string name="pref_numpad_layout_e_low_first">Dígitos ascendientes</string>

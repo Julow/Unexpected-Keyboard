@@ -2,12 +2,13 @@ import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import java.io.FileOutputStream
 
 plugins {
-  id("com.android.application") version "8.13.0"
+  id("com.android.application") version "8.13.2"
 }
 
 dependencies {
-  implementation("androidx.window:window-java:1.3.0")
-  implementation("androidx.core:core:1.16.0")
+  // Following versions of androidx.window require sdk version 23
+  implementation("androidx.window:window-java:1.4.0")
+  implementation("androidx.core:core:1.16.0") // Version 1.17.0 available with sdk 36
   testImplementation("junit:junit:4.13.2")
 }
 

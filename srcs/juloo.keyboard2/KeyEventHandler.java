@@ -456,7 +456,7 @@ public final class KeyEventHandler
     if (et == null) return;
     final int curs = et.selectionStart;
     // Notify the receiver as Android's [onUpdateSelection] is not triggered.
-    if (conn.setSelection(curs, curs));
+    if (conn.setSelection(curs, curs))
       _recv.selection_state_changed(false);
   }
 

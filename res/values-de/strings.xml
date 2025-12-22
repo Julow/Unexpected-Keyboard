@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Nur im Querformat</string>
     <string name="pref_show_numpad_always">Immer</string>
     <string name="pref_number_row_title">Zahlenreihe anzeigen</string>
-    <string name="pref_number_row_summary">Eine Zahlenreihe oben an der Tastatur hinzufügen, wenn der Ziffernblock ausgeblendet ist</string>
     <string name="pref_numpad_layout">Zahlenblock-Layout</string>
     <string name="pref_numpad_layout_e_high_first">Hohe Ziffern zuerst</string>
     <string name="pref_numpad_layout_e_low_first">Niedrige Ziffern zuerst</string>

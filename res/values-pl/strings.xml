@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Tylko w orientacji poziomej</string>
     <string name="pref_show_numpad_always">Zawsze</string>
     <string name="pref_number_row_title">Pokaż rząd cyfr</string>
-    <string name="pref_number_row_summary">Dodaj rząd cyfr na górze klawiatury, kiedy klaw. numeryczna jest schowana</string>
     <string name="pref_numpad_layout">Układ klawiatury numerycznej</string>
     <string name="pref_numpad_layout_e_high_first">Od największej cyfry</string>
     <string name="pref_numpad_layout_e_low_first">Od najmniejszej cyfry</string>

@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">只在横屏显示</string>
     <string name="pref_show_numpad_always">一直显示</string>
     <string name="pref_number_row_title">显示数字行</string>
-    <string name="pref_number_row_summary">当数字小键盘隐藏时，在键盘上方显示数字按键</string>
     <string name="pref_numpad_layout">数字小键盘布局</string>
     <string name="pref_numpad_layout_e_high_first">大数字在上方</string>
     <string name="pref_numpad_layout_e_low_first">小数字在上方</string>

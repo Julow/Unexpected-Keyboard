@@ -1,6 +1,5 @@
 package juloo.keyboard2;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build.VERSION;
@@ -8,7 +7,6 @@ import android.preference.PreferenceManager;
 import java.util.Map;
 import java.util.Set;
 
-@TargetApi(24)
 public final class DirectBootAwarePreferences
 {
   /* On API >= 24, preferences are read from the device protected storage. This

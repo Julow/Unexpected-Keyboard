@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Doar în mod panoramă</string>
     <string name="pref_show_numpad_always">Întotdeanuna</string>
     <string name="pref_number_row_title">Arată rândul cu numere</string>
-    <string name="pref_number_row_summary">Adaugă un rând deasupra tastaturii când numpad-ul este ascuns</string>
     <string name="pref_numpad_layout">Aspect NumPad</string>
     <string name="pref_numpad_layout_e_high_first">Mai întâi cifrele mari</string>
     <string name="pref_numpad_layout_e_low_first">Mai întâi cifrele mici</string>

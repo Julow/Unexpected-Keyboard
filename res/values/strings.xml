@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Only in landscape mode</string>
     <string name="pref_show_numpad_always">Always</string>
     <string name="pref_number_row_title">Show number row</string>
-    <string name="pref_number_row_summary">Add a number row at the top of the keyboard when the numpad is hidden</string>
     <string name="pref_numpad_layout">NumPad layout</string>
     <string name="pref_numpad_layout_e_high_first">High digits first</string>
     <string name="pref_numpad_layout_e_low_first">Low digits first</string>
@@ -149,4 +148,5 @@
     <string name="pref_clipboard_history_duration_5">At most 5 minutes</string>
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
     <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
+    <string name="pref_dialog_edit_text">Custom definition</string>
 </resources>
