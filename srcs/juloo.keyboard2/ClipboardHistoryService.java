@@ -137,7 +137,9 @@ public final class ClipboardHistoryService
   /** Add what is currently in the system clipboard into the history. */
   void add_current_clip()
   {
-    ClipData clip = _cm.getPrimaryClip();
+    ClipData clip = null;
+    // getPrimaryClip might throw when the keyboard is disconnected.
+    try { clip = _cm.getPrimaryClip(); } catch (Exception _e) {}
     if (clip == null)
       return;
     int count = clip.getItemCount();
