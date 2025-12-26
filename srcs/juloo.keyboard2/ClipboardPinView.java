@@ -30,9 +30,15 @@ public final class ClipboardPinView extends NonScrollListView
   {
     super(ctx, attrs);
     _entries = new ArrayList<String>();
-    _persist_store =
-      ctx.getSharedPreferences("pinned_clipboards", Context.MODE_PRIVATE);
-    load_from_prefs(_persist_store, _entries);
+    // Storage is not be available in direct-boot mode.
+    _persist_store = null;
+    try
+    {
+      _persist_store =
+        ctx.getSharedPreferences("pinned_clipboards", Context.MODE_PRIVATE);
+      load_from_prefs(_persist_store, _entries);
+    }
+    catch (Exception _e) {}
     _adapter = this.new ClipboardPinEntriesAdapter();
     setAdapter(_adapter);
   }
@@ -63,8 +69,6 @@ public final class ClipboardPinView extends NonScrollListView
     ClipboardHistoryService.paste(_entries.get(pos));
   }
 
-  void persist() { save_to_prefs(_persist_store, _entries); }
-
   static void load_from_prefs(SharedPreferences store, List<String> dst)
   {
     String arr_s = store.getString(PERSIST_PREF, null);
@@ -79,12 +83,14 @@ public final class ClipboardPinView extends NonScrollListView
     catch (JSONException _e) {}
   }
 
-  static void save_to_prefs(SharedPreferences store, List<String> entries)
+  void persist()
   {
+    if (_persist_store == null)
+      return;
     JSONArray arr = new JSONArray();
-    for (int i = 0; i < entries.size(); i++)
-      arr.put(entries.get(i));
-    store.edit()
+    for (int i = 0; i < _entries.size(); i++)
+      arr.put(_entries.get(i));
+    _persist_store.edit()
       .putString(PERSIST_PREF, arr.toString())
       .apply();
   }
