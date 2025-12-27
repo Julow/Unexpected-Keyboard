@@ -113,6 +113,16 @@ val genLayoutsList by tasks.registering(Exec::class) {
   commandLine("python", "gen_layouts.py")
 }
 
+val genMethodXml by tasks.registering(Exec::class) {
+  val out = projectDir.resolve("res/xml/method.xml")
+  inputs.file(projectDir.resolve("gen_method_xml.py"))
+  outputs.file(out)
+  doFirst { println("\nGenerating res/xml/method.xml") }
+  doFirst { standardOutput = FileOutputStream(out) }
+  workingDir = projectDir
+  commandLine("python", "gen_method_xml.py")
+}
+
 val checkKeyboardLayouts by tasks.registering(Exec::class) {
   inputs.dir(projectDir.resolve("srcs/layouts"))
   inputs.file(projectDir.resolve("srcs/juloo.keyboard2/KeyValue.java"))
@@ -137,7 +147,7 @@ val compileComposeSequences by tasks.registering(Exec::class) {
 }
 
 tasks.withType(Test::class).configureEach {
-  dependsOn(genLayoutsList, checkKeyboardLayouts, compileComposeSequences)
+  dependsOn(genLayoutsList, checkKeyboardLayouts, compileComposeSequences, genMethodXml)
 }
 
 val initDebugKeystore by tasks.registering(Exec::class) {
@@ -165,5 +175,5 @@ tasks.named("preBuild") {
   // Gradle) but doesn't create a dependency. These rules update files that are
   // checked in the repository that don't need to be updated during regular
   // builds.
-  mustRunAfter(genEmojis, genLayoutsList, compileComposeSequences)
+  mustRunAfter(genEmojis, genLayoutsList, compileComposeSequences, genMethodXml)
 }
