@@ -40,9 +40,11 @@ public class DictionaryListView extends LinearLayout
   {
     DownloadBtnListener listener = this.new DownloadBtnListener();
     _dict_views = new ArrayList<DictView>();
-    for (SupportedDictionaries d : SupportedDictionaries.values())
+    SupportedDictionaries ds = new SupportedDictionaries(ctx.getResources());
+    int len = ds.length();
+    for (int i = 0; i < len; i++)
     {
-      DictView dv = new DictView(ctx, d, listener);
+      DictView dv = new DictView(ctx, ds, i, listener);
       addView(dv.view);
       _dict_views.add(dv);
     }
@@ -58,16 +60,15 @@ public class DictionaryListView extends LinearLayout
       d.refresh(installed, _pending);
   }
 
-  void toggle_installed(SupportedDictionaries desc)
+  void toggle_installed(String dict_name)
   {
-    final String name = desc.internal_name();
-    run_dictionary_action(name, new Runnable()
+    run_dictionary_action(dict_name, new Runnable()
         {
           public void run()
           {
-            if (_dictionaries.get_installed().contains(name))
-              _dictionaries.uninstall(name);
-            else if (install_dictionary_from_internet(desc))
+            if (_dictionaries.get_installed().contains(dict_name))
+              _dictionaries.uninstall(dict_name);
+            else if (install_dictionary_from_internet(dict_name))
               post_toast(R.string.dictionaries_download_success);
             else
               post_toast(R.string.dictionaries_download_failed);
@@ -108,23 +109,24 @@ public class DictionaryListView extends LinearLayout
     {
       for (DictView dv : _dict_views)
         if (dv.download_button == v)
-          toggle_installed(dv.desc);
+          toggle_installed(dv.dict_name);
     }
   }
 
   static final class DictView
   {
     public final View view;
-    public final SupportedDictionaries desc;
+    public final String dict_name;
     public final View download_button;
 
-    public DictView(Context ctx, SupportedDictionaries d, DownloadBtnListener on_click)
+    public DictView(Context ctx, SupportedDictionaries ds, int dict_index,
+        DownloadBtnListener on_click)
     {
       view = View.inflate(ctx, R.layout.dictionary_download_item, null);
-      desc = d;
-      float size_mb = d.size / 1048576.f;
+      dict_name = ds.dict_name(dict_index);
+      float size_mb = ds.size(dict_index) / 1048576.f;
       ((TextView)view.findViewById(R.id.dictionary_download_locale))
-        .setText(ctx.getString(d.name_resource));
+        .setText(ds.display_name(dict_index));
       ((TextView)view.findViewById(R.id.dictionary_download_size))
         .setText(NumberFormat.getInstance().format(size_mb) + "MB");
       download_button = view.findViewById(R.id.dictionary_download_button);
@@ -133,10 +135,9 @@ public class DictionaryListView extends LinearLayout
 
     public void refresh(Set<String> installed, Set<String> pending)
     {
-      String name = desc.internal_name();
-      download_button.setBackgroundResource(installed.contains(name)
+      download_button.setBackgroundResource(installed.contains(dict_name)
           ? R.drawable.ic_delete : R.drawable.ic_download);
-      download_button.setVisibility(pending.contains(name)
+      download_button.setVisibility(pending.contains(dict_name)
           ? View.GONE : View.VISIBLE);
     }
   }
@@ -144,26 +145,26 @@ public class DictionaryListView extends LinearLayout
   static final String DICT_REPO_URL =
     "https://github.com/Julow/Unexpected-Keyboard-dictionaries/raw/refs/heads/main";
 
-  static URL url_of_dictionary(SupportedDictionaries desc)
+  static URL url_of_dictionary(String dict_name)
       throws MalformedURLException
   {
     int format_version = 0;
-    return new URL(DICT_REPO_URL + "/v" + format_version + "/" +
-        desc.internal_name() + ".dict");
+    return new URL(DICT_REPO_URL + "/v" + format_version + "/" + dict_name
+        + ".dict");
   }
 
   /** Returns [true] on success. */
-  boolean install_dictionary_from_internet(SupportedDictionaries desc)
+  boolean install_dictionary_from_internet(String dict_name)
   {
     try
     {
       // Remote files are compressed with gzip at rest. Do not use server side
       // compression and force decompression.
-      URLConnection con = url_of_dictionary(desc).openConnection();
+      URLConnection con = url_of_dictionary(dict_name).openConnection();
       con.setRequestProperty("Accept-Encoding", "identity");
       byte[] data = Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
       Cdict.of_bytes(data); // Check that the dictionary can load.
-      _dictionaries.install(desc.internal_name(), data);
+      _dictionaries.install(dict_name, data);
       return true;
     }
     catch (Exception e)
