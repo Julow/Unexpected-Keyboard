@@ -122,6 +122,7 @@ val genLayoutsList by tasks.registering(Exec::class) {
 val genMethodXml by tasks.registering(Exec::class) {
   val out = projectDir.resolve("res/xml/method.xml")
   inputs.file(projectDir.resolve("gen_method_xml.py"))
+  inputs.file(projectDir.resolve("res/values/dictionaries.xml"))
   outputs.file(out)
   doFirst { println("\nGenerating res/xml/method.xml") }
   doFirst { standardOutput = FileOutputStream(out) }
