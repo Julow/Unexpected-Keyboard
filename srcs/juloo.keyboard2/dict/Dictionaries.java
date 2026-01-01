@@ -8,9 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.Utils;
 
@@ -23,20 +24,42 @@ public final class Dictionaries
     _shared_prefs = ctx.getSharedPreferences("dictionaries", Context.MODE_PRIVATE);
     Set<String> s = _shared_prefs.getStringSet(PREF_INSTALLED_DICTS, null);
     _installed_dictionaries = (s == null) ? new HashSet() : s;
+    _loaded_dictionaries = new TreeMap<String, Cdict[]>();
+  }
+
+  /** Util for finding a dictionary by name. Returns [null] if not found. */
+  public static Cdict find_by_name(Cdict[] dicts, String name)
+  {
+    for (Cdict d : dicts)
+      if (d.name.equals(name))
+        return d;
+    return null;
   }
 
   /** Load an installed dictionary. Return [null] if the requested dictionary
-      is not installed. Throws [IOException] if the dictionary couldn't be
-      loaded. */
+      is not installed or the dictionary couldn't be loaded. */
   public Cdict[] load(String dict_name)
-      throws IOException, Cdict.ConstructionError
+  {
+    if (_loaded_dictionaries.containsKey(dict_name))
+      return _loaded_dictionaries.get(dict_name);
+    Cdict[] dict = load_uncached(dict_name);
+    _loaded_dictionaries.put(dict_name, dict);
+    return dict;
+  }
+
+  Cdict[] load_uncached(String dict_name)
   {
     if (!_installed_dictionaries.contains(dict_name))
       return null;
-    FileInputStream inp = _context.openFileInput(dict_file_name(dict_name));
-    byte[] data = Utils.read_all_bytes(inp);
-    inp.close();
-    return Cdict.of_bytes(data);
+    try
+    {
+      FileInputStream inp = _context.openFileInput(dict_file_name(dict_name));
+      byte[] data = Utils.read_all_bytes(inp);
+      inp.close();
+      return Cdict.of_bytes(data);
+    }
+    catch (IOException e) { return null; }
+    catch (Cdict.ConstructionError e) { return null; }
   }
 
   public Set<String> get_installed() { return _installed_dictionaries; }
@@ -62,6 +85,7 @@ public final class Dictionaries
   public void set_installed(String dict_name)
   {
     _installed_dictionaries.add(dict_name);
+    _loaded_dictionaries.remove(dict_name);
     save();
   }
 
@@ -69,6 +93,7 @@ public final class Dictionaries
   {
     _context.deleteFile(dict_file_name(dict_name));
     _installed_dictionaries.remove(dict_name);
+    _loaded_dictionaries.remove(dict_name);
     save();
   }
 
@@ -77,6 +102,7 @@ public final class Dictionaries
   Context _context;
   Set<String> _installed_dictionaries;
   SharedPreferences _shared_prefs;
+  Map<String, Cdict[]> _loaded_dictionaries;
 
   static final String PREF_INSTALLED_DICTS = "installed";
 

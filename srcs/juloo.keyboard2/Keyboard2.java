@@ -27,6 +27,7 @@ import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
+import juloo.cdict.Cdict;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -169,6 +170,18 @@ public class Keyboard2 extends InputMethodService
     _localeTextLayout = default_layout;
   }
 
+  private void refresh_current_dictionary()
+  {
+    _config.current_dictionary = null;
+    String current = _device_locales.default_.dictionary;
+    if (current == null)
+      return;
+    Cdict[] dicts = _dictionaries.load(current);
+    if (dicts == null)
+      return;
+    _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
+  }
+
   private void refresh_candidates_view()
   {
     boolean should_show = _config.editor_config.should_show_candidates_view;
@@ -183,6 +196,7 @@ public class Keyboard2 extends InputMethodService
   {
     int prev_theme = _config.theme;
     _config.refresh(getResources(), _foldStateTracker.isUnfolded(), _dictionaries);
+    refresh_current_dictionary();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
