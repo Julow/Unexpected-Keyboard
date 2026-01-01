@@ -27,6 +27,7 @@ import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
+import juloo.cdict.Cdict;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -164,6 +165,18 @@ public class Keyboard2 extends InputMethodService
     if (default_layout == null)
       default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
+    refresh_current_dictionary(locales.default_);
+  }
+
+  private void refresh_current_dictionary(DeviceLocales.Loc current_locale)
+  {
+    _config.current_dictionary = null;
+    if (current_locale.dictionary == null)
+      return;
+    Cdict[] dicts = _dictionaries.load(current_locale.dictionary);
+    if (dicts == null)
+      return;
+    _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
   }
 
   private void refresh_candidates_view(EditorInfo info)

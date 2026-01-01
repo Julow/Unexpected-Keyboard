@@ -187,34 +187,6 @@ public final class Config
 
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
-    refresh_current_dictionary(dicts);
-  }
-
-  public void refresh_current_dictionary(Dictionaries dicts)
-  {
-    current_dictionary = null;
-    /* Pick the first dictionary that loads.
-       TODO: Use the dictionary that matches the current locale. */
-    for (String dname : dicts.get_installed())
-    {
-      try
-      {
-        Logs.debug("Loading dictionary " + dname);
-        for (Cdict d : dicts.load(dname))
-        {
-          if (d.name.equals("main"))
-          {
-            current_dictionary = d;
-            return;
-          }
-        }
-      }
-      catch (Exception e)
-      {
-        Logs.exn("Failed to load dictionary " + dname, e);
-      }
-    }
-    Logs.debug("Failed load any dictionary");
   }
 
   public int get_current_layout()

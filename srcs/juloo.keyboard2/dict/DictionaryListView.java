@@ -77,7 +77,6 @@ public class DictionaryListView extends LinearLayout
               post_toast(R.string.dictionaries_download_success);
             else
               post_toast(R.string.dictionaries_download_failed);
-            refresh_current_dictionary();
           }
         });
   }
@@ -177,13 +176,6 @@ public class DictionaryListView extends LinearLayout
       Logs.exn("Failed to install dictionary from the internet", e);
       return false;
     }
-  }
-
-  void refresh_current_dictionary()
-  {
-    Config conf = Config.globalConfig();
-    if (conf != null) // Might be null if the keyboard is not running.
-      conf.refresh_current_dictionary(_dictionaries);
   }
 
   void post_toast(int msg_id)
