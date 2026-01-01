@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.Config;
+import juloo.keyboard2.DeviceLocales;
 import juloo.keyboard2.Logs;
 import juloo.keyboard2.R;
 import juloo.keyboard2.Utils;
@@ -38,15 +39,19 @@ public class DictionaryListView extends LinearLayout
 
   void inflate_views(Context ctx)
   {
+    DeviceLocales locales = DeviceLocales.load(ctx);
+    SupportedDictionaries ds = new SupportedDictionaries(ctx.getResources());
     DownloadBtnListener listener = this.new DownloadBtnListener();
     _dict_views = new ArrayList<DictView>();
-    SupportedDictionaries ds = new SupportedDictionaries(ctx.getResources());
-    int len = ds.length();
-    for (int i = 0; i < len; i++)
+    for (DeviceLocales.Loc loc : locales.installed)
     {
-      DictView dv = new DictView(ctx, ds, i, listener);
-      addView(dv.view);
-      _dict_views.add(dv);
+      int idx = (loc.dictionary != null) ? ds.find(loc.dictionary) : -1;
+      if (idx >= 0)
+      {
+        DictView dv = new DictView(ctx, ds, idx, listener);
+        addView(dv.view);
+        _dict_views.add(dv);
+      }
     }
     refresh();
   }
