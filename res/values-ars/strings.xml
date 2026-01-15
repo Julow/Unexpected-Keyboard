@@ -1,3 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="app_name_release">Unexpected Keyboard</string>
+    <string name="app_name_debug">Unexpected Keyboard (تصحيح الأخطاء)</string>
+    <string name="short_description">كيبورد افتراضي خفيف الوزن ويراعي الخصوصية لآندرويد.</string>
+    <string name="store_description">الميزة الرئيسية إنّه تقدر تكتب حروف أكثر عن طريق تمرير المفاتيح باتّجاه الزوايا\n\nهذا التطبيق أصلاً تسوّى علشان المبرمجين إلّي يستخدمون طرفية Termux.\nالآن صار تمام للاستخدام اليومي.\n\nهذا التطبيق ما فيه إعلانات، ما يقدّم أي طلبات على الشبكة ومفتوح المصدر.</string>
+    <string name="settings_activity_label">إعدادات Unexpected Keyboard</string>
+    <string name="pref_portrait">وضع لوحي</string>
+    <string name="pref_landscape">وضع أفقي</string>
+    <string name="pref_category_layout">التخطيط</string>
+    <string name="pref_label_brightness">اضبط سطوع التسمية</string>
+    <string name="pref_keyboard_opacity">اضبط شفافية خلفية الكيبورد</string>
+    <string name="pref_key_opacity">اضبط شفافية المفتاح</string>
+    <string name="pref_key_activated_opacity">اضبط شفافية المفتاح المضغوط</string>
+    <string name="pref_layout_e_system">إعدادات النظام</string>
+    <string name="pref_layout_e_custom">تخطيط مخصص</string>
+    <string name="pref_layouts_add">ضيف تخطيط بديل</string>
+    <string name="pref_layouts_item">التخطيط %1$d: %2$s</string>
+    <string name="pref_layouts_remove_custom">امسح التخطيط</string>
+    <string name="pref_custom_layout_title">تخطيط مخصص</string>
+    <string name="pref_show_numpad_title">إظهار لوحة الأرقام</string>
+    <string name="pref_show_numpad_never">أبدًا</string>
+    <string name="pref_show_numpad_landscape">بس في الوضع الأفقي</string>
+    <string name="pref_show_numpad_always">دايمًا</string>
+    <string name="pref_number_row_title">أظهر صف الأرقام</string>
+    <string name="pref_number_row_summary">يضيف صف أرقام بأعلى الكيبورد لمّا تكون لوحة الأرقام مخفية</string>
+    <string name="pref_numpad_layout">تخطيط لوحة الأرقام</string>
+    <string name="pref_numpad_layout_e_high_first">الأرقام العالية أولاً</string>
+    <string name="pref_numpad_layout_e_low_first">الأرقام المنخفضة أولاً</string>
+    <string name="pref_extra_keys_title">ضيف مفاتيح للكيبورد</string>
+    <string name="pref_extra_keys_custom">ضيف مفاتيح مخصصة</string>
+    <string name="pref_extra_keys_internal">اختار المفاتيح إلّي تبغى تضيفها للكيبورد</string>
+    <string name="pref_category_typing">الكتابة</string>
+    <string name="pref_swipe_dist_title">مسافة التمرير</string>
+    <string name="pref_swipe_dist_summary">المسافة بين الحروف في زوايا المفاتيح (%s)</string>
+    <string name="pref_long_timeout_title">مهلة الضغط لفترة طويلة</string>
+    <string name="pref_long_interval_title">فاصل تكرير المفتاح</string>
+    <string name="pref_keyrepeat_enabled">تكرير المفتاح عند الضغط المطوّل</string>
+    <string name="pref_lock_double_tap_title">نقرتين على زر Shift للكتابة بالحروف الكبيرة</string>
+    <string name="pref_lock_double_tap_summary">تقدر تقفّل أي مفتاح تعديل بالضغط عليه باستمرار</string>
+    <string name="pref_category_behavior">السلوك</string>
+    <string name="pref_autocapitalisation_title">الكتابة التلقائية بالحروف الكبيرة</string>
+    <string name="pref_autocapitalisation_summary">اضغط على مفتاح Shift في بداية جملة</string>
+    <string name="pref_switch_input_immediate_title">غيّر للكيبورد المستخدم آخر مرة</string>
+    <string name="pref_switch_input_immediate_summary">سلوك مفتاح تغيير الكيبورد</string>
+</resources>
