@@ -127,4 +127,10 @@
     <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
     <string name="clipboard_remove_confirmed">Ja</string>
     <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="key_descr_combining">Kombinierbar Diakritikum</string>
+    <string name="key_descr_dead_key">Tot-Taste</string>
+    <string name="key_descr_zwj">Breitenloser Verbinder</string>
+    <string name="key_descr_zwnj">Bindehemmer</string>
+    <string name="key_descr_nbsp">Geschütztes Leerzeichen</string>
+    <string name="key_descr_nnbsp">Schmales geschütztes Leerzeichen</string>
 </resources>
