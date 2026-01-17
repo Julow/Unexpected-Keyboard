@@ -184,7 +184,9 @@ public class Keyboard2 extends InputMethodService
 
   private void refresh_candidates_view()
   {
-    boolean should_show = _config.editor_config.should_show_candidates_view;
+    boolean should_show =
+      _config.suggestions_enabled
+      && _config.editor_config.should_show_candidates_view;
     if (should_show)
       _candidates_view.refresh_status();
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);

@@ -44,6 +44,7 @@ public final class Config
   public boolean number_row_symbols;
   public float swipe_dist_px;
   public float slide_step_px;
+  public boolean suggestions_enabled;
   // Let the system handle vibration when false.
   public boolean vibrate_custom;
   // Control the vibration if [vibrate_custom] is true.
@@ -77,7 +78,6 @@ public final class Config
   // Dynamically set
   /** Configuration options implied by the connected editor. */
   public EditorConfig editor_config;
-  public boolean should_show_candidates_view;
   public boolean shouldOfferVoiceTyping;
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
@@ -105,7 +105,6 @@ public final class Config
     // from prefs
     refresh(res, foldableUnfolded, dicts);
     // initialized later
-    should_show_candidates_view = false;
     shouldOfferVoiceTyping = false;
     extra_keys_subtype = null;
   }
@@ -138,6 +137,7 @@ public final class Config
     String number_row = _prefs.getString("number_row", "no_number_row");
     add_number_row = !number_row.equals("no_number_row");
     number_row_symbols = number_row.equals("symbols");
+    suggestions_enabled = _prefs.getBoolean("suggestions", true);
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
