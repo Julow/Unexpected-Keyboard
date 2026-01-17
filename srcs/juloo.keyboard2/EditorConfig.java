@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
+import juloo.keyboard2.CandidatesView;
 
 public final class EditorConfig
 {
@@ -30,6 +31,10 @@ public final class EditorConfig
   public CharSequence initial_text_before_cursor = null;
   public int initial_sel_start;
   public int initial_sel_end;
+
+  /** Suggestions. */
+  // Doesn't override [_config.suggestions_enabled].
+  public boolean should_show_candidates_view;
 
   public EditorConfig() {}
 
@@ -75,6 +80,8 @@ public final class EditorConfig
     initial_text_before_cursor = info.getInitialTextBeforeCursor(10, 0);
     initial_sel_start = info.initialSelStart;
     initial_sel_end = info.initialSelEnd;
+    /* Suggestions */
+    should_show_candidates_view = CandidatesView.should_show(info);
   }
 
   String actionLabel_of_imeAction(int action, Resources res)

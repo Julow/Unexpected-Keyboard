@@ -159,10 +159,9 @@ public class Keyboard2 extends InputMethodService
     _localeTextLayout = default_layout;
   }
 
-  private void refresh_candidates_view(EditorInfo info)
+  private void refresh_candidates_view()
   {
-    boolean should_show = CandidatesView.should_show(info);
-    _config.should_show_candidates_view = should_show;
+    boolean should_show = _config.editor_config.should_show_candidates_view;
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -204,7 +203,7 @@ public class Keyboard2 extends InputMethodService
   {
     _config.editor_config.refresh(info, getResources());
     refresh_config();
-    refresh_candidates_view(info);
+    refresh_candidates_view();
     _currentSpecialLayout = refresh_special_layout();
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
@@ -291,6 +290,7 @@ public class Keyboard2 extends InputMethodService
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
     refreshSubtypeImm();
+    refresh_candidates_view();
     _keyboardView.setKeyboard(current_layout());
   }
 
