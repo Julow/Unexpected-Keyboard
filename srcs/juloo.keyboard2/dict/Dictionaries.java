@@ -18,13 +18,11 @@ import juloo.keyboard2.Utils;
 /** Manage and load installed dictionaries. */
 public final class Dictionaries
 {
-  public Dictionaries(Context ctx)
+  public static Dictionaries instance(Context ctx)
   {
-    _context = ctx;
-    _shared_prefs = ctx.getSharedPreferences("dictionaries", Context.MODE_PRIVATE);
-    Set<String> s = _shared_prefs.getStringSet(PREF_INSTALLED_DICTS, null);
-    _installed_dictionaries = (s == null) ? new HashSet() : s;
-    _loaded_dictionaries = new TreeMap<String, Cdict[]>();
+    if (_instance == null)
+      _instance = new Dictionaries(ctx);
+    return _instance;
   }
 
   /** Util for finding a dictionary by name. Returns [null] if not found. */
@@ -45,21 +43,6 @@ public final class Dictionaries
     Cdict[] dict = load_uncached(dict_name);
     _loaded_dictionaries.put(dict_name, dict);
     return dict;
-  }
-
-  Cdict[] load_uncached(String dict_name)
-  {
-    if (!_installed_dictionaries.contains(dict_name))
-      return null;
-    try
-    {
-      FileInputStream inp = _context.openFileInput(dict_file_name(dict_name));
-      byte[] data = Utils.read_all_bytes(inp);
-      inp.close();
-      return Cdict.of_bytes(data);
-    }
-    catch (IOException e) { return null; }
-    catch (Cdict.ConstructionError e) { return null; }
   }
 
   public Set<String> get_installed() { return _installed_dictionaries; }
@@ -104,7 +87,33 @@ public final class Dictionaries
   SharedPreferences _shared_prefs;
   Map<String, Cdict[]> _loaded_dictionaries;
 
+  static Dictionaries _instance = null;
+
   static final String PREF_INSTALLED_DICTS = "installed";
+
+  Dictionaries(Context ctx)
+  {
+    _context = ctx;
+    _shared_prefs = ctx.getSharedPreferences("dictionaries", Context.MODE_PRIVATE);
+    Set<String> s = _shared_prefs.getStringSet(PREF_INSTALLED_DICTS, null);
+    _installed_dictionaries = (s == null) ? new HashSet() : s;
+    _loaded_dictionaries = new TreeMap<String, Cdict[]>();
+  }
+
+  Cdict[] load_uncached(String dict_name)
+  {
+    if (!_installed_dictionaries.contains(dict_name))
+      return null;
+    try
+    {
+      FileInputStream inp = _context.openFileInput(dict_file_name(dict_name));
+      byte[] data = Utils.read_all_bytes(inp);
+      inp.close();
+      return Cdict.of_bytes(data);
+    }
+    catch (IOException e) { return null; }
+    catch (Cdict.ConstructionError e) { return null; }
+  }
 
   void save()
   {

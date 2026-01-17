@@ -120,7 +120,7 @@ public class Keyboard2 extends InputMethodService
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
     _foldStateTracker = new FoldStateTracker(this);
-    _dictionaries = new Dictionaries(this);
+    _dictionaries = Dictionaries.instance(this);
     Config.initGlobalConfig(prefs, getResources(),
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();

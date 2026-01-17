@@ -33,7 +33,7 @@ public class DictionaryListView extends LinearLayout
   {
     super(ctx, attrs);
     setOrientation(LinearLayout.VERTICAL);
-    _dictionaries = new Dictionaries(ctx);
+    _dictionaries = Dictionaries.instance(ctx);
     inflate_views(ctx);
   }
 
