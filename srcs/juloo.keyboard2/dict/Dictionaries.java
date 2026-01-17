@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import juloo.cdict.Cdict;
+import juloo.keyboard2.Logs;
 import juloo.keyboard2.Utils;
 
 /** Manage and load installed dictionaries. */
@@ -84,6 +85,7 @@ public final class Dictionaries
 
   Context _context;
   Set<String> _installed_dictionaries;
+  /** Might be 'null' when safe storage is not available. */
   SharedPreferences _shared_prefs;
   Map<String, Cdict[]> _loaded_dictionaries;
 
@@ -94,10 +96,26 @@ public final class Dictionaries
   Dictionaries(Context ctx)
   {
     _context = ctx;
-    _shared_prefs = ctx.getSharedPreferences("dictionaries", Context.MODE_PRIVATE);
-    Set<String> s = _shared_prefs.getStringSet(PREF_INSTALLED_DICTS, null);
-    _installed_dictionaries = (s == null) ? new HashSet() : s;
+    _installed_dictionaries = new HashSet();
     _loaded_dictionaries = new TreeMap<String, Cdict[]>();
+    load_prefs();
+  }
+
+  void load_prefs()
+  {
+    _shared_prefs = null;
+    try
+    {
+      _shared_prefs =
+        _context.getSharedPreferences("dictionaries", Context.MODE_PRIVATE);
+      Set<String> s = _shared_prefs.getStringSet(PREF_INSTALLED_DICTS, null);
+      if (s != null)
+        _installed_dictionaries.addAll(s);
+    }
+    catch (Exception e)
+    {
+      Logs.exn("", e);
+    }
   }
 
   Cdict[] load_uncached(String dict_name)
@@ -117,6 +135,8 @@ public final class Dictionaries
 
   void save()
   {
+    if (_shared_prefs == null)
+      return;
     _shared_prefs.edit()
       .putStringSet(PREF_INSTALLED_DICTS, _installed_dictionaries)
       .commit();

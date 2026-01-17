@@ -173,7 +173,7 @@ public class DictionaryListView extends LinearLayout
     }
     catch (Exception e)
     {
-      Logs.exn("Failed to install dictionary from the internet", e);
+      Logs.exn("", e);
       return false;
     }
   }
