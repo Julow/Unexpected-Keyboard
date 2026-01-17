@@ -37,6 +37,8 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _currentSpecialLayout;
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
+  /** Installed and current locales. */
+  private DeviceLocales _device_locales;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   private Handler _handler;
@@ -118,6 +120,7 @@ public class Keyboard2 extends InputMethodService
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
+    refreshSubtypeImm();
     create_keyboard_view();
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
     _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
@@ -146,14 +149,14 @@ public class Keyboard2 extends InputMethodService
   {
     _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
-    DeviceLocales locales = DeviceLocales.load(this);
-    if (locales.default_ != null)
+    _device_locales = DeviceLocales.load(this);
+    if (_device_locales.default_ != null)
     {
-      String layout_name = locales.default_.default_layout;
+      String layout_name = _device_locales.default_.default_layout;
       if (layout_name != null)
         default_layout = LayoutsPreference.layout_of_string(getResources(), layout_name);
     }
-    _config.extra_keys_subtype = locales.extra_keys();
+    _config.extra_keys_subtype = _device_locales.extra_keys();
     if (default_layout == null)
       default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
@@ -171,7 +174,6 @@ public class Keyboard2 extends InputMethodService
   {
     int prev_theme = _config.theme;
     _config.refresh(getResources(), _foldStateTracker.isUnfolded());
-    refreshSubtypeImm();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
