@@ -122,8 +122,6 @@
   <style name="dictionary_download_button">
     <item name="android:layout_width">24dp</item>
     <item name="android:layout_height">24dp</item>
-    <item name="android:backgroundTint">@android:color/primary_text_dark</item>
-    <item name="android:backgroundTintMode">src_in</item>
   </style>
   <style name="appTheme" parent="@android:style/Theme.Material.Light"/>
   <style name="settingsTheme" parent="appTheme">
