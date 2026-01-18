@@ -13,7 +13,6 @@ import android.util.LogPrinter;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
@@ -38,6 +37,8 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _currentSpecialLayout;
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
+  /** Installed and current locales. */
+  private DeviceLocales _device_locales;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   private Handler _handler;
@@ -119,6 +120,7 @@ public class Keyboard2 extends InputMethodService
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
+    refreshSubtypeImm();
     create_keyboard_view();
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
     _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
@@ -138,79 +140,31 @@ public class Keyboard2 extends InputMethodService
     _candidates_view = (CandidatesView)_container_view.findViewById(R.id.candidates_view);
   }
 
-  private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
-  {
-    String pkg = getPackageName();
-    for (InputMethodInfo imi : imm.getEnabledInputMethodList())
-      if (imi.getPackageName().equals(pkg))
-        return imm.getEnabledInputMethodSubtypeList(imi, true);
-    return Arrays.asList();
-  }
-
-  private ExtraKeys extra_keys_of_subtype(InputMethodSubtype subtype)
-  {
-    String extra_keys = subtype.getExtraValueOf("extra_keys");
-    String script = subtype.getExtraValueOf("script");
-    if (extra_keys != null)
-      return ExtraKeys.parse(script, extra_keys);
-    return ExtraKeys.EMPTY;
-  }
-
-  private void refreshAccentsOption(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
-  {
-    List<ExtraKeys> extra_keys = new ArrayList<ExtraKeys>();
-    for (InputMethodSubtype s : enabled_subtypes)
-      extra_keys.add(extra_keys_of_subtype(s));
-    _config.extra_keys_subtype = ExtraKeys.merge(extra_keys);
-  }
-
   InputMethodManager get_imm()
   {
     return (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
   }
 
-  private InputMethodSubtype defaultSubtypes(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
-  {
-    if (VERSION.SDK_INT < 24)
-      return imm.getCurrentInputMethodSubtype();
-    // Android might return a random subtype, for example, the first in the
-    // list alphabetically.
-    InputMethodSubtype current_subtype = imm.getCurrentInputMethodSubtype();
-    if (current_subtype == null)
-      return null;
-    for (InputMethodSubtype s : enabled_subtypes)
-      if (s.getLanguageTag().equals(current_subtype.getLanguageTag()))
-        return s;
-    return null;
-  }
-
   private void refreshSubtypeImm()
   {
-    InputMethodManager imm = get_imm();
     _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
-    _config.extra_keys_subtype = null;
-    if (VERSION.SDK_INT >= 12)
+    _device_locales = DeviceLocales.load(this);
+    if (_device_locales.default_ != null)
     {
-      List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
-      InputMethodSubtype subtype = defaultSubtypes(imm, enabled_subtypes);
-      if (subtype != null)
-      {
-        String s = subtype.getExtraValueOf("default_layout");
-        if (s != null)
-          default_layout = LayoutsPreference.layout_of_string(getResources(), s);
-        refreshAccentsOption(imm, enabled_subtypes);
-      }
+      String layout_name = _device_locales.default_.default_layout;
+      if (layout_name != null)
+        default_layout = LayoutsPreference.layout_of_string(getResources(), layout_name);
     }
+    _config.extra_keys_subtype = _device_locales.extra_keys();
     if (default_layout == null)
       default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
   }
 
-  private void refresh_candidates_view(EditorInfo info)
+  private void refresh_candidates_view()
   {
-    boolean should_show = CandidatesView.should_show(info);
-    _config.should_show_candidates_view = should_show;
+    boolean should_show = _config.editor_config.should_show_candidates_view;
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -220,7 +174,6 @@ public class Keyboard2 extends InputMethodService
   {
     int prev_theme = _config.theme;
     _config.refresh(getResources(), _foldStateTracker.isUnfolded());
-    refreshSubtypeImm();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
@@ -252,7 +205,7 @@ public class Keyboard2 extends InputMethodService
   {
     _config.editor_config.refresh(info, getResources());
     refresh_config();
-    refresh_candidates_view(info);
+    refresh_candidates_view();
     _currentSpecialLayout = refresh_special_layout();
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
@@ -339,6 +292,7 @@ public class Keyboard2 extends InputMethodService
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
     refreshSubtypeImm();
+    refresh_candidates_view();
     _keyboardView.setKeyboard(current_layout());
   }
 
