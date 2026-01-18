@@ -3,143 +3,536 @@ package juloo.keyboard2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONException;
 
-public final class ClipboardPinView extends NonScrollListView
-{
-  /** Preference file name that store pinned clipboards. */
-  static final String PERSIST_FILE_NAME = "clipboards";
-  /** Preference name for pinned clipboards. */
-  static final String PERSIST_PREF = "pinned";
-
-  List<String> _entries;
+public final class ClipboardPinView extends NonScrollListView {
+  SnippetManager _manager;
   ClipboardPinEntriesAdapter _adapter;
-  SharedPreferences _persist_store;
+  int _draggingPos = -1;
 
-  public ClipboardPinView(Context ctx, AttributeSet attrs)
-  {
+  // Header views
+  View _headerView;
+  TextView _headerPath;
+  View _headerBack;
+  View _headerAddFolder;
+  View _headerFullScreen;
+
+  // Search state
+  boolean _isSearching = false;
+  String _searchQuery = "";
+  List<SnippetItem> _searchResults;
+  View _headerNormal;
+  View _headerSearchBar;
+  EditText _searchText;
+
+  public ClipboardPinView(Context ctx, AttributeSet attrs) {
     super(ctx, attrs);
-    _entries = new ArrayList<String>();
-    // Storage is not be available in direct-boot mode.
-    _persist_store = null;
-    try
-    {
-      _persist_store =
-        ctx.getSharedPreferences("pinned_clipboards", Context.MODE_PRIVATE);
-      load_from_prefs(_persist_store, _entries);
-    }
-    catch (Exception _e) {}
-    _adapter = this.new ClipboardPinEntriesAdapter();
+    _manager = SnippetManager.get(ctx);
+
+    // Register listener
+    _manager.addListener(new SnippetManager.OnSnippetsChangeListener() {
+      @Override
+      public void onSnippetsChanged() {
+        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) {
+          update_view();
+        } else {
+          post(new Runnable() {
+            @Override
+            public void run() {
+              update_view();
+            }
+          });
+        }
+      }
+    });
+
+    // Setup Header
+    _headerView = View.inflate(ctx, R.layout.clipboard_list_header, null);
+    _headerNormal = _headerView.findViewById(R.id.clipboard_header_normal);
+    _headerSearchBar = _headerView.findViewById(R.id.clipboard_header_search_bar);
+    _searchText = (EditText) _headerView.findViewById(R.id.clipboard_header_search_text);
+    _headerPath = (TextView) _headerView.findViewById(R.id.clipboard_header_path);
+
+    // Initialize buttons
+    _headerBack = _headerView.findViewById(R.id.clipboard_header_back);
+    _headerAddFolder = _headerView.findViewById(R.id.clipboard_header_add_folder);
+    _headerFullScreen = _headerView.findViewById(R.id.clipboard_header_fullscreen);
+
+    // Bind Listeners
+    _headerBack.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        go_up();
+      }
+    });
+
+    _headerAddFolder.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        prompt_new_folder();
+      }
+    });
+
+    _headerView.findViewById(R.id.clipboard_header_search).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        start_search();
+      }
+    });
+
+    _headerView.findViewById(R.id.clipboard_header_add_snippet).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        prompt_new_snippet();
+      }
+    });
+
+    _headerFullScreen.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        open_fullscreen();
+      }
+    });
+
+    _headerView.findViewById(R.id.clipboard_header_search_close).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        end_search();
+      }
+    });
+
+    _searchText.addTextChangedListener(new android.text.TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        onSearchTextChanged(s.toString());
+      }
+
+      @Override
+      public void afterTextChanged(android.text.Editable s) {
+      }
+    });
+
+    addHeaderView(_headerView);
+    _adapter = new ClipboardPinEntriesAdapter();
     setAdapter(_adapter);
+    update_view();
+  }
+
+  // Helper to access from Keyboard2
+  public View getSearchTextView() {
+    return _headerView != null ? _headerView.findViewById(R.id.clipboard_header_search_text) : null;
+  }
+
+  public void onSearchTextChanged(String text) {
+    _searchQuery = text;
+    update_search_results();
+  }
+
+  void start_search() {
+    _isSearching = true;
+    _headerNormal.setVisibility(View.GONE);
+    _headerSearchBar.setVisibility(View.VISIBLE);
+    // _searchText.requestFocus(); // Not needed for fake input
+
+    if (getContext() instanceof Keyboard2) {
+      ((Keyboard2) getContext()).setInClipboardSearchMode(true);
+    } else {
+      // Full screen mode - Real Focus needed here?
+      // If we changed to TextView, we CAN'T focus it.
+      // So Full Screen mode breaks with this "Elegant" solution unless we use
+      // EditText there and TextView here?
+      // Or we make the TextView focusable in touch mode in XML?
+      // Actually, if we use TextView, full screen mode won't show keyboard
+      // automatically.
+      // This is a tradeoff.
+      // But the user liked full screen mode behavior.
+      // "Now that I try it I can see why you had it open the fullscreen view. I
+      // didn't think about the recursive keyboard issue."
+      // If I change XML to TextView, I break FullScreen input.
+      // Solution: In start_search, if FullScreen, we might need a different approach
+      // or rely on the same interception?
+      // FullScreen Activity has its own InputConnection!
+      // Full screen mode: Enable focus for system IME
+      _searchText.setFocusable(true);
+      _searchText.setFocusableInTouchMode(true);
+      _searchText.requestFocus();
+
+      android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getContext()
+          .getSystemService(Context.INPUT_METHOD_SERVICE);
+      if (imm != null) {
+        imm.showSoftInput(_searchText, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+      }
+    }
+
+    update_search_results();
+  }
+
+  void end_search() {
+    _isSearching = false;
+    _searchQuery = "";
+    _searchText.setText("");
+    _headerSearchBar.setVisibility(View.GONE);
+    _headerNormal.setVisibility(View.VISIBLE);
+
+    _searchText.clearFocus();
+
+    if (getContext() instanceof Keyboard2) {
+      ((Keyboard2) getContext()).setInClipboardSearchMode(false);
+    } else {
+      android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getContext()
+          .getSystemService(Context.INPUT_METHOD_SERVICE);
+      if (imm != null) {
+        imm.hideSoftInputFromWindow(_searchText.getWindowToken(), 0);
+      }
+    }
+
+    update_view();
+  }
+
+  void update_search_results() {
+    if (_isSearching) {
+      _searchResults = _manager.findSnippets(_searchQuery);
+      _adapter.notifyDataSetChanged();
+    }
   }
 
   /** Pin a clipboard and persist the change. */
-  public void add_entry(String text)
-  {
-    _entries.add(text);
-    _adapter.notifyDataSetChanged();
-    persist();
-    invalidate();
+  public void add_entry(String text) {
+    _manager.getCurrentFolder().addItem(new Snippet(text));
+    _manager.save();
+    update_view();
   }
 
-  /** Remove the entry at index [pos] and persist the change. */
-  public void remove_entry(int pos)
-  {
-    if (pos < 0 || pos >= _entries.size())
+  /** Remove the entry. */
+  public void remove_entry(int pos) {
+    if (_isSearching) {
+      // Can't easily remove from search results safely without mapping back to real
+      // folder
+      // For now, disabling remove in search or handle it smartly
+      SnippetItem item = _searchResults.get(pos);
+      SnippetFolder parent = _manager.getParent(item);
+      if (parent != null) {
+        parent.removeItem(item);
+        _manager.save();
+        update_search_results();
+      }
       return;
-    _entries.remove(pos);
-    _adapter.notifyDataSetChanged();
-    persist();
-    invalidate();
+    }
+    _manager.getCurrentFolder().removeItem(pos);
+    _manager.save();
+    update_view();
   }
 
   /** Send the specified entry to the editor. */
-  public void paste_entry(int pos)
-  {
-    ClipboardHistoryService.paste(_entries.get(pos));
-  }
-
-  static void load_from_prefs(SharedPreferences store, List<String> dst)
-  {
-    String arr_s = store.getString(PERSIST_PREF, null);
-    if (arr_s == null)
+  public void paste_entry(final Snippet snippet) {
+    if (_isSearching) {
+      end_search();
+      // Delay paste to allow focus logic to settle?
+      // Specifically if in Keyboard2 logic, end_search resets layout.
+      // We need InputConnection to target the app.
+      // Clearing focus in end_search handles this mostly?
+      postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          ClipboardHistoryService.paste(snippet.content);
+        }
+      }, 100);
       return;
-    try
-    {
-      JSONArray arr = new JSONArray(arr_s);
-      for (int i = 0; i < arr.length(); i++)
-        dst.add(arr.getString(i));
     }
-    catch (JSONException _e) {}
+    ClipboardHistoryService.paste(snippet.content);
   }
 
-  void persist()
-  {
-    if (_persist_store == null)
+  void update_view() {
+    if (_isSearching) {
+      update_search_results();
       return;
-    JSONArray arr = new JSONArray();
-    for (int i = 0; i < _entries.size(); i++)
-      arr.put(_entries.get(i));
-    _persist_store.edit()
-      .putString(PERSIST_PREF, arr.toString())
-      .apply();
+    }
+    // Update Header
+    SnippetFolder current = _manager.getCurrentFolder();
+    if (_manager.isAtRoot()) {
+      _headerPath.setText("Snippets");
+      if (getActivity() instanceof SnippetManagerActivity) {
+        _headerBack.setVisibility(View.VISIBLE);
+      } else {
+        _headerBack.setVisibility(View.GONE);
+      }
+    } else {
+      _headerPath.setText(current.name);
+      _headerBack.setVisibility(View.VISIBLE);
+    }
+
+    _adapter.notifyDataSetChanged();
+    // Ensure layout updates if size changed
+    requestLayout();
   }
 
-  class ClipboardPinEntriesAdapter extends BaseAdapter
-  {
-    public ClipboardPinEntriesAdapter() {}
+  void go_up() {
+    if (_isSearching) {
+      end_search();
+      return;
+    }
+    SnippetFolder current = _manager.getCurrentFolder();
+    SnippetFolder parent = _manager.getParent(current);
+    if (parent != null) {
+      _manager.setCurrentFolder(parent);
+      update_view();
+    } else if (_manager.isAtRoot() && getActivity() instanceof SnippetManagerActivity) {
+      _manager.shouldRestoreClipboardView = true;
+      getActivity().finish();
+    } else if (!_manager.isAtRoot()) {
+      // Fallback if parent not found (orphan?), go root
+      _manager.setCurrentFolder(_manager.getRoot());
+      update_view();
+    }
+  }
+
+  void prompt_new_folder() {
+    android.content.Intent intent = new android.content.Intent(getContext(), SnippetFolderCreationActivity.class);
+    intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+    getContext().startActivity(intent);
+  }
+
+  void reorder_entry(int from, int to) {
+    SnippetFolder current = _manager.getCurrentFolder();
+    SnippetItem item = current.items.remove(from);
+    current.items.add(to, item);
+    _manager.save();
+    update_view();
+  }
+
+  void move_entry(String uuid) {
+    android.content.Intent intent = new android.content.Intent(getContext(), SnippetMoveActivity.class);
+    intent.putExtra(SnippetMoveActivity.EXTRA_ITEM_UUID, uuid);
+    intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+    getContext().startActivity(intent);
+  }
+
+  void open_fullscreen() {
+    android.content.Intent intent = new android.content.Intent(getContext(), SnippetManagerActivity.class);
+    intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+    getContext().startActivity(intent);
+  }
+
+  void prompt_new_snippet() {
+    android.content.Intent intent = new android.content.Intent(getContext(), SnippetCreationActivity.class);
+    intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+    getContext().startActivity(intent);
+  }
+
+  class ClipboardPinEntriesAdapter extends BaseAdapter {
+    static final int TYPE_SNIPPET = 0;
+    static final int TYPE_FOLDER = 1;
+
+    public ClipboardPinEntriesAdapter() {
+    }
 
     @Override
-    public int getCount() { return _entries.size(); }
-    @Override
-    public Object getItem(int pos) { return _entries.get(pos); }
-    @Override
-    public long getItemId(int pos) { return _entries.get(pos).hashCode(); }
+    public int getCount() {
+      if (_isSearching)
+        return _searchResults == null ? 0 : _searchResults.size();
+      return _manager.getCurrentFolder().items.size();
+    }
 
     @Override
-    public View getView(final int pos, View v, ViewGroup _parent)
-    {
-      if (v == null)
-        v = View.inflate(getContext(), R.layout.clipboard_pin_entry, null);
-      ((TextView)v.findViewById(R.id.clipboard_pin_text))
-        .setText(_entries.get(pos));
-      v.findViewById(R.id.clipboard_pin_paste).setOnClickListener(
-          new View.OnClickListener()
-          {
-            @Override
-            public void onClick(View v) { paste_entry(pos); }
-          });
-      v.findViewById(R.id.clipboard_pin_remove).setOnClickListener(
-          new View.OnClickListener()
-          {
-            @Override
-            public void onClick(View v)
-            {
-              AlertDialog d = new AlertDialog.Builder(getContext())
-                .setTitle(R.string.clipboard_remove_confirm)
-                .setPositiveButton(R.string.clipboard_remove_confirmed,
-                    new DialogInterface.OnClickListener(){
-                      public void onClick(DialogInterface _dialog, int _which)
-                      {
-                        remove_entry(pos);
-                      }
-                    })
-                .setNegativeButton(android.R.string.cancel, null)
-                .create();
-              Utils.show_dialog_on_ime(d, v.getWindowToken());
-            }
-          });
+    public Object getItem(int pos) {
+      if (_isSearching)
+        return _searchResults.get(pos);
+      return _manager.getCurrentFolder().items.get(pos);
+    }
+
+    @Override
+    public long getItemId(int pos) {
+      return pos;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+      return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+      SnippetItem item = (SnippetItem) getItem(position);
+      return (item instanceof SnippetFolder) ? TYPE_FOLDER : TYPE_SNIPPET;
+    }
+
+    @Override
+    public View getView(final int pos, View v, ViewGroup _parent) {
+      final SnippetItem item = (SnippetItem) getItem(pos);
+      int type = getItemViewType(pos);
+
+      if (v == null) {
+        if (type == TYPE_FOLDER) {
+          v = View.inflate(getContext(), R.layout.clipboard_folder_entry, null);
+        } else {
+          v = View.inflate(getContext(), R.layout.clipboard_pin_entry, null);
+        }
+      }
+
+      if (type == TYPE_FOLDER) {
+        SnippetFolder folder = (SnippetFolder) item;
+        ((TextView) v.findViewById(R.id.clipboard_folder_text)).setText(folder.name);
+
+        // Open folder on click
+        v.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            _manager.setCurrentFolder((SnippetFolder) item);
+            update_view();
+          }
+        });
+
+        // Move folder
+        View moveBtn = v.findViewById(R.id.clipboard_folder_move);
+        moveBtn.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            move_entry(item.uuid);
+          }
+        });
+        moveBtn.setOnLongClickListener(new View.OnLongClickListener() {
+          @Override
+          public boolean onLongClick(View v) {
+            _draggingPos = pos;
+            v.startDragAndDrop(android.content.ClipData.newPlainText("", ""), new View.DragShadowBuilder(v), null, 0);
+            update_view();
+            return true;
+          }
+        });
+
+        // Remove folder button
+        v.findViewById(R.id.clipboard_folder_remove).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            confirm_remove(pos);
+          }
+        });
+
+      } else {
+        final Snippet snippet = (Snippet) item;
+        TextView tv = (TextView) v.findViewById(R.id.clipboard_pin_text);
+        tv.setText(snippet.content);
+        tv.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            paste_entry(snippet);
+          }
+        });
+
+        // Allow editing name if we supported it, but content is main thing
+
+        View moveBtn = v.findViewById(R.id.clipboard_pin_move);
+        moveBtn.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            move_entry(item.uuid);
+          }
+        });
+        moveBtn.setOnLongClickListener(new View.OnLongClickListener() {
+          @Override
+          public boolean onLongClick(View v) {
+            _draggingPos = pos;
+            v.startDragAndDrop(android.content.ClipData.newPlainText("", ""), new View.DragShadowBuilder(v), null, 0);
+            update_view();
+            return true;
+          }
+        });
+
+        v.findViewById(R.id.clipboard_pin_remove).setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                confirm_remove(pos);
+              }
+            });
+
+      }
+
+      if (pos == _draggingPos) {
+        v.setAlpha(0.3f);
+      } else {
+        v.setAlpha(1.0f);
+      }
+
+      v.setOnDragListener(new View.OnDragListener() {
+
+        @Override
+        public boolean onDrag(View v, android.view.DragEvent event) {
+          switch (event.getAction()) {
+            case android.view.DragEvent.ACTION_DRAG_STARTED:
+              return true;
+            case android.view.DragEvent.ACTION_DRAG_ENTERED:
+              if (_draggingPos != -1 && _draggingPos != pos) {
+                v.setBackgroundColor(0x40888888);
+              }
+              return true;
+            case android.view.DragEvent.ACTION_DRAG_EXITED:
+              v.setBackground(null);
+              return true;
+            case android.view.DragEvent.ACTION_DROP:
+              v.setBackground(null);
+              if (_draggingPos != -1 && _draggingPos != pos) {
+                reorder_entry(_draggingPos, pos);
+                _draggingPos = -1;
+              }
+              return true;
+            case android.view.DragEvent.ACTION_DRAG_ENDED:
+              v.setBackground(null);
+              if (_draggingPos != -1) {
+                _draggingPos = -1;
+                post(new Runnable() {
+                  @Override
+                  public void run() {
+                    update_view();
+                  }
+                });
+              }
+              return true;
+          }
+          return false;
+        }
+
+      });
+
       return v;
     }
+
+    void confirm_remove(final int pos) {
+      AlertDialog d = new AlertDialog.Builder(getContext())
+          .setTitle(R.string.clipboard_remove_confirm)
+          .setPositiveButton(R.string.clipboard_remove_confirmed,
+              new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface _dialog, int _which) {
+                  remove_entry(pos);
+                }
+              })
+          .setNegativeButton(android.R.string.cancel, null)
+          .create();
+      Utils.show_dialog_on_ime(d, getWindowToken());
+    }
+
+  }
+
+  private android.app.Activity getActivity() {
+    Context context = getContext();
+    while (context instanceof android.content.ContextWrapper) {
+      if (context instanceof android.app.Activity) {
+        return (android.app.Activity) context;
+      }
+      context = ((android.content.ContextWrapper) context).getBaseContext();
+    }
+    return null;
   }
 }

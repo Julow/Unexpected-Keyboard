@@ -1,0 +1,11 @@
+// .devcontainer/devcontainer.json
+{
+    "name": "unexpected-",
+    "dockerFile": "../Dockerfile",
+    "forwardPorts": [8080],
+    // Remove the "customizations/vscode" property
+        "settings": {
+            "customizations/vscode/extensions": ["dbaeumer.vscode-eslint"]
+        }
+    }
+}

@@ -23,6 +23,11 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <activity android:name="juloo.keyboard2.SnippetFolderCreationActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" android:windowSoftInputMode="stateVisible" />
+    <activity android:name="juloo.keyboard2.SnippetCreationActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" android:windowSoftInputMode="stateVisible" />
+    <activity android:name="juloo.keyboard2.SnippetMoveActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" />
+    <activity android:name=".SnippetManagerActivity" android:label="Snippet Manager" android:theme="@android:style/Theme.DeviceDefault.NoActionBar"/>
   </application>
 
   <!-- To query enabled input methods for voice IME detection -->

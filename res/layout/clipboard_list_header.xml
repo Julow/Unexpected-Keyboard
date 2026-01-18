@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+    
+    <LinearLayout
+        android:id="@+id/clipboard_header_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/clipboard_header_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Back"
+            android:padding="4dp"
+            android:tint="?attr/colorLabel"
+            android:visibility="gone"/>
+    
+        <TextView
+            android:id="@+id/clipboard_header_path"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="8dp"
+            android:text="/"
+            android:textColor="?attr/colorLabel"
+            android:textSize="16dp"/>
+    
+    
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            
+            <ImageView
+                android:id="@+id/clipboard_header_add_snippet"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_add"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="4dp"
+                android:tint="?attr/colorLabel"
+                android:contentDescription="New Snippet"/>
+    
+            <ImageView
+                android:id="@+id/clipboard_header_add_folder"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_folder"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="4dp"
+                android:tint="?attr/colorLabel"
+                android:contentDescription="New Folder"/>
+            <ImageView
+                android:id="@+id/clipboard_header_search"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_search"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="4dp"
+                android:tint="?attr/colorLabel"
+                android:contentDescription="Search"/>
+                
+            <ImageView
+                android:id="@+id/clipboard_header_fullscreen"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_fullscreen"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="4dp"
+                android:tint="?attr/colorLabel"
+                android:contentDescription="Full Screen"/>
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/clipboard_header_search_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+        
+        <ImageView
+            android:id="@+id/clipboard_header_search_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_close"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="4dp"
+            android:tint="?attr/colorLabel"/>
+            
+        <EditText
+            android:id="@+id/clipboard_header_search_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Search snippets..."
+            android:textColor="?attr/colorLabel"
+            android:textColorHint="?attr/colorSubLabel"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"/>
+            
+    </LinearLayout>
+</LinearLayout>

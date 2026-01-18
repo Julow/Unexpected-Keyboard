@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+    
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_folder"
+        android:contentDescription="Folder"
+        android:layout_marginRight="8dp"/>
+
+    <TextView
+        android:id="@+id/clipboard_folder_text"
+        style="@style/clipboardEntry"
+        android:textStyle="bold"
+        android:layout_weight="1"/>
+
+    <LinearLayout style="@style/clipboardEntryButtons">
+        <!-- Optional: Rename button could go here -->
+        <View
+            android:id="@+id/clipboard_folder_move"
+            style="@style/clipboardEntryButton"
+            android:background="@drawable/ic_move"/>
+        <View
+            android:id="@+id/clipboard_folder_remove"
+            style="@style/clipboardEntryButton"
+            android:background="@drawable/ic_delete"/>
+    </LinearLayout>
+</LinearLayout>
