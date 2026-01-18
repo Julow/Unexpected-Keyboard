@@ -45,6 +45,7 @@ public final class KeyValue implements Comparable<KeyValue>
     HORN,
     HOOK_ABOVE,
     DOUBLE_GRAVE,
+    SMALL_CAPS,
     SUPERSCRIPT,
     SUBSCRIPT,
     RING,
@@ -357,7 +358,12 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private static KeyValue diacritic(int symbol, Modifier m)
   {
-    return new KeyValue(String.valueOf((char)symbol), Kind.Modifier, m.ordinal(),
+    return diacritic(String.valueOf((char)symbol), m);
+  }
+
+  private static KeyValue diacritic(String symbol, Modifier m)
+  {
+    return new KeyValue(symbol, Kind.Modifier, m.ordinal(),
         FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
   }
 
@@ -552,6 +558,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
       case "accent_double_grave": return diacritic(0xE063, Modifier.DOUBLE_GRAVE);
+      case "accent_small_caps": return diacritic("Aᴀ", Modifier.SMALL_CAPS);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
