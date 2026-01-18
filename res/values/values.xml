@@ -9,4 +9,15 @@
   <dimen name="candidates_spacing">8dp</dimen>
   <!-- Will be overwritten automatically by Gradle for the debug build variant -->
   <bool name="debug_logs">false</bool>
+  <!-- Color fallback for the Monet themes on Android API < 31. This makes the
+       Monet themes very similar to the "Dark" and "Light" themes. -->
+  <color name="system_accent1_400">#3399ff</color>
+  <color name="system_accent1_600">#33cc33</color>
+  <color name="system_neutral1_0">#ffffff</color>
+  <color name="system_neutral1_100">#e3e3e3</color>
+  <color name="system_neutral1_400">#cccccc</color>
+  <color name="system_neutral1_50">#cccccc</color>
+  <color name="system_neutral1_500">#333333</color>
+  <color name="system_neutral1_800">#333333</color>
+  <color name="system_neutral1_900">#1b1b1b</color>
 </resources>
