@@ -45,6 +45,7 @@ public class ExtraKeysPreference extends PreferenceCategory
     "accent_hook_above",
     "accent_horn",
     "accent_double_grave",
+    "accent_small_caps",
     "€",
     "ß",
     "£",
@@ -223,6 +224,7 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "accent_hook_above":
       case "accent_horn":
       case "accent_double_grave":
+      case "accent_small_caps":
         id = R.string.key_descr_dead_key;
         break;
 

@@ -81,6 +81,7 @@ public final class KeyModifier
       case HORN: return apply_compose(k, ComposeKeyData.accent_horn);
       case HOOK_ABOVE: return apply_compose(k, ComposeKeyData.accent_hook_above);
       case DOUBLE_GRAVE: return apply_compose(k, ComposeKeyData.accent_double_grave);
+      case SMALL_CAPS: return apply_compose(k, ComposeKeyData.accent_small_caps);
       case ARROW_RIGHT: return apply_combining_char(k, "\u20D7");
       case SELECTION_MODE: return apply_selection_mode(k);
       default: return k;
