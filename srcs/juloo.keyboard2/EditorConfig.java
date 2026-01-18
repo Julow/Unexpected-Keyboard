@@ -1,6 +1,7 @@
 package juloo.keyboard2;
 
 import android.content.res.Resources;
+import android.os.Build.VERSION;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
@@ -28,7 +29,7 @@ public final class EditorConfig
   public boolean caps_initially_updated = false;
 
   /** CurrentlyTypedWord. */
-  public CharSequence initial_text_before_cursor = null;
+  public CharSequence initial_text_before_cursor = null; // Might be [null].
   public int initial_sel_start;
   public int initial_sel_end;
 
@@ -77,7 +78,8 @@ public final class EditorConfig
     caps_initially_enabled = (info.initialCapsMode != 0);
     caps_initially_updated = caps_should_update_state(info);
     /* CurrentlyTypedWord */
-    initial_text_before_cursor = info.getInitialTextBeforeCursor(10, 0);
+    if (VERSION.SDK_INT >= 30)
+      initial_text_before_cursor = info.getInitialTextBeforeCursor(10, 0);
     initial_sel_start = info.initialSelStart;
     initial_sel_end = info.initialSelEnd;
     /* Suggestions */
