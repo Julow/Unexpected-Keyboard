@@ -449,9 +449,6 @@ public class Keyboard2 extends InputMethodService
     }
 
     public InputConnection getCurrentInputConnection() {
-      if (_in_clipboard_search_mode && _search_input_connection != null) {
-        return _search_input_connection;
-      }
       return Keyboard2.this.getCurrentInputConnection();
     }
 
@@ -463,47 +460,7 @@ public class Keyboard2 extends InputMethodService
       _candidates_view.set_candidates(suggestions);
     }
   }
-
-  public void setInClipboardSearchMode(boolean searching) {
-    if (_clipboard_pane == null)
-      return;
-    View history = _clipboard_pane.findViewById(R.id.history_view);
-    Keyboard2View kb = (Keyboard2View) _clipboard_pane.findViewById(R.id.clipboard_keyboard);
-    if (kb == null)
-      return;
-
-    _in_clipboard_search_mode = searching;
-
-    if (searching) {
-      if (history != null)
-        history.setVisibility(View.GONE);
-      kb.setKeyboard(current_layout());
-
-      // Initialize fake input connection
-      // Need reference to the TextView in the header
-      ClipboardPinView cpv = (ClipboardPinView) _clipboard_pane.findViewById(R.id.clipboard_pin_view);
-      if (cpv != null) {
-        android.widget.TextView tv = (android.widget.TextView) cpv.getSearchTextView();
-        if (tv != null) {
-          _search_input_connection = new SearchInputConnection(tv);
-          // Reset text?
-          tv.setText("");
-          // Ensure editable
-          if (!(tv.getText() instanceof android.text.Editable)) {
-            tv.setText("", android.widget.TextView.BufferType.EDITABLE);
-          }
-        }
-      }
-    } else {
-      if (history != null)
-        history.setVisibility(View.VISIBLE);
-      kb.setKeyboard(loadLayout(R.xml.clipboard_bottom_row));
-      _search_input_connection = null;
-    }
-    // Ensure key event handler is attached?
-    // Actually Keyboard2View always uses Config.handler, so it should be fine.
-  }
-
+ 
   private IBinder getConnectionToken() {
     return getWindow().getWindow().getAttributes().token;
   }
@@ -513,45 +470,5 @@ public class Keyboard2 extends InputMethodService
   }
 
   // Search Interception Logic
-  private boolean _in_clipboard_search_mode = false;
-  private SearchInputConnection _search_input_connection;
 
-  private class SearchInputConnection extends android.view.inputmethod.BaseInputConnection {
-    private final android.widget.TextView _target;
-
-    public SearchInputConnection(android.widget.TextView target) {
-      super(target, true);
-      _target = target;
-    }
-
-    @Override
-    public boolean commitText(CharSequence text, int newCursorPosition) {
-      boolean result = super.commitText(text, newCursorPosition);
-      updateSearch();
-      return result;
-    }
-
-    @Override
-    public boolean deleteSurroundingText(int beforeLength, int afterLength) {
-      boolean result = super.deleteSurroundingText(beforeLength, afterLength);
-      updateSearch();
-      return result;
-    }
-
-    @Override
-    public boolean setComposingText(CharSequence text, int newCursorPosition) {
-      boolean result = super.setComposingText(text, newCursorPosition);
-      updateSearch();
-      return result;
-    }
-
-    private void updateSearch() {
-      if (_clipboard_pane != null) {
-        ClipboardPinView cpv = (ClipboardPinView) _clipboard_pane.findViewById(R.id.clipboard_pin_view);
-        if (cpv != null) {
-          cpv.onSearchTextChanged(_target.getText().toString());
-        }
-      }
-    }
-  }
 }

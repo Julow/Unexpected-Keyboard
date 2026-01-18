@@ -25,14 +25,6 @@ public final class ClipboardPinView extends NonScrollListView {
   View _headerAddFolder;
   View _headerFullScreen;
 
-  // Search state
-  boolean _isSearching = false;
-  String _searchQuery = "";
-  List<SnippetItem> _searchResults;
-  View _headerNormal;
-  View _headerSearchBar;
-  EditText _searchText;
-
   public ClipboardPinView(Context ctx, AttributeSet attrs) {
     super(ctx, attrs);
     _manager = SnippetManager.get(ctx);
@@ -56,9 +48,7 @@ public final class ClipboardPinView extends NonScrollListView {
 
     // Setup Header
     _headerView = View.inflate(ctx, R.layout.clipboard_list_header, null);
-    _headerNormal = _headerView.findViewById(R.id.clipboard_header_normal);
-    _headerSearchBar = _headerView.findViewById(R.id.clipboard_header_search_bar);
-    _searchText = (EditText) _headerView.findViewById(R.id.clipboard_header_search_text);
+
     _headerPath = (TextView) _headerView.findViewById(R.id.clipboard_header_path);
 
     // Initialize buttons
@@ -105,24 +95,11 @@ public final class ClipboardPinView extends NonScrollListView {
     _headerView.findViewById(R.id.clipboard_header_search_close).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        end_search();
+        // No-op
       }
     });
 
-    _searchText.addTextChangedListener(new android.text.TextWatcher() {
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-      }
-
-      @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count) {
-        onSearchTextChanged(s.toString());
-      }
-
-      @Override
-      public void afterTextChanged(android.text.Editable s) {
-      }
-    });
+    // Removed text watcher
 
     addHeaderView(_headerView);
     _adapter = new ClipboardPinEntriesAdapter();
@@ -130,82 +107,10 @@ public final class ClipboardPinView extends NonScrollListView {
     update_view();
   }
 
-  // Helper to access from Keyboard2
-  public View getSearchTextView() {
-    return _headerView != null ? _headerView.findViewById(R.id.clipboard_header_search_text) : null;
-  }
-
-  public void onSearchTextChanged(String text) {
-    _searchQuery = text;
-    update_search_results();
-  }
-
   void start_search() {
-    _isSearching = true;
-    _headerNormal.setVisibility(View.GONE);
-    _headerSearchBar.setVisibility(View.VISIBLE);
-    // _searchText.requestFocus(); // Not needed for fake input
-
-    if (getContext() instanceof Keyboard2) {
-      ((Keyboard2) getContext()).setInClipboardSearchMode(true);
-    } else {
-      // Full screen mode - Real Focus needed here?
-      // If we changed to TextView, we CAN'T focus it.
-      // So Full Screen mode breaks with this "Elegant" solution unless we use
-      // EditText there and TextView here?
-      // Or we make the TextView focusable in touch mode in XML?
-      // Actually, if we use TextView, full screen mode won't show keyboard
-      // automatically.
-      // This is a tradeoff.
-      // But the user liked full screen mode behavior.
-      // "Now that I try it I can see why you had it open the fullscreen view. I
-      // didn't think about the recursive keyboard issue."
-      // If I change XML to TextView, I break FullScreen input.
-      // Solution: In start_search, if FullScreen, we might need a different approach
-      // or rely on the same interception?
-      // FullScreen Activity has its own InputConnection!
-      // Full screen mode: Enable focus for system IME
-      _searchText.setFocusable(true);
-      _searchText.setFocusableInTouchMode(true);
-      _searchText.requestFocus();
-
-      android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getContext()
-          .getSystemService(Context.INPUT_METHOD_SERVICE);
-      if (imm != null) {
-        imm.showSoftInput(_searchText, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
-      }
-    }
-
-    update_search_results();
-  }
-
-  void end_search() {
-    _isSearching = false;
-    _searchQuery = "";
-    _searchText.setText("");
-    _headerSearchBar.setVisibility(View.GONE);
-    _headerNormal.setVisibility(View.VISIBLE);
-
-    _searchText.clearFocus();
-
-    if (getContext() instanceof Keyboard2) {
-      ((Keyboard2) getContext()).setInClipboardSearchMode(false);
-    } else {
-      android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getContext()
-          .getSystemService(Context.INPUT_METHOD_SERVICE);
-      if (imm != null) {
-        imm.hideSoftInputFromWindow(_searchText.getWindowToken(), 0);
-      }
-    }
-
-    update_view();
-  }
-
-  void update_search_results() {
-    if (_isSearching) {
-      _searchResults = _manager.findSnippets(_searchQuery);
-      _adapter.notifyDataSetChanged();
-    }
+    android.content.Intent intent = new android.content.Intent(getContext(), SnippetSearchActivity.class);
+    intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+    getContext().startActivity(intent);
   }
 
   /** Pin a clipboard and persist the change. */
@@ -217,19 +122,7 @@ public final class ClipboardPinView extends NonScrollListView {
 
   /** Remove the entry. */
   public void remove_entry(int pos) {
-    if (_isSearching) {
-      // Can't easily remove from search results safely without mapping back to real
-      // folder
-      // For now, disabling remove in search or handle it smartly
-      SnippetItem item = _searchResults.get(pos);
-      SnippetFolder parent = _manager.getParent(item);
-      if (parent != null) {
-        parent.removeItem(item);
-        _manager.save();
-        update_search_results();
-      }
-      return;
-    }
+
     _manager.getCurrentFolder().removeItem(pos);
     _manager.save();
     update_view();
@@ -237,28 +130,12 @@ public final class ClipboardPinView extends NonScrollListView {
 
   /** Send the specified entry to the editor. */
   public void paste_entry(final Snippet snippet) {
-    if (_isSearching) {
-      end_search();
-      // Delay paste to allow focus logic to settle?
-      // Specifically if in Keyboard2 logic, end_search resets layout.
-      // We need InputConnection to target the app.
-      // Clearing focus in end_search handles this mostly?
-      postDelayed(new Runnable() {
-        @Override
-        public void run() {
-          ClipboardHistoryService.paste(snippet.content);
-        }
-      }, 100);
-      return;
-    }
+
     ClipboardHistoryService.paste(snippet.content);
   }
 
   void update_view() {
-    if (_isSearching) {
-      update_search_results();
-      return;
-    }
+
     // Update Header
     SnippetFolder current = _manager.getCurrentFolder();
     if (_manager.isAtRoot()) {
@@ -279,10 +156,7 @@ public final class ClipboardPinView extends NonScrollListView {
   }
 
   void go_up() {
-    if (_isSearching) {
-      end_search();
-      return;
-    }
+
     SnippetFolder current = _manager.getCurrentFolder();
     SnippetFolder parent = _manager.getParent(current);
     if (parent != null) {
@@ -340,15 +214,11 @@ public final class ClipboardPinView extends NonScrollListView {
 
     @Override
     public int getCount() {
-      if (_isSearching)
-        return _searchResults == null ? 0 : _searchResults.size();
       return _manager.getCurrentFolder().items.size();
     }
 
     @Override
     public Object getItem(int pos) {
-      if (_isSearching)
-        return _searchResults.get(pos);
       return _manager.getCurrentFolder().items.get(pos);
     }
 
@@ -394,6 +264,18 @@ public final class ClipboardPinView extends NonScrollListView {
           }
         });
 
+        // Edit folder
+        v.findViewById(R.id.clipboard_folder_edit).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            android.content.Intent intent = new android.content.Intent(getContext(),
+                SnippetFolderCreationActivity.class);
+            intent.putExtra(SnippetFolderCreationActivity.EXTRA_UUID, item.uuid);
+            intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(intent);
+          }
+        });
+
         // Move folder
         View moveBtn = v.findViewById(R.id.clipboard_folder_move);
         moveBtn.setOnClickListener(new View.OnClickListener() {
@@ -431,7 +313,16 @@ public final class ClipboardPinView extends NonScrollListView {
           }
         });
 
-        // Allow editing name if we supported it, but content is main thing
+        // Edit snippet
+        v.findViewById(R.id.clipboard_pin_edit).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            android.content.Intent intent = new android.content.Intent(getContext(), SnippetCreationActivity.class);
+            intent.putExtra(SnippetCreationActivity.EXTRA_UUID, item.uuid);
+            intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(intent);
+          }
+        });
 
         View moveBtn = v.findViewById(R.id.clipboard_pin_move);
         moveBtn.setOnClickListener(new View.OnClickListener() {

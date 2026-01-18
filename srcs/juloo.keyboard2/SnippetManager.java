@@ -163,16 +163,15 @@ public class SnippetManager {
 
     private void findSnippetsRecursive(SnippetFolder current, String query, List<SnippetItem> results) {
         for (SnippetItem item : current.items) {
+            if (item == null)
+                continue;
             if (item instanceof Snippet) {
                 Snippet snippet = (Snippet) item;
-                if (snippet.content.toLowerCase().contains(query)) {
+                if (snippet.content != null && snippet.content.toLowerCase().contains(query)) {
                     results.add(snippet);
                 }
             } else if (item instanceof SnippetFolder) {
-                // Should we search folder names? Maybe. For now just content inside.
-                // If user wants to find a folder, they probably browse.
-                // But let's check folder name too just in case.
-                if (item.name.toLowerCase().contains(query)) {
+                if (item.name != null && item.name.toLowerCase().contains(query)) {
                     results.add(item);
                 }
                 findSnippetsRecursive((SnippetFolder) item, query, results);
@@ -187,6 +186,19 @@ public class SnippetManager {
             target.addItem(item);
             save();
         }
+    }
+
+    public void updateSnippet(Snippet snippet, String newContent) {
+        snippet.content = newContent;
+        // Also update name if it was default? Maybe keep simple.
+        save();
+        notifyListeners();
+    }
+
+    public void updateFolder(SnippetFolder folder, String newName) {
+        folder.name = newName;
+        save();
+        notifyListeners();
     }
 
     private JSONObject serialize(SnippetItem item) throws JSONException {

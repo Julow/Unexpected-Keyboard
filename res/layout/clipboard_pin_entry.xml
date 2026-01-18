@@ -3,6 +3,7 @@
   <TextView android:id="@+id/clipboard_pin_text" style="@style/clipboardEntry" android:maxLines="3"
     android:clickable="true" android:focusable="true" android:background="?android:attr/selectableItemBackground"/>
   <LinearLayout style="@style/clipboardEntryButtons">
+    <View android:id="@+id/clipboard_pin_edit" style="@style/clipboardEntryButton" android:background="@drawable/ic_edit"/>
     <View android:id="@+id/clipboard_pin_move" style="@style/clipboardEntryButton" android:background="@drawable/ic_move"/>
     <View android:id="@+id/clipboard_pin_remove" style="@style/clipboardEntryButton" android:background="@drawable/ic_delete"/>
   </LinearLayout>

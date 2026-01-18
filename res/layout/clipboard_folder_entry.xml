@@ -21,6 +21,10 @@
     <LinearLayout style="@style/clipboardEntryButtons">
         <!-- Optional: Rename button could go here -->
         <View
+            android:id="@+id/clipboard_folder_edit"
+            style="@style/clipboardEntryButton"
+            android:background="@drawable/ic_edit"/>
+        <View
             android:id="@+id/clipboard_folder_move"
             style="@style/clipboardEntryButton"
             android:background="@drawable/ic_move"/>
