@@ -305,7 +305,11 @@ public final class ClipboardPinView extends NonScrollListView {
       } else {
         final Snippet snippet = (Snippet) item;
         TextView tv = (TextView) v.findViewById(R.id.clipboard_pin_text);
-        tv.setText(snippet.content);
+        if (snippet.name != null && !snippet.name.equals(snippet.content)) {
+          tv.setText(snippet.name + " (" + snippet.content + ")");
+        } else {
+          tv.setText(snippet.content);
+        }
         tv.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {

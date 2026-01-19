@@ -460,7 +460,7 @@ public class Keyboard2 extends InputMethodService
       _candidates_view.set_candidates(suggestions);
     }
   }
- 
+
   private IBinder getConnectionToken() {
     return getWindow().getWindow().getAttributes().token;
   }

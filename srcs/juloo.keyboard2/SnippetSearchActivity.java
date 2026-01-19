@@ -101,7 +101,12 @@ public class SnippetSearchActivity extends Activity {
                 TextView text = convertView.findViewById(R.id.clipboard_search_text);
 
                 if (item instanceof Snippet) {
-                    text.setText(((Snippet) item).content);
+                    Snippet snippet = (Snippet) item;
+                    if (snippet.name != null && !snippet.name.equals(snippet.content)) {
+                        text.setText(snippet.name + " (" + snippet.content + ")");
+                    } else {
+                        text.setText(snippet.content);
+                    }
                 } else if (item instanceof SnippetFolder) {
                     text.setText(((SnippetFolder) item).name + " (Folder)");
                 }

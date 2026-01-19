@@ -18,7 +18,19 @@ public class SnippetCreationActivity extends Activity {
         final SnippetManager manager = SnippetManager.get(this);
         final Snippet existingSnippet;
 
-        final EditText input = new EditText(this);
+        final android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
+        layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+        int padding = (int) (16 * getResources().getDisplayMetrics().density);
+        layout.setPadding(padding, padding / 2, padding, padding / 2);
+
+        final EditText nameInput = new EditText(this);
+        nameInput.setHint("Label (Optional)");
+        layout.addView(nameInput);
+
+        final EditText contentInput = new EditText(this);
+        contentInput.setHint("Snippet content");
+        layout.addView(contentInput);
+
         String title = "New Snippet";
         String positiveButton = "Create";
 
@@ -26,8 +38,9 @@ public class SnippetCreationActivity extends Activity {
             SnippetItem item = manager.findItem(uuid);
             if (item instanceof Snippet) {
                 existingSnippet = (Snippet) item;
-                input.setText(existingSnippet.content);
-                input.setSelection(existingSnippet.content.length());
+                nameInput.setText(existingSnippet.name);
+                contentInput.setText(existingSnippet.content);
+                // contentInput.setSelection(existingSnippet.content.length());
                 title = "Edit Snippet";
                 positiveButton = "Save";
             } else {
@@ -37,20 +50,26 @@ public class SnippetCreationActivity extends Activity {
             existingSnippet = null;
         }
 
-        input.setHint("Snippet content");
-
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(title)
-                .setView(input)
+                .setView(layout)
                 .setNegativeButton(positiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String content = input.getText().toString();
+                        String name = nameInput.getText().toString();
+                        String content = contentInput.getText().toString();
+
+                        if (name.isEmpty() && !content.isEmpty()) {
+                            name = content; // Fallback name to content if name is empty
+                        }
+
                         if (!content.isEmpty()) {
                             if (existingSnippet != null) {
-                                manager.updateSnippet(existingSnippet, content);
+                                manager.updateSnippet(existingSnippet, name, content);
                             } else {
-                                manager.getCurrentFolder().addItem(new Snippet(content));
+                                Snippet newSnippet = new Snippet(content);
+                                newSnippet.name = name;
+                                manager.getCurrentFolder().addItem(newSnippet);
                                 manager.save();
                             }
                         }
@@ -74,6 +93,10 @@ public class SnippetCreationActivity extends Activity {
         dialog.getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         dialog.show();
 
-        input.requestFocus();
+        if (existingSnippet == null) {
+            nameInput.requestFocus();
+        } else {
+            contentInput.requestFocus();
+        }
     }
 }

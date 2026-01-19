@@ -167,7 +167,8 @@ public class SnippetManager {
                 continue;
             if (item instanceof Snippet) {
                 Snippet snippet = (Snippet) item;
-                if (snippet.content != null && snippet.content.toLowerCase().contains(query)) {
+                if ((snippet.content != null && snippet.content.toLowerCase().contains(query)) ||
+                        (snippet.name != null && snippet.name.toLowerCase().contains(query))) {
                     results.add(snippet);
                 }
             } else if (item instanceof SnippetFolder) {
@@ -188,9 +189,9 @@ public class SnippetManager {
         }
     }
 
-    public void updateSnippet(Snippet snippet, String newContent) {
+    public void updateSnippet(Snippet snippet, String newName, String newContent) {
+        snippet.name = newName;
         snippet.content = newContent;
-        // Also update name if it was default? Maybe keep simple.
         save();
         notifyListeners();
     }
