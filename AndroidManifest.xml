@@ -27,6 +27,7 @@
     <activity android:name="juloo.keyboard2.SnippetFolderCreationActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" android:windowSoftInputMode="stateVisible" />
     <activity android:name="juloo.keyboard2.SnippetCreationActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" android:windowSoftInputMode="stateVisible" />
     <activity android:name="juloo.keyboard2.RngActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" android:windowSoftInputMode="stateVisible" />
+    <activity android:name="juloo.keyboard2.Base64Activity" android:theme="@android:style/Theme.Dialog" android:exported="false" android:windowSoftInputMode="stateVisible" />
     <activity android:name="juloo.keyboard2.SnippetMoveActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" />
     <activity android:name="juloo.keyboard2.SnippetSearchActivity" android:theme="@android:style/Theme.Dialog" android:exported="false" android:windowSoftInputMode="stateVisible" android:launchMode="singleTop" />
     <activity android:name=".SnippetManagerActivity" android:label="Snippet Manager" android:theme="@android:style/Theme.DeviceDefault.NoActionBar"/>

@@ -81,6 +81,15 @@ public class DeveloperView extends LinearLayout {
             }
         });
 
+        findViewById(R.id.btn_base64).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.Intent intent = new android.content.Intent(getContext(), Base64Activity.class);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(intent);
+            }
+        });
+
         findViewById(R.id.btn_lorem).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
