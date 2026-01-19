@@ -31,6 +31,78 @@ public class SnippetCreationActivity extends Activity {
         contentInput.setHint("Snippet content");
         layout.addView(contentInput);
 
+        final android.widget.LinearLayout tagsContainer = new android.widget.LinearLayout(this);
+        tagsContainer.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+        // Basic horizontal scroll for now since FlowLayout involves more code/custom
+        // view
+        final android.widget.HorizontalScrollView tagsScroll = new android.widget.HorizontalScrollView(this);
+        tagsScroll.addView(tagsContainer);
+        layout.addView(tagsScroll);
+
+        final EditText tagInput = new EditText(this);
+        tagInput.setHint("Type tag and press enter");
+        tagInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+        tagInput.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
+        layout.addView(tagInput);
+
+        // Helper to add chip
+        final java.util.List<String> currentTags = new java.util.ArrayList<>();
+        final Runnable updateTagsView = new Runnable() {
+            @Override
+            public void run() {
+                tagsContainer.removeAllViews();
+                final float density = getResources().getDisplayMetrics().density;
+
+                for (final String tag : currentTags) {
+                    android.widget.TextView chip = new android.widget.TextView(SnippetCreationActivity.this);
+                    chip.setText(tag);
+                    chip.setBackgroundResource(R.drawable.rect_rounded);
+                    chip.setTextColor(0xFFFFFFFF);
+                    chip.setTextSize(14f);
+
+                    android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(
+                            android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
+                            android.widget.LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins((int) (4 * density), (int) (4 * density), (int) (4 * density),
+                            (int) (4 * density));
+                    chip.setLayoutParams(params);
+
+                    chip.setOnClickListener(new android.view.View.OnClickListener() {
+                        @Override
+                        public void onClick(android.view.View v) {
+                            currentTags.remove(tag);
+                            run(); // update view
+                        }
+                    });
+                    tagsContainer.addView(chip);
+                }
+            }
+        };
+
+        tagInput.setOnEditorActionListener(new android.widget.TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, android.view.KeyEvent event) {
+                if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE ||
+                        (event != null && event.getKeyCode() == android.view.KeyEvent.KEYCODE_ENTER
+                                && event.getAction() == android.view.KeyEvent.ACTION_DOWN)) {
+                    String text = tagInput.getText().toString().trim();
+                    if (!text.isEmpty()) {
+                        currentTags.add(text);
+                        updateTagsView.run();
+                        tagInput.setText("");
+                        // Scroll to end
+                        tagsScroll.post(new Runnable() {
+                            public void run() {
+                                tagsScroll.fullScroll(android.view.View.FOCUS_RIGHT);
+                            }
+                        });
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
         String title = "New Snippet";
         String positiveButton = "Create";
 
@@ -40,7 +112,12 @@ public class SnippetCreationActivity extends Activity {
                 existingSnippet = (Snippet) item;
                 nameInput.setText(existingSnippet.name);
                 contentInput.setText(existingSnippet.content);
-                // contentInput.setSelection(existingSnippet.content.length());
+
+                if (existingSnippet.tags != null) {
+                    currentTags.addAll(existingSnippet.tags);
+                    updateTagsView.run();
+                }
+
                 title = "Edit Snippet";
                 positiveButton = "Save";
             } else {
@@ -58,6 +135,10 @@ public class SnippetCreationActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = nameInput.getText().toString();
                         String content = contentInput.getText().toString();
+                        String pendingTag = tagInput.getText().toString().trim();
+                        if (!pendingTag.isEmpty()) {
+                            currentTags.add(pendingTag);
+                        }
 
                         if (name.isEmpty() && !content.isEmpty()) {
                             name = content; // Fallback name to content if name is empty
@@ -65,10 +146,11 @@ public class SnippetCreationActivity extends Activity {
 
                         if (!content.isEmpty()) {
                             if (existingSnippet != null) {
-                                manager.updateSnippet(existingSnippet, name, content);
+                                manager.updateSnippet(existingSnippet, name, content, currentTags);
                             } else {
                                 Snippet newSnippet = new Snippet(content);
                                 newSnippet.name = name;
+                                newSnippet.tags = currentTags;
                                 manager.getCurrentFolder().addItem(newSnippet);
                                 manager.save();
                             }

@@ -167,8 +167,19 @@ public class SnippetManager {
                 continue;
             if (item instanceof Snippet) {
                 Snippet snippet = (Snippet) item;
+                boolean tagMatch = false;
+                if (snippet.tags != null) {
+                    for (String tag : snippet.tags) {
+                        if (tag.toLowerCase().contains(query)) {
+                            tagMatch = true;
+                            break;
+                        }
+                    }
+                }
+
                 if ((snippet.content != null && snippet.content.toLowerCase().contains(query)) ||
-                        (snippet.name != null && snippet.name.toLowerCase().contains(query))) {
+                        (snippet.name != null && snippet.name.toLowerCase().contains(query)) ||
+                        tagMatch) {
                     results.add(snippet);
                 }
             } else if (item instanceof SnippetFolder) {
@@ -189,9 +200,10 @@ public class SnippetManager {
         }
     }
 
-    public void updateSnippet(Snippet snippet, String newName, String newContent) {
+    public void updateSnippet(Snippet snippet, String newName, String newContent, List<String> newTags) {
         snippet.name = newName;
         snippet.content = newContent;
+        snippet.tags = newTags;
         save();
         notifyListeners();
     }
@@ -210,6 +222,11 @@ public class SnippetManager {
         if (item instanceof Snippet) {
             obj.put("type", "snippet");
             obj.put("content", ((Snippet) item).content);
+            JSONArray tagsArr = new JSONArray();
+            for (String tag : ((Snippet) item).tags) {
+                tagsArr.put(tag);
+            }
+            obj.put("tags", tagsArr);
         } else if (item instanceof SnippetFolder) {
             obj.put("type", "folder");
             JSONArray children = new JSONArray();
@@ -237,7 +254,14 @@ public class SnippetManager {
 
         if ("snippet".equals(type)) {
             String content = obj.getString("content");
-            return new Snippet(uuid, name, content);
+            Snippet snippet = new Snippet(uuid, name, content);
+            JSONArray tagsArr = obj.optJSONArray("tags");
+            if (tagsArr != null) {
+                for (int i = 0; i < tagsArr.length(); i++) {
+                    snippet.tags.add(tagsArr.getString(i));
+                }
+            }
+            return snippet;
         } else {
             SnippetFolder folder = new SnippetFolder(uuid, name);
             JSONArray items = obj.optJSONArray("items");

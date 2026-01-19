@@ -35,6 +35,14 @@ public class SnippetSearchActivity extends Activity {
         _adapter = new SearchAdapter();
         resultsList.setAdapter(_adapter);
 
+        searchInput.requestFocus();
+        // Force show keyboard
+        android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(
+                android.content.Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(searchInput, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+        }
+
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
