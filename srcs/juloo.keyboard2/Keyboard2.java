@@ -387,6 +387,7 @@ public class Keyboard2 extends InputMethodService
 
         case SWITCH_BACK_EMOJI:
         case SWITCH_BACK_CLIPBOARD:
+        case SWITCH_BACK_DEVELOPER:
           setInputView(_container_view);
           break;
 
@@ -427,6 +428,14 @@ public class Keyboard2 extends InputMethodService
           if (!VoiceImeSwitcher.switch_to_voice_ime(Keyboard2.this, get_imm(),
               Config.globalPrefs()))
             _config.shouldOfferVoiceTyping = false;
+          break;
+
+        case SWITCH_DEVELOPER:
+          if (_currentSpecialLayout == null) { // Or handle differently. Here we just set view like clipboard.
+            ViewGroup devPane = (ViewGroup) inflate_view(R.layout.developer_pane);
+            ((DeveloperView) devPane).setEventHandler(_keyeventhandler);
+            setInputView(devPane);
+          }
           break;
 
         case SWITCH_VOICE_TYPING_CHOOSER:

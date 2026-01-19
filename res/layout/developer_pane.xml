@@ -1,0 +1,116 @@
+<juloo.keyboard2.DeveloperView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="?attr/colorKeyboard">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Developer Tools"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="8dp"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:columnCount="2"
+            android:rowCount="3"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:useDefaultMargins="true">
+
+            <Button
+                android:id="@+id/btn_uuid"
+                android:background="@drawable/rect_rounded"
+                android:backgroundTint="?attr/colorKey"
+                android:stateListAnimator="@null"
+                android:elevation="0dp"
+                android:textColor="?attr/colorLabel"
+                android:text="UUID"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"/>
+
+            <Button
+                android:id="@+id/btn_random_str"
+                android:background="@drawable/rect_rounded"
+                android:backgroundTint="?attr/colorKey"
+                android:stateListAnimator="@null"
+                android:elevation="0dp"
+                android:textColor="?attr/colorLabel"
+                android:text="Random Str (16)"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"/>
+
+             <Button
+                android:id="@+id/btn_timestamp"
+                android:background="@drawable/rect_rounded"
+                android:backgroundTint="?attr/colorKey"
+                android:stateListAnimator="@null"
+                android:elevation="0dp"
+                android:textColor="?attr/colorLabel"
+                android:text="Timestamp"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"/>
+
+            <Button
+                android:id="@+id/btn_lorem"
+                android:background="@drawable/rect_rounded"
+                android:backgroundTint="?attr/colorKey"
+                android:stateListAnimator="@null"
+                android:elevation="0dp"
+                android:textColor="?attr/colorLabel"
+                android:text="Lorem Ipsum"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"/>
+
+            <Button
+                android:id="@+id/btn_random_num"
+                android:background="@drawable/rect_rounded"
+                android:backgroundTint="?attr/colorKey"
+                android:stateListAnimator="@null"
+                android:elevation="0dp"
+                android:textColor="?attr/colorLabel"
+                android:text="Random Number"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"/>
+
+
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_back"
+                android:background="@drawable/rect_rounded"
+                android:backgroundTint="?attr/colorKey"
+                android:stateListAnimator="@null"
+                android:elevation="0dp"
+                android:textColor="?attr/colorLabel"
+                android:text="Back (ABC)"
+                android:layout_margin="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</juloo.keyboard2.DeveloperView>
