@@ -1,3 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="app_name_release">nItlh \'echlet jum</string>
+    <string name="app_name_debug">nItlh \'echlet jum (Qagh SamwI\')</string>
+    <string name="clipboard_remove_confirmed">HIja\'</string>
+    <string name="key_action_done">pItlh</string>
+    <string name="key_action_go">Ha\'</string>
+    <string name="key_action_next">veb</string>
+    <string name="key_action_prev">vorgh</string>
+    <string name="key_action_search">yInej</string>
+    <string name="key_action_send">yIngeH</string>
+    <string name="pref_theme_e_dark">Hurgh</string>
+    <string name="pref_theme_e_light">wov</string>
+    <string name="pref_theme_e_black">qIj</string>
+    <string name="pref_theme_e_altblack">SetqIn qIj</string>
+    <string name="pref_theme_e_white">chIS</string>
+    <string name="pref_theme_e_epaper">\'ul nav</string>
+    <string name="pref_theme_e_desert">Deb</string>
+    <string name="pref_theme_e_jungle">chal bIQ ngem</string>
+    <string name="pref_theme_e_monet">mo\'net (pat)</string>
+    <string name="pref_theme_e_monetlight">mo\'net (wov)</string>
+    <string name="pref_theme_e_monetdark">mo\'net (Hurgh)</string>
+    <string name="pref_swipe_dist_e_very_short">wIlqu\'</string>
+    <string name="pref_swipe_dist_e_short">wIl</string>
+    <string name="pref_swipe_dist_e_default">motlh</string>
+    <string name="pref_swipe_dist_e_far">Hop</string>
+    <string name="pref_swipe_dist_e_very_far">Hopqu\'</string>
+    <string name="pref_show_numpad_never">not</string>
+    <string name="pref_show_numpad_always">reH</string>
+    <string name="key_descr_compose">chenmoH</string>
+    <string name="pref_theme_e_system">pat lo\'mey</string>
+    <string name="settings_activity_label">nItlh \'echlet jum lo\'mey</string>
+    <string name="pref_category_layout">tu\'qom</string>
+    <string name="pref_layout_e_system">pat lo\'mey</string>
+    <string name="pref_numpad_layout">mI\' \'echlet tu\'qom</string>
+    <string name="pref_layout_e_custom">tu\'qom pargh</string>
+    <string name="pref_custom_layout_title">tu\'qom pargh</string>
+    <string name="pref_layouts_add">tu\'qom pIm yIchel</string>
+    <string name="pref_extra_keys_custom">\'leQmey pIm yIchel</string>
+    <string name="pref_layouts_item">tu\'qom %1$d: %2$s</string>
+    <string name="pref_show_numpad_title">mI\' \'echlet yIcha\'</string>
+    <string name="key_descr_capslock">ngutlh\'a\' yIngaQ</string>
+    <string name="pref_layouts_remove_custom">tu\'qom yIQaw\'</string>
+    <string name="pref_vibrate_custom">valghach pIm</string>
+    <string name="pref_circle_sensitivity_e_high">jen</string>
+    <string name="pref_circle_sensitivity_e_medium">motlh</string>
+    <string name="pref_circle_sensitivity_e_low">\'eS</string>
+    <string name="key_descr_copy">voy</string>
+    <string name="key_descr_paste">roQ</string>
+    <string name="key_descr_cut">pe\'</string>
+    <string name="key_descr_selectAll">Hoch yIwIv</string>
+    <string name="key_descr_shareText">ghItlh yIlIn</string>
+</resources>
