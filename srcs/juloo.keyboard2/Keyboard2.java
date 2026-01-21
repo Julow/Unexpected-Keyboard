@@ -13,7 +13,6 @@ import android.util.LogPrinter;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
@@ -37,6 +36,8 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _currentSpecialLayout;
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
+  /** Installed and current locales. */
+  private DeviceLocales _device_locales;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   private Handler _handler;
@@ -109,6 +110,7 @@ public class Keyboard2 extends InputMethodService
     prefs.registerOnSharedPreferenceChangeListener(this);
     _config = Config.globalConfig();
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
+    refreshSubtypeImm();
     create_keyboard_view();
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
     _foldStateTracker.setChangedCallback(() -> {
@@ -185,14 +187,20 @@ public class Keyboard2 extends InputMethodService
         refreshAccentsOption(imm, enabled_subtypes);
       }
     }
+    _device_locales = DeviceLocales.load(this);
+    if (_device_locales.default_ != null) {
+      String layout_name = _device_locales.default_.default_layout;
+      if (layout_name != null)
+        default_layout = LayoutsPreference.layout_of_string(getResources(), layout_name);
+    }
+    _config.extra_keys_subtype = _device_locales.extra_keys();
     if (default_layout == null)
       default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
   }
 
-  private void refresh_candidates_view(EditorInfo info) {
-    boolean should_show = CandidatesView.should_show(info);
-    _config.should_show_candidates_view = should_show;
+  private void refresh_candidates_view() {
+    boolean should_show = _config.editor_config.should_show_candidates_view;
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -203,7 +211,6 @@ public class Keyboard2 extends InputMethodService
   private void refresh_config() {
     int prev_theme = _config.theme;
     _config.refresh(getResources(), _foldStateTracker.isUnfolded());
-    refreshSubtypeImm();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme) {
       create_keyboard_view();
@@ -232,7 +239,7 @@ public class Keyboard2 extends InputMethodService
   public void onStartInputView(EditorInfo info, boolean restarting) {
     _config.editor_config.refresh(info, getResources());
     refresh_config();
-    refresh_candidates_view(info);
+    refresh_candidates_view();
     _currentSpecialLayout = refresh_special_layout();
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
@@ -324,6 +331,7 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
     refreshSubtypeImm();
+    refresh_candidates_view();
     _keyboardView.setKeyboard(current_layout());
   }
 
