@@ -40,24 +40,30 @@ public class SnippetCreationActivity extends Activity {
         tagsScroll.addView(tagsContainer);
         layout.addView(tagsScroll);
 
-        final EditText tagInput = new EditText(this);
+        final android.widget.AutoCompleteTextView tagInput = new android.widget.AutoCompleteTextView(this);
         tagInput.setHint("Type tag and press enter");
         tagInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
         tagInput.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
-        tagInput.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
-        layout.addView(tagInput);
+        tagInput.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE); // Kept original duplication for
+                                                                                     // minimizing diff, though
+                                                                                     // redundant
 
-        final CheckBox isMacroInput = new CheckBox(this);
-        isMacroInput.setText("Is Macro");
-        layout.addView(isMacroInput);
-
-        // Helper to add chip
+        final java.util.List<String> allTags = manager.getAllTags();
         final java.util.List<String> currentTags = new java.util.ArrayList<>();
+
         final Runnable updateTagsView = new Runnable() {
             @Override
             public void run() {
                 tagsContainer.removeAllViews();
                 final float density = getResources().getDisplayMetrics().density;
+
+                // Update Adapter
+                java.util.List<String> availableTags = new java.util.ArrayList<>(allTags);
+                availableTags.removeAll(currentTags);
+                android.widget.ArrayAdapter<String> adapter = new android.widget.ArrayAdapter<>(
+                        SnippetCreationActivity.this,
+                        android.R.layout.simple_dropdown_item_1line, availableTags);
+                tagInput.setAdapter(adapter);
 
                 for (final String tag : currentTags) {
                     android.widget.TextView chip = new android.widget.TextView(SnippetCreationActivity.this);
@@ -85,6 +91,30 @@ public class SnippetCreationActivity extends Activity {
             }
         };
 
+        tagInput.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(android.widget.AdapterView<?> parent, android.view.View view, int position,
+                    long id) {
+                String selected = (String) parent.getItemAtPosition(position);
+                if (!currentTags.contains(selected)) {
+                    currentTags.add(selected);
+                    updateTagsView.run();
+                }
+                tagInput.setText("");
+            }
+        });
+
+        // Initial setup
+        android.widget.ArrayAdapter<String> adapter = new android.widget.ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, allTags);
+        tagInput.setAdapter(adapter);
+
+        layout.addView(tagInput);
+
+        final CheckBox isMacroInput = new CheckBox(this);
+        isMacroInput.setText("Is Macro");
+        layout.addView(isMacroInput);
+
         tagInput.setOnEditorActionListener(new android.widget.TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(android.widget.TextView v, int actionId, android.view.KeyEvent event) {
@@ -93,8 +123,10 @@ public class SnippetCreationActivity extends Activity {
                                 && event.getAction() == android.view.KeyEvent.ACTION_DOWN)) {
                     String text = tagInput.getText().toString().trim();
                     if (!text.isEmpty()) {
-                        currentTags.add(text);
-                        updateTagsView.run();
+                        if (!currentTags.contains(text)) {
+                            currentTags.add(text);
+                            updateTagsView.run();
+                        }
                         tagInput.setText("");
                         // Scroll to end
                         tagsScroll.post(new Runnable() {
@@ -143,7 +175,7 @@ public class SnippetCreationActivity extends Activity {
                         String name = nameInput.getText().toString();
                         String content = contentInput.getText().toString();
                         String pendingTag = tagInput.getText().toString().trim();
-                        if (!pendingTag.isEmpty()) {
+                        if (!pendingTag.isEmpty() && !currentTags.contains(pendingTag)) {
                             currentTags.add(pendingTag);
                         }
 

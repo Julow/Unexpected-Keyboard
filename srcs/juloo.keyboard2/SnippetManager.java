@@ -134,6 +134,25 @@ public class SnippetManager {
         }
     }
 
+    public List<String> getAllTags() {
+        java.util.Set<String> tags = new java.util.HashSet<>();
+        collectTagsRecursive(root, tags);
+        return new ArrayList<>(tags);
+    }
+
+    private void collectTagsRecursive(SnippetFolder current, java.util.Set<String> acc) {
+        for (SnippetItem item : current.items) {
+            if (item instanceof Snippet) {
+                Snippet snippet = (Snippet) item;
+                if (snippet.tags != null) {
+                    acc.addAll(snippet.tags);
+                }
+            } else if (item instanceof SnippetFolder) {
+                collectTagsRecursive((SnippetFolder) item, acc);
+            }
+        }
+    }
+
     public SnippetItem findItem(String uuid) {
         return findItemRecursive(root, uuid);
     }
