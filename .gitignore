@@ -11,3 +11,4 @@
 # Directory _build is not used anymore
 /_build
 /release
+/.agent
