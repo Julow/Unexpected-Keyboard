@@ -200,10 +200,12 @@ public class SnippetManager {
         }
     }
 
-    public void updateSnippet(Snippet snippet, String newName, String newContent, List<String> newTags) {
+    public void updateSnippet(Snippet snippet, String newName, String newContent, List<String> newTags,
+            boolean isMacro) {
         snippet.name = newName;
         snippet.content = newContent;
         snippet.tags = newTags;
+        snippet.isMacro = isMacro;
         save();
         notifyListeners();
     }
@@ -227,6 +229,7 @@ public class SnippetManager {
                 tagsArr.put(tag);
             }
             obj.put("tags", tagsArr);
+            obj.put("isMacro", ((Snippet) item).isMacro);
         } else if (item instanceof SnippetFolder) {
             obj.put("type", "folder");
             JSONArray children = new JSONArray();
@@ -260,7 +263,9 @@ public class SnippetManager {
                 for (int i = 0; i < tagsArr.length(); i++) {
                     snippet.tags.add(tagsArr.getString(i));
                 }
+
             }
+            snippet.isMacro = obj.optBoolean("isMacro", false);
             return snippet;
         } else {
             SnippetFolder folder = new SnippetFolder(uuid, name);

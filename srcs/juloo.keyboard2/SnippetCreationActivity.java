@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class SnippetCreationActivity extends Activity {
@@ -43,7 +44,12 @@ public class SnippetCreationActivity extends Activity {
         tagInput.setHint("Type tag and press enter");
         tagInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
         tagInput.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
+        tagInput.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
         layout.addView(tagInput);
+
+        final CheckBox isMacroInput = new CheckBox(this);
+        isMacroInput.setText("Is Macro");
+        layout.addView(isMacroInput);
 
         // Helper to add chip
         final java.util.List<String> currentTags = new java.util.ArrayList<>();
@@ -112,6 +118,7 @@ public class SnippetCreationActivity extends Activity {
                 existingSnippet = (Snippet) item;
                 nameInput.setText(existingSnippet.name);
                 contentInput.setText(existingSnippet.content);
+                isMacroInput.setChecked(existingSnippet.isMacro);
 
                 if (existingSnippet.tags != null) {
                     currentTags.addAll(existingSnippet.tags);
@@ -146,11 +153,13 @@ public class SnippetCreationActivity extends Activity {
 
                         if (!content.isEmpty()) {
                             if (existingSnippet != null) {
-                                manager.updateSnippet(existingSnippet, name, content, currentTags);
+                                manager.updateSnippet(existingSnippet, name, content, currentTags,
+                                        isMacroInput.isChecked());
                             } else {
                                 Snippet newSnippet = new Snippet(content);
                                 newSnippet.name = name;
                                 newSnippet.tags = currentTags;
+                                newSnippet.isMacro = isMacroInput.isChecked();
                                 manager.getCurrentFolder().addItem(newSnippet);
                                 manager.save();
                             }

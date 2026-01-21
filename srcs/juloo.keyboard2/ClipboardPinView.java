@@ -130,8 +130,11 @@ public final class ClipboardPinView extends NonScrollListView {
 
   /** Send the specified entry to the editor. */
   public void paste_entry(final Snippet snippet) {
-
-    ClipboardHistoryService.paste(snippet.content);
+    if (snippet.isMacro) {
+      ClipboardHistoryService.pasteMacro(snippet.content);
+    } else {
+      ClipboardHistoryService.paste(snippet.content);
+    }
   }
 
   void update_view() {

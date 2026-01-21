@@ -96,6 +96,7 @@ public final class KeyValue implements Comparable<KeyValue> {
     String, // [_payload] is also the string to output, value is unused.
     Slider, // [_payload] is a [KeyValue.Slider], value is slider repeatition.
     Macro, // [_payload] is a [KeyValue.Macro], value is unused.
+    Wait, // [_payload] is unused, value is duration in ms.
   }
 
   private static final int FLAGS_OFFSET = 20;
@@ -218,6 +219,11 @@ public final class KeyValue implements Comparable<KeyValue> {
   /** Defined only when [getKind() == Kind.Macro]. */
   public KeyValue[] getMacro() {
     return ((Macro) _payload).keys;
+  }
+
+  /** Defined only when [getKind() == Kind.Wait]. */
+  public int getWaitDuration() {
+    return (_code & VALUE_BITS);
   }
 
   /* Update the char and the symbol. */
@@ -442,6 +448,10 @@ public final class KeyValue implements Comparable<KeyValue> {
     if (symbol.length() > 1)
       flags |= FLAG_SMALLER_FONT;
     return new KeyValue(new Macro(keys, symbol), Kind.Macro, 0, flags);
+  }
+
+  public static KeyValue makeWait(int duration) {
+    return new KeyValue("", Kind.Wait, duration, 0);
   }
 
   /** Make a modifier key for passing to [KeyModifier]. */
