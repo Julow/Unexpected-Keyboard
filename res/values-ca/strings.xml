@@ -1,3 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="app_name_release">Unexpected Keyboard</string>
+    <string name="app_name_debug">Unexpected Keyboard (depuració)</string>
+    <string name="short_description">Un teclat virtual lleuger per a Android que és conscient de la teva privacitat.</string>
+    <string name="store_description">La característica principal és que pots escriure més caràcters arrossegant les tecles cap a les cantonades.\n\nAquesta aplicació va ser dissenyada originalment per als programadors que usen Termux.\nAra és perfecta per a un ús quotidià.\n\nAquesta aplicació no conté anuncis, no fa cap petició de xarxa i és de codi obert.</string>
+    <string name="settings_activity_label">Configuració de Unexpected Keyboard</string>
+    <string name="pref_portrait">En mode vertical</string>
+    <string name="pref_landscape">En mode apaïsat</string>
+    <string name="pref_category_layout">Distribució</string>
+    <string name="pref_label_brightness">Ajusta la brillantor dels símbols</string>
+    <string name="pref_keyboard_opacity">Ajusta l\'opacitat del fons del teclat</string>
+    <string name="pref_key_opacity">Ajusta l\'opacitat de les tecles</string>
+    <string name="pref_key_activated_opacity">Ajusta l\'opacitat de la tecla quan es prem</string>
+    <string name="pref_layout_e_system">Cobfiguració del sistema</string>
+    <string name="pref_layout_e_custom">Distribució personalitzada</string>
+    <string name="pref_layouts_add">Afegeix una distribució alternativa</string>
+    <string name="pref_layouts_item">Distribució %1$d: %2$s</string>
+    <string name="pref_layouts_remove_custom">Eliminar distribució</string>
+    <string name="pref_custom_layout_title">Distribució personalitzada</string>
+    <string name="pref_show_numpad_title">Mostra el teclat numèric</string>
+    <string name="pref_show_numpad_never">Mai</string>
+    <string name="pref_show_numpad_landscape">Només en mode apaïsat</string>
+    <string name="pref_show_numpad_always">Sempre</string>
+    <string name="pref_number_row_title">Mostra la fila de nombres</string>
+    <string name="pref_number_row_summary">Afageix una fila de nombres a dalt del teclat quan el teclat numèric és ocult</string>
+    <string name="pref_numpad_layout">Distribució del teclat numèric</string>
+    <string name="pref_numpad_layout_e_high_first">En ordre descendent</string>
+    <string name="pref_numpad_layout_e_low_first">En ordre ascendent</string>
+    <string name="pref_extra_keys_title">Afegeix tecles al teclat</string>
+    <string name="pref_extra_keys_custom">Afegeix tecles personalitzades</string>
+    <string name="pref_extra_keys_internal">Selecciona tecles per afegir al teclat</string>
+    <string name="pref_category_typing">Escriptura</string>
+    <string name="pref_swipe_dist_title">Distància d\'arrossegament</string>
+    <string name="pref_swipe_dist_summary">Distància dels caràcters a les cantonades de les tecles: %s</string>
+    <string name="pref_long_timeout_title">Temps d\'espera per tocs llargs</string>
+    <string name="pref_long_interval_title">Interval de repetició de la tecla</string>
+    <string name="pref_keyrepeat_enabled">Repeteix la tecla al mantenir-la premuda</string>
+    <string name="pref_lock_double_tap_title">Activa fer doble toc a shift pel bloqueig de majúscules</string>
+    <string name="pref_lock_double_tap_summary">Pots bloquejar qualsevol modificador prement-lo</string>
+    <string name="pref_category_behavior">Comportament</string>
+    <string name="pref_autocapitalisation_title">Majúscules automàtiques</string>
+    <string name="pref_autocapitalisation_summary">Fa que sigui innecesari prémer Shift a l\'inici de cada frase</string>
+    <string name="pref_switch_input_immediate_title">Canvia al darrer teclat utilitzat</string>
+    <string name="pref_switch_input_immediate_summary">Comportament de la tecla per canviar teclat</string>
+    <string name="pref_vibrate_custom">Personalitza la vibració</string>
+    <string name="pref_vibrate_duration_title">Intensitat de la vibració</string>
+    <string name="pref_pin_entry_enabled_title">Distribució de l\'entrada de codi numèric</string>
+    <string name="pref_pin_entry_enabled_summary">Quan s\'escriuen nombres, dates i números de telèfon</string>
+    <string name="pref_category_style">Estil</string>
+    <string name="pref_margin_bottom_title">Marge inferior</string>
+</resources>
