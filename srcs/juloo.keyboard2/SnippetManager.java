@@ -32,6 +32,11 @@ public class SnippetManager {
         return instance;
     }
 
+    public void reload() {
+        load();
+        notifyListeners();
+    }
+
     private void load() {
         String json = prefs.getString(PREF_KEY_NEW, null);
         if (json != null) {

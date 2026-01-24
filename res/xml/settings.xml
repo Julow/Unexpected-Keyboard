@@ -62,4 +62,8 @@
   <PreferenceCategory android:title="@string/pref_category_clipboard">
     <ListPreference android:key="clipboard_history_duration" android:title="@string/pref_clipboard_history_duration" android:summary="%s" android:defaultValue="5" android:entries="@array/pref_clipboard_duration_entries" android:entryValues="@array/pref_clipboard_duration_values" />
    </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_category_backup">
+    <juloo.keyboard2.prefs.ClickablePreference android:key="backup" android:title="@string/pref_backup_title" android:summary="@string/pref_backup_summary"/>
+    <juloo.keyboard2.prefs.ClickablePreference android:key="restore" android:title="@string/pref_restore_title" android:summary="@string/pref_restore_summary"/>
+  </PreferenceCategory>
 </PreferenceScreen>

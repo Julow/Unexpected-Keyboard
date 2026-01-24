@@ -150,4 +150,13 @@
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
     <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
     <string name="pref_dialog_edit_text">Custom definition</string>
+    <string name="pref_category_backup">Backup &amp; Restore</string>
+    <string name="pref_backup_title">Backup</string>
+    <string name="pref_backup_summary">Save settings and snippets to a file</string>
+    <string name="pref_restore_title">Restore</string>
+    <string name="pref_restore_summary">Restore settings and snippets from a file</string>
+    <string name="backup_success">Backup successful</string>
+    <string name="backup_failed">Backup failed</string>
+    <string name="restore_success">Restore successful</string>
+    <string name="restore_failed">Restore failed</string>
 </resources>
