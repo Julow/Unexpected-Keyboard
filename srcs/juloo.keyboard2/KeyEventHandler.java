@@ -106,6 +106,10 @@ public final class KeyEventHandler
         send_text(key.getString());
         break;
       case Event:
+        if (key.getEvent() == KeyValue.Event.ACTION && "✎".equals(key.getString())) {
+          _recv.openScratchpad();
+          break;
+        }
         _recv.handle_event_key(key.getEvent());
         break;
       case Keyevent:
@@ -142,6 +146,11 @@ public final class KeyEventHandler
   @Override
   public void paste_from_clipboard_pane(String content) {
     send_text(content);
+  }
+
+  @Override
+  public void openScratchpad() {
+    _recv.openScratchpad();
   }
 
   @Override
@@ -580,6 +589,8 @@ public final class KeyEventHandler
 
   public static interface IReceiver extends Suggestions.Callback {
     public void handle_event_key(KeyValue.Event ev);
+
+    public void openScratchpad();
 
     public void set_shift_state(boolean state, boolean lock);
 

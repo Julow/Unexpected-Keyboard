@@ -180,6 +180,11 @@ public class Keyboard2View extends View
   }
 
   @Override
+  public void openScratchpad() {
+    _config.handler.openScratchpad();
+  }
+
+  @Override
   public boolean onTouch(View v, MotionEvent event) {
     int p;
     switch (event.getActionMasked()) {

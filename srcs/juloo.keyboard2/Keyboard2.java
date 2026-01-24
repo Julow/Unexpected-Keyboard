@@ -454,6 +454,13 @@ public class Keyboard2 extends InputMethodService
       }
     }
 
+    @Override
+    public void openScratchpad() {
+      Intent intent = new Intent(Keyboard2.this, ScratchpadActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
+    }
+
     public void set_shift_state(boolean state, boolean lock) {
       _keyboardView.set_shift_state(state, lock);
     }

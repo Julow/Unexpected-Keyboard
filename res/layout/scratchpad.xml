@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scratchpad_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/colorBackground">
+
+    <TextView
+        android:id="@+id/scratchpad_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scratchpad"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/scratchpad_input"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:hint="Type here..."
+        android:minLines="10"
+        android:gravity="top|start"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="8dp">
+        
+        <Button
+             android:id="@+id/btn_copy"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Copy"
+             android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close" />
+    </LinearLayout>
+
+</LinearLayout>
