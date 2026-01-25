@@ -112,6 +112,18 @@
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill_horizontal"/>
 
+            <Button
+                android:id="@+id/btn_calculator"
+                android:background="@drawable/rect_rounded"
+                android:backgroundTint="?attr/colorKey"
+                android:stateListAnimator="@null"
+                android:elevation="0dp"
+                android:textColor="?attr/colorLabel"
+                android:text="Calculator"
+                android:layout_margin="4dp"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"/>
+
         </GridLayout>
 
         <LinearLayout
