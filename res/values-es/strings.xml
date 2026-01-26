@@ -76,7 +76,7 @@
     <string name="pref_key_vertical_space">Espacio vertical entre las teclas</string>
     <string name="pref_border_config_title">Bordes personalizados</string>
     <string name="pref_border_width_title">Ancho de bordes</string>
-    <string name="pref_corners_radius_title">Radio de rincones</string>
+    <string name="pref_corners_radius_title">Radio de las esquinas</string>
     <string name="pref_circle_sensitivity_title">Sensibilidad a gestos circulares</string>
     <string name="pref_circle_sensitivity_e_high">Alta</string>
     <string name="pref_circle_sensitivity_e_medium">Mediana</string>
