@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="app_name_release">Unexpected Keyboard</string>
+    <string name="pref_show_numpad_title">lukin e nena nanpa</string>
+    <string name="pref_show_numpad_never">ala</string>
+    <string name="pref_show_numpad_landscape">nasin supa taso</string>
+    <string name="pref_show_numpad_always">nasin ale</string>
+    <string name="pref_number_row_title">lukin e supa nanpa</string>
+</resources>
