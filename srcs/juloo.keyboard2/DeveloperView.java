@@ -45,6 +45,7 @@ public class DeveloperView extends LinearLayout {
                 popup.getMenu().add("Linux Epoch (s)");
                 popup.getMenu().add("ISO 8601 (UTC)");
                 popup.getMenu().add("ISO 8601 (Local)");
+                popup.getMenu().add(R.string.pref_timestamp_custom_menu);
                 popup.setOnMenuItemClickListener(new android.widget.PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(android.view.MenuItem item) {
                         long now = System.currentTimeMillis();
@@ -63,6 +64,14 @@ public class DeveloperView extends LinearLayout {
                             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",
                                     java.util.Locale.US);
                             text = sdf.format(new java.util.Date(now));
+                        } else if (title.equals(getContext().getString(R.string.pref_timestamp_custom_menu))) {
+                            try {
+                                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+                                        Config.globalConfig().timestamp_format, java.util.Locale.US);
+                                text = sdf.format(new java.util.Date(now));
+                            } catch (Exception e) {
+                                text = "Invalid format";
+                            }
                         }
                         commitText(text);
                         return true;
@@ -103,6 +112,15 @@ public class DeveloperView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 android.content.Intent intent = new android.content.Intent(getContext(), CalculatorActivity.class);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.btn_url_encode).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.Intent intent = new android.content.Intent(getContext(), UrlEncodeActivity.class);
                 intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
             }

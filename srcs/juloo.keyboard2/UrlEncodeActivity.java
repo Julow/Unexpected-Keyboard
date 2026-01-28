@@ -13,9 +13,11 @@ import android.content.ClipboardManager;
 import android.content.ClipData;
 import android.content.Context;
 import android.widget.Toast;
-import java.text.DecimalFormat;
+import java.net.URLEncoder;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
-public class CalculatorActivity extends Activity {
+public class UrlEncodeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +53,17 @@ public class CalculatorActivity extends Activity {
 
         // Input Label
         TextView inputLabel = new TextView(this);
-        inputLabel.setText("Expression:");
+        inputLabel.setText("Input:");
         inputLabel.setTextColor(labelColor);
         layout.addView(inputLabel);
 
         // Input Field
         final EditText inputParams = new EditText(this);
-        inputParams.setHint("e.g. 2 + 2 * (3 / 4)");
+        inputParams.setHint("Enter text here...");
         inputParams.setInputType(
                 android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        inputParams.setMinLines(2);
-        inputParams.setMaxLines(4);
+        inputParams.setMinLines(3);
+        inputParams.setMaxLines(5);
         inputParams.setGravity(Gravity.TOP | Gravity.START);
         inputParams.setTextColor(labelColor);
         inputParams.setHintTextColor((labelColor & 0x00FFFFFF) | 0x80000000); // 50% opacity
@@ -69,25 +71,34 @@ public class CalculatorActivity extends Activity {
         inputParams.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
         layout.addView(inputParams);
 
-        // Action Buttons
+        // Action Buttons (Encode/Decode)
         LinearLayout actionButtons = new LinearLayout(this);
         actionButtons.setOrientation(LinearLayout.HORIZONTAL);
-        actionButtons.setWeightSum(1);
+        actionButtons.setWeightSum(2);
 
-        Button calculateBtn = new Button(this);
-        calculateBtn.setText("Calculate");
-        LinearLayout.LayoutParams calcParams = new LinearLayout.LayoutParams(0,
+        Button encodeBtn = new Button(this);
+        encodeBtn.setText("Encode");
+        LinearLayout.LayoutParams encodeParams = new LinearLayout.LayoutParams(0,
                 LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-        calculateBtn.setLayoutParams(calcParams);
-        calculateBtn.setTextColor(labelColor);
-        calculateBtn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
+        encodeBtn.setLayoutParams(encodeParams);
+        encodeBtn.setTextColor(labelColor);
+        encodeBtn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
 
-        actionButtons.addView(calculateBtn);
+        Button decodeBtn = new Button(this);
+        decodeBtn.setText("Decode");
+        LinearLayout.LayoutParams decodeParams = new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        decodeBtn.setLayoutParams(decodeParams);
+        decodeBtn.setTextColor(labelColor);
+        decodeBtn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
+
+        actionButtons.addView(encodeBtn);
+        actionButtons.addView(decodeBtn);
         layout.addView(actionButtons);
 
         // Output Label
         TextView outputLabel = new TextView(this);
-        outputLabel.setText("Result:");
+        outputLabel.setText("Output:");
         outputLabel.setPadding(0, padding / 2, 0, 0);
         outputLabel.setTextColor(labelColor);
         layout.addView(outputLabel);
@@ -95,9 +106,10 @@ public class CalculatorActivity extends Activity {
         // Output Field (Read Only)
         final EditText outputField = new EditText(this);
         outputField.setHint("Result will appear here...");
-        outputField.setInputType(android.text.InputType.TYPE_NULL);
-        outputField.setMinLines(1);
-        outputField.setMaxLines(2);
+        outputField.setInputType(
+                android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        outputField.setMinLines(3);
+        outputField.setMaxLines(5);
         outputField.setGravity(Gravity.TOP | Gravity.START);
         outputField.setKeyListener(null); // Read only
         outputField.setTextColor(labelColor);
@@ -150,19 +162,34 @@ public class CalculatorActivity extends Activity {
         inputParams.requestFocus();
 
         // Listeners
-        calculateBtn.setOnClickListener(new View.OnClickListener() {
+        encodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String expression = inputParams.getText().toString();
-                if (expression.isEmpty())
-                    return;
                 try {
-                    double result = eval(expression);
-                    // Format to remove trailing zeros if integer
-                    DecimalFormat df = new DecimalFormat("#.##########");
-                    outputField.setText(df.format(result));
+                    String input = inputParams.getText().toString();
+                    if (input.isEmpty())
+                        return;
+                    String encoded = URLEncoder.encode(input, StandardCharsets.UTF_8.toString());
+                    outputField.setText(encoded);
                 } catch (Exception e) {
-                    outputField.setText("Error");
+                    outputField.setText("Error: " + e.getMessage());
+                }
+            }
+        });
+
+        decodeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String input = inputParams.getText().toString();
+                    if (input.isEmpty())
+                        return;
+                    String decoded = URLDecoder.decode(input, StandardCharsets.UTF_8.toString());
+                    outputField.setText(decoded);
+                } catch (IllegalArgumentException e) {
+                    outputField.setText("Error: Invalid URL encoding");
+                } catch (Exception e) {
+                    outputField.setText("Error: " + e.getMessage());
                 }
             }
         });
@@ -171,12 +198,12 @@ public class CalculatorActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String text = outputField.getText().toString();
-                if (text.isEmpty() || "Error".equals(text))
+                if (text.isEmpty())
                     return;
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Calculator Result", text);
+                ClipData clip = ClipData.newPlainText("URL Encode Result", text);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(CalculatorActivity.this, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UrlEncodeActivity.this, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -184,7 +211,7 @@ public class CalculatorActivity extends Activity {
             @Override
             public void onClick(View v) {
                 final String text = outputField.getText().toString();
-                if (text.isEmpty() || "Error".equals(text))
+                if (text.isEmpty() || text.startsWith("Error:"))
                     return;
 
                 finish();
@@ -197,91 +224,5 @@ public class CalculatorActivity extends Activity {
                 }, 200);
             }
         });
-    }
-
-    // Simple recursive parser
-    public static double eval(final String str) {
-        return new Object() {
-            int pos = -1, ch;
-
-            void nextChar() {
-                ch = (++pos < str.length()) ? str.charAt(pos) : -1;
-            }
-
-            boolean eat(int charToEat) {
-                while (ch == ' ')
-                    nextChar();
-                if (ch == charToEat) {
-                    nextChar();
-                    return true;
-                }
-                return false;
-            }
-
-            double parse() {
-                nextChar();
-                double x = parseExpression();
-                if (pos < str.length())
-                    throw new RuntimeException("Unexpected: " + (char) ch);
-                return x;
-            }
-
-            // Grammar:
-            // expression = term | expression `+` term | expression `-` term
-            // term = factor | term `*` factor | term `/` factor
-            // factor = `+` factor | `-` factor | `(` expression `)` | number | number `^`
-            // factor
-
-            double parseExpression() {
-                double x = parseTerm();
-                for (;;) {
-                    if (eat('+'))
-                        x += parseTerm(); // addition
-                    else if (eat('-'))
-                        x -= parseTerm(); // subtraction
-                    else
-                        return x;
-                }
-            }
-
-            double parseTerm() {
-                double x = parseFactor();
-                for (;;) {
-                    if (eat('*'))
-                        x *= parseFactor(); // multiplication
-                    else if (eat('/'))
-                        x /= parseFactor(); // division
-                    else if (eat('%'))
-                        x %= parseFactor(); // modulo
-                    else
-                        return x;
-                }
-            }
-
-            double parseFactor() {
-                if (eat('+'))
-                    return parseFactor(); // unary plus
-                if (eat('-'))
-                    return -parseFactor(); // unary minus
-
-                double x;
-                int startPos = this.pos;
-                if (eat('(')) { // parentheses
-                    x = parseExpression();
-                    eat(')');
-                } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
-                    while ((ch >= '0' && ch <= '9') || ch == '.')
-                        nextChar();
-                    x = Double.parseDouble(str.substring(startPos, this.pos));
-                } else {
-                    throw new RuntimeException("Unexpected: " + (char) ch);
-                }
-
-                if (eat('^'))
-                    x = Math.pow(x, parseFactor()); // exponentiation
-
-                return x;
-            }
-        }.parse();
     }
 }

@@ -28,50 +28,47 @@ public class ScratchpadActivity extends Activity {
         Button btnCopy = findViewById(R.id.btn_copy);
 
         // Apply theme
+        int labelColor = 0xFF000000;
+        int bgColor = 0xFFFFFFFF;
+        int keyColor = 0xFFCCCCCC;
+
         Config config = Config.globalConfig();
         if (config != null) {
-            Theme theme = new Theme(this, null); // Re-instantiating Theme might be heavy, but allows accessing colors
-                                                 // if not static.
-            // Actually Config has a 'theme' int ID, but Theme class extracts attributes
-            // from context's theme.
-            // We need to construct a Theme object using the context which has the correct
-            // style applied.
-            // But Activity uses Theme.Dialog. We can try to use the raw colors if we can
-            // get them.
-            // Let's use the colors from the keyboard view if possible, or construct a
-            // Theme.
-            // The issue is 'Theme' constructor reads from attributes.
-            // Let's rely on manually setting colors if we can get them from a static place
-            // or Config.
-            // Wait, Theme is instantiated in Keyboard2View. We don't have access to that
-            // instance here.
-
-            // Allow manual applying of colors if we can simply create a Theme object with
-            // the correct style.
-            // Config.theme holds the R.style ref.
-            getTheme().applyStyle(config.theme, true);
-            Theme t = new Theme(this, null);
-
-            findViewById(android.R.id.content).setBackgroundColor(t.colorNavBar); // Use navbar color for dialog bg? Or
-                                                                                  // key color.
-            View root = findViewById(R.id.scratchpad_root);
-            if (root != null)
-                root.setBackgroundColor(t.colorKey); // Use key color for background
-
-            mInput.setTextColor(t.labelColor);
-            mInput.setHintTextColor(t.greyedLabelColor);
-            // Give input a slight background to distinguish it
-            // Use greyedLabelColor with very low alpha for background
-            int bgColor = t.greyedLabelColor & 0x00FFFFFF | 0x20000000;
-            mInput.setBackgroundColor(bgColor);
-
-            TextView title = findViewById(R.id.scratchpad_title);
-            if (title != null)
-                title.setTextColor(t.labelColor);
-
-            btnClose.setTextColor(t.labelColor);
-            btnCopy.setTextColor(t.labelColor);
+            android.view.ContextThemeWrapper wrapper = new android.view.ContextThemeWrapper(this, config.theme);
+            android.content.res.TypedArray ta = wrapper.obtainStyledAttributes(new int[] {
+                    R.attr.colorLabel,
+                    R.attr.colorKeyboard,
+                    R.attr.colorKey
+            });
+            labelColor = ta.getColor(0, labelColor);
+            bgColor = ta.getColor(1, bgColor);
+            keyColor = ta.getColor(2, keyColor);
+            ta.recycle();
         }
+
+        View root = findViewById(R.id.scratchpad_root);
+        if (root != null) {
+            root.setBackgroundColor(bgColor);
+        }
+
+        mInput.setTextColor(labelColor);
+        mInput.setHintTextColor((labelColor & 0x00FFFFFF) | 0x80000000);
+        // Give input a slight background to distinguish it
+        // Use key color for consistency
+        mInput.setBackgroundResource(R.drawable.rect_rounded);
+        // We need to apply the tint to the background drawable
+        mInput.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
+
+        TextView title = findViewById(R.id.scratchpad_title);
+        if (title != null) {
+            title.setTextColor(labelColor);
+        }
+
+        btnClose.setTextColor(labelColor);
+        btnClose.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
+
+        btnCopy.setTextColor(labelColor);
+        btnCopy.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
 
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String content = prefs.getString(KEY_CONTENT, "");

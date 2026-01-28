@@ -116,10 +116,24 @@ public class Base64Activity extends Activity {
         outputField.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
         layout.addView(outputField);
 
-        // Result Buttons (Copy/Insert)
+        // Result Buttons (Close/Copy/Insert)
         LinearLayout resultButtons = new LinearLayout(this);
         resultButtons.setOrientation(LinearLayout.HORIZONTAL);
-        resultButtons.setWeightSum(2);
+        resultButtons.setWeightSum(3);
+
+        Button closeBtn = new Button(this);
+        closeBtn.setText("Close");
+        LinearLayout.LayoutParams closeParams = new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        closeBtn.setLayoutParams(closeParams);
+        closeBtn.setTextColor(labelColor);
+        closeBtn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Button copyBtn = new Button(this);
         copyBtn.setText("Copy");
@@ -137,6 +151,7 @@ public class Base64Activity extends Activity {
         insertBtn.setTextColor(labelColor);
         insertBtn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(keyColor));
 
+        resultButtons.addView(closeBtn);
         resultButtons.addView(copyBtn);
         resultButtons.addView(insertBtn);
         layout.addView(resultButtons);
