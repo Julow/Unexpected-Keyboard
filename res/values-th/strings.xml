@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="short_description">คีย์บอร์ดสำหรับแอนดรอยด์ที่กินทรัพยากรน้อยและโฟกัสที่ความเป็นส่วนตัว</string>
-    <string name="store_description">คีย์บอร์ดนี้สามารถเขียนตัวอักษรได้หลายตัวมากขึ้นโดยใช้การปัดคีย์ไปที่มุมต่างๆ\n\nคีย์บอร์ดนี้ถูกออกแบบมาเพื่อนักเขียนโปรแกรมที่ใช้เทอร์มักซ์ (Termux) \nแต่ตอนนี้เพอร์เฟ็กต์สำหรับคนทั่วไป\n\nแอพนี้ไม่มีโฆษณา ไม่มีการเชื่อมต่อกับอินเทอร์เน็ตแล้วก็โอเพ่นซอร์ส</string>
+    <string name="store_description">คีย์บอร์ดนี้สามารถเขียนตัวอักษรได้หลายตัวมากขึ้นโดยใช้การปัดคีย์ไปที่มุมต่างๆ\n\nคีย์บอร์ดนี้ถูกออกแบบมาเพื่อนักเขียนโปรแกรมที่ใช้เทอร์มักซ์ (Termux) \nแต่ตอนนี้เพอร์เฟ็กต์สำหรับคนทั่วไป\n\nแอพนี้ไม่มีโฆษณา ไม่มีการเชื่อมต่อกับอินเทอร์เน็ตแล้วก็เป็นแอพโอเพ่นซอร์ส</string>
     <string name="settings_activity_label">การตั้งค่า Unexpected Keyboard</string>
     <string name="pref_portrait">ในแนวตั้ง</string>
     <string name="pref_landscape">ในแนวนอน</string>
@@ -51,7 +51,7 @@
     <string name="pref_swipe_dist_e_far">ไกล</string>
     <string name="pref_swipe_dist_e_short">ใกล้</string>
     <string name="pref_swipe_dist_e_default">พอดี</string>
-    <string name="key_descr_change_method">เปลี่ยนเลย์เอาต์</string>
+    <string name="key_descr_change_method">เปลี่ยนคีย์บอร์ด</string>
     <string name="key_action_send">ส่ง</string>
     <string name="clipboard_remove_confirmed">ใช่</string>
     <string name="pref_category_behavior">การทำงาน</string>
@@ -62,7 +62,7 @@
     <string name="pref_margin_bottom_title">ขอบล่าง</string>
     <string name="pref_pin_entry_enabled_summary">ตอนพิมพ์ตัวเลข วันที่ หรือเบอร์โทรศัพท์</string>
     <string name="pref_theme_e_epaper">อีเปเปอร์</string>
-    <string name="pref_corners_radius_title">ความมนขอบของคีย์</string>
+    <string name="pref_corners_radius_title">ความมนของขอบคีย์</string>
     <string name="key_action_search">ค้นหา</string>
     <string name="key_action_done">เสร็จ</string>
     <string name="key_descr_superscript">ตัวยก</string>
@@ -102,8 +102,28 @@
     <string name="launcher_sourcecode">แอพนี้เป็นแอพฟรีและโอเพ่นซอร์ส</string>
     <string name="launcher_tryhere">หลังจากเปิดใช้งานแล้ว สามารถลองได้ตรงนี้</string>
     <string name="launcher_tryhere_hint">ลองดู!!</string>
-    <string name="key_descr_capslock">Caps lock</string>
-    <string name="key_descr_compose">Compose</string>
+    <string name="key_descr_capslock">caps lock</string>
+    <string name="key_descr_compose">compose</string>
     <string name="key_descr_shareText">แชร์ข้อความ</string>
     <string name="key_descr_undo">เลิกทำ</string>
+    <string name="pref_numpad_layout_e_low_first">เรียงเลขจากน้อยไปมาก</string>
+    <string name="pref_numpad_layout_e_high_first">เรียงเลขจากมากไปน้อย</string>
+    <string name="pref_vibrate_duration_title">ความแรงของการสั่น</string>
+    <string name="pref_vibrate_custom">กำหนดความแรงของการสั่น</string>
+    <string name="pref_border_config_title">กำหนดขอบของคีย์เอง</string>
+    <string name="pref_circle_sensitivity_title">ความเซนซิทีฟของท่าทางการสัมผัสวงกลม</string>
+    <string name="pref_circle_sensitivity_e_high">สูง</string>
+    <string name="pref_circle_sensitivity_e_medium">ปานกลาง</string>
+    <string name="pref_circle_sensitivity_e_low">ต่ำ</string>
+    <string name="clipboard_history_heading">ข้อความที่พึ่งคัดลอก</string>
+    <string name="key_descr_home">home</string>
+    <string name="key_descr_end">end</string>
+    <string name="key_descr_combining">เครื่องหมายกำกับเสียง</string>
+    <string name="key_descr_dead_key">คีย์กำกับอักษร</string>
+    <string name="key_descr_zwj">ตัวเชื่อมความกว้างศูนย์</string>
+    <string name="key_descr_zwnj">ตัวกันเชื่อมความกว้างศูนย์</string>
+    <string name="key_descr_nbsp">วรรคไม่ตัดคำ</string>
+    <string name="key_descr_nnbsp">วรรคแคบไม่ตัดคำ</string>
+    <string name="key_descr_page_up">page up</string>
+    <string name="key_descr_page_down">page down</string>
 </resources>
