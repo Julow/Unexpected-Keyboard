@@ -44,8 +44,10 @@
     <string name="pref_category_behavior">Behavior</string>
     <string name="pref_autocapitalisation_title">Automatic capitalisation</string>
     <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string>
-    <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string>
-    <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string>
+    <string name="pref_change_method_key_replacement_title">Switching between input methods</string>
+    <string name="pref_change_method_key_replacement_e_picker">Show the input method picker (long press)</string>
+    <string name="pref_change_method_key_replacement_e_prev">Switch to last used</string>
+    <string name="pref_change_method_key_replacement_e_next">Switch to the next in the list</string>
     <string name="pref_vibrate_custom">Custom vibration</string>
     <string name="pref_vibrate_duration_title">Vibration intensity</string>
     <string name="pref_number_entry_title">Layout when typing numbers, dates, and phone numbers</string>

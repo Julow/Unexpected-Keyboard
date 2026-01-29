@@ -156,9 +156,7 @@ public final class LayoutModifier
         switch (orig.getEvent())
         {
           case CHANGE_METHOD_PICKER:
-            if (globalConfig.switch_input_immediate)
-              return KeyValue.getKeyByName("change_method_prev");
-            break;
+            return globalConfig.change_method_key_replacement;
           case ACTION:
             String action_label = ec.actionLabel;
             if (action_label == null)
