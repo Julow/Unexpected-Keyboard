@@ -369,9 +369,16 @@ public class Keyboard2 extends InputMethodService
           get_imm().showInputMethodPicker();
           break;
 
-        case CHANGE_METHOD_AUTO:
+        case CHANGE_METHOD_PREV:
           if (VERSION.SDK_INT < 28)
             get_imm().switchToLastInputMethod(getConnectionToken());
+          else
+            switchToPreviousInputMethod();
+          break;
+
+        case CHANGE_METHOD_NEXT:
+          if (VERSION.SDK_INT < 28)
+            get_imm().switchToNextInputMethod(getConnectionToken(), false);
           else
             switchToNextInputMethod(false);
           break;

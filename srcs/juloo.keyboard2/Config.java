@@ -65,7 +65,7 @@ public final class Config
   public float characterSize; // Ratio
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
-  public boolean switch_input_immediate;
+  public KeyValue change_method_key_replacement;
   public NumberLayout selected_number_layout;
   public boolean borderConfig;
   public int circle_sensitivity;
@@ -173,7 +173,7 @@ public final class Config
       * characterSizeScale;
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
-    switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
+    change_method_key_replacement = get_change_method_key_replacement(_prefs);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
     selected_number_layout = NumberLayout.of_string(_prefs.getString("number_entry_layout", "pin"));
@@ -268,6 +268,17 @@ public final class Config
     }
   }
 
+  private static KeyValue get_change_method_key_replacement(SharedPreferences prefs)
+  {
+    switch (prefs.getString("change_method_key_replacement", "prev"))
+    {
+      case "prev": return KeyValue.getKeyByName("change_method_prev");
+      case "next": return KeyValue.getKeyByName("change_method_next");
+      default:
+      case "picker": return KeyValue.getKeyByName("change_method");
+    }
+  }
+
   private static Config _globalConfig = null;
 
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
@@ -298,7 +309,7 @@ public final class Config
 
   /** Config migrations. */
 
-  private static int CONFIG_VERSION = 3;
+  private static int CONFIG_VERSION = 4;
 
   public static void migrate(SharedPreferences prefs)
   {
@@ -335,6 +346,10 @@ public final class Config
         }
         // Fallthrough
       case 3:
+        e.putString("change_method_key_replacement",
+            prefs.getBoolean("switch_input_immediate", false) ? "prev" : "picker");
+        // Fallthrough
+      case 4:
       default: break;
     }
     e.apply();
