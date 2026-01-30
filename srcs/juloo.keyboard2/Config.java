@@ -270,7 +270,7 @@ public final class Config
 
   private static KeyValue get_change_method_key_replacement(SharedPreferences prefs)
   {
-    switch (prefs.getString("change_method_key_replacement", ""))
+    switch (prefs.getString("change_method_key_replacement", "prev"))
     {
       case "prev": return KeyValue.getKeyByName("change_method_prev");
       case "next": return KeyValue.getKeyByName("change_method_next");
@@ -346,8 +346,8 @@ public final class Config
         }
         // Fallthrough
       case 3:
-        if (prefs.getBoolean("switch_input_immediate", false))
-          e.putString("change_method_key_replacement", "prev");
+        e.putString("change_method_key_replacement",
+            prefs.getBoolean("switch_input_immediate", false) ? "prev" : "picker");
         // Fallthrough
       case 4:
       default: break;
