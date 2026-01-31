@@ -6,6 +6,13 @@
     <item name="android:textSize">18sp</item>
     <item name="android:textColor">?attr/colorLabel</item>
   </style>
+  <style name="candidates_status">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:textColor">?attr/colorLabel</item>
+  </style>
   <!-- Emoji pane -->
   <style name="emojiTypeButton">
     <item name="android:padding">1px</item>
