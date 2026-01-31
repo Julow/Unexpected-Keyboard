@@ -1,4 +1,4 @@
-package juloo.keyboard2;
+package juloo.keyboard2.suggestions;
 
 import android.content.Context;
 import android.text.InputType;
@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import juloo.keyboard2.Config;
+import juloo.keyboard2.R;
 
 public class CandidatesView extends LinearLayout
 {
@@ -77,6 +79,7 @@ public class CandidatesView extends LinearLayout
     _item_views[item_index] = v;
   }
 
+  /** Whether the candidates view should be shown for a given editor. */
   public static boolean should_show(EditorInfo info)
   {
     int variation = info.inputType & InputType.TYPE_MASK_VARIATION;

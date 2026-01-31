@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import juloo.keyboard2.prefs.LayoutsPreference;
+import juloo.keyboard2.suggestions.CandidatesView;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
