@@ -26,6 +26,10 @@ public class CandidatesView extends LinearLayout
       set to [GONE] when there are less than [NUM_CANDIDATES] suggestions. */
   TextView[] _item_views = new TextView[NUM_CANDIDATES];
 
+  /** Optional view showing a message to the user. Visible when no candidates
+      are shown. Might be [null]. */
+  View _status_no_dict = null; // Dictionary not installed
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -60,6 +64,36 @@ public class CandidatesView extends LinearLayout
         v.setVisibility(View.GONE);
       }
     }
+  }
+
+  /** Refresh the status messages after a configuration refresh. The status
+      message indicates whether the dictionaries should be installed. */
+  public void refresh_status()
+  {
+    set_candidates(Suggestions.NO_SUGGESTIONS);
+    _status_no_dict = inflate_and_show(_status_no_dict,
+        true,
+        R.layout.candidates_status_no_dict);
+  }
+
+  /** Show or hide a status view and inflate it if needed. */
+  View inflate_and_show(View v, boolean show, int layout_id)
+  {
+    if (!show)
+    {
+      if (v != null)
+        v.setVisibility(View.GONE);
+    }
+    else
+    {
+      if (v == null)
+      {
+        v = View.inflate(getContext(), layout_id, null);
+        addView(v);
+      }
+      v.setVisibility(View.VISIBLE);
+    }
+    return v;
   }
 
   private void setup_item_view(final int item_index, int item_id)
