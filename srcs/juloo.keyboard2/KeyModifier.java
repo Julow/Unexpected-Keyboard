@@ -29,6 +29,17 @@ public final class KeyModifier
     return r;
   }
 
+  /** Like [modify] but do not apply user modmaps. Used when evaluating macros
+      to avoid loops. */
+  public static KeyValue modify_no_modmap(KeyValue k, Pointers.Modifiers mods)
+  {
+    Modmap saved = _modmap;
+    _modmap = null;
+    KeyValue r = modify(k, mods);
+    _modmap = saved;
+    return r;
+  }
+
   public static KeyValue modify(KeyValue k, KeyValue mod)
   {
     switch (mod.getKind())
