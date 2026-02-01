@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="dict_name_ar">Arabic</string>
+  <string name="dict_name_as">Assamese</string>
+  <string name="dict_name_be">Belarusian</string>
+  <string name="dict_name_bg">Bulgarian</string>
+  <string name="dict_name_bn">Bangla</string>
+  <string name="dict_name_bs">Bosnian</string>
+  <string name="dict_name_ca">Catalan</string>
+  <string name="dict_name_cs">Czech</string>
+  <string name="dict_name_da">Danish</string>
+  <string name="dict_name_de">German</string>
+  <string name="dict_name_de_ch">German (Switzerland)</string>
+  <string name="dict_name_el">Greek</string>
+  <string name="dict_name_en_au">English (Australia)</string>
+  <string name="dict_name_en_gb">English (United Kingdom)</string>
+  <string name="dict_name_en_us">English (United States)</string>
+  <string name="dict_name_es">Spanish</string>
+  <string name="dict_name_eu">Basque</string>
+  <string name="dict_name_fi">Finnish</string>
+  <string name="dict_name_fr">French</string>
+  <string name="dict_name_gl">Galician</string>
+  <string name="dict_name_gu">Gujarati</string>
+  <string name="dict_name_hi">Hindi</string>
+  <string name="dict_name_hr">Croatian</string>
+  <string name="dict_name_hu">Hungarian</string>
+  <string name="dict_name_hy">Armenian</string>
+  <string name="dict_name_it">Italian</string>
+  <string name="dict_name_iw">Hebrew</string>
+  <string name="dict_name_ka">Georgian</string>
+  <string name="dict_name_km">Khmer</string>
+  <string name="dict_name_kn">Kannada</string>
+  <string name="dict_name_lb">Luxembourgish</string>
+  <string name="dict_name_lt">Lithuanian</string>
+  <string name="dict_name_lv">Latvian</string>
+  <string name="dict_name_mai">Maithili</string>
+  <string name="dict_name_ml">Malayalam</string>
+  <string name="dict_name_mr">Marathi</string>
+  <string name="dict_name_nb">Norwegian Bokmål</string>
+  <string name="dict_name_nl">Dutch</string>
+  <string name="dict_name_or">Odia</string>
+  <string name="dict_name_pa">Punjabi</string>
+  <string name="dict_name_pl">Polish</string>
+  <string name="dict_name_pt_br">Portuguese (Brazil)</string>
+  <string name="dict_name_pt_pt">Portuguese (Portugal)</string>
+  <string name="dict_name_ro">Romanian</string>
+  <string name="dict_name_ru">Russian</string>
+  <string name="dict_name_sa">Sanskrit</string>
+  <string name="dict_name_sat">Santali</string>
+  <string name="dict_name_sd">Sindhi</string>
+  <string name="dict_name_sl">Slovenian</string>
+  <string name="dict_name_sr">Serbian</string>
+  <string name="dict_name_sv">Swedish</string>
+  <string name="dict_name_ta">Tamil</string>
+  <string name="dict_name_te">Telugu</string>
+  <string name="dict_name_tr">Turkish</string>
+  <string name="dict_name_uk">Ukrainian</string>
+  <string name="dict_name_ur">Urdu</string>
+  <string name="dict_name_zgh">Standard Moroccan Tamazight</string>
+  <string-array name="dictionaries_locale">
+    <item>ar</item>
+    <item>as</item>
+    <item>be</item>
+    <item>bg</item>
+    <item>bn</item>
+    <item>bs</item>
+    <item>ca</item>
+    <item>cs</item>
+    <item>da</item>
+    <item>de</item>
+    <item>de_CH</item>
+    <item>el</item>
+    <item>en_AU</item>
+    <item>en_GB</item>
+    <item>en_US</item>
+    <item>es</item>
+    <item>eu</item>
+    <item>fi</item>
+    <item>fr</item>
+    <item>gl</item>
+    <item>gu</item>
+    <item>hi</item>
+    <item>hr</item>
+    <item>hu</item>
+    <item>hy</item>
+    <item>it</item>
+    <item>iw</item>
+    <item>ka</item>
+    <item>km</item>
+    <item>kn</item>
+    <item>lb</item>
+    <item>lt</item>
+    <item>lv</item>
+    <item>mai</item>
+    <item>ml</item>
+    <item>mr</item>
+    <item>nb</item>
+    <item>nl</item>
+    <item>or</item>
+    <item>pa</item>
+    <item>pl</item>
+    <item>pt_BR</item>
+    <item>pt_PT</item>
+    <item>ro</item>
+    <item>ru</item>
+    <item>sa</item>
+    <item>sat</item>
+    <item>sd</item>
+    <item>sl</item>
+    <item>sr</item>
+    <item>sv</item>
+    <item>ta</item>
+    <item>te</item>
+    <item>tr</item>
+    <item>uk</item>
+    <item>ur</item>
+    <item>zgh</item>
+  </string-array>
+  <string-array name="dictionaries_name">
+    <item>@string/dict_name_ar</item>
+    <item>@string/dict_name_as</item>
+    <item>@string/dict_name_be</item>
+    <item>@string/dict_name_bg</item>
+    <item>@string/dict_name_bn</item>
+    <item>@string/dict_name_bs</item>
+    <item>@string/dict_name_ca</item>
+    <item>@string/dict_name_cs</item>
+    <item>@string/dict_name_da</item>
+    <item>@string/dict_name_de</item>
+    <item>@string/dict_name_de_ch</item>
+    <item>@string/dict_name_el</item>
+    <item>@string/dict_name_en_au</item>
+    <item>@string/dict_name_en_gb</item>
+    <item>@string/dict_name_en_us</item>
+    <item>@string/dict_name_es</item>
+    <item>@string/dict_name_eu</item>
+    <item>@string/dict_name_fi</item>
+    <item>@string/dict_name_fr</item>
+    <item>@string/dict_name_gl</item>
+    <item>@string/dict_name_gu</item>
+    <item>@string/dict_name_hi</item>
+    <item>@string/dict_name_hr</item>
+    <item>@string/dict_name_hu</item>
+    <item>@string/dict_name_hy</item>
+    <item>@string/dict_name_it</item>
+    <item>@string/dict_name_iw</item>
+    <item>@string/dict_name_ka</item>
+    <item>@string/dict_name_km</item>
+    <item>@string/dict_name_kn</item>
+    <item>@string/dict_name_lb</item>
+    <item>@string/dict_name_lt</item>
+    <item>@string/dict_name_lv</item>
+    <item>@string/dict_name_mai</item>
+    <item>@string/dict_name_ml</item>
+    <item>@string/dict_name_mr</item>
+    <item>@string/dict_name_nb</item>
+    <item>@string/dict_name_nl</item>
+    <item>@string/dict_name_or</item>
+    <item>@string/dict_name_pa</item>
+    <item>@string/dict_name_pl</item>
+    <item>@string/dict_name_pt_br</item>
+    <item>@string/dict_name_pt_pt</item>
+    <item>@string/dict_name_ro</item>
+    <item>@string/dict_name_ru</item>
+    <item>@string/dict_name_sa</item>
+    <item>@string/dict_name_sat</item>
+    <item>@string/dict_name_sd</item>
+    <item>@string/dict_name_sl</item>
+    <item>@string/dict_name_sr</item>
+    <item>@string/dict_name_sv</item>
+    <item>@string/dict_name_ta</item>
+    <item>@string/dict_name_te</item>
+    <item>@string/dict_name_tr</item>
+    <item>@string/dict_name_uk</item>
+    <item>@string/dict_name_ur</item>
+    <item>@string/dict_name_zgh</item>
+  </string-array>
+  <integer-array name="dictionaries_size">
+    <item>455658</item>
+    <item>307451</item>
+    <item>1745968</item>
+    <item>347735</item>
+    <item>301586</item>
+    <item>481783</item>
+    <item>335099</item>
+    <item>657214</item>
+    <item>933060</item>
+    <item>1071580</item>
+    <item>1075177</item>
+    <item>964195</item>
+    <item>645068</item>
+    <item>644719</item>
+    <item>650605</item>
+    <item>635119</item>
+    <item>359849</item>
+    <item>1003794</item>
+    <item>871636</item>
+    <item>240926</item>
+    <item>279333</item>
+    <item>301928</item>
+    <item>727487</item>
+    <item>331818</item>
+    <item>948362</item>
+    <item>696974</item>
+    <item>352933</item>
+    <item>488139</item>
+    <item>263411</item>
+    <item>286588</item>
+    <item>331897</item>
+    <item>736799</item>
+    <item>854603</item>
+    <item>333644</item>
+    <item>354875</item>
+    <item>301259</item>
+    <item>776481</item>
+    <item>926933</item>
+    <item>357107</item>
+    <item>107120</item>
+    <item>740895</item>
+    <item>705536</item>
+    <item>996904</item>
+    <item>1421447</item>
+    <item>907625</item>
+    <item>342293</item>
+    <item>322250</item>
+    <item>256078</item>
+    <item>228729</item>
+    <item>740293</item>
+    <item>916845</item>
+    <item>297338</item>
+    <item>304295</item>
+    <item>690598</item>
+    <item>1179318</item>
+    <item>265324</item>
+    <item>628168</item>
+  </integer-array>
+</resources>
