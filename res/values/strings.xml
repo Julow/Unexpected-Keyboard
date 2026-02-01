@@ -34,6 +34,9 @@
     <string name="pref_extra_keys_title">Add keys to the keyboard</string>
     <string name="pref_extra_keys_custom">Add custom keys</string>
     <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string>
+    <string name="pref_category_suggestions">Suggestions</string>
+    <string name="pref_suggestions_title">Suggestions</string>
+    <string name="pref_suggestions_summary">Enable word completion and spell checking</string>
     <string name="pref_category_typing">Typing</string>
     <string name="pref_swipe_dist_title">Swiping distance</string>
     <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
@@ -135,4 +138,6 @@
     <string name="clipboard_remove_confirm">Remove this clipboard item?</string>
     <string name="clipboard_remove_confirmed">Yes</string>
     <string name="toast_no_voice_input">No voice typing app installed</string>
+    <string name="candidates_status_no_dict">No dictionary installed</string>
+    <string name="candidates_status_install">Install</string>
 </resources>

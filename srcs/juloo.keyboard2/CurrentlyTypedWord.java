@@ -113,12 +113,9 @@ public final class CurrentlyTypedWord
   /** Refresh the current word by immediately querying the editor. */
   void set_current_word(CharSequence text_before_cursor)
   {
-    if (text_before_cursor == null)
-    {
-      _enabled = false;
-      return;
-    }
     _w.setLength(0);
+    if (text_before_cursor == null)
+      return;
     int saved_cursor = _cursor;
     type_chars(text_before_cursor.toString());
     _cursor = saved_cursor;

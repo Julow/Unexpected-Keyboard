@@ -1,14 +1,15 @@
 package juloo.keyboard2;
 
 import android.annotation.SuppressLint;
-import android.os.Looper;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import java.util.Iterator;
+import juloo.keyboard2.suggestions.Suggestions;
 
 public final class KeyEventHandler
   implements Config.IKeyEventHandler,

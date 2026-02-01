@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import juloo.keyboard2.prefs.LayoutsPreference;
+import juloo.keyboard2.suggestions.CandidatesView;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -164,7 +165,11 @@ public class Keyboard2 extends InputMethodService
 
   private void refresh_candidates_view()
   {
-    boolean should_show = _config.editor_config.should_show_candidates_view;
+    boolean should_show =
+      _config.suggestions_enabled
+      && _config.editor_config.should_show_candidates_view;
+    if (should_show)
+      _candidates_view.refresh_config(_config);
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -185,6 +190,7 @@ public class Keyboard2 extends InputMethodService
     // Set keyboard background opacity
     _container_view.getBackground().setAlpha(_config.keyboardOpacity);
     _keyboardView.reset();
+    refresh_candidates_view();
   }
 
   private KeyboardData refresh_special_layout()
@@ -205,7 +211,6 @@ public class Keyboard2 extends InputMethodService
   {
     _config.editor_config.refresh(info, getResources());
     refresh_config();
-    refresh_candidates_view();
     _currentSpecialLayout = refresh_special_layout();
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
