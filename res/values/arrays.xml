@@ -112,16 +112,26 @@
     <item>30</item>
     <item>15</item>
   </string-array>
-    <string-array name="pref_clipboard_duration_entries">
-        <item>@string/pref_clipboard_history_duration_1</item>
-        <item>@string/pref_clipboard_history_duration_5</item>
-        <item>@string/pref_clipboard_history_duration_30</item>
-        <item>@string/pref_clipboard_history_duration_stop</item>
-    </string-array>
-    <string-array name="pref_clipboard_duration_values">
-        <item>1</item>
-        <item>5</item>
-        <item>30</item>
-        <item>-1</item>
-    </string-array>
+  <string-array name="pref_clipboard_duration_entries">
+    <item>@string/pref_clipboard_history_duration_1</item>
+    <item>@string/pref_clipboard_history_duration_5</item>
+    <item>@string/pref_clipboard_history_duration_30</item>
+    <item>@string/pref_clipboard_history_duration_stop</item>
+  </string-array>
+  <string-array name="pref_clipboard_duration_values">
+    <item>1</item>
+    <item>5</item>
+    <item>30</item>
+    <item>-1</item>
+  </string-array>
+  <string-array name="pref_change_method_key_replacement_entries">
+    <item>@string/pref_change_method_key_replacement_e_picker</item>
+    <item>@string/pref_change_method_key_replacement_e_prev</item>
+    <item>@string/pref_change_method_key_replacement_e_next</item>
+  </string-array>
+  <string-array name="pref_change_method_key_replacement_values">
+    <item>picker</item>
+    <item>prev</item>
+    <item>next</item>
+  </string-array>
 </resources>

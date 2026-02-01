@@ -188,7 +188,7 @@ public class Keyboard2 extends InputMethodService
       _config.suggestions_enabled
       && _config.editor_config.should_show_candidates_view;
     if (should_show)
-      _candidates_view.refresh_status();
+      _candidates_view.refresh_config(_config);
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -210,6 +210,7 @@ public class Keyboard2 extends InputMethodService
     // Set keyboard background opacity
     _container_view.getBackground().setAlpha(_config.keyboardOpacity);
     _keyboardView.reset();
+    refresh_candidates_view();
   }
 
   private KeyboardData refresh_special_layout()
@@ -230,7 +231,6 @@ public class Keyboard2 extends InputMethodService
   {
     _config.editor_config.refresh(info, getResources());
     refresh_config();
-    refresh_candidates_view();
     _currentSpecialLayout = refresh_special_layout();
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
@@ -405,9 +405,16 @@ public class Keyboard2 extends InputMethodService
           get_imm().showInputMethodPicker();
           break;
 
-        case CHANGE_METHOD_AUTO:
+        case CHANGE_METHOD_PREV:
           if (VERSION.SDK_INT < 28)
             get_imm().switchToLastInputMethod(getConnectionToken());
+          else
+            switchToPreviousInputMethod();
+          break;
+
+        case CHANGE_METHOD_NEXT:
+          if (VERSION.SDK_INT < 28)
+            get_imm().switchToNextInputMethod(getConnectionToken(), false);
           else
             switchToNextInputMethod(false);
           break;

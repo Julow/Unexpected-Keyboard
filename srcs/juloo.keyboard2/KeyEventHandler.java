@@ -1,8 +1,8 @@
 package juloo.keyboard2;
 
 import android.annotation.SuppressLint;
-import android.os.Looper;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.inputmethod.ExtractedText;
@@ -421,7 +421,7 @@ public final class KeyEventHandler
   void evaluate_macro_loop(final KeyValue[] keys, int i, Pointers.Modifiers mods, final boolean autocap_paused)
   {
     boolean should_delay = false;
-    KeyValue kv = KeyModifier.modify(keys[i], mods);
+    KeyValue kv = KeyModifier.modify_no_modmap(keys[i], mods);
     if (kv != null)
     {
       if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))

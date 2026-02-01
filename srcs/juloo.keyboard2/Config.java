@@ -53,7 +53,7 @@ public final class Config
   public long longPressInterval;
   public boolean keyrepeat_enabled;
   public float margin_bottom;
-  public int keyboardHeightPercent;
+  public int keyboard_rows_height_pixels;
   public int screenHeightPixels;
   public float horizontal_margin;
   public float key_vertical_margin;
@@ -68,7 +68,7 @@ public final class Config
   public float characterSize; // Ratio
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
-  public boolean switch_input_immediate;
+  public KeyValue change_method_key_replacement;
   public NumberLayout selected_number_layout;
   public boolean borderConfig;
   public int circle_sensitivity;
@@ -121,6 +121,7 @@ public final class Config
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
+    int keyboardHeightPercent;
     if (orientation_landscape)
     {
       if ("landscape".equals(show_numpad_s))
@@ -167,6 +168,12 @@ public final class Config
     customBorderRadius = _prefs.getInt("custom_border_radius", 0) / 100.f;
     customBorderLineWidth = get_dip_pref(dm, "custom_border_line_width", 0);
     screenHeightPixels = dm.heightPixels;
+    // Rows height is proportional to the screen height, meaning it doesn't
+    // change for layouts with more or less rows. 3.95 is the usual height of
+    // a layout in KeyboardData unit. The keyboard will be higher if the layout
+    // has more rows and smaller if it has less because rows stay the same
+    // height.
+    keyboard_rows_height_pixels = screenHeightPixels * keyboardHeightPercent / 395;
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
@@ -175,7 +182,7 @@ public final class Config
       * characterSizeScale;
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
-    switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
+    change_method_key_replacement = get_change_method_key_replacement(_prefs);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
     selected_number_layout = NumberLayout.of_string(_prefs.getString("number_entry_layout", "pin"));
@@ -270,6 +277,17 @@ public final class Config
     }
   }
 
+  private static KeyValue get_change_method_key_replacement(SharedPreferences prefs)
+  {
+    switch (prefs.getString("change_method_key_replacement", "prev"))
+    {
+      case "prev": return KeyValue.getKeyByName("change_method_prev");
+      case "next": return KeyValue.getKeyByName("change_method_next");
+      default:
+      case "picker": return KeyValue.getKeyByName("change_method");
+    }
+  }
+
   private static Config _globalConfig = null;
 
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
@@ -300,7 +318,7 @@ public final class Config
 
   /** Config migrations. */
 
-  private static int CONFIG_VERSION = 3;
+  private static int CONFIG_VERSION = 4;
 
   public static void migrate(SharedPreferences prefs)
   {
@@ -337,6 +355,10 @@ public final class Config
         }
         // Fallthrough
       case 3:
+        e.putString("change_method_key_replacement",
+            prefs.getBoolean("switch_input_immediate", false) ? "prev" : "picker");
+        // Fallthrough
+      case 4:
       default: break;
     }
     e.apply();

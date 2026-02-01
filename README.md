@@ -30,10 +30,6 @@ Improve the application translations [using Weblate](https://hosted.weblate.org/
 
 [<img src="https://hosted.weblate.org/widget/unexpected-keyboard/multi-auto.svg" alt="État de la traduction" />](https://hosted.weblate.org/engage/unexpected-keyboard/)
 
-## Similar apps
-
-* [Calculator++](https://git.bubu1.eu/Bubu/android-calculatorpp) - Calculator with a similar UX, swipe to corners for advanced math symbols and operators.
-
 ## Contributing
 
 For instructions on building the application, see

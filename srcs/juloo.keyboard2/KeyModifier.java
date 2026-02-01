@@ -29,6 +29,17 @@ public final class KeyModifier
     return r;
   }
 
+  /** Like [modify] but do not apply user modmaps. Used when evaluating macros
+      to avoid loops. */
+  public static KeyValue modify_no_modmap(KeyValue k, Pointers.Modifiers mods)
+  {
+    Modmap saved = _modmap;
+    _modmap = null;
+    KeyValue r = modify(k, mods);
+    _modmap = saved;
+    return r;
+  }
+
   public static KeyValue modify(KeyValue k, KeyValue mod)
   {
     switch (mod.getKind())
@@ -81,6 +92,7 @@ public final class KeyModifier
       case HORN: return apply_compose(k, ComposeKeyData.accent_horn);
       case HOOK_ABOVE: return apply_compose(k, ComposeKeyData.accent_hook_above);
       case DOUBLE_GRAVE: return apply_compose(k, ComposeKeyData.accent_double_grave);
+      case SMALL_CAPS: return apply_compose(k, ComposeKeyData.accent_small_caps);
       case ARROW_RIGHT: return apply_combining_char(k, "\u20D7");
       case SELECTION_MODE: return apply_selection_mode(k);
       default: return k;
@@ -95,7 +107,8 @@ public final class KeyModifier
       case Event:
         switch (k.getEvent())
         {
-          case CHANGE_METHOD_AUTO:
+          case CHANGE_METHOD_PREV:
+          case CHANGE_METHOD_NEXT:
             return KeyValue.getKeyByName("change_method");
           case SWITCH_VOICE_TYPING:
             return KeyValue.getKeyByName("voice_typing_chooser");
