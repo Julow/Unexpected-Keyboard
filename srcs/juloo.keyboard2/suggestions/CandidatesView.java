@@ -3,7 +3,9 @@ package juloo.keyboard2.suggestions;
 import android.content.Context;
 import android.text.InputType;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,8 +17,6 @@ import juloo.keyboard2.R;
 public class CandidatesView extends LinearLayout
 {
   static final int NUM_CANDIDATES = 3;
-
-  Config _config;
 
   /** Candidates currently visible. Entries can be [null] when there are less
       than [NUM_CANDIDATES] suggestions. */
@@ -33,7 +33,6 @@ public class CandidatesView extends LinearLayout
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
-    _config = Config.globalConfig();
   }
 
   @Override
@@ -69,14 +68,32 @@ public class CandidatesView extends LinearLayout
     }
   }
 
-  /** Refresh the status messages after a configuration refresh. The status
-      message indicates whether the dictionaries should be installed. */
-  public void refresh_status()
+  public void refresh_config(Config config)
   {
     set_candidates(Suggestions.NO_SUGGESTIONS);
+    // The status message indicates whether the dictionaries should be
+    // installed.
     _status_no_dict = inflate_and_show(_status_no_dict,
         true,
         R.layout.candidates_status_no_dict);
+    set_height(config);
+  }
+
+  void set_height(Config config)
+  {
+    // Make the candidates view about as high as a keyboard row.
+    int height = (int)(config.keyboard_rows_height_pixels * (1 - config.key_vertical_margin));
+    // Match the size of labels on the keyboard, increased by 15%.
+    float text_size = height * config.characterSize * config.labelTextSize * 1.15f;
+    for (int i = 0; i < NUM_CANDIDATES; i++)
+    {
+      TextView v = _item_views[i];
+      ViewGroup.MarginLayoutParams p =
+        (ViewGroup.MarginLayoutParams)v.getLayoutParams();
+      p.height = height;
+      v.setLayoutParams(p);
+      v.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size);
+    }
   }
 
   /** Show or hide a status view and inflate it if needed. */
@@ -109,7 +126,7 @@ public class CandidatesView extends LinearLayout
           {
             String it = _items[item_index];
             if (it != null)
-              _config.handler.suggestion_entered(it);
+              Config.globalConfig().handler.suggestion_entered(it);
           }
         });
     v.setVisibility(View.GONE);
