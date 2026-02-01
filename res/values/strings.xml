@@ -33,6 +33,9 @@
     <string name="pref_extra_keys_title">Add keys to the keyboard</string>
     <string name="pref_extra_keys_custom">Add custom keys</string>
     <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string>
+    <string name="pref_category_suggestions">Suggestions</string>
+    <string name="pref_suggestions_title">Suggestions</string>
+    <string name="pref_suggestions_summary">Enable word completion and spell checking</string>
     <string name="pref_category_typing">Typing</string>
     <string name="pref_swipe_dist_title">Swiping distance</string>
     <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
@@ -151,4 +154,6 @@
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
     <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
     <string name="pref_dialog_edit_text">Custom definition</string>
+    <string name="candidates_status_no_dict">No dictionary installed</string>
+    <string name="candidates_status_install">Install</string>
 </resources>
