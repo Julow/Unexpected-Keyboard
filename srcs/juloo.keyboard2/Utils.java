@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowManager;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Locale;
@@ -48,5 +50,15 @@ public final class Utils
     while ((l = reader.read(buff, 0, buff_length)) != -1)
       out.append(buff, 0, l);
     return out.toString();
+  }
+
+  public static byte[] read_all_bytes(InputStream inp) throws IOException
+  {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    byte[] buff = new byte[128000];
+    int l;
+    while ((l = inp.read(buff)) != -1)
+      out.write(buff, 0, l);
+    return out.toByteArray();
   }
 }

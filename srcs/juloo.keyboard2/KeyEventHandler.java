@@ -31,14 +31,14 @@ public final class KeyEventHandler
       [setSelection] could be used instead. */
   boolean _move_cursor_force_fallback = false;
 
-  public KeyEventHandler(IReceiver recv)
+  public KeyEventHandler(IReceiver recv, Config config)
   {
     _recv = recv;
     Handler handler = recv.getHandler();
     _autocap = new Autocapitalisation(handler,
         this.new Autocapitalisation_callback());
     _mods = Pointers.Modifiers.EMPTY;
-    _suggestions = new Suggestions(recv);
+    _suggestions = new Suggestions(recv, config);
     _typedword = new CurrentlyTypedWord(handler, this);
   }
 

@@ -23,8 +23,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import juloo.keyboard2.dict.Dictionaries;
+import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
+import juloo.cdict.Cdict;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -40,6 +43,7 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _localeTextLayout;
   /** Installed and current locales. */
   private DeviceLocales _device_locales;
+  private Dictionaries _dictionaries;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   private Handler _handler;
@@ -115,11 +119,14 @@ public class Keyboard2 extends InputMethodService
     super.onCreate();
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
-    _keyeventhandler = new KeyEventHandler(this.new Receiver());
     _foldStateTracker = new FoldStateTracker(this);
-    Config.initGlobalConfig(prefs, getResources(), _keyeventhandler, _foldStateTracker.isUnfolded());
-    prefs.registerOnSharedPreferenceChangeListener(this);
+    _dictionaries = Dictionaries.instance(this);
+    Config.initGlobalConfig(prefs, getResources(),
+        _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
+    _keyeventhandler = new KeyEventHandler(this.new Receiver(), _config);
+    _config.handler = _keyeventhandler;
+    prefs.registerOnSharedPreferenceChangeListener(this);
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
     refreshSubtypeImm();
     create_keyboard_view();
@@ -163,6 +170,18 @@ public class Keyboard2 extends InputMethodService
     _localeTextLayout = default_layout;
   }
 
+  private void refresh_current_dictionary()
+  {
+    _config.current_dictionary = null;
+    String current = _device_locales.default_.dictionary;
+    if (current == null)
+      return;
+    Cdict[] dicts = _dictionaries.load(current);
+    if (dicts == null)
+      return;
+    _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
+  }
+
   private void refresh_candidates_view()
   {
     boolean should_show =
@@ -178,7 +197,8 @@ public class Keyboard2 extends InputMethodService
   private void refresh_config()
   {
     int prev_theme = _config.theme;
-    _config.refresh(getResources(), _foldStateTracker.isUnfolded());
+    _config.refresh(getResources(), _foldStateTracker.isUnfolded(), _dictionaries);
+    refresh_current_dictionary();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)
     {
@@ -331,6 +351,19 @@ public class Keyboard2 extends InputMethodService
     return false;
   }
 
+  /** Called from [onClick] attributes. */
+  public void launch_dictionaries_activity(View v)
+  {
+    start_activity(DictionariesActivity.class);
+  }
+
+  void start_activity(Class cls)
+  {
+    Intent intent = new Intent(this, cls);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
+  }
+
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver
   {
@@ -339,9 +372,7 @@ public class Keyboard2 extends InputMethodService
       switch (ev)
       {
         case CONFIG:
-          Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
-          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          startActivity(intent);
+          start_activity(SettingsActivity.class);
           break;
 
         case SWITCH_TEXT:
