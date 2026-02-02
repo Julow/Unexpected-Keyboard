@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_release">Unexpected Keyboard</string>
-    <string name="app_name_debug">Unexpected Keyboard (debug)</string>
-    <string name="short_description">Una Tastiera Virtuale Leggera Per La Programmazione.</string>
+    <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
+    <string name="short_description">Una tastiera virtuale leggera ed attenta alla privacy per Android.</string>
     <!-- <string name="store_description">"The main feature is that you can type more characters by swiping the keys towards the corners.
 
 This application was originally designed for programmers using Termux.
@@ -108,9 +108,9 @@ This application contains no ads, doesn't make any network requests and is Open 
     <string name="key_descr_º">Ordinale</string>
     <string name="pref_number_row_title">Mostra la riga dei numeri</string>
     <string name="key_descr_nbsp">Spazio senza interruzione</string>
-    <string name="pref_numpad_layout">Layout del yadtierino numerico</string>
+    <string name="pref_numpad_layout">Layout del tastierino numerico</string>
     <string name="pref_layouts_add">Aggiungi un layout alternativo</string>
-    <string name="pref_label_brightness">Regolare la luminosita` della descrizione</string>
+    <string name="pref_label_brightness">Regolare la luminosità della descrizione</string>
     <string name="pref_show_numpad_never">Mai</string>
     <string name="key_descr_home">Inizio</string>
     <string name="pref_show_numpad_always">Sempre</string>
@@ -125,19 +125,19 @@ This application contains no ads, doesn't make any network requests and is Open 
     <string name="pref_custom_layout_title">Layout personalizzato</string>
     <string name="pref_show_numpad_title">Mostra la tastiera dei numeri</string>
     <string name="pref_number_row_summary">Aggiungere una riga dei numeri sopra la tastiera quando il tastierino numerico e\' nascosto</string>
-    <string name="pref_numpad_layout_e_high_first">Prima i numeri piu` alti</string>
-    <string name="pref_numpad_layout_e_low_first">Prima i numeri piu` bassi</string>
+    <string name="pref_numpad_layout_e_high_first">Prima i numeri più alti</string>
+    <string name="pref_numpad_layout_e_low_first">Prima i numeri più bassi</string>
     <string name="pref_extra_keys_title">Aggiungi altri simboli alla tastiera</string>
     <string name="pref_extra_keys_custom">Aggiungere tasti personalizzati</string>
     <string name="pref_long_timeout_title">Durata tasto premuto a lungo</string>
     <string name="pref_switch_input_immediate_title">Passare all\'ultima tastiera usata</string>
-    <string name="pref_vibrate_duration_title">Intensita` della vibrazione</string>
+    <string name="pref_vibrate_duration_title">Intensità della vibrazione</string>
     <string name="pref_pin_entry_enabled_title">Layout del campo PIN</string>
     <string name="key_descr_pasteAsPlainText">Incolla testo non formattato</string>
     <string name="key_descr_undo">Annulla</string>
     <string name="key_descr_ª">Ordinale</string>
     <string name="key_descr_page_up">Pagina su</string>
-    <string name="key_descr_page_down">Pagina giu`</string>
+    <string name="key_descr_page_down">Pagina giù</string>
     <string name="key_descr_end">Fine</string>
     <string name="key_descr_clipboard">Gestore degli appunti</string>
     <string name="clipboard_history_heading">Testo copiato recentemente</string>
