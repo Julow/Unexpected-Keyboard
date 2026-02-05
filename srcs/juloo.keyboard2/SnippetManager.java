@@ -8,319 +8,402 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SnippetManager {
-    private static SnippetManager instance;
-    private static final String PREF_NAME = "pinned_clipboards";
-    private static final String PREF_KEY_OLD = "pinned";
-    private static final String PREF_KEY_NEW = "snippets_root";
+public class SnippetManager
+{
+  private static SnippetManager instance;
+  private static final String PREF_NAME = "pinned_clipboards";
+  private static final String PREF_KEY_OLD = "pinned";
+  private static final String PREF_KEY_NEW = "snippets_root";
 
-    private final SharedPreferences prefs;
-    private SnippetFolder root;
-    private SnippetFolder currentFolder;
+  private final SharedPreferences prefs;
+  private SnippetFolder root;
+  private SnippetFolder currentFolder;
 
-    public boolean shouldRestoreClipboardView = false;
+  public boolean shouldRestoreClipboardView = false;
 
-    private SnippetManager(Context context) {
-        this.prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        load();
+  private SnippetManager(Context context)
+  {
+    this.prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    load();
+  }
+
+  public static synchronized SnippetManager get(Context context)
+  {
+    if (instance == null)
+    {
+      instance = new SnippetManager(context);
     }
+    return instance;
+  }
 
-    public static synchronized SnippetManager get(Context context) {
-        if (instance == null) {
-            instance = new SnippetManager(context);
+  public void reload()
+  {
+    load();
+    notifyListeners();
+  }
+
+  private void load()
+  {
+    String json = prefs.getString(PREF_KEY_NEW, null);
+    if (json != null)
+    {
+      try
+      {
+        JSONObject obj = new JSONObject(json);
+        root = (SnippetFolder) deserialize(obj);
+      }
+      catch (JSONException e)
+      {
+        // Fallback or error handling
+        root = new SnippetFolder("Root");
+      }
+    }
+    else
+    {
+      // Check for migration
+      root = new SnippetFolder("Root");
+      migrateOldPinnedItems();
+    }
+    if (root.items.isEmpty())
+    {
+      root.addItem(new Snippet("Welcome to Snippets!"));
+      root.addItem(new Snippet("Long press move button to drag."));
+      save();
+    }
+    currentFolder = root;
+  }
+
+  private void migrateOldPinnedItems()
+  {
+    String oldJson = prefs.getString(PREF_KEY_OLD, null);
+    if (oldJson == null)
+      return;
+
+    try
+    {
+      JSONArray arr = new JSONArray(oldJson);
+      for (int i = 0; i < arr.length(); i++)
+      {
+        String content = arr.getString(i);
+        root.addItem(new Snippet(content));
+      }
+      save(); // Save immediately in new format
+      // Optional: clear old key? Maybe keep for safety for now.
+    }
+    catch (JSONException e)
+    {
+      // Ignore malformed old data
+    }
+  }
+
+  public void save()
+  {
+    try
+    {
+      JSONObject obj = serialize(root);
+      prefs.edit().putString(PREF_KEY_NEW, obj.toString()).apply();
+      notifyListeners();
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  public SnippetFolder getRoot()
+  {
+    return root;
+  }
+
+  public SnippetFolder getCurrentFolder()
+  {
+    return currentFolder;
+  }
+
+  public void setCurrentFolder(SnippetFolder folder)
+  {
+    this.currentFolder = folder;
+  }
+
+  public boolean isAtRoot()
+  {
+    return currentFolder == root;
+  }
+
+  // Rudimentary parent lookup, could be optimized with backward links
+  public SnippetFolder getParent(SnippetItem target)
+  {
+    if (target == root)
+      return null;
+    return findParentRecursive(root, target);
+  }
+
+  private SnippetFolder findParentRecursive(SnippetFolder current, SnippetItem target)
+  {
+    for (SnippetItem item : current.items)
+    {
+      if (item == target)
+        return current;
+      if (item instanceof SnippetFolder)
+      {
+        SnippetFolder result = findParentRecursive((SnippetFolder) item, target);
+        if (result != null)
+          return result;
+      }
+    }
+    return null;
+  }
+
+  public List<SnippetFolder> getAllFolders()
+  {
+    List<SnippetFolder> folders = new ArrayList<>();
+    collectFoldersRecursive(root, folders);
+    return folders;
+  }
+
+  private void collectFoldersRecursive(SnippetFolder current, List<SnippetFolder> acc)
+  {
+    acc.add(current);
+    for (SnippetItem item : current.items)
+    {
+      if (item instanceof SnippetFolder)
+      {
+        collectFoldersRecursive((SnippetFolder) item, acc);
+      }
+    }
+  }
+
+  public List<String> getAllTags()
+  {
+    java.util.Set<String> tags = new java.util.HashSet<>();
+    collectTagsRecursive(root, tags);
+    return new ArrayList<>(tags);
+  }
+
+  private void collectTagsRecursive(SnippetFolder current, java.util.Set<String> acc)
+  {
+    for (SnippetItem item : current.items)
+    {
+      if (item instanceof Snippet)
+      {
+        Snippet snippet = (Snippet) item;
+        if (snippet.tags != null)
+        {
+          acc.addAll(snippet.tags);
         }
-        return instance;
+      }
+      else if (item instanceof SnippetFolder)
+      {
+        collectTagsRecursive((SnippetFolder) item, acc);
+      }
     }
+  }
 
-    public void reload() {
-        load();
-        notifyListeners();
+  public SnippetItem findItem(String uuid)
+  {
+    return findItemRecursive(root, uuid);
+  }
+
+  private SnippetItem findItemRecursive(SnippetFolder current, String uuid)
+  {
+    if (current.uuid.equals(uuid))
+      return current;
+    for (SnippetItem item : current.items)
+    {
+      if (item.uuid.equals(uuid))
+        return item;
+      if (item instanceof SnippetFolder)
+      {
+        SnippetItem result = findItemRecursive((SnippetFolder) item, uuid);
+        if (result != null)
+          return result;
+      }
     }
+    return null;
+  }
 
-    private void load() {
-        String json = prefs.getString(PREF_KEY_NEW, null);
-        if (json != null) {
-            try {
-                JSONObject obj = new JSONObject(json);
-                root = (SnippetFolder) deserialize(obj);
-            } catch (JSONException e) {
-                // Fallback or error handling
-                root = new SnippetFolder("Root");
+  public List<SnippetItem> findSnippets(String query)
+  {
+    List<SnippetItem> results = new ArrayList<>();
+    if (query == null || query.isEmpty())
+      return results;
+    findSnippetsRecursive(root, query.toLowerCase(), results);
+    return results;
+  }
+
+  private void findSnippetsRecursive(SnippetFolder current, String query, List<SnippetItem> results)
+  {
+    for (SnippetItem item : current.items)
+    {
+      if (item == null)
+        continue;
+      if (item instanceof Snippet)
+      {
+        Snippet snippet = (Snippet) item;
+        boolean tagMatch = false;
+        if (snippet.tags != null)
+        {
+          for (String tag : snippet.tags)
+          {
+            if (tag.toLowerCase().contains(query))
+            {
+              tagMatch = true;
+              break;
             }
-        } else {
-            // Check for migration
-            root = new SnippetFolder("Root");
-            migrateOldPinnedItems();
-        }
-        if (root.items.isEmpty()) {
-            root.addItem(new Snippet("Welcome to Snippets!"));
-            root.addItem(new Snippet("Long press move button to drag."));
-            save();
-        }
-        currentFolder = root;
-    }
-
-    private void migrateOldPinnedItems() {
-        String oldJson = prefs.getString(PREF_KEY_OLD, null);
-        if (oldJson == null)
-            return;
-
-        try {
-            JSONArray arr = new JSONArray(oldJson);
-            for (int i = 0; i < arr.length(); i++) {
-                String content = arr.getString(i);
-                root.addItem(new Snippet(content));
-            }
-            save(); // Save immediately in new format
-            // Optional: clear old key? Maybe keep for safety for now.
-        } catch (JSONException e) {
-            // Ignore malformed old data
-        }
-    }
-
-    public void save() {
-        try {
-            JSONObject obj = serialize(root);
-            prefs.edit().putString(PREF_KEY_NEW, obj.toString()).apply();
-            notifyListeners();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public SnippetFolder getRoot() {
-        return root;
-    }
-
-    public SnippetFolder getCurrentFolder() {
-        return currentFolder;
-    }
-
-    public void setCurrentFolder(SnippetFolder folder) {
-        this.currentFolder = folder;
-    }
-
-    public boolean isAtRoot() {
-        return currentFolder == root;
-    }
-
-    // Rudimentary parent lookup, could be optimized with backward links
-    public SnippetFolder getParent(SnippetItem target) {
-        if (target == root)
-            return null;
-        return findParentRecursive(root, target);
-    }
-
-    private SnippetFolder findParentRecursive(SnippetFolder current, SnippetItem target) {
-        for (SnippetItem item : current.items) {
-            if (item == target)
-                return current;
-            if (item instanceof SnippetFolder) {
-                SnippetFolder result = findParentRecursive((SnippetFolder) item, target);
-                if (result != null)
-                    return result;
-            }
-        }
-        return null;
-    }
-
-    public List<SnippetFolder> getAllFolders() {
-        List<SnippetFolder> folders = new ArrayList<>();
-        collectFoldersRecursive(root, folders);
-        return folders;
-    }
-
-    private void collectFoldersRecursive(SnippetFolder current, List<SnippetFolder> acc) {
-        acc.add(current);
-        for (SnippetItem item : current.items) {
-            if (item instanceof SnippetFolder) {
-                collectFoldersRecursive((SnippetFolder) item, acc);
-            }
-        }
-    }
-
-    public List<String> getAllTags() {
-        java.util.Set<String> tags = new java.util.HashSet<>();
-        collectTagsRecursive(root, tags);
-        return new ArrayList<>(tags);
-    }
-
-    private void collectTagsRecursive(SnippetFolder current, java.util.Set<String> acc) {
-        for (SnippetItem item : current.items) {
-            if (item instanceof Snippet) {
-                Snippet snippet = (Snippet) item;
-                if (snippet.tags != null) {
-                    acc.addAll(snippet.tags);
-                }
-            } else if (item instanceof SnippetFolder) {
-                collectTagsRecursive((SnippetFolder) item, acc);
-            }
-        }
-    }
-
-    public SnippetItem findItem(String uuid) {
-        return findItemRecursive(root, uuid);
-    }
-
-    private SnippetItem findItemRecursive(SnippetFolder current, String uuid) {
-        if (current.uuid.equals(uuid))
-            return current;
-        for (SnippetItem item : current.items) {
-            if (item.uuid.equals(uuid))
-                return item;
-            if (item instanceof SnippetFolder) {
-                SnippetItem result = findItemRecursive((SnippetFolder) item, uuid);
-                if (result != null)
-                    return result;
-            }
-        }
-        return null;
-    }
-
-    public List<SnippetItem> findSnippets(String query) {
-        List<SnippetItem> results = new ArrayList<>();
-        if (query == null || query.isEmpty())
-            return results;
-        findSnippetsRecursive(root, query.toLowerCase(), results);
-        return results;
-    }
-
-    private void findSnippetsRecursive(SnippetFolder current, String query, List<SnippetItem> results) {
-        for (SnippetItem item : current.items) {
-            if (item == null)
-                continue;
-            if (item instanceof Snippet) {
-                Snippet snippet = (Snippet) item;
-                boolean tagMatch = false;
-                if (snippet.tags != null) {
-                    for (String tag : snippet.tags) {
-                        if (tag.toLowerCase().contains(query)) {
-                            tagMatch = true;
-                            break;
-                        }
-                    }
-                }
-
-                if ((snippet.content != null && snippet.content.toLowerCase().contains(query)) ||
-                        (snippet.name != null && snippet.name.toLowerCase().contains(query)) ||
-                        tagMatch) {
-                    results.add(snippet);
-                }
-            } else if (item instanceof SnippetFolder) {
-                if (item.name != null && item.name.toLowerCase().contains(query)) {
-                    results.add(item);
-                }
-                findSnippetsRecursive((SnippetFolder) item, query, results);
-            }
-        }
-    }
-
-    public void moveItem(SnippetItem item, SnippetFolder target) {
-        SnippetFolder parent = getParent(item);
-        if (parent != null) {
-            parent.removeItem(item);
-            target.addItem(item);
-            save();
-        }
-    }
-
-    public void updateSnippet(Snippet snippet, String newName, String newContent, List<String> newTags,
-            boolean isMacro) {
-        snippet.name = newName;
-        snippet.content = newContent;
-        snippet.tags = newTags;
-        snippet.isMacro = isMacro;
-        save();
-        notifyListeners();
-    }
-
-    public void updateFolder(SnippetFolder folder, String newName) {
-        folder.name = newName;
-        save();
-        notifyListeners();
-    }
-
-    private JSONObject serialize(SnippetItem item) throws JSONException {
-        JSONObject obj = new JSONObject();
-        obj.put("uuid", item.uuid);
-        obj.put("name", item.name);
-
-        if (item instanceof Snippet) {
-            obj.put("type", "snippet");
-            obj.put("content", ((Snippet) item).content);
-            JSONArray tagsArr = new JSONArray();
-            for (String tag : ((Snippet) item).tags) {
-                tagsArr.put(tag);
-            }
-            obj.put("tags", tagsArr);
-            obj.put("isMacro", ((Snippet) item).isMacro);
-        } else if (item instanceof SnippetFolder) {
-            obj.put("type", "folder");
-            JSONArray children = new JSONArray();
-            for (SnippetItem child : ((SnippetFolder) item).items) {
-                children.put(serialize(child));
-            }
-            obj.put("items", children);
-        }
-        return obj;
-    }
-
-    private SnippetItem deserialize(JSONObject obj) throws JSONException {
-        String type = obj.optString("type");
-        if (type.isEmpty()) {
-            // Infer type if missing
-            if (obj.has("content")) {
-                type = "snippet";
-            } else {
-                type = "folder";
-            }
+          }
         }
 
-        String uuid = obj.optString("uuid");
-        String name = obj.getString("name");
-
-        if ("snippet".equals(type)) {
-            String content = obj.getString("content");
-            Snippet snippet = new Snippet(uuid, name, content);
-            JSONArray tagsArr = obj.optJSONArray("tags");
-            if (tagsArr != null) {
-                for (int i = 0; i < tagsArr.length(); i++) {
-                    snippet.tags.add(tagsArr.getString(i));
-                }
-
-            }
-            snippet.isMacro = obj.optBoolean("isMacro", false);
-            return snippet;
-        } else {
-            SnippetFolder folder = new SnippetFolder(uuid, name);
-            JSONArray items = obj.optJSONArray("items");
-            if (items != null) {
-                for (int i = 0; i < items.length(); i++) {
-                    folder.addItem(deserialize(items.getJSONObject(i)));
-                }
-            }
-            return folder;
+        if ((snippet.content != null && snippet.content.toLowerCase().contains(query)) ||
+            (snippet.name != null && snippet.name.toLowerCase().contains(query)) ||
+            tagMatch)
+        {
+          results.add(snippet);
         }
-    }
-
-    // Listener interface
-    public interface OnSnippetsChangeListener {
-        void onSnippetsChanged();
-    }
-
-    private List<OnSnippetsChangeListener> listeners = new ArrayList<>();
-
-    public void addListener(OnSnippetsChangeListener l) {
-        listeners.add(l);
-    }
-
-    public void removeListener(OnSnippetsChangeListener l) {
-        listeners.remove(l);
-    }
-
-    private void notifyListeners() {
-        for (OnSnippetsChangeListener l : listeners) {
-            l.onSnippetsChanged();
+      }
+      else if (item instanceof SnippetFolder)
+      {
+        if (item.name != null && item.name.toLowerCase().contains(query))
+        {
+          results.add(item);
         }
+        findSnippetsRecursive((SnippetFolder) item, query, results);
+      }
     }
+  }
+
+  public void moveItem(SnippetItem item, SnippetFolder target)
+  {
+    SnippetFolder parent = getParent(item);
+    if (parent != null)
+    {
+      parent.removeItem(item);
+      target.addItem(item);
+      save();
+    }
+  }
+
+  public void updateSnippet(Snippet snippet, String newName, String newContent, List<String> newTags,
+      boolean isMacro)
+  {
+    snippet.name = newName;
+    snippet.content = newContent;
+    snippet.tags = newTags;
+    snippet.isMacro = isMacro;
+    save();
+    notifyListeners();
+  }
+
+  public void updateFolder(SnippetFolder folder, String newName)
+  {
+    folder.name = newName;
+    save();
+    notifyListeners();
+  }
+
+  private JSONObject serialize(SnippetItem item) throws JSONException
+  {
+    JSONObject obj = new JSONObject();
+    obj.put("uuid", item.uuid);
+    obj.put("name", item.name);
+
+    if (item instanceof Snippet)
+    {
+      obj.put("type", "snippet");
+      obj.put("content", ((Snippet) item).content);
+      JSONArray tagsArr = new JSONArray();
+      for (String tag : ((Snippet) item).tags)
+      {
+        tagsArr.put(tag);
+      }
+      obj.put("tags", tagsArr);
+      obj.put("isMacro", ((Snippet) item).isMacro);
+    }
+    else if (item instanceof SnippetFolder)
+    {
+      obj.put("type", "folder");
+      JSONArray children = new JSONArray();
+      for (SnippetItem child : ((SnippetFolder) item).items)
+      {
+        children.put(serialize(child));
+      }
+      obj.put("items", children);
+    }
+    return obj;
+  }
+
+  private SnippetItem deserialize(JSONObject obj) throws JSONException
+  {
+    String type = obj.optString("type");
+    if (type.isEmpty())
+    {
+      // Infer type if missing
+      if (obj.has("content"))
+      {
+        type = "snippet";
+      }
+      else
+      {
+        type = "folder";
+      }
+    }
+
+    String uuid = obj.optString("uuid");
+    String name = obj.getString("name");
+
+    if ("snippet".equals(type))
+    {
+      String content = obj.getString("content");
+      Snippet snippet = new Snippet(uuid, name, content);
+      JSONArray tagsArr = obj.optJSONArray("tags");
+      if (tagsArr != null)
+      {
+        for (int i = 0; i < tagsArr.length(); i++)
+        {
+          snippet.tags.add(tagsArr.getString(i));
+        }
+
+      }
+      snippet.isMacro = obj.optBoolean("isMacro", false);
+      return snippet;
+    }
+    else
+    {
+      SnippetFolder folder = new SnippetFolder(uuid, name);
+      JSONArray items = obj.optJSONArray("items");
+      if (items != null)
+      {
+        for (int i = 0; i < items.length(); i++)
+        {
+          folder.addItem(deserialize(items.getJSONObject(i)));
+        }
+      }
+      return folder;
+    }
+  }
+
+  // Listener interface
+  public interface OnSnippetsChangeListener
+  {
+    void onSnippetsChanged();
+  }
+
+  private List<OnSnippetsChangeListener> listeners = new ArrayList<>();
+
+  public void addListener(OnSnippetsChangeListener l)
+  {
+    listeners.add(l);
+  }
+
+  public void removeListener(OnSnippetsChangeListener l)
+  {
+    listeners.remove(l);
+  }
+
+  private void notifyListeners()
+  {
+    for (OnSnippetsChangeListener l : listeners)
+    {
+      l.onSnippetsChanged();
+    }
+  }
 }

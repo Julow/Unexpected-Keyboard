@@ -17,20 +17,25 @@ import java.util.Date;
 import java.util.Locale;
 import org.json.JSONException;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity
+{
   private static final int REQUEST_CODE_BACKUP = 101;
   private static final int REQUEST_CODE_RESTORE = 102;
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState)
+  {
     super.onCreate(savedInstanceState);
     // The preferences can't be read when in direct-boot mode. Avoid crashing
     // and don't allow changing the settings.
     // Run the config migration on this prefs as it might be different from the
     // one used by the keyboard, which have been migrated.
-    try {
+    try
+    {
       Config.migrate(getPreferenceManager().getSharedPreferences());
-    } catch (Exception _e) {
+    }
+    catch (Exception _e)
+    {
       fallbackEncrypted();
       return;
     }
@@ -45,12 +50,14 @@ public class SettingsActivity extends PreferenceActivity {
     findPreference("keyboard_height_landscape_unfolded").setEnabled(foldableDevice);
   }
 
-  void fallbackEncrypted() {
+  void fallbackEncrypted()
+  {
     // Can't communicate with the user here.
     finish();
   }
 
-  protected void onStop() {
+  protected void onStop()
+  {
     DirectBootAwarePreferences
         .copy_preferences_to_protected_storage(this,
             getPreferenceManager().getSharedPreferences());
@@ -58,9 +65,11 @@ public class SettingsActivity extends PreferenceActivity {
   }
 
   @Override
-  public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+  public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
+  {
     String key = preference.getKey();
-    if ("backup".equals(key)) {
+    if ("backup".equals(key))
+    {
       Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
       intent.addCategory(Intent.CATEGORY_OPENABLE);
       intent.setType("application/zip");
@@ -68,7 +77,9 @@ public class SettingsActivity extends PreferenceActivity {
       intent.putExtra(Intent.EXTRA_TITLE, "unexpected_keyboard_backup_" + timeStamp + ".zip");
       startActivityForResult(intent, REQUEST_CODE_BACKUP);
       return true;
-    } else if ("restore".equals(key)) {
+    }
+    else if ("restore".equals(key))
+    {
       Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
       intent.addCategory(Intent.CATEGORY_OPENABLE);
       intent.setType("application/zip");
@@ -79,24 +90,35 @@ public class SettingsActivity extends PreferenceActivity {
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  protected void onActivityResult(int requestCode, int resultCode, Intent data)
+  {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+    if (resultCode == RESULT_OK && data != null && data.getData() != null)
+    {
       Uri uri = data.getData();
-      if (requestCode == REQUEST_CODE_BACKUP) {
-        try {
+      if (requestCode == REQUEST_CODE_BACKUP)
+      {
+        try
+        {
           BackupManager.exportData(this, uri);
           Toast.makeText(this, R.string.backup_success, Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
           e.printStackTrace();
           Toast.makeText(this, R.string.backup_failed, Toast.LENGTH_SHORT).show();
         }
-      } else if (requestCode == REQUEST_CODE_RESTORE) {
-        try {
+      }
+      else if (requestCode == REQUEST_CODE_RESTORE)
+      {
+        try
+        {
           BackupManager.importData(this, uri, getPreferenceManager());
           Toast.makeText(this, R.string.restore_success, Toast.LENGTH_SHORT).show();
           recreate();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
           e.printStackTrace();
           Toast.makeText(this, R.string.restore_failed, Toast.LENGTH_SHORT).show();
         }

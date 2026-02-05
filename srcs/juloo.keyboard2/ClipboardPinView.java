@@ -95,8 +95,7 @@ public final class ClipboardPinView extends NonScrollListView {
     _headerView.findViewById(R.id.clipboard_header_search_close).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        // No-op
-      }
+      } // No-op
     });
 
     // Removed text watcher
@@ -122,7 +121,6 @@ public final class ClipboardPinView extends NonScrollListView {
 
   /** Remove the entry. */
   public void remove_entry(int pos) {
-
     _manager.getCurrentFolder().removeItem(pos);
     _manager.save();
     update_view();
@@ -138,7 +136,6 @@ public final class ClipboardPinView extends NonScrollListView {
   }
 
   void update_view() {
-
     // Update Header
     SnippetFolder current = _manager.getCurrentFolder();
     if (_manager.isAtRoot()) {
@@ -159,7 +156,6 @@ public final class ClipboardPinView extends NonScrollListView {
   }
 
   void go_up() {
-
     SnippetFolder current = _manager.getCurrentFolder();
     SnippetFolder parent = _manager.getParent(current);
     if (parent != null) {
@@ -304,7 +300,6 @@ public final class ClipboardPinView extends NonScrollListView {
             confirm_remove(pos);
           }
         });
-
       } else {
         final Snippet snippet = (Snippet) item;
         TextView tv = (TextView) v.findViewById(R.id.clipboard_pin_text);
@@ -365,7 +360,6 @@ public final class ClipboardPinView extends NonScrollListView {
       }
 
       v.setOnDragListener(new View.OnDragListener() {
-
         @Override
         public boolean onDrag(View v, android.view.DragEvent event) {
           switch (event.getAction()) {
@@ -401,9 +395,7 @@ public final class ClipboardPinView extends NonScrollListView {
           }
           return false;
         }
-
       });
-
       return v;
     }
 
@@ -420,7 +412,6 @@ public final class ClipboardPinView extends NonScrollListView {
           .create();
       Utils.show_dialog_on_ime(d, getWindowToken());
     }
-
   }
 
   private android.app.Activity getActivity() {

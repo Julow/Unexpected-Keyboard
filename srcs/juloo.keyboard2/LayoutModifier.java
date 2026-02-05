@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public final class LayoutModifier {
+public final class LayoutModifier
+{
   static Config globalConfig;
   static KeyboardData.Row bottom_row;
   static KeyboardData.Row number_row_no_symbols;
@@ -23,7 +24,8 @@ public final class LayoutModifier {
    * - Add the optional numpad and number row
    * - Add the extra keys
    */
-  public static KeyboardData modify_layout(KeyboardData kw) {
+  public static KeyboardData modify_layout(KeyboardData kw)
+  {
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
     final TreeMap<KeyValue, KeyboardData.PreferredPos> extra_keys = new TreeMap<KeyValue, KeyboardData.PreferredPos>();
@@ -37,10 +39,12 @@ public final class LayoutModifier {
     // removing the number keys from the main layout.
     KeyboardData.Row added_number_row = null;
     KeyboardData added_numpad = null;
-    if (globalConfig.show_numpad) {
+    if (globalConfig.show_numpad)
+    {
       added_numpad = modify_numpad(num_pad, kw);
       remove_keys.addAll(added_numpad.getKeys().keySet());
-    } else if (globalConfig.add_number_row && !kw.embedded_number_row) // The numpad removes the number row
+    }
+    else if (globalConfig.add_number_row && !kw.embedded_number_row) // The numpad removes the number row
     {
       added_number_row = modify_number_row(globalConfig.number_row_symbols ? number_row_symbols : number_row_no_symbols,
           kw);
@@ -54,14 +58,17 @@ public final class LayoutModifier {
     Set<KeyValue> extra_keys_keyset = extra_keys.keySet();
     // 'kw_keys' contains the keys present on the layout without any extra keys
     Set<KeyValue> kw_keys = kw.getKeys().keySet();
-    if (globalConfig.extra_keys_subtype != null && kw.locale_extra_keys) {
+    if (globalConfig.extra_keys_subtype != null && kw.locale_extra_keys)
+    {
       Set<KeyValue> present = new HashSet<KeyValue>(kw_keys);
       present.addAll(extra_keys_keyset);
       globalConfig.extra_keys_subtype.compute(extra_keys,
           new ExtraKeys.Query(kw.script, present));
     }
-    kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
-      public KeyValue apply(KeyValue key, boolean localized) {
+    kw = kw.mapKeys(new KeyboardData.MapKeyValues()
+    {
+      public KeyValue apply(KeyValue key, boolean localized)
+      {
         if (localized && !extra_keys.containsKey(key))
           return null;
         if (remove_keys.contains(key))
@@ -71,15 +78,19 @@ public final class LayoutModifier {
     });
 
     // Add visual cue for scratchpad on Ctrl keys
-    kw = kw.mapKeys(new KeyboardData.MapKey() {
-      public KeyboardData.Key apply(KeyboardData.Key k) {
+    kw = kw.mapKeys(new KeyboardData.MapKey()
+    {
+      public KeyboardData.Key apply(KeyboardData.Key k)
+      {
         if (k.keys.length > 0 && k.keys[0] != null &&
             k.keys[0].getKind() == KeyValue.Kind.Modifier &&
-            k.keys[0].getModifier() == KeyValue.Modifier.CTRL) {
+            k.keys[0].getModifier() == KeyValue.Modifier.CTRL)
+        {
           // Check if index 1 is empty or we should overwrite it?
           // Usually modifiers don't have swipe actions, so safe to overwrite or fill if
           // null.
-          if (k.keys[1] == null) {
+          if (k.keys[1] == null)
+          {
             return k.withKeyValue(1, KeyValue.makeActionKey("✎"));
           }
         }
@@ -103,17 +114,22 @@ public final class LayoutModifier {
    * Handle the numpad layout. The [main_kw] is used to adapt the numpad to
    * the main layout's script.
    */
-  public static KeyboardData modify_numpad(KeyboardData kw, KeyboardData main_kw) {
+  public static KeyboardData modify_numpad(KeyboardData kw, KeyboardData main_kw)
+  {
     final int map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
-    return kw.mapKeys(new KeyboardData.MapKeyValues() {
-      public KeyValue apply(KeyValue key, boolean localized) {
-        switch (key.getKind()) {
+    return kw.mapKeys(new KeyboardData.MapKeyValues()
+    {
+      public KeyValue apply(KeyValue key, boolean localized)
+      {
+        switch (key.getKind())
+        {
           case Char:
             char prev_c = key.getChar();
             char c = prev_c;
             if (globalConfig.inverse_numpad)
               c = inverse_numpad_char(c);
-            if (map_digit != -1) {
+            if (map_digit != -1)
+            {
               KeyValue modified = ComposeKey.apply(map_digit, c);
               if (modified != null) // Was modified by script
                 return modified;
@@ -121,6 +137,7 @@ public final class LayoutModifier {
             if (prev_c != c) // Was inverted
               return key.withChar(c);
             return key; // Don't fallback into [modify_key]
+          default: break;
         }
         return modify_key(key);
       }
@@ -131,24 +148,29 @@ public final class LayoutModifier {
    * Modify the pin entry layout. [main_kw] is used to map the digits into the
    * same script.
    */
-  public static KeyboardData modify_pinentry(KeyboardData kw, KeyboardData main_kw) {
+  public static KeyboardData modify_pinentry(KeyboardData kw, KeyboardData main_kw)
+  {
     KeyboardData.MapKeyValues m = numpad_script_map(main_kw.numpad_script);
     return m == null ? kw : kw.mapKeys(m);
   }
 
   /** Modify the number row according to [main_kw]'s script. */
   static KeyboardData.Row modify_number_row(KeyboardData.Row row,
-      KeyboardData main_kw) {
+      KeyboardData main_kw)
+  {
     KeyboardData.MapKeyValues m = numpad_script_map(main_kw.numpad_script);
     return m == null ? row : row.mapKeys(m);
   }
 
-  static KeyboardData.MapKeyValues numpad_script_map(String numpad_script) {
+  static KeyboardData.MapKeyValues numpad_script_map(String numpad_script)
+  {
     final int map_digit = KeyModifier.modify_numpad_script(numpad_script);
     if (map_digit == -1)
       return null;
-    return new KeyboardData.MapKeyValues() {
-      public KeyValue apply(KeyValue key, boolean localized) {
+    return new KeyboardData.MapKeyValues()
+    {
+      public KeyValue apply(KeyValue key, boolean localized)
+      {
         KeyValue modified = ComposeKey.apply(map_digit, key);
         return (modified != null) ? modified : key;
       }
@@ -158,11 +180,14 @@ public final class LayoutModifier {
   /**
    * Modify keys on the main layout and on the numpad according to the config.
    */
-  static KeyValue modify_key(KeyValue orig) {
+  static KeyValue modify_key(KeyValue orig)
+  {
     EditorConfig ec = globalConfig.editor_config;
-    switch (orig.getKind()) {
+    switch (orig.getKind())
+    {
       case Event:
-        switch (orig.getEvent()) {
+        switch (orig.getEvent())
+        {
           case CHANGE_METHOD_PICKER:
             if (globalConfig.switch_input_immediate)
               return KeyValue.getKeyByName("change_method_prev");
@@ -181,24 +206,30 @@ public final class LayoutModifier {
           case SWITCH_VOICE_TYPING:
           case SWITCH_VOICE_TYPING_CHOOSER:
             return globalConfig.shouldOfferVoiceTyping ? orig : null;
+          default: break;
         }
         break;
       case Keyevent:
-        switch (orig.getKeyevent()) {
+        switch (orig.getKeyevent())
+        {
           case KeyEvent.KEYCODE_ENTER:
             if (ec.swapEnterActionKey && ec.actionLabel != null)
               return KeyValue.makeActionKey(ec.actionLabel);
             break;
+          default: break;
         }
         break;
       case Modifier:
         break;
+      default: break;
     }
     return orig;
   }
 
-  static char inverse_numpad_char(char c) {
-    switch (c) {
+  static char inverse_numpad_char(char c)
+  {
+    switch (c)
+    {
       case '7':
         return '1';
       case '8':
@@ -216,14 +247,18 @@ public final class LayoutModifier {
     }
   }
 
-  public static void init(Config globalConfig_, Resources res) {
+  public static void init(Config globalConfig_, Resources res)
+  {
     globalConfig = globalConfig_;
-    try {
+    try
+    {
       number_row_no_symbols = KeyboardData.load_row(res, R.xml.number_row_no_symbols);
       number_row_symbols = KeyboardData.load_row(res, R.xml.number_row);
       bottom_row = KeyboardData.load_row(res, R.xml.bottom_row);
       num_pad = KeyboardData.load_num_pad(res);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       throw new RuntimeException(e.getMessage()); // Not recoverable
     }
   }

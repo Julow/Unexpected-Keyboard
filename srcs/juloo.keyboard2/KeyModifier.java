@@ -4,19 +4,20 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import java.util.HashMap;
 
-public final class KeyModifier {
-  /**
-   * The optional modmap takes priority over modifiers usual behaviors. Set to
-   * [null] to disable.
-   */
+public final class KeyModifier
+{
+  /** The optional modmap takes priority over modifiers usual behaviors. Set to
+      [null] to disable. */
   private static Modmap _modmap = null;
 
-  public static void set_modmap(Modmap mm) {
+  public static void set_modmap(Modmap mm)
+  {
     _modmap = mm;
   }
 
   /** Modify a key according to modifiers. */
-  public static KeyValue modify(KeyValue k, Pointers.Modifiers mods) {
+  public static KeyValue modify(KeyValue k, Pointers.Modifiers mods)
+  {
     if (k == null)
       return null;
     int n_mods = mods.size();
@@ -29,8 +30,10 @@ public final class KeyModifier {
     return r;
   }
 
-  public static KeyValue modify(KeyValue k, KeyValue mod) {
-    switch (mod.getKind()) {
+  public static KeyValue modify(KeyValue k, KeyValue mod)
+  {
+    switch (mod.getKind())
+    {
       case Modifier:
         return modify(k, mod.getModifier());
       case Compose_pending:
@@ -45,8 +48,10 @@ public final class KeyModifier {
     return k;
   }
 
-  public static KeyValue modify(KeyValue k, KeyValue.Modifier mod) {
-    switch (mod) {
+  public static KeyValue modify(KeyValue k, KeyValue.Modifier mod)
+  {
+    switch (mod)
+    {
       case CTRL:
         return apply_ctrl(k);
       case ALT:
@@ -118,10 +123,13 @@ public final class KeyModifier {
   }
 
   /** Modify a key after a long press. */
-  public static KeyValue modify_long_press(KeyValue k) {
-    switch (k.getKind()) {
+  public static KeyValue modify_long_press(KeyValue k)
+  {
+    switch (k.getKind())
+    {
       case Event:
-        switch (k.getEvent()) {
+        switch (k.getEvent())
+        {
           case CHANGE_METHOD_AUTO:
             return KeyValue.getKeyByName("change_method");
           case SWITCH_VOICE_TYPING:
@@ -133,10 +141,12 @@ public final class KeyModifier {
   }
 
   /** Return the compose state that modifies the numpad script. */
-  public static int modify_numpad_script(String numpad_script) {
+  public static int modify_numpad_script(String numpad_script)
+  {
     if (numpad_script == null)
       return -1;
-    switch (numpad_script) {
+    switch (numpad_script)
+    {
       case "hindu-arabic":
         return ComposeKeyData.numpad_hindu;
       case "bengali":
@@ -157,8 +167,10 @@ public final class KeyModifier {
   }
 
   /** Keys that do not match any sequence are greyed. */
-  private static KeyValue apply_compose_pending(int state, KeyValue kv) {
-    switch (kv.getKind()) {
+  private static KeyValue apply_compose_pending(int state, KeyValue kv)
+  {
+    switch (kv.getKind())
+    {
       case Char:
       case String:
         KeyValue res = ComposeKey.apply(state, kv);
@@ -180,39 +192,47 @@ public final class KeyModifier {
   }
 
   /** Apply the given compose state or fallback to the dead_char. */
-  private static KeyValue apply_compose_or_dead_char(KeyValue k, int state, char dead_char) {
+  private static KeyValue apply_compose_or_dead_char(KeyValue k, int state, char dead_char)
+  {
     KeyValue r = ComposeKey.apply(state, k);
     if (r != null)
       return r;
     return apply_dead_char(k, dead_char);
   }
 
-  private static KeyValue apply_compose(KeyValue k, int state) {
+  private static KeyValue apply_compose(KeyValue k, int state)
+  {
     KeyValue r = ComposeKey.apply(state, k);
     return (r != null) ? r : k;
   }
 
-  private static KeyValue apply_dead_char(KeyValue k, char dead_char) {
-    switch (k.getKind()) {
+  private static KeyValue apply_dead_char(KeyValue k, char dead_char)
+  {
+    switch (k.getKind())
+    {
       case Char:
         char c = k.getChar();
-        char modified = (char) KeyCharacterMap.getDeadChar(dead_char, c);
+        char modified = (char)KeyCharacterMap.getDeadChar(dead_char, c);
         if (modified != 0 && modified != c)
           return KeyValue.makeStringKey(String.valueOf(modified));
     }
     return k;
   }
 
-  private static KeyValue apply_combining_char(KeyValue k, String combining) {
-    switch (k.getKind()) {
+  private static KeyValue apply_combining_char(KeyValue k, String combining)
+  {
+    switch (k.getKind())
+    {
       case Char:
         return KeyValue.makeStringKey(k.getChar() + combining, k.getFlags());
     }
     return k;
   }
 
-  private static KeyValue apply_shift(KeyValue k) {
-    if (_modmap != null) {
+  private static KeyValue apply_shift(KeyValue k)
+  {
+    if (_modmap != null)
+    {
       KeyValue mapped = _modmap.get(Modmap.M.Shift, k);
       if (mapped != null)
         return mapped;
@@ -220,7 +240,8 @@ public final class KeyModifier {
     KeyValue r = ComposeKey.apply(ComposeKeyData.shift, k);
     if (r != null)
       return r;
-    switch (k.getKind()) {
+    switch (k.getKind())
+    {
       case Char:
         char kc = k.getChar();
         char c = Character.toUpperCase(kc);
@@ -234,14 +255,17 @@ public final class KeyModifier {
     }
   }
 
-  private static KeyValue apply_fn(KeyValue k) {
-    if (_modmap != null) {
+  private static KeyValue apply_fn(KeyValue k)
+  {
+    if (_modmap != null)
+    {
       KeyValue mapped = _modmap.get(Modmap.M.Fn, k);
       if (mapped != null)
         return mapped;
     }
     String name = null;
-    switch (k.getKind()) {
+    switch (k.getKind())
+    {
       case Char:
       case String:
         KeyValue r = ComposeKey.apply(ComposeKeyData.fn, k);
@@ -262,8 +286,10 @@ public final class KeyModifier {
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
 
-  private static String apply_fn_keyevent(int code) {
-    switch (code) {
+  private static String apply_fn_keyevent(int code)
+  {
+    switch (code)
+    {
       case KeyEvent.KEYCODE_DPAD_UP:
         return "page_up";
       case KeyEvent.KEYCODE_DPAD_DOWN:
@@ -286,8 +312,10 @@ public final class KeyModifier {
     }
   }
 
-  private static String apply_fn_event(KeyValue.Event ev) {
-    switch (ev) {
+  private static String apply_fn_event(KeyValue.Event ev)
+  {
+    switch (ev)
+    {
       case SWITCH_NUMERIC:
         return "switch_greekmath";
       default:
@@ -295,8 +323,10 @@ public final class KeyModifier {
     }
   }
 
-  private static String apply_fn_placeholder(KeyValue.Placeholder p) {
-    switch (p) {
+  private static String apply_fn_placeholder(KeyValue.Placeholder p)
+  {
+    switch (p)
+    {
       case F11:
         return "f11";
       case F12:
@@ -314,8 +344,10 @@ public final class KeyModifier {
     }
   }
 
-  private static String apply_fn_editing(KeyValue.Editing p) {
-    switch (p) {
+  private static String apply_fn_editing(KeyValue.Editing p)
+  {
+    switch (p)
+    {
       case UNDO:
         return "redo";
       case PASTE:
@@ -325,8 +357,10 @@ public final class KeyModifier {
     }
   }
 
-  private static KeyValue apply_ctrl(KeyValue k) {
-    if (_modmap != null) {
+  private static KeyValue apply_ctrl(KeyValue k)
+  {
+    if (_modmap != null)
+    {
       KeyValue mapped = _modmap.get(Modmap.M.Ctrl, k);
       // Do not return the modified character right away, first turn it into a
       // key event.
@@ -336,11 +370,13 @@ public final class KeyModifier {
     return turn_into_keyevent(k);
   }
 
-  private static KeyValue turn_into_keyevent(KeyValue k) {
+  private static KeyValue turn_into_keyevent(KeyValue k)
+  {
     if (k.getKind() != KeyValue.Kind.Char)
       return k;
     int e;
-    switch (k.getChar()) {
+    switch (k.getChar())
+    {
       case 'a':
         e = KeyEvent.KEYCODE_A;
         break;
@@ -510,9 +546,11 @@ public final class KeyModifier {
   }
 
   /** Modify a key affected by a round-trip or a clockwise circle gesture. */
-  private static KeyValue apply_gesture(KeyValue k) {
+  private static KeyValue apply_gesture(KeyValue k)
+  {
     KeyValue modified = apply_shift(k);
-    if (_modmap != null) {
+    if (_modmap != null)
+    {
       modified = _modmap.get(Modmap.M.Fn, k);
       if (modified != null)
         return modified;
@@ -524,16 +562,19 @@ public final class KeyModifier {
     if (modified != null && !modified.equals(k))
       return modified;
     String name = null;
-    switch (k.getKind()) {
+    switch (k.getKind())
+    {
       case Modifier:
-        switch (k.getModifier()) {
+        switch (k.getModifier())
+        {
           case SHIFT:
             name = "capslock";
             break;
         }
         break;
       case Keyevent:
-        switch (k.getKeyevent()) {
+        switch (k.getKeyevent())
+        {
           case KeyEvent.KEYCODE_DEL:
             name = "delete_word";
             break;
@@ -546,18 +587,22 @@ public final class KeyModifier {
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
 
-  private static KeyValue apply_selection_mode(KeyValue k) {
+  private static KeyValue apply_selection_mode(KeyValue k)
+  {
     String name = null;
-    switch (k.getKind()) {
+    switch (k.getKind())
+    {
       case Char:
-        switch (k.getChar()) {
+        switch (k.getChar())
+        {
           case ' ':
             name = "selection_cancel";
             break;
         }
         break;
       case Slider:
-        switch (k.getSlider()) {
+        switch (k.getSlider())
+        {
           case Cursor_left:
             name = "selection_cursor_left";
             break;
@@ -567,7 +612,8 @@ public final class KeyModifier {
         }
         break;
       case Keyevent:
-        switch (k.getKeyevent()) {
+        switch (k.getKeyevent())
+        {
           case KeyEvent.KEYCODE_ESCAPE:
             name = "selection_cancel";
             break;
@@ -578,8 +624,10 @@ public final class KeyModifier {
   }
 
   /** Compose the precomposed initial with the medial [kv]. */
-  private static KeyValue combine_hangul_initial(KeyValue kv, int precomposed) {
-    switch (kv.getKind()) {
+  private static KeyValue combine_hangul_initial(KeyValue kv, int precomposed)
+  {
+    switch (kv.getKind())
+    {
       case Char:
         return combine_hangul_initial(kv, kv.getChar(), precomposed);
       case Hangul_initial:
@@ -591,9 +639,11 @@ public final class KeyModifier {
   }
 
   private static KeyValue combine_hangul_initial(KeyValue kv, char medial,
-      int precomposed) {
+      int precomposed)
+  {
     int medial_idx;
-    switch (medial) {
+    switch (medial)
+    {
       // Vowels
       case 'ㅏ':
         medial_idx = 0;
@@ -666,8 +716,10 @@ public final class KeyModifier {
   }
 
   /** Combine the precomposed medial with the final [kv]. */
-  private static KeyValue combine_hangul_medial(KeyValue kv, int precomposed) {
-    switch (kv.getKind()) {
+  private static KeyValue combine_hangul_medial(KeyValue kv, int precomposed)
+  {
+    switch (kv.getKind())
+    {
       case Char:
         return combine_hangul_medial(kv, kv.getChar(), precomposed);
       case Hangul_initial:
@@ -679,9 +731,11 @@ public final class KeyModifier {
   }
 
   private static KeyValue combine_hangul_medial(KeyValue kv, char c,
-      int precomposed) {
+      int precomposed)
+  {
     int final_idx;
-    switch (c) {
+    switch (c)
+    {
       case ' ':
         final_idx = 0;
         break;

@@ -13,9 +13,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
-public final class Utils {
+public final class Utils
+{
   /** Turn the first letter of a string uppercase. */
-  public static String capitalize_string(String s) {
+  public static String capitalize_string(String s)
+  {
     if (s.length() < 1)
       return s;
     // Make sure not to cut a code point in half
@@ -27,7 +29,8 @@ public final class Utils {
    * Like [dialog.show()] but properly configure layout params when called
    * from an IME. [token] is the input view's [getWindowToken()].
    */
-  public static void show_dialog_on_ime(AlertDialog dialog, IBinder token) {
+  public static void show_dialog_on_ime(AlertDialog dialog, IBinder token)
+  {
     Window win = dialog.getWindow();
     WindowManager.LayoutParams lp = win.getAttributes();
     lp.token = token;
@@ -41,7 +44,8 @@ public final class Utils {
    * Same as [show_dialog_on_ime] but allows the dialog to interact with the
    * IM (e.g. for EditTexts).
    */
-  public static void show_input_dialog_on_ime(AlertDialog dialog, IBinder token) {
+  public static void show_input_dialog_on_ime(AlertDialog dialog, IBinder token)
+  {
     Window win = dialog.getWindow();
     WindowManager.LayoutParams lp = win.getAttributes();
     lp.token = token;
@@ -51,7 +55,8 @@ public final class Utils {
     dialog.show();
   }
 
-  public static String read_all_utf8(InputStream inp) throws Exception {
+  public static String read_all_utf8(InputStream inp) throws Exception
+  {
     InputStreamReader reader = new InputStreamReader(inp, "UTF-8");
     StringBuilder out = new StringBuilder();
     int buff_length = 8000;

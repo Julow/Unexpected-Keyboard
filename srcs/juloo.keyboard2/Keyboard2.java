@@ -13,9 +13,9 @@ import android.util.LogPrinter;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
-import android.view.inputmethod.InputMethodInfo;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import java.util.AbstractMap.SimpleEntry;
@@ -27,7 +27,8 @@ import java.util.Set;
 import juloo.keyboard2.prefs.LayoutsPreference;
 
 public class Keyboard2 extends InputMethodService
-    implements SharedPreferences.OnSharedPreferenceChangeListener {
+    implements SharedPreferences.OnSharedPreferenceChangeListener
+{
   /** The view containing the keyboard and candidates view. */
   private ViewGroup _container_view;
   private Keyboard2View _keyboardView;
@@ -48,7 +49,8 @@ public class Keyboard2 extends InputMethodService
   private FoldStateTracker _foldStateTracker;
 
   /** Layout currently visible before it has been modified. */
-  KeyboardData current_layout_unmodified() {
+  KeyboardData current_layout_unmodified()
+  {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
     KeyboardData layout = null;
@@ -63,45 +65,53 @@ public class Keyboard2 extends InputMethodService
   }
 
   /** Layout currently visible. */
-  KeyboardData current_layout() {
+  KeyboardData current_layout()
+  {
     if (_currentSpecialLayout != null)
       return _currentSpecialLayout;
     return LayoutModifier.modify_layout(current_layout_unmodified());
   }
 
-  void setTextLayout(int l) {
+  void setTextLayout(int l)
+  {
     _config.set_current_layout(l);
     _currentSpecialLayout = null;
     _keyboardView.setKeyboard(current_layout());
   }
 
-  void incrTextLayout(int delta) {
+  void incrTextLayout(int delta)
+  {
     int s = _config.layouts.size();
     setTextLayout((_config.get_current_layout() + delta + s) % s);
   }
 
-  void setSpecialLayout(KeyboardData l) {
+  void setSpecialLayout(KeyboardData l)
+  {
     _currentSpecialLayout = l;
     _keyboardView.setKeyboard(l);
   }
 
-  KeyboardData loadLayout(int layout_id) {
+  KeyboardData loadLayout(int layout_id)
+  {
     return KeyboardData.load(getResources(), layout_id);
   }
 
   /** Load a layout that contains a numpad. */
-  KeyboardData loadNumpad(int layout_id) {
+  KeyboardData loadNumpad(int layout_id)
+  {
     return LayoutModifier.modify_numpad(KeyboardData.load(getResources(), layout_id),
         current_layout_unmodified());
   }
 
-  KeyboardData loadPinentry(int layout_id) {
+  KeyboardData loadPinentry(int layout_id)
+  {
     return LayoutModifier.modify_pinentry(KeyboardData.load(getResources(), layout_id),
         current_layout_unmodified());
   }
 
   @Override
-  public void onCreate() {
+  public void onCreate()
+  {
     super.onCreate();
     SharedPreferences prefs = DirectBootAwarePreferences.get_shared_preferences(this);
     _handler = new Handler(getMainLooper());
@@ -114,9 +124,7 @@ public class Keyboard2 extends InputMethodService
     refreshSubtypeImm();
     create_keyboard_view();
     ClipboardHistoryService.on_startup(this, _keyeventhandler);
-    _foldStateTracker.setChangedCallback(() -> {
-      refresh_config();
-    });
+    _foldStateTracker.setChangedCallback(() -> { refresh_config(); });
   }
 
   @Override
@@ -126,13 +134,15 @@ public class Keyboard2 extends InputMethodService
     _foldStateTracker.close();
   }
 
-  private void create_keyboard_view() {
-    _container_view = (ViewGroup) inflate_view(R.layout.keyboard);
-    _keyboardView = (Keyboard2View) _container_view.findViewById(R.id.keyboard_view);
-    _candidates_view = (CandidatesView) _container_view.findViewById(R.id.candidates_view);
+  private void create_keyboard_view()
+  {
+    _container_view = (ViewGroup)inflate_view(R.layout.keyboard);
+    _keyboardView = (Keyboard2View)_container_view.findViewById(R.id.keyboard_view);
+    _candidates_view = (CandidatesView)_container_view.findViewById(R.id.candidates_view);
   }
 
-  private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm) {
+  private List<InputMethodSubtype> getEnabledSubtypes(InputMethodManager imm)
+  {
     String pkg = getPackageName();
     for (InputMethodInfo imi : imm.getEnabledInputMethodList())
       if (imi.getPackageName().equals(pkg))
@@ -140,7 +150,8 @@ public class Keyboard2 extends InputMethodService
     return Arrays.asList();
   }
 
-  private ExtraKeys extra_keys_of_subtype(InputMethodSubtype subtype) {
+  private ExtraKeys extra_keys_of_subtype(InputMethodSubtype subtype)
+  {
     String extra_keys = subtype.getExtraValueOf("extra_keys");
     String script = subtype.getExtraValueOf("script");
     if (extra_keys != null)
@@ -148,18 +159,21 @@ public class Keyboard2 extends InputMethodService
     return ExtraKeys.EMPTY;
   }
 
-  private void refreshAccentsOption(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes) {
+  private void refreshAccentsOption(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
+  {
     List<ExtraKeys> extra_keys = new ArrayList<ExtraKeys>();
     for (InputMethodSubtype s : enabled_subtypes)
       extra_keys.add(extra_keys_of_subtype(s));
     _config.extra_keys_subtype = ExtraKeys.merge(extra_keys);
   }
 
-  InputMethodManager get_imm() {
-    return (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+  InputMethodManager get_imm()
+  {
+    return (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
   }
 
-  private InputMethodSubtype defaultSubtypes(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes) {
+  private InputMethodSubtype defaultSubtypes(InputMethodManager imm, List<InputMethodSubtype> enabled_subtypes)
+  {
     if (VERSION.SDK_INT < 24)
       return imm.getCurrentInputMethodSubtype();
     // Android might return a random subtype, for example, the first in the
@@ -173,15 +187,18 @@ public class Keyboard2 extends InputMethodService
     return null;
   }
 
-  private void refreshSubtypeImm() {
+  private void refreshSubtypeImm()
+  {
     InputMethodManager imm = get_imm();
     _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
     _config.extra_keys_subtype = null;
-    if (VERSION.SDK_INT >= 12) {
+    if (VERSION.SDK_INT >= 12)
+    {
       List<InputMethodSubtype> enabled_subtypes = getEnabledSubtypes(imm);
       InputMethodSubtype subtype = defaultSubtypes(imm, enabled_subtypes);
-      if (subtype != null) {
+      if (subtype != null)
+      {
         String s = subtype.getExtraValueOf("default_layout");
         if (s != null)
           default_layout = LayoutsPreference.layout_of_string(getResources(), s);
@@ -189,7 +206,8 @@ public class Keyboard2 extends InputMethodService
       }
     }
     _device_locales = DeviceLocales.load(this);
-    if (_device_locales.default_ != null) {
+    if (_device_locales.default_ != null)
+    {
       String layout_name = _device_locales.default_.default_layout;
       if (layout_name != null)
         default_layout = LayoutsPreference.layout_of_string(getResources(), layout_name);
@@ -200,20 +218,21 @@ public class Keyboard2 extends InputMethodService
     _localeTextLayout = default_layout;
   }
 
-  private void refresh_candidates_view() {
+  private void refresh_candidates_view(EditorInfo info)
+  {
     boolean should_show = _config.editor_config.should_show_candidates_view;
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
-  /**
-   * Might re-create the keyboard view. [_keyboardView.setKeyboard()] and
-   * [setInputView()] must be called soon after.
-   */
-  private void refresh_config() {
+  /** Might re-create the keyboard view. [_keyboardView.setKeyboard()] and
+      [setInputView()] must be called soon after. */
+  private void refresh_config()
+  {
     int prev_theme = _config.theme;
     _config.refresh(getResources(), _foldStateTracker.isUnfolded());
     // Refreshing the theme config requires re-creating the views
-    if (prev_theme != _config.theme) {
+    if (prev_theme != _config.theme)
+    {
       create_keyboard_view();
       _emojiPane = null;
       _clipboard_pane = null;
@@ -224,20 +243,22 @@ public class Keyboard2 extends InputMethodService
     _keyboardView.reset();
   }
 
-  private KeyboardData refresh_special_layout() {
-    if (_config.editor_config.numeric_layout) {
-      switch (_config.selected_number_layout) {
-        case PIN:
-          return loadPinentry(R.xml.pin);
-        case NUMBER:
-          return loadNumpad(R.xml.numeric);
+  private KeyboardData refresh_special_layout()
+  {
+    if (_config.editor_config.numeric_layout)
+    {
+      switch (_config.selected_number_layout)
+      {
+        case PIN: return loadPinentry(R.xml.pin);
+        case NUMBER: return loadNumpad(R.xml.numeric);
       }
     }
     return null;
   }
 
   @Override
-  public void onStartInputView(EditorInfo info, boolean restarting) {
+  public void onStartInputView(EditorInfo info, boolean restarting)
+  {
     _config.editor_config.refresh(info, getResources());
     refresh_config();
     refresh_candidates_view();
@@ -245,12 +266,15 @@ public class Keyboard2 extends InputMethodService
     _keyboardView.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
 
-    if (SnippetManager.get(this).shouldRestoreClipboardView) {
+    if (SnippetManager.get(this).shouldRestoreClipboardView)
+    {
       SnippetManager.get(this).shouldRestoreClipboardView = false;
       if (_clipboard_pane == null)
         _clipboard_pane = (ViewGroup) inflate_view(R.layout.clipboard_pane);
       setInputView(_clipboard_pane);
-    } else {
+    }
+    else
+    {
       setInputView(_container_view);
     }
 
@@ -258,10 +282,11 @@ public class Keyboard2 extends InputMethodService
   }
 
   @Override
-  public void setInputView(View v) {
+  public void setInputView(View v)
+  {
     ViewParent parent = v.getParent();
     if (parent != null && parent instanceof ViewGroup)
-      ((ViewGroup) parent).removeView(v);
+      ((ViewGroup)parent).removeView(v);
     super.setInputView(v);
     updateSoftInputWindowLayoutParams();
     v.requestApplyInsets();
@@ -277,9 +302,11 @@ public class Keyboard2 extends InputMethodService
     final Window window = getWindow().getWindow();
     // On API >= 35, Keyboard2View behaves as edge-to-edge
     // APIs 30 to 34 have visual artifact when edge-to-edge is enabled
-    if (VERSION.SDK_INT >= 35) {
+    if (VERSION.SDK_INT >= 35)
+    {
       WindowManager.LayoutParams wattrs = window.getAttributes();
-      wattrs.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+      wattrs.layoutInDisplayCutoutMode =
+        WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
       // Allow to draw behind system bars
       wattrs.setFitInsetsTypes(0);
       window.setDecorFitsSystemWindows(false);
@@ -330,15 +357,16 @@ public class Keyboard2 extends InputMethodService
   }
 
   @Override
-  public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
+  public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
+  {
     refreshSubtypeImm();
     refresh_candidates_view();
     _keyboardView.setKeyboard(current_layout());
   }
 
   @Override
-  public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart,
-      int candidatesEnd) {
+  public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd)
+  {
     super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
     _keyeventhandler.selection_updated(oldSelStart, newSelStart, newSelEnd);
     if ((oldSelStart == oldSelEnd) != (newSelStart == newSelEnd))
@@ -346,27 +374,33 @@ public class Keyboard2 extends InputMethodService
   }
 
   @Override
-  public void onFinishInputView(boolean finishingInput) {
+  public void onFinishInputView(boolean finishingInput)
+  {
     super.onFinishInputView(finishingInput);
     _keyboardView.reset();
   }
 
   @Override
-  public void onSharedPreferenceChanged(SharedPreferences _prefs, String _key) {
+  public void onSharedPreferenceChanged(SharedPreferences _prefs, String _key)
+  {
     refresh_config();
     _keyboardView.setKeyboard(current_layout());
   }
 
   @Override
-  public boolean onEvaluateFullscreenMode() {
+  public boolean onEvaluateFullscreenMode()
+  {
     /* Entirely disable fullscreen mode. */
     return false;
   }
 
   /** Not static */
-  public class Receiver implements KeyEventHandler.IReceiver {
-    public void handle_event_key(KeyValue.Event ev) {
-      switch (ev) {
+  public class Receiver implements KeyEventHandler.IReceiver
+  {
+    public void handle_event_key(KeyValue.Event ev)
+    {
+      switch (ev)
+      {
         case CONFIG:
           Intent intent = new Intent(Keyboard2.this, SettingsActivity.class);
           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -384,13 +418,13 @@ public class Keyboard2 extends InputMethodService
 
         case SWITCH_EMOJI:
           if (_emojiPane == null)
-            _emojiPane = (ViewGroup) inflate_view(R.layout.emoji_pane);
+            _emojiPane = (ViewGroup)inflate_view(R.layout.emoji_pane);
           setInputView(_emojiPane);
           break;
 
         case SWITCH_CLIPBOARD:
           if (_clipboard_pane == null)
-            _clipboard_pane = (ViewGroup) inflate_view(R.layout.clipboard_pane);
+            _clipboard_pane = (ViewGroup)inflate_view(R.layout.clipboard_pane);
           setInputView(_clipboard_pane);
           break;
 
@@ -440,60 +474,71 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_DEVELOPER:
-          if (_currentSpecialLayout == null) { // Or handle differently. Here we just set view like clipboard.
+        {
+          if (_currentSpecialLayout == null)
+          { // Or handle differently. Here we just set view like clipboard.
             ViewGroup devPane = (ViewGroup) inflate_view(R.layout.developer_pane);
             ((DeveloperView) devPane).setEventHandler(_keyeventhandler);
             setInputView(devPane);
           }
           break;
+        }
 
         case SWITCH_VOICE_TYPING_CHOOSER:
           VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
               Config.globalPrefs());
           break;
+
+        default: break;
       }
     }
 
     @Override
-    public void openScratchpad() {
+    public void openScratchpad()
+    {
       Intent intent = new Intent(Keyboard2.this, ScratchpadActivity.class);
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       startActivity(intent);
     }
 
-    public void set_shift_state(boolean state, boolean lock) {
+    public void set_shift_state(boolean state, boolean lock)
+    {
       _keyboardView.set_shift_state(state, lock);
     }
 
-    public void set_compose_pending(boolean pending) {
+    public void set_compose_pending(boolean pending)
+    {
       _keyboardView.set_compose_pending(pending);
     }
 
-    public void selection_state_changed(boolean selection_is_ongoing) {
+    public void selection_state_changed(boolean selection_is_ongoing)
+    {
       _keyboardView.set_selection_state(selection_is_ongoing);
     }
 
-    public InputConnection getCurrentInputConnection() {
+    public InputConnection getCurrentInputConnection()
+    {
       return Keyboard2.this.getCurrentInputConnection();
     }
 
-    public Handler getHandler() {
+    public Handler getHandler()
+    {
       return _handler;
     }
 
-    public void set_suggestions(List<String> suggestions) {
+    public void set_suggestions(List<String> suggestions)
+    {
       _candidates_view.set_candidates(suggestions);
     }
   }
 
-  private IBinder getConnectionToken() {
+  private IBinder getConnectionToken()
+  {
     return getWindow().getWindow().getAttributes().token;
   }
 
-  private View inflate_view(int layout) {
+  private View inflate_view(int layout)
+  {
     return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
   }
-
-  // Search Interception Logic
-
 }

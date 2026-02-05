@@ -21,13 +21,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Keyboard2View extends View
-    implements View.OnTouchListener, Pointers.IPointerEventHandler {
+    implements View.OnTouchListener, Pointers.IPointerEventHandler
+{
   private KeyboardData _keyboard;
 
-  /**
-   * The key holding the shift key is used to set shift state from
-   * autocapitalisation.
-   */
+  /** The key holding the shift key is used to set shift state from
+      autocapitalisation. */
   private KeyValue _shift_kv;
   private KeyboardData.Key _shift_key;
 
@@ -58,35 +57,40 @@ public class Keyboard2View extends View
 
   private static RectF _tmpRect = new RectF();
 
-  enum Vertical {
+  enum Vertical
+  {
     TOP,
     CENTER,
     BOTTOM
   }
 
-  public Keyboard2View(Context context, AttributeSet attrs) {
+  public Keyboard2View(Context context, AttributeSet attrs)
+  {
     super(context, attrs);
     _theme = new Theme(getContext(), attrs);
     _config = Config.globalConfig();
     _pointers = new Pointers(this, _config);
     refresh_navigation_bar(context);
     setOnTouchListener(this);
-    int layout_id = (attrs == null) ? 0 : attrs.getAttributeResourceValue(null, "layout", 0);
+    int layout_id = (attrs == null) ? 0 :
+      attrs.getAttributeResourceValue(null, "layout", 0);
     if (layout_id == 0)
       reset();
     else
       setKeyboard(KeyboardData.load(getResources(), layout_id));
   }
 
-  private Window getParentWindow(Context context) {
+  private Window getParentWindow(Context context)
+  {
     if (context instanceof InputMethodService)
-      return ((InputMethodService) context).getWindow().getWindow();
+      return ((InputMethodService)context).getWindow().getWindow();
     if (context instanceof ContextWrapper)
-      return getParentWindow(((ContextWrapper) context).getBaseContext());
+      return getParentWindow(((ContextWrapper)context).getBaseContext());
     return null;
   }
 
-  public void refresh_navigation_bar(Context context) {
+  public void refresh_navigation_bar(Context context)
+  {
     if (VERSION.SDK_INT < 21)
       return;
     // The intermediate Window is a [Dialog].
@@ -102,7 +106,8 @@ public class Keyboard2View extends View
     setSystemUiVisibility(uiFlags);
   }
 
-  public void setKeyboard(KeyboardData kw) {
+  public void setKeyboard(KeyboardData kw)
+  {
     _keyboard = kw;
     _shift_kv = KeyValue.getKeyByName("shift");
     _shift_key = _keyboard.findKeyWithValue(_shift_kv);
@@ -112,7 +117,8 @@ public class Keyboard2View extends View
     reset();
   }
 
-  public void reset() {
+  public void reset()
+  {
     _mods = Pointers.Modifiers.EMPTY;
     _pointers.clear();
     requestLayout();
@@ -120,41 +126,48 @@ public class Keyboard2View extends View
   }
 
   void set_fake_ptr_latched(KeyboardData.Key key, KeyValue kv, boolean latched,
-      boolean lock) {
+      boolean lock)
+  {
     if (_keyboard == null || key == null)
       return;
     _pointers.set_fake_pointer_state(key, kv, latched, lock);
   }
 
   /** Called by auto-capitalisation. */
-  public void set_shift_state(boolean latched, boolean lock) {
+  public void set_shift_state(boolean latched, boolean lock)
+  {
     set_fake_ptr_latched(_shift_key, _shift_kv, latched, lock);
   }
 
   /** Called from [KeyEventHandler]. */
-  public void set_compose_pending(boolean pending) {
+  public void set_compose_pending(boolean pending)
+  {
     set_fake_ptr_latched(_compose_key, _compose_kv, pending, false);
   }
 
-  /** Called from [Keybard2.onUpdateSelection]. */
-  public void set_selection_state(boolean selection_state) {
+  /** Called from [Keybard2.onUpdateSelection].  */
+  public void set_selection_state(boolean selection_state)
+  {
     if (_config.editor_config.selection_mode_enabled)
       set_fake_ptr_latched(KeyboardData.Key.EMPTY,
           KeyValue.getKeyByName("selection_mode"), selection_state, true);
   }
 
-  public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods) {
+  public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
+  {
     return KeyModifier.modify(k, mods);
   }
 
-  public void onPointerDown(KeyValue k, boolean isSwipe) {
+  public void onPointerDown(KeyValue k, boolean isSwipe)
+  {
     updateFlags();
     _config.handler.key_down(k, isSwipe);
     invalidate();
     vibrate();
   }
 
-  public void onPointerUp(KeyValue k, Pointers.Modifiers mods) {
+  public void onPointerUp(KeyValue k, Pointers.Modifiers mods)
+  {
     // [key_up] must be called before [updateFlags]. The latter might disable
     // flags.
     _config.handler.key_up(k, mods);
@@ -162,32 +175,38 @@ public class Keyboard2View extends View
     invalidate();
   }
 
-  public void onPointerHold(KeyValue k, Pointers.Modifiers mods) {
+  public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
+  {
     _config.handler.key_up(k, mods);
     updateFlags();
   }
 
-  public void onPointerFlagsChanged(boolean shouldVibrate) {
+  public void onPointerFlagsChanged(boolean shouldVibrate)
+  {
     updateFlags();
     invalidate();
     if (shouldVibrate)
       vibrate();
   }
 
-  private void updateFlags() {
+  private void updateFlags()
+  {
     _mods = _pointers.getModifiers();
     _config.handler.mods_changed(_mods);
   }
 
   @Override
-  public void openScratchpad() {
+  public void openScratchpad()
+  {
     _config.handler.openScratchpad();
   }
 
   @Override
-  public boolean onTouch(View v, MotionEvent event) {
+  public boolean onTouch(View v, MotionEvent event)
+  {
     int p;
-    switch (event.getActionMasked()) {
+    switch (event.getActionMasked())
+    {
       case MotionEvent.ACTION_UP:
       case MotionEvent.ACTION_POINTER_UP:
         _pointers.onTouchUp(event.getPointerId(event.getActionIndex()));
@@ -214,11 +233,13 @@ public class Keyboard2View extends View
     return (true);
   }
 
-  private KeyboardData.Row getRowAtPosition(float ty) {
+  private KeyboardData.Row getRowAtPosition(float ty)
+  {
     float y = _config.marginTop;
     if (ty < y)
       return null;
-    for (KeyboardData.Row row : _keyboard.rows) {
+    for (KeyboardData.Row row : _keyboard.rows)
+    {
       y += (row.shift + row.height) * _tc.row_height;
       if (ty < y)
         return row;
@@ -226,12 +247,14 @@ public class Keyboard2View extends View
     return null;
   }
 
-  private KeyboardData.Key getKeyAtPosition(float tx, float ty) {
+  private KeyboardData.Key getKeyAtPosition(float tx, float ty)
+  {
     KeyboardData.Row row = getRowAtPosition(ty);
     float x = _marginLeft;
     if (row == null || tx < x)
       return null;
-    for (KeyboardData.Key key : row.keys) {
+    for (KeyboardData.Key key : row.keys)
+    {
       float xLeft = x + key.shift * _keyWidth;
       float xRight = xLeft + key.width * _keyWidth;
       if (tx < xLeft)
@@ -243,12 +266,14 @@ public class Keyboard2View extends View
     return null;
   }
 
-  private void vibrate() {
+  private void vibrate()
+  {
     VibratorCompat.vibrate(this, _config);
   }
 
   @Override
-  public void onMeasure(int wSpec, int hSpec) {
+  public void onMeasure(int wSpec, int hSpec)
+  {
     int width;
     DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
     width = dm.widthPixels;
@@ -264,39 +289,43 @@ public class Keyboard2View extends View
     // width computation is useful when the keyboard is unusually high.
     float labelBaseSize = Math.min(
         _tc.row_height - _tc.vertical_margin,
-        (width / 10 - _tc.horizontal_margin) * 3 / 2) * _config.characterSize;
+        (width / 10 - _tc.horizontal_margin) * 3/2
+        ) * _config.characterSize;
     _mainLabelSize = labelBaseSize * _config.labelTextSize;
     _subLabelSize = labelBaseSize * _config.sublabelTextSize;
-    int height = (int) (_tc.row_height * _keyboard.keysHeight
+    int height =
+      (int)(_tc.row_height * _keyboard.keysHeight
         + _config.marginTop + _marginBottom);
     setMeasuredDimension(width, height);
   }
 
   Rect _cached_exclusion_rect = new Rect();
   List<Rect> _cached_exclusion_rects = Arrays.asList(_cached_exclusion_rect);
-
   @Override
-  public void onLayout(boolean changed, int left, int top, int right, int bottom) {
+  public void onLayout(boolean changed, int left, int top, int right, int bottom)
+  {
     if (!changed)
       return;
-    if (VERSION.SDK_INT >= 29) {
+    if (VERSION.SDK_INT >= 29)
+    {
       // Disable the back-gesture on the keyboard area
       _cached_exclusion_rect.set(
-          left + (int) _marginLeft,
-          top + (int) _config.marginTop,
-          right - (int) _marginRight,
-          bottom - (int) _marginBottom);
+          left + (int)_marginLeft,
+          top + (int)_config.marginTop,
+          right - (int)_marginRight,
+          bottom - (int)_marginBottom);
       setSystemGestureExclusionRects(_cached_exclusion_rects);
     }
   }
 
   @Override
-  public WindowInsets onApplyWindowInsets(WindowInsets wi) {
-    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in
-    // [Keyboard2#updateSoftInputWindowLayoutParams] for SDK_INT >= 35.
+  public WindowInsets onApplyWindowInsets(WindowInsets wi)
+  {
+    // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams] for SDK_INT >= 35.
     if (VERSION.SDK_INT < 35)
       return wi;
-    int insets_types = WindowInsets.Type.systemBars()
+    int insets_types =
+      WindowInsets.Type.systemBars()
         | WindowInsets.Type.displayCutout();
     Insets insets = wi.getInsets(insets_types);
     _insets_left = insets.left;
@@ -306,26 +335,29 @@ public class Keyboard2View extends View
   }
 
   /** Horizontal and vertical position of the 9 indexes. */
-  static final Paint.Align[] LABEL_POSITION_H = new Paint.Align[] {
+  static final Paint.Align[] LABEL_POSITION_H = new Paint.Align[]{
       Paint.Align.CENTER, Paint.Align.LEFT, Paint.Align.RIGHT, Paint.Align.LEFT,
       Paint.Align.RIGHT, Paint.Align.LEFT, Paint.Align.RIGHT,
       Paint.Align.CENTER, Paint.Align.CENTER
   };
 
-  static final Vertical[] LABEL_POSITION_V = new Vertical[] {
+  static final Vertical[] LABEL_POSITION_V = new Vertical[]{
       Vertical.CENTER, Vertical.TOP, Vertical.TOP, Vertical.BOTTOM,
       Vertical.BOTTOM, Vertical.CENTER, Vertical.CENTER, Vertical.TOP,
       Vertical.BOTTOM
   };
 
   @Override
-  protected void onDraw(Canvas canvas) {
+  protected void onDraw(Canvas canvas)
+  {
     float y = _tc.margin_top;
-    for (KeyboardData.Row row : _keyboard.rows) {
+    for (KeyboardData.Row row : _keyboard.rows)
+    {
       y += row.shift * _tc.row_height;
       float x = _marginLeft + _tc.margin_left;
       float keyH = row.height * _tc.row_height - _tc.vertical_margin;
-      for (KeyboardData.Key k : row.keys) {
+      for (KeyboardData.Key k : row.keys)
+      {
         x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _tc.horizontal_margin;
         boolean isKeyDown = _pointers.isKeyDown(k);
@@ -333,7 +365,8 @@ public class Keyboard2View extends View
         drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
         if (k.keys[0] != null)
           drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
-        for (int i = 1; i < 9; i++) {
+        for (int i = 1; i < 9; i++)
+        {
           if (k.keys[i] != null)
             drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown, tc_key);
         }
@@ -345,19 +378,22 @@ public class Keyboard2View extends View
   }
 
   @Override
-  public void onDetachedFromWindow() {
+  public void onDetachedFromWindow()
+  {
     super.onDetachedFromWindow();
   }
 
   /** Draw borders and background of the key. */
   void drawKeyFrame(Canvas canvas, float x, float y, float keyW, float keyH,
-      Theme.Computed.Key tc) {
+      Theme.Computed.Key tc)
+  {
     float r = tc.border_radius;
     float w = tc.border_width;
     float padding = w / 2.f;
     _tmpRect.set(x + padding, y + padding, x + keyW - padding, y + keyH - padding);
     canvas.drawRoundRect(_tmpRect, r, r, tc.bg_paint);
-    if (w > 0.f) {
+    if (w > 0.f)
+    {
       float overlap = r - r * 0.85f + w; // sin(45°)
       drawBorder(canvas, x, y, x + overlap, y + keyH, tc.border_left_paint, tc);
       drawBorder(canvas, x + keyW - overlap, y, x + keyW, y + keyH, tc.border_right_paint, tc);
@@ -366,12 +402,11 @@ public class Keyboard2View extends View
     }
   }
 
-  /**
-   * Clip to draw a border at a time. This allows to call [drawRoundRect]
-   * several time with the same parameters but a different Paint.
-   */
+  /** Clip to draw a border at a time. This allows to call [drawRoundRect]
+      several time with the same parameters but a different Paint. */
   void drawBorder(Canvas canvas, float clipl, float clipt, float clipr,
-      float clipb, Paint paint, Theme.Computed.Key tc) {
+      float clipb, Paint paint, Theme.Computed.Key tc)
+  {
     float r = tc.border_radius;
     canvas.save();
     canvas.clipRect(clipl, clipt, clipr, clipb);
@@ -379,16 +414,20 @@ public class Keyboard2View extends View
     canvas.restore();
   }
 
-  private int labelColor(KeyValue k, boolean isKeyDown, boolean sublabel) {
-    if (isKeyDown) {
+  private int labelColor(KeyValue k, boolean isKeyDown, boolean sublabel)
+  {
+    if (isKeyDown)
+    {
       int flags = _pointers.getKeyFlags(k);
-      if (flags != -1) {
+      if (flags != -1)
+      {
         if ((flags & Pointers.FLAG_P_LOCKED) != 0)
           return _theme.lockedColor;
         return _theme.activatedColor;
       }
     }
-    if (k.hasFlagsAny(KeyValue.FLAG_SECONDARY | KeyValue.FLAG_GREYED)) {
+    if (k.hasFlagsAny(KeyValue.FLAG_SECONDARY | KeyValue.FLAG_GREYED))
+    {
       if (k.hasFlagsAny(KeyValue.FLAG_GREYED))
         return _theme.greyedLabelColor;
       return _theme.secondaryLabelColor;
@@ -397,12 +436,14 @@ public class Keyboard2View extends View
   }
 
   private void drawLabel(Canvas canvas, KeyValue kv, float x, float y,
-      float keyH, boolean isKeyDown, Theme.Computed.Key tc) {
+      float keyH, boolean isKeyDown, Theme.Computed.Key tc)
+  {
     kv = modifyKey(kv, _mods);
     if (kv == null)
       return;
 
-    if (kv.getKind() == KeyValue.Kind.Event && kv.getEvent() == KeyValue.Event.SWITCH_DEVELOPER) {
+    if (kv.getKind() == KeyValue.Kind.Event && kv.getEvent() == KeyValue.Event.SWITCH_DEVELOPER)
+    {
       android.graphics.drawable.Drawable d = getContext().getResources().getDrawable(R.drawable.ic_developer);
       d.setTint(labelColor(kv, isKeyDown, false));
       int s = (int) scaleTextSize(kv, true);
@@ -425,7 +466,8 @@ public class Keyboard2View extends View
 
   private void drawSubLabel(Canvas canvas, KeyValue kv, float x, float y,
       float keyW, float keyH, int sub_index, boolean isKeyDown,
-      Theme.Computed.Key tc) {
+      Theme.Computed.Key tc)
+  {
     Paint.Align a = LABEL_POSITION_H[sub_index];
     Vertical v = LABEL_POSITION_V[sub_index];
     kv = modifyKey(kv, _mods);
@@ -451,16 +493,18 @@ public class Keyboard2View extends View
   }
 
   private void drawIndication(Canvas canvas, KeyboardData.Key k, float x,
-      float y, float keyW, float keyH, Theme.Computed tc) {
+      float y, float keyW, float keyH, Theme.Computed tc)
+  {
     if (k.indication == null || k.indication.equals(""))
       return;
     Paint p = tc.indication_paint;
     p.setTextSize(_subLabelSize);
     canvas.drawText(k.indication, 0, k.indication.length(),
-        x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4 / 5 + y, p);
+        x + keyW / 2f, (keyH - p.ascent() - p.descent()) * 4/5 + y, p);
   }
 
-  private float scaleTextSize(KeyValue k, boolean main_label) {
+  private float scaleTextSize(KeyValue k, boolean main_label)
+  {
     float smaller_font = k.hasFlagsAny(KeyValue.FLAG_SMALLER_FONT) ? 0.75f : 1.f;
     float label_size = main_label ? _mainLabelSize : _subLabelSize;
     return label_size * smaller_font;
