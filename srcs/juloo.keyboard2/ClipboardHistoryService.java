@@ -47,12 +47,7 @@ public final class ClipboardHistoryService
       _paste_callback.paste_from_clipboard_pane(clip);
   }
 
-  /** Send the given string to the editor as a macro. */
-  public static void pasteMacro(String clip)
-  {
-    if (_paste_callback != null)
-      _paste_callback.paste_macro_from_clipboard_pane(clip);
-  }
+
 
   /** The maximum size limits the amount of user data stored in memory but also
       gives a sense to the user that the history is not persisted and can be
@@ -199,6 +194,6 @@ public final class ClipboardHistoryService
   {
     public void paste_from_clipboard_pane(String content);
 
-    public void paste_macro_from_clipboard_pane(String content);
+
   }
 }

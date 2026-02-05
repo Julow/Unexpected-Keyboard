@@ -118,9 +118,7 @@ public class SnippetCreationActivity extends Activity
 
     layout.addView(tagInput);
 
-    final CheckBox isMacroInput = new CheckBox(this);
-    isMacroInput.setText("Is Macro");
-    layout.addView(isMacroInput);
+
 
     tagInput.setOnEditorActionListener(new android.widget.TextView.OnEditorActionListener()
     {
@@ -166,7 +164,7 @@ public class SnippetCreationActivity extends Activity
         existingSnippet = (Snippet) item;
         nameInput.setText(existingSnippet.name);
         contentInput.setText(existingSnippet.content);
-        isMacroInput.setChecked(existingSnippet.isMacro);
+
 
         if (existingSnippet.tags != null)
         {
@@ -212,15 +210,14 @@ public class SnippetCreationActivity extends Activity
             {
               if (existingSnippet != null)
               {
-                manager.updateSnippet(existingSnippet, name, content, currentTags,
-                    isMacroInput.isChecked());
+                manager.updateSnippet(existingSnippet, name, content, currentTags);
               }
               else
               {
                 Snippet newSnippet = new Snippet(content);
                 newSnippet.name = name;
                 newSnippet.tags = currentTags;
-                newSnippet.isMacro = isMacroInput.isChecked();
+
                 manager.getCurrentFolder().addItem(newSnippet);
                 manager.save();
               }

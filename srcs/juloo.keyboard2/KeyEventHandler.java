@@ -143,55 +143,7 @@ public final class KeyEventHandler
     _recv.openScratchpad();
   }
 
-  @Override
-  public void paste_macro_from_clipboard_pane(String content)
-  {
-    java.util.List<KeyValue> keys = new java.util.ArrayList<>();
-    int lastEnd = 0;
-    // Match {KEY} or {KEY:VAL}
-    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\{([^}:]+)(?::([^}]+))?\\}");
-    java.util.regex.Matcher matcher = pattern.matcher(content);
 
-    while (matcher.find())
-    {
-      if (matcher.start() > lastEnd)
-      {
-        keys.add(KeyValue.makeStringKey(content.substring(lastEnd, matcher.start())));
-      }
-      String keyName = matcher.group(1).toLowerCase();
-      String param = matcher.group(2);
-
-      if ("wait".equals(keyName))
-      {
-        int duration = 0;
-        try { duration = Integer.parseInt(param); } catch (NumberFormatException e) {}
-        if (duration > 0)
-        {
-          keys.add(KeyValue.makeWait(duration));
-        }
-      }
-      else
-      {
-        KeyValue kv = KeyValue.getKeyByName(keyName);
-        int repeats = 1;
-        if (param != null)
-        {
-          try { repeats = Integer.parseInt(param); } catch (NumberFormatException e) {}
-        }
-        for (int i = 0; i < repeats; i++)
-        {
-          keys.add(kv);
-        }
-      }
-      lastEnd = matcher.end();
-    }
-    if (lastEnd < content.length())
-    {
-      keys.add(KeyValue.makeStringKey(content.substring(lastEnd)));
-    }
-
-    evaluate_macro(keys.toArray(new KeyValue[0]));
-  }
 
   @Override
   public void currently_typed_word(String word)

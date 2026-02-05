@@ -218,7 +218,7 @@ public class Keyboard2 extends InputMethodService
     _localeTextLayout = default_layout;
   }
 
-  private void refresh_candidates_view(EditorInfo info)
+  private void refresh_candidates_view()
   {
     boolean should_show = _config.editor_config.should_show_candidates_view;
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);

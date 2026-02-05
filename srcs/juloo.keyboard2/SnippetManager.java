@@ -282,13 +282,12 @@ public class SnippetManager
     }
   }
 
-  public void updateSnippet(Snippet snippet, String newName, String newContent, List<String> newTags,
-      boolean isMacro)
+  public void updateSnippet(Snippet snippet, String newName, String newContent, List<String> newTags)
   {
     snippet.name = newName;
     snippet.content = newContent;
     snippet.tags = newTags;
-    snippet.isMacro = isMacro;
+
     save();
     notifyListeners();
   }
@@ -316,7 +315,7 @@ public class SnippetManager
         tagsArr.put(tag);
       }
       obj.put("tags", tagsArr);
-      obj.put("isMacro", ((Snippet) item).isMacro);
+
     }
     else if (item instanceof SnippetFolder)
     {
@@ -363,7 +362,7 @@ public class SnippetManager
         }
 
       }
-      snippet.isMacro = obj.optBoolean("isMacro", false);
+
       return snippet;
     }
     else
