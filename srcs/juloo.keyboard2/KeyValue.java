@@ -149,44 +149,88 @@ public final class KeyValue implements Comparable<KeyValue>
       The meaning of the value depends on the kind. */
   private final int _code;
 
-  public Kind getKind() { return Kind.values()[(_code & KIND_BITS) >>> KIND_OFFSET]; }
-  public int getFlags() { return (_code & FLAGS_BITS); }
-  public boolean hasFlagsAny(int has) { return ((_code & has) != 0); }
+  public Kind getKind()
+  {
+    return Kind.values()[(_code & KIND_BITS) >>> KIND_OFFSET];
+  }
+
+  public int getFlags()
+  {
+    return (_code & FLAGS_BITS);
+  }
+
+  public boolean hasFlagsAny(int has)
+  {
+    return ((_code & has) != 0);
+  }
 
   /** The string to render on the keyboard.
       When [getKind() == Kind.String], also the string to send. */
-  public String getString() { return _payload.toString(); }
+  public String getString()
+  {
+    return _payload.toString();
+  }
 
   /** Defined only when [getKind() == Kind.Char]. */
-  public char getChar() { return (char)(_code & VALUE_BITS); }
+  public char getChar()
+  {
+    return (char)(_code & VALUE_BITS);
+  }
 
   /** Defined only when [getKind() == Kind.Keyevent]. */
-  public int getKeyevent() { return (_code & VALUE_BITS); }
+  public int getKeyevent()
+  {
+    return (_code & VALUE_BITS);
+  }
 
   /** Defined only when [getKind() == Kind.Event]. */
-  public Event getEvent() { return Event.values()[(_code & VALUE_BITS)]; }
+  public Event getEvent()
+  {
+    return Event.values()[(_code & VALUE_BITS)];
+  }
 
   /** Defined only when [getKind() == Kind.Modifier]. */
-  public Modifier getModifier() { return Modifier.values()[(_code & VALUE_BITS)]; }
+  public Modifier getModifier()
+  {
+    return Modifier.values()[(_code & VALUE_BITS)];
+  }
 
   /** Defined only when [getKind() == Kind.Editing]. */
-  public Editing getEditing() { return Editing.values()[(_code & VALUE_BITS)]; }
+  public Editing getEditing()
+  {
+    return Editing.values()[(_code & VALUE_BITS)];
+  }
 
   /** Defined only when [getKind() == Kind.Placeholder]. */
-  public Placeholder getPlaceholder() { return Placeholder.values()[(_code & VALUE_BITS)]; }
+  public Placeholder getPlaceholder()
+  {
+    return Placeholder.values()[(_code & VALUE_BITS)];
+  }
 
   /** Defined only when [getKind() == Kind.Compose_pending]. */
-  public int getPendingCompose() { return (_code & VALUE_BITS); }
+  public int getPendingCompose()
+  {
+    return (_code & VALUE_BITS);
+  }
 
   /** Defined only when [getKind()] is [Kind.Hangul_initial] or
       [Kind.Hangul_medial]. */
-  public int getHangulPrecomposed() { return (_code & VALUE_BITS); }
+  public int getHangulPrecomposed()
+  {
+    return (_code & VALUE_BITS);
+  }
 
   /** Defined only when [getKind() == Kind.Slider]. */
-  public Slider getSlider() { return (Slider)_payload; }
+  public Slider getSlider()
+  {
+    return (Slider)_payload;
+  }
 
   /** Defined only when [getKind() == Kind.Slider]. */
-  public int getSliderRepeat() { return ((int)(short)(_code & VALUE_BITS)); }
+  public int getSliderRepeat()
+  {
+    return ((int)(short)(_code & VALUE_BITS));
+  }
 
   /** Defined only when [getKind() == Kind.Macro]. */
   public KeyValue[] getMacro() { return ((Macro)_payload).keys; }
@@ -225,12 +269,13 @@ public final class KeyValue implements Comparable<KeyValue>
       case Modifier:
       case Editing:
       case Placeholder:
-        if (symbol.length() > 1) flags |= FLAG_SMALLER_FONT;
+        if (symbol.length() > 1)
+          flags |= FLAG_SMALLER_FONT;
         return new KeyValue(symbol, _code, _code, flags);
       case Macro:
         return makeMacro(symbol, getMacro(), flags);
       default:
-        return makeMacro(symbol, new KeyValue[]{this}, flags);
+        return makeMacro(symbol, new KeyValue[]{ this }, flags);
     }
   }
 
@@ -245,9 +290,11 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     // Compare the kind and value first, then the flags.
     int d = (_code & ~FLAGS_BITS) - (snd._code & ~FLAGS_BITS);
-    if (d != 0) return d;
+    if (d != 0)
+      return d;
     d = _code - snd._code;
-    if (d != 0) return d;
+    if (d != 0)
+      return d;
     // Calls [compareTo] assuming that if [_code] matches, then [_payload] are
     // of the same class.
     return _payload.compareTo(snd._payload);
@@ -256,7 +303,8 @@ public final class KeyValue implements Comparable<KeyValue>
   /** Type-safe alternative to [equals]. */
   public boolean sameKey(KeyValue snd)
   {
-    if (snd == null) return false;
+    if (snd == null)
+      return false;
     return _code == snd._code && _payload.compareTo(snd._payload) == 0;
   }
 
@@ -277,7 +325,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private KeyValue(Comparable p, int kind, int value, int flags)
   {
-    if (p == null) throw new NullPointerException("KeyValue payload cannot be null");
+    if (p == null)
+      throw new NullPointerException("KeyValue payload cannot be null");
     _payload = p;
     _code = (kind & KIND_BITS) | (flags & FLAGS_BITS) | (value & VALUE_BITS);
   }
@@ -299,7 +348,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private static KeyValue modifierKey(String symbol, Modifier m, int flags)
   {
-    if (symbol.length() > 1) flags |= FLAG_SMALLER_FONT;
+    if (symbol.length() > 1)
+      flags |= FLAG_SMALLER_FONT;
     return new KeyValue(symbol, Kind.Modifier, m.ordinal(),
                         FLAG_LATCH | FLAG_SPECIAL | FLAG_SECONDARY | flags);
   }
@@ -377,13 +427,20 @@ public final class KeyValue implements Comparable<KeyValue>
                         id.ordinal(), flags | FLAG_KEY_FONT);
   }
 
-  public static KeyValue makeStringKey(String str) { return makeStringKey(str, 0); }
+  public static KeyValue makeStringKey(String str)
+  {
+    return makeStringKey(str, 0);
+  }
 
-  public static KeyValue makeCharKey(char c) { return makeCharKey(c, null, 0); }
+  public static KeyValue makeCharKey(char c)
+  {
+    return makeCharKey(c, null, 0);
+  }
 
   public static KeyValue makeCharKey(char c, String symbol, int flags)
   {
-    if (symbol == null) symbol = String.valueOf(c);
+    if (symbol == null)
+      symbol = String.valueOf(c);
     return new KeyValue(symbol, Kind.Char, c, flags);
   }
 
@@ -440,7 +497,8 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public static KeyValue makeMacro(String symbol, KeyValue[] keys, int flags)
   {
-    if (symbol.length() > 1) flags |= FLAG_SMALLER_FONT;
+    if (symbol.length() > 1)
+      flags |= FLAG_SMALLER_FONT;
     return new KeyValue(new Macro(keys, symbol), Kind.Macro, 0, flags);
   }
 
@@ -460,7 +518,8 @@ public final class KeyValue implements Comparable<KeyValue>
   public static KeyValue getKeyByName(String name)
   {
     KeyValue k = getSpecialKeyByName(name);
-    if (k != null) return k;
+    if (k != null)
+      return k;
     try
     {
       return KeyValueParser.parse(name);
@@ -659,7 +718,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "ole_placeholder": return placeholderKey(Placeholder.OLE);
       case "meteg": return charKey("\u05DE\u05BD", '\u05BD', 0); // or siluq or sof-pasuq
       case "meteg_placeholder": return placeholderKey(Placeholder.METEG);
-      /* intending/preventing ligature - supported by many scripts */
+      /* intending/preventing ligature - supported by many scripts*/
       case "zwj": return charKey(0xE019, '\u200D', 0); // zero-width joiner (provides ligature)
       case "zwnj":
       case "halfspace": return charKey(0xE018, '\u200C', 0); // zero-width non joiner
@@ -718,186 +777,49 @@ public final class KeyValue implements Comparable<KeyValue>
       case "ㅎ": return makeHangulInitial("ㅎ", 18);
 
       /* Tamil letters should be smaller on the keyboard. */
-      case "ஔ":
-      case "ந":
-      case "ல":
-      case "ழ":
-      case "௯":
-      case "க":
-      case "ஷ":
-      case "ே":
-      case "௨":
-      case "ஜ":
-      case "ங":
-      case "ன":
-      case "௦":
-      case "ை":
-      case "ூ":
-      case "ம":
-      case "ஆ":
-      case "௭":
-      case "௪":
-      case "ா":
-      case "ஶ":
-      case "௬":
-      case "வ":
-      case "ஸ":
-      case "௮":
-      case "ட":
-      case "ப":
-      case "ஈ":
-      case "௩":
-      case "ஒ":
-      case "ௌ":
-      case "உ":
-      case "௫":
-      case "ய":
-      case "ர":
-      case "ு":
-      case "இ":
-      case "ோ":
-      case "ஓ":
-      case "ஃ":
-      case "ற":
-      case "த":
-      case "௧":
-      case "ண":
-      case "ஏ":
-      case "ஊ":
-      case "ொ":
-      case "ஞ":
-      case "அ":
-      case "எ":
-      case "ச":
-      case "ெ":
-      case "ஐ":
-      case "ி":
-      case "௹":
-      case "ள":
-      case "ஹ":
-      case "௰":
-      case "ௐ":
-      case "௱":
-      case "௲":
-      case "௳": return makeStringKey(name, FLAG_SMALLER_FONT);
+      case "ஔ": case "ந": case "ல": case "ழ": case "௯": case "க":
+      case "ஷ": case "ே": case "௨": case "ஜ": case "ங": case "ன":
+      case "௦": case "ை": case "ூ": case "ம": case "ஆ": case "௭":
+      case "௪": case "ா": case "ஶ": case "௬": case "வ": case "ஸ":
+      case "௮": case "ட": case "ப": case "ஈ": case "௩": case "ஒ":
+      case "ௌ": case "உ": case "௫": case "ய": case "ர": case "ு":
+      case "இ": case "ோ": case "ஓ": case "ஃ": case "ற": case "த":
+      case "௧": case "ண": case "ஏ": case "ஊ": case "ொ": case "ஞ":
+      case "அ": case "எ": case "ச": case "ெ": case "ஐ": case "ி":
+      case "௹": case "ள": case "ஹ": case "௰": case "ௐ": case "௱":
+      case "௲": case "௳":
+        return makeStringKey(name, FLAG_SMALLER_FONT);
 
       /* Sinhala letters to reduced size */
-      case "අ":
-      case "ආ":
-      case "ඇ":
-      case "ඈ":
-      case "ඉ":
-      case "ඊ":
-      case "උ":
-      case "ඌ":
-      case "ඍ":
-      case "ඎ":
-      case "ඏ":
-      case "ඐ":
-      case "එ":
-      case "ඒ":
-      case "ඓ":
-      case "ඔ":
-      case "ඕ":
-      case "ඖ":
-      case "ක":
-      case "ඛ":
-      case "ග":
-      case "ඝ":
-      case "ඞ":
-      case "ඟ":
-      case "ච":
-      case "ඡ":
-      case "ජ":
-      case "ඣ":
-      case "ඤ":
-      case "ඥ":
-      case "ඦ":
-      case "ට":
-      case "ඨ":
-      case "ඩ":
-      case "ඪ":
-      case "ණ":
-      case "ඬ":
-      case "ත":
-      case "ථ":
-      case "ද":
-      case "ධ":
-      case "න":
-      case "ඳ":
-      case "ප":
-      case "ඵ":
-      case "බ":
-      case "භ":
-      case "ම":
-      case "ඹ":
-      case "ය":
-      case "ර":
-      case "ල":
-      case "ව":
-      case "ශ":
-      case "ෂ":
-      case "ස":
-      case "හ":
-      case "ළ":
-      case "ෆ":
+      case "අ": case "ආ": case "ඇ": case "ඈ": case "ඉ":
+      case "ඊ": case "උ": case "ඌ": case "ඍ": case "ඎ":
+      case "ඏ": case "ඐ": case "එ": case "ඒ": case "ඓ":
+      case "ඔ": case "ඕ": case "ඖ": case "ක": case "ඛ":
+      case "ග": case "ඝ": case "ඞ": case "ඟ": case "ච":
+      case "ඡ": case "ජ": case "ඣ": case "ඤ": case "ඥ":
+      case "ඦ": case "ට": case "ඨ": case "ඩ": case "ඪ":
+      case "ණ": case "ඬ": case "ත": case "ථ": case "ද":
+      case "ධ": case "න": case "ඳ": case "ප": case "ඵ":
+      case "බ": case "භ": case "ම": case "ඹ": case "ය":
+      case "ර": case "ල": case "ව": case "ශ": case "ෂ":
+      case "ස": case "හ": case "ළ": case "ෆ":
       /* Astrological numbers */
-      case "෦":
-      case "෧":
-      case "෨":
-      case "෩":
-      case "෪":
-      case "෫":
-      case "෬":
-      case "෭":
-      case "෮":
-      case "෯":
-      case "ෲ":
-      case "ෳ":
+      case "෦": case "෧": case "෨": case "෩": case "෪":
+      case "෫": case "෬": case "෭": case "෮": case "෯":
+      case "ෲ": case "ෳ":
       /* Diacritics */
-      case "\u0d81":
-      case "\u0d82":
-      case "\u0d83":
-      case "\u0dca":
-      case "\u0dcf":
-      case "\u0dd0":
-      case "\u0dd1":
-      case "\u0dd2":
-      case "\u0dd3":
-      case "\u0dd4":
-      case "\u0dd6":
-      case "\u0dd8":
-      case "\u0dd9":
-      case "\u0dda":
-      case "\u0ddb":
-      case "\u0ddc":
-      case "\u0ddd":
-      case "\u0dde":
-      case "\u0ddf":
+      case "\u0d81": case "\u0d82": case "\u0d83": case "\u0dca":
+      case "\u0dcf": case "\u0dd0": case "\u0dd1": case "\u0dd2":
+      case "\u0dd3": case "\u0dd4": case "\u0dd6": case "\u0dd8":
+      case "\u0dd9": case "\u0dda": case "\u0ddb": case "\u0ddc":
+      case "\u0ddd": case "\u0dde": case "\u0ddf":
       /* Archaic digits */
-      case "𑇡":
-      case "𑇢":
-      case "𑇣":
-      case "𑇤":
-      case "𑇥":
-      case "𑇦":
-      case "𑇧":
-      case "𑇨":
-      case "𑇩":
-      case "𑇪":
-      case "𑇫":
-      case "𑇬":
-      case "𑇭":
-      case "𑇮":
-      case "𑇯":
-      case "𑇰":
-      case "𑇱":
-      case "𑇲":
-      case "𑇳":
-      case "𑇴":
+      case "𑇡": case "𑇢": case "𑇣": case "𑇤": case "𑇥":
+      case "𑇦": case "𑇧": case "𑇨": case "𑇩": case "𑇪":
+      case "𑇫": case "𑇬": case "𑇭": case "𑇮": case "𑇯":
+      case "𑇰": case "𑇱": case "𑇲": case "𑇳": case "𑇴":
       /* Exta */
-      case "෴":
-      case "₨": // Rupee is not exclusively Sinhala sign
+      case "෴": case "₨":  // Rupee is not exclusively Sinhala sign
         return makeStringKey(name, FLAG_SMALLER_FONT);
 
       /* Internal keys */
@@ -910,7 +832,8 @@ public final class KeyValue implements Comparable<KeyValue>
   // Substitute for [assert], which has no effect on Android.
   private static void check(boolean b)
   {
-    if (!b) throw new RuntimeException("Assertion failure");
+    if (!b)
+      throw new RuntimeException("Assertion failure");
   }
 
   public static interface Describe

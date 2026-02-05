@@ -25,10 +25,8 @@ public final class Utils
     return s.substring(0, i).toUpperCase(Locale.getDefault()) + s.substring(i);
   }
 
-  /**
-   * Like [dialog.show()] but properly configure layout params when called
-   * from an IME. [token] is the input view's [getWindowToken()].
-   */
+  /** Like [dialog.show()] but properly configure layout params when called
+      from an IME. [token] is the input view's [getWindowToken()]. */
   public static void show_dialog_on_ime(AlertDialog dialog, IBinder token)
   {
     Window win = dialog.getWindow();

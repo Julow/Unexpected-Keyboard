@@ -15,14 +15,13 @@ public final class LayoutModifier
   static KeyboardData.Row number_row_symbols;
   static KeyboardData num_pad;
 
-  /**
-   * Update the layout according to the configuration.
-   * - Remove the switching key if it isn't needed
-   * - Remove "localized" keys from other locales (not in 'extra_keys')
-   * - Replace the action key to show the right label
-   * - Swap the enter and action keys
-   * - Add the optional numpad and number row
-   * - Add the extra keys
+  /** Update the layout according to the configuration.
+   *  - Remove the switching key if it isn't needed
+   *  - Remove "localized" keys from other locales (not in 'extra_keys')
+   *  - Replace the action key to show the right label
+   *  - Swap the enter and action keys
+   *  - Add the optional numpad and number row
+   *  - Add the extra keys
    */
   public static KeyboardData modify_layout(KeyboardData kw)
   {
@@ -46,8 +45,7 @@ public final class LayoutModifier
     }
     else if (globalConfig.add_number_row && !kw.embedded_number_row) // The numpad removes the number row
     {
-      added_number_row = modify_number_row(globalConfig.number_row_symbols ? number_row_symbols : number_row_no_symbols,
-          kw);
+      added_number_row = modify_number_row(globalConfig.number_row_symbols ? number_row_symbols : number_row_no_symbols, kw);
       remove_keys.addAll(added_number_row.getKeys(0).keySet());
     }
     // Add the bottom row before computing the extra keys
@@ -65,8 +63,7 @@ public final class LayoutModifier
       globalConfig.extra_keys_subtype.compute(extra_keys,
           new ExtraKeys.Query(kw.script, present));
     }
-    kw = kw.mapKeys(new KeyboardData.MapKeyValues()
-    {
+    kw = kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
         if (localized && !extra_keys.containsKey(key))
@@ -110,15 +107,12 @@ public final class LayoutModifier
     return kw;
   }
 
-  /**
-   * Handle the numpad layout. The [main_kw] is used to adapt the numpad to
-   * the main layout's script.
-   */
+  /** Handle the numpad layout. The [main_kw] is used to adapt the numpad to
+      the main layout's script. */
   public static KeyboardData modify_numpad(KeyboardData kw, KeyboardData main_kw)
   {
     final int map_digit = KeyModifier.modify_numpad_script(main_kw.numpad_script);
-    return kw.mapKeys(new KeyboardData.MapKeyValues()
-    {
+    return kw.mapKeys(new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
         switch (key.getKind())
@@ -137,17 +131,14 @@ public final class LayoutModifier
             if (prev_c != c) // Was inverted
               return key.withChar(c);
             return key; // Don't fallback into [modify_key]
-          default: break;
         }
         return modify_key(key);
       }
     });
   }
 
-  /**
-   * Modify the pin entry layout. [main_kw] is used to map the digits into the
-   * same script.
-   */
+  /** Modify the pin entry layout. [main_kw] is used to map the digits into the
+      same script. */
   public static KeyboardData modify_pinentry(KeyboardData kw, KeyboardData main_kw)
   {
     KeyboardData.MapKeyValues m = numpad_script_map(main_kw.numpad_script);
@@ -167,8 +158,7 @@ public final class LayoutModifier
     final int map_digit = KeyModifier.modify_numpad_script(numpad_script);
     if (map_digit == -1)
       return null;
-    return new KeyboardData.MapKeyValues()
-    {
+    return new KeyboardData.MapKeyValues() {
       public KeyValue apply(KeyValue key, boolean localized)
       {
         KeyValue modified = ComposeKey.apply(map_digit, key);
@@ -177,8 +167,7 @@ public final class LayoutModifier
     };
   }
 
-  /**
-   * Modify keys on the main layout and on the numpad according to the config.
+  /** Modify keys on the main layout and on the numpad according to the config.
    */
   static KeyValue modify_key(KeyValue orig)
   {
@@ -206,7 +195,6 @@ public final class LayoutModifier
           case SWITCH_VOICE_TYPING:
           case SWITCH_VOICE_TYPING_CHOOSER:
             return globalConfig.shouldOfferVoiceTyping ? orig : null;
-          default: break;
         }
         break;
       case Keyevent:
@@ -216,12 +204,8 @@ public final class LayoutModifier
             if (ec.swapEnterActionKey && ec.actionLabel != null)
               return KeyValue.makeActionKey(ec.actionLabel);
             break;
-          default: break;
         }
         break;
-      case Modifier:
-        break;
-      default: break;
     }
     return orig;
   }
@@ -230,20 +214,13 @@ public final class LayoutModifier
   {
     switch (c)
     {
-      case '7':
-        return '1';
-      case '8':
-        return '2';
-      case '9':
-        return '3';
-      case '1':
-        return '7';
-      case '2':
-        return '8';
-      case '3':
-        return '9';
-      default:
-        return c;
+      case '7': return '1';
+      case '8': return '2';
+      case '9': return '3';
+      case '1': return '7';
+      case '2': return '8';
+      case '3': return '9';
+      default: return c;
     }
   }
 

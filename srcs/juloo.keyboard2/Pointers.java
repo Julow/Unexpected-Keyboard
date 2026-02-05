@@ -42,9 +42,7 @@ public final class Pointers implements Handler.Callback
     return getModifiers(false);
   }
 
-  /**
-   * When [skip_latched] is true, don't take flags of latched keys into account.
-   */
+  /** When [skip_latched] is true, don't take flags of latched keys into account. */
   private Modifiers getModifiers(boolean skip_latched)
   {
     int n_ptrs = _ptrs.size();
@@ -96,15 +94,12 @@ public final class Pointers implements Handler.Callback
     _handler.onPointerFlagsChanged(false);
   }
 
-  /**
-   * Set whether a key is latched or locked by adding a "fake" pointer, a
-   * pointer that is not due to user interaction.
-   * This is used by auto-capitalisation.
-   * 
-   * When [lock] is true, [latched] control whether the modifier is locked or
-   * disabled.
-   * When [lock] is false, an existing locked pointer is not affected.
-   */
+  /** Set whether a key is latched or locked by adding a "fake" pointer, a
+      pointer that is not due to user interaction.
+      This is used by auto-capitalisation.
+
+      When [lock] is true, [latched] control whether the modifier is locked or disabled.
+      When [lock] is false, an existing locked pointer is not affected. */
   public void set_fake_pointer_state(KeyboardData.Key key, KeyValue kv,
       boolean latched, boolean lock)
   {
@@ -119,8 +114,7 @@ public final class Pointers implements Handler.Callback
       }
     }
     else if ((ptr.flags & FLAG_P_FAKE) == 0)
-    {
-    } // Key already latched but not by a fake ptr, do nothing.
+    {} // Key already latched but not by a fake ptr, do nothing.
     else if (lock)
     {
       // Acting on locked modifiers, replace the pointer each time.
@@ -130,8 +124,7 @@ public final class Pointers implements Handler.Callback
       _handler.onPointerFlagsChanged(false);
     }
     else if ((ptr.flags & FLAG_P_LOCKED) != 0)
-    {
-    } // Existing ptr is locked but [lock] is false, do not continue.
+    {} // Existing ptr is locked but [lock] is false, do not continue.
     else if (!latched)
     {
       // Key is latched by a fake ptr. Unlatch if requested.
@@ -222,7 +215,7 @@ public final class Pointers implements Handler.Callback
     _handler.onPointerDown(value, false);
   }
 
-  static final int[] DIRECTION_TO_INDEX = new int[] {
+  static final int[] DIRECTION_TO_INDEX = new int[]{
       7, 2, 2, 6, 6, 4, 4, 8, 8, 3, 3, 5, 5, 1, 1, 7
   };
 
@@ -247,7 +240,7 @@ public final class Pointers implements Handler.Callback
     KeyValue k;
     // [i] is [0, -1, +1, ..., -3, +3], scanning 43% of the circle's area,
     // centered on the initial swipe direction.
-    for (int i = 0; i > -4; i = (~i >> 31) - i)
+    for (int i = 0; i > -4; i = (~i>>31) - i)
     {
       int d = (direction + i + 16) % 16;
       // Don't make the difference between a key that doesn't exist and a key
@@ -279,10 +272,8 @@ public final class Pointers implements Handler.Callback
     }
 
     // The position in a IME windows is clampled to view.
-    // For a better up swipe behaviour, set the y position to a negative value when
-    // clamped.
-    if (y == 0.0)
-      y = -400;
+    // For a better up swipe behaviour, set the y position to a negative value when clamped.
+    if (y == 0.0) y = -400;
     float dx = x - ptr.downX;
     float dy = y - ptr.downY;
 
@@ -305,7 +296,7 @@ public final class Pointers implements Handler.Callback
       double a = Math.atan2(dy, dx) + Math.PI;
       // a is between 0 and 2pi, 0 is pointing to the left
       // add 12 to align 0 to the top
-      int direction = ((int) (a * 8 / Math.PI) + 12) % 16;
+      int direction = ((int)(a * 8 / Math.PI) + 12) % 16;
       if (ptr.gesture == null)
       { // Gesture starts
 
@@ -472,10 +463,8 @@ public final class Pointers implements Handler.Callback
 
   // Sliding
 
-  /**
-   * When sliding is ongoing, key events are handled by the [Slider] class.
-   * [kv] must be of kind [Slider].
-   */
+  /** When sliding is ongoing, key events are handled by the [Slider] class.
+      [kv] must be of kind [Slider]. */
   void startSliding(Pointer ptr, float x, float y, float dx, float dy, KeyValue kv)
   {
     int r = kv.getSliderRepeat();
@@ -515,16 +504,17 @@ public final class Pointers implements Handler.Callback
       case Swipe:
         return ptr.value;
       case Roundtrip:
-        return modify_key_with_extra_modifier(
+        return
+          modify_key_with_extra_modifier(
             ptr,
             getNearestKeyAtDirection(ptr, ptr.gesture.current_direction()),
             KeyValue.Modifier.GESTURE);
       case Circle:
-        return modify_key_with_extra_modifier(ptr, ptr.key.keys[0],
+        return
+          modify_key_with_extra_modifier(ptr, ptr.key.keys[0],
             KeyValue.Modifier.GESTURE);
       case Anticircle:
         return _handler.modifyKey(ptr.key.anticircle, ptr.modifiers);
-      default: break;
     }
     return ptr.value; // Unreachable
   }
@@ -532,7 +522,8 @@ public final class Pointers implements Handler.Callback
   KeyValue modify_key_with_extra_modifier(Pointer ptr, KeyValue kv,
       KeyValue.Modifier extra_mod)
   {
-    return _handler.modifyKey(kv,
+    return
+      _handler.modifyKey(kv,
         ptr.modifiers.with_extra_mod(KeyValue.makeInternalModifier(extra_mod)));
   }
 
@@ -551,10 +542,7 @@ public final class Pointers implements Handler.Callback
     public int pointerId;
     /** The Key pressed by this Pointer */
     public final KeyboardData.Key key;
-    /**
-     * Gesture state, see [Gesture]. [null] means the pointer has not moved out of
-     * the center region.
-     */
+    /** Gesture state, see [Gesture]. [null] means the pointer has not moved out of the center region. */
     public Gesture gesture;
     /** Selected value with [modifiers] applied. */
     public KeyValue value;
@@ -598,17 +586,13 @@ public final class Pointers implements Handler.Callback
     /** Coordinate of the last move. */
     float last_x;
     float last_y;
-    /**
-     * [System.currentTimeMillis()] at the time of the last move. Equals to
-     * [-1] when the sliding hasn't started yet.
-     */
+    /** [System.currentTimeMillis()] at the time of the last move. Equals to
+      [-1] when the sliding hasn't started yet. */
     long last_move_ms = -1;
     /** The property which is being slided. */
     KeyValue.Slider slider;
-    /**
-     * Direction of the initial movement, positive if sliding to the right and
-     * negative if sliding to the left.
-     */
+    /** Direction of the initial movement, positive if sliding to the right and
+        negative if sliding to the left. */
     int direction_x;
     int direction_y;
 
@@ -624,11 +608,9 @@ public final class Pointers implements Handler.Callback
     static final float SPEED_SMOOTHING = 0.7f;
     /** Avoid absurdly large values. */
     static final float SPEED_MAX = 4.f;
-    /**
-     * Make vertical sliders slower. The intention is to make the up/down
-     * slider slower, as we have less visibility and do smaller movements in
-     * that direction.
-     */
+    /** Make vertical sliders slower. The intention is to make the up/down
+        slider slower, as we have less visibility and do smaller movements in
+        that direction. */
     static final float SPEED_VERTICAL_MULT = 0.5f;
 
     public void onTouchMove(Pointer ptr, float x, float y)
@@ -648,7 +630,7 @@ public final class Pointers implements Handler.Callback
           / _config.slide_step_px;
       update_speed(travelled, x, y);
       // Send an event when [abs(d)] exceeds [1].
-      int d_ = (int) d;
+      int d_ = (int)d;
       if (d_ != 0)
       {
         d -= d_;
@@ -657,27 +639,23 @@ public final class Pointers implements Handler.Callback
       }
     }
 
-    /**
-     * Handle a sliding pointer going up. Latched modifiers are not
-     * cleared to allow easy adjustments to the cursors. The pointer is
-     * cancelled.
-     */
+    /** Handle a sliding pointer going up. Latched modifiers are not
+        cleared to allow easy adjustments to the cursors. The pointer is
+        cancelled. */
     public void onTouchUp(Pointer ptr)
     {
       removePtr(ptr);
       _handler.onPointerFlagsChanged(false);
     }
 
-    /**
-     * [speed] is computed from the elapsed time and distance traveled
-     * between two move events. Exponential smoothing is used to smooth out
-     * the noise. Sets [last_move_ms] and [last_pos].
-     */
+    /** [speed] is computed from the elapsed time and distance traveled
+        between two move events. Exponential smoothing is used to smooth out
+        the noise. Sets [last_move_ms] and [last_pos]. */
     void update_speed(float travelled, float x, float y)
     {
       long now = System.currentTimeMillis();
       float instant_speed = Math.min(SPEED_MAX,
-          travelled / (float) (now - last_move_ms) + 1.f);
+          travelled / (float)(now - last_move_ms) + 1.f);
       speed = speed + (instant_speed - speed) * SPEED_SMOOTHING;
       last_move_ms = now;
       last_x = x;
@@ -685,10 +663,8 @@ public final class Pointers implements Handler.Callback
     }
   }
 
-  /**
-   * Represent modifiers currently activated.
-   * Sorted in the order they should be evaluated.
-   */
+  /** Represent modifiers currently activated.
+      Sorted in the order they should be evaluated. */
   public static final class Modifiers
   {
     private final KeyValue[] _mods;
@@ -696,20 +672,11 @@ public final class Pointers implements Handler.Callback
 
     private Modifiers(KeyValue[] m, int s)
     {
-      _mods = m;
-      _size = s;
+      _mods = m; _size = s;
     }
 
-    public KeyValue get(int i)
-    {
-      return _mods[_size - 1 - i];
-    }
-
-    public int size()
-    {
-      return _size;
-    }
-
+    public KeyValue get(int i) { return _mods[_size - 1 - i]; }
+    public int size() { return _size; }
     public boolean has(KeyValue.Modifier m)
     {
       for (int i = 0; i < _size; i++)
@@ -720,7 +687,6 @@ public final class Pointers implements Handler.Callback
           case Modifier:
             if (kv.getModifier().equals(m))
               return true;
-          default: break;
         }
       }
       return false;
@@ -741,18 +707,15 @@ public final class Pointers implements Handler.Callback
     }
 
     @Override
-    public int hashCode()
-    {
-      return Arrays.hashCode(_mods);
-    }
-
+    public int hashCode() { return Arrays.hashCode(_mods); }
     @Override
     public boolean equals(Object obj)
     {
-      return Arrays.equals(_mods, ((Modifiers) obj)._mods);
+      return Arrays.equals(_mods, ((Modifiers)obj)._mods);
     }
 
-    public static final Modifiers EMPTY = new Modifiers(new KeyValue[0], 0);
+    public static final Modifiers EMPTY =
+      new Modifiers(new KeyValue[0], 0);
 
     protected static Modifiers ofArray(KeyValue[] mods, int size)
     {
@@ -806,10 +769,8 @@ public final class Pointers implements Handler.Callback
         return m;
       }
 
-      /**
-       * Advance to the next element if [i1] is not a valid element. The end
-       * is reached when [i1 = m1.size()].
-       */
+      /** Advance to the next element if [i1] is not a valid element. The end
+          is reached when [i1 = m1.size()].  */
       void advance()
       {
         while (i1 < m1.size())
@@ -839,17 +800,13 @@ public final class Pointers implements Handler.Callback
 
     public void openScratchpad();
 
-    /**
-     * A key is pressed. [getModifiers()] is uptodate. Might be called after a
-     * press or a swipe to a different value. Down events are not paired with
-     * up events.
-     */
+    /** A key is pressed. [getModifiers()] is uptodate. Might be called after a
+        press or a swipe to a different value. Down events are not paired with
+        up events. */
     public void onPointerDown(KeyValue k, boolean isSwipe);
 
-    /**
-     * Key is released. [k] is the key that was returned by
-     * [modifySelectedKey] or [modifySelectedKey].
-     */
+    /** Key is released. [k] is the key that was returned by
+        [modifySelectedKey] or [modifySelectedKey]. */
     public void onPointerUp(KeyValue k, Modifiers mods);
 
     /** Flags changed because latched or locked keys or cancelled pointers. */

@@ -34,11 +34,7 @@ public class SettingsActivity extends PreferenceActivity
     {
       Config.migrate(getPreferenceManager().getSharedPreferences());
     }
-    catch (Exception _e)
-    {
-      fallbackEncrypted();
-      return;
-    }
+    catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
 
     boolean foldableDevice = FoldStateTracker.isFoldableDevice(this);

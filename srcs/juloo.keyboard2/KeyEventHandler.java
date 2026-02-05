@@ -47,7 +47,8 @@ public final class KeyEventHandler
     InputConnection ic = _recv.getCurrentInputConnection();
     _autocap.started(conf, ic);
     _typedword.started(conf, ic);
-    _move_cursor_force_fallback = conf.editor_config.should_move_cursor_force_fallback;
+    _move_cursor_force_fallback =
+      conf.editor_config.should_move_cursor_force_fallback;
   }
 
   /** Selection has been updated. */
@@ -85,8 +86,7 @@ public final class KeyEventHandler
         // is called after the trigger distance have been travelled.
         handle_slider(key.getSlider(), key.getSliderRepeat(), true);
         break;
-      default:
-        break;
+      default: break;
     }
   }
 
@@ -100,37 +100,21 @@ public final class KeyEventHandler
     update_meta_state(mods);
     switch (key.getKind())
     {
-      case Char:
-        send_text(String.valueOf(key.getChar()));
-        break;
-      case String:
-        send_text(key.getString());
-        break;
+      case Char: send_text(String.valueOf(key.getChar())); break;
+      case String: send_text(key.getString()); break;
       case Event:
         if (key.getEvent() == KeyValue.Event.ACTION && "✎".equals(key.getString()))
         {
           _recv.openScratchpad();
           break;
         }
-        _recv.handle_event_key(key.getEvent());
-        break;
-      case Keyevent:
-        send_key_down_up(key.getKeyevent());
-        break;
-      case Modifier:
-        break;
-      case Editing:
-        handle_editing_key(key.getEditing());
-        break;
-      case Compose_pending:
-        _recv.set_compose_pending(true);
-        break;
-      case Slider:
-        handle_slider(key.getSlider(), key.getSliderRepeat(), false);
-        break;
-      case Macro:
-        evaluate_macro(key.getMacro());
-        break;
+        _recv.handle_event_key(key.getEvent()); break;
+      case Keyevent: send_key_down_up(key.getKeyevent()); break;
+      case Modifier: break;
+      case Editing: handle_editing_key(key.getEditing()); break;
+      case Compose_pending: _recv.set_compose_pending(true); break;
+      case Slider: handle_slider(key.getSlider(), key.getSliderRepeat(), false); break;
+      case Macro: evaluate_macro(key.getMacro()); break;
     }
     update_meta_state(old_mods);
   }
@@ -332,50 +316,20 @@ public final class KeyEventHandler
   {
     switch (ev)
     {
-      case COPY:
-        if (is_selection_not_empty())
-          send_context_menu_action(android.R.id.copy);
-        break;
-      case PASTE:
-        send_context_menu_action(android.R.id.paste);
-        break;
-      case CUT:
-        if (is_selection_not_empty())
-          send_context_menu_action(android.R.id.cut);
-        break;
-      case SELECT_ALL:
-        send_context_menu_action(android.R.id.selectAll);
-        break;
-      case SHARE:
-        send_context_menu_action(android.R.id.shareText);
-        break;
-      case PASTE_PLAIN:
-        send_context_menu_action(android.R.id.pasteAsPlainText);
-        break;
-      case UNDO:
-        send_context_menu_action(android.R.id.undo);
-        break;
-      case REDO:
-        send_context_menu_action(android.R.id.redo);
-        break;
-      case REPLACE:
-        send_context_menu_action(android.R.id.replaceText);
-        break;
-      case ASSIST:
-        send_context_menu_action(android.R.id.textAssist);
-        break;
-      case AUTOFILL:
-        send_context_menu_action(android.R.id.autofill);
-        break;
-      case DELETE_WORD:
-        send_key_down_up(KeyEvent.KEYCODE_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON);
-        break;
-      case FORWARD_DELETE_WORD:
-        send_key_down_up(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON);
-        break;
-      case SELECTION_CANCEL:
-        cancel_selection();
-        break;
+      case COPY: if(is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
+      case PASTE: send_context_menu_action(android.R.id.paste); break;
+      case CUT: if(is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
+      case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
+      case SHARE: send_context_menu_action(android.R.id.shareText); break;
+      case PASTE_PLAIN: send_context_menu_action(android.R.id.pasteAsPlainText); break;
+      case UNDO: send_context_menu_action(android.R.id.undo); break;
+      case REDO: send_context_menu_action(android.R.id.redo); break;
+      case REPLACE: send_context_menu_action(android.R.id.replaceText); break;
+      case ASSIST: send_context_menu_action(android.R.id.textAssist); break;
+      case AUTOFILL: send_context_menu_action(android.R.id.autofill); break;
+      case DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
+      case FORWARD_DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
+      case SELECTION_CANCEL: cancel_selection(); break;
     }
   }
 
@@ -398,24 +352,12 @@ public final class KeyEventHandler
   {
     switch (s)
     {
-      case Cursor_left:
-        move_cursor(-r);
-        break;
-      case Cursor_right:
-        move_cursor(r);
-        break;
-      case Cursor_up:
-        move_cursor_vertical(-r);
-        break;
-      case Cursor_down:
-        move_cursor_vertical(r);
-        break;
-      case Selection_cursor_left:
-        move_cursor_sel(r, true, key_down);
-        break;
-      case Selection_cursor_right:
-        move_cursor_sel(r, false, key_down);
-        break;
+      case Cursor_left: move_cursor(-r); break;
+      case Cursor_right: move_cursor(r); break;
+      case Cursor_up: move_cursor_vertical(-r); break;
+      case Cursor_down: move_cursor_vertical(r); break;
+      case Selection_cursor_left: move_cursor_sel(r, true, key_down); break;
+      case Selection_cursor_right: move_cursor_sel(r, false, key_down); break;
     }
   }
 
@@ -493,7 +435,8 @@ public final class KeyEventHandler
       example. */
   boolean can_set_selection(InputConnection conn)
   {
-    final int system_mods = KeyEvent.META_CTRL_ON | KeyEvent.META_ALT_ON | KeyEvent.META_META_ON;
+    final int system_mods =
+      KeyEvent.META_CTRL_ON | KeyEvent.META_ALT_ON | KeyEvent.META_META_ON;
     return !_move_cursor_force_fallback && (_meta_state & system_mods) == 0;
   }
 
@@ -566,8 +509,7 @@ public final class KeyEventHandler
       // handling is scheduled differently than the other edit functions.
       final int i_ = i;
       final Pointers.Modifiers mods_ = mods;
-      _recv.getHandler().postDelayed(new Runnable()
-      {
+      _recv.getHandler().postDelayed(new Runnable() {
         public void run()
         {
           evaluate_macro_loop(keys, i_, mods_, autocap_paused);
@@ -607,8 +549,7 @@ public final class KeyEventHandler
     if (conn == null)
       return;
     ExtractedText et = get_cursor_pos(conn);
-    if (et == null)
-      return;
+    if (et == null) return;
     final int curs = et.selectionStart;
     // Notify the receiver as Android's [onUpdateSelection] is not triggered.
     if (conn.setSelection(curs, curs))
@@ -618,8 +559,7 @@ public final class KeyEventHandler
   boolean is_selection_not_empty()
   {
     InputConnection conn = _recv.getCurrentInputConnection();
-    if (conn == null)
-      return false;
+    if (conn == null) return false;
     return (conn.getSelectedText(0) != null);
   }
 

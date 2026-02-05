@@ -6,11 +6,9 @@ import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-/**
- * A non-scrollable list view that can be embedded in a bigger ScrollView.
- * Credits to Dedaniya HirenKumar in
- * https://stackoverflow.com/questions/18813296/non-scrollable-listview-inside-scrollview
- */
+/** A non-scrollable list view that can be embedded in a bigger ScrollView.
+    Credits to Dedaniya HirenKumar in
+    https://stackoverflow.com/questions/18813296/non-scrollable-listview-inside-scrollview */
 public class NonScrollListView extends ListView
 {
   public NonScrollListView(Context context)
