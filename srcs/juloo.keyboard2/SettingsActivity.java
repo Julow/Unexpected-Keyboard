@@ -55,8 +55,8 @@ public class SettingsActivity extends PreferenceActivity
   protected void onStop()
   {
     DirectBootAwarePreferences
-        .copy_preferences_to_protected_storage(this,
-            getPreferenceManager().getSharedPreferences());
+      .copy_preferences_to_protected_storage(this,
+          getPreferenceManager().getSharedPreferences());
     super.onStop();
   }
 

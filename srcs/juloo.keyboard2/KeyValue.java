@@ -232,7 +232,7 @@ public final class KeyValue implements Comparable<KeyValue>
   }
 
   /** Defined only when [getKind() == Kind.Macro]. */
-  public KeyValue[] getMacro() 
+  public KeyValue[] getMacro()
   {
     return ((Macro)_payload).keys;
   }
@@ -500,8 +500,6 @@ public final class KeyValue implements Comparable<KeyValue>
       flags |= FLAG_SMALLER_FONT;
     return new KeyValue(new Macro(keys, symbol), Kind.Macro, 0, flags);
   }
-
-
 
   /** Make a modifier key for passing to [KeyModifier]. */
   public static KeyValue makeInternalModifier(Modifier mod)

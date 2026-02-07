@@ -9,7 +9,6 @@ public final class KeyModifier
   /** The optional modmap takes priority over modifiers usual behaviors. Set to
       [null] to disable. */
   private static Modmap _modmap = null;
-
   public static void set_modmap(Modmap mm)
   {
     _modmap = mm;
