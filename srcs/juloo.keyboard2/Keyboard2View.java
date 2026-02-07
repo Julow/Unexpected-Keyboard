@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Keyboard2View extends View
-    implements View.OnTouchListener, Pointers.IPointerEventHandler
+  implements View.OnTouchListener, Pointers.IPointerEventHandler
 {
   private KeyboardData _keyboard;
 
@@ -295,7 +295,7 @@ public class Keyboard2View extends View
     _subLabelSize = labelBaseSize * _config.sublabelTextSize;
     int height =
       (int)(_tc.row_height * _keyboard.keysHeight
-        + _config.marginTop + _marginBottom);
+          + _config.marginTop + _marginBottom);
     setMeasuredDimension(width, height);
   }
 
@@ -326,7 +326,7 @@ public class Keyboard2View extends View
       return wi;
     int insets_types =
       WindowInsets.Type.systemBars()
-        | WindowInsets.Type.displayCutout();
+      | WindowInsets.Type.displayCutout();
     Insets insets = wi.getInsets(insets_types);
     _insets_left = insets.left;
     _insets_right = insets.right;
@@ -336,15 +336,15 @@ public class Keyboard2View extends View
 
   /** Horizontal and vertical position of the 9 indexes. */
   static final Paint.Align[] LABEL_POSITION_H = new Paint.Align[]{
-      Paint.Align.CENTER, Paint.Align.LEFT, Paint.Align.RIGHT, Paint.Align.LEFT,
-      Paint.Align.RIGHT, Paint.Align.LEFT, Paint.Align.RIGHT,
-      Paint.Align.CENTER, Paint.Align.CENTER
+    Paint.Align.CENTER, Paint.Align.LEFT, Paint.Align.RIGHT, Paint.Align.LEFT,
+    Paint.Align.RIGHT, Paint.Align.LEFT, Paint.Align.RIGHT,
+    Paint.Align.CENTER, Paint.Align.CENTER
   };
 
   static final Vertical[] LABEL_POSITION_V = new Vertical[]{
-      Vertical.CENTER, Vertical.TOP, Vertical.TOP, Vertical.BOTTOM,
-      Vertical.BOTTOM, Vertical.CENTER, Vertical.CENTER, Vertical.TOP,
-      Vertical.BOTTOM
+    Vertical.CENTER, Vertical.TOP, Vertical.TOP, Vertical.BOTTOM,
+    Vertical.BOTTOM, Vertical.CENTER, Vertical.CENTER, Vertical.TOP,
+    Vertical.BOTTOM
   };
 
   @Override

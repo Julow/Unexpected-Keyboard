@@ -47,8 +47,6 @@ public final class ClipboardHistoryService
       _paste_callback.paste_from_clipboard_pane(clip);
   }
 
-
-
   /** The maximum size limits the amount of user data stored in memory but also
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
@@ -193,7 +191,5 @@ public final class ClipboardHistoryService
   public interface ClipboardPasteCallback
   {
     public void paste_from_clipboard_pane(String content);
-
-
   }
 }

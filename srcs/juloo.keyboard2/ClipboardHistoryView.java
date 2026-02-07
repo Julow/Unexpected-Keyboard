@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public final class ClipboardHistoryView extends NonScrollListView
-    implements ClipboardHistoryService.OnClipboardHistoryChange
+  implements ClipboardHistoryService.OnClipboardHistoryChange
 {
   List<String> _history;
   ClipboardHistoryService _service;
@@ -33,7 +33,7 @@ public final class ClipboardHistoryView extends NonScrollListView
     setAdapter(_adapter);
   }
 
-    /** The history entry at index [pos] is removed from the history and added to
+  /** The history entry at index [pos] is removed from the history and added to
       the list of pinned clipboards. */
   public void pin_entry(int pos)
   {
@@ -100,7 +100,7 @@ public final class ClipboardHistoryView extends NonScrollListView
       if (v == null)
         v = View.inflate(getContext(), R.layout.clipboard_history_entry, null);
       ((TextView)v.findViewById(R.id.clipboard_entry_text))
-          .setText(_history.get(pos));
+        .setText(_history.get(pos));
       v.findViewById(R.id.clipboard_entry_addpin).setOnClickListener(
           new View.OnClickListener()
           {

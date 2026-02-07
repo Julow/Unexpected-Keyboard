@@ -27,7 +27,7 @@ import java.util.Set;
 import juloo.keyboard2.prefs.LayoutsPreference;
 
 public class Keyboard2 extends InputMethodService
-    implements SharedPreferences.OnSharedPreferenceChangeListener
+  implements SharedPreferences.OnSharedPreferenceChangeListener
 {
   /** The view containing the keyboard and candidates view. */
   private ViewGroup _container_view;
@@ -315,10 +315,10 @@ public class Keyboard2 extends InputMethodService
     final View inputArea = window.findViewById(android.R.id.inputArea);
 
     updateLayoutHeightOf(
-        (View) inputArea.getParent(),
-        isFullscreenMode()
-            ? ViewGroup.LayoutParams.MATCH_PARENT
-            : ViewGroup.LayoutParams.WRAP_CONTENT);
+            (View) inputArea.getParent(),
+            isFullscreenMode()
+                    ? ViewGroup.LayoutParams.MATCH_PARENT
+                    : ViewGroup.LayoutParams.WRAP_CONTENT);
     updateLayoutGravityOf((View) inputArea.getParent(), Gravity.BOTTOM);
 
   }
@@ -469,7 +469,7 @@ public class Keyboard2 extends InputMethodService
 
         case SWITCH_VOICE_TYPING:
           if (!VoiceImeSwitcher.switch_to_voice_ime(Keyboard2.this, get_imm(),
-              Config.globalPrefs()))
+                Config.globalPrefs()))
             _config.shouldOfferVoiceTyping = false;
           break;
 

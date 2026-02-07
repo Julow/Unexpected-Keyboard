@@ -11,9 +11,9 @@ import android.view.inputmethod.InputConnection;
 import java.util.Iterator;
 
 public final class KeyEventHandler
-    implements Config.IKeyEventHandler,
-    ClipboardHistoryService.ClipboardPasteCallback,
-    CurrentlyTypedWord.Callback
+  implements Config.IKeyEventHandler,
+             ClipboardHistoryService.ClipboardPasteCallback,
+             CurrentlyTypedWord.Callback
 {
   IReceiver _recv;
   Autocapitalisation _autocap;
@@ -166,6 +166,16 @@ public final class KeyEventHandler
     _mods = mods;
   }
 
+  // private void handleDelKey(int before, int after)
+  // {
+  //  CharSequence selection = getCurrentInputConnection().getSelectedText(0);
+
+  //  if (selection != null && selection.length() > 0)
+  //  getCurrentInputConnection().commitText("", 1);
+  //  else
+  //  getCurrentInputConnection().deleteSurroundingText(before, after);
+  // }
+
   void sendMetaKey(int eventCode, int meta_flags, boolean down)
   {
     if (down)
@@ -224,8 +234,8 @@ public final class KeyEventHandler
     if (conn == null)
       return;
     conn.sendKeyEvent(new KeyEvent(1, 1, eventAction, eventCode, 0,
-        metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
-        KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
+          metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+          KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
     if (eventAction == KeyEvent.ACTION_UP)
     {
       _autocap.event_sent(eventCode, metaState);

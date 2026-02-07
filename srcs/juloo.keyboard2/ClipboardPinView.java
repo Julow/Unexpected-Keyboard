@@ -13,7 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.List;
 
-public final class ClipboardPinView extends NonScrollListView {
+public final class ClipboardPinView extends NonScrollListView
+{
   SnippetManager _manager;
   ClipboardPinEntriesAdapter _adapter;
   int _draggingPos = -1;
@@ -25,7 +26,8 @@ public final class ClipboardPinView extends NonScrollListView {
   View _headerAddFolder;
   View _headerFullScreen;
 
-  public ClipboardPinView(Context ctx, AttributeSet attrs) {
+  public ClipboardPinView(Context ctx, AttributeSet attrs)
+  {
     super(ctx, attrs);
     _manager = SnippetManager.get(ctx);
 
@@ -113,21 +115,24 @@ public final class ClipboardPinView extends NonScrollListView {
   }
 
   /** Pin a clipboard and persist the change. */
-  public void add_entry(String text) {
+  public void add_entry(String text)
+  {
     _manager.getCurrentFolder().addItem(new Snippet(text));
     _manager.save();
     update_view();
   }
 
   /** Remove the entry. */
-  public void remove_entry(int pos) {
+  public void remove_entry(int pos)
+  {
     _manager.getCurrentFolder().removeItem(pos);
     _manager.save();
     update_view();
   }
 
   /** Send the specified entry to the editor. */
-  public void paste_entry(final Snippet snippet) {
+  public void paste_entry(final Snippet snippet)
+  {
       ClipboardHistoryService.paste(snippet.content);
   }
 

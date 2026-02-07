@@ -53,7 +53,7 @@ public final class Pointers implements Handler.Callback
       Pointer p = _ptrs.get(i);
       if (p.value != null
           && !(skip_latched && p.hasFlagsAny(FLAG_P_LATCHED)
-              && (p.flags & FLAG_P_LOCKED) == 0))
+            && (p.flags & FLAG_P_LOCKED) == 0))
         mods[n_mods++] = p.value;
     }
     return Modifiers.ofArray(mods, n_mods);
@@ -216,7 +216,7 @@ public final class Pointers implements Handler.Callback
   }
 
   static final int[] DIRECTION_TO_INDEX = new int[]{
-      7, 2, 2, 6, 6, 4, 4, 8, 8, 3, 3, 5, 5, 1, 1, 7
+    7, 2, 2, 6, 6, 4, 4, 8, 8, 3, 3, 5, 5, 1, 1, 7
   };
 
   /**
@@ -506,13 +506,13 @@ public final class Pointers implements Handler.Callback
       case Roundtrip:
         return
           modify_key_with_extra_modifier(
-            ptr,
-            getNearestKeyAtDirection(ptr, ptr.gesture.current_direction()),
-            KeyValue.Modifier.GESTURE);
+              ptr,
+              getNearestKeyAtDirection(ptr, ptr.gesture.current_direction()),
+              KeyValue.Modifier.GESTURE);
       case Circle:
         return
           modify_key_with_extra_modifier(ptr, ptr.key.keys[0],
-            KeyValue.Modifier.GESTURE);
+              KeyValue.Modifier.GESTURE);
       case Anticircle:
         return _handler.modifyKey(ptr.key.anticircle, ptr.modifiers);
     }
@@ -627,7 +627,7 @@ public final class Pointers implements Handler.Callback
       }
       d += ((x - last_x) * speed * direction_x
           + (y - last_y) * speed * SPEED_VERTICAL_MULT * direction_y)
-          / _config.slide_step_px;
+        / _config.slide_step_px;
       update_speed(travelled, x, y);
       // Send an event when [abs(d)] exceeds [1].
       int d_ = (int)d;

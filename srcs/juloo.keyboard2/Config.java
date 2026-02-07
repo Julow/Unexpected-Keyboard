@@ -171,7 +171,7 @@ public final class Config
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
       _prefs.getFloat("character_size", 1.15f)
-        * characterSizeScale;
+      * characterSizeScale;
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
     switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);

@@ -242,7 +242,7 @@ public final class KeyValue implements Comparable<KeyValue>
   public KeyValue withChar(char c)
   {
     return new KeyValue(String.valueOf(c), Kind.Char, c,
-                        getFlags() & ~(FLAG_KEY_FONT | FLAG_SMALLER_FONT));
+        getFlags() & ~(FLAG_KEY_FONT | FLAG_SMALLER_FONT));
   }
 
   public KeyValue withKeyevent(int code)
@@ -317,7 +317,7 @@ public final class KeyValue implements Comparable<KeyValue>
   public String toString()
   {
     StringBuilder b = new StringBuilder()
-        .append(getKind().name()).append(":").append(getString());
+      .append(getKind().name()).append(":").append(getString());
     if (_payload instanceof Describe)
       b.append(":").append(((Describe)_payload).describe());
     return b.toString();
@@ -351,7 +351,7 @@ public final class KeyValue implements Comparable<KeyValue>
     if (symbol.length() > 1)
       flags |= FLAG_SMALLER_FONT;
     return new KeyValue(symbol, Kind.Modifier, m.ordinal(),
-                        FLAG_LATCH | FLAG_SPECIAL | FLAG_SECONDARY | flags);
+        FLAG_LATCH | FLAG_SPECIAL | FLAG_SECONDARY | flags);
   }
 
   private static KeyValue modifierKey(int symbol, Modifier m, int flags)
@@ -367,7 +367,7 @@ public final class KeyValue implements Comparable<KeyValue>
   private static KeyValue diacritic(String symbol, Modifier m)
   {
     return new KeyValue(symbol, Kind.Modifier, m.ordinal(),
-                        FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
+        FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
   }
 
   private static KeyValue eventKey(String symbol, Event e, int flags)
@@ -393,7 +393,7 @@ public final class KeyValue implements Comparable<KeyValue>
   private static KeyValue editingKey(String symbol, Editing action, int flags)
   {
     return new KeyValue(symbol, Kind.Editing, action.ordinal(),
-                        flags | FLAG_SPECIAL | FLAG_SECONDARY);
+        flags | FLAG_SPECIAL | FLAG_SECONDARY);
   }
 
   private static KeyValue editingKey(String symbol, Editing action)
@@ -412,7 +412,7 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     // Casting to a short then back to a int to preserve the sign bit.
     return new KeyValue(s, Kind.Slider, (short)repeatition & 0xFFFF,
-                        FLAG_SPECIAL | FLAG_SECONDARY | FLAG_KEY_FONT);
+        FLAG_SPECIAL | FLAG_SECONDARY | FLAG_KEY_FONT);
   }
 
   /** A key that do nothing but has a unique ID. */
@@ -424,7 +424,7 @@ public final class KeyValue implements Comparable<KeyValue>
   private static KeyValue placeholderKey(int symbol, Placeholder id, int flags)
   {
     return new KeyValue(String.valueOf((char)symbol), Kind.Placeholder,
-                        id.ordinal(), flags | FLAG_KEY_FONT);
+        id.ordinal(), flags | FLAG_KEY_FONT);
   }
 
   public static KeyValue makeStringKey(String str)
@@ -452,26 +452,26 @@ public final class KeyValue implements Comparable<KeyValue>
   public static KeyValue makeComposePending(String symbol, int state, int flags)
   {
     return new KeyValue(symbol, Kind.Compose_pending, state,
-                        flags | FLAG_LATCH);
+        flags | FLAG_LATCH);
   }
 
   public static KeyValue makeComposePending(int symbol, int state, int flags)
   {
     return makeComposePending(String.valueOf((char)symbol), state,
-                              flags | FLAG_KEY_FONT);
+        flags | FLAG_KEY_FONT);
   }
 
   public static KeyValue makeHangulInitial(String symbol, int initial_idx)
   {
     return new KeyValue(symbol, Kind.Hangul_initial, initial_idx * 588 + 44032,
-                        FLAG_LATCH);
+        FLAG_LATCH);
   }
 
   public static KeyValue makeHangulMedial(int precomposed, int medial_idx)
   {
     precomposed += medial_idx * 28;
     return new KeyValue(String.valueOf((char)precomposed), Kind.Hangul_medial,
-                        precomposed, FLAG_LATCH);
+        precomposed, FLAG_LATCH);
   }
 
   public static KeyValue makeHangulFinal(int precomposed, int final_idx)
