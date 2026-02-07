@@ -434,17 +434,10 @@ public final class KeyEventHandler
   void evaluate_macro_loop(final KeyValue[] keys, int i, Pointers.Modifiers mods, final boolean autocap_paused)
   {
     boolean should_delay = false;
-    long delay_ms = 1000 / 30;
-
     KeyValue kv = KeyModifier.modify(keys[i], mods);
     if (kv != null)
     {
-      if (kv.getKind() == KeyValue.Kind.Wait)
-      {
-        should_delay = true;
-        delay_ms = kv.getWaitDuration();
-      }
-      else if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
+      if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
       {
         // Non-special latchable keys clear latched modifiers
         if (!kv.hasFlagsAny(KeyValue.FLAG_SPECIAL))
@@ -456,8 +449,8 @@ public final class KeyEventHandler
         key_down(kv, false);
         key_up(kv, mods);
         mods = Pointers.Modifiers.EMPTY;
-        should_delay = wait_after_macro_key(kv);
       }
+      should_delay = wait_after_macro_key(kv);
     }
     i++;
     if (i >= keys.length) // Stop looping
@@ -476,7 +469,7 @@ public final class KeyEventHandler
         {
           evaluate_macro_loop(keys, i_, mods_, autocap_paused);
         }
-      }, delay_ms);
+      }, 1000/30);
     }
     else
       evaluate_macro_loop(keys, i, mods, autocap_paused);
@@ -489,7 +482,6 @@ public final class KeyEventHandler
       case Keyevent:
       case Editing:
       case Event:
-      case Wait:
         return true;
       case Slider:
         return _move_cursor_force_fallback;

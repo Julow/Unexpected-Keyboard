@@ -25,7 +25,7 @@ public final class KeyModifier
     for (int i = 0; i < n_mods; i++)
       r = modify(r, mods.get(i));
     /* Keys with an empty string are placeholder keys. */
-    if (r.getString().length() == 0 && r.getKind() != KeyValue.Kind.Wait)
+    if (r.getString().length() == 0)
       return null;
     return r;
   }

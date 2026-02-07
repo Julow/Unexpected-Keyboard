@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.CheckBox;
+
 import android.widget.EditText;
 
 public class SnippetCreationActivity extends Activity
