@@ -253,7 +253,7 @@ public class Keyboard2 extends InputMethodService
   private void refresh_config()
   {
     int prev_theme = _config.theme;
-    _config.refresh(getResources(), _foldStateTracker.isUnfolded(), _dictionaries);
+    _config.refresh(getResources(), _foldStateTracker.isUnfolded());
     refresh_current_dictionary();
     // Refreshing the theme config requires re-creating the views
     if (prev_theme != _config.theme)

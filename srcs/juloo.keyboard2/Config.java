@@ -104,7 +104,7 @@ public final class Config
     labelTextSize = 0.33f;
     sublabelTextSize = 0.22f;
     // from prefs
-    refresh(res, foldableUnfolded, dicts);
+    refresh(res, foldableUnfolded);
     // initialized later
     shouldOfferVoiceTyping = false;
     extra_keys_subtype = null;
@@ -113,7 +113,7 @@ public final class Config
   /*
    ** Reload prefs
    */
-  public void refresh(Resources res, Boolean foldableUnfolded, Dictionaries dicts)
+  public void refresh(Resources res, Boolean foldableUnfolded)
   {
     DisplayMetrics dm = res.getDisplayMetrics();
     orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
