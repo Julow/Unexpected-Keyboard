@@ -33,6 +33,9 @@
     <string name="pref_extra_keys_title">Add keys to the keyboard</string>
     <string name="pref_extra_keys_custom">Add custom keys</string>
     <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string>
+    <string name="pref_category_suggestions">Suggestions</string>
+    <string name="pref_suggestions_title">Suggestions</string>
+    <string name="pref_suggestions_summary">Enable word completion and spell checking</string>
     <string name="pref_category_typing">Typing</string>
     <string name="pref_swipe_dist_title">Swiping distance</string>
     <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
@@ -44,8 +47,10 @@
     <string name="pref_category_behavior">Behavior</string>
     <string name="pref_autocapitalisation_title">Automatic capitalisation</string>
     <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string>
-    <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string>
-    <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string>
+    <string name="pref_change_method_key_replacement_title">Switching between input methods</string>
+    <string name="pref_change_method_key_replacement_e_picker">Show the input method picker (long press)</string>
+    <string name="pref_change_method_key_replacement_e_prev">Switch to last used</string>
+    <string name="pref_change_method_key_replacement_e_next">Switch to the next in the list</string>
     <string name="pref_vibrate_custom">Custom vibration</string>
     <string name="pref_vibrate_duration_title">Vibration intensity</string>
     <string name="pref_number_entry_title">Layout when typing numbers, dates, and phone numbers</string>
@@ -103,6 +108,7 @@
     <string name="key_action_send">Send</string>
     <string name="launcher_button_imesettings">Enable keyboard</string>
     <string name="launcher_button_imepicker">Select keyboard</string>
+    <string name="launcher_button_dictionaries">Install dictionaries</string>
     <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string>
     <string name="launcher_sourcecode">This is a free and open source application. You can find the source code or report bugs on GitHub.</string>
     <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string>
@@ -150,6 +156,11 @@
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
     <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
     <string name="pref_dialog_edit_text">Custom definition</string>
+    <string name="dictionaries_from_internet">Download a dictionary from the Internet</string>
+    <string name="dictionaries_download_success">Dictionary installed</string>
+    <string name="dictionaries_download_failed">Download failed</string>
+    <string name="candidates_status_no_dict">No dictionary installed</string>
+    <string name="candidates_status_install">Install</string>
     <string name="pref_timestamp_format_title">Timestamp format</string>
     <string name="pref_timestamp_format_summary">Custom format for the timestamp button (e.g. yyyy-MM-dd)</string>
     <string name="pref_timestamp_custom_menu">Custom Format</string>
