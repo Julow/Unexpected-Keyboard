@@ -11,6 +11,8 @@
     <string name="pref_category_layout">Layout</string>
     <string name="pref_label_brightness">Adjust label brightness</string>
     <string name="pref_keyboard_opacity">Adjust keyboard background opacity</string>
+    <string name="pref_split_keyboard">Split landscape layout</string>
+    <string name="pref_split_gap_title">Split gap size</string>
     <string name="pref_key_opacity">Adjust key opacity</string>
     <string name="pref_key_activated_opacity">Adjust pressed key opacity</string>
     <string name="pref_layout_e_system">System settings</string>

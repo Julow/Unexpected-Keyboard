@@ -74,6 +74,8 @@ public final class Config
   public int circle_sensitivity;
   public boolean clipboard_history_enabled;
   public int clipboard_history_duration;
+  public boolean split_keyboard;
+  public float split_gap;
 
   // Dynamically set
   /** Configuration options implied by the connected editor. */
@@ -191,6 +193,8 @@ public final class Config
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
     clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
+    split_keyboard = _prefs.getBoolean("split_keyboard", false);
+    split_gap = get_float_pref(_prefs, "split_gap", 2.0f);
 
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
@@ -369,5 +373,21 @@ public final class Config
     if (name == null || name.equals("system"))
       return new LayoutsPreference.SystemLayout();
     return new LayoutsPreference.NamedLayout(name);
+  }
+
+  private static float get_float_pref(SharedPreferences prefs, String key, float def)
+  {
+    try
+    {
+      return Float.valueOf(prefs.getString(key, String.valueOf(def)));
+    }
+    catch (ClassCastException e)
+    {
+      return prefs.getFloat(key, def);
+    }
+    catch (NumberFormatException e)
+    {
+      return def;
+    }
   }
 }
