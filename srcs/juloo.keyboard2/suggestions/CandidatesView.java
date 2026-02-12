@@ -68,6 +68,9 @@ public class CandidatesView extends LinearLayout
     }
   }
 
+  /** Used by the complete key. */
+  public String[] get_candidates() { return _items; }
+
   public void refresh_config(Config config)
   {
     set_candidates(Suggestions.NO_SUGGESTIONS);
