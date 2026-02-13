@@ -110,6 +110,7 @@ public final class KeyEventHandler
       case Compose_pending: _recv.set_compose_pending(true); break;
       case Slider: handle_slider(key.getSlider(), key.getSliderRepeat(), false); break;
       case Macro: evaluate_macro(key.getMacro()); break;
+      case Stateful: handle_stateful(key.getStateful()); break;
     }
     update_meta_state(old_mods);
   }
@@ -307,6 +308,18 @@ public final class KeyEventHandler
       case Cursor_down: move_cursor_vertical(r); break;
       case Selection_cursor_left: move_cursor_sel(r, true, key_down); break;
       case Selection_cursor_right: move_cursor_sel(r, false, key_down); break;
+    }
+  }
+
+  void handle_stateful(KeyValue.Stateful st)
+  {
+    switch (st)
+    {
+      case Complete_first:
+      case Complete_second:
+      case Complete_third:
+        suggestion_entered(st.toString());
+        break;
     }
   }
 

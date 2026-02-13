@@ -124,7 +124,9 @@ public class Keyboard2 extends InputMethodService
     Config.initGlobalConfig(prefs, getResources(),
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
-    _keyeventhandler = new KeyEventHandler(this.new Receiver(), _config);
+    Receiver recvr = this.new Receiver();
+    _keyeventhandler = new KeyEventHandler(recvr, _config);
+    KeyValue.Stateful._handler = recvr;
     _config.handler = _keyeventhandler;
     prefs.registerOnSharedPreferenceChangeListener(this);
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
@@ -365,7 +367,8 @@ public class Keyboard2 extends InputMethodService
   }
 
   /** Not static */
-  public class Receiver implements KeyEventHandler.IReceiver
+  public class Receiver implements KeyEventHandler.IReceiver,
+         KeyValue.Stateful.Symbol_provider
   {
     public void handle_event_key(KeyValue.Event ev)
     {
@@ -482,6 +485,23 @@ public class Keyboard2 extends InputMethodService
     public void set_suggestions(List<String> suggestions)
     {
       _candidates_view.set_candidates(suggestions);
+    }
+
+    String get_candidate(int i)
+    {
+      String c = _candidates_view.get_candidates()[i];
+      return (c == null) ? "" : c;
+    }
+
+    public String provide_stateful_key_symbol(KeyValue.Stateful q)
+    {
+      switch (q)
+      {
+        case Complete_first: return get_candidate(0);
+        case Complete_second: return get_candidate(1);
+        case Complete_third: return get_candidate(2);
+      }
+      return "";
     }
   }
 
