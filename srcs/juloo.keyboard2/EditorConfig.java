@@ -9,10 +9,12 @@ import juloo.keyboard2.suggestions.CandidatesView;
 
 public final class EditorConfig
 {
-  public String actionLabel = null; // Might be [null]
-  /** Action performed by the Action key. Only when [actionLabel != null]. */
+  /** Key that replaces the "ACTION" key. Might be [null] to remove that key. */
+  public KeyValue action_key_replacement = null;
+  /** Key that replaces the "ENTER" key. Might be [null] to not replace the
+      enter key. */
+  public KeyValue enter_key_replacement = null;
   public int actionId;
-  public boolean swapEnterActionKey = false; // Swap the "enter" and "action" keys
   /** Whether selection mode turns on automatically when text is selected. */
   public boolean selection_mode_enabled = true;
   /** Whether the numeric layout should be shown by default. */
@@ -46,18 +48,29 @@ public final class EditorConfig
     /* Selection mode.
        Editors with [TYPE_NULL] are for example Termux and Emacs. */
     selection_mode_enabled = inputType != InputType.TYPE_NULL;
+    enter_key_replacement = null;
     /* Action key. Looks at [info.actionLabel] first. */
     if (info.actionLabel != null)
     {
-      actionLabel = info.actionLabel.toString();
       actionId = info.actionId;
-      swapEnterActionKey = false;
+      action_key_replacement =
+        KeyValue.makeActionKey(info.actionLabel.toString());
     }
     else
     {
       actionId = options & EditorInfo.IME_MASK_ACTION;
-      actionLabel = actionLabel_of_imeAction(actionId, res);
-      swapEnterActionKey = (options & EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0;
+      String label = actionLabel_of_imeAction(actionId, res);
+      action_key_replacement = null;
+      if (label != null)
+      {
+        action_key_replacement = KeyValue.makeActionKey(label);
+        // Swap the enter and action keys
+        if ((options & EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0)
+        {
+          enter_key_replacement = action_key_replacement;
+          action_key_replacement = KeyValue.ENTER;
+        }
+      }
     }
     /* Numeric layout */
     switch (inputType)

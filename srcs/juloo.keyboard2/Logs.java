@@ -23,9 +23,6 @@ public final class Logs
     info.dump(_debug_logs, "");
     if (info.extras != null)
       _debug_logs.println("extras: "+info.extras.toString());
-    _debug_logs.println("swapEnterActionKey: "
-        +conf.editor_config.swapEnterActionKey);
-    _debug_logs.println("actionLabel: "+conf.editor_config.actionLabel);
   }
 
   public static void debug_config_migration(int from_version, int to_version)
