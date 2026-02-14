@@ -81,6 +81,7 @@ public final class KeyValue implements Comparable<KeyValue>
     DELETE_WORD,
     FORWARD_DELETE_WORD,
     SELECTION_CANCEL,
+    SPACE_BAR,
   }
 
   public static enum Placeholder
@@ -401,7 +402,12 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private static KeyValue editingKey(int symbol, Editing action)
   {
-    return editingKey(String.valueOf((char)symbol), action, FLAG_KEY_FONT);
+    return editingKey(symbol, action, 0);
+  }
+
+  private static KeyValue editingKey(int symbol, Editing action, int flags)
+  {
+    return editingKey(String.valueOf((char)symbol), action, flags | FLAG_KEY_FONT);
   }
 
   /** A key that slides the property specified by [s] by the amount specified
@@ -680,7 +686,7 @@ public final class KeyValue implements Comparable<KeyValue>
       /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
       case "\\n": return charKey("\\n", '\n', 0); // Send the newline character
-      case "space": return charKey(0xE00D, ' ', FLAG_SMALLER_FONT | FLAG_GREYED);
+      case "space": return editingKey(0xE00D, Editing.SPACE_BAR, FLAG_SMALLER_FONT | FLAG_GREYED);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
       case "nnbsp": return charKey("\u2423", '\u202F', FLAG_SMALLER_FONT);
 

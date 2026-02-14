@@ -10,10 +10,14 @@ public final class ComposeKey
   {
     switch (kv.getKind())
     {
-      case Char:
-        return apply(state, kv.getChar());
-      case String:
-        return apply(state, kv.getString());
+      case Char: return apply(state, kv.getChar());
+      case String: return apply(state, kv.getString());
+      case Editing:
+        switch (kv.getEditing())
+        {
+          case SPACE_BAR: return apply(state, ' ');
+        }
+        break;
     }
     return null;
   }
