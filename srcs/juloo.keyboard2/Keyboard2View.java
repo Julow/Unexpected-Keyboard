@@ -27,11 +27,9 @@ public class Keyboard2View extends View
 
   /** The key holding the shift key is used to set shift state from
       autocapitalisation. */
-  private KeyValue _shift_kv;
   private KeyboardData.Key _shift_key;
 
   /** Used to add fake pointers. */
-  private KeyValue _compose_kv;
   private KeyboardData.Key _compose_key;
 
   private Pointers _pointers;
@@ -109,10 +107,8 @@ public class Keyboard2View extends View
   public void setKeyboard(KeyboardData kw)
   {
     _keyboard = kw;
-    _shift_kv = KeyValue.getKeyByName("shift");
-    _shift_key = _keyboard.findKeyWithValue(_shift_kv);
-    _compose_kv = KeyValue.getKeyByName("compose");
-    _compose_key = _keyboard.findKeyWithValue(_compose_kv);
+    _shift_key = _keyboard.findKeyWithValue(KeyValue.SHIFT);
+    _compose_key = _keyboard.findKeyWithValue(KeyValue.COMPOSE);
     KeyModifier.set_modmap(_keyboard.modmap);
     reset();
   }
@@ -136,13 +132,13 @@ public class Keyboard2View extends View
   /** Called by auto-capitalisation. */
   public void set_shift_state(boolean latched, boolean lock)
   {
-    set_fake_ptr_latched(_shift_key, _shift_kv, latched, lock);
+    set_fake_ptr_latched(_shift_key, KeyValue.SHIFT, latched, lock);
   }
 
   /** Called from [KeyEventHandler]. */
   public void set_compose_pending(boolean pending)
   {
-    set_fake_ptr_latched(_compose_key, _compose_kv, pending, false);
+    set_fake_ptr_latched(_compose_key, KeyValue.COMPOSE, pending, false);
   }
 
   /** Called from [Keybard2.onUpdateSelection].  */
@@ -150,7 +146,7 @@ public class Keyboard2View extends View
   {
     if (_config.editor_config.selection_mode_enabled)
       set_fake_ptr_latched(KeyboardData.Key.EMPTY,
-          KeyValue.getKeyByName("selection_mode"), selection_state, true);
+          KeyValue.SELECTION_MODE, selection_state, true);
   }
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)

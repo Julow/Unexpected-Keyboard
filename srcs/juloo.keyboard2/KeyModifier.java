@@ -109,9 +109,9 @@ public final class KeyModifier
         {
           case CHANGE_METHOD_PREV:
           case CHANGE_METHOD_NEXT:
-            return KeyValue.getKeyByName("change_method");
+            return KeyValue.CHANGE_METHOD;
           case SWITCH_VOICE_TYPING:
-            return KeyValue.getKeyByName("voice_typing_chooser");
+            return KeyValue.VOICE_TYPING_CHOOSER;
         }
         break;
     }
@@ -150,7 +150,7 @@ public final class KeyModifier
         return res;
       /* Tapping compose again exits the pending sequence. */
       case Compose_pending:
-        return KeyValue.getKeyByName("compose_cancel");
+        return KeyValue.COMPOSE_CANCEL;
       /* These keys are not greyed. */
       case Event:
       case Modifier:
