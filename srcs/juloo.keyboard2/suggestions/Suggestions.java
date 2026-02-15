@@ -13,6 +13,10 @@ public final class Suggestions
   Callback _callback;
   Config _config;
 
+  /** The suggestion displayed at the center of the candidates view and entered
+      by the space bar. */
+  public String best_suggestion = null;
+
   public Suggestions(Callback c, Config conf)
   {
     _callback = c;
@@ -24,7 +28,7 @@ public final class Suggestions
     Cdict dict = _config.current_dictionary;
     if (word.length() < 2 || dict == null)
     {
-      _callback.set_suggestions(NO_SUGGESTIONS);
+      set_suggestions(NO_SUGGESTIONS);
     }
     else
     {
@@ -42,8 +46,14 @@ public final class Suggestions
         if (dist.length > j && i < 3)
           suggestions[i++] = dict.word(dist[j]);
       }
-      _callback.set_suggestions(Arrays.asList(suggestions));
+      set_suggestions(Arrays.asList(suggestions));
     }
+  }
+
+  void set_suggestions(List<String> ws)
+  {
+    _callback.set_suggestions(ws);
+    best_suggestion = (ws.size() > 0) ? ws.get(0) : null;
   }
 
   static final List<String> NO_SUGGESTIONS = Arrays.asList();

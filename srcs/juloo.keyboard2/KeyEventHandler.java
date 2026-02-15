@@ -279,7 +279,7 @@ public final class KeyEventHandler
       case DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
       case FORWARD_DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
       case SELECTION_CANCEL: cancel_selection(); break;
-      case SPACE_BAR: send_text(" "); break;
+      case SPACE_BAR: handle_space_bar(); break;
     }
   }
 
@@ -503,6 +503,18 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null) return false;
     return (conn.getSelectedText(0) != null);
+  }
+
+  void handle_space_bar()
+  {
+    if (_suggestions.best_suggestion != null && !is_selection_not_empty())
+    {
+      suggestion_entered(_suggestions.best_suggestion);
+    }
+    else
+    {
+      send_text(" ");
+    }
   }
 
   public static interface IReceiver extends Suggestions.Callback
