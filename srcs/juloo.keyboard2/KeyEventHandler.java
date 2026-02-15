@@ -30,6 +30,8 @@ public final class KeyEventHandler
   /** Whether to force sending arrow keys to move the cursor when
       [setSelection] could be used instead. */
   boolean _move_cursor_force_fallback = false;
+  /** Whether the space bar automatically enters the best suggestion. */
+  boolean _space_bar_auto_complete = false;
 
   public KeyEventHandler(IReceiver recv, Config config)
   {
@@ -50,6 +52,7 @@ public final class KeyEventHandler
     _typedword.started(conf, ic);
     _move_cursor_force_fallback =
       conf.editor_config.should_move_cursor_force_fallback;
+    _space_bar_auto_complete = conf.space_bar_auto_complete;
     clear_space_bar_state();
   }
 
@@ -522,7 +525,8 @@ public final class KeyEventHandler
 
   void handle_space_bar()
   {
-    if (_suggestions.best_suggestion != null && !is_selection_not_empty())
+    if (_space_bar_auto_complete && _suggestions.best_suggestion != null
+        && !is_selection_not_empty())
     {
       suggestion_entered(_suggestions.best_suggestion);
     }
