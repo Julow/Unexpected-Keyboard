@@ -82,6 +82,7 @@ public final class KeyValue implements Comparable<KeyValue>
     FORWARD_DELETE_WORD,
     SELECTION_CANCEL,
     SPACE_BAR,
+    BACKSPACE,
   }
 
   public static enum Placeholder
@@ -664,7 +665,6 @@ public final class KeyValue implements Comparable<KeyValue>
       case "page_down": return keyeventKey(0xE003, KeyEvent.KEYCODE_PAGE_DOWN, 0);
       case "home": return keyeventKey(0xE00B, KeyEvent.KEYCODE_MOVE_HOME, FLAG_SMALLER_FONT);
       case "end": return keyeventKey(0xE00C, KeyEvent.KEYCODE_MOVE_END, FLAG_SMALLER_FONT);
-      case "backspace": return keyeventKey(0xE011, KeyEvent.KEYCODE_DEL, 0);
       case "delete": return keyeventKey(0xE010, KeyEvent.KEYCODE_FORWARD_DEL, 0);
       case "insert": return keyeventKey("Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
       case "f1": return keyeventKey("F1", KeyEvent.KEYCODE_F1, 0);
@@ -735,6 +735,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "halfspace": return charKey(0xE018, '\u200C', 0); // zero-width non joiner
 
       /* Editing keys */
+      case "backspace": return editingKey(0xE011, Editing.BACKSPACE, 0);
       case "copy": return editingKey(0xE030, Editing.COPY);
       case "paste": return editingKey(0xE032, Editing.PASTE);
       case "cut": return editingKey(0xE031, Editing.CUT);
