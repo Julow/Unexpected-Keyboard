@@ -50,6 +50,7 @@ public final class KeyEventHandler
     _typedword.started(conf, ic);
     _move_cursor_force_fallback =
       conf.editor_config.should_move_cursor_force_fallback;
+    clear_space_bar_state();
   }
 
   /** Selection has been updated. */
@@ -123,7 +124,10 @@ public final class KeyEventHandler
   @Override
   public void suggestion_entered(String text)
   {
-    replace_text_before_cursor(_typedword.get().length(), text + " ");
+    String old = _typedword.get();
+    replace_text_before_cursor(old.length(), text + " ");
+    last_replaced_word = old;
+    last_replacement_word_len = text.length() + 1;
   }
 
   @Override
@@ -227,6 +231,7 @@ public final class KeyEventHandler
     {
       _autocap.event_sent(eventCode, metaState);
       _typedword.event_sent(eventCode, metaState);
+      clear_space_bar_state();
     }
   }
 
@@ -238,6 +243,7 @@ public final class KeyEventHandler
     _autocap.typed(text);
     _typedword.typed(text);
     conn.commitText(text, 1);
+    clear_space_bar_state();
   }
 
   void replace_text_before_cursor(int remove_length, String new_text)
@@ -280,7 +286,7 @@ public final class KeyEventHandler
       case FORWARD_DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
       case SELECTION_CANCEL: cancel_selection(); break;
       case SPACE_BAR: handle_space_bar(); break;
-      case BACKSPACE: send_key_down_up(KeyEvent.KEYCODE_DEL); break;
+      case BACKSPACE: handle_backspace(); break;
     }
   }
 
@@ -506,6 +512,14 @@ public final class KeyEventHandler
     return (conn.getSelectedText(0) != null);
   }
 
+  /** The word that was replaced by a suggestion when the last action was to
+      enter a suggestion (with the space bar or the candidates view) or [null]
+      otherwise. */
+  String last_replaced_word = null;
+  /** Length of the text before the cursor that should be replaced by
+      backspace. */
+  int last_replacement_word_len = 0;
+
   void handle_space_bar()
   {
     if (_suggestions.best_suggestion != null && !is_selection_not_empty())
@@ -516,6 +530,24 @@ public final class KeyEventHandler
     {
       send_text(" ");
     }
+  }
+
+  void handle_backspace()
+  {
+    if (last_replaced_word != null)
+    {
+      replace_text_before_cursor(last_replacement_word_len, last_replaced_word);
+      last_replaced_word = null;
+    }
+    else
+    {
+      send_key_down_up(KeyEvent.KEYCODE_DEL);
+    }
+  }
+
+  void clear_space_bar_state()
+  {
+    last_replaced_word = null;
   }
 
   public static interface IReceiver extends Suggestions.Callback
