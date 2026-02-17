@@ -11,6 +11,8 @@
     <ListPreference android:key="number_row" android:title="@string/pref_number_row_title" android:summary="%s" android:defaultValue="no_number_row" android:entries="@array/pref_show_number_row_entries" android:entryValues="@array/pref_show_number_row_values"/>
     <ListPreference android:key="show_numpad" android:title="@string/pref_show_numpad_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_show_numpad_entries" android:entryValues="@array/pref_show_numpad_values"/>
     <ListPreference android:key="numpad_layout" android:title="@string/pref_numpad_layout" android:summary="%s" android:defaultValue="high_first" android:entries="@array/pref_numpad_layout_entries" android:entryValues="@array/pref_numpad_layout_values"/>
+    <CheckBoxPreference android:key="split_keyboard" android:title="@string/pref_split_keyboard" android:defaultValue="false"/>
+    <juloo.keyboard2.prefs.SlideBarPreference android:key="split_gap" android:title="@string/pref_split_gap_title" android:summary="%s" android:defaultValue="1.5" min="0" max="10" android:dependency="split_keyboard"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_suggestions">
     <CheckBoxPreference android:key="suggestions" android:title="@string/pref_suggestions_title" android:summary="@string/pref_suggestions_summary" android:defaultValue="true"/>

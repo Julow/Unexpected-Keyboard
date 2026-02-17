@@ -51,6 +51,8 @@ public class Keyboard2View extends View
   private int _insets_left = 0;
   private int _insets_right = 0;
   private int _insets_bottom = 0;
+  private float _splitGap = 0;
+  private boolean _isSplit = false;
 
   private Theme _theme;
   private Theme.Computed _tc;
@@ -247,10 +249,45 @@ public class Keyboard2View extends View
     float x = _marginLeft;
     if (row == null || tx < x)
       return null;
-    for (KeyboardData.Key key : row.keys)
+    int middleIndex = _isSplit ? row.keys.size() / 2 : -1;
+    boolean isOdd = row.keys.size() % 2 != 0;
+    for (int i = 0; i < row.keys.size(); i++)
     {
-      float xLeft = x + key.shift * _keyWidth;
-      float xRight = xLeft + key.width * _keyWidth;
+      KeyboardData.Key key = row.keys.get(i);
+      float kShift = key.shift * _keyWidth;
+      float kWidth = key.width * _keyWidth;
+
+      if (_isSplit && i == middleIndex)
+      {
+        if (isOdd)
+        {
+          // Split key (Space)
+          float halfWidth = kWidth / 2f;
+          float xLeftStart = x + kShift;
+          float xLeftEnd = xLeftStart + halfWidth;
+
+          // Check left half
+          if (tx >= xLeftStart && tx < xLeftEnd)
+            return key;
+
+          // Check right half
+          float xRightStart = xLeftEnd + _splitGap * _keyWidth;
+          float xRightEnd = xRightStart + halfWidth;
+          if (tx >= xRightStart && tx < xRightEnd)
+             return key;
+             
+          x = xRightEnd;
+          continue;
+        }
+        else
+        {
+          // Simple gap
+          x += _splitGap * _keyWidth;
+        }
+      }
+      
+      float xLeft = x + kShift;
+      float xRight = xLeft + kWidth;
       if (tx < xLeft)
         return null;
       if (tx < xRight)
@@ -275,7 +312,17 @@ public class Keyboard2View extends View
     _marginRight = Math.max(_config.horizontal_margin, _insets_right);
     _marginBottom = _config.margin_bottom + _insets_bottom;
     width += _insets_left + _insets_right;
-    _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
+
+    _isSplit = _config.split_keyboard && _config.wide_screen;
+    _splitGap = _isSplit ? _config.split_gap : 0f;
+
+    if (_isSplit) {
+        // Optimization: Use available space for gap instead of margins
+        _marginLeft = 0;
+        _marginRight = 0;
+    }
+
+    _keyWidth = (width - _marginLeft - _marginRight) / (_keyboard.keysWidth + _splitGap);
     _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
     // Compute the size of labels based on the width or the height of keys. The
     // margin around keys is taken into account. Keys normal aspect ratio is
@@ -350,8 +397,53 @@ public class Keyboard2View extends View
       y += row.shift * _tc.row_height;
       float x = _marginLeft + _tc.margin_left;
       float keyH = row.height * _tc.row_height - _tc.vertical_margin;
-      for (KeyboardData.Key k : row.keys)
+      int middleIndex = _isSplit ? row.keys.size() / 2 : -1;
+      boolean isOdd = row.keys.size() % 2 != 0;
+      
+      for (int i = 0; i < row.keys.size(); i++)
       {
+        KeyboardData.Key k = row.keys.get(i);
+        
+        if (_isSplit && i == middleIndex) {
+            if (isOdd) {
+                // Split key
+                float halfWidth = (_keyWidth * k.width - _tc.horizontal_margin) / 2f + _tc.horizontal_margin / 2f; // Visual half width
+                // Wait, logic above in detection used raw width. Visual width subtracts margin.
+                // Let's stick to keyW logic.
+                // keyW = _keyWidth * k.width - _tc.horizontal_margin;
+                // If we split it, we want (keyW / 2) visual width? Or (TotalW / 2 - margin)?
+                // Let's effectively split the RAW key width.
+                
+                float rawKeyW = _keyWidth * k.width;
+                float rawHalf = rawKeyW / 2f;
+                
+                // Left Half
+                x += k.shift * _keyWidth;
+                boolean isKeyDown = _pointers.isKeyDown(k);
+                Theme.Computed.Key tc_key = isKeyDown ? _tc.key_activated : _tc.key;
+
+                float keyW = rawHalf - _tc.horizontal_margin;
+                drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
+                if (k.keys[0] != null) drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
+                // Draw sublabels? Probably on one side? Let's skip sublabels for space for now or draw on both?
+                // Space usually doesn't have sublabels.
+                
+                // Gap
+                x += rawHalf;
+                x += _splitGap * _keyWidth;
+                
+                // Right Half
+                drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
+                // Draw label again?
+                if (k.keys[0] != null) drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
+                
+                x += rawHalf;
+                continue;
+            } else {
+                 x += _splitGap * _keyWidth;
+            }
+        }
+
         x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _tc.horizontal_margin;
         boolean isKeyDown = _pointers.isKeyDown(k);
@@ -359,10 +451,10 @@ public class Keyboard2View extends View
         drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
         if (k.keys[0] != null)
           drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
-        for (int i = 1; i < 9; i++)
+        for (int j = 1; j < 9; j++)
         {
-          if (k.keys[i] != null)
-            drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown, tc_key);
+          if (k.keys[j] != null)
+            drawSubLabel(canvas, k.keys[j], x, y, keyW, keyH, j, isKeyDown, tc_key);
         }
         drawIndication(canvas, k, x, y, keyW, keyH, _tc);
         x += _keyWidth * k.width;
