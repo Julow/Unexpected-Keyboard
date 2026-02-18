@@ -6,7 +6,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import java.util.List;
 
-/** Keep track of the word being typed. */
+/** Keep track of the word being typed. This also tracks whether the selection
+    is empty. */
 public final class CurrentlyTypedWord
 {
   InputConnection _ic = null;
@@ -38,6 +39,11 @@ public final class CurrentlyTypedWord
   public String get()
   {
     return _w.toString();
+  }
+
+  public boolean is_selection_not_empty()
+  {
+    return _has_selection;
   }
 
   public void started(Config conf, InputConnection ic)

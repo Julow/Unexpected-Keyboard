@@ -274,9 +274,9 @@ public final class KeyEventHandler
   {
     switch (ev)
     {
-      case COPY: if(is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
+      case COPY: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
       case PASTE: send_context_menu_action(android.R.id.paste); break;
-      case CUT: if(is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
+      case CUT: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
       case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
       case SHARE: send_context_menu_action(android.R.id.shareText); break;
       case PASTE_PLAIN: send_context_menu_action(android.R.id.pasteAsPlainText); break;
@@ -508,13 +508,6 @@ public final class KeyEventHandler
       _recv.selection_state_changed(false);
   }
 
-  boolean is_selection_not_empty()
-  {
-    InputConnection conn = _recv.getCurrentInputConnection();
-    if (conn == null) return false;
-    return (conn.getSelectedText(0) != null);
-  }
-
   /** The word that was replaced by a suggestion when the last action was to
       enter a suggestion (with the space bar or the candidates view) or [null]
       otherwise. */
@@ -526,7 +519,7 @@ public final class KeyEventHandler
   void handle_space_bar()
   {
     if (_space_bar_auto_complete && _suggestions.best_suggestion != null
-        && !is_selection_not_empty())
+        && !_typedword.is_selection_not_empty())
     {
       suggestion_entered(_suggestions.best_suggestion);
     }
