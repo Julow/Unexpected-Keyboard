@@ -65,6 +65,7 @@ public final class Config
   public boolean borderConfig;
   public int circle_sensitivity;
   public boolean clipboard_history_enabled;
+  public boolean space_bar_auto_complete;
 
   // Dynamically set
   /** Configuration options implied by the connected editor. */
@@ -183,6 +184,7 @@ public final class Config
     current_layout_unfolded_landscape = _prefs.getInt("current_layout_unfolded_landscape", 0);
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
+    space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
   }
 
   public int get_current_layout()
