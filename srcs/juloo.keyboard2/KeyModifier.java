@@ -178,15 +178,26 @@ public final class KeyModifier
 
   private static KeyValue apply_dead_char(KeyValue k, char dead_char)
   {
+    KeyValue r = null;
     switch (k.getKind())
     {
-      case Char:
-        char c = k.getChar();
-        char modified = (char)KeyCharacterMap.getDeadChar(dead_char, c);
-        if (modified != 0 && modified != c)
-          return KeyValue.makeStringKey(String.valueOf(modified));
+      case Char: r = apply_dead_char(k.getChar(), dead_char); break;
+      case Editing:
+        switch (k.getEditing())
+        {
+          case SPACE_BAR: r = apply_dead_char(' ', dead_char); break;
+        }
+        break;
     }
-    return k;
+    return (r == null) ? k : r;
+  }
+
+  private static KeyValue apply_dead_char(char c, char dead_char)
+  {
+    char modified = (char)KeyCharacterMap.getDeadChar(dead_char, c);
+    if (modified != 0 && modified != c)
+      return KeyValue.makeStringKey(String.valueOf(modified));
+    return null;
   }
 
   private static KeyValue apply_combining_char(KeyValue k, String combining)
@@ -294,6 +305,7 @@ public final class KeyModifier
     {
       case UNDO: return "redo";
       case PASTE: return "pasteAsPlainText";
+      case SPACE_BAR: return "nbsp";
       default: return null;
     }
   }
@@ -313,65 +325,76 @@ public final class KeyModifier
 
   private static KeyValue turn_into_keyevent(KeyValue k)
   {
-    if (k.getKind() != KeyValue.Kind.Char)
-      return k;
     int e;
-    switch (k.getChar())
+    switch (k.getKind())
     {
-      case 'a': e = KeyEvent.KEYCODE_A; break;
-      case 'b': e = KeyEvent.KEYCODE_B; break;
-      case 'c': e = KeyEvent.KEYCODE_C; break;
-      case 'd': e = KeyEvent.KEYCODE_D; break;
-      case 'e': e = KeyEvent.KEYCODE_E; break;
-      case 'f': e = KeyEvent.KEYCODE_F; break;
-      case 'g': e = KeyEvent.KEYCODE_G; break;
-      case 'h': e = KeyEvent.KEYCODE_H; break;
-      case 'i': e = KeyEvent.KEYCODE_I; break;
-      case 'j': e = KeyEvent.KEYCODE_J; break;
-      case 'k': e = KeyEvent.KEYCODE_K; break;
-      case 'l': e = KeyEvent.KEYCODE_L; break;
-      case 'm': e = KeyEvent.KEYCODE_M; break;
-      case 'n': e = KeyEvent.KEYCODE_N; break;
-      case 'o': e = KeyEvent.KEYCODE_O; break;
-      case 'p': e = KeyEvent.KEYCODE_P; break;
-      case 'q': e = KeyEvent.KEYCODE_Q; break;
-      case 'r': e = KeyEvent.KEYCODE_R; break;
-      case 's': e = KeyEvent.KEYCODE_S; break;
-      case 't': e = KeyEvent.KEYCODE_T; break;
-      case 'u': e = KeyEvent.KEYCODE_U; break;
-      case 'v': e = KeyEvent.KEYCODE_V; break;
-      case 'w': e = KeyEvent.KEYCODE_W; break;
-      case 'x': e = KeyEvent.KEYCODE_X; break;
-      case 'y': e = KeyEvent.KEYCODE_Y; break;
-      case 'z': e = KeyEvent.KEYCODE_Z; break;
-      case '0': e = KeyEvent.KEYCODE_0; break;
-      case '1': e = KeyEvent.KEYCODE_1; break;
-      case '2': e = KeyEvent.KEYCODE_2; break;
-      case '3': e = KeyEvent.KEYCODE_3; break;
-      case '4': e = KeyEvent.KEYCODE_4; break;
-      case '5': e = KeyEvent.KEYCODE_5; break;
-      case '6': e = KeyEvent.KEYCODE_6; break;
-      case '7': e = KeyEvent.KEYCODE_7; break;
-      case '8': e = KeyEvent.KEYCODE_8; break;
-      case '9': e = KeyEvent.KEYCODE_9; break;
-      case '`': e = KeyEvent.KEYCODE_GRAVE; break;
-      case '-': e = KeyEvent.KEYCODE_MINUS; break;
-      case '=': e = KeyEvent.KEYCODE_EQUALS; break;
-      case '[': e = KeyEvent.KEYCODE_LEFT_BRACKET; break;
-      case ']': e = KeyEvent.KEYCODE_RIGHT_BRACKET; break;
-      case '\\': e = KeyEvent.KEYCODE_BACKSLASH; break;
-      case ';': e = KeyEvent.KEYCODE_SEMICOLON; break;
-      case '\'': e = KeyEvent.KEYCODE_APOSTROPHE; break;
-      case '/': e = KeyEvent.KEYCODE_SLASH; break;
-      case '@': e = KeyEvent.KEYCODE_AT; break;
-      case '+': e = KeyEvent.KEYCODE_PLUS; break;
-      case ',': e = KeyEvent.KEYCODE_COMMA; break;
-      case '.': e = KeyEvent.KEYCODE_PERIOD; break;
-      case '*': e = KeyEvent.KEYCODE_STAR; break;
-      case '#': e = KeyEvent.KEYCODE_POUND; break;
-      case '(': e = KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN; break;
-      case ')': e = KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN; break;
-      case ' ': e = KeyEvent.KEYCODE_SPACE; break;
+      case Char:
+        switch (k.getChar())
+        {
+          case 'a': e = KeyEvent.KEYCODE_A; break;
+          case 'b': e = KeyEvent.KEYCODE_B; break;
+          case 'c': e = KeyEvent.KEYCODE_C; break;
+          case 'd': e = KeyEvent.KEYCODE_D; break;
+          case 'e': e = KeyEvent.KEYCODE_E; break;
+          case 'f': e = KeyEvent.KEYCODE_F; break;
+          case 'g': e = KeyEvent.KEYCODE_G; break;
+          case 'h': e = KeyEvent.KEYCODE_H; break;
+          case 'i': e = KeyEvent.KEYCODE_I; break;
+          case 'j': e = KeyEvent.KEYCODE_J; break;
+          case 'k': e = KeyEvent.KEYCODE_K; break;
+          case 'l': e = KeyEvent.KEYCODE_L; break;
+          case 'm': e = KeyEvent.KEYCODE_M; break;
+          case 'n': e = KeyEvent.KEYCODE_N; break;
+          case 'o': e = KeyEvent.KEYCODE_O; break;
+          case 'p': e = KeyEvent.KEYCODE_P; break;
+          case 'q': e = KeyEvent.KEYCODE_Q; break;
+          case 'r': e = KeyEvent.KEYCODE_R; break;
+          case 's': e = KeyEvent.KEYCODE_S; break;
+          case 't': e = KeyEvent.KEYCODE_T; break;
+          case 'u': e = KeyEvent.KEYCODE_U; break;
+          case 'v': e = KeyEvent.KEYCODE_V; break;
+          case 'w': e = KeyEvent.KEYCODE_W; break;
+          case 'x': e = KeyEvent.KEYCODE_X; break;
+          case 'y': e = KeyEvent.KEYCODE_Y; break;
+          case 'z': e = KeyEvent.KEYCODE_Z; break;
+          case '0': e = KeyEvent.KEYCODE_0; break;
+          case '1': e = KeyEvent.KEYCODE_1; break;
+          case '2': e = KeyEvent.KEYCODE_2; break;
+          case '3': e = KeyEvent.KEYCODE_3; break;
+          case '4': e = KeyEvent.KEYCODE_4; break;
+          case '5': e = KeyEvent.KEYCODE_5; break;
+          case '6': e = KeyEvent.KEYCODE_6; break;
+          case '7': e = KeyEvent.KEYCODE_7; break;
+          case '8': e = KeyEvent.KEYCODE_8; break;
+          case '9': e = KeyEvent.KEYCODE_9; break;
+          case '`': e = KeyEvent.KEYCODE_GRAVE; break;
+          case '-': e = KeyEvent.KEYCODE_MINUS; break;
+          case '=': e = KeyEvent.KEYCODE_EQUALS; break;
+          case '[': e = KeyEvent.KEYCODE_LEFT_BRACKET; break;
+          case ']': e = KeyEvent.KEYCODE_RIGHT_BRACKET; break;
+          case '\\': e = KeyEvent.KEYCODE_BACKSLASH; break;
+          case ';': e = KeyEvent.KEYCODE_SEMICOLON; break;
+          case '\'': e = KeyEvent.KEYCODE_APOSTROPHE; break;
+          case '/': e = KeyEvent.KEYCODE_SLASH; break;
+          case '@': e = KeyEvent.KEYCODE_AT; break;
+          case '+': e = KeyEvent.KEYCODE_PLUS; break;
+          case ',': e = KeyEvent.KEYCODE_COMMA; break;
+          case '.': e = KeyEvent.KEYCODE_PERIOD; break;
+          case '*': e = KeyEvent.KEYCODE_STAR; break;
+          case '#': e = KeyEvent.KEYCODE_POUND; break;
+          case '(': e = KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN; break;
+          case ')': e = KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN; break;
+          case ' ': e = KeyEvent.KEYCODE_SPACE; break;
+          default: return k;
+        }
+        break;
+      case Editing:
+        switch (k.getEditing())
+        {
+          case SPACE_BAR: e = KeyEvent.KEYCODE_SPACE; break;
+          default: return k;
+        }
+        break;
       default: return k;
     }
     return k.withKeyevent(e);
@@ -409,6 +432,12 @@ public final class KeyModifier
           case KeyEvent.KEYCODE_FORWARD_DEL: name = "forward_delete_word"; break;
         }
         break;
+      case Editing:
+        switch (k.getEditing())
+        {
+          case BACKSPACE: name = "delete_word"; break;
+        }
+        break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
@@ -435,6 +464,12 @@ public final class KeyModifier
         switch (k.getKeyevent())
         {
           case KeyEvent.KEYCODE_ESCAPE: name = "selection_cancel"; break;
+        }
+        break;
+      case Editing:
+        switch (k.getEditing())
+        {
+          case SPACE_BAR: name = "selection_cancel"; break;
         }
         break;
     }
