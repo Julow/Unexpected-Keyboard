@@ -281,10 +281,10 @@ public final class Config
   {
     switch (prefs.getString("change_method_key_replacement", "prev"))
     {
-      case "prev": return KeyValue.getKeyByName("change_method_prev");
-      case "next": return KeyValue.getKeyByName("change_method_next");
+      case "prev": return KeyValue.CHANGE_METHOD_PREV;
+      case "next": return KeyValue.CHANGE_METHOD_NEXT;
       default:
-      case "picker": return KeyValue.getKeyByName("change_method");
+      case "picker": return KeyValue.CHANGE_METHOD;
     }
   }
 

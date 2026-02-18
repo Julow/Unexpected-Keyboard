@@ -31,7 +31,7 @@ public final class LayoutModifier
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     // Make sure the config key is accessible to avoid being locked in a custom
     // layout.
-    extra_keys.put(KeyValue.getKeyByName("config"), KeyboardData.PreferredPos.ANYWHERE);
+    extra_keys.put(KeyValue.CONFIG, KeyboardData.PreferredPos.ANYWHERE);
     extra_keys.putAll(globalConfig.extra_keys_param);
     extra_keys.putAll(globalConfig.extra_keys_custom);
     // Number row and numpads are added after the modification pass to allow
@@ -158,12 +158,7 @@ public final class LayoutModifier
           case CHANGE_METHOD_PICKER:
             return globalConfig.change_method_key_replacement;
           case ACTION:
-            String action_label = ec.actionLabel;
-            if (action_label == null)
-              return null; // Remove the action key
-            if (ec.swapEnterActionKey)
-              return KeyValue.getKeyByName("enter");
-            return KeyValue.makeActionKey(action_label);
+            return ec.action_key_replacement;
           case SWITCH_FORWARD:
             return (globalConfig.layouts.size() > 1) ? orig : null;
           case SWITCH_BACKWARD:
@@ -177,8 +172,8 @@ public final class LayoutModifier
         switch (orig.getKeyevent())
         {
           case KeyEvent.KEYCODE_ENTER:
-            if (ec.swapEnterActionKey && ec.actionLabel != null)
-              return KeyValue.makeActionKey(ec.actionLabel);
+            if (ec.enter_key_replacement != null)
+              return ec.enter_key_replacement;
             break;
         }
         break;
