@@ -432,6 +432,12 @@ public final class KeyModifier
           case KeyEvent.KEYCODE_FORWARD_DEL: name = "forward_delete_word"; break;
         }
         break;
+      case Editing:
+        switch (k.getEditing())
+        {
+          case BACKSPACE: name = "delete_word"; break;
+        }
+        break;
     }
     return (name == null) ? k : KeyValue.getKeyByName(name);
   }
