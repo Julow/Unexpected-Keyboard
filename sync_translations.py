@@ -24,6 +24,7 @@ VALUE_DIR_TO_METADATA = {
         "nl": "nl-NL",
         "pl": "pl-PL",
         "pt": "pt-BR",
+        "sh": "sh",
         "ro": "ro",
         "ru": "ru-RU",
         "tr": "tr-TR",
