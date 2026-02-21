@@ -393,17 +393,7 @@ public final class KeyValue implements Comparable<KeyValue>
   private static KeyValue editingKey(String symbol, Editing action, int flags)
   {
     return new KeyValue(symbol, Kind.Editing, action.ordinal(),
-        flags | FLAG_SPECIAL | FLAG_SECONDARY);
-  }
-
-  private static KeyValue editingKey(String symbol, Editing action)
-  {
-    return editingKey(symbol, action, FLAG_SMALLER_FONT);
-  }
-
-  private static KeyValue editingKey(int symbol, Editing action)
-  {
-    return editingKey(symbol, action, 0);
+        flags | FLAG_SECONDARY);
   }
 
   private static KeyValue editingKey(int symbol, Editing action, int flags)
@@ -736,27 +726,27 @@ public final class KeyValue implements Comparable<KeyValue>
 
       /* Editing keys */
       case "backspace": return editingKey(0xE011, Editing.BACKSPACE, 0);
-      case "copy": return editingKey(0xE030, Editing.COPY);
-      case "paste": return editingKey(0xE032, Editing.PASTE);
-      case "cut": return editingKey(0xE031, Editing.CUT);
-      case "selectAll": return editingKey(0xE033, Editing.SELECT_ALL);
-      case "shareText": return editingKey(0xE034, Editing.SHARE);
-      case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
-      case "undo": return editingKey(0xE036, Editing.UNDO);
-      case "redo": return editingKey(0xE037, Editing.REDO);
-      case "delete_word": return editingKey(0xE01B, Editing.DELETE_WORD);
-      case "forward_delete_word": return editingKey(0xE01C, Editing.FORWARD_DELETE_WORD);
+      case "copy": return editingKey(0xE030, Editing.COPY, FLAG_SPECIAL);
+      case "paste": return editingKey(0xE032, Editing.PASTE, 0);
+      case "cut": return editingKey(0xE031, Editing.CUT, FLAG_SPECIAL);
+      case "selectAll": return editingKey(0xE033, Editing.SELECT_ALL, FLAG_SPECIAL);
+      case "shareText": return editingKey(0xE034, Editing.SHARE, FLAG_SPECIAL);
+      case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN, 0);
+      case "undo": return editingKey(0xE036, Editing.UNDO, 0);
+      case "redo": return editingKey(0xE037, Editing.REDO, 0);
+      case "delete_word": return editingKey(0xE01B, Editing.DELETE_WORD, 0);
+      case "forward_delete_word": return editingKey(0xE01C, Editing.FORWARD_DELETE_WORD, 0);
       case "cursor_left": return sliderKey(Slider.Cursor_left, 1);
       case "cursor_right": return sliderKey(Slider.Cursor_right, 1);
       case "cursor_up": return sliderKey(Slider.Cursor_up, 1);
       case "cursor_down": return sliderKey(Slider.Cursor_down, 1);
-      case "selection_cancel": return editingKey("Esc", Editing.SELECTION_CANCEL, FLAG_SMALLER_FONT);
+      case "selection_cancel": return editingKey("Esc", Editing.SELECTION_CANCEL, FLAG_SMALLER_FONT | FLAG_SPECIAL);
       case "selection_cursor_left": return sliderKey(Slider.Selection_cursor_left, -1); // Move the left side of the selection
       case "selection_cursor_right": return sliderKey(Slider.Selection_cursor_right, 1);
       // These keys are not used
-      case "replaceText": return editingKey("repl", Editing.REPLACE);
-      case "textAssist": return editingKey(0xE038, Editing.ASSIST);
-      case "autofill": return editingKey("auto", Editing.AUTOFILL);
+      case "replaceText": return editingKey("repl", Editing.REPLACE, FLAG_SPECIAL | FLAG_SMALLER_FONT);
+      case "textAssist": return editingKey(0xE038, Editing.ASSIST, FLAG_SPECIAL);
+      case "autofill": return editingKey("auto", Editing.AUTOFILL, FLAG_SPECIAL | FLAG_SMALLER_FONT);
 
       /* The compose key */
       case "compose": return COMPOSE;
