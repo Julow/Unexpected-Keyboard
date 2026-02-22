@@ -32,22 +32,46 @@ public final class Suggestions
     }
     else
     {
-      Cdict.Result r = dict.find(word);
-      String[] suggestions = new String[3];
-      int i = 0;
-      if (r.found)
-        suggestions[i++] = word;
-      int[] suffixes = dict.suffixes(r, 3);
-      int[] dist = dict.distance(word, 1, 3);
-      for (int j = 0; j < 3 && i < 3; j++)
-      {
-        if (suffixes.length > j)
-          suggestions[i++] = dict.word(suffixes[j]);
-        if (dist.length > j && i < 3)
-          suggestions[i++] = dict.word(dist[j]);
-      }
-      set_suggestions(Arrays.asList(suggestions));
+      String[] dst = new String[3];
+      query_suggestions(dict, word, dst, 3);
+      set_suggestions(Arrays.asList(dst));
     }
+  }
+
+  int query_suggestions(Cdict dict, String word, String[] dst, int max_count)
+  {
+    Cdict.Result r = dict.find(word);
+    int i = 0;
+    if (r.found)
+      dst[i++] = word;
+    boolean first_char_upper = Character.isUpperCase(word.charAt(0));
+    // Do the dictionary query in lower case and re-apply the upper case after
+    if (first_char_upper)
+    {
+      r = dict.find(word.toLowerCase());
+      if (r.found)
+        dst[i++] = word;
+    }
+    int[] suffixes = dict.suffixes(r, max_count);
+    // Disable distance search for small words
+    int[] dist = (word.length() < 3 || i + 1 >= max_count) ? NO_RESULTS :
+      dict.distance(word, 1, max_count);
+    for (int j = 0; j < max_count && i < max_count; j++)
+    {
+      if (suffixes.length > j)
+        dst[i++] = dict.word(suffixes[j]);
+      if (dist.length > j && i < max_count)
+        dst[i++] = dict.word(dist[j]);
+    }
+    if (first_char_upper)
+      capitalize_results(dst);
+    return i;
+  }
+
+  void capitalize_results(String[] rs)
+  {
+    for (int i = 0; i < rs.length; i++)
+      rs[i] = rs[i].substring(0, 1).toUpperCase() + rs[i].substring(1);
   }
 
   void set_suggestions(List<String> ws)
@@ -57,6 +81,7 @@ public final class Suggestions
   }
 
   static final List<String> NO_SUGGESTIONS = Arrays.asList();
+  static final int[] NO_RESULTS = new int[0];
 
   public static interface Callback
   {
