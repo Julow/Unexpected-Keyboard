@@ -46,6 +46,7 @@
     <item>latn_azerty_fr</item>
     <item>latn_bepo_fr</item>
     <item>latn_bone</item>
+    <item>latn_dvorak2</item>
     <item>latn_neo2</item>
     <item>latn_qwerty_apl</item>
     <item>latn_qwerty_az</item>
@@ -138,6 +139,7 @@
     <item>AZERTY (Français)</item>
     <item>BEPO (Français)</item>
     <item>Bone</item>
+    <item>Dvorak</item>
     <item>Neo 2</item>
     <item>QWERTY (APL)</item>
     <item>QWERTY (Azərbaycanca)</item>
@@ -230,6 +232,7 @@
     <item>@xml/latn_azerty_fr</item>
     <item>@xml/latn_bepo_fr</item>
     <item>@xml/latn_bone</item>
+    <item>@xml/latn_dvorak2</item>
     <item>@xml/latn_neo2</item>
     <item>@xml/latn_qwerty_apl</item>
     <item>@xml/latn_qwerty_az</item>
