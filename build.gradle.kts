@@ -92,6 +92,14 @@ android {
   }
 }
 
+
+// This raises an error with an informative message instead of the confusing
+// ndk-build errors that occur when submodules are not initialized.
+gradle.projectsEvaluated {
+  if (!file("vendor/cdict/java").exists())
+    throw GradleException("Git submodules not initialized. Run 'git submodule update --init'")
+}
+
 val buildKeyboardFont by tasks.registering(Exec::class) {
   val `in` = projectDir.resolve("srcs/special_font")
   val out = layout.projectDirectory.file("assets/special_font.ttf")

@@ -11,6 +11,12 @@ Android Studio is not required. The build dependencies are:
 
 Python 3 is required to update generated files but not to build the app.
 
+Make sure the Git submodules are initialized and point to the right revision:
+
+```sh
+git submodule update --init
+```
+
 For Android Studio users, no more setup is needed.
 
 For Nix users, the right environment can be obtained with `nix-shell ./shell.nix`.
