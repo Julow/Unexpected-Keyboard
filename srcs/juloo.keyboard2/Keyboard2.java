@@ -351,6 +351,15 @@ public class Keyboard2 extends InputMethodService
     return false;
   }
 
+  @Override
+  public boolean onEvaluateInputViewShown()
+  {
+    super.onEvaluateInputViewShown();
+    // Return true regardless of the super call result to fix the keyboard not
+    // being visible on Android 16
+    return true;
+  }
+
   /** Called from [onClick] attributes. */
   public void launch_dictionaries_activity(View v)
   {
