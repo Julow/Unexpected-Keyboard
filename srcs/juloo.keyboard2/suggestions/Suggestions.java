@@ -71,7 +71,8 @@ public final class Suggestions
   void capitalize_results(String[] rs)
   {
     for (int i = 0; i < rs.length; i++)
-      rs[i] = rs[i].substring(0, 1).toUpperCase() + rs[i].substring(1);
+      if (rs[i] != null)
+        rs[i] = rs[i].substring(0, 1).toUpperCase() + rs[i].substring(1);
   }
 
   void set_suggestions(List<String> ws)
