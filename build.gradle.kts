@@ -14,12 +14,12 @@ dependencies {
 
 android {
   namespace = "juloo.keyboard2"
-  compileSdkVersion = "android-35"
+  compileSdkVersion = "android-36"
 
   defaultConfig {
     applicationId = "juloo.keyboard2"
     minSdk = 21
-    targetSdk { version = release(35) }
+    targetSdk { version = release(36) }
     versionCode = 50
     versionName = "1.32.1"
   }
