@@ -413,8 +413,9 @@ public class Keyboard2View extends View
       {
         if ((flags & Pointers.FLAG_P_LOCKED) != 0)
           return _theme.lockedColor;
+        return _theme.activatedColor;
       }
-      return _theme.activatedColor;
+      return _theme.pressedColor;
     }
     if (k.hasFlagsAny(KeyValue.FLAG_SECONDARY | KeyValue.FLAG_GREYED))
     {
