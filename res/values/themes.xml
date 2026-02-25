@@ -9,6 +9,7 @@
     <attr name="colorKeyActivated" format="color"/>
     <!-- Label colors -->
     <attr name="colorLabel" format="color"/>
+    <attr name="colorLabelPressed" format="color"/> <!-- defaults to colorLabel -->
     <attr name="colorLabelActivated" format="color"/>
     <attr name="colorLabelLocked" format="color"/>
     <attr name="secondaryDimming" format="float"/>
@@ -282,6 +283,7 @@
     <item name="colorKeyActivated">#ffffff</item>
     <item name="colorLabel">#ffffff</item>
     <item name="colorLabelActivated">?colorKey</item>
+    <item name="colorLabelPressed">?colorKey</item>
     <item name="colorLabelLocked">#f5060b</item>
     <item name="colorSubLabel">?colorLabel</item>
     <item name="keyBorderWidth">1dp</item>
