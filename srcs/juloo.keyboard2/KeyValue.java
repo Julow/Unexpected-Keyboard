@@ -847,18 +847,24 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public static enum Slider implements Describe
   {
-    Cursor_left(0xE008),
-    Cursor_right(0xE006),
-    Cursor_up(0xE005),
-    Cursor_down(0xE007),
-    Selection_cursor_left(0xE008),
-    Selection_cursor_right(0xE006);
+    Cursor_left(0xE008, false),
+    Cursor_right(0xE006, false),
+    Cursor_up(0xE005, true),
+    Cursor_down(0xE007, true),
+    Selection_cursor_left(0xE008, false),
+    Selection_cursor_right(0xE006, false);
 
     final String symbol;
+    final boolean vertical;
 
-    Slider(int symbol_)
+    Slider(int symbol_, boolean vertical)
     {
       symbol = String.valueOf((char)symbol_);
+      this.vertical = vertical;
+    }
+    
+    public boolean isVertical() {
+      return vertical;
     }
 
     @Override
