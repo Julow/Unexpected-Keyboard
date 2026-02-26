@@ -98,6 +98,9 @@ public class CustomLayoutEditDialog
 
     /** A mutable Rect object that is used during onDraw. */
     Rect _clip_bounds = new Rect();
+    
+    /** The currently-set left padding amount */
+    int _prev_padding = Integer.MIN_VALUE;
 
     @Override
     protected void onDraw(Canvas canvas)
@@ -105,12 +108,16 @@ public class CustomLayoutEditDialog
       float digit_width = _ln_paint.measureText("0");
       int line_count = getLineCount();
       // Extra '+ 1' serves as padding.
-      setPadding((int)(((int)Math.log10(line_count) + 1 + 1) * digit_width), 0, 0, 0);
+      int padding = (int)(((int)Math.log10(line_count) + 1 + 1) * digit_width);
+      if (padding != _prev_padding) {
+        setPadding(padding, 0, 0, 0);
+        _prev_padding = padding;
+      }
       super.onDraw(canvas);
       _ln_paint.setColor(getPaint().getColor());
       canvas.getClipBounds(_clip_bounds);
       Layout layout = getLayout();
-      int offset = _clip_bounds.left + (int)(digit_width / 2.f);
+      int offset = (int)(digit_width / 2.f);
       int line = layout.getLineForVertical(_clip_bounds.top);
       int skipped = line;
       while (line < line_count)
