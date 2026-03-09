@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (تصحيح الأخطاء)</string>
     <string name="short_description">لوحة مفاتيح افتراضية خفيفة ومُراعية للخصوصية لنظام آندرويد.</string>
-    <string name="store_description">الميزة الرئيسة هي أنّه يمكنك كتابة المزيد من الأحرف عن طريق تمرير المفاتيح نحو الزوايا.\n\nهذا التطبيق كان مُصممًا للمُبرمجين الذين يستخدمون طرفية Termux.\nالآن صار مثاليًا للاستخدام اليومي.\n\nهذا التطبيق لا يحتوي على إعلانات، ولا يقوم بأيّ طلبات شبكة، وكما أنّه مفتوح المصدر.</string>
+    <string name="store_description">الميزة الرئيسة هي أنه يمكنك كتابة المزيد من الأحرف عن طريق تمرير المفاتيح نحو الزوايا.\n\nهذا التطبيق كان مصممًا للمبرمجين الذين يستخدمون طرفية Termux.\nالآن صار مثاليًا للاستخدام اليومي.\n\nهذا التطبيق لا يحتوي على إعلانات، ولا يقوم بأي طلبات شبكة، وكما أنه مفتوح المصدر.</string>
     <string name="settings_activity_label">إعدادات Unexpected Keyboard</string>
     <string name="pref_portrait">في الوضع اللوحي</string>
     <string name="pref_landscape">في الوضع الأفقي</string>
@@ -28,8 +28,8 @@
     <string name="pref_numpad_layout_e_high_first">الأرقام العالية أولاً</string>
     <string name="pref_numpad_layout_e_low_first">الأرقام السفلى أولاً</string>
     <string name="pref_extra_keys_title">إضافة مفاتيح إلى لوحة المفاتيح</string>
-    <string name="pref_extra_keys_custom">إضافة مفاتيح مخصّصة</string>
-    <string name="pref_extra_keys_internal">حدّد المفاتيح المراد إضافتها إلى لوحة المفاتيح</string>
+    <string name="pref_extra_keys_custom">إضافة مفاتيح مخصصة</string>
+    <string name="pref_extra_keys_internal">حدد المفاتيح المراد إضافتها إلى لوحة المفاتيح</string>
     <string name="pref_category_typing">الكتابة</string>
     <string name="pref_swipe_dist_title">مسافة التمرير</string>
     <string name="pref_swipe_dist_summary">مسافة الأحرف في زوايا المفاتيح (%s)</string>
@@ -37,7 +37,7 @@
     <string name="pref_long_interval_title">فترة تكرار المفتاح</string>
     <string name="pref_keyrepeat_enabled">تكرار المفتاح عند الضغط لفترة طويلة</string>
     <string name="pref_lock_double_tap_title">نقرة مُزدوجة على زر Shift لوضع الأحرف الكبيرة</string>
-    <string name="pref_lock_double_tap_summary">يمكنك قفل أي معدِّل من خلال الضغط عليه باستمرار</string>
+    <string name="pref_lock_double_tap_summary">يمكنك قفل أي معدل من خلال الضغط عليه باستمرار</string>
     <string name="pref_category_behavior">السلوك</string>
     <string name="pref_autocapitalisation_title">الكتابة تلقائيًّا بالأحرف الكبيرة</string>
     <string name="pref_autocapitalisation_summary">ضغط زر Shift في بداية جملة</string>
