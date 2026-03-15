@@ -1,4 +1,4 @@
-name: Check layouts
+name: Check generated files
 
 on:
   workflow_dispatch:
@@ -9,20 +9,31 @@ on:
 
 jobs:
   gen-layouts:
-    name: Generated files
+    name: Layout list
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
     - run: python3 gen_layouts.py
-    - name: "Run 'python3 gen_layouts.py' to update generated files"
+    - name: "Run 'python3 gen_layouts.py' to update the generated files."
       run: git diff --exit-code
+
   check-layouts:
-    name: check_layout.output
+    name: Layout warnings
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
     - run: python3 check_layout.py
     - name: "Fix your layout accordingly or run 'python3 check_layout.py' to promote the warnings"
+      run: git diff --exit-code
+
+  check-compose:
+    name: Compose key data
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - run: python3 srcs/compose/compile.py srcs/compose/{*.json,compose} > srcs/juloo.keyboard2/ComposeKeyData.java
+    - name: "Run 'gradle test' to update the generated files."
       run: git diff --exit-code
