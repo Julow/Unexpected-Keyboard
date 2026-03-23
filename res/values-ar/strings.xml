@@ -2,14 +2,14 @@
 <resources>
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (تصحيح الأخطاء)</string>
-    <string name="short_description">لوحة مفاتيح افتراضية خفيفة ومُراعية للخصوصية لنظام آندرويد.</string>
-    <string name="store_description">الميزة الرئيسة هي أنه يمكنك كتابة المزيد من الأحرف عن طريق تمرير المفاتيح نحو الزوايا.\n\nهذا التطبيق كان مصممًا للمبرمجين الذين يستخدمون طرفية Termux.\nالآن صار مثاليًا للاستخدام اليومي.\n\nهذا التطبيق لا يحتوي على إعلانات، ولا يقوم بأي طلبات شبكة، وكما أنه مفتوح المصدر.</string>
+    <string name="short_description">لوحة مفاتيح افتراضية خفيفة الوزن ومراعية للخصوصية لنظام أندرويد.</string>
+    <string name="store_description">الميزة الرئيسة هي إمكانية كتابة المزيد من الأحرف عن طريق تمرير المفاتيح نحو الزوايا.\n\nصُمم هذا التطبيق في الأصل للمبرمجين الذين يستخدمون Termux.\nأصبح الآن مثاليًا للاستخدام اليومي.\n\nهذا التطبيق لا يحتوي على إعلانات، ولا يقوم بأي طلبات عبر الشبكة، وهو مفتوح المصدر.</string>
     <string name="settings_activity_label">إعدادات Unexpected Keyboard</string>
-    <string name="pref_portrait">في الوضع اللوحي</string>
+    <string name="pref_portrait">في الوضع العمودي</string>
     <string name="pref_landscape">في الوضع الأفقي</string>
     <string name="pref_category_layout">التخطيط</string>
     <string name="pref_label_brightness">ضبط سطوع التسمية</string>
-    <string name="pref_keyboard_opacity">ضبط عتامة خلفية لوحة المفاتيح</string>
+    <string name="pref_keyboard_opacity">ضبط شفافية خلفية لوحة المفاتيح</string>
     <string name="pref_key_opacity">ضبط عتامة المفتاح</string>
     <string name="pref_key_activated_opacity">ضبط عتامة المفتاح المضغوط</string>
     <string name="pref_layout_e_system">إعدادات النظام</string>
