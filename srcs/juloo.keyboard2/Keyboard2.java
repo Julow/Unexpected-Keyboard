@@ -211,6 +211,7 @@ public class Keyboard2 extends InputMethodService
     _keyboard_container_view.getBackground().setAlpha(_config.keyboardOpacity);
     _keyboard_layout_view.reset();
     refresh_candidates_view();
+    _keyeventhandler.refresh_auto_space(_config);
   }
 
   private KeyboardData refresh_special_layout()

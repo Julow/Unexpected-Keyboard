@@ -33,6 +33,9 @@ public final class EditorConfig
   public int initial_sel_start;
   public int initial_sel_end;
 
+  /** Auto-space after punctuation. */
+  public boolean no_auto_space_after_punct = false;
+
   /** Suggestions. */
   // Doesn't override [_config.suggestions_enabled].
   public boolean should_show_candidates_view;
@@ -84,6 +87,24 @@ public final class EditorConfig
     initial_sel_end = info.initialSelEnd;
     /* Suggestions */
     should_show_candidates_view = CandidatesView.should_show(info);
+    /* Auto-space after punctuation */
+    int ec_class = info.inputType & InputType.TYPE_MASK_CLASS;
+    if (ec_class != InputType.TYPE_CLASS_TEXT)
+    {
+      no_auto_space_after_punct = true;
+    }
+    else
+    {
+      int variation = info.inputType & InputType.TYPE_MASK_VARIATION;
+      no_auto_space_after_punct = (
+        variation == InputType.TYPE_TEXT_VARIATION_PASSWORD ||
+        variation == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD ||
+        variation == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD ||
+        variation == InputType.TYPE_TEXT_VARIATION_URI ||
+        variation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS ||
+        variation == InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
+      );
+    }
   }
 
   String actionLabel_of_imeAction(int action, Resources res)

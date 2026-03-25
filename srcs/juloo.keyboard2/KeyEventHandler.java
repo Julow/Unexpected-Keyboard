@@ -33,6 +33,8 @@ public final class KeyEventHandler
   boolean _move_cursor_force_fallback = false;
   /** Whether the space bar automatically enters the best suggestion. */
   boolean _space_bar_auto_complete = false;
+  /** Whether to automatically insert a space after punctuation characters. */
+  boolean _auto_space_after_punct = false;
   /** True between a manual shift key_down and the resulting latch (mods_changed)
       or unlatch (key_up). Used to distinguish user taps from auto-cap. */
   boolean _shift_manually_pressed = false;
@@ -48,6 +50,16 @@ public final class KeyEventHandler
     _typedword = new CurrentlyTypedWord(handler, this);
   }
 
+  /** Called when preferences change while the keyboard is already active.
+      Updates flags derived solely from preferences (not editor-specific). */
+  public void refresh_auto_space(Config conf)
+  {
+    // editor_config is already up-to-date because refresh_config() is called
+    // after editor_config.refresh() in onStartInputView, and here we only need
+    // the preference side; editor-type suppression remains from the last started().
+    _auto_space_after_punct = conf.auto_space_after_punct && !conf.editor_config.no_auto_space_after_punct;
+  }
+
   /** Editing just started. */
   public void started(Config conf)
   {
@@ -57,6 +69,7 @@ public final class KeyEventHandler
     _move_cursor_force_fallback =
       conf.editor_config.should_move_cursor_force_fallback;
     _space_bar_auto_complete = conf.space_bar_auto_complete;
+    _auto_space_after_punct = conf.auto_space_after_punct && !conf.editor_config.no_auto_space_after_punct;
     clear_space_bar_state();
   }
 
@@ -225,18 +238,6 @@ public final class KeyEventHandler
     }
   }
 
-  void send_key_down_up(int keyCode)
-  {
-    send_key_down_up(keyCode, _meta_state);
-  }
-
-  /** Ignores currently pressed system modifiers. */
-  void send_key_down_up(int keyCode, int metaState)
-  {
-    send_keyevent(KeyEvent.ACTION_DOWN, keyCode, metaState);
-    send_keyevent(KeyEvent.ACTION_UP, keyCode, metaState);
-  }
-
   void send_keyevent(int eventAction, int eventCode, int metaState)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
@@ -253,15 +254,72 @@ public final class KeyEventHandler
     }
   }
 
+  void send_key_down_up(int keyCode)
+  {
+    send_key_down_up(keyCode, _meta_state);
+  }
+
+  /** Ignores currently pressed system modifiers. */
+  void send_key_down_up(int keyCode, int metaState)
+  {
+    send_keyevent(KeyEvent.ACTION_DOWN, keyCode, metaState);
+    send_keyevent(KeyEvent.ACTION_UP, keyCode, metaState);
+  }
+
   void send_text(String text)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
+    boolean is_single_punct = _auto_space_after_punct
+      && text.length() == 1
+      && is_auto_space_punct(text.charAt(0));
+    // If the character immediately before the cursor is a space (from a previous
+    // auto-space or a suggestion's trailing space), delete it so punctuation is
+    // not preceded by a space ("word. " not "word . ").
+    if (is_single_punct)
+    {
+      CharSequence before = conn.getTextBeforeCursor(1, 0);
+      if (before != null && before.length() > 0 && before.charAt(0) == ' ')
+      {
+        conn.beginBatchEdit();
+        conn.deleteSurroundingText(1, 0);
+        _autocap.event_sent(KeyEvent.KEYCODE_DEL, 0);
+        _typedword.event_sent(KeyEvent.KEYCODE_DEL, 0);
+        conn.commitText(text, 1);
+        conn.endBatchEdit();
+      }
+      else
+      {
+        conn.commitText(text, 1);
+      }
+    }
+    else
+    {
+      conn.commitText(text, 1);
+    }
     _autocap.typed(text);
     _typedword.typed(text);
-    conn.commitText(text, 1);
+    if (is_single_punct)
+    {
+      CharSequence after = conn.getTextAfterCursor(1, 0);
+      if (after == null || after.length() == 0 || after.charAt(0) != ' ')
+      {
+        _autocap.typed(" ");
+        _typedword.typed(" ");
+        conn.commitText(" ", 1);
+      }
+    }
     clear_space_bar_state();
+  }
+
+  private static boolean is_auto_space_punct(char c)
+  {
+    switch (c)
+    {
+      case '.': case '!': case '?': case ',': case ';': case ':': return true;
+      default: return false;
+    }
   }
 
   void replace_text_before_cursor(int remove_length, String new_text)
