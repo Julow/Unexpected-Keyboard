@@ -1,0 +1,73 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Build Commands
+
+```bash
+./gradlew assembleDebug          # Build debug APK
+./gradlew installDebug           # Build and install debug APK on connected device
+./gradlew assembleRelease        # Build release APK
+./gradlew test                   # Run unit tests
+```
+
+### Code Generation (run before building after modifying source files)
+
+Several source files are generated from Python scripts and must be regenerated when their inputs change:
+
+```bash
+./gradlew genLayoutsList         # Regenerate layout registry (after adding/modifying layouts in srcs/layouts/)
+./gradlew checkKeyboardLayouts   # Validate all keyboard layouts
+./gradlew compileComposeSequences # Regenerate ComposeKeyData.java (after modifying srcs/compose/)
+./gradlew genMethodXml           # Regenerate input method XML
+./gradlew buildKeyboardFont      # Rebuild custom TTF font (after modifying srcs/special_font/)
+```
+
+The CI workflow `.github/workflows/check-generated.yml` enforces that generated files are up to date.
+
+## Architecture
+
+This is an Android IME (Input Method Editor) — a keyboard app — targeting API 21+, compiled with Java 8.
+
+### Core Data Flow
+
+1. **Touch input** → `Pointers.java` (gesture detection, swipe direction)
+2. **Gesture** → `KeyEventHandler.java` (resolves key value, applies modifiers)
+3. **Key value** → Android `InputConnection` (sends text/events to the focused app)
+
+### Key System
+
+`KeyValue.java` is the central enum-like class representing everything a key can do: characters, editing actions (backspace, cursor movement), modifiers (shift, fn, compose), special actions (switch layout, emoji panel). Keys have 9 positions (center + 8 swipe directions: n, s, e, w, ne, nw, se, sw).
+
+### Layout System
+
+Layouts are XML files in `srcs/layouts/`. `KeyboardData.java` parses them into memory. `LayoutModifier.java` applies modifier layers (shift, fn). `Keyboard2.java` selects the active layout based on device locale and user preferences. Generated code in `srcs/res/xml/method.xml` and `srcs/juloo.keyboard2/Layouts.java` ties layouts to the Android IME system.
+
+### Compose/Modifier Sequences
+
+`srcs/compose/` contains JSON definitions for multi-key sequences (accent + letter → accented letter, etc.). `srcs/compose/compile.py` compiles these into `ComposeKeyData.java` (~97KB generated file). `ComposeKey.java` handles runtime sequence matching.
+
+### Configuration
+
+`Config.java` is the single source of truth for all user preferences. `PreferencesActivity` provides the settings UI using custom preference components in `srcs/juloo.keyboard2/prefs/`. `EditorConfig.java` manages per-editor overrides (e.g., different layout for password fields).
+
+### Optional Features
+
+- `suggestions/` + `dict/` (vendor submodule `cdict`) — word suggestions from local dictionary
+- `EmojiGridView.java` — emoji panel
+- `ClipboardHistoryView.java` — clipboard history panel
+- `CandidatesView.java` — suggestion strip above keyboard
+
+## Adding a New Keyboard Layout
+
+1. Create an XML file in `srcs/layouts/` following the existing format
+2. Run `./gradlew genLayoutsList` to register it
+3. Optionally add locale mapping in `Keyboard2.java` for auto-selection
+4. Run `./gradlew checkKeyboardLayouts` to validate
+
+## Submodules
+
+The `vendor/cdict` submodule must be initialized for dictionary features:
+```bash
+git submodule update --init
+```
