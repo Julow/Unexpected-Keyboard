@@ -77,6 +77,7 @@
     <item>latn_qwertz_cz_diacritics</item>
     <item>latn_qwertz_cz_multifunctional</item>
     <item>latn_qwertz_de</item>
+    <item>latn_qwertz_de_ch</item>
     <item>latn_qwertz_fr_ch</item>
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
@@ -164,6 +165,7 @@
     <item>QWERTZ (Czech with diacritic keys)</item>
     <item>QWERTZ Multifunctional (Czech)</item>
     <item>QWERTZ (Deutsch)</item>
+    <item>QWERTZ (Schweiz)</item>
     <item>QWERTZ (Swiss French)</item>
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
@@ -251,6 +253,7 @@
     <item>@xml/latn_qwertz_cz_diacritics</item>
     <item>@xml/latn_qwertz_cz_multifunctional</item>
     <item>@xml/latn_qwertz_de</item>
+    <item>@xml/latn_qwertz_de_ch</item>
     <item>@xml/latn_qwertz_fr_ch</item>
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>

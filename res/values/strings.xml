@@ -146,4 +146,5 @@
     <string name="dictionaries_download_failed">Download failed</string>
     <string name="candidates_status_no_dict">No dictionary installed</string>
     <string name="candidates_status_install">Install</string>
+    <string name="pref_dialog_edit_text">Enter value</string>
 </resources>

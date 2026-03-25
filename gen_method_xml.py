@@ -22,6 +22,7 @@ LOCALES = [
   loc("cy_GB", "latin", "latn_qwerty_cy"),
   loc("da_DK", "latin", "latn_qwerty_da", extra_keys="€|æ|å|ø"),
   loc("de_BE", "latin", "latn_azerty_be", extra_keys="accent_grave:è@f|accent_aigu:á:é:í:ó:ú:ý:j́@d|accent_circonflexe:ê@f|accent_cedille:ç@c|accent_trema@u|€"),
+  loc("de_CH", "latin", "latn_qwertz_de_ch", extra_keys="accent_trema:ä:ö:ü@u|€"),
   loc("de_DE", "latin", "latn_qwertz_de", extra_keys="accent_trema:ä:ö:ü@u|ß|€"),
   loc("el", "latin", "grek_qwerty", extra_keys="£@l|€"),
   loc("en_AU", "latin", "latn_qwerty_us"),

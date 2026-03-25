@@ -21,5 +21,9 @@ latn_colemak: Some keys contain whitespaces, unexpected:  ́
 latn_dvorak: Missing important key, missing: loc capslock
 latn_neo2: Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
 latn_qwertz_cz_multifunctional: Layout includes some ASCII punctuation but not all, missing: `
+latn_qwertz_de_ch: Duplicate keys: !
+latn_qwertz_de_ch: These keys are now added automatically, unexpected: f11_placeholder, f12_placeholder
+latn_qwertz_de_ch: Missing programming keys, missing: loc esc, loc tab
+latn_qwertz_de_ch: Layout redefines the bottom row but some important keys are missing, missing: down, left, loc compose, loc end, loc home, loc page_down, loc page_up, right, up
 latn_qwertz_sk: Layout includes some ASCII punctuation but not all, missing: `
 urdu_phonetic_ur: Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
