@@ -289,7 +289,9 @@ public final class KeyEventHandler
     CharSequence after = conn.getTextAfterCursor(1, 0);
     if (after != null && after.length() > 0 && Character.isLetter(after.charAt(0)))
       return;
-    replace_text_before_cursor(word.length(), cycle_word_case(word));
+    String new_word = cycle_word_case(word);
+    replace_text_before_cursor(word.length(), new_word);
+    _typedword.set_current_word(new_word);
     _recv.set_shift_state(false, false);
   }
 
