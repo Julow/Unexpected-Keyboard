@@ -9,6 +9,7 @@ import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import java.util.Iterator;
+import java.util.Locale;
 import juloo.keyboard2.suggestions.Suggestions;
 
 public final class KeyEventHandler
@@ -32,6 +33,9 @@ public final class KeyEventHandler
   boolean _move_cursor_force_fallback = false;
   /** Whether the space bar automatically enters the best suggestion. */
   boolean _space_bar_auto_complete = false;
+  /** True between a manual shift key_down and the resulting latch (mods_changed)
+      or unlatch (key_up). Used to distinguish user taps from auto-cap. */
+  boolean _shift_manually_pressed = false;
 
   public KeyEventHandler(IReceiver recv, Config config)
   {
@@ -81,6 +85,9 @@ public final class KeyEventHandler
           case META:
             _autocap.stop();
             break;
+          case SHIFT:
+            _shift_manually_pressed = true;
+            break;
         }
         break;
       case Compose_pending:
@@ -109,7 +116,10 @@ public final class KeyEventHandler
       case String: send_text(key.getString()); break;
       case Event: _recv.handle_event_key(key.getEvent()); break;
       case Keyevent: send_key_down_up(key.getKeyevent()); break;
-      case Modifier: break;
+      case Modifier:
+        if (key.getModifier() == KeyValue.Modifier.SHIFT)
+          _shift_manually_pressed = false;
+        break;
       case Editing: handle_editing_key(key.getEditing()); break;
       case Compose_pending: _recv.set_compose_pending(true); break;
       case Slider: handle_slider(key.getSlider(), key.getSliderRepeat(), false); break;
@@ -121,6 +131,11 @@ public final class KeyEventHandler
   @Override
   public void mods_changed(Pointers.Modifiers mods)
   {
+    if (_shift_manually_pressed && mods.has(KeyValue.Modifier.SHIFT))
+    {
+      _shift_manually_pressed = false;
+      handle_shift_retroactive_cap();
+    }
     update_meta_state(mods);
   }
 
@@ -258,6 +273,47 @@ public final class KeyEventHandler
     conn.deleteSurroundingText(remove_length, 0);
     conn.commitText(new_text, 1);
     conn.endBatchEdit();
+  }
+
+  /** When shift is tapped while the cursor is at the end of a word (no letter
+      after cursor), cycles the word through: lowercase → Title Case → ALL CAPS
+      → lowercase, then deactivates shift. */
+  void handle_shift_retroactive_cap()
+  {
+    String word = _typedword.get();
+    if (word.isEmpty())
+      return;
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    CharSequence after = conn.getTextAfterCursor(1, 0);
+    if (after != null && after.length() > 0 && Character.isLetter(after.charAt(0)))
+      return;
+    replace_text_before_cursor(word.length(), cycle_word_case(word));
+    _recv.set_shift_state(false, false);
+  }
+
+  /** Cycles a word through lowercase → Title Case → ALL CAPS → lowercase. */
+  static String cycle_word_case(String word)
+  {
+    boolean firstUpper = Character.isUpperCase(word.codePointAt(0));
+    boolean allUpper = true;
+    boolean allLower = true;
+    for (int i = 0; i < word.length(); )
+    {
+      int cp = word.codePointAt(i);
+      if (Character.isUpperCase(cp)) allLower = false;
+      if (Character.isLowerCase(cp)) allUpper = false;
+      i += Character.charCount(cp);
+    }
+    if (allLower)
+      return Utils.capitalize_string(word); // lowercase → Title Case
+    if (firstUpper && !allUpper)
+      return word.toUpperCase(Locale.getDefault()); // Title Case → ALL CAPS
+    if (allUpper)
+      return word.toLowerCase(Locale.getDefault()); // ALL CAPS → lowercase
+    // Mixed case → Title Case
+    return Utils.capitalize_string(word.toLowerCase(Locale.getDefault()));
   }
 
   /** See {!InputConnection.performContextMenuAction}. */
