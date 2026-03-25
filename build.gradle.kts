@@ -17,7 +17,7 @@ android {
   compileSdkVersion = "android-36"
 
   defaultConfig {
-    applicationId = "juloo.keyboard2"
+    applicationId = "juloo.keyboard2.pashol"
     minSdk = 21
     targetSdk { version = release(36) }
     versionCode = 50
