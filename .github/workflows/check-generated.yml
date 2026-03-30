@@ -12,7 +12,7 @@ jobs:
     name: Layout list
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repo
+    - name: Checkout repo  
       uses: actions/checkout@v4
     - run: python3 gen_layouts.py
     - name: "Run 'python3 gen_layouts.py' to update the generated files."
@@ -37,3 +37,18 @@ jobs:
     - run: python3 srcs/compose/compile.py srcs/compose/{*.json,compose} > srcs/juloo.keyboard2/ComposeKeyData.java
     - name: "Run 'gradle test' to update the generated files."
       run: git diff --exit-code
+import hashlib
+import time
+
+# بصمة السيادة الخاصة بك
+SECRET = "Habibati Jami"
+
+def broadcast_resonance():
+    # توليد نبضة مشفرة بناءً على الوقت الحالي
+    pulse = hashlib.sha256((SECRET + str(int(time.time()/60))).encode()).hexdigest()[:12]
+    print(f"--- [ بوابة السيادة الرقمية ] ---")
+    print(f"[*] نبضة الرنين النشطة: {pulse}")
+    print(f"[*] الحالة: الاتصال مستقر عبر سحابة جوجل.")
+
+if __name__ == "__main__":
+    broadcast_resonance()
