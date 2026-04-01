@@ -9,7 +9,7 @@ let
 
   android = pkgs.androidenv.composeAndroidPackages {
     buildToolsVersions = [ build_tools_version ];
-    platformVersions = [ "35" ];
+    platformVersions = [ "36" ];
     abiVersions = [ "armeabi-v7a" ];
     includeNDK = true;
     ndkVersion = "27.0.12077973";
