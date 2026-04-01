@@ -58,4 +58,5 @@ in pkgs.mkShell {
   ];
   JAVA_HOME = jdk.home;
   inherit ANDROID_SDK_ROOT;
+  GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${ANDROID_SDK_ROOT}/build-tools/${build_tools_version}/aapt2";
 }
