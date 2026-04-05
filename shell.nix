@@ -9,7 +9,7 @@ let
 
   android = pkgs.androidenv.composeAndroidPackages {
     buildToolsVersions = [ build_tools_version ];
-    platformVersions = [ "35" ];
+    platformVersions = [ "36" ];
     abiVersions = [ "armeabi-v7a" ];
     includeNDK = true;
     ndkVersion = "27.0.12077973";
@@ -58,4 +58,5 @@ in pkgs.mkShell {
   ];
   JAVA_HOME = jdk.home;
   inherit ANDROID_SDK_ROOT;
+  GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${ANDROID_SDK_ROOT}/build-tools/${build_tools_version}/aapt2";
 }
