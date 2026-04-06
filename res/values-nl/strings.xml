@@ -20,7 +20,7 @@
     <string name="key_descr_end">Einde</string>
     <string name="key_descr_nnbsp">Smalle niet-onderbrekende spatie</string>
     <string name="pref_swipe_dist_e_very_far">Zeer ver</string>
-    <string name="key_descr_zwnj">Zero width non-joiner</string>
+    <string name="key_descr_zwnj">Nulbreedte non-koppelteken</string>
     <string name="pref_landscape">In liggende stand</string>
     <string name="pref_number_row_title">Toon getallenrij</string>
     <string name="pref_theme_e_desert">Woestijn</string>
@@ -110,7 +110,7 @@
     <string name="key_descr_clipboard">Klembord beheerder</string>
     <string name="key_descr_combining">Diakritische tekens combineren</string>
     <string name="key_descr_dead_key">Dode toets</string>
-    <string name="key_descr_zwj">Zero width joiner</string>
+    <string name="key_descr_zwj">Nulbreedte koppelteken</string>
     <string name="key_descr_nbsp">Niet-onderbrekende spatie</string>
     <string name="clipboard_history_heading">Recentelijk gekopieerde tekst</string>
     <string name="clipboard_pin_heading">Vastgemaakt</string>
