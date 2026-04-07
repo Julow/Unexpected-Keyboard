@@ -45,7 +45,7 @@
     <string name="pref_switch_input_immediate_summary">Comportamento da tecla de troca de teclado</string>
     <string name="pref_vibrate_custom">Vibração personalizada</string>
     <string name="pref_vibrate_duration_title">Intensidade da vibração</string>
-    <string name="pref_pin_entry_enabled_title">Layout PIN</string>
+    <string name="pref_pin_entry_enabled_title">Entrada PIN</string>
     <string name="pref_pin_entry_enabled_summary">Quando digitando números, datas ou números de telefone</string>
     <string name="pref_category_style">Estilo</string>
     <string name="pref_margin_bottom_title">Margem inferior</string>
@@ -66,7 +66,7 @@
     <string name="pref_theme_e_monet">Monet (Sistema)</string>
     <string name="pref_theme_e_monetlight">Monet (Claro)</string>
     <string name="pref_theme_e_monetdark">Monet (Escuro)</string>
-    <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="pref_theme_e_rosepine">Rosa Pinheiro</string>
     <string name="pref_swipe_dist_e_very_short">Bem curta</string>
     <string name="pref_swipe_dist_e_short">Curta</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
