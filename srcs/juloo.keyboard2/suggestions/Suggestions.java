@@ -15,9 +15,13 @@ public final class Suggestions
   Callback _callback;
   Config _config;
 
-  /** The suggestion displayed at the center of the candidates view and entered
-      by the space bar. */
-  public String best_suggestion = null;
+  /** Current suggestions. The best suggestion is at index [0]. */
+  public String[] suggestions = new String[MAX_COUNT];
+  /** Number of suggestions at the beginning of the [suggestions] array that
+      are not [null]. */
+  public int count = 0;
+  /** Number of suggestions in [suggestions]. */
+  public static final int MAX_COUNT = 3;
 
   public Suggestions(Callback c, Config conf)
   {
@@ -29,46 +33,42 @@ public final class Suggestions
   {
     Cdict dict = _config.current_dictionary;
     if (word.length() < 2 || dict == null)
-    {
-      set_suggestions(NO_SUGGESTIONS);
-    }
+      count = 0;
     else
-    {
-      String[] dst = new String[3];
-      query_suggestions(dict, word, dst, 3);
-      set_suggestions(Arrays.asList(dst));
-    }
+      query_suggestions(dict, word);
+    set_suggestions();
   }
 
-  int query_suggestions(Cdict dict, String word, String[] dst, int max_count)
+  int query_suggestions(Cdict dict, String word)
   {
     boolean first_char_upper = Character.isUpperCase(word.charAt(0));
     word = apply_substitutions(word);
     Cdict.Result r = dict.find(word);
     int i = 0;
     if (r.found)
-      dst[i++] = dict.word(r.index);
-    int[] suffixes = dict.suffixes(r, max_count);
+      suggestions[i++] = dict.word(r.index);
+    int[] suffixes = dict.suffixes(r, MAX_COUNT);
     // Disable distance search for small words
-    int[] dist = (word.length() < 3 || i + 1 >= max_count) ? NO_RESULTS :
-      dict.distance(word, 1, max_count);
-    for (int j = 0; j < max_count && i < max_count; j++)
+    int[] dist = (word.length() < 3 || i + 1 >= MAX_COUNT) ? NO_RESULTS :
+      dict.distance(word, 1, MAX_COUNT);
+    for (int j = 0; j < MAX_COUNT && i < MAX_COUNT; j++)
     {
       if (suffixes.length > j)
-        dst[i++] = dict.word(suffixes[j]);
-      if (dist.length > j && i < max_count)
-        dst[i++] = dict.word(dist[j]);
+        suggestions[i++] = dict.word(suffixes[j]);
+      if (dist.length > j && i < MAX_COUNT)
+        suggestions[i++] = dict.word(dist[j]);
     }
     if (first_char_upper)
-      capitalize_results(dst);
+      capitalize_results();
+    count = i;
     return i;
   }
 
-  void capitalize_results(String[] rs)
+  void capitalize_results()
   {
-    for (int i = 0; i < rs.length; i++)
-      if (rs[i] != null)
-        rs[i] = rs[i].substring(0, 1).toUpperCase() + rs[i].substring(1);
+    for (int i = 0; i < count; i++)
+      suggestions[i] = suggestions[i].substring(0, 1).toUpperCase()
+        + suggestions[i].substring(1);
   }
 
   /** Apply the same substitutions that were used when building the
@@ -87,17 +87,15 @@ public final class Suggestions
     return b.toString();
   }
 
-  void set_suggestions(List<String> ws)
+  void set_suggestions()
   {
-    _callback.set_suggestions(ws);
-    best_suggestion = (ws.size() > 0) ? ws.get(0) : null;
+    _callback.set_suggestions(this);
   }
 
-  static final List<String> NO_SUGGESTIONS = Arrays.asList();
   static final int[] NO_RESULTS = new int[0];
 
   public static interface Callback
   {
-    public void set_suggestions(List<String> suggestions);
+    public void set_suggestions(Suggestions suggestions);
   }
 }

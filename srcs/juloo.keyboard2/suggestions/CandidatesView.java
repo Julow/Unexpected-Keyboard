@@ -44,9 +44,9 @@ public class CandidatesView extends LinearLayout
     setup_item_view(2, R.id.candidates_left);
   }
 
-  public void set_candidates(List<String> suggestions)
+  public void set_candidates(Suggestions s)
   {
-    int s_count = suggestions.size();
+    int s_count = s.count;
     // Hide the status message when showing candidates.
     if (s_count != 0 && _status_no_dict != null)
       _status_no_dict.setVisibility(View.GONE);
@@ -55,7 +55,7 @@ public class CandidatesView extends LinearLayout
       TextView v = _item_views[i];
       if (i < s_count)
       {
-        String it = suggestions.get(i);
+        String it = s.suggestions[i];
         _items[i] = it;
         v.setText(it);
         v.setVisibility(View.VISIBLE);
@@ -68,9 +68,18 @@ public class CandidatesView extends LinearLayout
     }
   }
 
+  public void clear_candidates()
+  {
+    for (int i = 0; i < _item_views.length; i++)
+    {
+      _items[i] = null;
+      _item_views[i].setVisibility(View.GONE);
+    }
+  }
+
   public void refresh_config(Config config)
   {
-    set_candidates(Suggestions.NO_SUGGESTIONS);
+    clear_candidates();
     // The status message indicates whether the dictionaries should be
     // installed.
     _status_no_dict = inflate_and_show(_status_no_dict,

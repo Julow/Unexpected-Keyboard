@@ -23,11 +23,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
-import juloo.cdict.Cdict;
+import juloo.keyboard2.suggestions.Suggestions;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -488,7 +489,7 @@ public class Keyboard2 extends InputMethodService
       return _handler;
     }
 
-    public void set_suggestions(List<String> suggestions)
+    public void set_suggestions(Suggestions suggestions)
     {
       _candidates_view.set_candidates(suggestions);
     }
