@@ -174,6 +174,7 @@ public class Keyboard2 extends InputMethodService
   private void refresh_current_dictionary()
   {
     _config.current_dictionary = null;
+    _config.emoji_dictionary = null;
     String current = _device_locales.default_.dictionary;
     if (current == null)
       return;
@@ -181,6 +182,7 @@ public class Keyboard2 extends InputMethodService
     if (dicts == null)
       return;
     _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
+    _config.emoji_dictionary = Dictionaries.find_by_name(dicts, "emoji");
   }
 
   private void refresh_candidates_view()

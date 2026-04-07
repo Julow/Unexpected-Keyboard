@@ -20,6 +20,7 @@ public final class Suggestions
   /** Number of suggestions at the beginning of the [suggestions] array that
       are not [null]. */
   public int count = 0;
+  public String emoji_suggestion = null;
   /** Number of suggestions in [suggestions]. */
   public static final int MAX_COUNT = 3;
 
@@ -31,16 +32,22 @@ public final class Suggestions
 
   public void currently_typed_word(String word)
   {
-    Cdict dict = _config.current_dictionary;
-    if (word.length() < 2 || dict == null)
-      count = 0;
+    if (word.length() < 2 || _config.current_dictionary == null)
+      clear();
     else
-      query_suggestions(dict, word);
+      query_suggestions(word);
     set_suggestions();
   }
 
-  int query_suggestions(Cdict dict, String word)
+  void clear()
   {
+    count = 0;
+    emoji_suggestion = null;
+  }
+
+  int query_suggestions(String word)
+  {
+    Cdict dict = _config.current_dictionary;
     boolean first_char_upper = Character.isUpperCase(word.charAt(0));
     word = apply_substitutions(word);
     Cdict.Result r = dict.find(word);
@@ -60,6 +67,7 @@ public final class Suggestions
     }
     if (first_char_upper)
       capitalize_results();
+    emoji_suggestion = query_emoji(word); // word with substitutions applied
     count = i;
     return i;
   }
@@ -69,6 +77,21 @@ public final class Suggestions
     for (int i = 0; i < count; i++)
       suggestions[i] = suggestions[i].substring(0, 1).toUpperCase()
         + suggestions[i].substring(1);
+  }
+
+  String query_emoji(String word)
+  {
+    Cdict dict = _config.emoji_dictionary;
+    // Disable emoji suggestion for short words
+    if (dict == null || word.length() < 3)
+      return null;
+    Cdict.Result r = dict.find(word);
+    if (r.found)
+      return dict.word(r.index);
+    int[] s = dict.suffixes(r, 1);
+    if (s.length > 0)
+      return dict.word(s[0]);
+    return null;
   }
 
   /** Apply the same substitutions that were used when building the
