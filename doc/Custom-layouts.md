@@ -151,6 +151,9 @@ The clockwise circle and the round-trip gestures are affected by the `<fn />` ma
 ```
 This maps Ctrl+в to Ctrl+V—not to v.
 
+### Default mappings
+Unexpected Keyboard's built-in mappings are not expressed as a Modmap but by a series of .json files in `https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/compose`. For example, the mappings for `fn` are in [`fn.json`](https://github.com/Julow/Unexpected-Keyboard/blob/master/srcs/compose/fn.json). These built-in mappings are common to every language.
+
 ## Portrait vs. landscape
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. So you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
 
