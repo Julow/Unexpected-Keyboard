@@ -15,7 +15,8 @@ public final class KeyValue implements Comparable<KeyValue>
     SWITCH_CLIPBOARD,
     SWITCH_BACK_CLIPBOARD,
     CHANGE_METHOD_PICKER,
-    CHANGE_METHOD_AUTO,
+    CHANGE_METHOD_PREV,
+    CHANGE_METHOD_NEXT,
     ACTION,
     SWITCH_FORWARD,
     SWITCH_BACKWARD,
@@ -45,6 +46,7 @@ public final class KeyValue implements Comparable<KeyValue>
     HORN,
     HOOK_ABOVE,
     DOUBLE_GRAVE,
+    SMALL_CAPS,
     SUPERSCRIPT,
     SUBSCRIPT,
     RING,
@@ -79,6 +81,8 @@ public final class KeyValue implements Comparable<KeyValue>
     DELETE_WORD,
     FORWARD_DELETE_WORD,
     SELECTION_CANCEL,
+    SPACE_BAR,
+    BACKSPACE,
   }
 
   public static enum Placeholder
@@ -312,8 +316,11 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public String toString()
   {
-    int value = _code & VALUE_BITS;
-    return "[KeyValue " + getKind().toString() + "+" + getFlags() + "+" + value + " \"" + getString() + "\"]";
+    StringBuilder b = new StringBuilder()
+      .append(getKind().name()).append(":").append(getString());
+    if (_payload instanceof Describe)
+      b.append(":").append(((Describe)_payload).describe());
+    return b.toString();
   }
 
   private KeyValue(Comparable p, int kind, int value, int flags)
@@ -354,7 +361,12 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private static KeyValue diacritic(int symbol, Modifier m)
   {
-    return new KeyValue(String.valueOf((char)symbol), Kind.Modifier, m.ordinal(),
+    return diacritic(String.valueOf((char)symbol), m);
+  }
+
+  private static KeyValue diacritic(String symbol, Modifier m)
+  {
+    return new KeyValue(symbol, Kind.Modifier, m.ordinal(),
         FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
   }
 
@@ -381,17 +393,12 @@ public final class KeyValue implements Comparable<KeyValue>
   private static KeyValue editingKey(String symbol, Editing action, int flags)
   {
     return new KeyValue(symbol, Kind.Editing, action.ordinal(),
-        flags | FLAG_SPECIAL | FLAG_SECONDARY);
+        flags | FLAG_SECONDARY);
   }
 
-  private static KeyValue editingKey(String symbol, Editing action)
+  private static KeyValue editingKey(int symbol, Editing action, int flags)
   {
-    return editingKey(symbol, action, FLAG_SMALLER_FONT);
-  }
-
-  private static KeyValue editingKey(int symbol, Editing action)
-  {
-    return editingKey(String.valueOf((char)symbol), action, FLAG_KEY_FONT);
+    return editingKey(String.valueOf((char)symbol), action, flags | FLAG_KEY_FONT);
   }
 
   /** A key that slides the property specified by [s] by the amount specified
@@ -513,6 +520,18 @@ public final class KeyValue implements Comparable<KeyValue>
     }
   }
 
+  /** Keys constants. Keys which are accessed from the application's code. */
+  public static final KeyValue ENTER = keyeventKey(0xE00E, KeyEvent.KEYCODE_ENTER, 0);
+  public static final KeyValue CONFIG = eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
+  public static final KeyValue SHIFT = modifierKey(0xE00A, Modifier.SHIFT, FLAG_DOUBLE_TAP_LOCK);
+  public static final KeyValue COMPOSE = makeComposePending(0xE016, ComposeKeyData.compose, FLAG_SECONDARY);
+  public static final KeyValue SELECTION_MODE = makeInternalModifier(Modifier.SELECTION_MODE);
+  public static final KeyValue CHANGE_METHOD = eventKey(0xE009, Event.CHANGE_METHOD_PICKER, FLAG_SMALLER_FONT);
+  public static final KeyValue CHANGE_METHOD_PREV = eventKey(0xE009, Event.CHANGE_METHOD_PREV, FLAG_SMALLER_FONT);
+  public static final KeyValue CHANGE_METHOD_NEXT = eventKey(0xE009, Event.CHANGE_METHOD_NEXT, FLAG_SMALLER_FONT);
+  public static final KeyValue VOICE_TYPING_CHOOSER = eventKey(0xE015, Event.SWITCH_VOICE_TYPING_CHOOSER, FLAG_SMALLER_FONT);
+  public static final KeyValue COMPOSE_CANCEL = placeholderKey(0xE01A, Placeholder.COMPOSE_CANCEL, FLAG_SECONDARY);
+
   public static KeyValue getSpecialKeyByName(String name)
   {
     switch (name)
@@ -526,7 +545,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "\\\\": return makeStringKey("\\");
 
       /* Modifiers and dead-keys */
-      case "shift": return modifierKey(0xE00A, Modifier.SHIFT, FLAG_DOUBLE_TAP_LOCK);
+      case "shift": return SHIFT;
       case "ctrl": return modifierKey("Ctrl", Modifier.CTRL, 0);
       case "alt": return modifierKey("Alt", Modifier.ALT, 0);
       case "accent_aigu": return diacritic(0xE050, Modifier.AIGU);
@@ -549,6 +568,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
       case "accent_double_grave": return diacritic(0xE063, Modifier.DOUBLE_GRAVE);
+      case "accent_small_caps": return diacritic("Aᴀ", Modifier.SMALL_CAPS);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
@@ -606,7 +626,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "combining_palatalization": return makeCharKey(0xE223, '\u0484', 0);
 
       /* Special event keys */
-      case "config": return eventKey(0xE004, Event.CONFIG, FLAG_SMALLER_FONT);
+      case "config": return CONFIG;
       case "switch_text": return eventKey("ABC", Event.SWITCH_TEXT, FLAG_SMALLER_FONT);
       case "switch_numeric": return eventKey("123+", Event.SWITCH_NUMERIC, FLAG_SMALLER_FONT);
       case "switch_emoji": return eventKey(0xE001, Event.SWITCH_EMOJI, FLAG_SMALLER_FONT);
@@ -616,16 +636,17 @@ public final class KeyValue implements Comparable<KeyValue>
       case "switch_forward": return eventKey(0xE013, Event.SWITCH_FORWARD, FLAG_SMALLER_FONT);
       case "switch_backward": return eventKey(0xE014, Event.SWITCH_BACKWARD, FLAG_SMALLER_FONT);
       case "switch_greekmath": return eventKey("πλ∇¬", Event.SWITCH_GREEKMATH, FLAG_SMALLER_FONT);
-      case "change_method": return eventKey(0xE009, Event.CHANGE_METHOD_PICKER, FLAG_SMALLER_FONT);
-      case "change_method_prev": return eventKey(0xE009, Event.CHANGE_METHOD_AUTO, FLAG_SMALLER_FONT);
+      case "change_method": return CHANGE_METHOD;
+      case "change_method_prev": return CHANGE_METHOD_PREV;
+      case "change_method_next": return CHANGE_METHOD_NEXT;
       case "action": return eventKey("Action", Event.ACTION, FLAG_SMALLER_FONT); // Will always be replaced
       case "capslock": return eventKey(0xE012, Event.CAPS_LOCK, 0);
       case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
-      case "voice_typing_chooser": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING_CHOOSER, FLAG_SMALLER_FONT);
+      case "voice_typing_chooser": return VOICE_TYPING_CHOOSER;
 
       /* Key events */
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
-      case "enter": return keyeventKey(0xE00E, KeyEvent.KEYCODE_ENTER, 0);
+      case "enter": return ENTER;
       case "up": return keyeventKey(0xE005, KeyEvent.KEYCODE_DPAD_UP, 0);
       case "right": return keyeventKey(0xE006, KeyEvent.KEYCODE_DPAD_RIGHT, FLAG_SMALLER_FONT);
       case "down": return keyeventKey(0xE007, KeyEvent.KEYCODE_DPAD_DOWN, 0);
@@ -634,7 +655,6 @@ public final class KeyValue implements Comparable<KeyValue>
       case "page_down": return keyeventKey(0xE003, KeyEvent.KEYCODE_PAGE_DOWN, 0);
       case "home": return keyeventKey(0xE00B, KeyEvent.KEYCODE_MOVE_HOME, FLAG_SMALLER_FONT);
       case "end": return keyeventKey(0xE00C, KeyEvent.KEYCODE_MOVE_END, FLAG_SMALLER_FONT);
-      case "backspace": return keyeventKey(0xE011, KeyEvent.KEYCODE_DEL, 0);
       case "delete": return keyeventKey(0xE010, KeyEvent.KEYCODE_FORWARD_DEL, 0);
       case "insert": return keyeventKey("Ins", KeyEvent.KEYCODE_INSERT, FLAG_SMALLER_FONT);
       case "f1": return keyeventKey("F1", KeyEvent.KEYCODE_F1, 0);
@@ -656,7 +676,7 @@ public final class KeyValue implements Comparable<KeyValue>
       /* Spaces */
       case "\\t": return charKey("\\t", '\t', 0); // Send the tab character
       case "\\n": return charKey("\\n", '\n', 0); // Send the newline character
-      case "space": return charKey(0xE00D, ' ', FLAG_SMALLER_FONT | FLAG_GREYED);
+      case "space": return editingKey(0xE00D, Editing.SPACE_BAR, FLAG_SMALLER_FONT | FLAG_GREYED);
       case "nbsp": return charKey("\u237d", '\u00a0', FLAG_SMALLER_FONT);
       case "nnbsp": return charKey("\u2423", '\u202F', FLAG_SMALLER_FONT);
 
@@ -705,31 +725,32 @@ public final class KeyValue implements Comparable<KeyValue>
       case "halfspace": return charKey(0xE018, '\u200C', 0); // zero-width non joiner
 
       /* Editing keys */
-      case "copy": return editingKey(0xE030, Editing.COPY);
-      case "paste": return editingKey(0xE032, Editing.PASTE);
-      case "cut": return editingKey(0xE031, Editing.CUT);
-      case "selectAll": return editingKey(0xE033, Editing.SELECT_ALL);
-      case "shareText": return editingKey(0xE034, Editing.SHARE);
-      case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN);
-      case "undo": return editingKey(0xE036, Editing.UNDO);
-      case "redo": return editingKey(0xE037, Editing.REDO);
-      case "delete_word": return editingKey(0xE01B, Editing.DELETE_WORD);
-      case "forward_delete_word": return editingKey(0xE01C, Editing.FORWARD_DELETE_WORD);
+      case "backspace": return editingKey(0xE011, Editing.BACKSPACE, 0);
+      case "copy": return editingKey(0xE030, Editing.COPY, FLAG_SPECIAL);
+      case "paste": return editingKey(0xE032, Editing.PASTE, 0);
+      case "cut": return editingKey(0xE031, Editing.CUT, FLAG_SPECIAL);
+      case "selectAll": return editingKey(0xE033, Editing.SELECT_ALL, FLAG_SPECIAL);
+      case "shareText": return editingKey(0xE034, Editing.SHARE, FLAG_SPECIAL);
+      case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN, 0);
+      case "undo": return editingKey(0xE036, Editing.UNDO, 0);
+      case "redo": return editingKey(0xE037, Editing.REDO, 0);
+      case "delete_word": return editingKey(0xE01B, Editing.DELETE_WORD, 0);
+      case "forward_delete_word": return editingKey(0xE01C, Editing.FORWARD_DELETE_WORD, 0);
       case "cursor_left": return sliderKey(Slider.Cursor_left, 1);
       case "cursor_right": return sliderKey(Slider.Cursor_right, 1);
       case "cursor_up": return sliderKey(Slider.Cursor_up, 1);
       case "cursor_down": return sliderKey(Slider.Cursor_down, 1);
-      case "selection_cancel": return editingKey("Esc", Editing.SELECTION_CANCEL, FLAG_SMALLER_FONT);
+      case "selection_cancel": return editingKey("Esc", Editing.SELECTION_CANCEL, FLAG_SMALLER_FONT | FLAG_SPECIAL);
       case "selection_cursor_left": return sliderKey(Slider.Selection_cursor_left, -1); // Move the left side of the selection
       case "selection_cursor_right": return sliderKey(Slider.Selection_cursor_right, 1);
       // These keys are not used
-      case "replaceText": return editingKey("repl", Editing.REPLACE);
-      case "textAssist": return editingKey(0xE038, Editing.ASSIST);
-      case "autofill": return editingKey("auto", Editing.AUTOFILL);
+      case "replaceText": return editingKey("repl", Editing.REPLACE, FLAG_SPECIAL | FLAG_SMALLER_FONT);
+      case "textAssist": return editingKey(0xE038, Editing.ASSIST, FLAG_SPECIAL);
+      case "autofill": return editingKey("auto", Editing.AUTOFILL, FLAG_SPECIAL | FLAG_SMALLER_FONT);
 
       /* The compose key */
-      case "compose": return makeComposePending(0xE016, ComposeKeyData.compose, FLAG_SECONDARY);
-      case "compose_cancel": return placeholderKey(0xE01A, Placeholder.COMPOSE_CANCEL, FLAG_SECONDARY);
+      case "compose": return COMPOSE;
+      case "compose_cancel": return COMPOSE_CANCEL;
 
       /* Placeholder keys */
       case "removed": return placeholderKey(Placeholder.REMOVED);
@@ -804,7 +825,7 @@ public final class KeyValue implements Comparable<KeyValue>
         return makeStringKey(name, FLAG_SMALLER_FONT);
 
       /* Internal keys */
-      case "selection_mode": return makeInternalModifier(Modifier.SELECTION_MODE);
+      case "selection_mode": return SELECTION_MODE;
 
       default: return null;
     }
@@ -817,27 +838,43 @@ public final class KeyValue implements Comparable<KeyValue>
       throw new RuntimeException("Assertion failure");
   }
 
-  public static enum Slider
+  public static interface Describe
   {
-    Cursor_left(0xE008),
-    Cursor_right(0xE006),
-    Cursor_up(0xE005),
-    Cursor_down(0xE007),
-    Selection_cursor_left(0xE008),
-    Selection_cursor_right(0xE006);
+    /** Describe the payload content, without the symbol.
+        Used for printing in tests. */
+    public String describe();
+  }
+
+  public static enum Slider implements Describe
+  {
+    Cursor_left(0xE008, false),
+    Cursor_right(0xE006, false),
+    Cursor_up(0xE005, true),
+    Cursor_down(0xE007, true),
+    Selection_cursor_left(0xE008, false),
+    Selection_cursor_right(0xE006, false);
 
     final String symbol;
+    final boolean vertical;
 
-    Slider(int symbol_)
+    Slider(int symbol_, boolean vertical)
     {
       symbol = String.valueOf((char)symbol_);
+      this.vertical = vertical;
+    }
+    
+    public boolean isVertical() {
+      return vertical;
     }
 
     @Override
     public String toString() { return symbol; }
+
+    @Override
+    public String describe() { return name(); }
   };
 
-  public static final class Macro implements Comparable<Macro>
+  public static final class Macro implements Comparable<Macro>, Describe
   {
     public final KeyValue[] keys;
     private final String _symbol;
@@ -848,7 +885,19 @@ public final class KeyValue implements Comparable<KeyValue>
       _symbol = sym_;
     }
 
+    @Override
     public String toString() { return _symbol; }
+
+    @Override
+    public String describe()
+    {
+      StringBuilder b = new StringBuilder();
+      if (keys.length > 0)
+        b.append(keys[0].toString());
+      for (int i = 1; i < keys.length; i++)
+        b.append(",").append(keys[i].toString());
+      return b.toString();
+    }
 
     @Override
     public int compareTo(Macro snd)

@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Solo in modalita` orizzontale</string>
     <string name="pref_show_numpad_always">Sempre</string>
     <string name="pref_number_row_title">Mostrare la riga dei numeri</string>
-    <string name="pref_number_row_summary">Aggiungere una riga dei numeri sopra la tastiera quando il tastierino numerico e\' nascosto</string>
     <string name="pref_numpad_layout">Layout del yadtierino numerico</string>
     <string name="pref_numpad_layout_e_high_first">Prima i numeri piu` alti</string>
     <string name="pref_numpad_layout_e_low_first">Prima i numeri piu` bassi</string>

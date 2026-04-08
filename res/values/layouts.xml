@@ -13,7 +13,9 @@
     <item>arab_pc_ckb_fa</item>
     <item>arab_pc_hindu</item>
     <item>arab_pc_ir</item>
-    <item>armenian_ph_am</item>
+    <item>armn_cpbsmo</item>
+    <item>armn_kvertc</item>
+    <item>beng_assamese</item>
     <item>beng_national</item>
     <item>beng_provat</item>
     <item>cyrl_fcuzhen_mn</item>
@@ -21,10 +23,12 @@
     <item>cyrl_jcuken_kk</item>
     <item>cyrl_jcuken_ru</item>
     <item>cyrl_jcuken_uk</item>
+    <item>cyrl_jiuken</item>
     <item>cyrl_lynyertdz_mk</item>
     <item>cyrl_lynyertz_sr</item>
     <item>cyrl_ueishsht</item>
     <item>cyrl_yaverti</item>
+    <item>cyrl_yawerty</item>
     <item>cyrl_yqukeng_tj</item>
     <item>cyrl_yxukeng_os</item>
     <item>deva_alt</item>
@@ -38,6 +42,7 @@
     <item>hebr_1_il</item>
     <item>hebr_2_il</item>
     <item>kann_kannada</item>
+    <item>latin_kbdtuf_tr</item>
     <item>latn_azerty_be</item>
     <item>latn_azerty_fr</item>
     <item>latn_bepo_fr</item>
@@ -52,6 +57,7 @@
     <item>latn_qwerty_da</item>
     <item>latn_qwerty_es</item>
     <item>latn_qwerty_et</item>
+    <item>latn_qwerty_fi</item>
     <item>latn_qwerty_ga</item>
     <item>latn_qwerty_gb</item>
     <item>latn_qwerty_haw</item>
@@ -81,6 +87,7 @@
     <item>latn_qwertz_hu</item>
     <item>latn_qwertz_sk</item>
     <item>latn_qwertz_sq</item>
+    <item>latn_qzerty_it</item>
     <item>latn_workman_us</item>
     <item>shaw_imperial_en</item>
     <item>sinhala_phonetic</item>
@@ -100,7 +107,9 @@
     <item>Central Kurdish (سۆرانی) Persian Layout</item>
     <item>Arabic PC (Hindu numerals)</item>
     <item>Persian PC</item>
-    <item>Armenian</item>
+    <item>ՃՓԲՍՄՈ</item>
+    <item>ՔՎԸՐՏՃ</item>
+    <item>অসমীয়া (Assamese)</item>
     <item>বাংলা (জাতীয়)</item>
     <item>বাংলা (প্রভাত)</item>
     <item>ФЦУЖЭН (Монгол)</item>
@@ -108,10 +117,12 @@
     <item>ЙЦУКЕН (Қазақша)</item>
     <item>ЙЦУКЕН (Русский)</item>
     <item>ЙЦУКЕН (Українська)</item>
+    <item>ЙІУКЕН</item>
     <item>ЉЊЕРТЅ (Македонски)</item>
     <item>ЉЊЕРТЗ (Српски)</item>
     <item>УЕИШЩ (Български, БДС)</item>
     <item>ЯВЕРТЪ</item>
+    <item>ЯВЕРТЫ</item>
     <item>Tajiki Persian (Тоҷикӣ)</item>
     <item>Old Church Slavonic (Црькъвьнословѣньскъ ѩзыкъ)</item>
     <item>देवनागरी (हिंदी)-2</item>
@@ -125,6 +136,7 @@
     <item>Hebrew 1</item>
     <item>Hebrew 2</item>
     <item>ಕನ್ನಡ - Kannada</item>
+    <item>Turkish F</item>
     <item>AZERTY (Belgian)</item>
     <item>AZERTY (Français)</item>
     <item>BEPO (Français)</item>
@@ -139,6 +151,7 @@
     <item>QWERTY (Danish)</item>
     <item>QWERTY (Español)</item>
     <item>QWERTY (eesti)</item>
+    <item>QWERTY (Finnish)</item>
     <item>QWERTY (Irish)</item>
     <item>QWERTY (UK)</item>
     <item>QWERTY (Hawaiian)</item>
@@ -168,6 +181,7 @@
     <item>QWERTZ (Magyar)</item>
     <item>QWERTZ (Slovak)</item>
     <item>QWERTZ (Albanian)</item>
+    <item>QZERTY (Italiano)</item>
     <item>WORKMAN (US)</item>
     <item>Shaw Imperial</item>
     <item>සිංහල</item>
@@ -187,7 +201,9 @@
     <item>@xml/arab_pc_ckb_fa</item>
     <item>@xml/arab_pc_hindu</item>
     <item>@xml/arab_pc_ir</item>
-    <item>@xml/armenian_ph_am</item>
+    <item>@xml/armn_cpbsmo</item>
+    <item>@xml/armn_kvertc</item>
+    <item>@xml/beng_assamese</item>
     <item>@xml/beng_national</item>
     <item>@xml/beng_provat</item>
     <item>@xml/cyrl_fcuzhen_mn</item>
@@ -195,10 +211,12 @@
     <item>@xml/cyrl_jcuken_kk</item>
     <item>@xml/cyrl_jcuken_ru</item>
     <item>@xml/cyrl_jcuken_uk</item>
+    <item>@xml/cyrl_jiuken</item>
     <item>@xml/cyrl_lynyertdz_mk</item>
     <item>@xml/cyrl_lynyertz_sr</item>
     <item>@xml/cyrl_ueishsht</item>
     <item>@xml/cyrl_yaverti</item>
+    <item>@xml/cyrl_yawerty</item>
     <item>@xml/cyrl_yqukeng_tj</item>
     <item>@xml/cyrl_yxukeng_os</item>
     <item>@xml/deva_alt</item>
@@ -212,6 +230,7 @@
     <item>@xml/hebr_1_il</item>
     <item>@xml/hebr_2_il</item>
     <item>@xml/kann_kannada</item>
+    <item>@xml/latin_kbdtuf_tr</item>
     <item>@xml/latn_azerty_be</item>
     <item>@xml/latn_azerty_fr</item>
     <item>@xml/latn_bepo_fr</item>
@@ -226,6 +245,7 @@
     <item>@xml/latn_qwerty_da</item>
     <item>@xml/latn_qwerty_es</item>
     <item>@xml/latn_qwerty_et</item>
+    <item>@xml/latn_qwerty_fi</item>
     <item>@xml/latn_qwerty_ga</item>
     <item>@xml/latn_qwerty_gb</item>
     <item>@xml/latn_qwerty_haw</item>
@@ -255,6 +275,7 @@
     <item>@xml/latn_qwertz_hu</item>
     <item>@xml/latn_qwertz_sk</item>
     <item>@xml/latn_qwertz_sq</item>
+    <item>@xml/latn_qzerty_it</item>
     <item>@xml/latn_workman_us</item>
     <item>@xml/shaw_imperial_en</item>
     <item>@xml/sinhala_phonetic</item>

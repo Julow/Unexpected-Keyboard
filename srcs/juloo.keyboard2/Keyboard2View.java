@@ -18,6 +18,7 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
 import java.util.Arrays;
+import java.util.List;
 
 public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
@@ -26,11 +27,9 @@ public class Keyboard2View extends View
 
   /** The key holding the shift key is used to set shift state from
       autocapitalisation. */
-  private KeyValue _shift_kv;
   private KeyboardData.Key _shift_key;
 
   /** Used to add fake pointers. */
-  private KeyValue _compose_kv;
   private KeyboardData.Key _compose_key;
 
   private Pointers _pointers;
@@ -108,10 +107,8 @@ public class Keyboard2View extends View
   public void setKeyboard(KeyboardData kw)
   {
     _keyboard = kw;
-    _shift_kv = KeyValue.getKeyByName("shift");
-    _shift_key = _keyboard.findKeyWithValue(_shift_kv);
-    _compose_kv = KeyValue.getKeyByName("compose");
-    _compose_key = _keyboard.findKeyWithValue(_compose_kv);
+    _shift_key = _keyboard.findKeyWithValue(KeyValue.SHIFT);
+    _compose_key = _keyboard.findKeyWithValue(KeyValue.COMPOSE);
     KeyModifier.set_modmap(_keyboard.modmap);
     reset();
   }
@@ -135,20 +132,21 @@ public class Keyboard2View extends View
   /** Called by auto-capitalisation. */
   public void set_shift_state(boolean latched, boolean lock)
   {
-    set_fake_ptr_latched(_shift_key, _shift_kv, latched, lock);
+    set_fake_ptr_latched(_shift_key, KeyValue.SHIFT, latched, lock);
   }
 
   /** Called from [KeyEventHandler]. */
   public void set_compose_pending(boolean pending)
   {
-    set_fake_ptr_latched(_compose_key, _compose_kv, pending, false);
+    set_fake_ptr_latched(_compose_key, KeyValue.COMPOSE, pending, false);
   }
 
   /** Called from [Keybard2.onUpdateSelection].  */
   public void set_selection_state(boolean selection_state)
   {
-    set_fake_ptr_latched(KeyboardData.Key.EMPTY,
-        KeyValue.getKeyByName("selection_mode"), selection_state, true);
+    if (_config.editor_config.selection_mode_enabled)
+      set_fake_ptr_latched(KeyboardData.Key.EMPTY,
+          KeyValue.SELECTION_MODE, selection_state, true);
   }
 
   public KeyValue modifyKey(KeyValue k, Pointers.Modifiers mods)
@@ -272,6 +270,7 @@ public class Keyboard2View extends View
     _marginLeft = Math.max(_config.horizontal_margin, _insets_left);
     _marginRight = Math.max(_config.horizontal_margin, _insets_right);
     _marginBottom = _config.margin_bottom + _insets_bottom;
+    width += _insets_left + _insets_right;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
     _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
     // Compute the size of labels based on the width or the height of keys. The
@@ -290,6 +289,8 @@ public class Keyboard2View extends View
     setMeasuredDimension(width, height);
   }
 
+  Rect _cached_exclusion_rect = new Rect();
+  List<Rect> _cached_exclusion_rects = Arrays.asList(_cached_exclusion_rect);
   @Override
   public void onLayout(boolean changed, int left, int top, int right, int bottom)
   {
@@ -298,12 +299,12 @@ public class Keyboard2View extends View
     if (VERSION.SDK_INT >= 29)
     {
       // Disable the back-gesture on the keyboard area
-      Rect keyboard_area = new Rect(
+      _cached_exclusion_rect.set(
           left + (int)_marginLeft,
           top + (int)_config.marginTop,
           right - (int)_marginRight,
           bottom - (int)_marginBottom);
-      setSystemGestureExclusionRects(Arrays.asList(keyboard_area));
+      setSystemGestureExclusionRects(_cached_exclusion_rects);
     }
   }
 
@@ -339,8 +340,6 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
-    // Set keyboard background opacity
-    getBackground().setAlpha(_config.keyboardOpacity);
     float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {
@@ -416,6 +415,7 @@ public class Keyboard2View extends View
           return _theme.lockedColor;
         return _theme.activatedColor;
       }
+      return _theme.pressedColor;
     }
     if (k.hasFlagsAny(KeyValue.FLAG_SECONDARY | KeyValue.FLAG_GREYED))
     {

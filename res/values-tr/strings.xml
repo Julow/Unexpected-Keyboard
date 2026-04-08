@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Sadece manzara modunda</string>
     <string name="pref_show_numpad_always">Her zaman</string>
     <string name="pref_number_row_title">Rakam satırını göster</string>
-    <string name="pref_number_row_summary">NumPad gizlendiğinde klavyenin üstüne rakam satırı ekle</string>
     <string name="pref_numpad_layout">NumPad düzeni</string>
     <string name="pref_numpad_layout_e_high_first">9dan 1e</string>
     <string name="pref_numpad_layout_e_low_first">1den 9a</string>

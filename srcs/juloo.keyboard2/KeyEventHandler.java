@@ -1,23 +1,25 @@
 package juloo.keyboard2;
 
 import android.annotation.SuppressLint;
-import android.os.Looper;
 import android.os.Handler;
-import android.text.InputType;
+import android.os.Looper;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import java.util.Iterator;
+import juloo.keyboard2.suggestions.Suggestions;
 
 public final class KeyEventHandler
   implements Config.IKeyEventHandler,
-             ClipboardHistoryService.ClipboardPasteCallback
+             ClipboardHistoryService.ClipboardPasteCallback,
+             CurrentlyTypedWord.Callback
 {
   IReceiver _recv;
   Autocapitalisation _autocap;
+  Suggestions _suggestions;
+  CurrentlyTypedWord _typedword;
   /** State of the system modifiers. It is updated whether a modifier is down
       or up and a corresponding key event is sent. */
   Pointers.Modifiers _mods;
@@ -28,26 +30,37 @@ public final class KeyEventHandler
   /** Whether to force sending arrow keys to move the cursor when
       [setSelection] could be used instead. */
   boolean _move_cursor_force_fallback = false;
+  /** Whether the space bar automatically enters the best suggestion. */
+  boolean _space_bar_auto_complete = false;
 
-  public KeyEventHandler(IReceiver recv)
+  public KeyEventHandler(IReceiver recv, Config config)
   {
     _recv = recv;
-    _autocap = new Autocapitalisation(recv.getHandler(),
+    Handler handler = recv.getHandler();
+    _autocap = new Autocapitalisation(handler,
         this.new Autocapitalisation_callback());
     _mods = Pointers.Modifiers.EMPTY;
+    _suggestions = new Suggestions(recv, config);
+    _typedword = new CurrentlyTypedWord(handler, this);
   }
 
   /** Editing just started. */
-  public void started(EditorInfo info)
+  public void started(Config conf)
   {
-    _autocap.started(info, _recv.getCurrentInputConnection());
-    _move_cursor_force_fallback = should_move_cursor_force_fallback(info);
+    InputConnection ic = _recv.getCurrentInputConnection();
+    _autocap.started(conf, ic);
+    _typedword.started(conf, ic);
+    _move_cursor_force_fallback =
+      conf.editor_config.should_move_cursor_force_fallback;
+    _space_bar_auto_complete = conf.space_bar_auto_complete;
+    clear_space_bar_state();
   }
 
   /** Selection has been updated. */
-  public void selection_updated(int oldSelStart, int newSelStart)
+  public void selection_updated(int oldSelStart, int newSelStart, int newSelEnd)
   {
     _autocap.selection_updated(oldSelStart, newSelStart);
+    _typedword.selection_updated(oldSelStart, newSelStart, newSelEnd);
   }
 
   /** A key is being pressed. There will not necessarily be a corresponding
@@ -112,9 +125,24 @@ public final class KeyEventHandler
   }
 
   @Override
+  public void suggestion_entered(String text)
+  {
+    String old = _typedword.get();
+    replace_text_before_cursor(old.length(), text + " ");
+    last_replaced_word = old;
+    last_replacement_word_len = text.length() + 1;
+  }
+
+  @Override
   public void paste_from_clipboard_pane(String content)
   {
     send_text(content);
+  }
+
+  @Override
+  public void currently_typed_word(String word)
+  {
+    _suggestions.currently_typed_word(word);
   }
 
   /** Update [_mods] to be consistent with the [mods], sending key events if
@@ -203,16 +231,33 @@ public final class KeyEventHandler
           metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
           KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
     if (eventAction == KeyEvent.ACTION_UP)
+    {
       _autocap.event_sent(eventCode, metaState);
+      _typedword.event_sent(eventCode, metaState);
+      clear_space_bar_state();
+    }
   }
 
-  void send_text(CharSequence text)
+  void send_text(String text)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
-    conn.commitText(text, 1);
     _autocap.typed(text);
+    _typedword.typed(text);
+    conn.commitText(text, 1);
+    clear_space_bar_state();
+  }
+
+  void replace_text_before_cursor(int remove_length, String new_text)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    conn.beginBatchEdit();
+    conn.deleteSurroundingText(remove_length, 0);
+    conn.commitText(new_text, 1);
+    conn.endBatchEdit();
   }
 
   /** See {!InputConnection.performContextMenuAction}. */
@@ -229,9 +274,9 @@ public final class KeyEventHandler
   {
     switch (ev)
     {
-      case COPY: if(is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
+      case COPY: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
       case PASTE: send_context_menu_action(android.R.id.paste); break;
-      case CUT: if(is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
+      case CUT: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
       case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
       case SHARE: send_context_menu_action(android.R.id.shareText); break;
       case PASTE_PLAIN: send_context_menu_action(android.R.id.pasteAsPlainText); break;
@@ -243,6 +288,8 @@ public final class KeyEventHandler
       case DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
       case FORWARD_DELETE_WORD: send_key_down_up(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON); break;
       case SELECTION_CANCEL: cancel_selection(); break;
+      case SPACE_BAR: handle_space_bar(); break;
+      case BACKSPACE: handle_backspace(); break;
     }
   }
 
@@ -385,7 +432,7 @@ public final class KeyEventHandler
   void evaluate_macro_loop(final KeyValue[] keys, int i, Pointers.Modifiers mods, final boolean autocap_paused)
   {
     boolean should_delay = false;
-    KeyValue kv = KeyModifier.modify(keys[i], mods);
+    KeyValue kv = KeyModifier.modify_no_modmap(keys[i], mods);
     if (kv != null)
     {
       if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
@@ -457,29 +504,50 @@ public final class KeyEventHandler
     if (et == null) return;
     final int curs = et.selectionStart;
     // Notify the receiver as Android's [onUpdateSelection] is not triggered.
-    if (conn.setSelection(curs, curs));
+    if (conn.setSelection(curs, curs))
       _recv.selection_state_changed(false);
   }
 
-  boolean is_selection_not_empty()
+  /** The word that was replaced by a suggestion when the last action was to
+      enter a suggestion (with the space bar or the candidates view) or [null]
+      otherwise. */
+  String last_replaced_word = null;
+  /** Length of the text before the cursor that should be replaced by
+      backspace. */
+  int last_replacement_word_len = 0;
+
+  void handle_space_bar()
   {
-    InputConnection conn = _recv.getCurrentInputConnection();
-    if (conn == null) return false;
-    return (conn.getSelectedText(0) != null);
+    if (_space_bar_auto_complete && _suggestions.best_suggestion != null
+        && !_typedword.is_selection_not_empty())
+    {
+      suggestion_entered(_suggestions.best_suggestion);
+    }
+    else
+    {
+      send_text(" ");
+    }
   }
 
-  /** Workaround some apps which answers to [getExtractedText] but do not react
-      to [setSelection] while returning [true]. */
-  boolean should_move_cursor_force_fallback(EditorInfo info)
+  void handle_backspace()
   {
-    // This catch Acode: which sets several variations at once.
-    if ((info.inputType & InputType.TYPE_MASK_VARIATION & InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0)
-      return true;
-    // Godot editor: Doesn't handle setSelection() but returns true.
-    return info.packageName.startsWith("org.godotengine.editor");
+    if (last_replaced_word != null)
+    {
+      replace_text_before_cursor(last_replacement_word_len, last_replaced_word);
+      last_replaced_word = null;
+    }
+    else
+    {
+      send_key_down_up(KeyEvent.KEYCODE_DEL);
+    }
   }
 
-  public static interface IReceiver
+  void clear_space_bar_state()
+  {
+    last_replaced_word = null;
+  }
+
+  public static interface IReceiver extends Suggestions.Callback
   {
     public void handle_event_key(KeyValue.Event ev);
     public void set_shift_state(boolean state, boolean lock);

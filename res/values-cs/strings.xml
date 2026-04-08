@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Pouze v režimu na šířku</string>
     <string name="pref_show_numpad_always">Vždy</string>
     <string name="pref_number_row_title">Zobrazit řádek s čísly</string>
-    <string name="pref_number_row_summary">Přidá řádek s čísly nad klávesnici, pokud je NumPad skrytý</string>
     <string name="pref_numpad_layout">Rozložení NumPadu</string>
     <string name="pref_numpad_layout_e_high_first">Vyšší číslice jako první (horní řádek 789)</string>
     <string name="pref_numpad_layout_e_low_first">Nižší číslice jako první (horní řádek 123)</string>

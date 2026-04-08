@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- String constants that should not be translated.
+       It is mostly meant to silence the linter checks. -->
+  <string name="launcher_anim_7">7</string>
+  <string name="launcher_anim_g">G</string>
+  <string name="launcher_anim_dash">-</string>
+  <string name="launcher_repo_url">https://github.com/Julow/Unexpected-Keyboard</string>
+</resources>

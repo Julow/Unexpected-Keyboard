@@ -12,6 +12,10 @@
     <ListPreference android:key="show_numpad" android:title="@string/pref_show_numpad_title" android:summary="%s" android:defaultValue="1" android:entries="@array/pref_show_numpad_entries" android:entryValues="@array/pref_show_numpad_values"/>
     <ListPreference android:key="numpad_layout" android:title="@string/pref_numpad_layout" android:summary="%s" android:defaultValue="high_first" android:entries="@array/pref_numpad_layout_entries" android:entryValues="@array/pref_numpad_layout_values"/>
   </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_category_suggestions">
+    <CheckBoxPreference android:key="suggestions" android:title="@string/pref_suggestions_title" android:summary="@string/pref_suggestions_summary" android:defaultValue="true"/>
+    <CheckBoxPreference android:key="space_bar_auto_complete" android:title="@string/pref_space_bar_auto_complete_title" android:summary="@string/pref_space_bar_auto_complete_summary" android:defaultValue="false"/>
+  </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
     <ListPreference android:key="swipe_dist" android:title="@string/pref_swipe_dist_title" android:summary="@string/pref_swipe_dist_summary" android:defaultValue="15" android:entries="@array/pref_swipe_dist_entries" android:entryValues="@array/pref_swipe_dist_values"/>
     <ListPreference android:key="circle_sensitivity" android:title="@string/pref_circle_sensitivity_title" android:summary="%s" android:defaultValue="2" android:entries="@array/pref_circle_sensitivity_entries" android:entryValues="@array/pref_circle_sensitivity_values"/>
@@ -23,7 +27,7 @@
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_behavior">
     <CheckBoxPreference android:key="autocapitalisation" android:title="@string/pref_autocapitalisation_title" android:summary="@string/pref_autocapitalisation_summary" android:defaultValue="true"/>
-    <CheckBoxPreference android:key="switch_input_immediate" android:title="@string/pref_switch_input_immediate_title" android:summary="@string/pref_switch_input_immediate_summary" android:defaultValue="false"/>
+    <ListPreference android:key="change_method_key_replacement" android:title="@string/pref_change_method_key_replacement_title" android:summary="%s" android:entries="@array/pref_change_method_key_replacement_entries" android:entryValues="@array/pref_change_method_key_replacement_values" android:defaultValue="prev"/>
     <CheckBoxPreference android:key="vibrate_custom" android:title="@string/pref_vibrate_custom" android:defaultValue="false"/>
     <juloo.keyboard2.prefs.IntSlideBarPreference android:dependency="vibrate_custom" android:key="vibrate_duration" android:title="@string/pref_vibrate_duration_title" android:summary="%sms" android:defaultValue="20" min="0" max="100"/>
     <ListPreference android:key="number_entry_layout" android:title="@string/pref_number_entry_title" android:summary="%s" android:defaultValue="pin" android:entries="@array/pref_number_entry_entries" android:entryValues="@array/pref_number_entry_values"/>
@@ -35,10 +39,10 @@
     <juloo.keyboard2.prefs.IntSlideBarPreference android:key="key_opacity" android:title="@string/pref_key_opacity" android:summary="%s%%" android:defaultValue="100" min="0" max="100"/>
     <juloo.keyboard2.prefs.IntSlideBarPreference android:key="key_activated_opacity" android:title="@string/pref_key_activated_opacity" android:summary="%s%%" android:defaultValue="100" min="0" max="100"/>
     <PreferenceScreen android:title="@string/pref_margin_bottom_title">
-      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_portrait" android:title="@string/pref_portrait" android:summary="%sdp" android:defaultValue="7" min="0" max="100"/>
-      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_landscape" android:title="@string/pref_landscape" android:summary="%sdp" android:defaultValue="3" min="0" max="100"/>
-      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_portrait_unfolded" android:title="@string/pref_portrait_unfolded" android:summary="%sdp" android:defaultValue="7" min="0" max="100"/>
-      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_landscape_unfolded" android:title="@string/pref_landscape_unfolded" android:summary="%sdp" android:defaultValue="3" min="0" max="100"/>
+      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_portrait" android:title="@string/pref_portrait" android:summary="%sdp" android:defaultValue="7" min="0" max="250"/>
+      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_landscape" android:title="@string/pref_landscape" android:summary="%sdp" android:defaultValue="3" min="0" max="120"/>
+      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_portrait_unfolded" android:title="@string/pref_portrait_unfolded" android:summary="%sdp" android:defaultValue="7" min="0" max="250"/>
+      <juloo.keyboard2.prefs.IntSlideBarPreference android:key="margin_bottom_landscape_unfolded" android:title="@string/pref_landscape_unfolded" android:summary="%sdp" android:defaultValue="3" min="0" max="250"/>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_keyboard_height_title">
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="keyboard_height" android:title="@string/pref_portrait" android:summary="%s%%" android:defaultValue="35" min="10" max="100"/>
@@ -58,5 +62,8 @@
     <CheckBoxPreference android:key="border_config" android:title="@string/pref_border_config_title" android:defaultValue="false"/>
     <juloo.keyboard2.prefs.IntSlideBarPreference android:key="custom_border_radius" android:title="@string/pref_corners_radius_title" android:summary="%s%%" android:defaultValue="0" min="0" max="100" android:dependency="border_config"/>
     <juloo.keyboard2.prefs.SlideBarPreference android:key="custom_border_line_width" android:title="@string/pref_border_width_title" android:summary="%sdp" android:defaultValue="0" min="0" max="5" android:dependency="border_config"/>
+  </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_category_clipboard">
+    <ListPreference android:key="clipboard_history_duration" android:title="@string/pref_clipboard_history_duration" android:summary="%s" android:defaultValue="5" android:entries="@array/pref_clipboard_duration_entries" android:entryValues="@array/pref_clipboard_duration_values"/>
   </PreferenceCategory>
 </PreferenceScreen>

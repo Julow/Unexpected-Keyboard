@@ -9,6 +9,7 @@
     <attr name="colorKeyActivated" format="color"/>
     <!-- Label colors -->
     <attr name="colorLabel" format="color"/>
+    <attr name="colorLabelPressed" format="color"/> <!-- defaults to colorLabel -->
     <attr name="colorLabelActivated" format="color"/>
     <attr name="colorLabelLocked" format="color"/>
     <attr name="secondaryDimming" format="float"/>
@@ -181,25 +182,25 @@
   </style>
   <style name="MonetLight" parent="@style/BaseTheme">
     <item name="android:isLightTheme">true</item>
-    <item name="colorKeyboard">@android:color/system_neutral1_100</item>
-    <item name="colorKey">@android:color/system_neutral1_50</item>
+    <item name="colorKeyboard">@color/system_neutral1_100</item>
+    <item name="colorKey">@color/system_neutral1_50</item>
     <item name="colorKeyActivated">?colorKeyboard</item>
-    <item name="colorLabel">@android:color/system_neutral1_800</item>
-    <item name="colorLabelActivated">@android:color/system_accent1_400</item>
-    <item name="colorLabelLocked">@android:color/system_accent1_600</item>
-    <item name="colorSubLabel">@android:color/system_neutral1_500</item>
+    <item name="colorLabel">@color/system_neutral1_800</item>
+    <item name="colorLabelActivated">@color/system_accent1_400</item>
+    <item name="colorLabelLocked">@color/system_accent1_600</item>
+    <item name="colorSubLabel">@color/system_neutral1_500</item>
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">?colorKeyboard</item>
   </style>
   <style name="MonetDark" parent="@style/BaseTheme">
     <item name="android:isLightTheme">false</item>
-    <item name="colorKeyboard">@android:color/system_neutral1_900</item>
-    <item name="colorKey">@android:color/system_neutral1_800</item>
+    <item name="colorKeyboard">@color/system_neutral1_900</item>
+    <item name="colorKey">@color/system_neutral1_800</item>
     <item name="colorKeyActivated">?colorKeyboard</item>
-    <item name="colorLabel">@android:color/system_neutral1_0</item>
-    <item name="colorLabelActivated">@android:color/system_accent1_400</item>
-    <item name="colorLabelLocked">@android:color/system_accent1_600</item>
-    <item name="colorSubLabel">@android:color/system_neutral1_400</item>
+    <item name="colorLabel">@color/system_neutral1_0</item>
+    <item name="colorLabelActivated">@color/system_accent1_400</item>
+    <item name="colorLabelLocked">@color/system_accent1_600</item>
+    <item name="colorSubLabel">@color/system_neutral1_400</item>
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">?colorKeyboard</item>
   </style>
@@ -236,5 +237,64 @@
     <item name="emoji_button_bg">?colorKeyActivated</item>
     <item name="emoji_color">?colorLabel</item>
     <item name="clipboard_divider_color">?colorKey</item>
+ </style>
+ <style name="Cobalt" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#000000</item>
+    <item name="colorKey">?colorKeyboard</item>
+    <item name="colorKeyActivated">#78bfff</item>
+    <item name="colorLabel">#95c9ff</item>
+    <item name="colorLabelActivated">?colorKey</item>
+    <item name="colorLabelLocked">#ffffff</item>
+    <item name="colorSubLabel">#66dbff</item>
+    <item name="keyBorderWidth">0.0dip</item>
+    <item name="keyBorderWidthActivated">0.0dip</item>
+    <item name="keyBorderColorLeft">#333349</item>
+    <item name="keyBorderColorTop">#333349</item>
+    <item name="keyBorderColorRight">#333349</item>
+    <item name="keyBorderColorBottom">#333349</item>
+    <item name="emoji_button_bg">?colorKeyboard</item>
+    <item name="emoji_color">?colorLabel</item>
+    <item name="clipboard_divider_color">?colorKey</item>
+ </style>
+ <style name="Pine" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#000000</item>
+    <item name="colorKey">?colorKeyboard</item>
+    <item name="colorKeyActivated">#74cc8a</item>
+    <item name="colorLabel">#91d7a6</item>
+    <item name="colorLabelActivated">?colorKey</item>
+    <item name="colorLabelLocked">#f7ff9b</item>
+    <item name="colorSubLabel">#63ea8b</item>
+    <item name="keyBorderWidth">0.0dip</item>
+    <item name="keyBorderWidthActivated">0.0dip</item>
+    <item name="keyBorderColorLeft">#2f301e</item>
+    <item name="keyBorderColorTop">#2f301e</item>
+    <item name="keyBorderColorRight">#2f301e</item>
+    <item name="keyBorderColorBottom">#2f301e</item>
+    <item name="emoji_button_bg">?colorKeyboard</item>
+    <item name="emoji_color">?colorLabel</item>
+    <item name="clipboard_divider_color">?colorKey</item>
+ </style>
+ <style name="ePaperBlack" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#000000</item>
+    <item name="colorKey">?colorKeyboard</item>
+    <item name="colorKeyActivated">#ffffff</item>
+    <item name="colorLabel">#ffffff</item>
+    <item name="colorLabelActivated">?colorKey</item>
+    <item name="colorLabelPressed">?colorKey</item>
+    <item name="colorLabelLocked">#f5060b</item>
+    <item name="colorSubLabel">?colorLabel</item>
+    <item name="keyBorderWidth">1dp</item>
+    <item name="keyBorderWidthActivated">5dp</item>
+    <item name="keyBorderColorLeft">#ffffff</item>
+    <item name="keyBorderColorTop">#ffffff</item>
+    <item name="keyBorderColorRight">#ffffff</item>
+    <item name="keyBorderColorBottom">#ffffff</item>
+    <item name="emoji_button_bg">?colorKeyboard</item>
+    <item name="emoji_color">?colorLabel</item>
+    <item name="clipboard_divider_color">?colorLabel</item>
+    <item name="clipboard_divider_height">2dp</item>
  </style>
 </resources>

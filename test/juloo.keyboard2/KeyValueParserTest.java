@@ -44,6 +44,12 @@ public class KeyValueParserTest
       KeyValue.getSpecialKeyByName("ctrl"),
       KeyValue.getSpecialKeyByName("backspace")
     }, 0));
+    Utils.parse("symbol:a,'\\\\abc','abc','a\\\\bc'", KeyValue.makeMacro("symbol", new KeyValue[]{
+      KeyValue.makeStringKey("a"),
+      KeyValue.makeStringKey("\\abc"),
+      KeyValue.makeStringKey("abc"),
+      KeyValue.makeStringKey("a\\bc")
+    }, 0));
     Utils.expect_error("symbol:");
     Utils.expect_error("unterminated_string:'");
     Utils.expect_error("unterminated_string:abc,'");
@@ -57,6 +63,10 @@ public class KeyValueParserTest
   {
     Utils.parse("a:b", KeyValue.makeCharKey('b', "a", 0));
     Utils.parse("symbol:abc", KeyValue.makeStringKey("abc").withSymbol("symbol"));
+    Utils.parse("symbol:\\abc", KeyValue.makeStringKey("abc").withSymbol("symbol"));
+    Utils.parse("symbol:a\\bc", KeyValue.makeStringKey("abc").withSymbol("symbol"));
+    Utils.parse("symbol:\\\\abc", KeyValue.makeStringKey("\\abc").withSymbol("symbol"));
+    Utils.parse("symbol:a\\\\bc", KeyValue.makeStringKey("a\\bc").withSymbol("symbol"));
   }
 
   @Test

@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
     <string name="pref_show_numpad_always">Toujour</string>
     <string name="pref_number_row_title">Rangée de chiffres</string>
-    <string name="pref_number_row_summary">Ajoute une rangée de chiffres en haut du clavier quand le pavé numérique est caché</string>
     <string name="pref_numpad_layout">Disposition du pavé numérique</string>
     <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
     <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>

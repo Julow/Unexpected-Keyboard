@@ -27,7 +27,6 @@
     <string name="pref_show_numpad_landscape">Tikai līmeniskajā stāvoklī</string>
     <string name="pref_show_numpad_always">Vienmēr</string>
     <string name="pref_number_row_title">Rādīt ciparu rindu</string>
-    <string name="pref_number_row_summary">Pievienot ciparu rindu virs tastatūras, kad ciparnīca ir paslēpta</string>
     <string name="pref_numpad_layout">Ciparnīcas izkārtojums</string>
     <string name="pref_numpad_layout_e_high_first">Lielie cipari augšā</string>
     <string name="pref_numpad_layout_e_low_first">Mazie cipari augšā</string>

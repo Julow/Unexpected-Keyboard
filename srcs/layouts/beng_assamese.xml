@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<keyboard name="অসমীয়া (Assamese)" script="bengali">
+  <row>
+    <key shift="0.5" c="ৌ" se="ঔ" nw="১"/>
+    <key c="ৈ"             se="ঐ" nw="২" sw="ৰ্"/>
+    <key c="া"             se="আ" nw="৩" sw="জ্ঞ"/>
+    <key c="ী"             se="ঈ" nw="৪" sw="ত্ৰ"/>
+    <key c="&#x09c2;"      se="ঊ" nw="৫" sw="ক্ষ"/>
+    <key c="ব"             sw="ভ" ne="৬" se="শ্ৰ"/>
+    <key c="হ"             sw="ঙ" ne="৭" se="ড"/>
+    <key c="গ"             sw="ঘ" ne="৮" se="&#x09bc;"/>
+    <key c="দ"             sw="ধ" ne="৯" se="ঃ"/>
+    <key c="জ"             sw="ঝ" ne="০" se="ঋ"/>
+  </row>
+  <row>
+    <key c="ো" ne="॥" se="ও"/>
+    <key c="ে" se="এ"/>
+    <key c="&#x09cd;" se="অ"/>
+    <key c="ি" se="ই"/>
+    <key c="&#x09c1;" se="উ"/>
+    <key c="প" se="ফ"/>
+    <key c="ৰ"/>
+    <key c="ক" sw="খ"/>
+    <key c="ত" sw="থ"/>
+    <key c="চ" sw="ছ" nw="ঢ"/>
+    <key c="ট" sw="ঠ" nw="ঞ"/>
+  </row>
+  <row>
+    <key shift="0.5" c="ং" se="&quot;" n="shift"/>
+    <key c="ম" se="ণ" nw="!"/>
+    <key c="ন" nw="@"/>
+    <key c="ৱ"/>
+    <key c="ল"/>
+    <key c="স" sw="শ"/>
+    <key c="," sw="ষ" ne="("/>
+    <key c="." sw="।" ne=")"/>
+    <key c="য়" sw="য"/>
+    <key width="1.5" c="backspace" ne="delete"/>
+  </row>
+</keyboard>

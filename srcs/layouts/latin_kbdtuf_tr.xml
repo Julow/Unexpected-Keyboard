@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<keyboard name="Turkish F" script="latin">
+  <modmap>
+    <shift a="i" b="İ" />
+    <shift a="ı" b="I" />
+  </modmap>
+  <row scale="11">
+  <key key0="f" key2="1" key4="esc"/>
+  <key key0="g" key1="~" key2="2" key3="\@"/>
+  <key key0="ğ" key1="!" key2="3" key3="\#"/>
+  <key key0="ı" key1="loc ₪" key2="4" key3="₺"/>
+  <key key0="o" key2="5" key3="%"/>
+  <key key0="d" key2="6" key3="^"/>
+  <key key0="r" key2="7" key3="&amp;"/>
+  <key key0="n" key2="8" key3="*"/>
+  <key key0="h" key1="q" key2="9" key3="(" key4=")"/>
+  <key key0="p" key1="w" key2="0" key3="f11_placeholder" key4="f12_placeholder"/>\
+</row>
+<row>
+<key key0="u" key1="tab" key2="`" key3="û"/>
+<key key0="i" key3="î"/>
+<key key0="e" key2="loc £"/>
+<key key0="a" key3="â"/>
+<key key0="ü" key2="-" key3="_"/>
+<key key0="t" key2="=" key3="+"/>
+<key key0="k" key3="{" key4="}"/>
+<key key0="m"/>
+<key key0="l" key3="[" key4="]"/>
+<key key0="y" key3="\\" key4="|"/>
+<key key0="ş" key1="x"/>
+</row>
+<row>
+<key width="1.5" key0="shift" key2="loc capslock"/>
+<key key0="j" key2="«"/>
+<key key0="ö" key2="»"/>
+<key key0="v" key2="&lt;" key3="."/>
+<key key0="c" key2=">" key3=","/>
+<key key0="ç" key1="¿" key2="\?" key3="/"/>
+<key key0="z" key2=":" key3=";"/>
+<key key0="s" key2="&quot;" key3="'"/>
+<key key0="b" key2="×"/>
+<key width="1.5" key0="backspace" key2="delete"/>
+</row>
+    </keyboard>

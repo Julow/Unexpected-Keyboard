@@ -8,6 +8,8 @@ import android.util.TypedValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import juloo.cdict.Cdict;
+import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.prefs.CustomExtraKeysPreference;
 import juloo.keyboard2.prefs.ExtraKeysPreference;
 import juloo.keyboard2.prefs.LayoutsPreference;
@@ -42,6 +44,7 @@ public final class Config
   public boolean number_row_symbols;
   public float swipe_dist_px;
   public float slide_step_px;
+  public boolean suggestions_enabled;
   // Let the system handle vibration when false.
   public boolean vibrate_custom;
   // Control the vibration if [vibrate_custom] is true.
@@ -50,7 +53,7 @@ public final class Config
   public long longPressInterval;
   public boolean keyrepeat_enabled;
   public float margin_bottom;
-  public int keyboardHeightPercent;
+  public int keyboard_rows_height_pixels;
   public int screenHeightPixels;
   public float horizontal_margin;
   public float key_vertical_margin;
@@ -65,22 +68,23 @@ public final class Config
   public float characterSize; // Ratio
   public int theme; // Values are R.style.*
   public boolean autocapitalisation;
-  public boolean switch_input_immediate;
+  public KeyValue change_method_key_replacement;
   public NumberLayout selected_number_layout;
   public boolean borderConfig;
   public int circle_sensitivity;
   public boolean clipboard_history_enabled;
+  public int clipboard_history_duration;
+  public boolean space_bar_auto_complete;
 
   // Dynamically set
+  /** Configuration options implied by the connected editor. */
+  public EditorConfig editor_config;
   public boolean shouldOfferVoiceTyping;
-  public String actionLabel; // Might be 'null'
-  public int actionId; // Meaningful only when 'actionLabel' isn't 'null'
-  public boolean swapEnterActionKey; // Swap the "enter" and "action" keys
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
-
-  public final IKeyEventHandler handler;
+  public Cdict current_dictionary = null; // Might be 'null'.
+  public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;
   public boolean wide_screen = false;
@@ -89,29 +93,27 @@ public final class Config
   int current_layout_narrow;
   int current_layout_wide;
 
-  private Config(SharedPreferences prefs, Resources res, IKeyEventHandler h, Boolean foldableUnfolded)
+  private Config(SharedPreferences prefs, Resources res,
+      Boolean foldableUnfolded, Dictionaries dicts)
   {
     _prefs = prefs;
+    editor_config = new EditorConfig();
     // static values
     marginTop = res.getDimension(R.dimen.margin_top);
     keyPadding = res.getDimension(R.dimen.key_padding);
     labelTextSize = 0.33f;
     sublabelTextSize = 0.22f;
     // from prefs
-    refresh(res, foldableUnfolded);
+    refresh(res, foldableUnfolded, dicts);
     // initialized later
     shouldOfferVoiceTyping = false;
-    actionLabel = null;
-    actionId = 0;
-    swapEnterActionKey = false;
     extra_keys_subtype = null;
-    handler = h;
   }
 
   /*
    ** Reload prefs
    */
-  public void refresh(Resources res, Boolean foldableUnfolded)
+  public void refresh(Resources res, Boolean foldableUnfolded, Dictionaries dicts)
   {
     DisplayMetrics dm = res.getDisplayMetrics();
     orientation_landscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
@@ -120,6 +122,7 @@ public final class Config
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
+    int keyboardHeightPercent;
     if (orientation_landscape)
     {
       if ("landscape".equals(show_numpad_s))
@@ -136,6 +139,7 @@ public final class Config
     String number_row = _prefs.getString("number_row", "no_number_row");
     add_number_row = !number_row.equals("no_number_row");
     number_row_symbols = number_row.equals("symbols");
+    suggestions_enabled = _prefs.getBoolean("suggestions", true);
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
@@ -165,6 +169,12 @@ public final class Config
     customBorderRadius = _prefs.getInt("custom_border_radius", 0) / 100.f;
     customBorderLineWidth = get_dip_pref(dm, "custom_border_line_width", 0);
     screenHeightPixels = dm.heightPixels;
+    // Rows height is proportional to the screen height, meaning it doesn't
+    // change for layouts with more or less rows. 3.95 is the usual height of
+    // a layout in KeyboardData unit. The keyboard will be higher if the layout
+    // has more rows and smaller if it has less because rows stay the same
+    // height.
+    keyboard_rows_height_pixels = screenHeightPixels * keyboardHeightPercent / 395;
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
@@ -173,7 +183,7 @@ public final class Config
       * characterSizeScale;
     theme = getThemeId(res, _prefs.getString("theme", ""));
     autocapitalisation = _prefs.getBoolean("autocapitalisation", true);
-    switch_input_immediate = _prefs.getBoolean("switch_input_immediate", false);
+    change_method_key_replacement = get_change_method_key_replacement(_prefs);
     extra_keys_param = ExtraKeysPreference.get_extra_keys(_prefs);
     extra_keys_custom = CustomExtraKeysPreference.get(_prefs);
     selected_number_layout = NumberLayout.of_string(_prefs.getString("number_entry_layout", "pin"));
@@ -181,6 +191,8 @@ public final class Config
     current_layout_wide = _prefs.getInt("current_layout_landscape", 0);
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
+    clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
+    space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
 
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
@@ -208,7 +220,7 @@ public final class Config
   public void set_clipboard_history_enabled(boolean e)
   {
     clipboard_history_enabled = e;
-    _prefs.edit().putBoolean("clipboard_history_enabled", e).commit();
+    _prefs.edit().putBoolean("clipboard_history_enabled", e).apply();
   }
 
   private float get_dip_pref(DisplayMetrics dm, String pref_name, float def)
@@ -256,6 +268,9 @@ public final class Config
         return R.style.MonetDark;
       case "rosepine": return R.style.RosePine;
       case "everforestlight": return R.style.EverforestLight;
+      case "cobalt": return R.style.Cobalt;
+      case "pine": return R.style.Pine;
+      case "epaperblack": return R.style.ePaperBlack;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
@@ -264,13 +279,24 @@ public final class Config
     }
   }
 
+  private static KeyValue get_change_method_key_replacement(SharedPreferences prefs)
+  {
+    switch (prefs.getString("change_method_key_replacement", "prev"))
+    {
+      case "prev": return KeyValue.CHANGE_METHOD_PREV;
+      case "next": return KeyValue.CHANGE_METHOD_NEXT;
+      default:
+      case "picker": return KeyValue.CHANGE_METHOD;
+    }
+  }
+
   private static Config _globalConfig = null;
 
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,
-      IKeyEventHandler handler, Boolean foldableUnfolded)
+      Boolean foldableUnfolded, Dictionaries dicts)
   {
     migrate(prefs);
-    _globalConfig = new Config(prefs, res, handler, foldableUnfolded);
+    _globalConfig = new Config(prefs, res, foldableUnfolded, dicts);
     LayoutModifier.init(_globalConfig, res);
   }
 
@@ -289,11 +315,12 @@ public final class Config
     public void key_down(KeyValue value, boolean is_swipe);
     public void key_up(KeyValue value, Pointers.Modifiers mods);
     public void mods_changed(Pointers.Modifiers mods);
+    public void suggestion_entered(String text);
   }
 
   /** Config migrations. */
 
-  private static int CONFIG_VERSION = 3;
+  private static int CONFIG_VERSION = 4;
 
   public static void migrate(SharedPreferences prefs)
   {
@@ -330,6 +357,10 @@ public final class Config
         }
         // Fallthrough
       case 3:
+        e.putString("change_method_key_replacement",
+            prefs.getBoolean("switch_input_immediate", false) ? "prev" : "picker");
+        // Fallthrough
+      case 4:
       default: break;
     }
     e.apply();
