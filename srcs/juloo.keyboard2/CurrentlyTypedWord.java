@@ -113,7 +113,7 @@ public final class CurrentlyTypedWord
     if (_has_selection)
       set_current_word("");
     else
-      set_current_word(_ic.getTextBeforeCursor(10, 0));
+      set_current_word(_ic.getTextBeforeCursor(20, 0));
   }
 
   /** Refresh the current word by immediately querying the editor. */
