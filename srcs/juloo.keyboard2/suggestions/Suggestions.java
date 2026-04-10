@@ -12,6 +12,7 @@ public final class Suggestions
 {
   Callback _callback;
   Config _config;
+  boolean _enabled;
 
   /** The suggestion displayed at the center of the candidates view and entered
       by the space bar. */
@@ -23,8 +24,16 @@ public final class Suggestions
     _config = conf;
   }
 
+  public void started()
+  {
+    _enabled = _config.editor_config.should_show_candidates_view;
+    best_suggestion = null;
+  }
+
   public void currently_typed_word(String word)
   {
+    if (!_enabled)
+      return;
     Cdict dict = _config.current_dictionary;
     if (word.length() < 2 || dict == null)
     {
