@@ -146,6 +146,12 @@ public final class KeyEventHandler
     _suggestions.currently_typed_word(word);
   }
 
+  public void ime_subtype_changed()
+  {
+    // Refresh the suggestions immediately after dictionary changed.
+    _suggestions.currently_typed_word(_typedword.get());
+  }
+
   /** Update [_mods] to be consistent with the [mods], sending key events if
       needed. */
   void update_meta_state(Pointers.Modifiers mods)

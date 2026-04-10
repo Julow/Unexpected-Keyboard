@@ -317,8 +317,10 @@ public class Keyboard2 extends InputMethodService
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
     refreshSubtypeImm();
+    refresh_current_dictionary();
     refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
+    _keyeventhandler.ime_subtype_changed();
   }
 
   @Override
