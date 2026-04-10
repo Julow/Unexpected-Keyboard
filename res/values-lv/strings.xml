@@ -69,7 +69,7 @@
     <!-- <string name="pref_theme_e_rosepine">Rosé Pine</string> -->
   <string name="pref_swipe_dist_e_very_short">Ļoti tuvs</string>
     <string name="pref_swipe_dist_e_short">Tuvs</string>
-    <string name="pref_swipe_dist_e_default">Vidējs</string>
+    <string name="pref_swipe_dist_e_default">Parasts</string>
     <string name="pref_swipe_dist_e_far">Tāls</string>
     <string name="pref_swipe_dist_e_very_far">Ļoti tāls</string>
     <string name="pref_key_horizontal_space">Līmeniskais attālums starp taustiņiem</string>
