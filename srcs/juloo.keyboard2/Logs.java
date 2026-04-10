@@ -1,7 +1,10 @@
 package juloo.keyboard2;
 
+import android.graphics.Insets;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.LogPrinter;
+import android.view.WindowInsets;
 import android.view.inputmethod.EditorInfo;
 import org.json.JSONException;
 
@@ -45,5 +48,24 @@ public final class Logs
   {
     if (_debug_logs != null)
       _debug_logs.println(Log.getStackTraceString(new Exception()));
+  }
+
+  public static void debug_insets(WindowInsets wi)
+  {
+    if (_debug_logs == null)
+      return;
+    Insets i = wi.getInsets(WindowInsets.Type.systemBars());
+    _debug_logs.println("Insets systemBars left=" + i.left + ", right=" + i.right + ", bottom=" + i.bottom);
+    i = wi.getInsets(WindowInsets.Type.displayCutout());
+    _debug_logs.println("Insets displayCutout left=" + i.left + ", right=" + i.right + ", bottom=" + i.bottom);
+    i = wi.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
+    _debug_logs.println("Insets left=" + i.left + ", right=" + i.right + ", bottom=" + i.bottom);
+  }
+
+  public static void debug_on_measure(DisplayMetrics dm, Config conf)
+  {
+    if (_debug_logs == null)
+      return;
+    _debug_logs.println("onMeasure dm.widthPixels=" + dm.widthPixels + ", horizntal_margin=" + conf.horizontal_margin);
   }
 }

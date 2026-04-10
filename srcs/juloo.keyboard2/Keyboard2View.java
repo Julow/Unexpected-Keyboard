@@ -273,6 +273,7 @@ public class Keyboard2View extends View
     width += _insets_left + _insets_right;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
     _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
+    Logs.debug_on_measure(dm, _config);
     // Compute the size of labels based on the width or the height of keys. The
     // margin around keys is taken into account. Keys normal aspect ratio is
     // assumed to be 3/2 for a 10 columns layout. It's generally more, the
@@ -321,6 +322,7 @@ public class Keyboard2View extends View
     _insets_left = insets.left;
     _insets_right = insets.right;
     _insets_bottom = insets.bottom;
+    Logs.debug_insets(wi);
     return WindowInsets.CONSUMED;
   }
 
