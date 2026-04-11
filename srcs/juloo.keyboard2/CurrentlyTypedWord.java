@@ -1,9 +1,11 @@
 package juloo.keyboard2;
 
+import android.os.Build.VERSION;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.SurroundingText;
 import java.util.List;
 
 /** Keep track of the word being typed. This also tracks whether the selection
@@ -29,6 +31,9 @@ public final class CurrentlyTypedWord
       position gets out of sync, the text before the cursor is queried again to
       the editor. */
   int _cursor;
+  /** The cursor position within the current word relative to the end of the
+    word. Equal to [0] when the cursor is at the end of the word. */
+  int _w_cursor;
 
   public CurrentlyTypedWord(Handler h, Callback cb)
   {
@@ -46,6 +51,12 @@ public final class CurrentlyTypedWord
     return _has_selection;
   }
 
+  /** The cursor position relative to the end of the word. */
+  public int cursor_relative()
+  {
+    return _w_cursor;
+  }
+
   public void started(Config conf, InputConnection ic)
   {
     _ic = ic;
@@ -53,8 +64,12 @@ public final class CurrentlyTypedWord
     EditorConfig e = conf.editor_config;
     _has_selection = e.initial_sel_start != e.initial_sel_end;
     _cursor = e.initial_sel_start;
+    _w_cursor = 0;
     if (!_has_selection)
+    {
       set_current_word(e.initial_text_before_cursor);
+      _w_cursor = -append_chars(e.initial_text_after_cursor); 
+    }
   }
 
   public void typed(String s)
@@ -87,16 +102,17 @@ public final class CurrentlyTypedWord
 
   void callback()
   {
-    _callback.currently_typed_word(_w.toString());
+    String w = _w.toString();
+    Logs.debug("Current word: " + w);
+    _callback.currently_typed_word(w);
   }
 
   /** Estimate the currently typed word after [chars] has been typed. */
-  void type_chars(String s)
+  void type_chars(CharSequence s, int start, int end)
   {
-    int len = s.length();
-    for (int i = 0; i < len;)
+    for (int i = start; i < end;)
     {
-      int c = s.codePointAt(i);
+      int c = Character.codePointAt(s, i);
       if (Character.isLetter(c))
         _w.appendCodePoint(c);
       else
@@ -106,12 +122,42 @@ public final class CurrentlyTypedWord
     }
   }
 
+  void type_chars(CharSequence s)
+  {
+    type_chars(s, 0, s.length());
+  }
+
+  /** Append chars to the current word without moving the cursor. Return the
+      number of characters that were added in the current word. */
+  int append_chars(CharSequence s, int start, int end)
+  {
+    int i = start;
+    while (i < end)
+    {
+      int c = Character.codePointAt(s, i);
+      if (!Character.isLetter(c))
+        break;
+      _w.appendCodePoint(c);
+      i += Character.charCount(c);
+    }
+    return i - start;
+  }
+
+  int append_chars(CharSequence s)
+  {
+    return append_chars(s, 0, s.length());
+  }
+
   /** Refresh the current word by immediately querying the editor. */
   void refresh_current_word()
   {
+    Logs.debug("Refresh current word");
     _refresh_pending = false;
+    _w_cursor = 0;
     if (_has_selection)
       set_current_word("");
+    else if (VERSION.SDK_INT >= 31)
+      set_current_word(_ic.getSurroundingText(20, 20, 0));
     else
       set_current_word(_ic.getTextBeforeCursor(20, 0));
   }
@@ -124,6 +170,21 @@ public final class CurrentlyTypedWord
       return;
     int saved_cursor = _cursor;
     type_chars(text_before_cursor.toString());
+    _cursor = saved_cursor;
+    callback();
+  }
+
+  /** Like above but take the text after the cursor into account. */
+  void set_current_word(SurroundingText st)
+  {
+    _w.setLength(0);
+    if (st == null)
+      return;
+    int saved_cursor = _cursor;
+    int st_sel = st.getSelectionStart();
+    CharSequence st_text = st.getText();
+    type_chars(st_text, 0, st_sel);
+    _w_cursor = -append_chars(st_text, st_sel, st_text.length());
     _cursor = saved_cursor;
     callback();
   }
