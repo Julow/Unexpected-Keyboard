@@ -540,7 +540,8 @@ public final class KeyEventHandler
   {
     if (last_replaced_word != null)
     {
-      replace_text_before_cursor(last_replacement_word_len, last_replaced_word);
+      replace_text_before_cursor(last_replacement_word_len,
+          last_replaced_word + " ");
       last_replaced_word = null;
     }
     else
