@@ -68,7 +68,8 @@ public final class CurrentlyTypedWord
     if (!_has_selection)
     {
       set_current_word(e.initial_text_before_cursor);
-      _w_cursor = -append_chars(e.initial_text_after_cursor); 
+      _w_cursor = (e.initial_text_after_cursor == null) ? 0 :
+        -append_chars(e.initial_text_after_cursor); 
     }
   }
 
