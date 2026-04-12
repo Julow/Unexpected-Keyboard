@@ -26,13 +26,13 @@ public final class CurrentlyTypedWord
   /** Used to avoid concurrent refreshes in [delayed_refresh()]. */
   boolean _refresh_pending = false;
 
-  /** The estimated cursor position. Used to avoid expensive IPC calls when the
-      typed word can be estimated locally with [typed]. When the cursor
-      position gets out of sync, the text before the cursor is queried again to
-      the editor. */
+  /** The estimated cursor position in code points. Used to avoid expensive IPC
+      calls when the typed word can be estimated locally with [typed]. When the
+      cursor position gets out of sync, the text before the cursor is queried
+      again to the editor. */
   int _cursor;
   /** The cursor position within the current word relative to the end of the
-    word. Equal to [0] when the cursor is at the end of the word. */
+      word in chars. Equal to [0] when the cursor is at the end of the word. */
   int _w_cursor;
 
   public CurrentlyTypedWord(Handler h, Callback cb)
@@ -85,12 +85,22 @@ public final class CurrentlyTypedWord
   {
     // Avoid the expensive [refresh_current_word] call when [typed] was called
     // before.
-    boolean new_has_sel = newSelStart != newSelEnd;
-    if (!_enabled || (newSelStart == _cursor && new_has_sel == _has_selection))
+    if (!_enabled)
       return;
-    _has_selection = new_has_sel;
-    _cursor = newSelStart;
-    refresh_current_word();
+    boolean new_has_sel = newSelStart != newSelEnd;
+    if (new_has_sel || _has_selection) // Selection was on or is now on.
+    {
+      _cursor = newSelStart;
+      _has_selection = new_has_sel;
+      refresh_current_word();
+    }
+    else if (newSelStart != _cursor)
+    {
+      _cursor = newSelStart;
+      _w_cursor += newSelStart - oldSelStart;
+      if (_w_cursor < -_w.length() || _w_cursor > 0)
+        refresh_current_word();
+    }
   }
 
   public void event_sent(int code, int meta)
@@ -110,16 +120,19 @@ public final class CurrentlyTypedWord
   /** Estimate the currently typed word after [chars] has been typed. */
   void type_chars(CharSequence s, int start, int end)
   {
+    int insert_start = 0;
+    // Iterate over code points as that's the unit of [_cursor].
     for (int i = start; i < end;)
     {
       int c = Character.codePointAt(s, i);
-      if (Character.isLetter(c))
-        _w.appendCodePoint(c);
-      else
-        _w.setLength(0);
-      _cursor++;
       i += Character.charCount(c);
+      _cursor++;
+      if (!Character.isLetter(c))
+        insert_start = i;
     }
+    if (insert_start > 0)
+      _w.setLength(0);
+    _w.insert(_w.length() + _w_cursor, s, insert_start, end);
   }
 
   void type_chars(CharSequence s)
