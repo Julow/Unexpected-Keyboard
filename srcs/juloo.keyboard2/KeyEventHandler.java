@@ -542,7 +542,8 @@ public final class KeyEventHandler
   {
     if (last_replaced_word != null)
     {
-      replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word);
+      replace_surrounding_text(last_replacement_word_len, 0,
+          last_replaced_word + " ");
       last_replaced_word = null;
     }
     else
