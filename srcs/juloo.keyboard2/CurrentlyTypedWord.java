@@ -113,7 +113,6 @@ public final class CurrentlyTypedWord
   void callback()
   {
     String w = _w.toString();
-    Logs.debug("Current word: " + w);
     _callback.currently_typed_word(w);
   }
 
