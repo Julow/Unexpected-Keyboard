@@ -32,6 +32,7 @@ public final class EditorConfig
 
   /** CurrentlyTypedWord. */
   public CharSequence initial_text_before_cursor = null; // Might be [null].
+  public CharSequence initial_text_after_cursor = null; // Might be [null].
   public int initial_sel_start;
   public int initial_sel_end;
 
@@ -92,7 +93,10 @@ public final class EditorConfig
     caps_initially_updated = caps_should_update_state(info);
     /* CurrentlyTypedWord */
     if (VERSION.SDK_INT >= 30)
-      initial_text_before_cursor = info.getInitialTextBeforeCursor(10, 0);
+    {
+      initial_text_before_cursor = info.getInitialTextBeforeCursor(20, 0);
+      initial_text_after_cursor = info.getInitialTextAfterCursor(20, 0);
+    }
     initial_sel_start = info.initialSelStart;
     initial_sel_end = info.initialSelEnd;
     /* Suggestions */

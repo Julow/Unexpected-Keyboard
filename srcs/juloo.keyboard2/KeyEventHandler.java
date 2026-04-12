@@ -50,6 +50,7 @@ public final class KeyEventHandler
     InputConnection ic = _recv.getCurrentInputConnection();
     _autocap.started(conf, ic);
     _typedword.started(conf, ic);
+    _suggestions.started();
     _move_cursor_force_fallback =
       conf.editor_config.should_move_cursor_force_fallback;
     _space_bar_auto_complete = conf.space_bar_auto_complete;
@@ -128,7 +129,8 @@ public final class KeyEventHandler
   public void suggestion_entered(String text)
   {
     String old = _typedword.get();
-    replace_text_before_cursor(old.length(), text + " ");
+    int cur_rel = _typedword.cursor_relative();
+    replace_surrounding_text(old.length() + cur_rel, -cur_rel, text + " ");
     last_replaced_word = old;
     last_replacement_word_len = text.length() + 1;
   }
@@ -143,6 +145,12 @@ public final class KeyEventHandler
   public void currently_typed_word(String word)
   {
     _suggestions.currently_typed_word(word);
+  }
+
+  public void ime_subtype_changed()
+  {
+    // Refresh the suggestions immediately after dictionary changed.
+    _suggestions.currently_typed_word(_typedword.get());
   }
 
   /** Update [_mods] to be consistent with the [mods], sending key events if
@@ -249,13 +257,14 @@ public final class KeyEventHandler
     clear_space_bar_state();
   }
 
-  void replace_text_before_cursor(int remove_length, String new_text)
+  void replace_surrounding_text(int remove_before, int remove_after,
+      String new_text)
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
     conn.beginBatchEdit();
-    conn.deleteSurroundingText(remove_length, 0);
+    conn.deleteSurroundingText(remove_before, remove_after);
     conn.commitText(new_text, 1);
     conn.endBatchEdit();
   }
@@ -533,7 +542,8 @@ public final class KeyEventHandler
   {
     if (last_replaced_word != null)
     {
-      replace_text_before_cursor(last_replacement_word_len, last_replaced_word);
+      replace_surrounding_text(last_replacement_word_len, 0,
+          last_replaced_word + " ");
       last_replaced_word = null;
     }
     else

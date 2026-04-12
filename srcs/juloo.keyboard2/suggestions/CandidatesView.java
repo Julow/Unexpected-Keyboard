@@ -160,8 +160,15 @@ public class CandidatesView extends LinearLayout
           case InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD:
             return false;
           default:
-            if ((flags & InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS) != 0)
-              return false; // Editor requested that we don't show suggestions
+            /* Editor requested that we don't show suggestions. Enable
+               suggestions anyway when the flags [NO_SUGGESTIONS] and
+               [AUTO_CORRECT] are present at the same time. This happens with
+               Google Keep. */
+            if ((flags &
+                  (InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                   | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT))
+                == InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
+              return false;
             return true;
         }
       case InputType.TYPE_CLASS_NUMBER:

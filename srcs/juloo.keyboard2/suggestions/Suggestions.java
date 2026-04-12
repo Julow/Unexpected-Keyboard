@@ -14,6 +14,7 @@ public final class Suggestions
 {
   Callback _callback;
   Config _config;
+  boolean _enabled;
 
   /** Current suggestions. The best suggestion is at index [0]. */
   public String[] suggestions = new String[MAX_COUNT];
@@ -30,8 +31,16 @@ public final class Suggestions
     _config = conf;
   }
 
+  public void started()
+  {
+    _enabled = _config.editor_config.should_show_candidates_view;
+    clear();
+  }
+
   public void currently_typed_word(String word)
   {
+    if (!_enabled)
+      return;
     if (word.length() < 2 || _config.current_dictionary == null)
       clear();
     else
@@ -42,6 +51,7 @@ public final class Suggestions
   void clear()
   {
     count = 0;
+    suggestions[0] = null;
     emoji_suggestion = null;
   }
 

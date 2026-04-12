@@ -44,8 +44,8 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. It defaults to the same as `script`.
 
 * `bottom_row`: Whether or not to show the built-in bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines the bottom row, then specify `bottom_row="false"` to disable the built-in bottom row.
-  + We recommend your layout use the built-in bottom row, because it is still evolving and your layout will incorporate innovations in future versions. However, to define your own, the current definition of the bottom row is in [bottom_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/bottom_row.xml). You can copypaste this XML into your custom layout as a starting point.
-  + Likewise, the current definition of the top (number) row is in [number_row.xml](https://github.com/Julow/Unexpected-Keyboard/res/xml/number_row.xml).
+  + We recommend your layout use the built-in bottom row, because it is still evolving and your layout will incorporate innovations in future versions. However, to define your own, the current definition of the bottom row is in [bottom_row.xml](https://github.com/Julow/Unexpected-Keyboard/blob/master/res/xml/bottom_row.xml). You can copypaste this XML into your custom layout as a starting point.
+  + Likewise, the current definition of the top (number) row is in [number_row.xml](https://github.com/Julow/Unexpected-Keyboard/blob/master/res/xml/number_row.xml).
 
 * `embedded_number_row`: Whether the layout has an embedded number row, and thus the "Show number row" setting shouldn't add another one. It accepts `true` or `false`, and defaults to `false`.
 
@@ -150,6 +150,9 @@ The clockwise circle and the round-trip gestures are affected by the `<fn />` ma
     <ctrl a="в" b="v" />
 ```
 This maps Ctrl+в to Ctrl+V—not to v.
+
+### Default mappings
+Unexpected Keyboard's built-in mappings are not expressed as a modmap but by a series of .json files in `https://github.com/Julow/Unexpected-Keyboard/tree/master/srcs/compose`. For example, the mappings for `fn` are in [`fn.json`](https://github.com/Julow/Unexpected-Keyboard/blob/master/srcs/compose/fn.json). These built-in mappings are common to every language.
 
 ## Portrait vs. landscape
 Unexpected Keyboard remembers *separately* which layout has last been used in portrait and landscape orientation. So you may have one custom layout for portrait orientation, but another custom layout for landscape orientation, and Unexpected Keyboard will switch between them without your intervention.
