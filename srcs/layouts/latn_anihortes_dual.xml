@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<keyboard name="ANIHORTES (Dual)" script="latin" bottom_row="false">
+  <row height="0.6" scale="7.8">
+    <key key0="scroll_lock" />
+    <key key0="switch_clipboard" />
+    <key key0="lrm" />
+    <key key0="rlm" />
+    <key key0="arrows" />
+    <key key0="box" />
+    <key key0="nbsp" />
+    <key key0="nnbsp" />
+    <key key0="zwj" />
+    <key key0="zwnj" />
+    <key key0="insert" />
+  </row>
+  <row>
+    <key key0="1" shift="0.8" w="" n="" e="loc accent_ring" s="" nw="" ne="" se="" sw=""/>
+    <key key0="2" w="" n="up" e="loc ⷫ" s="$" nw="•" ne="" se="" sw=""/>
+    <key key0="3" w="" n="" e="" s="loc £" nw="" ne="" se="" sw=""/>
+    <key key0="a" w="loc accent_breve" n="loc accent_circonflexe" e="-" s="loc accent_dot_above" se="v" nw="loc accent_double_aigu" ne="loc accent_dot_below" sw="loc accent_slash"/>
+    <key key0="n" w="+" n="^" e="!" s="l" nw="loc accent_grave" ne="loc accent_aigu" se="\\" sw="/"/>
+    <key key0="i" w="?" n="loc accent_caron" e="loc accent_macron" s="=" nw="˚" ne="loc ç" se="loc €" sw="x"/>
+    <key key0="fn" s="Hide:hide"/>
+  </row>
+  <row>
+    <key key0="switch_numeric" width="0.8"/>
+    <key key0="4" w="left" n="®" e="™" s="©" nw="§" ne="" se="" sw="¶"/>
+    <key key0="5" w="" n="" e="loc accent_tilde" s="" nw="†" ne="" se="" sw="‡"/>
+    <key key0="6" w="¼" n="½" e="right" s="¾" nw="¢" ne="" se="" sw=""/>
+    <key key0="h" w="(" n="å" e="k" s="ß" nw="{" ne="%" se="_" sw="["/>
+    <key key0="o" w="c" n="u" e="b" s="d" nw="q" ne="p" se="j" sw="g"/>
+    <key key0="r" w="m" n="ø" e=")" s="ü" nw="|" ne="}" se="]" sw="@"/>
+    <key key0="paste" nw="undo" ne="redo" w="cut" s="selectAll" n="copy" e="switch_clipboard" />
+  </row>
+  <row>
+    <key key0="switch_greekmath" width="0.8"/>
+    <key key0="7" w="" n="" e="loc accent_bar" s="" nw="" ne="" se="" sw="þ"/>
+    <key key0="8" w="№" n="" e="¬" s="down" nw="" ne="" se="" sw=""/>
+    <key key0="9" w="loc accent_double_grave" n="" e="" s="" nw="" ne="" se="" sw=""/>
+    <key key0="t" w="&lt;" n="loc accent_trema" e="*" s="ä" nw="~" ne="y" se="æ" sw="loc accent_cedille"/>
+    <key key0="e" w="ğ" n="w" e="z" s="." nw="&quot;" ne="'" se=":" sw=","/>
+    <key key0="s" w="#" n="&amp;" e="&gt;" s="ö" nw="f" ne="ñ" se="ş" sw=";"/>
+    <key key0="shift" n="capslock" nw="superscript" sw="subscript" w="loc accent_small_caps" e="shareText"/>
+  </row>
+  <row>
+    <key key0="switch_emoji" width="0.8"/>
+    <key key0="delete" e="forward_delete_word" n="alt" se="page_up" sw="home"/>
+    <key key0="0" w="loc voice_typing" e="loc compose" n="meta" s="esc" nw="" ne="" se="" sw=""/>
+    <key key0="backspace" w="delete_word" n="ctrl" sw="page_down" se="end"/>
+    <key key0="space" width="2" w="cursor_left" e="cursor_right" n="switch_forward" s="switch_backward"/>
+    <key key0="enter" s="action" n="tab" w="\n" e="\t" />
+    <key key0="config"/>
+  </row>
+  <modmap>
+    <fn a="-" b="combining_bar" />
+    <fn a="delete" b="f10" />
+    <fn a="0" b="f11" />
+    <fn a="backspace" b="f12" />
+    <fn a="delete_word" b="" />
+    <fn a="forward_delete_word" b="" />
+    <fn a="accent_aigu" b="combining_aigu" />
+    <fn a="accent_caron" b="combining_caron" />
+    <fn a="accent_cedille" b="combining_cedille" />
+    <fn a="accent_circonflexe" b="combining_circonflexe" />
+    <fn a="accent_grave" b="combining_grave" />
+    <fn a="accent_macron" b="combining_macron" />
+    <fn a="accent_ring" b="combining_ring" />
+    <fn a="accent_tilde" b="combining_tilde" />
+    <fn a="accent_trema" b="combining_trema" />
+    <fn a="accent_ogonek" b="combining_ogonek" />
+    <fn a="accent_dot_above" b="combining_dot_above" />
+    <fn a="accent_double_aigu" b="combining_double_aigu" />
+    <fn a="accent_slash" b="combining_slash" />
+    <fn a="accent_arrow_right" b="combining_arrow_right" />
+    <fn a="accent_breve" b="combining_breve" />
+    <fn a="accent_bar" b="combining_bar" />
+    <fn a="accent_dot_below" b="combining_dot_below" />
+    <fn a="accent_horn" b="combining_horn" />
+    <fn a="accent_hook_above" b="combining_hook_above" />
+    <fn a="accent_double_grave" b="combining_double_grave" />
+    <ctrl a="space" b="nbsp" />
+  </modmap>
+</keyboard>
+
+-->
