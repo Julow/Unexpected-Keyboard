@@ -80,7 +80,7 @@ LOCALES = [
 ]
 
 # The locale that is at the beginning of the list
-DEFAULT_LOCALE = loc("en", "latin", "latn_qwerty_us", tag="en", dictionary="en_US")
+DEFAULT_LOCALE = loc("en", "latin", "latn_qwerty_gb", tag="en", dictionary="en_GB")
 
 def parse_dictionaries():
     tree = ET.parse("res/values/dictionaries.xml")
