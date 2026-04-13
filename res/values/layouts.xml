@@ -89,6 +89,7 @@
     <item>latn_qwertz_sq</item>
     <item>latn_qzerty_it</item>
     <item>latn_workman_us</item>
+    <item>latn_anihortes_dual</item>
     <item>shaw_imperial_en</item>
     <item>sinhala_phonetic</item>
     <item>tamil_default</item>
@@ -183,6 +184,7 @@
     <item>QWERTZ (Albanian)</item>
     <item>QZERTY (Italiano)</item>
     <item>WORKMAN (US)</item>
+    <item>ANIHORTES (Dual)</item>
     <item>Shaw Imperial</item>
     <item>සිංහල</item>
     <item>தமிழ்</item>
@@ -277,6 +279,7 @@
     <item>@xml/latn_qwertz_sq</item>
     <item>@xml/latn_qzerty_it</item>
     <item>@xml/latn_workman_us</item>
+    <item>@xml/latn_anihortes_dual</item>
     <item>@xml/shaw_imperial_en</item>
     <item>@xml/sinhala_phonetic</item>
     <item>@xml/tamil_default</item>
