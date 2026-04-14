@@ -5,7 +5,7 @@
        Update this file with 'gradle test'.
 
   -->
-  <subtype android:label="%s" android:languageTag="en" android:imeSubtypeLocale="en" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_us,dictionary=en_US" />
+  <subtype android:label="%s" android:languageTag="en" android:imeSubtypeLocale="en" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=latin,default_layout=latn_qwerty_us,dictionary=en_GB" />
   <subtype android:label="%s" android:languageTag="ar" android:imeSubtypeLocale="ar" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=arabic,default_layout=arab_pc_hindu,dictionary=ar" />
   <subtype android:label="%s" android:languageTag="ar-TN" android:imeSubtypeLocale="ar_TN" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=arabic,default_layout=arab_pc,dictionary=ar" />
   <subtype android:label="%s" android:languageTag="ay" android:imeSubtypeLocale="ay_AM" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:imeSubtypeExtraValue="script=armenian,default_layout=armenian_ph_am" />
