@@ -525,19 +525,18 @@ public final class KeyEventHandler
       backspace. */
   int last_replacement_word_len = 0;
 
+  /** Implement autocorrect when enabled in the settings. */
   void handle_space_bar()
   {
     if (_space_bar_auto_complete && _suggestions.best_suggestion != null
-        && !_typedword.is_selection_not_empty())
-    {
+        && !_typedword.is_selection_not_empty()
+        && _typedword.cursor_relative() == 0)
       suggestion_entered(_suggestions.best_suggestion);
-    }
     else
-    {
       send_text(" ");
-    }
   }
 
+  /** Undo the last autocorrect. */
   void handle_backspace()
   {
     if (last_replaced_word != null)
