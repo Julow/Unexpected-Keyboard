@@ -32,6 +32,9 @@ public final class KeyEventHandler
   boolean _move_cursor_force_fallback = false;
   /** Whether the space bar automatically enters the best suggestion. */
   boolean _space_bar_auto_complete = false;
+  /** Remember the action that was handled. This is used by autocorrect. */
+  LastAction _last_action = null;
+  LastAction _next_last_action = null;
 
   public KeyEventHandler(IReceiver recv, Config config)
   {
@@ -54,7 +57,7 @@ public final class KeyEventHandler
     _move_cursor_force_fallback =
       conf.editor_config.should_move_cursor_force_fallback;
     _space_bar_auto_complete = conf.space_bar_auto_complete;
-    clear_space_bar_state();
+    _last_action = null;
   }
 
   /** Selection has been updated. */
@@ -102,6 +105,7 @@ public final class KeyEventHandler
   {
     if (key == null)
       return;
+    _next_last_action = LastAction.OTHER;
     Pointers.Modifiers old_mods = _mods;
     update_meta_state(mods);
     switch (key.getKind())
@@ -117,6 +121,7 @@ public final class KeyEventHandler
       case Macro: evaluate_macro(key.getMacro()); break;
     }
     update_meta_state(old_mods);
+    _last_action = _next_last_action;
   }
 
   @Override
@@ -133,6 +138,7 @@ public final class KeyEventHandler
     replace_surrounding_text(old.length() + cur_rel, -cur_rel, text + " ");
     last_replaced_word = old;
     last_replacement_word_len = text.length() + 1;
+    _next_last_action = LastAction.SUGGESTION_ENTERED;
   }
 
   @Override
@@ -242,7 +248,6 @@ public final class KeyEventHandler
     {
       _autocap.event_sent(eventCode, metaState);
       _typedword.event_sent(eventCode, metaState);
-      clear_space_bar_state();
     }
   }
 
@@ -254,7 +259,6 @@ public final class KeyEventHandler
     _autocap.typed(text);
     _typedword.typed(text);
     conn.commitText(text, 1);
-    clear_space_bar_state();
   }
 
   void replace_surrounding_text(int remove_before, int remove_after,
@@ -525,22 +529,22 @@ public final class KeyEventHandler
       backspace. */
   int last_replacement_word_len = 0;
 
+  /** Implement autocorrect when enabled in the settings. */
   void handle_space_bar()
   {
     if (_space_bar_auto_complete && _suggestions.best_suggestion != null
-        && !_typedword.is_selection_not_empty())
-    {
+        && !_typedword.is_selection_not_empty()
+        && _typedword.cursor_relative() == 0)
       suggestion_entered(_suggestions.best_suggestion);
-    }
     else
-    {
       send_text(" ");
-    }
   }
 
+  /** Undo the last autocorrect. */
   void handle_backspace()
   {
-    if (last_replaced_word != null)
+    if (_last_action == LastAction.SUGGESTION_ENTERED
+        && last_replaced_word != null)
     {
       replace_surrounding_text(last_replacement_word_len, 0,
           last_replaced_word + " ");
@@ -550,11 +554,6 @@ public final class KeyEventHandler
     {
       send_key_down_up(KeyEvent.KEYCODE_DEL);
     }
-  }
-
-  void clear_space_bar_state()
-  {
-    last_replaced_word = null;
   }
 
   public static interface IReceiver extends Suggestions.Callback
@@ -577,5 +576,11 @@ public final class KeyEventHandler
       else if (should_disable)
         _recv.set_shift_state(false, false);
     }
+  }
+
+  public static enum LastAction
+  {
+    SUGGESTION_ENTERED,
+    OTHER
   }
 }
