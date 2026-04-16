@@ -132,7 +132,7 @@ public final class CurrentlyTypedWord
     }
     if (insert_start > 0)
       _w.setLength(0);
-    _w.insert(_w.length() + _w_cursor, s, insert_start, end);
+    _w.insert(Math.max(_w.length() + _w_cursor, 0), s, insert_start, end);
   }
 
   void type_chars(CharSequence s)
