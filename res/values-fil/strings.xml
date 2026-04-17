@@ -6,7 +6,7 @@
     <string name="key_descr_cut">Ilipat</string>
     <string name="key_descr_undo">I-undo</string>
     <string name="pref_lock_double_tap_summary">Mala-lock mo ang anumang modifier kapag ini-long press</string>
-    <string name="pref_pin_entry_enabled_title">Layout ng pin entry</string>
+    <string name="pref_pin_entry_enabled_title">Layout ng PIN entry</string>
     <string name="store_description">Ang pangunahing feature ay maaari kang mag-type ng mas marami pang karakter sa pag-swipe sa gilid ng mga key.\n\nNoong simula, ginawa itong application para sa mga programmer sa na nagte-Termux.\nNgayo\'y perpekto na sa pang-araw-araw.\n\nWalang ads, hindi nagne-network request at Open Source ang application na ito.</string>
     <string name="pref_long_timeout_title">Timeout sa long press</string>
     <string name="pref_show_numpad_always">Palagi</string>
@@ -17,7 +17,7 @@
     <string name="pref_theme_e_dark">Madilim</string>
     <string name="pref_numpad_layout_e_high_first">Pinakamataas muna</string>
     <string name="pref_extra_keys_title">Maglagay ng key sa keyboard</string>
-    <string name="launcher_sourcecode">Libre at open source ito na application. Maaaring makita ang source code o makapagreport ng bugs sa Github.</string>
+    <string name="launcher_sourcecode">Libre at open source ito na application. Maaaring makita ang source code o makapag-report ng bug sa Github.</string>
     <string name="key_descr_capslock">Caps lock</string>
     <string name="pref_horizontal_margin_title">Kabilaang margin</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
@@ -66,10 +66,10 @@
     <string name="pref_circle_sensitivity_title">Sensitibidad ng circle gesture</string>
     <string name="pref_circle_sensitivity_e_medium">Katamtaman</string>
     <string name="key_action_next">Sunod</string>
-    <string name="key_action_done">OK</string>
+    <string name="key_action_done">Tapos</string>
     <string name="key_action_go">Sige</string>
     <string name="key_action_prev">Balik</string>
-    <string name="key_action_search">Maghanap</string>
+    <string name="key_action_search">Hanapin</string>
     <string name="key_action_send">Send</string>
     <string name="launcher_button_imesettings">Paganahin ang keyboard</string>
     <string name="launcher_button_imepicker">Pumili ng keyboard</string>
@@ -96,7 +96,7 @@
     <string name="clipboard_remove_confirmed">Oo</string>
     <string name="key_descr_nnbsp">Narrow non-breaking space</string>
     <string name="key_descr_page_up">Page Up</string>
-    <string name="launcher_description">Itong application ay isang virtual keyboard. Pindutin ang buton sa ilalim nang pumunta sa system settings at buksan ang Unexpected-Keyboard.</string>
+    <string name="launcher_description">Itong application ay isang virtual keyboard. Pindutin ang button sa ilalim nang pumunta sa system settings at buksan ang Unexpected-Keyboard.</string>
     <string name="pref_number_row_summary">Maglagay ng number row sa itaas ng keyboard kapag nakatago ang numpad</string>
     <string name="pref_numpad_layout">Layout ng NumPad</string>
     <string name="pref_margin_bottom_title">Pambabang margin</string>
