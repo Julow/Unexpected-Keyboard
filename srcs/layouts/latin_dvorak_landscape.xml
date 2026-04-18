@@ -61,4 +61,10 @@
     <key width="1.3" c="backspace" n="delete"/>
     <key width="1.3" c="enter" nw="loc voice_typing" ne="action"/>
   </row>
+  <modmap>
+    <shift a="'" b="&quot;"/>
+    <shift a="," b="&lt;"/>
+    <shift a="." b="&gt;"/>
+
+  </modmap>  
 </keyboard>
