@@ -50,7 +50,7 @@ LOCALES = [
   loc("ka_GE", "latin", "georgian_mes"),
   loc("kk_KZ", "latin", "cyrl_jcuken_kk"),
   loc("kn_IN", "kannada", "kann_kannada"),
-  loc("ko_KR", "hangul", "latn_qwerty_us"),
+  loc("ko_KR", "hangul", "hang_dubeolsik_kr"),
   loc("lt_LT", "latin", "latn_qwerty_lt", extra_keys="accent_ogonek:ą:ę:į:ų@s|accent_caron:č:š:ž@f|accent_dot_above:ė@s|accent_macron:ū@o|€"),
   loc("lv_LV", "latin", "latn_qwerty_lv", extra_keys="accent_macron:ā:ē:ī:ū@o|accent_caron:č:š:ž@f|accent_ogonek:ķ:ļ:ņ@s|accent_cedille:ģ@c|€"),
   loc("mk", "cyrillic", "cyrl_lynyertdz_mk", extra_keys="ѕ|ѓ|ќ|ѝ|ѐ|љ|њ|џ|„|“|€"),
