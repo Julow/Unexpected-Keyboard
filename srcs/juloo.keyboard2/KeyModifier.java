@@ -535,9 +535,17 @@ public final class KeyModifier
       case Hangul_initial:
         // Finals that can also be initials have this kind.
         return combine_hangul_medial(kv, kv.getString().charAt(0), precomposed);
-      default:
-        return kv;
+      case Editing:
+        switch (kv.getEditing())
+        {
+          case SPACE_BAR:
+            return combine_hangul_medial(kv, ' ', precomposed);
+          default: break;
+        }
+        break;
+      default: break;
     }
+    return kv;
   }
 
   private static KeyValue combine_hangul_medial(KeyValue kv, char c,
