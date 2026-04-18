@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="Dvorak-Left" bottom_row="false" script="latin">
+  <row >
+    <key c="esc" />
+
+    <key width="1.5" c="&quot;" nw="`" w="_" e="\\" n="3" s="?" sw=":" se=";" n="~" />
+    <key width="1.5" c="/" nw="{" ne="}" w="(" e=")" sw="[" se="]" n="&lt;" s="&gt;" />
+    <key width="1.5" c="=" nw="+" ne="*" sw="-" se="/" n="," s="." />
+
+  </row>
+  <row >
+    <key c="shift" />
+    <key c="a" n="'"          w="1" e="!"  />
+    <key c="o" n="," s="q" w="2" e="\@" />
+    <key c="e" n="." s="j" w="3" e="\#" />
+    <key c="u" n="p" s="k" w="4" e="$"  />
+    <key c="i" n="y" s="x" w="5" e="%"  />
+    <key width="1.3" c="backspace" n="delete"/>
+    <key shift="2" c="" />
+
+  </row>
+  <row >
+    <key width="1" c="ctrl" nw="loc switch_greekmath" ne="loc meta" sw="loc switch_clipboard" se="switch_numeric"/>
+    <key c="d" n="f" s="b" w="6" e="^"     />
+    <key c="h" n="g" s="m" w="7" e="&amp;" />
+    <key c="t" n="c" s="w" w="8" e="*"     />
+    <key c="n" n="r" s="v" w="9" e="!"     />
+    <key c="s" n="l" s="z" w="0"              />
+    <key width="1.3" c="enter" nw="loc voice_typing" ne="action"/>
+    <key shift="2" c="" />
+
+  </row>
+  <row height="0.95">
+    <key width="0.5" c="" />
+
+    <key width="1.5" c="fn" nw="loc alt" ne="loc change_method" sw="switch_emoji" se="config"/>
+    <key width="2.5" c="space" n="switch_forward" s="switch_backward" w="cursor_left" e="cursor_right"/>
+    <key width="1.5" c="loc compose" n="up" e="right" w="left" s="down" nw="loc home" ne="loc page_up" sw="loc end" se="loc page_down"/>
+  </row>
+</keyboard>

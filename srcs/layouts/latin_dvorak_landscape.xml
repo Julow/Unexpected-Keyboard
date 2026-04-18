@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="Dvorak-Landscape" bottom_row="false" script="latin">
+  <row scale="16">
+    <key c="'" n="&quot;" se="esc" />
+    <key c="," sw=":" se=";" />
+    <key c="." sw="&lt;" se="&gt;" />
+    <key c="p" s="loc accent_ring" />
+    <key c="y" se="_" s="loc accent_grave" />
+      <key c="7" shift="1.5"/>
+      <key c="8"/>
+      <key c="9"/>
+      <key c="/"/>
+    <key shift="0.5" c="f" ne="=" se="." n="loc €" />
+    <key c="g" nw="+" ne="*" sw="-" se="/" />
+    <key c="c" nw="loc accent_trema" sw="{" se="}" />
+    <key c="r" sw="[" se="]" />
+    <key c="l" se="loc £" />
+  </row>
+  <row scale="16">
+    <key c="a" ne="!" e="¡" n="1" sw="loc å" />
+    <key c="o" ne="\@" n="2" sw="loc accent_ogonek" s="loc ø" />
+    <key c="e" ne="\#" n="3" sw="loc accent_dot_above" s="loc ə" />
+    <key c="u" ne="$" s="loc æ" n="4" sw="loc accent_double_aigu" />
+    <key c="i" ne="%" n="5" s="loc ı" />
+      <key c="4" shift="1.5" />
+      <key c="5"/>
+      <key c="6"/>
+      <key c="*"/>    
+    <key shift="0.5"  c="d" ne="^" n="6" s="loc ð" />
+    <key c="h" ne="&amp;" n="7" s="ȝ" />
+    <key c="t" ne="*" sw="?" se="¿" n="8" s="loc þ" />
+    <key c="n" sw="(" se=")" n="9" />
+    <key c="s" n="0" se="loc ß" />
+  </row>
+  <row scale="16">
+    <key c="shift" sw="loc accent_tilde" n="~" />
+    <key c="q" sw="/" se="\\" s="loc shareText" />
+    <key c="j" nw="accent_grave" ne="accent_tilde" sw="accent_aigu" n="loc accent_aigu" />
+    <key c="k" n="|" />
+    <key c="x" n="loc accent_cedille"/>
+      <key c="1" shift="1.5"/>
+      <key c="2"/>
+      <key c="3"/>
+      <key c="-"/>    
+    <key shift="0.5" c="b"  />
+    <key c="m" n="`" />
+    <key c="w"  />
+    <key c="v" />
+    <key c="z" />
+  </row>
+  <row scale="16" height="0.95">
+    <key width="1.1" c="ctrl" nw="loc switch_greekmath" ne="loc meta" sw="loc switch_clipboard" se="switch_numeric"/>
+    <key width="1.3" c="fn" nw="loc alt" ne="loc change_method" sw="switch_emoji" se="config"/>
+    <key width="2.2" c="space" n="switch_forward" w="cursor_left" e="cursor_right"/>
+    <key width="1.3" c="loc compose" n="up" e="right" w="left" s="down" nw="loc home" ne="loc page_up" sw="loc end" se="loc page_down"/>
+      <key c="0" shift="0.6"/>
+      <key c="."/>
+      <key c="="/>
+      <key c="+"/> 
+    <key width="2.4" shift=".5" c="space" n="switch_backward" w="cursor_left" e="cursor_right"/>
+    <key width="1.3" c="backspace" n="delete"/>
+    <key width="1.3" c="enter" nw="loc voice_typing" ne="action"/>
+  </row>
+</keyboard>
