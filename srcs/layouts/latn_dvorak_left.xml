@@ -3,7 +3,7 @@
   <row >
     <key c="esc" />
 
-    <key width="1.5" c="&quot;" nw="`" w="_" e="\\" n="3" s="?" sw=":" se=";" n="~" />
+    <key width="1.5" c="&quot;" nw="`" w="_" e="\\" s="?" sw=":" se=";" n="~" />
     <key width="1.5" c="/" nw="{" ne="}" w="(" e=")" sw="[" se="]" n="&lt;" s="&gt;" />
     <key width="1.5" c="=" nw="+" ne="*" sw="-" se="/" n="," s="." />
     <key width="1.5" c="¡" w="¿" nw="accent_grave" ne="accent_tilde" sw="accent_aigu" n="loc accent_aigu" />
