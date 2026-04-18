@@ -25,6 +25,11 @@ public final class LayoutModifier
    */
   public static KeyboardData modify_layout(KeyboardData kw)
   {
+
+
+    if (globalConfig.split_keyboard && globalConfig.wide_screen)
+      kw = split_layout(kw);
+
     // Extra keys are removed from the set as they are encountered during the
     // first iteration then automatically added.
     final TreeMap<KeyValue, KeyboardData.PreferredPos> extra_keys = new TreeMap<KeyValue, KeyboardData.PreferredPos>();
@@ -82,6 +87,7 @@ public final class LayoutModifier
     // Avoid adding extra keys to the number row
     if (added_number_row != null)
       kw = kw.insert_row(added_number_row, 0);
+
     return kw;
   }
 
@@ -214,5 +220,52 @@ public final class LayoutModifier
     {
       throw new RuntimeException(e.getMessage()); // Not recoverable
     }
+  }
+
+
+
+  static KeyboardData split_layout(KeyboardData kw)
+  {
+    java.util.ArrayList<KeyboardData.Row> newRows = new java.util.ArrayList<KeyboardData.Row>();
+    for (KeyboardData.Row row : kw.rows)
+    {
+      java.util.ArrayList<KeyboardData.Key> newKeys = new java.util.ArrayList<KeyboardData.Key>();
+      int size = row.keys.size();
+      int middle = size / 2;
+      boolean isOdd = size % 2 != 0;
+      
+      for (int i = 0; i < size; i++)
+      {
+        KeyboardData.Key key = row.keys.get(i);
+        
+        // Split only the space key (or keys defined as space)
+        boolean isSpace = key.hasValue(KeyValue.getKeyByName("space"));
+
+        if (isOdd && i == middle && isSpace)
+        {
+          KeyboardData.Key left = key.scaleWidth(0.5f);
+          KeyboardData.Key right = key.scaleWidth(0.5f).withShift(globalConfig.split_gap);
+          newKeys.add(left);
+          newKeys.add(right);
+        }
+        else
+        {
+          boolean addGap = false;
+          if (isOdd) {
+              addGap = (i == middle + 1);
+          } else {
+              addGap = (i == middle);
+          }
+
+          if (addGap)
+          {
+            key = key.withShift(key.shift + globalConfig.split_gap);
+          }
+          newKeys.add(key);
+        }
+      }
+      newRows.add(new KeyboardData.Row(newKeys, row.height, row.shift));
+    }
+    return new KeyboardData(kw, newRows);
   }
 }

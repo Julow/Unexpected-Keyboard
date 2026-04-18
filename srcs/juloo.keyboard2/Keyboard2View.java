@@ -247,15 +247,14 @@ public class Keyboard2View extends View
     float x = _marginLeft;
     if (row == null || tx < x)
       return null;
+    
     for (KeyboardData.Key key : row.keys)
     {
-      float xLeft = x + key.shift * _keyWidth;
-      float xRight = xLeft + key.width * _keyWidth;
-      if (tx < xLeft)
-        return null;
-      if (tx < xRight)
+      x += key.shift * _keyWidth;
+      float keyW = key.width * _keyWidth;
+      if (tx >= x && tx < x + keyW)
         return key;
-      x = xRight;
+      x += keyW;
     }
     return null;
   }
@@ -275,6 +274,7 @@ public class Keyboard2View extends View
     _marginRight = Math.max(_config.horizontal_margin, _insets_right);
     _marginBottom = _config.margin_bottom + _insets_bottom;
     width += _insets_left + _insets_right;
+
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
     _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
     // Compute the size of labels based on the width or the height of keys. The
@@ -350,6 +350,7 @@ public class Keyboard2View extends View
       y += row.shift * _tc.row_height;
       float x = _marginLeft + _tc.margin_left;
       float keyH = row.height * _tc.row_height - _tc.vertical_margin;
+
       for (KeyboardData.Key k : row.keys)
       {
         x += k.shift * _keyWidth;
@@ -359,10 +360,10 @@ public class Keyboard2View extends View
         drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
         if (k.keys[0] != null)
           drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
-        for (int i = 1; i < 9; i++)
+        for (int j = 1; j < 9; j++)
         {
-          if (k.keys[i] != null)
-            drawSubLabel(canvas, k.keys[i], x, y, keyW, keyH, i, isKeyDown, tc_key);
+          if (k.keys[j] != null)
+            drawSubLabel(canvas, k.keys[j], x, y, keyW, keyH, j, isKeyDown, tc_key);
         }
         drawIndication(canvas, k, x, y, keyW, keyH, _tc);
         x += _keyWidth * k.width;
