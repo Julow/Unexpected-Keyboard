@@ -5,6 +5,8 @@ import java.util.List;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.Config;
+import juloo.keyboard2.ComposeKey;
+import juloo.keyboard2.ComposeKeyData;
 
 /** Keep track of the word being typed and provide suggestions for
     [CandidatesView]. */
@@ -12,6 +14,7 @@ public final class Suggestions
 {
   Callback _callback;
   Config _config;
+  boolean _enabled;
 
   /** The suggestion displayed at the center of the candidates view and entered
       by the space bar. */
@@ -23,8 +26,16 @@ public final class Suggestions
     _config = conf;
   }
 
+  public void started()
+  {
+    _enabled = _config.editor_config.should_show_candidates_view;
+    best_suggestion = null;
+  }
+
   public void currently_typed_word(String word)
   {
+    if (!_enabled)
+      return;
     Cdict dict = _config.current_dictionary;
     if (word.length() < 2 || dict == null)
     {
@@ -40,18 +51,12 @@ public final class Suggestions
 
   int query_suggestions(Cdict dict, String word, String[] dst, int max_count)
   {
+    boolean first_char_upper = Character.isUpperCase(word.charAt(0));
+    word = apply_substitutions(word);
     Cdict.Result r = dict.find(word);
     int i = 0;
     if (r.found)
-      dst[i++] = word;
-    boolean first_char_upper = Character.isUpperCase(word.charAt(0));
-    // Do the dictionary query in lower case and re-apply the upper case after
-    if (first_char_upper)
-    {
-      r = dict.find(word.toLowerCase());
-      if (r.found)
-        dst[i++] = word;
-    }
+      dst[i++] = dict.word(r.index);
     int[] suffixes = dict.suffixes(r, max_count);
     // Disable distance search for small words
     int[] dist = (word.length() < 3 || i + 1 >= max_count) ? NO_RESULTS :
@@ -73,6 +78,22 @@ public final class Suggestions
     for (int i = 0; i < rs.length; i++)
       if (rs[i] != null)
         rs[i] = rs[i].substring(0, 1).toUpperCase() + rs[i].substring(1);
+  }
+
+  /** Apply the same substitutions that were used when building the
+      dictionaries to find word aliases. This catches missing diacritics for
+      example. */
+  String apply_substitutions(String w)
+  {
+    StringBuilder b = new StringBuilder(w);
+    int len = w.length();
+    for (int i = 0; i < len; i++)
+    {
+      char r =
+        ComposeKey.transform_char(ComposeKeyData.substitutions, b.charAt(i));
+      if (r != 0) b.setCharAt(i, r);
+    }
+    return b.toString();
   }
 
   void set_suggestions(List<String> ws)

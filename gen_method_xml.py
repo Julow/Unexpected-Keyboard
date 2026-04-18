@@ -33,6 +33,7 @@ LOCALES = [
   loc("es_ES", "latin", "latn_qwerty_es", extra_keys="accent_aigu:á:é:í:ó:ú@d|accent_tilde:ñ@n|accent_grave@f|accent_trema@u|€"),
   loc("et_EE", "latin", "latn_qwerty_et", extra_keys="accent_trema:ä:ö:ü@u|accent_tilde:õ@o|accent_caron:š:ž@s|€"),
   loc("fa_IR", "persian", "arab_pc_ir"),
+  loc("fi", "latin", "latn_qwerty_fi", extra_keys="å|accent_ring|accent_aigu|accent_trema|ö|ä|€"),
   loc("fr_BE", "latin", "latn_azerty_be", extra_keys="accent_grave:à:è:ù@f|accent_aigu:é@d|accent_circonflexe:ê:û@f|accent_cedille:ç@c|accent_trema@u|€"),
   loc("fr_CA", "latin", "latn_azerty_fr", extra_keys="accent_grave:à:è:ù@f|accent_aigu:é@d|accent_circonflexe:â:ê:ô:û@f|accent_cedille:ç@c|accent_trema:ë:ï:ü:ÿ@u"),
   loc("fr_CH", "latin", "latn_qwertz_fr_ch", extra_keys="accent_grave:à:è:ù@f|accent_aigu:é@d|accent_circonflexe:â:ê:ô:û@o|accent_cedille:ç@c|accent_trema:ë:ï:ü:ÿ@u|€"),
@@ -79,7 +80,7 @@ LOCALES = [
 ]
 
 # The locale that is at the beginning of the list
-DEFAULT_LOCALE = loc("en", "latin", "latn_qwerty_us", tag="en", dictionary="en_US")
+DEFAULT_LOCALE = loc("en", "latin", "latn_qwerty_us", tag="en", dictionary="en_GB")
 
 def parse_dictionaries():
     tree = ET.parse("res/values/dictionaries.xml")

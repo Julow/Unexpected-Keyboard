@@ -8,5 +8,6 @@ LOCAL_CFLAGS +=
 LOCAL_SRC_FILES := cdict/libcdict/libcdict.c cdict/java/jni/juloo_cdict_Cdict.c
 LOCAL_MODULE := libcdict_java
 LOCAL_SDK_VERSION := 21
+LOCAL_LDFLAGS += -Wl,-z,max-page-size=16384
 
 include $(BUILD_SHARED_LIBRARY)

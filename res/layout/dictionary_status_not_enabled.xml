@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" style="@style/paragraph" android:paddingHorizontal="24dp" android:gravity="center" android:text="@string/dictionaries_activity_not_enabled"/>
