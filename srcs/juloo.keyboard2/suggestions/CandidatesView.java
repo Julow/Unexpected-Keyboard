@@ -1,6 +1,7 @@
 package juloo.keyboard2.suggestions;
 
 import android.content.Context;
+import android.os.Build.VERSION;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -76,10 +77,11 @@ public class CandidatesView extends LinearLayout
     _status_no_dict = inflate_and_show(_status_no_dict,
         (config.current_dictionary == null),
         R.layout.candidates_status_no_dict);
-    set_height(config);
+    set_sizes(config);
   }
 
-  void set_height(Config config)
+  /** Set the height of the suggestion row and the text size. */
+  void set_sizes(Config config)
   {
     // Make the candidates view about as high as a keyboard row.
     int height = (int)(config.keyboard_rows_height_pixels * (1 - config.key_vertical_margin));
@@ -88,11 +90,17 @@ public class CandidatesView extends LinearLayout
     for (int i = 0; i < NUM_CANDIDATES; i++)
     {
       TextView v = _item_views[i];
+      // Set view height
       ViewGroup.MarginLayoutParams p =
         (ViewGroup.MarginLayoutParams)v.getLayoutParams();
       p.height = height;
       v.setLayoutParams(p);
-      v.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size);
+      // Set text size and enable auto size if supported.
+      if (VERSION.SDK_INT < 26)
+        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size);
+      else
+        v.setAutoSizeTextTypeUniformWithConfiguration(
+            (int)(text_size / 2.), (int)text_size, 1, TypedValue.COMPLEX_UNIT_PX);
     }
   }
 
