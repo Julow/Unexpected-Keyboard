@@ -155,7 +155,8 @@
     <string name="pref_clipboard_history_duration_1">At most 1 minute</string>
     <string name="pref_clipboard_history_duration_5">At most 5 minutes</string>
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
-    <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
+    <string name="pref_clipboard_history_duration_300">At most 5 hours</string>
+    <string name="pref_clipboard_history_duration_stop">No expiration (until manually cleared)</string>
     <string name="pref_dialog_edit_text">Custom definition</string>
     <string name="dictionaries_from_internet">Download a dictionary from the Internet</string>
     <string name="dictionaries_download_success">Dictionary installed</string>
