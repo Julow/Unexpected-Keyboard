@@ -47,10 +47,14 @@ public final class ClipboardHistoryService
       _paste_callback.paste_from_clipboard_pane(clip);
   }
 
+  /** Keep at least this many entries around even if old entries have reached
+      their configured expiration time. */
+  public static final int MIN_HISTORY_SIZE = 5;
+
   /** The maximum size limits the amount of user data stored in memory but also
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
-  public static final int MAX_HISTORY_SIZE = 6;
+  public static final int MAX_HISTORY_SIZE = 12;
 
   static ClipboardHistoryService _service = null;
   static ClipboardPasteCallback _paste_callback = null;
@@ -74,7 +78,8 @@ public final class ClipboardHistoryService
     while (it.hasNext())
     {
       HistoryEntry ent = it.next();
-      if (ent.expiry_timestamp <= now_ms)
+      // Keep at least [MIN_HISTORY_SIZE] entries in memory.
+      if (ent.expiry_timestamp <= now_ms && _history.size() > MIN_HISTORY_SIZE)
         it.remove();
       else
         dst.add(ent.content);
