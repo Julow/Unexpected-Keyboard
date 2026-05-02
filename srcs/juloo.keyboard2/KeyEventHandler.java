@@ -532,10 +532,10 @@ public final class KeyEventHandler
   /** Implement autocorrect when enabled in the settings. */
   void handle_space_bar()
   {
-    if (_space_bar_auto_complete && _suggestions.best_suggestion != null
+    if (_space_bar_auto_complete && _suggestions.count > 0
         && !_typedword.is_selection_not_empty()
         && _typedword.cursor_relative() == 0)
-      suggestion_entered(_suggestions.best_suggestion);
+      suggestion_entered(_suggestions.suggestions[0]);
     else
       send_text(" ");
   }
