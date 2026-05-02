@@ -33,6 +33,11 @@
     <string name="pref_extra_keys_title">选择要显示的按键</string>
     <string name="pref_extra_keys_custom">添加自定义按键</string>
     <string name="pref_extra_keys_internal">选择要添加到键盘的按键</string>
+    <!-- <string name="pref_category_suggestions">Suggestions</string> -->
+    <!-- <string name="pref_suggestions_title">Suggestions</string> -->
+    <!-- <string name="pref_suggestions_summary">Enable word completion and spell checking</string> -->
+    <!-- <string name="pref_space_bar_auto_complete_title">Autocomplete with the space bar</string> -->
+    <!-- <string name="pref_space_bar_auto_complete_summary">Enter the best suggestion by pressing space</string> -->
     <string name="pref_category_typing">输入</string>
     <string name="pref_swipe_dist_title">滑动触发距离</string>
     <string name="pref_swipe_dist_summary">输入按键四角的符号需要滑动的距离 (%s)</string>
@@ -44,11 +49,13 @@
     <string name="pref_category_behavior">行为</string>
     <string name="pref_autocapitalisation_title">句首自动大写</string>
     <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
-    <string name="pref_switch_input_immediate_title">切换到最近使用的键盘</string>
-    <string name="pref_switch_input_immediate_summary">切换键盘按钮的行为</string>
+    <!-- <string name="pref_change_method_key_replacement_title">Switching between input methods</string> -->
+    <!-- <string name="pref_change_method_key_replacement_e_picker">Show the input method picker (long press)</string> -->
+    <!-- <string name="pref_change_method_key_replacement_e_prev">Switch to last used</string> -->
+    <!-- <string name="pref_change_method_key_replacement_e_next">Switch to the next in the list</string> -->
     <string name="pref_vibrate_custom">自定义振动</string>
     <string name="pref_vibrate_duration_title">振动强度</string>
-    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
+    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates, and phone numbers</string> -->
     <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
     <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
     <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
@@ -72,6 +79,10 @@
     <string name="pref_theme_e_monetlight">莫奈（浅色）</string>
     <string name="pref_theme_e_monetdark">莫奈（深色）</string>
     <string name="pref_theme_e_rosepine">桃红松韵（Rosé Pine）</string>
+    <!-- <string name="pref_theme_e_everforestlight">Everforest Light</string> -->
+    <!-- <string name="pref_theme_e_cobalt">Cobalt</string> -->
+    <!-- <string name="pref_theme_e_pine">Pine</string> -->
+    <!-- <string name="pref_theme_e_epaperblack">ePaper Black</string> -->
     <string name="pref_swipe_dist_e_very_short">非常短</string>
     <string name="pref_swipe_dist_e_short">短</string>
     <string name="pref_swipe_dist_e_default">中（默认）</string>
@@ -87,6 +98,10 @@
     <string name="pref_circle_sensitivity_e_medium">中</string>
     <string name="pref_circle_sensitivity_e_low">低</string>
     <string name="pref_circle_sensitivity_e_disabled">禁用</string>
+    <!-- <string name="pref_slider_sensitivity_title">Space bar slider sensitivity</string> -->
+    <!-- <string name="pref_slider_sensitivity_slow">Slow</string> -->
+    <!-- <string name="pref_slider_sensitivity_medium">Medium</string> -->
+    <!-- <string name="pref_slider_sensitivity_fast">Fast</string> -->
     <string name="key_action_next">下一项</string>
     <string name="key_action_done">完成</string>
     <string name="key_action_go">前往</string>
@@ -95,6 +110,7 @@
     <string name="key_action_send">发送</string>
     <string name="launcher_button_imesettings">启用键盘</string>
     <string name="launcher_button_imepicker">选择键盘</string>
+    <!-- <string name="launcher_button_dictionaries">Install dictionaries</string> -->
     <string name="launcher_description">这是一个虚拟键盘软件。点击按钮进入系统设置，然后启用 Unexpected-Keyboard 即可使用。</string>
     <string name="launcher_sourcecode">这是一个免费且开源的软件。你可以在 GitHub 上找到源代码或反馈问题。</string>
     <string name="launcher_tryhere">启用键盘后，可以在这里测试效果：</string>
@@ -134,4 +150,17 @@
     <string name="clipboard_remove_confirm">确定移除此剪贴内容？</string>
     <string name="clipboard_remove_confirmed">确定</string>
     <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
+    <!-- <string name="pref_category_clipboard">Clipboard</string> -->
+    <!-- <string name="pref_clipboard_history_duration">Clipboard memory duration</string> -->
+    <!-- <string name="pref_clipboard_history_duration_1">At most 1 minute</string> -->
+    <!-- <string name="pref_clipboard_history_duration_5">At most 5 minutes</string> -->
+    <!-- <string name="pref_clipboard_history_duration_30">At most 30 minutes</string> -->
+    <!-- <string name="pref_clipboard_history_duration_stop">Until the app stops</string> -->
+    <!-- <string name="pref_dialog_edit_text">Custom definition</string> -->
+    <!-- <string name="dictionaries_from_internet">Download a dictionary from the Internet</string> -->
+    <!-- <string name="dictionaries_download_success">Dictionary installed</string> -->
+    <!-- <string name="dictionaries_download_failed">Download failed</string> -->
+    <!-- <string name="dictionaries_activity_not_enabled">You must first enable the keyboard to download dictionaries.</string> -->
+    <!-- <string name="candidates_status_no_dict">No dictionary installed</string> -->
+    <!-- <string name="candidates_status_install">Install</string> -->
 </resources>

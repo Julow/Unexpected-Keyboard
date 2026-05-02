@@ -9,6 +9,11 @@ import glob, os, sys
 # Sync store title and descriptions to the metadata directory.
 
 VALUE_DIR_TO_METADATA = {
+        "ar": "ar",
+        "ars": "ars",
+        "arz": "arz",
+        "bn-rBD": "bn-BD",
+        "ca": "ca",
         "cs": "cs-CZ",
         "de": "de-DE",
         "en": "en-US",
@@ -21,15 +26,19 @@ VALUE_DIR_TO_METADATA = {
         "ja": "ja-JP",
         "ko": "ko-KR",
         "lv": "lv",
+        "my": "my",
         "nl": "nl-NL",
         "pl": "pl-PL",
         "pt": "pt-BR",
         "ro": "ro",
         "ru": "ru-RU",
+        "th": "th",
+        "tok": "tok",
         "tr": "tr-TR",
         "uk": "uk",
         "vi": "vi",
         "zh-rCN": "zh-CN",
+        "zh-rTW": "zh-TW",
         }
 
 # Dict of strings. Key is the pair string name and product field (often None).
