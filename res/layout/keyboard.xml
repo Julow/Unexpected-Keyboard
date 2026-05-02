@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:hardwareAccelerated="false" android:orientation="vertical" android:background="?attr/colorKeyboard">
-  <juloo.keyboard2.suggestions.CandidatesView android:id="@+id/candidates_view" android:layout_width="match_parent" android:layout_height="48dp" android:orientation="horizontal" android:gravity="center">
+  <juloo.keyboard2.suggestions.CandidatesView android:id="@+id/candidates_view" style="@style/candidates_view">
     <TextView android:id="@+id/candidates_emoji" style="@style/candidates_emoji"/>
     <TextView android:id="@+id/candidates_left" style="@style/candidates_item"/>
     <TextView android:id="@+id/candidates_middle" style="@style/candidates_item"/>
