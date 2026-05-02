@@ -1,0 +1,6 @@
+La característica principal és que pots escriure més caràcters arrossegant les tecles cap a les cantonades.
+
+Aquesta aplicació va ser dissenyada originalment per als programadors que usen Termux.
+Ara és perfecta per a un ús quotidià.
+
+Aquesta aplicació no conté anuncis, no fa cap petició de xarxa i és de codi obert.
