@@ -8,17 +8,19 @@ import glob, os, sys
 # The baseline is 'values/strings.xml', which is english.
 # Sync store title and descriptions to the metadata directory.
 
+# Map language codes to the codes that Google Play understands. Languages
+# mapped to [None] are not supported by Google Play.
 VALUE_DIR_TO_METADATA = {
         "ar": "ar",
-        "ars": "ars",
-        "arz": "arz",
-        "bn-rBD": "bn-BD",
+        "ars": None,
+        "arz": None,
+        "bn-rBD": None,
         "ca": "ca",
         "cs": "cs-CZ",
         "de": "de-DE",
         "en": "en-US",
         "es": "es-ES",
-        "fa": "fa-IR",
+        "fa": None,
         "fil": "fil",
         "fr": "fr-FR",
         "in": "id",
@@ -26,14 +28,14 @@ VALUE_DIR_TO_METADATA = {
         "ja": "ja-JP",
         "ko": "ko-KR",
         "lv": "lv",
-        "my": "my",
+        "my": None,
         "nl": "nl-NL",
         "pl": "pl-PL",
         "pt": "pt-BR",
         "ro": "ro",
         "ru": "ru-RU",
         "th": "th",
-        "tok": "tok",
+        "tok": None,
         "tr": "tr-TR",
         "uk": "uk",
         "vi": "vi",
@@ -78,7 +80,10 @@ def sync_metadata(value_dir, strings):
     locale = os.path.basename(value_dir).removeprefix("values-")
     if not locale in VALUE_DIR_TO_METADATA:
         raise Exception("Locale '%s' not known, please add it into sync_translations.py" % locale)
-    meta_dir = "fastlane/metadata/android/" + VALUE_DIR_TO_METADATA[locale]
+    metadata_name = VALUE_DIR_TO_METADATA[locale]
+    if metadata_name == None:
+        return # Not supported by the play store
+    meta_dir = "fastlane/metadata/android/" + metadata_name
     def sync_meta_file(fname, string_name):
         if string_name in strings:
             string = strings[string_name]
