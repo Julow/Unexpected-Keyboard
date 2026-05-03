@@ -69,6 +69,9 @@ android {
   buildTypes {
     named("release") {
       isMinifyEnabled = true
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro")
       isShrinkResources = true
       isDebuggable = false
       resValue("string", "app_name", "@string/app_name_release")
