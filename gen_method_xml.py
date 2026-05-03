@@ -1,7 +1,11 @@
 import xml.etree.ElementTree as ET
 import itertools as it
+import sys
 
 # This script generates res/xml/method.xml.
+
+def warn(msg):
+    print("Warning: " + msg, file=sys.stderr)
 
 def loc(loc_name, script, default_layout, **kwargs):
     return { "name": loc_name, "script": script,
@@ -91,6 +95,13 @@ def parse_dictionaries():
 # Available dictionares of the form "de" or "de_CH".
 available_dictionaries = parse_dictionaries()
 
+# Warn when a dictionary is attached to no locale
+def check_locales_for_dictionaries(locales):
+    used = { l["dictionary"] for l in locales if "dictionary" in l }
+    for d in available_dictionaries:
+        if d not in used:
+            warn("Dictionary '%s' is attached to no locale" % d)
+
 def subtype_elem(root, loc):
     tag = loc["tag"].replace("_", "-")
     extra_keys = ",extra_keys=" + loc["extra_keys"] if "extra_keys" in loc else ""
@@ -105,8 +116,7 @@ def subtype_elem(root, loc):
         "android:imeSubtypeExtraValue": extra_value
         })
 
-# Return locales in sorted order with the "tag" and "dictionary" attributes
-# added.
+# Return locales with the "tag" and "dictionary" attributes added.
 def compute_attrs():
     locales_grouped = {} # Locales grouped by language tag
     def lang(loc):
@@ -142,6 +152,7 @@ def sort_locales(locales):
 
 def gen():
     locales = sort_locales(compute_attrs())
+    check_locales_for_dictionaries(locales)
     root = ET.Element("input-method", attrib={
         "xmlns:android": "http://schemas.android.com/apk/res/android",
         "android:settingsActivity": "juloo.keyboard2.SettingsActivity",
