@@ -127,7 +127,9 @@ public final class CurrentlyTypedWord
       int c = Character.codePointAt(s, i);
       i += Character.charCount(c);
       _cursor++;
-      if (!Character.isLetter(c))
+      // [i >= end] might happen when the cursor is in the middle of a
+      // surrogate pair
+      if (!Character.isLetter(c) && i < end)
         insert_start = i;
     }
     if (insert_start > 0)
