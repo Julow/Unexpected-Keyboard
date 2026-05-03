@@ -5,7 +5,7 @@ import itertools as it
 
 def loc(loc_name, script, default_layout, **kwargs):
     return { "name": loc_name, "script": script,
-            "default_layout": default_layout, **kwargs }
+             "default_layout": default_layout, **kwargs }
 
 # The locales are defined here. To add support for a language, add it to the
 # following block:
@@ -24,6 +24,7 @@ LOCALES = [
   loc("de_BE", "latin", "latn_azerty_be", extra_keys="accent_grave:è@f|accent_aigu:á:é:í:ó:ú:ý:j́@d|accent_circonflexe:ê@f|accent_cedille:ç@c|accent_trema@u|€"),
   loc("de_DE", "latin", "latn_qwertz_de", extra_keys="accent_trema:ä:ö:ü@u|ß|€"),
   loc("el", "latin", "grek_qwerty", extra_keys="£@l|€"),
+  loc("en", "latin", "latn_qwerty_us", dictionary="en_GB"),
   loc("en_AU", "latin", "latn_qwerty_us"),
   loc("en_CA", "latin", "latn_qwerty_us"),
   loc("en_GB", "latin", "latn_qwerty_gb", extra_keys="£@l"),
@@ -79,8 +80,8 @@ LOCALES = [
   loc("yo_NG", "latin", "latn_qwerty_us", extra_keys="₦|ẹ|ọ|ṣ")
 ]
 
-# The locale that is at the beginning of the list
-DEFAULT_LOCALE = loc("en", "latin", "latn_qwerty_us", tag="en", dictionary="en_GB")
+# The locale that is at the beginning of the list.
+DEFAULT_LOCALE = "en_GB"
 
 def parse_dictionaries():
     tree = ET.parse("res/values/dictionaries.xml")
@@ -113,8 +114,8 @@ def compute_attrs():
     for loc in LOCALES:
         locales_grouped.setdefault(lang(loc), []).append(loc)
     def tag(loc):
-        if "tag" in loc: return loc["tag"]
         l = lang(loc)
+        if loc["name"] == l: return l # Locales like "en"
         if loc["name"] == f"{l}_{l.upper()}": return l # Locales like "fr_FR"
         # Return a short tag when it's not shared between several locales
         return l if len(locales_grouped[l]) == 1 else loc["name"]
@@ -124,11 +125,23 @@ def compute_attrs():
         if l in available_dictionaries: return l
         return None
     def add_attrs(loc):
-        return dict(tag=tag(loc), dictionary=dictionary(loc), **loc)
+        loc = dict(**loc)
+        loc["tag"] = tag(loc)
+        loc["dictionary"] = dictionary(loc)
+        return loc
     return map(add_attrs, LOCALES)
 
+def sort_locales(locales):
+    # The default locale for a language (eg. "en") might shadow the exact
+    # locale (eg. "en_US"). Makes sure the default locale sorts after the exact
+    # ones.
+    def key(l):
+        s = l["name"].split("_")
+        return (l["name"] != DEFAULT_LOCALE), s[0], (len(s) == 1), s[1:]
+    return sorted(locales, key=key)
+
 def gen():
-    locales = compute_attrs()
+    locales = sort_locales(compute_attrs())
     root = ET.Element("input-method", attrib={
         "xmlns:android": "http://schemas.android.com/apk/res/android",
         "android:settingsActivity": "juloo.keyboard2.SettingsActivity",
@@ -139,8 +152,7 @@ def gen():
        Update this file with 'gradle test'.
 
   """))
-    subtype_elem(root, DEFAULT_LOCALE)
-    for loc in sorted(locales, key=lambda loc: loc["name"]):
+    for loc in locales:
         subtype_elem(root, loc)
     ET.indent(root)
     print(ET.tostring(root, encoding="utf-8", xml_declaration=True).decode("UTF-8"))
