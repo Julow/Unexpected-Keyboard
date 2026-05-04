@@ -35,6 +35,8 @@ public final class KeyEventHandler
   /** Remember the action that was handled. This is used by autocorrect. */
   LastAction _last_action = null;
   LastAction _next_last_action = null;
+  /** Current Hangul composing syllable precomposed value. 0 = no composition. */
+  int _hangul_composing = 0;
 
   public KeyEventHandler(IReceiver recv, Config config)
   {
@@ -50,6 +52,7 @@ public final class KeyEventHandler
   /** Editing just started. */
   public void started(Config conf)
   {
+    _hangul_composing = 0;
     InputConnection ic = _recv.getCurrentInputConnection();
     _autocap.started(conf, ic);
     _typedword.started(conf, ic);
@@ -58,6 +61,50 @@ public final class KeyEventHandler
       conf.editor_config.should_move_cursor_force_fallback;
     _space_bar_auto_complete = conf.space_bar_auto_complete;
     _last_action = null;
+  }
+
+  /** Commit any pending Hangul composing text. */
+  void commit_hangul()
+  {
+    if (_hangul_composing == 0)
+      return;
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn != null)
+      conn.finishComposingText();
+    _hangul_composing = 0;
+  }
+
+  /** Update the Hangul composing text from currently latched keys. */
+  void update_hangul_composing(Pointers.Modifiers mods)
+  {
+    int new_precomposed = 0;
+    for (int i = 0; i < mods.size(); i++)
+    {
+      KeyValue mod = mods.get(i);
+      switch (mod.getKind())
+      {
+        case Hangul_initial:
+        case Hangul_medial:
+          new_precomposed = mod.getHangulPrecomposed();
+          break;
+        default:
+          break;
+      }
+    }
+    _hangul_composing = new_precomposed;
+    if (_hangul_composing != 0)
+    {
+      InputConnection conn = _recv.getCurrentInputConnection();
+      if (conn != null)
+      {
+        String s = String.valueOf((char)_hangul_composing);
+        conn.setComposingText(s, 1);
+      }
+    }
+    else
+    {
+      commit_hangul();
+    }
   }
 
   /** Selection has been updated. */
@@ -110,12 +157,25 @@ public final class KeyEventHandler
     update_meta_state(mods);
     switch (key.getKind())
     {
-      case Char: send_text(String.valueOf(key.getChar())); break;
-      case String: send_text(key.getString()); break;
+      case Char:
+        if (_hangul_composing != 0) { commit_hangul(); }
+        send_text(String.valueOf(key.getChar()));
+        break;
+      case String:
+        if (_hangul_composing != 0) { commit_hangul(); }
+        send_text(key.getString());
+        break;
       case Event: _recv.handle_event_key(key.getEvent()); break;
       case Keyevent: send_key_down_up(key.getKeyevent()); break;
       case Modifier: break;
-      case Editing: handle_editing_key(key.getEditing()); break;
+      case Editing:
+        if (_hangul_composing != 0 && key.getEditing() == KeyValue.Editing.SPACE_BAR) {
+          commit_hangul();
+          send_text(" ");
+        } else {
+          handle_editing_key(key.getEditing());
+        }
+        break;
       case Compose_pending: _recv.set_compose_pending(true); break;
       case Slider: handle_slider(key.getSlider(), key.getSliderRepeat(), false); break;
       case Macro: evaluate_macro(key.getMacro()); break;
@@ -128,6 +188,7 @@ public final class KeyEventHandler
   public void mods_changed(Pointers.Modifiers mods)
   {
     update_meta_state(mods);
+    update_hangul_composing(mods);
   }
 
   @Override
