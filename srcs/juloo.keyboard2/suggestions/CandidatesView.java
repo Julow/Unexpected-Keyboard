@@ -70,6 +70,7 @@ public class CandidatesView extends LinearLayout
         v.setVisibility(View.GONE);
       }
     }
+    update_visibility();
   }
 
   public void clear_candidates()
@@ -79,6 +80,7 @@ public class CandidatesView extends LinearLayout
       _items[i] = null;
       _item_views[i].setVisibility(View.GONE);
     }
+    update_visibility();
   }
 
   public void refresh_config(Config config)
@@ -87,9 +89,10 @@ public class CandidatesView extends LinearLayout
     // The status message indicates whether the dictionaries should be
     // installed.
     _status_no_dict = inflate_and_show(_status_no_dict,
-        (config.current_dictionary == null),
+        config.current_dictionary_missing,
         R.layout.candidates_status_no_dict);
     set_sizes(config);
+    update_visibility();
   }
 
   /** Set the height of the suggestion row and the text size. */
@@ -134,6 +137,32 @@ public class CandidatesView extends LinearLayout
       v.setVisibility(View.VISIBLE);
     }
     return v;
+  }
+
+  /** Hide the entire CandidatesView when only the 'No dictionary installed'
+      message would be visible; show it when there are actual candidates. */
+  void update_visibility()
+  {
+    boolean has_visible_candidates = false;
+    for (int i = 0; i < NUM_CANDIDATES; i++)
+    {
+      if (_item_views[i].getVisibility() == View.VISIBLE)
+      {
+        has_visible_candidates = true;
+        break;
+      }
+    }
+    if (has_visible_candidates)
+    {
+      setVisibility(View.VISIBLE);
+      return;
+    }
+    // No candidates visible; if the 'No dictionary' status is visible, hide
+    // the whole view so it doesn't occupy empty space.
+    if (_status_no_dict != null && _status_no_dict.getVisibility() == View.VISIBLE)
+      setVisibility(View.GONE);
+    else
+      setVisibility(View.VISIBLE);
   }
 
   private void setup_item_view(final int item_index, int item_id)

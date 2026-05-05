@@ -459,14 +459,14 @@ public final class KeyValue implements Comparable<KeyValue>
   public static KeyValue makeHangulInitial(String symbol, int initial_idx)
   {
     return new KeyValue(symbol, Kind.Hangul_initial, initial_idx * 588 + 44032,
-        FLAG_LATCH);
+        0);
   }
 
   public static KeyValue makeHangulMedial(int precomposed, int medial_idx)
   {
     precomposed += medial_idx * 28;
     return new KeyValue(String.valueOf((char)precomposed), Kind.Hangul_medial,
-        precomposed, FLAG_LATCH);
+        precomposed, 0);
   }
 
   public static KeyValue makeHangulFinal(int precomposed, int final_idx)
