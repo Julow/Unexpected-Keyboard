@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Keyboard virtual yang ringan dan sadar privasi untuk Android.</string>
-    <string name="store_description">Fitur utamanya adalah Anda dapat mengetik lebih banyak karakter dengan menggeser tombol ke arah sudut.\n\nAplikasi ini awalnya dirancang untuk programmer yang menggunakan Termux.\nSekarang sempurna untuk penggunaan sehari-hari.\n\nAplikasi ini tidak berisi iklan, tidak membuat permintaan jaringan dan Open Source.</string>
+    <string name="store_description">Fitur utamanya adalah Anda dapat mengetik lebih banyak karakter dengan menggeser tombol ke arah sudut.\n\nAplikasi ini awalnya dirancang untuk programmer yang menggunakan Termux.\nSekarang sempurna untuk penggunaan sehari-hari.\n\nAplikasi ini tidak berisi iklan dan Open Source.</string>
     <string name="pref_portrait">Dalam mode potret</string>
     <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">Dalam mode lansekap</string>

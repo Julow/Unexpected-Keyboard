@@ -3,7 +3,7 @@
     <string name="app_name_release">صفحه‌کلید غیرمنتظره</string>
     <string name="app_name_debug">صفحه‌کلید غیرمنتظره (دیباگ كردن)</string>
     <string name="short_description">صفحه‌کلید مجازی سبک و با حفظ حریم خصوصی برای اندروید.</string>
-    <string name="store_description">ویژگی اصلی این است که می‌توانید با کشیدن کلیدها به سمت گوشه‌ها، نویسه های (کاراکترهای) بیشتری تایپ کنید.\n\nاین برنامه در ابتدا برای برنامه‌نویسانی که از Termux استفاده می‌کنند طراحی شده بود.\n\nاکنون برای استفاده روزمره عالی است.\nاین برنامه هیچ تبلیغاتی ندارد، هیچ درخواست شبکه‌ای انجام نمی‌دهد و متن‌باز است.</string>
+    <string name="store_description">ویژگی اصلی این است که می‌توانید با کشیدن کلیدها به سمت گوشه‌ها، نویسه های (کاراکترهای) بیشتری تایپ کنید.\n\nاین برنامه در ابتدا برای برنامه‌نویسانی که از Termux استفاده می‌کنند طراحی شده بود.\n\nاکنون برای استفاده روزمره عالی است.</string>
     <string name="pref_portrait">در حالت عمودی</string>
     <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">در حالت افقی</string>

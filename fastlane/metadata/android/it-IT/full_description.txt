@@ -3,4 +3,4 @@ La caratteristica principale è quella di poter digitare altri caratteri scorren
 L'applicazione era originariamente pensata per l'utilizzo di Termux da parte di programmatori.
 Ora è perfetta anche per l'uso quotidiano.
 
-L'applicazione non contiene pubblicità, non esegue alcuna richiesta di rete ed è Open Source.
+L'applicazione non contiene pubblicità ed è Open Source.

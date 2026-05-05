@@ -3,4 +3,4 @@ Galvenā tastatūras iespēja ir viegli ievadīt vairāk rakstzīmju ar pavilkš
 Sākotnēji šī lietotne tika izstrādāta programmētājiem, kas izmanto Termux.
 Tagad tā lieliski piemērota ikdienas lietošanai.
 
-Lietotne nesatur reklāmas, neveic nekādus tīkla pieprasījumus, un tās pirmkods ir pieejams visiem.
+Lietotne nesatur reklāmas, un tās pirmkods ir pieejams visiem.

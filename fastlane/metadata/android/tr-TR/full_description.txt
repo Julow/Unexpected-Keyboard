@@ -3,4 +3,4 @@ Bu uygulama özünde tuşların kenarlarından kaydırarak daha fazla karakter y
 Bu uygulama aslında Termux kullanıcıları için geliştirildi.
 Artık gündelik kullanım için de uygun.
 
-Bu uygulama açık kaynaklıdır. Reklam içermez ve internete bağlanmaz.
+Bu uygulama açık kaynaklıdır. Reklam içermez.

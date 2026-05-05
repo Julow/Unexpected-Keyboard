@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Una tastiera virtuale leggera ed attenta alla privacy per Android.</string>
-    <string name="store_description">La caratteristica principale è quella di poter digitare altri caratteri scorrendo verso i bordi dei tasti.\n\nL\'applicazione era originariamente pensata per l\'utilizzo di Termux da parte di programmatori.\nOra è perfetta anche per l\'uso quotidiano.\n\nL\'applicazione non contiene pubblicità, non esegue alcuna richiesta di rete ed è Open Source.</string>
+    <string name="store_description">La caratteristica principale è quella di poter digitare altri caratteri scorrendo verso i bordi dei tasti.\n\nL\'applicazione era originariamente pensata per l\'utilizzo di Termux da parte di programmatori.\nOra è perfetta anche per l\'uso quotidiano.\n\nL\'applicazione non contiene pubblicità ed è Open Source.</string>
     <string name="pref_portrait">In modalità verticale</string>
     <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">In modalità orizzontale</string>

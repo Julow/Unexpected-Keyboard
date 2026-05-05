@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (تصحيح الأخطاء)</string>
     <string name="short_description">كيبورد افتراضي خفيف الوزن ويراعي الخصوصية لآندرويد.</string>
-    <string name="store_description">الميزة الرئيسية إنّه تقدر تكتب حروف أكثر عن طريق تمرير المفاتيح باتّجاه الزوايا\n\nهذا التطبيق أصلاً تسوّى علشان المبرمجين إلّي يستخدمون طرفية Termux.\nالآن صار تمام للاستخدام اليومي.\n\nهذا التطبيق ما فيه إعلانات، ما يقدّم أي طلبات على الشبكة ومفتوح المصدر.</string>
+    <string name="store_description">الميزة الرئيسية إنّه تقدر تكتب حروف أكثر عن طريق تمرير المفاتيح باتّجاه الزوايا\n\nهذا التطبيق أصلاً تسوّى علشان المبرمجين إلّي يستخدمون طرفية Termux.\nالآن صار تمام للاستخدام اليومي.</string>
     <string name="pref_portrait">وضع لوحي</string>
     <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">وضع أفقي</string>

@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (depuració)</string>
     <string name="short_description">Un teclat virtual lleuger per a Android que és conscient de la teva privacitat.</string>
-    <string name="store_description">La característica principal és que pots escriure més caràcters arrossegant les tecles cap a les cantonades.\n\nAquesta aplicació va ser dissenyada originalment per als programadors que usen Termux.\nAra és perfecta per a un ús quotidià.\n\nAquesta aplicació no conté anuncis, no fa cap petició de xarxa i és de codi obert.</string>
+    <string name="store_description">La característica principal és que pots escriure més caràcters arrossegant les tecles cap a les cantonades.\n\nAquesta aplicació va ser dissenyada originalment per als programadors que usen Termux.\nAra és perfecta per a un ús quotidià.\n\nAquesta aplicació no conté anuncis i és de codi obert.</string>
     <string name="pref_portrait">En mode vertical</string>
     <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">En mode apaïsat</string>

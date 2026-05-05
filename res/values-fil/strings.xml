@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Magaan at privacy-conscious na virtual keyboard sa Android.</string>
-    <string name="store_description">Ang pangunahing feature ay maaari kang mag-type ng mas marami pang karakter sa pag-swipe sa gilid ng mga key.\n\nNoong simula, ginawa itong application para sa mga programmer sa na nagte-Termux.\nNgayo\'y perpekto na sa pang-araw-araw.\n\nWalang ads, hindi nagne-network request at Open Source ang application na ito.</string>
+    <string name="store_description">Ang pangunahing feature ay maaari kang mag-type ng mas marami pang karakter sa pag-swipe sa gilid ng mga key.\n\nNoong simula, ginawa itong application para sa mga programmer sa na nagte-Termux.\nNgayo\'y perpekto na sa pang-araw-araw.\n\nWalang ads at Open Source ang application na ito.</string>
     <string name="pref_portrait">Nakapatayo</string>
     <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">Nakapahiga</string>

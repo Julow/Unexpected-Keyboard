@@ -3,4 +3,4 @@ The main feature is that you can type more characters by swiping the keys toward
 This application was originally designed for programmers using Termux.
 Now perfect for everyday use.
 
-This application contains no ads, doesn't make any network requests and is Open Source.
+This application contains no ads and is Open Source.
