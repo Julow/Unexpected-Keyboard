@@ -175,16 +175,50 @@ public class Keyboard2 extends InputMethodService
   {
     _config.current_dictionary = null;
     _config.emoji_dictionary = null;
+    _config.current_dictionary_missing = false;
     if (_device_locales.default_ == null)
       return;
     String current = _device_locales.default_.dictionary;
     if (current == null)
       return;
+    _config.current_dictionary_missing = true;
     Cdict[] dicts = _dictionaries.load(current);
     if (dicts == null)
       return;
     _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
     _config.emoji_dictionary = Dictionaries.find_by_name(dicts, "emoji");
+    _config.current_dictionary_missing = _config.current_dictionary == null;
+  }
+  {
+    _config.current_dictionary = null;
+    _config.emoji_dictionary = null;
+    _config.current_dictionary_missing = false;
+    if (_device_locales.default_ == null)
+      return;
+    String current = _device_locales.default_.dictionary;
+    if (current == null)
+      return;
+    _config.current_dictionary_missing = true;
+    _config.emoji_dictionary = null;
+    _config.current_dictionary_missing = false;
+    if (_device_locales.default_ == null)
+      return;
+    String current = _device_locales.default_.dictionary;
+    if (_device_locales.default_ == null)
+      return;
+=======
+    _config.current_dictionary_missing = false;
+>>>>>>> 72768af (feat(hangul): Add sequential Hangul input with custom layout support)
+    String current = _device_locales.default_.dictionary;
+    if (current == null)
+      return;
+    _config.current_dictionary_missing = true;
+    Cdict[] dicts = _dictionaries.load(current);
+    if (dicts == null)
+      return;
+    _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
+    _config.emoji_dictionary = Dictionaries.find_by_name(dicts, "emoji");
+    _config.current_dictionary_missing = _config.current_dictionary == null;
   }
 
   private void refresh_candidates_view()
@@ -192,7 +226,11 @@ public class Keyboard2 extends InputMethodService
     boolean should_show =
       _config.suggestions_enabled
       && _config.editor_config.should_show_candidates_view;
-    if (should_show)
+    if (should_show) {
+      _candidates_view.refresh_config(_config);
+    } else {
+      _candidates_view.setVisibility(View.GONE);
+    }
       _candidates_view.refresh_config(_config);
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }

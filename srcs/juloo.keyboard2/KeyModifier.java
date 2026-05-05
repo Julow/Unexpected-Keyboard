@@ -49,11 +49,9 @@ public final class KeyModifier
       case Compose_pending:
         return apply_compose_pending(mod.getPendingCompose(), k);
       case Hangul_initial:
-        if (k.equals(mod)) // Allow typing the initial in letter form
-          return KeyValue.makeStringKey(k.getString(), KeyValue.FLAG_GREYED);
-        return combine_hangul_initial(k, mod.getHangulPrecomposed());
       case Hangul_medial:
-        return combine_hangul_medial(k, mod.getHangulPrecomposed());
+        // Sequential input handled in KeyEventHandler, not via latch
+        return k;
     }
     return k;
   }

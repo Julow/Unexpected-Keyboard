@@ -85,6 +85,7 @@ public final class Config
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
   public Cdict current_dictionary = null; // Might be 'null'.
   public Cdict emoji_dictionary = null; // Might be 'null'.
+  public boolean current_dictionary_missing = false;
   public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;
