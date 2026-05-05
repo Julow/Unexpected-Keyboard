@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_show_numpad_title">Näita numbriklahvistikku</string>
+    <string name="pref_show_numpad_never">Mitte kunagi</string>
+    <string name="pref_show_numpad_landscape">Vaid rõhtvaates</string>
+    <string name="pref_show_numpad_always">Alati</string>
+    <string name="pref_number_row_title">Näita numbrite rida</string>
+    <string name="pref_numpad_layout">Numbriklahvistiku paigutus</string>
+</resources>
