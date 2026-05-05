@@ -175,6 +175,8 @@ public class Keyboard2 extends InputMethodService
   {
     _config.current_dictionary = null;
     _config.emoji_dictionary = null;
+    if (_device_locales.default_ == null)
+      return;
     String current = _device_locales.default_.dictionary;
     if (current == null)
       return;
