@@ -26,7 +26,7 @@
     <string name="pref_show_numpad_never">Jamais</string>
     <string name="pref_show_numpad_landscape">Seulement en mode paysage</string>
     <string name="pref_show_numpad_always">Toujours</string>
-    <string name="pref_number_row_title">Montrer la rangée de nombres</string>
+    <string name="pref_number_row_title">Montrer la rangée de chiffres</string>
     <string name="pref_numpad_layout">Disposition du pavé numérique</string>
     <string name="pref_numpad_layout_e_high_first">Du plus haut au plus bas</string>
     <string name="pref_numpad_layout_e_low_first">Du plus bas au plus haut</string>
@@ -163,4 +163,26 @@
     <!-- <string name="dictionaries_activity_not_enabled">You must first enable the keyboard to download dictionaries.</string> -->
     <!-- <string name="candidates_status_no_dict">No dictionary installed</string> -->
     <!-- <string name="candidates_status_install">Install</string> -->
+<string name="pref_portrait_unfolded">En mode portrait déplié</string>
+    <string name="pref_landscape_unfolded">En mode paysage déplié</string>
+    <string name="pref_show_number_row_no_number_row">Aucune rangée de chiffres</string>
+    <string name="pref_show_number_row_no_symbols">Rangée de chiffres sans symboles</string>
+    <string name="pref_show_number_row_symbols">Rangée de chiffres avec symboles</string>
+    <string name="pref_category_suggestions">Suggestions</string>
+    <string name="pref_suggestions_title">Suggestions</string>
+    <string name="pref_suggestions_summary">Activer la suggestion de mots correction orthographique</string>
+    <string name="pref_space_bar_auto_complete_title">Correction automatique avec la barre d\'espace</string>
+    <string name="pref_space_bar_auto_complete_summary">Entrer la meilleure suggestion en appuyant sur espace</string>
+    <string name="pref_change_method_key_replacement_title">Changer de méthode de saisie</string>
+    <string name="pref_change_method_key_replacement_e_picker">Afficher le sélecteur de méthode de saisie (appui long)</string>
+    <string name="pref_change_method_key_replacement_e_prev">Changer vers le dernier utilisé</string>
+    <string name="pref_change_method_key_replacement_e_next">Changer vers le suivant dans la liste</string>
+    <string name="pref_number_entry_title">Disposition pour écrire des nombres, des dates et des numéros de téléphone</string>
+    <string name="pref_number_entry_layout_pin">Code PIN</string>
+    <string name="pref_number_entry_layout_number">Panneau des chiffres</string>
+    <string name="pref_number_entry_layout_normal">Utiliser la disposition principale</string>
+    <string name="pref_theme_e_everforestlight">Everforest Light</string>
+    <string name="pref_theme_e_cobalt">Cobalt</string>
+    <string name="pref_theme_e_pine">Pine</string>
+    <string name="pref_theme_e_epaperblack">ePaper Noir</string>
 </resources>
