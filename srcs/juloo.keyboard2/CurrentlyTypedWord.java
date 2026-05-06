@@ -129,7 +129,7 @@ public final class CurrentlyTypedWord
       _cursor++;
       // [i >= end] might happen when the cursor is in the middle of a
       // surrogate pair
-      if (!Character.isLetter(c) && i < end)
+      if (!Character.isLetter(c) && i <= end)
         insert_start = i;
     }
     if (insert_start > 0)
