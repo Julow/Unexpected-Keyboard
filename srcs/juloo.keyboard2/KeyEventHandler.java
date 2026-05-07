@@ -274,12 +274,30 @@ public final class KeyEventHandler
   }
 
   /** See {!InputConnection.performContextMenuAction}. */
-  void send_context_menu_action(int id)
+  boolean send_context_menu_action(int id)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return false;
+    return conn.performContextMenuAction(id);
+  }
+
+  void fallback_paste_from_clipboard()
+  {
+    String clip = ClipboardHistoryService.get_current_clip();
+    if (clip != null && clip.length() > 0)
+      send_text(clip);
+  }
+
+  void fallback_copy_selection_to_clipboard()
   {
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
-    conn.performContextMenuAction(id);
+    CharSequence selected = conn.getSelectedText(0);
+    if (selected == null || selected.length() == 0)
+      return;
+    ClipboardHistoryService.set_current_clip(selected.toString());
   }
 
   @SuppressLint("InlinedApi")
@@ -287,12 +305,28 @@ public final class KeyEventHandler
   {
     switch (ev)
     {
-      case COPY: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
-      case PASTE: send_context_menu_action(android.R.id.paste); break;
+      case COPY:
+        if (_typedword.is_selection_not_empty())
+        {
+          if (!send_context_menu_action(android.R.id.copy))
+            fallback_copy_selection_to_clipboard();
+        }
+        else
+        {
+          fallback_copy_selection_to_clipboard();
+        }
+        break;
+      case PASTE:
+        if (!send_context_menu_action(android.R.id.paste))
+          fallback_paste_from_clipboard();
+        break;
       case CUT: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
       case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
       case SHARE: send_context_menu_action(android.R.id.shareText); break;
-      case PASTE_PLAIN: send_context_menu_action(android.R.id.pasteAsPlainText); break;
+      case PASTE_PLAIN:
+        if (!send_context_menu_action(android.R.id.pasteAsPlainText))
+          fallback_paste_from_clipboard();
+        break;
       case UNDO: send_context_menu_action(android.R.id.undo); break;
       case REDO: send_context_menu_action(android.R.id.redo); break;
       case REPLACE: send_context_menu_action(android.R.id.replaceText); break;

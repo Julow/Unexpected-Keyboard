@@ -47,6 +47,30 @@ public final class ClipboardHistoryService
       _paste_callback.paste_from_clipboard_pane(clip);
   }
 
+  /** Read the first text item from the system clipboard. Might return [null]. */
+  public static String get_current_clip()
+  {
+    if (_service == null)
+      return null;
+    ClipData clip = null;
+    try { clip = _service._cm.getPrimaryClip(); } catch (Exception _e) {}
+    if (clip == null || clip.getItemCount() == 0)
+      return null;
+    CharSequence text = clip.getItemAt(0).getText();
+    return (text == null) ? null : text.toString();
+  }
+
+  /** Update the system clipboard and clipboard history. */
+  public static void set_current_clip(String clip)
+  {
+    if (_service == null)
+      return;
+    if (clip == null)
+      clip = "";
+    _service._cm.setPrimaryClip(ClipData.newPlainText("", clip));
+    _service.add_clip(clip);
+  }
+
   /** The maximum size limits the amount of user data stored in memory but also
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
