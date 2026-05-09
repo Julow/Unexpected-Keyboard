@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard name="AZERTY (Français, Big joystick)" script="latin" bottom_row="false">
+  <row>
+    <key key0="a" key2="1" key4="loc esc"/>
+    <key key0="z" key2="2" key3="&amp;" key4="~"/>
+    <key key0="e" key2="3" key3="&quot;" key4="\#"/>
+    <key key0="r" key2="4" key3="'"/>
+    <key key0="t" key2="5" key3="(" key4=")"/>
+    <key key0="y" key2="6" key3="-" key4="|"/>
+    <key key0="u" key2="7" key3="à" key4="`"/>
+    <key key0="i" key2="8" key3="_" key4="\\"/>
+    <key key0="o" key2="9" key3="\@"/>
+    <key key0="p" key2="0"/>
+  </row>
+  <row>
+    <key key0="q" key2="loc tab"/>
+    <key key0="s" key3="loc ß"/>
+    <key key0="d" key1="accent_grave" key2="é" key3="accent_aigu"/>
+    <key key0="f" key3="{" key4="}"/>
+    <key key0="g" key2="ê" key3="[" key4="]"/>
+    <key key0="h" key3="=" key4="+"/>
+    <key key0="j" key1="accent_trema" key2="accent_circonflexe" key3="^"/>
+    <key key0="k" key1="è" key2="€" key3="$"/>
+    <key key0="l" key2="%"/>
+    <key key0="m" key3="*"/>
+  </row>
+  <row>
+    <key width="2.0" key0="shift" key2="loc capslock"/>
+    <key key0="w" key3="&lt;" key4="&gt;"/>
+    <key key0="x" key1="loc †"/>
+    <key key0="c" key1="loc accent_cedille" key2="ç" key3="," key4="\?"/>
+    <key key0="v" key3=";" key4="."/>
+    <key key0="b" key3=":" key4="/"/>
+    <key key0="n" key1="loc accent_tilde" key2="§" key4="!"/>
+    <key width="2.0" key0="backspace" key2="delete"/>
+  </row>
+  <row height="0.95">
+    <key width="1.5" key0="ctrl" key7="loc switch_greekmath" key2="loc meta" key3="loc switch_clipboard" key4="switch_numeric"/>
+    <key width="1.0" key0="fn" key7="loc alt" key2="loc change_method" key3="switch_emoji" key4="config"/>
+    <key width="3.8" key0="space" key7="switch_forward" key8="switch_backward" key5="cursor_left" key6="cursor_right"/>
+    <key width="2.2" key0="loc compose" key7="up" key6="right" key5="left" key8="down" key1="loc home" key2="loc page_up" key3="loc end" key4="loc page_down"/>
+    <key width="1.5" key0="enter" key7="loc voice_typing" key2="action"/>
+  </row>
+</keyboard>
