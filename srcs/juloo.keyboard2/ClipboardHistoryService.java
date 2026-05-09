@@ -3,11 +3,14 @@ package juloo.keyboard2;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build.VERSION;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public final class ClipboardHistoryService
 {
@@ -47,21 +50,32 @@ public final class ClipboardHistoryService
       _paste_callback.paste_from_clipboard_pane(clip);
   }
 
+  /** Keep at least this many entries around even if old entries have reached
+      their configured expiration time. */
+  public static final int MIN_HISTORY_SIZE = 5;
+
   /** The maximum size limits the amount of user data stored in memory but also
       gives a sense to the user that the history is not persisted and can be
       forgotten as soon as the app stops. */
-  public static final int MAX_HISTORY_SIZE = 6;
+  public static final int MAX_HISTORY_SIZE = 12;
 
   static ClipboardHistoryService _service = null;
   static ClipboardPasteCallback _paste_callback = null;
+  static final String PREFS_FILE = "clipboard_history";
+  static final String PREFS_KEY_ENTRIES = "entries_v1";
+  static final String ENTRY_CONTENT = "content";
+  static final String ENTRY_EXPIRY_TIMESTAMP = "expiry_timestamp";
 
   ClipboardManager _cm;
+  SharedPreferences _prefs;
   List<HistoryEntry> _history;
   OnClipboardHistoryChange _listener = null;
 
   ClipboardHistoryService(Context ctx)
   {
+    _prefs = ctx.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
     _history = new ArrayList<HistoryEntry>();
+    restore_history();
     _cm = (ClipboardManager)ctx.getSystemService(Context.CLIPBOARD_SERVICE);
     _cm.addPrimaryClipChangedListener(this.new SystemListener());
   }
@@ -70,15 +84,22 @@ public final class ClipboardHistoryService
   {
     long now_ms = System.currentTimeMillis();
     List<String> dst = new ArrayList<String>();
+    boolean changed = false;
     Iterator<HistoryEntry> it = _history.iterator();
     while (it.hasNext())
     {
       HistoryEntry ent = it.next();
-      if (ent.expiry_timestamp <= now_ms)
+      // Keep at least [MIN_HISTORY_SIZE] entries in memory.
+      if (ent.expiry_timestamp <= now_ms && _history.size() > MIN_HISTORY_SIZE)
+      {
         it.remove();
+        changed = true;
+      }
       else
         dst.add(ent.content);
     }
+    if (changed)
+      save_history();
     return dst;
   }
 
@@ -103,6 +124,7 @@ public final class ClipboardHistoryService
       else
         _cm.setText("");
     }
+    save_history();
     if (_listener != null)
       _listener.on_clipboard_history_change();
   }
@@ -119,6 +141,7 @@ public final class ClipboardHistoryService
     if (size >= MAX_HISTORY_SIZE)
       _history.remove(0);
     _history.add(new HistoryEntry(clip));
+    save_history();
     if (_listener != null)
       _listener.on_clipboard_history_change();
   }
@@ -126,6 +149,7 @@ public final class ClipboardHistoryService
   public synchronized void clear_history()
   {
     _history.clear();
+    save_history();
     if (_listener != null)
       _listener.on_clipboard_history_change();
   }
@@ -158,6 +182,47 @@ public final class ClipboardHistoryService
     return Config.globalConfig().clipboard_history_duration;
   }
 
+  synchronized void restore_history()
+  {
+    String serialized = _prefs.getString(PREFS_KEY_ENTRIES, null);
+    if (serialized == null || serialized.equals(""))
+      return;
+    try
+    {
+      JSONArray entries = new JSONArray(serialized);
+      for (int i = 0; i < entries.length(); i++)
+      {
+        JSONObject entry = entries.getJSONObject(i);
+        String content = entry.optString(ENTRY_CONTENT, "");
+        long expiry_ts = entry.optLong(ENTRY_EXPIRY_TIMESTAMP, 0L);
+        if (content.equals("") || expiry_ts == 0L)
+          continue;
+        _history.add(new HistoryEntry(content, expiry_ts));
+      }
+    }
+    catch (Exception _e)
+    {
+      _history.clear();
+    }
+  }
+
+  synchronized void save_history()
+  {
+    JSONArray entries = new JSONArray();
+    for (HistoryEntry entry : _history)
+    {
+      JSONObject obj = new JSONObject();
+      try
+      {
+        obj.put(ENTRY_CONTENT, entry.content);
+        obj.put(ENTRY_EXPIRY_TIMESTAMP, entry.expiry_timestamp);
+        entries.put(obj);
+      }
+      catch (Exception _e) {}
+    }
+    _prefs.edit().putString(PREFS_KEY_ENTRIES, entries.toString()).apply();
+  }
+
   final class SystemListener implements ClipboardManager.OnPrimaryClipChangedListener
   {
     public SystemListener() {}
@@ -178,13 +243,21 @@ public final class ClipboardHistoryService
 
     public HistoryEntry(String c)
     {
+      this(c, compute_expiry_timestamp());
+    }
+
+    public HistoryEntry(String c, long expiry)
+    {
       content = c;
-        final int historyTtlMinutes = _service.get_history_ttl_minutes();
-        if (historyTtlMinutes >= 0) {
-            expiry_timestamp = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(historyTtlMinutes);
-        } else {
-            expiry_timestamp = Long.MAX_VALUE;
-        }
+      expiry_timestamp = expiry;
+    }
+
+    static long compute_expiry_timestamp()
+    {
+      final int historyTtlMinutes = _service.get_history_ttl_minutes();
+      if (historyTtlMinutes >= 0)
+        return System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(historyTtlMinutes);
+      return Long.MAX_VALUE;
     }
   }
 
