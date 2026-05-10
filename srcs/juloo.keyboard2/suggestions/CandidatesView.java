@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.R;
 
@@ -29,9 +30,9 @@ public class CandidatesView extends LinearLayout
       set to [GONE] when there are less than [NUM_CANDIDATES] suggestions. */
   TextView[] _item_views = new TextView[NUM_CANDIDATES];
 
-  /** Optional view showing a message to the user. Visible when no candidates
-      are shown. Might be [null]. */
-  View _status_no_dict = null; // Dictionary not installed
+  /** Message when no dictionary is installed. Visible when no candidates are
+      shown. Might be [null]. */
+  View _status_no_dict = null;
 
   public CandidatesView(Context context, AttributeSet attrs)
   {
@@ -86,9 +87,10 @@ public class CandidatesView extends LinearLayout
     clear_candidates();
     // The status message indicates whether the dictionaries should be
     // installed.
-    _status_no_dict = inflate_and_show(_status_no_dict,
-        (config.current_dictionary == null),
-        R.layout.candidates_status_no_dict);
+    if (config.current_dictionary == null)
+      inflate_status_no_dict(config);
+    else if (_status_no_dict != null)
+      _status_no_dict.setVisibility(View.GONE);
     set_sizes(config);
   }
 
@@ -133,6 +135,24 @@ public class CandidatesView extends LinearLayout
       v.setVisibility(View.VISIBLE);
     }
     return v;
+  }
+
+  void inflate_status_no_dict(Config config)
+  {
+    if (_status_no_dict == null)
+    {
+      _status_no_dict = View.inflate(getContext(),
+          R.layout.candidates_status_no_dict, null);
+      addView(_status_no_dict);
+    }
+    Locale current_locale = (config.device_locales.default_ != null) ?
+      Locale.forLanguageTag(config.device_locales.default_.lang_tag) : null;
+    TextView tv = _status_no_dict.findViewById(android.R.id.text1);
+    if (tv != null && current_locale != null)
+      tv.setText(getResources().getString(
+            R.string.candidates_status_click_to_install,
+            current_locale.getDisplayName()));
+    _status_no_dict.setVisibility(View.VISIBLE);
   }
 
   private void setup_item_view(final int item_index, int item_id)
