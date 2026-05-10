@@ -83,6 +83,7 @@ public final class Config
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
+  public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
   public Cdict emoji_dictionary = null; // Might be 'null'.
   public IKeyEventHandler handler;

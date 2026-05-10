@@ -45,7 +45,6 @@ public class Keyboard2 extends InputMethodService
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
   /** Installed and current locales. */
-  private DeviceLocales _device_locales;
   private Dictionaries _dictionaries;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
@@ -160,14 +159,14 @@ public class Keyboard2 extends InputMethodService
   {
     _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
-    _device_locales = DeviceLocales.load(this);
-    if (_device_locales.default_ != null)
+    _config.device_locales = DeviceLocales.load(this);
+    if (_config.device_locales.default_ != null)
     {
-      String layout_name = _device_locales.default_.default_layout;
+      String layout_name = _config.device_locales.default_.default_layout;
       if (layout_name != null)
         default_layout = LayoutsPreference.layout_of_string(getResources(), layout_name);
     }
-    _config.extra_keys_subtype = _device_locales.extra_keys();
+    _config.extra_keys_subtype = _config.device_locales.extra_keys();
     if (default_layout == null)
       default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
@@ -177,9 +176,9 @@ public class Keyboard2 extends InputMethodService
   {
     _config.current_dictionary = null;
     _config.emoji_dictionary = null;
-    if (_device_locales.default_ == null)
+    if (_config.device_locales.default_ == null)
       return;
-    String current = _device_locales.default_.dictionary;
+    String current = _config.device_locales.default_.dictionary;
     if (current == null)
       return;
     Cdict[] dicts = _dictionaries.load(current);
