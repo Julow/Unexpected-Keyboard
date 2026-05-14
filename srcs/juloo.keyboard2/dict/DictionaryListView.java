@@ -150,7 +150,7 @@ public class DictionaryListView extends LinearLayout
   }
 
   static final String DICT_REPO_URL =
-    "https://github.com/Julow/Unexpected-Keyboard-dictionaries/raw/refs/heads/main";
+    "https://raw.githubusercontent.com/Julow/Unexpected-Keyboard-dictionaries/refs/heads/main";
 
   static URL url_of_dictionary(String dict_name)
       throws MalformedURLException
