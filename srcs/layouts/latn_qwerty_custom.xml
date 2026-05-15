@@ -15,9 +15,9 @@
   </row>
   <!-- Row 2: QWERTY (q-p) -->
   <row>
-    <key key0="q"/>
-    <key key0="w"/>
-    <key key0="e"/>
+    <key key0="q" key2="superscript"/>
+    <key key0="w" key2="subscript"/>
+    <key key0="e" key2="shareText"/>
     <key key0="r"/>
     <key key0="t"/>
     <key key0="y" key2="redo" key3="&lt;" key4="&gt;"/>
@@ -46,8 +46,8 @@
     <key key0="c" key2="copy"/>
     <key key0="v" key2="paste"/>
     <key key0="b" key2="pasteAsPlainText"/>
-    <key key0="n" key1="&quot;" key2="."/>
-    <key key0="m" key1="/" key2="?"/>
+    <key key0="n" key3="," key4="."/>
+    <key key0="m" key3="/" key4="?"/>
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

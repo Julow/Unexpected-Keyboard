@@ -15,9 +15,9 @@
   </row>
   <!-- Row 2: Korean jamo (QWERTY q-p) -->
   <row>
-    <key key0="ㅂ"/>
-    <key key0="ㅈ"/>
-    <key key0="ㄷ"/>
+    <key key0="ㅂ" key2="superscript"/>
+    <key key0="ㅈ" key2="subscript"/>
+    <key key0="ㄷ" key2="shareText"/>
     <key key0="ㄱ"/>
     <key key0="ㅅ"/>
     <key key0="ㅛ" key2="redo" key3="&lt;" key4="&gt;"/>
@@ -46,8 +46,8 @@
     <key key0="ㅊ" key2="copy"/>
     <key key0="ㅍ" key2="paste"/>
     <key key0="ㅠ" key2="pasteAsPlainText"/>
-    <key key0="ㅜ" key1="&quot;" key2="."/>
-    <key key0="ㅡ" key1="/" key2="?"/>
+    <key key0="ㅜ" key3="," key4="."/>
+    <key key0="ㅡ" key3="/" key4="?"/>
     <key width="1.5" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

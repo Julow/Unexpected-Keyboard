@@ -216,6 +216,9 @@ public final class KeyModifier
       if (mapped != null)
         return mapped;
     }
+    KeyValue hangul = apply_hangul_shift(k);
+    if (hangul != null)
+      return hangul;
     KeyValue r = ComposeKey.apply(ComposeKeyData.shift, k);
     if (r != null)
       return r;
@@ -231,6 +234,31 @@ public final class KeyModifier
         return s.equals(ks) ? k : KeyValue.makeStringKey(s, k.getFlags());
       default: return k;
     }
+  }
+
+  private static KeyValue apply_hangul_shift(KeyValue k)
+  {
+    switch (k.getKind())
+    {
+      case Hangul_initial:
+        switch (k.getString().charAt(0))
+        {
+          case 'ㄱ': return KeyValue.getKeyByName("ㄲ");
+          case 'ㄷ': return KeyValue.getKeyByName("ㄸ");
+          case 'ㅂ': return KeyValue.getKeyByName("ㅃ");
+          case 'ㅅ': return KeyValue.getKeyByName("ㅆ");
+          case 'ㅈ': return KeyValue.getKeyByName("ㅉ");
+        }
+        break;
+      case Char:
+        switch (k.getChar())
+        {
+          case 'ㅐ': return KeyValue.getKeyByName("ㅒ");
+          case 'ㅔ': return KeyValue.getKeyByName("ㅖ");
+        }
+        break;
+    }
+    return null;
   }
 
   private static KeyValue apply_fn(KeyValue k)
