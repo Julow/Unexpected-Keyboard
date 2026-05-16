@@ -171,8 +171,8 @@ public final class KeyEventHandler
       case 10: return 6;  // ㄻ→ㅁ
       case 11: return 7;  // ㄼ→ㅂ
       case 12: return 9;  // ㄽ→ㅅ
-      case 13: return 25; // ㄾ→ㅌ
-      case 14: return 26; // ㄿ→ㅍ
+      case 13: return 16; // ㄾ→ㅌ
+      case 14: return 17; // ㄿ→ㅍ
       case 15: return 18; // ㅀ→ㅎ
       case 18: return 9;  // ㅄ→ㅅ
       default: return -1;
@@ -311,6 +311,30 @@ public final class KeyEventHandler
     send_text(String.valueOf(HANGUL_MEDIALS[idx]));
   }
 
+  void start_hangul_ieung_medial(int idx)
+  {
+    _hangul_initial = 11;
+    _hangul_medial = idx;
+    _hangul_final = 0;
+    send_hangul_current();
+  }
+
+  static boolean should_move_final_to_next_syllable(int medial)
+  {
+    switch (medial)
+    {
+      case 2:  // ㅑ
+      case 3:  // ㅒ
+      case 6:  // ㅕ
+      case 7:  // ㅖ
+      case 12: // ㅛ
+      case 17: // ㅠ
+        return false;
+      default:
+        return true;
+    }
+  }
+
   boolean handle_hangul_char(char c)
   {
     int medial = hangul_medial_index(c);
@@ -405,6 +429,12 @@ public final class KeyEventHandler
       // If we have a final, try splitting it to next syllable
       if (_hangul_final > 0)
       {
+        if (!should_move_final_to_next_syllable(medial))
+        {
+          start_hangul_ieung_medial(medial);
+          return;
+        }
+
         int moved_initial;
         if (_hangul_final >= 3 && _hangul_final <= 27)
         {
