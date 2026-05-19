@@ -161,6 +161,52 @@ public class HangulInputTest
   }
 
   @Test
+  public void simpleBatchimWordsKeepFinalsBeforeNextInitials()
+  {
+    assertEquals("한국", typeHangul("ㅎ", "ㅏ", "ㄴ", "ㄱ", "ㅜ", "ㄱ"));
+    assertEquals("감기", typeHangul("ㄱ", "ㅏ", "ㅁ", "ㄱ", "ㅣ"));
+    assertEquals("밥상", typeHangul("ㅂ", "ㅏ", "ㅂ", "ㅅ", "ㅏ", "ㅇ"));
+    assertEquals("꽃길", typeHangul("ㄲ", "ㅗ", "ㅊ", "ㄱ", "ㅣ", "ㄹ"));
+  }
+
+  @Test
+  public void compoundBatchimWordsKeepFinalsBeforeNextInitials()
+  {
+    assertEquals("읽다", typeHangul("ㅇ", "ㅣ", "ㄹ", "ㄱ", "ㄷ", "ㅏ"));
+    assertEquals("많다", typeHangul("ㅁ", "ㅏ", "ㄴ", "ㅎ", "ㄷ", "ㅏ"));
+    assertEquals("없다", typeHangul("ㅇ", "ㅓ", "ㅂ", "ㅅ", "ㄷ", "ㅏ"));
+    assertEquals("앉다", typeHangul("ㅇ", "ㅏ", "ㄴ", "ㅈ", "ㄷ", "ㅏ"));
+    assertEquals("핥다", typeHangul("ㅎ", "ㅏ", "ㄹ", "ㅌ", "ㄷ", "ㅏ"));
+    assertEquals("읊다", typeHangul("ㅇ", "ㅡ", "ㄹ", "ㅍ", "ㄷ", "ㅏ"));
+    assertEquals("싫다", typeHangul("ㅅ", "ㅣ", "ㄹ", "ㅎ", "ㄷ", "ㅏ"));
+  }
+
+  @Test
+  public void compoundBatchimSplitsBeforePlainMedials()
+  {
+    assertEquals("넉서", typeHangul("ㄴ", "ㅓ", "ㄱ", "ㅅ", "ㅓ"));
+    assertEquals("안자", typeHangul("ㅇ", "ㅏ", "ㄴ", "ㅈ", "ㅏ"));
+    assertEquals("만하", typeHangul("ㅁ", "ㅏ", "ㄴ", "ㅎ", "ㅏ"));
+    assertEquals("달가", typeHangul("ㄷ", "ㅏ", "ㄹ", "ㄱ", "ㅏ"));
+    assertEquals("살마", typeHangul("ㅅ", "ㅏ", "ㄹ", "ㅁ", "ㅏ"));
+    assertEquals("발바", typeHangul("ㅂ", "ㅏ", "ㄹ", "ㅂ", "ㅏ"));
+    assertEquals("골사", typeHangul("ㄱ", "ㅗ", "ㄹ", "ㅅ", "ㅏ"));
+    assertEquals("할타", typeHangul("ㅎ", "ㅏ", "ㄹ", "ㅌ", "ㅏ"));
+    assertEquals("을퍼", typeHangul("ㅇ", "ㅡ", "ㄹ", "ㅍ", "ㅓ"));
+    assertEquals("실허", typeHangul("ㅅ", "ㅣ", "ㄹ", "ㅎ", "ㅓ"));
+    assertEquals("업서", typeHangul("ㅇ", "ㅓ", "ㅂ", "ㅅ", "ㅓ"));
+  }
+
+  @Test
+  public void explicitIeungKeepsCompoundBatchimBeforeMedials()
+  {
+    assertEquals("많아", typeHangul("ㅁ", "ㅏ", "ㄴ", "ㅎ", "ㅇ", "ㅏ"));
+    assertEquals("읽어", typeHangul("ㅇ", "ㅣ", "ㄹ", "ㄱ", "ㅇ", "ㅓ"));
+    assertEquals("없어", typeHangul("ㅇ", "ㅓ", "ㅂ", "ㅅ", "ㅇ", "ㅓ"));
+    assertEquals("앉아", typeHangul("ㅇ", "ㅏ", "ㄴ", "ㅈ", "ㅇ", "ㅏ"));
+  }
+
+  @Test
   public void plainMedialsStillMoveFinals()
   {
     assertEquals("가나", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅏ"));

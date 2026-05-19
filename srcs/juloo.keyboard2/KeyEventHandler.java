@@ -416,17 +416,7 @@ public final class KeyEventHandler
 
     if (_hangul_initial >= 0 && _hangul_medial >= 0)
     {
-      // We have a full syllable. Try medial combination first.
-      int combined = combine_medial(_hangul_medial, medial);
-      if (combined >= 0)
-      {
-        _hangul_medial = combined;
-        _hangul_final = 0;
-        replace_hangul_current();
-        return;
-      }
-
-      // If we have a final, try splitting it to next syllable
+      // If we have a final, split or move it before trying medial combination.
       if (_hangul_final > 0)
       {
         if (!should_move_final_to_next_syllable(medial))
@@ -466,6 +456,16 @@ public final class KeyEventHandler
           _hangul_final = 0;
           return;
         }
+      }
+
+      // We have a full syllable without final. Try medial combination.
+      int combined = combine_medial(_hangul_medial, medial);
+      if (combined >= 0)
+      {
+        _hangul_medial = combined;
+        _hangul_final = 0;
+        replace_hangul_current();
+        return;
       }
 
       // No combination, start new vowel syllable
