@@ -11,11 +11,8 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_weight">1</item>
+    <item name="android:paddingHorizontal">@dimen/candidates_padding</item>
     <item name="android:gravity">center</item>
-    <item name="android:textColor">?attr/colorLabel</item>
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">match_parent</item>
-    <item name="android:layout_weight">1</item>
     <item name="android:textColor">?attr/colorLabel</item>
     <item name="android:maxLines">1</item>
   </style>
