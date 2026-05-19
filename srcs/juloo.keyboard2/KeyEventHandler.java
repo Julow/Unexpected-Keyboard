@@ -443,8 +443,8 @@ public final class KeyEventHandler
           int second = split_compound_final_second_initial(_hangul_final);
           if (first > 0 && second >= 0)
           {
-            // Split: previous syllable loses final, new syllable starts with second
-            char prev = make_hangul_syllable(_hangul_initial, _hangul_medial, 0);
+            // Split: previous syllable keeps first final, new syllable starts with second
+            char prev = make_hangul_syllable(_hangul_initial, _hangul_medial, first);
             char next = make_hangul_syllable(second, medial, 0);
             replace_surrounding_text(1, 0, String.valueOf(prev) + String.valueOf(next));
             _hangul_initial = second;

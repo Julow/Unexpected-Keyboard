@@ -1,10 +1,89 @@
 package juloo.keyboard2;
 
+import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.inputmethod.InputConnection;
 import org.junit.Test;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import static org.junit.Assert.*;
+import juloo.keyboard2.suggestions.Suggestions;
 
 public class HangulInputTest
 {
+  static class TestReceiver implements KeyEventHandler.IReceiver
+  {
+    final StringBuilder text = new StringBuilder();
+    final InputConnection inputConnection = (InputConnection)Proxy.newProxyInstance(
+        InputConnection.class.getClassLoader(),
+        new Class<?>[] { InputConnection.class },
+        new InvocationHandler()
+        {
+          @Override
+          public Object invoke(Object proxy, Method method, Object[] args)
+          {
+            String name = method.getName();
+            if (name.equals("commitText"))
+            {
+              text.append((CharSequence)args[0]);
+              return true;
+            }
+            if (name.equals("deleteSurroundingText"))
+            {
+              int before = (Integer)args[0];
+              int start = Math.max(0, text.length() - before);
+              text.delete(start, text.length());
+              return true;
+            }
+            if (name.equals("beginBatchEdit") || name.equals("endBatchEdit"))
+              return true;
+            if (name.equals("sendKeyEvent"))
+            {
+              KeyEvent event = (KeyEvent)args[0];
+              if (event.getAction() == KeyEvent.ACTION_UP
+                  && event.getKeyCode() == KeyEvent.KEYCODE_DEL
+                  && text.length() > 0)
+                text.delete(text.length() - 1, text.length());
+              return true;
+            }
+            if (name.equals("getTextAfterCursor"))
+              return "";
+            if (name.equals("getCursorCapsMode"))
+              return 0;
+            if (method.getReturnType() == Boolean.TYPE)
+              return false;
+            if (method.getReturnType() == Integer.TYPE)
+              return 0;
+            return null;
+          }
+        });
+
+    @Override
+    public void handle_event_key(KeyValue.Event ev) {}
+    @Override
+    public void set_shift_state(boolean state, boolean lock) {}
+    @Override
+    public void set_compose_pending(boolean pending) {}
+    @Override
+    public void selection_state_changed(boolean selection_is_ongoing) {}
+    @Override
+    public InputConnection getCurrentInputConnection() { return inputConnection; }
+    @Override
+    public Handler getHandler() { return null; }
+    @Override
+    public void set_suggestions(Suggestions suggestions) {}
+  }
+
+  private static String typeHangul(String... keys)
+  {
+    TestReceiver receiver = new TestReceiver();
+    KeyEventHandler handler = new KeyEventHandler(receiver, null);
+    for (String key : keys)
+      handler.key_up(KeyValue.getKeyByName(key), Pointers.Modifiers.EMPTY);
+    return receiver.text.toString();
+  }
+
   @Test
   public void doubleInitialsCombine()
   {
@@ -71,4 +150,20 @@ public class HangulInputTest
     assertEquals(9, KeyEventHandler.split_compound_final_second_initial(18));  // ㅄ→ㅅ
   }
 
+
+  @Test
+  public void wordsKeepFinalsBeforeNextInitials()
+  {
+    assertEquals("만화", typeHangul("ㅁ", "ㅏ", "ㄴ", "ㅎ", "ㅗ", "ㅏ"));
+    assertEquals("만화", typeHangul("ㅁ", "ㅏ", "ㄴ", "ㅎ", "ㅘ"));
+    assertEquals("한글", typeHangul("ㅎ", "ㅏ", "ㄴ", "ㄱ", "ㅡ", "ㄹ"));
+    assertEquals("안녕", typeHangul("ㅇ", "ㅏ", "ㄴ", "ㄴ", "ㅕ", "ㅇ"));
+  }
+
+  @Test
+  public void plainMedialsStillMoveFinals()
+  {
+    assertEquals("가나", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅏ"));
+    assertEquals("난예", typeHangul("ㄴ", "ㅏ", "ㄴ", "ㅖ"));
+  }
 }

@@ -49,6 +49,8 @@ public final class Autocapitalisation
 
   public void typed(CharSequence c)
   {
+    if (!_enabled)
+      return;
     for (int i = 0; i < c.length(); i++)
       type_one_char(c.charAt(i));
     callback(false);
