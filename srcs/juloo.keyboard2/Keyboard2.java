@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.Handler;
@@ -361,9 +362,15 @@ public class Keyboard2 extends InputMethodService
   @Override
   public boolean onEvaluateInputViewShown()
   {
-    super.onEvaluateInputViewShown();
-    // Return true regardless of the super call result to fix the keyboard not
-    // being visible on Android 16
+    // Since Android 16, this method returns [false] for unknown reasons.
+    if (super.onEvaluateInputViewShown())
+      return true;
+    if (getResources().getConfiguration().hardKeyboardHidden
+        == Configuration.HARDKEYBOARDHIDDEN_NO)
+    {
+      Logs.debug("Physical keyboard is present");
+      return false;
+    }
     return true;
   }
 
