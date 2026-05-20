@@ -77,6 +77,14 @@ public final class Autocapitalisation
     callback(true);
   }
 
+  public void text_replaced()
+  {
+    if (!_enabled)
+      return;
+    _should_update_caps_mode = true;
+    callback(false);
+  }
+
   public void stop()
   {
     _should_enable_shift = false;
@@ -110,6 +118,8 @@ public final class Autocapitalisation
   /** Returns [true] if shift might be disabled. */
   public void selection_updated(int old_cursor, int new_cursor)
   {
+    if (!_enabled)
+      return;
     if (new_cursor == _cursor) // Just typing
       return;
     if (new_cursor == 0 && _ic != null)

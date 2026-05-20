@@ -41,6 +41,8 @@ public final class KeyEventHandler
   int _hangul_initial = -1;
   int _hangul_medial = -1;
   int _hangul_final = 0;
+  boolean _hangul_selection_update_pending = false;
+  int _hangul_expected_selection_delta = 0;
 
   public KeyEventHandler(IReceiver recv, Config config)
   {
@@ -225,6 +227,16 @@ public final class KeyEventHandler
     _hangul_initial = -1;
     _hangul_medial = -1;
     _hangul_final = 0;
+    _hangul_selection_update_pending = false;
+    _hangul_expected_selection_delta = 0;
+  }
+
+  void expect_hangul_selection_update(int cursor_delta)
+  {
+    if (!has_hangul_state())
+      return;
+    _hangul_selection_update_pending = true;
+    _hangul_expected_selection_delta = cursor_delta;
   }
 
   boolean has_hangul_state()
@@ -560,6 +572,20 @@ public final class KeyEventHandler
   /** Selection has been updated. */
   public void selection_updated(int oldSelStart, int newSelStart, int newSelEnd)
   {
+    if (has_hangul_state())
+    {
+      boolean selection_is_cursor = newSelStart == newSelEnd;
+      boolean expected_update = _hangul_selection_update_pending
+        && selection_is_cursor
+        && (oldSelStart < 0 || oldSelStart + _hangul_expected_selection_delta == newSelStart);
+      if (expected_update)
+      {
+        _hangul_selection_update_pending = false;
+        _hangul_expected_selection_delta = 0;
+      }
+      else if (!selection_is_cursor || oldSelStart != newSelStart)
+        reset_hangul();
+    }
     _autocap.selection_updated(oldSelStart, newSelStart);
     _typedword.selection_updated(oldSelStart, newSelStart, newSelEnd);
   }
@@ -796,6 +822,7 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
+    expect_hangul_selection_update(text.length());
     _autocap.typed(text);
     _typedword.typed(text);
     conn.commitText(text, 1);
@@ -807,10 +834,13 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
+    expect_hangul_selection_update(new_text.length() - remove_before);
     conn.beginBatchEdit();
     conn.deleteSurroundingText(remove_before, remove_after);
     conn.commitText(new_text, 1);
     conn.endBatchEdit();
+    _autocap.text_replaced();
+    _typedword.text_replaced();
   }
 
   /** See {!InputConnection.performContextMenuAction}. */

@@ -84,6 +84,11 @@ public class HangulInputTest
     return receiver.text.toString();
   }
 
+  private static void type(KeyEventHandler handler, String key)
+  {
+    handler.key_up(KeyValue.getKeyByName(key), Pointers.Modifiers.EMPTY);
+  }
+
   @Test
   public void doubleInitialsCombine()
   {
@@ -204,6 +209,34 @@ public class HangulInputTest
     assertEquals("읽어", typeHangul("ㅇ", "ㅣ", "ㄹ", "ㄱ", "ㅇ", "ㅓ"));
     assertEquals("없어", typeHangul("ㅇ", "ㅓ", "ㅂ", "ㅅ", "ㅇ", "ㅓ"));
     assertEquals("앉아", typeHangul("ㅇ", "ㅏ", "ㄴ", "ㅈ", "ㅇ", "ㅏ"));
+  }
+
+  @Test
+  public void expectedSelectionUpdatesKeepHangulState()
+  {
+    TestReceiver receiver = new TestReceiver();
+    KeyEventHandler handler = new KeyEventHandler(receiver, null);
+
+    type(handler, "ㄱ");
+    handler.selection_updated(0, 1, 1);
+    type(handler, "ㅏ");
+
+    assertEquals("가", receiver.text.toString());
+  }
+
+  @Test
+  public void externalSelectionChangesResetHangulState()
+  {
+    TestReceiver receiver = new TestReceiver();
+    KeyEventHandler handler = new KeyEventHandler(receiver, null);
+
+    type(handler, "ㄱ");
+    type(handler, "ㅏ");
+    type(handler, "ㄴ");
+    handler.selection_updated(1, 0, 0);
+    type(handler, "ㅏ");
+
+    assertEquals("간ㅏ", receiver.text.toString());
   }
 
   @Test

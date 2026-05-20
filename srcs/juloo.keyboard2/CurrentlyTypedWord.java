@@ -111,6 +111,13 @@ public final class CurrentlyTypedWord
     delayed_refresh();
   }
 
+  public void text_replaced()
+  {
+    if (!_enabled)
+      return;
+    delayed_refresh();
+  }
+
   void callback()
   {
     String w = _w.toString();
