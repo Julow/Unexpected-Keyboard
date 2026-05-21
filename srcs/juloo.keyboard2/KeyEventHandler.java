@@ -41,6 +41,7 @@ public final class KeyEventHandler
   int _hangul_initial = -1;
   int _hangul_medial = -1;
   int _hangul_final = 0;
+  boolean _hangul_final_is_combined = false;
   boolean _hangul_selection_update_pending = false;
   int _hangul_expected_selection_delta = 0;
 
@@ -147,6 +148,7 @@ public final class KeyEventHandler
   {
     switch (fin)
     {
+      case 2: return 1;   // ㄲ→ㄱ
       case 3: return 1;   // ㄳ→ㄱ
       case 5: return 4;   // ㄵ→ㄴ
       case 6: return 4;   // ㄶ→ㄴ
@@ -158,6 +160,7 @@ public final class KeyEventHandler
       case 14: return 8;  // ㄿ→ㄹ
       case 15: return 8;  // ㅀ→ㄹ
       case 18: return 17; // ㅄ→ㅂ
+      case 20: return 19; // ㅆ→ㅅ
       default: return 0;
     }
   }
@@ -166,6 +169,7 @@ public final class KeyEventHandler
   {
     switch (fin)
     {
+      case 2: return 0;   // ㄲ→ㄱ
       case 3: return 9;   // ㄳ→ㅅ
       case 5: return 12;  // ㄵ→ㅈ
       case 6: return 18;  // ㄶ→ㅎ
@@ -177,6 +181,7 @@ public final class KeyEventHandler
       case 14: return 17; // ㄿ→ㅍ
       case 15: return 18; // ㅀ→ㅎ
       case 18: return 9;  // ㅄ→ㅅ
+      case 20: return 9;  // ㅆ→ㅅ
       default: return -1;
     }
   }
@@ -227,6 +232,7 @@ public final class KeyEventHandler
     _hangul_initial = -1;
     _hangul_medial = -1;
     _hangul_final = 0;
+    _hangul_final_is_combined = false;
     _hangul_selection_update_pending = false;
     _hangul_expected_selection_delta = 0;
   }
@@ -312,6 +318,7 @@ public final class KeyEventHandler
     _hangul_initial = idx;
     _hangul_medial = -1;
     _hangul_final = 0;
+    _hangul_final_is_combined = false;
     send_text(String.valueOf(HANGUL_INITIALS[idx]));
   }
 
@@ -320,6 +327,7 @@ public final class KeyEventHandler
     _hangul_initial = -1;
     _hangul_medial = idx;
     _hangul_final = 0;
+    _hangul_final_is_combined = false;
     send_text(String.valueOf(HANGUL_MEDIALS[idx]));
   }
 
@@ -328,23 +336,8 @@ public final class KeyEventHandler
     _hangul_initial = 11;
     _hangul_medial = idx;
     _hangul_final = 0;
+    _hangul_final_is_combined = false;
     send_hangul_current();
-  }
-
-  static boolean should_move_final_to_next_syllable(int medial)
-  {
-    switch (medial)
-    {
-      case 2:  // ㅑ
-      case 3:  // ㅒ
-      case 6:  // ㅕ
-      case 7:  // ㅖ
-      case 12: // ㅛ
-      case 17: // ㅠ
-        return false;
-      default:
-        return true;
-    }
   }
 
   boolean handle_hangul_char(char c)
@@ -392,6 +385,7 @@ public final class KeyEventHandler
       if (_hangul_final == 0 && fin > 0)
       {
         _hangul_final = fin;
+        _hangul_final_is_combined = false;
         replace_hangul_current();
         return;
       }
@@ -402,6 +396,7 @@ public final class KeyEventHandler
         if (double_final > 0)
         {
           _hangul_final = double_final;
+          _hangul_final_is_combined = true;
           replace_hangul_current();
           return;
         }
@@ -409,6 +404,7 @@ public final class KeyEventHandler
         if (compound > 0)
         {
           _hangul_final = compound;
+          _hangul_final_is_combined = true;
           replace_hangul_current();
           return;
         }
@@ -431,14 +427,8 @@ public final class KeyEventHandler
       // If we have a final, split or move it before trying medial combination.
       if (_hangul_final > 0)
       {
-        if (!should_move_final_to_next_syllable(medial))
-        {
-          start_hangul_ieung_medial(medial);
-          return;
-        }
-
         int moved_initial;
-        if (_hangul_final >= 3 && _hangul_final <= 27)
+        if (_hangul_final_is_combined)
         {
           // Compound final: split to first+second
           int first = split_compound_final_first(_hangul_final);
@@ -452,6 +442,7 @@ public final class KeyEventHandler
             _hangul_initial = second;
             _hangul_medial = medial;
             _hangul_final = 0;
+            _hangul_final_is_combined = false;
             return;
           }
         }
@@ -466,6 +457,7 @@ public final class KeyEventHandler
           _hangul_initial = moved_initial;
           _hangul_medial = medial;
           _hangul_final = 0;
+          _hangul_final_is_combined = false;
           return;
         }
       }
@@ -476,6 +468,7 @@ public final class KeyEventHandler
       {
         _hangul_medial = combined;
         _hangul_final = 0;
+        _hangul_final_is_combined = false;
         replace_hangul_current();
         return;
       }
@@ -490,6 +483,7 @@ public final class KeyEventHandler
       // initial + medial = syllable
       _hangul_medial = medial;
       _hangul_final = 0;
+      _hangul_final_is_combined = false;
       replace_hangul_current();
       return;
     }
@@ -521,14 +515,16 @@ public final class KeyEventHandler
     if (_hangul_final > 0)
     {
       int first = split_compound_final_first(_hangul_final);
-      if (first > 0)
+      if (_hangul_final_is_combined && first > 0)
       {
         _hangul_final = first;
+        _hangul_final_is_combined = false;
         replace_hangul_current();
       }
       else
       {
         _hangul_final = 0;
+        _hangul_final_is_combined = false;
         replace_hangul_current();
       }
       return true;

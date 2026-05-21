@@ -121,27 +121,9 @@ public class HangulInputTest
   }
 
   @Test
-  public void finalsStayBeforeIotizedMedials()
-  {
-    assertTrue(KeyEventHandler.should_move_final_to_next_syllable(0));   // ㅏ: 간아 -> 가나
-    assertTrue(KeyEventHandler.should_move_final_to_next_syllable(4));   // ㅓ: 간어 -> 가너
-    assertTrue(KeyEventHandler.should_move_final_to_next_syllable(20));  // ㅣ: 간이 -> 가니
-
-    assertFalse(KeyEventHandler.should_move_final_to_next_syllable(2));  // ㅑ: 간야 -> 간야
-    assertFalse(KeyEventHandler.should_move_final_to_next_syllable(3));  // ㅒ: 간얘 -> 간얘
-    assertFalse(KeyEventHandler.should_move_final_to_next_syllable(6));  // ㅕ: 간여 -> 간여
-    assertFalse(KeyEventHandler.should_move_final_to_next_syllable(7));  // ㅖ: 난예 -> 난예
-    assertFalse(KeyEventHandler.should_move_final_to_next_syllable(12)); // ㅛ: 간요 -> 간요
-    assertFalse(KeyEventHandler.should_move_final_to_next_syllable(17)); // ㅠ: 간유 -> 간유
-
-    assertEquals("난예",
-      String.valueOf(KeyEventHandler.make_hangul_syllable(2, 0, 4))
-      + String.valueOf(KeyEventHandler.make_hangul_syllable(11, 7, 0)));
-  }
-
-  @Test
   public void compoundFinalsSplitToInitialIndices()
   {
+    assertEquals(0, KeyEventHandler.split_compound_final_second_initial(2));   // ㄲ→ㄱ
     assertEquals(9, KeyEventHandler.split_compound_final_second_initial(3));   // ㄳ→ㅅ
     assertEquals(12, KeyEventHandler.split_compound_final_second_initial(5));  // ㄵ→ㅈ
     assertEquals(18, KeyEventHandler.split_compound_final_second_initial(6));  // ㄶ→ㅎ
@@ -153,6 +135,7 @@ public class HangulInputTest
     assertEquals(17, KeyEventHandler.split_compound_final_second_initial(14)); // ㄿ→ㅍ
     assertEquals(18, KeyEventHandler.split_compound_final_second_initial(15)); // ㅀ→ㅎ
     assertEquals(9, KeyEventHandler.split_compound_final_second_initial(18));  // ㅄ→ㅅ
+    assertEquals(9, KeyEventHandler.split_compound_final_second_initial(20));  // ㅆ→ㅅ
   }
 
 
@@ -172,6 +155,32 @@ public class HangulInputTest
     assertEquals("감기", typeHangul("ㄱ", "ㅏ", "ㅁ", "ㄱ", "ㅣ"));
     assertEquals("밥상", typeHangul("ㅂ", "ㅏ", "ㅂ", "ㅅ", "ㅏ", "ㅇ"));
     assertEquals("꽃길", typeHangul("ㄲ", "ㅗ", "ㅊ", "ㄱ", "ㅣ", "ㄹ"));
+    assertEquals("하면", typeHangul("ㅎ", "ㅏ", "ㅁ", "ㅕ", "ㄴ"));
+  }
+
+  @Test
+  public void iotizedMedialsMoveSimpleFinals()
+  {
+    assertEquals("가냐", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅑ"));
+    assertEquals("가냬", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅒ"));
+    assertEquals("가녀", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅕ"));
+    assertEquals("가녜", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅖ"));
+    assertEquals("가뇨", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅛ"));
+    assertEquals("가뉴", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅠ"));
+  }
+
+  @Test
+  public void directDoubleFinalsMoveAsWholeFinals()
+  {
+    assertEquals("바께", typeHangul("ㅂ", "ㅏ", "ㄲ", "ㅔ"));
+    assertEquals("이써", typeHangul("ㅇ", "ㅣ", "ㅆ", "ㅓ"));
+  }
+
+  @Test
+  public void sequentialDoubleFinalsSplitBeforeMedials()
+  {
+    assertEquals("박게", typeHangul("ㅂ", "ㅏ", "ㄱ", "ㄱ", "ㅔ"));
+    assertEquals("잇서", typeHangul("ㅇ", "ㅣ", "ㅅ", "ㅅ", "ㅓ"));
   }
 
   @Test
@@ -205,6 +214,8 @@ public class HangulInputTest
   @Test
   public void explicitIeungKeepsCompoundBatchimBeforeMedials()
   {
+    assertEquals("간아", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅇ", "ㅏ"));
+    assertEquals("난예", typeHangul("ㄴ", "ㅏ", "ㄴ", "ㅇ", "ㅖ"));
     assertEquals("많아", typeHangul("ㅁ", "ㅏ", "ㄴ", "ㅎ", "ㅇ", "ㅏ"));
     assertEquals("읽어", typeHangul("ㅇ", "ㅣ", "ㄹ", "ㄱ", "ㅇ", "ㅓ"));
     assertEquals("없어", typeHangul("ㅇ", "ㅓ", "ㅂ", "ㅅ", "ㅇ", "ㅓ"));
@@ -243,6 +254,7 @@ public class HangulInputTest
   public void plainMedialsStillMoveFinals()
   {
     assertEquals("가나", typeHangul("ㄱ", "ㅏ", "ㄴ", "ㅏ"));
-    assertEquals("난예", typeHangul("ㄴ", "ㅏ", "ㄴ", "ㅖ"));
+    assertEquals("나녜", typeHangul("ㄴ", "ㅏ", "ㄴ", "ㅖ"));
+    assertEquals("적극적", typeHangul("ㅈ", "ㅓ", "ㄱ", "ㄱ", "ㅡ", "ㄱ", "ㅈ", "ㅓ", "ㄱ"));
   }
 }
