@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
@@ -35,6 +36,14 @@ public final class KeyEventHandler
   /** Remember the action that was handled. This is used by autocorrect. */
   LastAction _last_action = null;
   LastAction _next_last_action = null;
+  long _last_space_bar_time = 0;
+  /** Current Hangul sequential input state. -1 = component missing. */
+  int _hangul_initial = -1;
+  int _hangul_medial = -1;
+  int _hangul_final = 0;
+  boolean _hangul_final_is_combined = false;
+  boolean _hangul_selection_update_pending = false;
+  int _hangul_expected_selection_delta = 0;
 
   public KeyEventHandler(IReceiver recv, Config config)
   {
@@ -50,6 +59,7 @@ public final class KeyEventHandler
   /** Editing just started. */
   public void started(Config conf)
   {
+    reset_hangul();
     InputConnection ic = _recv.getCurrentInputConnection();
     _autocap.started(conf, ic);
     _typedword.started(conf, ic);
@@ -58,11 +68,520 @@ public final class KeyEventHandler
       conf.editor_config.should_move_cursor_force_fallback;
     _space_bar_auto_complete = conf.space_bar_auto_complete;
     _last_action = null;
+    _last_space_bar_time = 0;
+  }
+
+  static final char[] HANGUL_INITIALS =
+  {
+    'ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'
+  };
+  static final char[] HANGUL_MEDIALS =
+  {
+    'ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ',
+    'ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'
+  };
+  static final char[] HANGUL_FINALS =
+  {
+    0,'ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ',
+    'ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'
+  };
+
+  static char make_hangul_syllable(int initial, int medial, int fin)
+  {
+    return (char)(0xAC00 + initial * 588 + medial * 28 + fin);
+  }
+
+  static int combine_medial(int a, int b)
+  {
+    // ㅗ: 8, ㅜ: 13, ㅡ: 18
+    if (a == 8 && b == 0) return 9;   // ㅗ+ㅏ = ㅘ
+    if (a == 8 && b == 1) return 10;  // ㅗ+ㅐ = ㅙ
+    if (a == 8 && b == 20) return 11; // ㅗ+ㅣ = ㅚ
+    if (a == 13 && b == 4) return 14; // ㅜ+ㅓ = ㅝ
+    if (a == 13 && b == 5) return 15; // ㅜ+ㅔ = ㅞ
+    if (a == 13 && b == 20) return 16; // ㅜ+ㅣ = ㅟ
+    if (a == 18 && b == 20) return 19; // ㅡ+ㅣ = ㅢ
+    return -1;
+  }
+
+  static int combine_final(int a, int b)
+  {
+    // simple final indices
+    if (a == 1 && b == 19) return 3;   // ㄱ+ㅅ = ㄳ
+    if (a == 4 && b == 22) return 5;   // ㄴ+ㅈ = ㄵ
+    if (a == 4 && b == 27) return 6;   // ㄴ+ㅎ = ㄶ
+    if (a == 8 && b == 1) return 9;    // ㄹ+ㄱ = ㄺ
+    if (a == 8 && b == 16) return 10;  // ㄹ+ㅁ = ㄻ
+    if (a == 8 && b == 17) return 11;  // ㄹ+ㅂ = ㄼ
+    if (a == 8 && b == 19) return 12;  // ㄹ+ㅅ = ㄽ
+    if (a == 8 && b == 25) return 13;  // ㄹ+ㅌ = ㄾ
+    if (a == 8 && b == 26) return 14;  // ㄹ+ㅍ = ㄿ
+    if (a == 8 && b == 27) return 15;  // ㄹ+ㅎ = ㅀ
+    if (a == 17 && b == 19) return 18; // ㅂ+ㅅ = ㅄ
+    return 0;
+  }
+
+  static int combine_double_initial(int initial)
+  {
+    switch (initial)
+    {
+      case 0: return 1;   // ㄱ+ㄱ = ㄲ
+      case 3: return 4;   // ㄷ+ㄷ = ㄸ
+      case 7: return 8;   // ㅂ+ㅂ = ㅃ
+      case 9: return 10;  // ㅅ+ㅅ = ㅆ
+      case 12: return 13; // ㅈ+ㅈ = ㅉ
+      default: return -1;
+    }
+  }
+
+  static int combine_double_final(int fin)
+  {
+    switch (fin)
+    {
+      case 1: return 2;   // ㄱ+ㄱ = ㄲ
+      case 19: return 20; // ㅅ+ㅅ = ㅆ
+      default: return 0;
+    }
+  }
+
+  static int split_compound_final_first(int fin)
+  {
+    switch (fin)
+    {
+      case 2: return 1;   // ㄲ→ㄱ
+      case 3: return 1;   // ㄳ→ㄱ
+      case 5: return 4;   // ㄵ→ㄴ
+      case 6: return 4;   // ㄶ→ㄴ
+      case 9: return 8;   // ㄺ→ㄹ
+      case 10: return 8;  // ㄻ→ㄹ
+      case 11: return 8;  // ㄼ→ㄹ
+      case 12: return 8;  // ㄽ→ㄹ
+      case 13: return 8;  // ㄾ→ㄹ
+      case 14: return 8;  // ㄿ→ㄹ
+      case 15: return 8;  // ㅀ→ㄹ
+      case 18: return 17; // ㅄ→ㅂ
+      case 20: return 19; // ㅆ→ㅅ
+      default: return 0;
+    }
+  }
+
+  static int split_compound_final_second_initial(int fin)
+  {
+    switch (fin)
+    {
+      case 2: return 0;   // ㄲ→ㄱ
+      case 3: return 9;   // ㄳ→ㅅ
+      case 5: return 12;  // ㄵ→ㅈ
+      case 6: return 18;  // ㄶ→ㅎ
+      case 9: return 0;   // ㄺ→ㄱ
+      case 10: return 6;  // ㄻ→ㅁ
+      case 11: return 7;  // ㄼ→ㅂ
+      case 12: return 9;  // ㄽ→ㅅ
+      case 13: return 16; // ㄾ→ㅌ
+      case 14: return 17; // ㄿ→ㅍ
+      case 15: return 18; // ㅀ→ㅎ
+      case 18: return 9;  // ㅄ→ㅅ
+      case 20: return 9;  // ㅆ→ㅅ
+      default: return -1;
+    }
+  }
+
+  static int initial_from_final(int fin)
+  {
+    // final_idx -> initial_idx mapping
+    if (fin >= 1 && fin <= 27)
+    {
+      char c = HANGUL_FINALS[fin];
+      for (int i = 0; i < HANGUL_INITIALS.length; i++)
+        if (HANGUL_INITIALS[i] == c)
+          return i;
+    }
+    return -1;
+  }
+
+  static int final_from_initial(int initial)
+  {
+    // initial_idx -> final_idx mapping
+    if (initial >= 0 && initial < HANGUL_INITIALS.length)
+    {
+      char c = HANGUL_INITIALS[initial];
+      for (int i = 1; i < HANGUL_FINALS.length; i++)
+        if (HANGUL_FINALS[i] == c)
+          return i;
+    }
+    return 0;
+  }
+
+  static int split_compound_medial_first(int medial)
+  {
+    switch (medial)
+    {
+      case 9: return 8;   // ㅘ→ㅗ
+      case 10: return 8;  // ㅙ→ㅗ
+      case 11: return 8;  // ㅚ→ㅗ
+      case 14: return 13; // ㅝ→ㅜ
+      case 15: return 13; // ㅞ→ㅜ
+      case 16: return 13; // ㅟ→ㅜ
+      case 19: return 18; // ㅢ→ㅡ
+      default: return -1;
+    }
+  }
+
+  void reset_hangul()
+  {
+    _hangul_initial = -1;
+    _hangul_medial = -1;
+    _hangul_final = 0;
+    _hangul_final_is_combined = false;
+    _hangul_selection_update_pending = false;
+    _hangul_expected_selection_delta = 0;
+  }
+
+  void expect_hangul_selection_update(int cursor_delta)
+  {
+    if (!has_hangul_state())
+      return;
+    _hangul_selection_update_pending = true;
+    _hangul_expected_selection_delta = cursor_delta;
+  }
+
+  boolean has_hangul_state()
+  {
+    return _hangul_initial >= 0 || _hangul_medial >= 0;
+  }
+
+  int hangul_initial_index(char c)
+  {
+    for (int i = 0; i < HANGUL_INITIALS.length; i++)
+      if (HANGUL_INITIALS[i] == c)
+        return i;
+    return -1;
+  }
+
+  int hangul_medial_index(char c)
+  {
+    for (int i = 0; i < HANGUL_MEDIALS.length; i++)
+      if (HANGUL_MEDIALS[i] == c)
+        return i;
+    return -1;
+  }
+
+  int hangul_final_index(char c)
+  {
+    for (int i = 1; i < HANGUL_FINALS.length; i++)
+      if (HANGUL_FINALS[i] == c)
+        return i;
+    return -1;
+  }
+
+  int hangul_medial_from_precomposed(int precomposed)
+  {
+    return ((precomposed - 0xAC00) % 588) / 28;
+  }
+
+  void replace_hangul_current()
+  {
+    if (_hangul_initial >= 0 && _hangul_medial >= 0)
+    {
+      char c = make_hangul_syllable(_hangul_initial, _hangul_medial, _hangul_final);
+      replace_surrounding_text(1, 0, String.valueOf(c));
+    }
+    else if (_hangul_initial >= 0)
+    {
+      replace_surrounding_text(1, 0, String.valueOf(HANGUL_INITIALS[_hangul_initial]));
+    }
+    else if (_hangul_medial >= 0)
+    {
+      replace_surrounding_text(1, 0, String.valueOf(HANGUL_MEDIALS[_hangul_medial]));
+    }
+  }
+
+  void send_hangul_current()
+  {
+    if (_hangul_initial >= 0 && _hangul_medial >= 0)
+    {
+      char c = make_hangul_syllable(_hangul_initial, _hangul_medial, _hangul_final);
+      send_text(String.valueOf(c));
+    }
+    else if (_hangul_initial >= 0)
+    {
+      send_text(String.valueOf(HANGUL_INITIALS[_hangul_initial]));
+    }
+    else if (_hangul_medial >= 0)
+    {
+      send_text(String.valueOf(HANGUL_MEDIALS[_hangul_medial]));
+    }
+  }
+
+  void start_hangul_initial(int idx)
+  {
+    _hangul_initial = idx;
+    _hangul_medial = -1;
+    _hangul_final = 0;
+    _hangul_final_is_combined = false;
+    send_text(String.valueOf(HANGUL_INITIALS[idx]));
+  }
+
+  void start_hangul_medial(int idx)
+  {
+    _hangul_initial = -1;
+    _hangul_medial = idx;
+    _hangul_final = 0;
+    _hangul_final_is_combined = false;
+    send_text(String.valueOf(HANGUL_MEDIALS[idx]));
+  }
+
+  void start_hangul_ieung_medial(int idx)
+  {
+    _hangul_initial = 11;
+    _hangul_medial = idx;
+    _hangul_final = 0;
+    _hangul_final_is_combined = false;
+    send_hangul_current();
+  }
+
+  boolean handle_hangul_char(char c)
+  {
+    int medial = hangul_medial_index(c);
+    if (medial >= 0)
+    {
+      handle_hangul_medial(medial);
+      return true;
+    }
+    int initial = hangul_initial_index(c);
+    if (initial >= 0)
+    {
+      handle_hangul_initial(c);
+      return true;
+    }
+    int fin = hangul_final_index(c);
+    if (fin >= 0)
+    {
+      handle_hangul_initial(c);
+      return true;
+    }
+    return false;
+  }
+
+  void handle_hangul_initial(char c)
+  {
+    int initial = hangul_initial_index(c);
+    int fin = hangul_final_index(c);
+
+    if (_hangul_initial >= 0 && _hangul_medial < 0)
+    {
+      int combined = (_hangul_initial == initial) ? combine_double_initial(initial) : -1;
+      if (combined >= 0)
+      {
+        _hangul_initial = combined;
+        replace_hangul_current();
+        return;
+      }
+    }
+
+    if (_hangul_initial >= 0 && _hangul_medial >= 0)
+    {
+      // We have initial + medial, try to add final
+      if (_hangul_final == 0 && fin > 0)
+      {
+        _hangul_final = fin;
+        _hangul_final_is_combined = false;
+        replace_hangul_current();
+        return;
+      }
+      // Try compound final
+      if (_hangul_final > 0)
+      {
+        int double_final = (_hangul_final == fin) ? combine_double_final(fin) : 0;
+        if (double_final > 0)
+        {
+          _hangul_final = double_final;
+          _hangul_final_is_combined = true;
+          replace_hangul_current();
+          return;
+        }
+        int compound = combine_final(_hangul_final, fin);
+        if (compound > 0)
+        {
+          _hangul_final = compound;
+          _hangul_final_is_combined = true;
+          replace_hangul_current();
+          return;
+        }
+      }
+    }
+
+    if (initial >= 0)
+      start_hangul_initial(initial);
+    else
+      reset_hangul();
+  }
+
+  void handle_hangul_medial(int medial)
+  {
+    if (medial < 0)
+      return;
+
+    if (_hangul_initial >= 0 && _hangul_medial >= 0)
+    {
+      // If we have a final, split or move it before trying medial combination.
+      if (_hangul_final > 0)
+      {
+        int moved_initial;
+        if (_hangul_final_is_combined)
+        {
+          // Compound final: split to first+second
+          int first = split_compound_final_first(_hangul_final);
+          int second = split_compound_final_second_initial(_hangul_final);
+          if (first > 0 && second >= 0)
+          {
+            // Split: previous syllable keeps first final, new syllable starts with second
+            char prev = make_hangul_syllable(_hangul_initial, _hangul_medial, first);
+            char next = make_hangul_syllable(second, medial, 0);
+            replace_surrounding_text(1, 0, String.valueOf(prev) + String.valueOf(next));
+            _hangul_initial = second;
+            _hangul_medial = medial;
+            _hangul_final = 0;
+            _hangul_final_is_combined = false;
+            return;
+          }
+        }
+
+        // Simple final → next initial
+        moved_initial = initial_from_final(_hangul_final);
+        if (moved_initial >= 0)
+        {
+          char prev = make_hangul_syllable(_hangul_initial, _hangul_medial, 0);
+          char next = make_hangul_syllable(moved_initial, medial, 0);
+          replace_surrounding_text(1, 0, String.valueOf(prev) + String.valueOf(next));
+          _hangul_initial = moved_initial;
+          _hangul_medial = medial;
+          _hangul_final = 0;
+          _hangul_final_is_combined = false;
+          return;
+        }
+      }
+
+      // We have a full syllable without final. Try medial combination.
+      int combined = combine_medial(_hangul_medial, medial);
+      if (combined >= 0)
+      {
+        _hangul_medial = combined;
+        _hangul_final = 0;
+        _hangul_final_is_combined = false;
+        replace_hangul_current();
+        return;
+      }
+
+      // No combination, start new vowel syllable
+      start_hangul_medial(medial);
+      return;
+    }
+
+    if (_hangul_initial >= 0 && _hangul_medial < 0)
+    {
+      // initial + medial = syllable
+      _hangul_medial = medial;
+      _hangul_final = 0;
+      _hangul_final_is_combined = false;
+      replace_hangul_current();
+      return;
+    }
+
+    if (_hangul_medial >= 0)
+    {
+      // Previous medial, try combination
+      int combined = combine_medial(_hangul_medial, medial);
+      if (combined >= 0)
+      {
+        _hangul_medial = combined;
+        replace_hangul_current();
+        return;
+      }
+      start_hangul_medial(medial);
+      return;
+    }
+
+    // No state, start new medial
+    start_hangul_medial(medial);
+  }
+
+  boolean handle_hangul_backspace()
+  {
+    if (!has_hangul_state())
+      return false;
+
+    // Final exists -> remove or split compound
+    if (_hangul_final > 0)
+    {
+      int first = split_compound_final_first(_hangul_final);
+      if (_hangul_final_is_combined && first > 0)
+      {
+        _hangul_final = first;
+        _hangul_final_is_combined = false;
+        replace_hangul_current();
+      }
+      else
+      {
+        _hangul_final = 0;
+        _hangul_final_is_combined = false;
+        replace_hangul_current();
+      }
+      return true;
+    }
+
+    // No final, medial exists
+    if (_hangul_medial >= 0)
+    {
+      int first = split_compound_medial_first(_hangul_medial);
+      if (first >= 0)
+      {
+        _hangul_medial = first;
+        replace_hangul_current();
+      }
+      else if (_hangul_initial >= 0)
+      {
+        // Remove medial, back to initial
+        _hangul_medial = -1;
+        replace_hangul_current();
+      }
+      else
+      {
+        // Standalone medial, delete it
+        replace_surrounding_text(1, 0, "");
+        reset_hangul();
+      }
+      return true;
+    }
+
+    // Initial only
+    if (_hangul_initial >= 0)
+    {
+      replace_surrounding_text(1, 0, "");
+      reset_hangul();
+      return true;
+    }
+
+    return false;
   }
 
   /** Selection has been updated. */
   public void selection_updated(int oldSelStart, int newSelStart, int newSelEnd)
   {
+    if (has_hangul_state())
+    {
+      boolean selection_is_cursor = newSelStart == newSelEnd;
+      boolean expected_update = _hangul_selection_update_pending
+        && selection_is_cursor
+        && (oldSelStart < 0 || oldSelStart + _hangul_expected_selection_delta == newSelStart);
+      if (expected_update)
+      {
+        _hangul_selection_update_pending = false;
+        _hangul_expected_selection_delta = 0;
+      }
+      else if (!selection_is_cursor || oldSelStart != newSelStart)
+        reset_hangul();
+    }
     _autocap.selection_updated(oldSelStart, newSelStart);
     _typedword.selection_updated(oldSelStart, newSelStart, newSelEnd);
   }
@@ -93,6 +612,7 @@ public final class KeyEventHandler
       case Slider:
         // Don't wait for the next key_up and move the cursor right away. This
         // is called after the trigger distance have been travelled.
+        reset_hangul();
         handle_slider(key.getSlider(), key.getSliderRepeat(), true);
         break;
       default: break;
@@ -110,15 +630,57 @@ public final class KeyEventHandler
     update_meta_state(mods);
     switch (key.getKind())
     {
-      case Char: send_text(String.valueOf(key.getChar())); break;
-      case String: send_text(key.getString()); break;
-      case Event: _recv.handle_event_key(key.getEvent()); break;
-      case Keyevent: send_key_down_up(key.getKeyevent()); break;
+      case Char:
+        if (!handle_hangul_char(key.getChar()))
+        {
+          reset_hangul();
+          send_text(String.valueOf(key.getChar()));
+        }
+        break;
+      case Hangul_initial:
+        handle_hangul_initial(key.getString().charAt(0));
+        break;
+      case Hangul_medial:
+        handle_hangul_medial(hangul_medial_from_precomposed(
+              key.getHangulPrecomposed()));
+        break;
+      case String:
+        if (key.getString().length() == 1 && handle_hangul_char(key.getString().charAt(0)))
+        {
+          // Handled by Hangul automaton
+        }
+        else
+        {
+          reset_hangul();
+          send_text(key.getString());
+        }
+        break;
+      case Event:
+        reset_hangul();
+        _recv.handle_event_key(key.getEvent());
+        break;
+      case Keyevent:
+        reset_hangul();
+        send_key_down_up(key.getKeyevent());
+        break;
       case Modifier: break;
-      case Editing: handle_editing_key(key.getEditing()); break;
-      case Compose_pending: _recv.set_compose_pending(true); break;
-      case Slider: handle_slider(key.getSlider(), key.getSliderRepeat(), false); break;
-      case Macro: evaluate_macro(key.getMacro()); break;
+      case Editing:
+        if (key.getEditing() != KeyValue.Editing.BACKSPACE)
+          reset_hangul();
+        handle_editing_key(key.getEditing());
+        break;
+      case Compose_pending:
+        reset_hangul();
+        _recv.set_compose_pending(true);
+        break;
+      case Slider:
+        reset_hangul();
+        handle_slider(key.getSlider(), key.getSliderRepeat(), false);
+        break;
+      case Macro:
+        reset_hangul();
+        evaluate_macro(key.getMacro());
+        break;
     }
     update_meta_state(old_mods);
     _last_action = _next_last_action;
@@ -256,6 +818,7 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
+    expect_hangul_selection_update(text.length());
     _autocap.typed(text);
     _typedword.typed(text);
     conn.commitText(text, 1);
@@ -267,10 +830,13 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
+    expect_hangul_selection_update(new_text.length() - remove_before);
     conn.beginBatchEdit();
     conn.deleteSurroundingText(remove_before, remove_after);
     conn.commitText(new_text, 1);
     conn.endBatchEdit();
+    _autocap.text_replaced();
+    _typedword.text_replaced();
   }
 
   /** See {!InputConnection.performContextMenuAction}. */
@@ -536,13 +1102,44 @@ public final class KeyEventHandler
         && !_typedword.is_selection_not_empty()
         && _typedword.cursor_relative() == 0)
       suggestion_entered(_suggestions.suggestions[0]);
-    else
+    else if (!handle_space_bar_double_tap())
+    {
       send_text(" ");
+      _last_space_bar_time = System.currentTimeMillis();
+      _next_last_action = LastAction.SPACE_BAR;
+    }
+  }
+
+  boolean handle_space_bar_double_tap()
+  {
+    if (_last_action != LastAction.SPACE_BAR)
+      return false;
+    if (System.currentTimeMillis() - _last_space_bar_time > ViewConfiguration.getDoubleTapTimeout())
+      return false;
+    if (_typedword.is_selection_not_empty() || _typedword.cursor_relative() != 0)
+      return false;
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return false;
+    CharSequence before = conn.getTextBeforeCursor(2, 0);
+    if (before == null || before.length() < 2 || before.charAt(before.length() - 1) != ' ')
+      return false;
+    char previous = before.charAt(before.length() - 2);
+    if (Character.isWhitespace(previous) || ".!?。！？".indexOf(previous) >= 0)
+      return false;
+    replace_surrounding_text(1, 0, ". ");
+    _autocap.typed(". ");
+    _typedword.delayed_refresh();
+    _last_space_bar_time = 0;
+    _next_last_action = LastAction.OTHER;
+    return true;
   }
 
   /** Undo the last autocorrect. */
   void handle_backspace()
   {
+    if (handle_hangul_backspace())
+      return;
     if (_last_action == LastAction.SUGGESTION_ENTERED
         && last_replaced_word != null)
     {
@@ -581,6 +1178,7 @@ public final class KeyEventHandler
   public static enum LastAction
   {
     SUGGESTION_ENTERED,
+    SPACE_BAR,
     OTHER
   }
 }

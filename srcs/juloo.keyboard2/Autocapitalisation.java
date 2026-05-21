@@ -49,6 +49,8 @@ public final class Autocapitalisation
 
   public void typed(CharSequence c)
   {
+    if (!_enabled)
+      return;
     for (int i = 0; i < c.length(); i++)
       type_one_char(c.charAt(i));
     callback(false);
@@ -73,6 +75,14 @@ public final class Autocapitalisation
         break;
     }
     callback(true);
+  }
+
+  public void text_replaced()
+  {
+    if (!_enabled)
+      return;
+    _should_update_caps_mode = true;
+    callback(false);
   }
 
   public void stop()
@@ -108,6 +118,8 @@ public final class Autocapitalisation
   /** Returns [true] if shift might be disabled. */
   public void selection_updated(int old_cursor, int new_cursor)
   {
+    if (!_enabled)
+      return;
     if (new_cursor == _cursor) // Just typing
       return;
     if (new_cursor == 0 && _ic != null)

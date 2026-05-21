@@ -29,6 +29,20 @@ public class ModmapTest
     Utils.apply(mm, "љ", KeyValue.Modifier.CTRL, KeyValue.getKeyByName("љ").withKeyevent(45));
   }
 
+  @Test
+  public void hangul_shift_mappings()
+  {
+    Utils.apply(null, "ㅂ", KeyValue.Modifier.SHIFT, "ㅃ");
+    Utils.apply(null, "ㅈ", KeyValue.Modifier.SHIFT, "ㅉ");
+    Utils.apply(null, "ㄷ", KeyValue.Modifier.SHIFT, "ㄸ");
+    Utils.apply(null, "ㄱ", KeyValue.Modifier.SHIFT, "ㄲ");
+    Utils.apply(null, "ㅅ", KeyValue.Modifier.SHIFT, "ㅆ");
+    Utils.apply(null, "ㅐ", KeyValue.Modifier.SHIFT, "ㅒ");
+    Utils.apply(null, "ㅔ", KeyValue.Modifier.SHIFT, "ㅖ");
+    Utils.apply(null, "ㅁ", KeyValue.Modifier.SHIFT, "ㅁ");
+    Utils.apply(null, "ㅏ", KeyValue.Modifier.SHIFT, "ㅏ");
+  }
+
   static class Utils
   {
     static void apply(Modmap mm, String a, KeyValue.Modifier mod, String expected)
