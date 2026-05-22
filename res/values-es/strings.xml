@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_release">Unexpected Keyboard</string>
-    <string name="app_name_debug">Unexpected Keyboard (debug)</string>
+    <string name="app_name_debug">Unexpected Keyboard (Depuración)</string>
     <string name="short_description">Un teclado virtual ligero para Android consciente de su privacidad.</string>
     <string name="store_description">La característica principal es que hay acceso a más caractéres deslizando hacia las esquinas de las teclas.\n\nEsta aplicación fue originalmente diseñada para programadores que usaran Termux.\nAhora es perfecta para uso cotidiano.\n\nLa misma no contiene ningún anuncio/publicidad y es de Fuente Abierta.</string>
     <string name="pref_portrait">En modo vertical</string>
