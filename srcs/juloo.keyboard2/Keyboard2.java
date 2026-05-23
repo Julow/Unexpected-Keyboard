@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.Handler;
@@ -214,7 +215,9 @@ public class Keyboard2 extends InputMethodService
       setInputView(_keyboard_container_view);
     }
     // Set keyboard background opacity
-    _keyboard_container_view.getBackground().setAlpha(_config.keyboardOpacity);
+    Drawable bg = _keyboard_container_view.getBackground().mutate();
+    bg.setAlpha(_config.keyboardOpacity);
+    _keyboard_container_view.setBackground(bg);
     _keyboard_layout_view.reset();
     refresh_candidates_view();
   }
