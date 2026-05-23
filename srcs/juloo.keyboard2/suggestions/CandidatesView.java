@@ -96,17 +96,16 @@ public class CandidatesView extends LinearLayout
   void set_sizes(Config config)
   {
     // Make the candidates view about as high as a keyboard row.
-    int height = (int)(config.keyboard_rows_height_pixels * (1 - config.key_vertical_margin));
+    float row_height = config.keyboard_rows_height_pixels * (1 - config.key_vertical_margin);
+    ViewGroup.MarginLayoutParams p =
+      (ViewGroup.MarginLayoutParams)getLayoutParams();
+    p.height = (int)row_height;
+    setLayoutParams(p);
     // Match the size of labels on the keyboard.
-    float text_size = height * config.characterSize * config.labelTextSize;
+    float text_size = row_height * config.characterSize * config.labelTextSize;
     for (int i = 0; i < NUM_CANDIDATES; i++)
     {
       TextView v = _item_views[i];
-      // Set view height
-      ViewGroup.MarginLayoutParams p =
-        (ViewGroup.MarginLayoutParams)v.getLayoutParams();
-      p.height = height;
-      v.setLayoutParams(p);
       // Set text size and enable auto size if supported.
       if (VERSION.SDK_INT < 26)
         v.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size);

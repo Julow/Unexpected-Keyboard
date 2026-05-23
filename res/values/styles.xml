@@ -3,25 +3,30 @@
   <!-- Candidates view -->
   <style name="candidates_view">
     <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">48dp</item>
+    <item name="android:layout_height">wrap_content</item>
     <item name="android:orientation">horizontal</item>
     <item name="android:gravity">center</item>
+    <item name="android:paddingEnd">@dimen/candidates_gap</item>
   </style>
   <style name="candidates_item">
-    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_weight">1</item>
-    <item name="android:paddingHorizontal">@dimen/candidates_padding</item>
+    <item name="android:layout_marginStart">@dimen/candidates_gap</item>
+    <item name="android:layout_marginTop">@dimen/candidates_margin_vertical</item>
+    <item name="android:layout_marginBottom">@dimen/candidates_margin_vertical</item>
+    <item name="android:padding">@dimen/candidates_suggestions_padding</item>
     <item name="android:gravity">center</item>
+    <item name="android:background">@drawable/suggestions_item_background</item>
     <item name="android:textColor">?attr/colorLabel</item>
     <item name="android:maxLines">1</item>
   </style>
   <style name="candidates_emoji">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">match_parent</item>
-    <item name="android:layout_marginLeft">12dp</item>
+    <item name="android:layout_width">@dimen/candidates_emoji_width</item>
+    <item name="android:layout_height">@dimen/candidates_emoji_width</item>
     <item name="android:layout_weight">0</item>
-    <item name="android:paddingHorizontal">@dimen/candidates_padding</item>
+    <item name="android:layout_marginStart">@dimen/candidates_gap</item>
+    <item name="android:padding">@dimen/candidates_suggestions_padding</item>
     <item name="android:gravity">center</item>
   </style>
   <style name="candidates_status">
