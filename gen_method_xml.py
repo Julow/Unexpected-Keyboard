@@ -33,7 +33,7 @@ LOCALES = [
   loc("el", "latin", "grek_qwerty", extra_keys="£@l|€"),
   loc("en", "latin", "latn_qwerty_us", dictionary="en_GB"),
   loc("en_AU", "latin", "latn_qwerty_us"),
-  loc("en_CA", "latin", "latn_qwerty_us"),
+  loc("en_CA", "latin", "latn_qwerty_us", dictionary="en_US"),
   loc("en_GB", "latin", "latn_qwerty_gb", extra_keys="£@l"),
   loc("en_IN", "latin", "latn_qwerty_us"),
   loc("en_NG", "latin", "latn_qwerty_us", extra_keys="₦"),
