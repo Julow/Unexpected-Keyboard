@@ -142,6 +142,7 @@ def compute_attrs():
         # Return a short tag when it's not shared between several locales
         return l if len(locales_grouped[l]) == 1 else loc["name"]
     def dictionary(loc):
+        if "dictionary" in loc: return loc["dictionary"]
         if loc["name"] in available_dictionaries: return loc["name"]
         l = lang(loc)
         if l in available_dictionaries: return l
