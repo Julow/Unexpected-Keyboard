@@ -20,6 +20,7 @@ VALUE_DIR_TO_METADATA = {
         "de": "de-DE",
         "en": "en-US",
         "es": "es-ES",
+        "et": "et",
         "fa": None,
         "fil": "fil",
         "fr": "fr-FR",
