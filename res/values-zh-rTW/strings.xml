@@ -205,5 +205,5 @@
     <string name="dictionaries_download_success">字典已安裝</string>
     <string name="dictionaries_download_failed">下載失敗</string>
     <string name="dictionaries_activity_not_enabled">需要啟用鍵盤才能下載字典。</string>
-    <string name="candidates_status_install">安裝</string>
+    <!-- <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string> -->
 </resources>

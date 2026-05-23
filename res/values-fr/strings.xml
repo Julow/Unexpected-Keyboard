@@ -161,8 +161,6 @@
     <!-- <string name="dictionaries_download_success">Dictionary installed</string> -->
     <!-- <string name="dictionaries_download_failed">Download failed</string> -->
     <!-- <string name="dictionaries_activity_not_enabled">You must first enable the keyboard to download dictionaries.</string> -->
-    <!-- <string name="candidates_status_no_dict">No dictionary installed</string> -->
-    <!-- <string name="candidates_status_install">Install</string> -->
 <string name="pref_portrait_unfolded">En mode portrait déplié</string>
     <string name="pref_landscape_unfolded">En mode paysage déplié</string>
     <string name="pref_show_number_row_no_number_row">Aucune rangée de chiffres</string>
@@ -185,4 +183,5 @@
     <string name="pref_theme_e_cobalt">Cobalt</string>
     <string name="pref_theme_e_pine">Pine</string>
     <string name="pref_theme_e_epaperblack">ePaper Noir</string>
+    <!-- <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string> -->
 </resources>

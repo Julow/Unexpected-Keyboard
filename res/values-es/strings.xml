@@ -203,7 +203,7 @@
     <string name="dictionaries_download_success">Diccionario instalado</string>
     <string name="dictionaries_download_failed">Falló la descarga</string>
     <string name="dictionaries_activity_not_enabled">Primero tienes que habilitar al teclado para descargar diccionarios.</string>
-    <string name="candidates_status_install">Instalar</string>
     <string name="pref_portrait_unfolded">En modo vertical desplegado</string>
     <string name="pref_landscape_unfolded">En modo horizontal desplegado</string>
+    <!-- <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string> -->
 </resources>
