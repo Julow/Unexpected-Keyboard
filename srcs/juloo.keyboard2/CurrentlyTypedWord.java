@@ -129,7 +129,7 @@ public final class CurrentlyTypedWord
       _cursor++;
       // [i >= end] might happen when the cursor is in the middle of a
       // surrogate pair
-      if (!Character.isLetter(c) && i <= end)
+      if (!is_word_char(c) && i <= end)
         insert_start = i;
     }
     if (insert_start > 0)
@@ -150,7 +150,7 @@ public final class CurrentlyTypedWord
     while (i < end)
     {
       int c = Character.codePointAt(s, i);
-      if (!Character.isLetter(c))
+      if (!is_word_char(c))
         break;
       _w.appendCodePoint(c);
       i += Character.charCount(c);
@@ -220,6 +220,13 @@ public final class CurrentlyTypedWord
         refresh_current_word();
     }
   };
+
+  /** A word is the longest consecutive sequence for which [is_word_char]
+      returns [true]. */
+  public static boolean is_word_char(int c)
+  {
+    return Character.isLetterOrDigit(c) || (c == '\'');
+  }
 
   public static interface Callback
   {
