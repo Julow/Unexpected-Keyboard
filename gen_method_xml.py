@@ -133,6 +133,9 @@ def compute_attrs():
     locales_grouped = {} # Locales grouped by language tag
     def lang(loc):
         return loc["name"].split("_")[0]
+    def find_locale(name):
+        l = name.split("_")[0]
+        return next(( loc for loc in locales_grouped[l] if loc["name"] == name ), None)
     for loc in LOCALES:
         locales_grouped.setdefault(lang(loc), []).append(loc)
     def tag(loc):
@@ -142,10 +145,12 @@ def compute_attrs():
         # Return a short tag when it's not shared between several locales
         return l if len(locales_grouped[l]) == 1 else loc["name"]
     def dictionary(loc):
+        if loc is None: return None
         if "dictionary" in loc: return loc["dictionary"]
         if loc["name"] in available_dictionaries: return loc["name"]
         l = lang(loc)
         if l in available_dictionaries: return l
+        if l != loc["name"]: return dictionary(find_locale(l))
         return None
     def add_attrs(loc):
         loc = dict(**loc)
