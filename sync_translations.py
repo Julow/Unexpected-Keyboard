@@ -49,16 +49,15 @@ def parse_strings_file(file):
     resrcs = ET.parse(file).getroot()
     return { key(ent): ent for ent in resrcs if ent.tag == "string" }
 
-# Print the XML file back autoformatted. Takes the output of [sync].
-def write_updated_strings(out, strings):
-    out.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n')
-    for key, string, comment in strings:
-        out.write("    ")
-        if comment: out.write("<!-- ")
-        out.write(ET.tostring(string, "unicode").strip())
-        if comment: out.write(" -->")
-        out.write("\n")
-    out.write('</resources>\n')
+# # Print the XML file back autoformatted. Takes the output of [sync].
+# def write_updated_strings(out, strings):
+#     out.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n')
+#     for key, string, comment in strings:
+#         if comment: continue
+#         out.write("    ")
+#         out.write(ET.tostring(string, "unicode").strip())
+#         out.write("\n")
+#     out.write('</resources>\n')
 
 # Print whether string file is uptodate.
 def print_status(fname, strings):
@@ -112,8 +111,9 @@ for value_dir in glob.glob("res/values-*"):
     if os.path.isfile(strings_file):
         local_strings = dict(parse_strings_file(strings_file))
         synced_strings = sync(baseline, local_strings)
-        with open(strings_file, "w", encoding="utf-8") as out:
-            write_updated_strings(out, synced_strings)
+        # Syncing translation files is no longer needed since we use Weblate.
+        # with open(strings_file, "w", encoding="utf-8") as out:
+        #     write_updated_strings(out, synced_strings)
         sync_metadata(value_dir, local_strings)
         print_status(strings_file, synced_strings)
 
