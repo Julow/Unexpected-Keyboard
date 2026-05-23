@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">為Android打造的輕量、注重隱私的虛擬鍵盤。</string>
-    <string name="store_description">你能透過往按鍵角落滑動來輸入更多字元。\n\n該軟體原先被設計給Termux使用者使用。\n現在已完善並可日用。</string>
+    <string name="store_description">你能透過往按鍵角落滑動來輸入更多字元。\n\n該軟體原先被設計給Termux使用者使用。\n現在已完善並可日用。\n\n此應用程式無任何廣告並且是開源的。</string>
     <string name="pref_portrait">直向螢幕模式</string>
     <string name="pref_portrait_unfolded">直向螢幕模式展開</string>
     <string name="pref_landscape">橫向螢幕模式</string>

@@ -119,4 +119,18 @@
     <string name="clipboard_pin_heading">Vastgemaakt</string>
     <string name="clipboard_remove_confirm">Verwijder dit klembord?</string>
     <string name="clipboard_remove_confirmed">Ja</string>
+<string name="pref_portrait_unfolded">Uitgeklapt in staande stand</string>
+    <string name="pref_landscape_unfolded">Uitgeklapt in liggende stand</string>
+    <string name="pref_show_number_row_no_number_row">Geen rijnummer</string>
+    <string name="pref_show_number_row_no_symbols">Nummerrij zonder symbolen</string>
+    <string name="pref_show_number_row_symbols">Nummerrij met symbolen</string>
+    <string name="pref_category_suggestions">Suggesties</string>
+    <string name="pref_suggestions_title">Suggesties</string>
+    <string name="pref_suggestions_summary">Schakel woordaanvulling en spellingcontrole in</string>
+    <string name="pref_space_bar_auto_complete_title">Automatisch aanvullen met spatiebalk</string>
+    <string name="pref_space_bar_auto_complete_summary">Accepteer beste suggestie met druk op spatiebalk</string>
+    <string name="pref_change_method_key_replacement_title">Schakelen tussen invoermethoden</string>
+    <string name="pref_change_method_key_replacement_e_picker">Toon invoermethodekiezer (lang indrukken)</string>
+    <string name="pref_change_method_key_replacement_e_prev">Schakelen naar laatst gebruikt</string>
+    <string name="pref_change_method_key_replacement_e_next">Schakelen naar volgende in de lijst</string>
 </resources>
