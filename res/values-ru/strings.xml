@@ -119,7 +119,7 @@
     <string name="clipboard_pin_heading">Закреплено</string>
     <string name="clipboard_remove_confirm">Удалить этот буфер обмена?</string>
     <string name="clipboard_remove_confirmed">Да</string>
-<string name="pref_portrait_unfolded">В развернутом портретном режиме</string>
+    <string name="pref_portrait_unfolded">В развернутом портретном режиме</string>
     <string name="pref_landscape_unfolded">В развернутом ландшафтном режиме</string>
     <string name="pref_show_number_row_no_number_row">Без ряда цифр</string>
     <string name="pref_show_number_row_no_symbols">Ряд цифр без символов</string>
@@ -159,8 +159,7 @@
     <string name="dictionaries_from_internet">Загрузить словарь из Интернета</string>
     <string name="dictionaries_download_success">Словарь установлен</string>
     <string name="dictionaries_download_failed">Ошибка при загрузке</string>
-    <string name="candidates_status_install">Установить</string>
     <string name="dictionaries_activity_not_enabled">Необходимо включить клавиатуру до загрузки словарей.</string>
-    <string name="candidates_status_no_dict">Словарь не установлен</string>
     <string name="pref_dialog_edit_text">Собственное определение</string>
+    <string name="candidates_status_click_to_install">Нажмите, чтобы установить словарь для %s</string>
 </resources>
