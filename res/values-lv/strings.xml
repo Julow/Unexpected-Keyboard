@@ -119,7 +119,7 @@
     <string name="clipboard_pin_heading">Piesprausts</string>
     <string name="clipboard_remove_confirm">Noņemt šo starpliktuves vienumu?</string>
     <string name="clipboard_remove_confirmed">Jā</string>
-<string name="pref_category_suggestions">\@string/pref_suggestions_title</string>
+    <string name="pref_category_suggestions">\@string/pref_suggestions_title</string>
     <string name="pref_suggestions_title">Ieteikumi</string>
     <string name="pref_theme_e_cobalt">Kobalts</string>
     <string name="pref_theme_e_pine">Priede</string>
@@ -128,14 +128,12 @@
     <string name="pref_slider_sensitivity_fast">Ātrs</string>
     <string name="key_descr_gesture">Žests</string>
     <string name="pref_category_clipboard">Starpliktuve</string>
-    <string name="candidates_status_install">Uzstādīt</string>
     <string name="pref_theme_e_epaperblack">ePapīrs melns</string>
     <string name="launcher_button_dictionaries">Uzstādīt vārdnīcas</string>
     <string name="dictionaries_download_success">Vārdnīca uzstādīta</string>
     <string name="dictionaries_download_failed">Neizdevās lejupielādēt</string>
     <string name="key_descr_delete_word">Dzēst vārdu</string>
     <string name="pref_clipboard_history_duration">Starpliktuves glabāšanas ilgums</string>
-    <string name="candidates_status_no_dict">Nav uzstādīta neviena vārdnīca</string>
     <string name="pref_change_method_key_replacement_e_prev">Pārslēgties uz pēdējo izmantoto</string>
     <string name="pref_slider_sensitivity_title">Atstarpes taustiņa slīdņa jutīgums</string>
     <string name="pref_clipboard_history_duration_1">Ne ilgāk kā 1 minūti</string>
