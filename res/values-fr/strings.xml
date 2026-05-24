@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_release">Unexpected Keyboard</string>
-    <string name="app_name_debug">Unexpected Keyboard (debug)</string>
+    <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Clavier virtuel léger et respectueux de la vie privée pour Android.</string>
     <string name="store_description">La fonctionnalité principale est l\'accès rapide à plus de caractères en balayant les touches vers les coins.\n\nCette application a été conçue à l\'origine pour les programmeurs utilisant Termux.\nElle est maintenant parfaite pour une utilisation quotidienne.\n\nCette application ne contient pas de publicité et est Open Source.</string>
     <string name="pref_portrait">En mode portrait</string>
@@ -16,7 +16,7 @@
     <string name="pref_layout_e_system">Paramètres système</string>
     <string name="pref_layout_e_custom">Disposition personnalisée</string>
     <string name="pref_layouts_add">Ajouter un clavier alternatif</string>
-    <string name="pref_layouts_item">Disposition %1$d: %2$s</string>
+    <string name="pref_layouts_item">Disposition %1$d : %2$s</string>
     <string name="pref_layouts_remove_custom">Supprimer</string>
     <string name="pref_custom_layout_title">Disposition personnalisée</string>
     <string name="pref_show_number_row_no_number_row">Aucune rangée de chiffres</string>
@@ -141,4 +141,25 @@
     <string name="clipboard_pin_heading">Épinglé</string>
     <string name="clipboard_remove_confirm">Supprimer ce presse-papiers ?</string>
     <string name="clipboard_remove_confirmed">Oui</string>
+    <string name="pref_slider_sensitivity_title">Sensibilité de la glisse sur la barre d\'espace</string>
+    <string name="pref_slider_sensitivity_slow">Lente</string>
+    <string name="pref_slider_sensitivity_medium">Moyenne</string>
+    <string name="pref_slider_sensitivity_fast">Rapide</string>
+    <string name="launcher_button_dictionaries">Installer des dictionnaires</string>
+    <string name="key_descr_delete_word">Supprime un mot</string>
+    <string name="key_descr_forward_delete_word">Supprime un mot vers la droite</string>
+    <string name="key_descr_gesture">Geste</string>
+    <string name="toast_no_voice_input">Aucune application de saisie vocale</string>
+    <string name="pref_category_clipboard">Presse-papiers</string>
+    <string name="pref_clipboard_history_duration">Durée de rétention du presse-papiers</string>
+    <string name="pref_clipboard_history_duration_1">Au maximum 1 minute</string>
+    <string name="pref_clipboard_history_duration_5">Au maximum 5 minutes</string>
+    <string name="pref_clipboard_history_duration_30">Au maximum 30 minutes</string>
+    <string name="pref_clipboard_history_duration_stop">Jusqu\'à ce que l\'application s\'arrête</string>
+    <string name="pref_dialog_edit_text">Personnalisée</string>
+    <string name="dictionaries_from_internet">Télécharger un dictionnaire depuis Internet</string>
+    <string name="dictionaries_download_success">Dictionnaire installé</string>
+    <string name="dictionaries_download_failed">Le téléchargement a échoué</string>
+    <string name="dictionaries_activity_not_enabled">Vous devez d\'abord activer le clavier.</string>
+    <string name="candidates_status_click_to_install">Cliquez pour installer un dictionnaire pour le %s</string>
 </resources>
