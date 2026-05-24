@@ -92,7 +92,7 @@
     <string name="key_descr_compose">نوشتن</string>
     <string name="key_descr_switch_greekmath">نمادهای یونانی و ریاضی</string>
     <string name="key_descr_change_method">تغییر صفحه‌کلید</string>
-<string name="pref_show_number_row_no_number_row">بدون ردیف شماره</string>
+    <string name="pref_show_number_row_no_number_row">بدون ردیف شماره</string>
     <string name="pref_show_number_row_no_symbols">ردیف شماره بدون نشانه ها</string>
     <string name="pref_show_number_row_symbols">ردیف شماره با نشانه ها</string>
     <string name="pref_category_suggestions">پیشنهادات</string>
@@ -134,6 +134,4 @@
     <string name="dictionaries_download_success">دیکشنری نصب شد</string>
     <string name="dictionaries_download_failed">دانلود با خطا مواجه شد</string>
     <string name="dictionaries_activity_not_enabled">شما ابتدا باید صفحه کلید را برای دانلود دیکشنری ها فعال کنید.</string>
-    <string name="candidates_status_no_dict">دیکشنری ای نصب نشده</string>
-    <string name="candidates_status_install">نصب</string>
 </resources>
