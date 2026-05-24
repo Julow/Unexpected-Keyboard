@@ -146,8 +146,6 @@
     <string name="dictionaries_download_success">Sõnastik on paigaldatud</string>
     <string name="dictionaries_download_failed">Allalaadimine ei õnnestunud</string>
     <string name="dictionaries_activity_not_enabled">Sõnastike allalaadimiseks pead esmalt klahvistiku kasutusele võtma.</string>
-    <string name="candidates_status_no_dict">Ühtegi sõnastikku pole paigaldatud</string>
-    <string name="candidates_status_install">Paigalda</string>
     <string name="key_descr_clipboard">Lõikelaua haldur</string>
     <string name="key_descr_combining">Täpitähemärkide kombineerimine</string>
     <string name="key_descr_dead_key">Surnud klahv</string>
