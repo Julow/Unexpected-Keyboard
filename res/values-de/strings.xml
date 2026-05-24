@@ -119,7 +119,7 @@
     <string name="clipboard_pin_heading">Angeheftet</string>
     <string name="clipboard_remove_confirm">Aus der Zwischenablage entfernen?</string>
     <string name="clipboard_remove_confirmed">Ja</string>
-<string name="pref_show_number_row_no_number_row">keine Zahlenreihe</string>
+    <string name="pref_show_number_row_no_number_row">keine Zahlenreihe</string>
     <string name="pref_show_number_row_no_symbols">Zahlenreihe ohne Symbole</string>
     <string name="pref_show_number_row_symbols">Zahlenreihe mit Symbolen</string>
     <string name="pref_category_suggestions">Vorschläge</string>
@@ -156,8 +156,6 @@
     <string name="dictionaries_download_success">Wörterbuch installiert</string>
     <string name="dictionaries_download_failed">Herunterladen fehlgeschlagen</string>
     <string name="dictionaries_activity_not_enabled">Du musst die Tastatur aktivieren um Wörterbücher herunterzuladen.</string>
-    <string name="candidates_status_no_dict">kein Wörterbuch installiert</string>
-    <string name="candidates_status_install">Installieren</string>
     <string name="pref_portrait_unfolded">im Hochformat aufgeklappt</string>
     <string name="pref_landscape_unfolded">Im Querformat aufgeklappt</string>
     <string name="pref_number_entry_layout_number">Zahlenbereich</string>
