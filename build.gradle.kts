@@ -196,3 +196,18 @@ tasks.named("preBuild") {
   // builds.
   mustRunAfter(genEmojis, genLayoutsList, compileComposeSequences, genMethodXml)
 }
+
+// Check whether [buildToolsVersion] matches the system version of aapt2.
+// [android.aapt2FromMavenOverride] is used on NixOS to workaround the
+// non-portable distribution of the Android SDK.
+val check_aapt2_version by tasks.registering(Exec::class) {
+  commandLine("bash", "scripts/check_aapt2_version.sh",
+    android.sdkDirectory.resolve("build-tools/${android.buildToolsVersion}/aapt2").absolutePath,
+    (project.findProperty("android.aapt2FromMavenOverride") as? String) ?: "")
+}
+
+afterEvaluate {
+  tasks.named("preReleaseBuild") {
+    dependsOn(check_aapt2_version)
+  }
+}
