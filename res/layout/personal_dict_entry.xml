@@ -3,29 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="12dp"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
     android:gravity="center_vertical"
     android:minHeight="48dp">
 
-  <LinearLayout
+  <TextView
+      android:id="@+id/personal_dict_entry_word"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:orientation="vertical">
+      android:textAppearance="?android:textAppearanceMedium"/>
 
-    <TextView
-        android:id="@+id/personal_dict_entry_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceMedium"/>
-
-    <TextView
-        android:id="@+id/personal_dict_entry_replacement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="?android:textColorSecondary"/>
-
-  </LinearLayout>
+  <TextView
+      android:id="@+id/personal_dict_entry_replacement"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:textAppearanceSmall"
+      android:textColor="?android:textColorSecondary"
+      android:maxWidth="160dp"
+      android:ellipsize="end"
+      android:singleLine="true"/>
 
 </LinearLayout>
