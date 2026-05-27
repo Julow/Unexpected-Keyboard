@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,18 +28,39 @@ public class PersonalDictionaryActivity extends Activity
     _dict = PersonalDictionary.instance(this);
     setContentView(R.layout.personal_dict_activity);
     _list_container = (LinearLayout)findViewById(R.id.personal_dict_list);
-
-    findViewById(R.id.personal_dict_add_btn).setOnClickListener(new View.OnClickListener()
-        {
-          @Override
-          public void onClick(View v) { show_add_dialog(null); }
-        });
+    setTitle(R.string.personal_dict_title);
+    if (getActionBar() != null)
+      getActionBar().setDisplayHomeAsUpEnabled(true);
 
     String prefill = getIntent().getStringExtra(EXTRA_WORD);
     if (prefill != null && !prefill.isEmpty())
       show_add_dialog(prefill);
 
     refresh_list();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.personal_dict_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    int id = item.getItemId();
+    if (id == R.id.personal_dict_menu_add)
+    {
+      show_add_dialog(null);
+      return true;
+    }
+    if (id == android.R.id.home)
+    {
+      finish();
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   void show_add_dialog(String initial_word)

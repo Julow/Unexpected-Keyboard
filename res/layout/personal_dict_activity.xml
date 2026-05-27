@@ -1,47 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
   <LinearLayout
+      android:id="@+id/personal_dict_list"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:padding="8dp"
-      android:gravity="center_vertical">
+      android:orientation="vertical"/>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/personal_dict_title"
-        android:textAppearance="?android:textAppearanceMedium"/>
-
-    <Button
-        android:id="@+id/personal_dict_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/personal_dict_add_btn"/>
-
-  </LinearLayout>
-
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="?android:attr/dividerHorizontal"/>
-
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1">
-
-    <LinearLayout
-        android:id="@+id/personal_dict_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
-
-  </ScrollView>
-
-</LinearLayout>
+</ScrollView>
