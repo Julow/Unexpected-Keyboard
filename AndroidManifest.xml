@@ -31,6 +31,12 @@
         <action android:name="android.intent.action.MAIN"/>
       </intent-filter>
     </activity>
+
+    <activity android:name="juloo.keyboard2.dict.PersonalDictionaryActivity" android:icon="@mipmap/ic_launcher" android:theme="@style/appTheme" android:exported="false">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+      </intent-filter>
+    </activity>
   </application>
 
   <!-- To query enabled input methods for voice IME detection -->

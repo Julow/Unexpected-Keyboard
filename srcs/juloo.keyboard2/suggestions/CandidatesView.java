@@ -1,6 +1,7 @@
 package juloo.keyboard2.suggestions;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.R;
+import juloo.keyboard2.dict.PersonalDictionaryActivity;
 
 public class CandidatesView extends LinearLayout
 {
@@ -30,6 +32,13 @@ public class CandidatesView extends LinearLayout
       are shown. Might be [null]. */
   View _status_no_dict = null; // Dictionary not installed
 
+  /** Small button shown while typing to add the current word to the personal
+      dictionary. Might be [null] until inflated. */
+  View _add_word_btn = null;
+
+  /** Word currently being typed, used when the add-word button is tapped. */
+  String _current_word = null;
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -42,6 +51,17 @@ public class CandidatesView extends LinearLayout
     setup_item_view(0, R.id.candidates_middle);
     setup_item_view(1, R.id.candidates_right);
     setup_item_view(2, R.id.candidates_left);
+    setup_add_word_button();
+  }
+
+  /** Called with the word currently being typed so the add-word button knows
+      what to pre-fill. Pass [null] when no word is being typed. */
+  public void set_current_word(String word)
+  {
+    _current_word = word;
+    if (_add_word_btn != null)
+      _add_word_btn.setVisibility(
+          (word != null && !word.isEmpty()) ? View.VISIBLE : View.GONE);
   }
 
   public void set_candidates(List<String> suggestions)
@@ -131,6 +151,26 @@ public class CandidatesView extends LinearLayout
         });
     v.setVisibility(View.GONE);
     _item_views[item_index] = v;
+  }
+
+  private void setup_add_word_button()
+  {
+    _add_word_btn = findViewById(R.id.candidates_add_word);
+    if (_add_word_btn == null)
+      return;
+    _add_word_btn.setVisibility(View.GONE);
+    _add_word_btn.setOnClickListener(new View.OnClickListener()
+        {
+          @Override
+          public void onClick(View _v)
+          {
+            Intent i = new Intent(getContext(), PersonalDictionaryActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (_current_word != null && !_current_word.isEmpty())
+              i.putExtra(PersonalDictionaryActivity.EXTRA_WORD, _current_word);
+            getContext().startActivity(i);
+          }
+        });
   }
 
   /** Whether the candidates view should be shown for a given editor. */

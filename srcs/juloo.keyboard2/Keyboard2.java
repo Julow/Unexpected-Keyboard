@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Set;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
+import juloo.keyboard2.dict.PersonalDictionary;
+import juloo.keyboard2.dict.PersonalDictionaryActivity;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 import juloo.cdict.Cdict;
@@ -44,6 +46,7 @@ public class Keyboard2 extends InputMethodService
   /** Installed and current locales. */
   private DeviceLocales _device_locales;
   private Dictionaries _dictionaries;
+  private PersonalDictionary _personal_dictionary;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   private Handler _handler;
@@ -121,9 +124,11 @@ public class Keyboard2 extends InputMethodService
     _handler = new Handler(getMainLooper());
     _foldStateTracker = new FoldStateTracker(this);
     _dictionaries = Dictionaries.instance(this);
+    _personal_dictionary = PersonalDictionary.instance(this);
     Config.initGlobalConfig(prefs, getResources(),
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
+    _config.personal_dictionary = _personal_dictionary;
     _keyeventhandler = new KeyEventHandler(this.new Receiver(), _config);
     _config.handler = _keyeventhandler;
     prefs.registerOnSharedPreferenceChangeListener(this);
@@ -173,10 +178,21 @@ public class Keyboard2 extends InputMethodService
   private void refresh_current_dictionary()
   {
     _config.current_dictionary = null;
-    String current = _device_locales.default_.dictionary;
-    if (current == null)
-      return;
-    Cdict[] dicts = _dictionaries.load(current);
+    String selected = _config.selected_dictionary;
+    String dict_name;
+    if (selected == null || selected.equals("auto"))
+    {
+      if (_device_locales.default_ == null)
+        return;
+      dict_name = _device_locales.default_.dictionary;
+      if (dict_name == null)
+        return;
+    }
+    else
+    {
+      dict_name = selected;
+    }
+    Cdict[] dicts = _dictionaries.load(dict_name);
     if (dicts == null)
       return;
     _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
@@ -368,6 +384,12 @@ public class Keyboard2 extends InputMethodService
     start_activity(DictionariesActivity.class);
   }
 
+  /** Called from [onClick] attributes. */
+  public void launch_personal_dictionary_activity(View v)
+  {
+    start_activity(PersonalDictionaryActivity.class);
+  }
+
   void start_activity(Class cls)
   {
     Intent intent = new Intent(this, cls);
@@ -493,6 +515,11 @@ public class Keyboard2 extends InputMethodService
     public void set_suggestions(List<String> suggestions)
     {
       _candidates_view.set_candidates(suggestions);
+    }
+
+    public void set_current_word(String word)
+    {
+      _candidates_view.set_current_word(word);
     }
   }
 

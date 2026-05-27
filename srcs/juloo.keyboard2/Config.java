@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
+import juloo.keyboard2.dict.PersonalDictionary;
 import juloo.keyboard2.prefs.CustomExtraKeysPreference;
 import juloo.keyboard2.prefs.ExtraKeysPreference;
 import juloo.keyboard2.prefs.LayoutsPreference;
@@ -84,6 +85,9 @@ public final class Config
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
   public Cdict current_dictionary = null; // Might be 'null'.
+  public PersonalDictionary personal_dictionary = null; // Might be 'null'.
+  /** "auto" means use the locale-based dictionary. */
+  public String selected_dictionary;
   public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;
@@ -193,6 +197,7 @@ public final class Config
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
     clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
     space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
+    selected_dictionary = _prefs.getString("selected_dictionary", "auto");
 
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
