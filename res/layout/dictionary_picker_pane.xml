@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorKeyboard">
+
+  <!-- Scrollable list of dictionaries -->
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1">
+
+    <LinearLayout
+        android:id="@+id/dict_picker_list"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"/>
+
+  </ScrollView>
+
+  <!-- Bottom row with back button, themed as a keyboard row -->
+  <juloo.keyboard2.Keyboard2View
+      layout="@xml/dict_picker_bottom_row"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/colorKeyboard"/>
+
+</LinearLayout>

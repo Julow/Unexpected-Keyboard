@@ -167,6 +167,7 @@
     <string name="candidates_add_word_desc">Add word to personal dictionary</string>
     <string name="pref_selected_dictionary_title">Active dictionary</string>
     <string name="pref_selected_dictionary_auto">Auto (based on language)</string>
+    <string name="dict_picker_title">Select dictionary</string>
     <string name="pref_manage_dictionaries_title">Manage dictionaries</string>
     <string name="pref_manage_dictionaries_summary">Download or remove language dictionaries</string>
     <string name="pref_personal_dictionary_title">Personal dictionary</string>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="14dp"
+    android:gravity="center_vertical"
+    android:minHeight="48dp">
+
+  <TextView
+      android:id="@+id/dict_picker_item_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textSize="16sp"
+      android:textColor="?attr/colorLabel"/>
+
+  <TextView
+      android:id="@+id/dict_picker_item_check"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="✓"
+      android:textSize="18sp"
+      android:textColor="?attr/colorLabelActivated"
+      android:visibility="gone"/>
+
+</LinearLayout>

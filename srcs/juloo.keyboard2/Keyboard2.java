@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import android.view.Gravity;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +28,7 @@ import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.dict.PersonalDictionary;
 import juloo.keyboard2.dict.PersonalDictionaryActivity;
+import juloo.keyboard2.dict.SupportedDictionaries;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 import juloo.cdict.Cdict;
@@ -49,6 +51,7 @@ public class Keyboard2 extends InputMethodService
   private PersonalDictionary _personal_dictionary;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
+  private ViewGroup _dictionary_picker_pane = null;
   private Handler _handler;
 
   private Config _config;
@@ -221,6 +224,7 @@ public class Keyboard2 extends InputMethodService
       create_keyboard_view();
       _emojiPane = null;
       _clipboard_pane = null;
+      _dictionary_picker_pane = null;
       setInputView(_keyboard_container_view);
     }
     // Set keyboard background opacity
@@ -429,6 +433,13 @@ public class Keyboard2 extends InputMethodService
           setInputView(_clipboard_pane);
           break;
 
+        case SWITCH_DICTIONARY:
+          _dictionary_picker_pane = (ViewGroup)inflate_view(R.layout.dictionary_picker_pane);
+          build_dictionary_picker(_dictionary_picker_pane);
+          setInputView(_dictionary_picker_pane);
+          break;
+
+        case SWITCH_BACK_DICT_PICKER:
         case SWITCH_BACK_EMOJI:
         case SWITCH_BACK_CLIPBOARD:
           setInputView(_keyboard_container_view);
@@ -526,6 +537,59 @@ public class Keyboard2 extends InputMethodService
   private IBinder getConnectionToken()
   {
     return getWindow().getWindow().getAttributes().token;
+  }
+
+  /** Populate the dictionary picker pane with the current set of installed
+      dictionaries and wire up selection callbacks. */
+  private void build_dictionary_picker(ViewGroup pane)
+  {
+    android.widget.LinearLayout list =
+      (android.widget.LinearLayout)pane.findViewById(R.id.dict_picker_list);
+    list.removeAllViews();
+    SupportedDictionaries supported = new SupportedDictionaries(getResources());
+    Set<String> installed = _dictionaries.get_installed();
+    String current = _config.selected_dictionary;
+
+    add_dictionary_picker_item(list, getString(R.string.pref_selected_dictionary_auto),
+        "auto", "auto".equals(current) || current == null);
+
+    for (int i = 0; i < supported.length(); i++)
+    {
+      final String name = supported.dict_name(i);
+      if (!installed.contains(name))
+        continue;
+      add_dictionary_picker_item(list, supported.display_name(i),
+          name, name.equals(current));
+    }
+  }
+
+  private void add_dictionary_picker_item(android.widget.LinearLayout list,
+      String label, String dict_key, boolean is_current)
+  {
+    android.view.View row =
+      View.inflate(new ContextThemeWrapper(this, _config.theme),
+          R.layout.dictionary_picker_item, null);
+    ((android.widget.TextView)row.findViewById(R.id.dict_picker_item_name))
+      .setText(label);
+    android.widget.TextView check =
+      (android.widget.TextView)row.findViewById(R.id.dict_picker_item_check);
+    check.setVisibility(is_current ? View.VISIBLE : View.GONE);
+
+    row.setOnClickListener(new View.OnClickListener()
+        {
+          @Override
+          public void onClick(View v)
+          {
+            Config.globalPrefs().edit()
+              .putString("selected_dictionary", dict_key)
+              .apply();
+            _config.selected_dictionary = dict_key;
+            refresh_current_dictionary();
+            _keyeventhandler.ime_subtype_changed();
+            setInputView(_keyboard_container_view);
+          }
+        });
+    list.addView(row);
   }
 
   private View inflate_view(int layout)

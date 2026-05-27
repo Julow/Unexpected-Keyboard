@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<keyboard bottom_row="false">
+  <row height="0.95">
+    <key key0="switch_back_dict_picker"/>
+  </row>
+</keyboard>
