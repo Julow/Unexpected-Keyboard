@@ -15,7 +15,7 @@ dependencies {
 android {
   namespace = "juloo.keyboard2"
   compileSdkVersion = "android-36"
-  buildToolsVersion = "36.1.0"
+  buildToolsVersion = "35.0.0"
 
   defaultConfig {
     applicationId = "juloo.keyboard2"
