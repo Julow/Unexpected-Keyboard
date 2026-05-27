@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.R;
+import juloo.keyboard2.dict.PersonalDictionary;
 import juloo.keyboard2.dict.PersonalDictionaryActivity;
 
 public class CandidatesView extends LinearLayout
@@ -91,11 +92,21 @@ public class CandidatesView extends LinearLayout
   public void refresh_config(Config config)
   {
     set_candidates(Suggestions.NO_SUGGESTIONS);
-    // The status message indicates whether the dictionaries should be
-    // installed.
-    _status_no_dict = inflate_and_show(_status_no_dict,
-        (config.current_dictionary == null),
-        R.layout.candidates_status_no_dict);
+    boolean no_dict =
+      config.current_dictionary == null
+      && (config.personal_dictionary == null || config.personal_dictionary.get_all().isEmpty());
+    if (_status_no_dict == null && no_dict)
+    {
+      _status_no_dict = View.inflate(getContext(), R.layout.candidates_status_no_dict, null);
+      // Insert before the "+" button so it stays at the right edge.
+      int add_idx = (_add_word_btn != null) ? indexOfChild(_add_word_btn) : -1;
+      if (add_idx >= 0)
+        addView(_status_no_dict, add_idx);
+      else
+        addView(_status_no_dict);
+    }
+    if (_status_no_dict != null)
+      _status_no_dict.setVisibility(no_dict ? View.VISIBLE : View.GONE);
     set_height(config);
   }
 
@@ -114,26 +125,6 @@ public class CandidatesView extends LinearLayout
       v.setLayoutParams(p);
       v.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size);
     }
-  }
-
-  /** Show or hide a status view and inflate it if needed. */
-  View inflate_and_show(View v, boolean show, int layout_id)
-  {
-    if (!show)
-    {
-      if (v != null)
-        v.setVisibility(View.GONE);
-    }
-    else
-    {
-      if (v == null)
-      {
-        v = View.inflate(getContext(), layout_id, null);
-        addView(v);
-      }
-      v.setVisibility(View.VISIBLE);
-    }
-    return v;
   }
 
   private void setup_item_view(final int item_index, int item_id)
