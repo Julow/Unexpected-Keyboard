@@ -1,14 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorKeyboard">
 
-  <!-- Scrollable list of dictionaries -->
+  <!-- Left column: autocorrect toggle at top, ABC back button at bottom -->
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:gravity="center_horizontal"
+      android:paddingVertical="8dp"
+      android:paddingHorizontal="6dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auto"
+        android:textColor="?attr/colorLabel"
+        android:textSize="11sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correct"
+        android:textColor="?attr/colorLabel"
+        android:textSize="11sp"
+        android:gravity="center"/>
+
+    <Switch
+        android:id="@+id/dict_picker_autocorrect_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/dict_picker_abc_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ABC"
+        android:textColor="?attr/colorLabel"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:padding="8dp"/>
+
+  </LinearLayout>
+
+  <!-- Vertical divider -->
+  <View
+      android:layout_width="1dp"
+      android:layout_height="match_parent"
+      android:background="?attr/colorKey"/>
+
+  <!-- Right column: scrollable list of dictionaries -->
   <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
       android:layout_weight="1">
 
     <LinearLayout
@@ -16,15 +70,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="8dp"/>
+        android:paddingVertical="4dp"/>
 
   </ScrollView>
-
-  <!-- Bottom row with back button, themed as a keyboard row -->
-  <juloo.keyboard2.Keyboard2View
-      layout="@xml/dict_picker_bottom_row"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="?attr/colorKeyboard"/>
 
 </LinearLayout>

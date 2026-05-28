@@ -436,7 +436,30 @@ public class Keyboard2 extends InputMethodService
         case SWITCH_DICTIONARY:
           _dictionary_picker_pane = (ViewGroup)inflate_view(R.layout.dictionary_picker_pane);
           build_dictionary_picker(_dictionary_picker_pane);
+          final int dict_picker_h =
+            _keyboard_layout_view.getMeasuredHeight() + _candidates_view.getMeasuredHeight();
           setInputView(_dictionary_picker_pane);
+          if (dict_picker_h > 0)
+          {
+            final ViewGroup picker_pane = _dictionary_picker_pane;
+            picker_pane.getViewTreeObserver().addOnPreDrawListener(
+                new android.view.ViewTreeObserver.OnPreDrawListener()
+                {
+                  @Override
+                  public boolean onPreDraw()
+                  {
+                    picker_pane.getViewTreeObserver().removeOnPreDrawListener(this);
+                    android.view.ViewGroup.LayoutParams lp = picker_pane.getLayoutParams();
+                    if (lp != null && lp.height != dict_picker_h)
+                    {
+                      lp.height = dict_picker_h;
+                      picker_pane.setLayoutParams(lp);
+                      return false;
+                    }
+                    return true;
+                  }
+                });
+          }
           break;
 
         case SWITCH_BACK_DICT_PICKER:
@@ -532,6 +555,11 @@ public class Keyboard2 extends InputMethodService
     {
       _candidates_view.set_current_word(word);
     }
+
+    public void on_autocorrect_undone(String original, String corrected)
+    {
+      _candidates_view.on_autocorrect_undone(original, corrected);
+    }
   }
 
   private IBinder getConnectionToken()
@@ -543,6 +571,33 @@ public class Keyboard2 extends InputMethodService
       dictionaries and wire up selection callbacks. */
   private void build_dictionary_picker(ViewGroup pane)
   {
+    android.widget.Switch toggle =
+      (android.widget.Switch)pane.findViewById(R.id.dict_picker_autocorrect_switch);
+    toggle.setChecked(_config.space_bar_auto_complete);
+    toggle.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener()
+        {
+          @Override
+          public void onCheckedChanged(android.widget.CompoundButton btn, boolean checked)
+          {
+            Config.globalPrefs().edit()
+              .putBoolean("space_bar_auto_complete", checked)
+              .apply();
+            _config.space_bar_auto_complete = checked;
+            _keyeventhandler.set_space_bar_auto_complete(checked);
+          }
+        });
+
+    View abc_btn = pane.findViewById(R.id.dict_picker_abc_btn);
+    if (abc_btn != null)
+      abc_btn.setOnClickListener(new View.OnClickListener()
+          {
+            @Override
+            public void onClick(View v)
+            {
+              setInputView(_keyboard_container_view);
+            }
+          });
+
     android.widget.LinearLayout list =
       (android.widget.LinearLayout)pane.findViewById(R.id.dict_picker_list);
     list.removeAllViews();

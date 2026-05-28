@@ -137,6 +137,7 @@ public final class KeyEventHandler
     int cur_rel = _typedword.cursor_relative();
     replace_surrounding_text(old.length() + cur_rel, -cur_rel, text + " ");
     last_replaced_word = old;
+    last_correction_word = text;
     last_replacement_word_len = text.length() + 1;
     _next_last_action = LastAction.SUGGESTION_ENTERED;
   }
@@ -157,6 +158,11 @@ public final class KeyEventHandler
   {
     // Refresh the suggestions immediately after dictionary changed.
     _suggestions.currently_typed_word(_typedword.get());
+  }
+
+  public void set_space_bar_auto_complete(boolean enabled)
+  {
+    _space_bar_auto_complete = enabled;
   }
 
   /** Update [_mods] to be consistent with the [mods], sending key events if
@@ -525,6 +531,8 @@ public final class KeyEventHandler
       enter a suggestion (with the space bar or the candidates view) or [null]
       otherwise. */
   String last_replaced_word = null;
+  /** The suggestion that replaced [last_replaced_word]. */
+  String last_correction_word = null;
   /** Length of the text before the cursor that should be replaced by
       backspace. */
   int last_replacement_word_len = 0;
@@ -548,7 +556,11 @@ public final class KeyEventHandler
     {
       replace_surrounding_text(last_replacement_word_len, 0,
           last_replaced_word + " ");
+      String original = last_replaced_word;
+      String corrected = last_correction_word;
       last_replaced_word = null;
+      last_correction_word = null;
+      _recv.on_autocorrect_undone(original, corrected);
     }
     else
     {
@@ -564,6 +576,9 @@ public final class KeyEventHandler
     public void selection_state_changed(boolean selection_is_ongoing);
     public InputConnection getCurrentInputConnection();
     public Handler getHandler();
+    /** Called after backspace undoes an autocorrect. [original] is the word
+        the user typed, [corrected] is what autocorrect inserted. */
+    public void on_autocorrect_undone(String original, String corrected);
   }
 
   class Autocapitalisation_callback implements Autocapitalisation.Callback

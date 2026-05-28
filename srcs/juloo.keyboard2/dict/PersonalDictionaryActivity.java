@@ -17,6 +17,7 @@ import juloo.keyboard2.R;
 public class PersonalDictionaryActivity extends Activity
 {
   public static final String EXTRA_WORD = "word";
+  public static final String EXTRA_REPLACEMENT = "replacement";
 
   PersonalDictionary _dict;
   LinearLayout _list_container;
@@ -32,9 +33,10 @@ public class PersonalDictionaryActivity extends Activity
     if (getActionBar() != null)
       getActionBar().setDisplayHomeAsUpEnabled(true);
 
-    String prefill = getIntent().getStringExtra(EXTRA_WORD);
-    if (prefill != null && !prefill.isEmpty())
-      show_add_dialog(prefill);
+    String prefill_word = getIntent().getStringExtra(EXTRA_WORD);
+    String prefill_replacement = getIntent().getStringExtra(EXTRA_REPLACEMENT);
+    if (prefill_word != null && !prefill_word.isEmpty())
+      show_add_dialog(prefill_word, prefill_replacement != null ? prefill_replacement : "");
 
     refresh_list();
   }
@@ -52,7 +54,7 @@ public class PersonalDictionaryActivity extends Activity
     int id = item.getItemId();
     if (id == R.id.personal_dict_menu_add)
     {
-      show_add_dialog(null);
+      show_add_dialog(null, null);
       return true;
     }
     if (id == android.R.id.home)
@@ -63,12 +65,12 @@ public class PersonalDictionaryActivity extends Activity
     return super.onOptionsItemSelected(item);
   }
 
-  void show_add_dialog(String initial_word)
+  void show_add_dialog(String initial_word, String initial_replacement)
   {
     show_word_dialog(
         getString(R.string.personal_dict_add_title),
         initial_word != null ? initial_word : "",
-        "",
+        initial_replacement != null ? initial_replacement : "",
         new OnSaveListener()
         {
           @Override

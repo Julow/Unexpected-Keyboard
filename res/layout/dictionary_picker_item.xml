@@ -3,17 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingHorizontal="24dp"
-    android:paddingVertical="14dp"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="7dp"
     android:gravity="center_vertical"
-    android:minHeight="48dp">
+    android:minHeight="28dp">
 
   <TextView
       android:id="@+id/dict_picker_item_name"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:textSize="16sp"
+      android:textSize="14sp"
       android:textColor="?attr/colorLabel"/>
 
   <TextView
@@ -21,7 +21,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="✓"
-      android:textSize="18sp"
+      android:textSize="16sp"
       android:textColor="?attr/colorLabelActivated"
       android:visibility="gone"/>
 

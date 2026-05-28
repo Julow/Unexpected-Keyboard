@@ -40,6 +40,16 @@ public class CandidatesView extends LinearLayout
   /** Word currently being typed, used when the add-word button is tapped. */
   String _current_word = null;
 
+  /** When set, tapping the add-word button will pre-fill the word field with
+      this value (the original word before autocorrect replaced it). Persists
+      independently of [_current_word] so it survives the word-tracking reset
+      that happens when the cursor lands after a space post-undo. */
+  String _pending_word = null;
+
+  /** When set, tapping the add-word button will pre-fill the replacement field
+      with this value (the word that autocorrect had previously inserted). */
+  String _pending_replacement = null;
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -60,9 +70,33 @@ public class CandidatesView extends LinearLayout
   public void set_current_word(String word)
   {
     _current_word = word;
-    if (_add_word_btn != null)
-      _add_word_btn.setVisibility(
-          (word != null && !word.isEmpty()) ? View.VISIBLE : View.GONE);
+  }
+
+  /** Called when backspace undoes an autocorrect. Highlights the add-word
+      button and pre-fills both the original word and the correction. */
+  public void on_autocorrect_undone(String original, String corrected)
+  {
+    _pending_word = original;
+    _pending_replacement = corrected;
+    set_add_word_highlight(true);
+  }
+
+  void set_add_word_highlight(boolean highlighted)
+  {
+    if (_add_word_btn == null) return;
+    android.util.TypedValue tv = new android.util.TypedValue();
+    int colorAttr = highlighted
+      ? R.attr.colorLabelActivated
+      : R.attr.colorLabel;
+    getContext().getTheme().resolveAttribute(colorAttr, tv, true);
+    ((TextView)_add_word_btn).setTextColor(tv.data);
+  }
+
+  void clear_add_word_highlight()
+  {
+    _pending_word = null;
+    _pending_replacement = null;
+    set_add_word_highlight(false);
   }
 
   public void set_candidates(List<String> suggestions)
@@ -149,7 +183,7 @@ public class CandidatesView extends LinearLayout
     _add_word_btn = findViewById(R.id.candidates_add_word);
     if (_add_word_btn == null)
       return;
-    _add_word_btn.setVisibility(View.GONE);
+    _add_word_btn.setVisibility(View.VISIBLE);
     _add_word_btn.setOnClickListener(new View.OnClickListener()
         {
           @Override
@@ -157,8 +191,13 @@ public class CandidatesView extends LinearLayout
           {
             Intent i = new Intent(getContext(), PersonalDictionaryActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            if (_current_word != null && !_current_word.isEmpty())
-              i.putExtra(PersonalDictionaryActivity.EXTRA_WORD, _current_word);
+            String word = (_pending_word != null && !_pending_word.isEmpty())
+              ? _pending_word : _current_word;
+            if (word != null && !word.isEmpty())
+              i.putExtra(PersonalDictionaryActivity.EXTRA_WORD, word);
+            if (_pending_replacement != null)
+              i.putExtra(PersonalDictionaryActivity.EXTRA_REPLACEMENT, _pending_replacement);
+            clear_add_word_highlight();
             getContext().startActivity(i);
           }
         });
