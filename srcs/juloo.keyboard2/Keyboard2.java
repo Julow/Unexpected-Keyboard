@@ -188,9 +188,9 @@ public class Keyboard2 extends InputMethodService
     String dict_name;
     if (selected == null || selected.equals("auto"))
     {
-      if (_device_locales.default_ == null)
+      if (_config.device_locales.default_ == null)
         return;
-      dict_name = _device_locales.default_.dictionary;
+      dict_name = _config.device_locales.default_.dictionary;
       if (dict_name == null)
         return;
     }
