@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
+import juloo.keyboard2.dict.PersonalDictionary;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.ComposeKey;
 import juloo.keyboard2.ComposeKeyData;
@@ -39,16 +40,30 @@ public final class Suggestions
 
   public void currently_typed_word(String word)
   {
+    _callback.set_current_word(word.isEmpty() ? null : word);
     if (!_enabled)
       return;
-    if (word.length() < 2 || _config.current_dictionary == null)
+    Cdict dict = _config.current_dictionary;
+    PersonalDictionary pdict = _config.personal_dictionary;
+    boolean has_personal = pdict != null && !pdict.get_all().isEmpty();
+    if (word.length() < 2 || (dict == null && !has_personal))
+    {
       clear();
+    }
     else
-      query_suggestions(word);
+    {
+      count = 0;
+      emoji_suggestion = null;
+      if (has_personal)
+        count += pdict.find_suggestions(word, suggestions, 0, MAX_COUNT);
+      if (dict != null && count < MAX_COUNT)
+        query_suggestions(word, count);
+    }
     set_suggestions();
   }
 
   void clear()
+
   {
     count = 0;
     suggestions[0] = null;
@@ -82,11 +97,44 @@ public final class Suggestions
     return i;
   }
 
+  int query_suggestions(String word, int offset)
+  {
+    Cdict dict = _config.current_dictionary;
+    boolean first_char_upper = Character.isUpperCase(word.charAt(0));
+    word = apply_substitutions(word);
+    Cdict.Result r = dict.find(word);
+    int i = 0;
+    int limit = MAX_COUNT - offset;
+    if (r.found)
+      suggestions[offset + i++] = dict.word(r.index);
+    int[] suffixes = dict.suffixes(r, limit);
+    int[] dist = (word.length() < 3 || i + 1 >= limit) ? NO_RESULTS :
+      dict.distance(word, 1, limit);
+    for (int j = 0; j < limit && i < limit; j++)
+    {
+      if (suffixes.length > j)
+        suggestions[offset + i++] = dict.word(suffixes[j]);
+      if (dist.length > j && i < limit)
+        suggestions[offset + i++] = dict.word(dist[j]);
+    }
+    if (first_char_upper)
+      capitalize_results(offset, offset + i);
+    emoji_suggestion = query_emoji(word);
+    count = offset + i;
+    return i;
+  }
+
   void capitalize_results()
   {
-    for (int i = 0; i < count; i++)
-      suggestions[i] = suggestions[i].substring(0, 1).toUpperCase()
-        + suggestions[i].substring(1);
+    capitalize_results(0, count);
+  }
+
+  void capitalize_results(int from, int to)
+  {
+    for (int i = from; i < to && i < suggestions.length; i++)
+      if (suggestions[i] != null)
+        suggestions[i] = suggestions[i].substring(0, 1).toUpperCase()
+          + suggestions[i].substring(1);
   }
 
   String query_emoji(String word)
@@ -130,5 +178,7 @@ public final class Suggestions
   public static interface Callback
   {
     public void set_suggestions(Suggestions suggestions);
+    /** Called with the word currently being typed, or [null] when no word. */
+    public void set_current_word(String word);
   }
 }

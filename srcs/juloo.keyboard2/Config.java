@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
+import juloo.keyboard2.dict.PersonalDictionary;
 import juloo.keyboard2.prefs.CustomExtraKeysPreference;
 import juloo.keyboard2.prefs.ExtraKeysPreference;
 import juloo.keyboard2.prefs.LayoutsPreference;
@@ -56,6 +57,7 @@ public final class Config
   public int keyboard_rows_height_pixels;
   public int screenHeightPixels;
   public float horizontal_margin;
+  public boolean margin_for_display_cutout;
   public float key_vertical_margin;
   public float key_horizontal_margin;
   public int labelBrightness; // 0 - 255
@@ -85,6 +87,9 @@ public final class Config
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
   public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
+  public PersonalDictionary personal_dictionary = null; // Might be 'null'.
+  /** "auto" means use the locale-based dictionary. */
+  public String selected_dictionary;
   public Cdict emoji_dictionary = null; // Might be 'null'.
   public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
@@ -179,6 +184,7 @@ public final class Config
     keyboard_rows_height_pixels = screenHeightPixels * keyboardHeightPercent / 395;
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
+    margin_for_display_cutout = _prefs.getBoolean("margin_for_display_cutout", false);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
       _prefs.getFloat("character_size", 1.15f)
@@ -195,6 +201,7 @@ public final class Config
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
     clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
     space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
+    selected_dictionary = _prefs.getString("selected_dictionary", "auto");
 
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;

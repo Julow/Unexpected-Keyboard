@@ -63,6 +63,8 @@
     <string name="pref_margin_bottom_title">Margin bottom</string>
     <string name="pref_keyboard_height_title">Keyboard height</string>
     <string name="pref_horizontal_margin_title">Horizontal margin</string>
+    <string name="pref_margin_for_display_cutout_title">Margin for display cutout</string>
+    <string name="pref_margin_for_display_cutout_summary">Add extra margin to avoid drawing keys behind the camera cutout</string>
     <string name="pref_character_size_title">Label size</string>
     <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
     <string name="pref_theme">Theme</string>
@@ -161,5 +163,27 @@
     <string name="dictionaries_download_success">Dictionary installed</string>
     <string name="dictionaries_download_failed">Download failed</string>
     <string name="dictionaries_activity_not_enabled">You must first enable the keyboard to download dictionaries.</string>
+    <string name="candidates_status_no_dict">No dictionary installed</string>
+    <string name="candidates_status_install">Install</string>
     <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string>
+    <string name="candidates_add_word">+</string>
+    <string name="candidates_add_word_desc">Add word to personal dictionary</string>
+    <string name="pref_selected_dictionary_title">Active dictionary</string>
+    <string name="pref_selected_dictionary_auto">Auto (based on language)</string>
+    <string name="dict_picker_title">Select dictionary</string>
+    <string name="dict_picker_autocorrect_label">Auto-correct with space bar</string>
+    <string name="pref_manage_dictionaries_title">Manage dictionaries</string>
+    <string name="pref_manage_dictionaries_summary">Download or remove language dictionaries</string>
+    <string name="pref_personal_dictionary_title">Personal dictionary</string>
+    <string name="pref_personal_dictionary_summary">Custom words and autocorrections</string>
+    <string name="personal_dict_title">Personal dictionary</string>
+    <string name="personal_dict_add_btn">Add word</string>
+    <string name="personal_dict_add_title">Add word</string>
+    <string name="personal_dict_edit_title">Edit word</string>
+    <string name="personal_dict_word_hint">Word (trigger)</string>
+    <string name="personal_dict_replacement_hint">Replacement (leave blank to use word as-is)</string>
+    <string name="personal_dict_save">Save</string>
+    <string name="personal_dict_delete">Delete</string>
+    <string name="personal_dict_word_empty">Word cannot be empty</string>
+    <string name="personal_dict_empty">No words added yet. Tap \"Add word\" or use the + button while typing.</string>
 </resources>

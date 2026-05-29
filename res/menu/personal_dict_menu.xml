@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+      android:id="@+id/personal_dict_menu_add"
+      android:title="@string/personal_dict_add_btn"
+      android:showAsAction="always"/>
+</menu>

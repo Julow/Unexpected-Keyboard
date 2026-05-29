@@ -15,6 +15,9 @@
   <PreferenceCategory android:title="@string/pref_category_suggestions">
     <CheckBoxPreference android:key="suggestions" android:title="@string/pref_suggestions_title" android:summary="@string/pref_suggestions_summary" android:defaultValue="true"/>
     <CheckBoxPreference android:key="space_bar_auto_complete" android:title="@string/pref_space_bar_auto_complete_title" android:summary="@string/pref_space_bar_auto_complete_summary" android:defaultValue="false"/>
+    <juloo.keyboard2.prefs.DictionaryPickerPreference android:key="selected_dictionary" android:title="@string/pref_selected_dictionary_title" android:summary="%s" android:defaultValue="auto" android:dependency="suggestions"/>
+    <Preference android:key="pref_manage_dictionaries" android:title="@string/pref_manage_dictionaries_title" android:summary="@string/pref_manage_dictionaries_summary" android:dependency="suggestions"/>
+    <Preference android:key="pref_personal_dictionary" android:title="@string/pref_personal_dictionary_title" android:summary="@string/pref_personal_dictionary_summary" android:dependency="suggestions"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
     <ListPreference android:key="swipe_dist" android:title="@string/pref_swipe_dist_title" android:summary="@string/pref_swipe_dist_summary" android:defaultValue="15" android:entries="@array/pref_swipe_dist_entries" android:entryValues="@array/pref_swipe_dist_values"/>
@@ -55,6 +58,7 @@
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="horizontal_margin_landscape" android:title="@string/pref_landscape" android:summary="%sdp" android:defaultValue="28" min="0" max="200"/>
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="horizontal_margin_portrait_unfolded" android:title="@string/pref_portrait_unfolded" android:summary="%sdp" android:defaultValue="3" min="0" max="30"/>
       <juloo.keyboard2.prefs.IntSlideBarPreference android:key="horizontal_margin_landscape_unfolded" android:title="@string/pref_landscape_unfolded" android:summary="%sdp" android:defaultValue="28" min="0" max="200"/>
+      <CheckBoxPreference android:key="margin_for_display_cutout" android:title="@string/pref_margin_for_display_cutout_title" android:summary="@string/pref_margin_for_display_cutout_summary" android:defaultValue="false"/>
     </PreferenceScreen>
     <juloo.keyboard2.prefs.SlideBarPreference android:key="character_size" android:title="@string/pref_character_size_title" android:summary="@string/pref_character_size_summary" android:defaultValue="1.15" min="0.75" max="1.5"/>
     <juloo.keyboard2.prefs.SlideBarPreference android:key="key_vertical_margin" android:title="@string/pref_key_vertical_space" android:summary="%s%%" android:defaultValue="1.5" min="0" max="5"/>

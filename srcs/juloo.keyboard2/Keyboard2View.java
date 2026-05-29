@@ -117,6 +117,7 @@ public class Keyboard2View extends View
   {
     _mods = Pointers.Modifiers.EMPTY;
     _pointers.clear();
+    requestApplyInsets();
     requestLayout();
     invalidate();
   }
@@ -312,9 +313,9 @@ public class Keyboard2View extends View
     // LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS is set in [Keyboard2#updateSoftInputWindowLayoutParams] for SDK_INT >= 35.
     if (VERSION.SDK_INT < 35)
       return wi;
-    int insets_types =
-      WindowInsets.Type.systemBars()
-      | WindowInsets.Type.displayCutout();
+    int insets_types = _config.margin_for_display_cutout
+      ? WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout()
+      : WindowInsets.Type.systemBars();
     Insets insets = wi.getInsets(insets_types);
     _insets_left = insets.left;
     _insets_right = insets.right;

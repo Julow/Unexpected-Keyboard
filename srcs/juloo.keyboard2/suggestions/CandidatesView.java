@@ -1,6 +1,7 @@
 package juloo.keyboard2.suggestions;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build.VERSION;
 import android.text.InputType;
 import android.util.AttributeSet;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Locale;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.R;
+import juloo.keyboard2.dict.PersonalDictionary;
+import juloo.keyboard2.dict.PersonalDictionaryActivity;
 
 public class CandidatesView extends LinearLayout
 {
@@ -34,6 +37,23 @@ public class CandidatesView extends LinearLayout
       shown. Might be [null]. */
   View _status_no_dict = null;
 
+  /** Small button shown while typing to add the current word to the personal
+      dictionary. Might be [null] until inflated. */
+  View _add_word_btn = null;
+
+  /** Word currently being typed, used when the add-word button is tapped. */
+  String _current_word = null;
+
+  /** When set, tapping the add-word button will pre-fill the word field with
+      this value (the original word before autocorrect replaced it). Persists
+      independently of [_current_word] so it survives the word-tracking reset
+      that happens when the cursor lands after a space post-undo. */
+  String _pending_word = null;
+
+  /** When set, tapping the add-word button will pre-fill the replacement field
+      with this value (the word that autocorrect had previously inserted). */
+  String _pending_replacement = null;
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -47,6 +67,41 @@ public class CandidatesView extends LinearLayout
     setup_item_view(1, R.id.candidates_right);
     setup_item_view(2, R.id.candidates_left);
     setup_item_view(3, R.id.candidates_emoji);
+    setup_add_word_button();
+  }
+
+  /** Called with the word currently being typed so the add-word button knows
+      what to pre-fill. Pass [null] when no word is being typed. */
+  public void set_current_word(String word)
+  {
+    _current_word = word;
+  }
+
+  /** Called when backspace undoes an autocorrect. Highlights the add-word
+      button and pre-fills both the original word and the correction. */
+  public void on_autocorrect_undone(String original, String corrected)
+  {
+    _pending_word = original;
+    _pending_replacement = corrected;
+    set_add_word_highlight(true);
+  }
+
+  void set_add_word_highlight(boolean highlighted)
+  {
+    if (_add_word_btn == null) return;
+    android.util.TypedValue tv = new android.util.TypedValue();
+    int colorAttr = highlighted
+      ? R.attr.colorLabelActivated
+      : R.attr.colorLabel;
+    getContext().getTheme().resolveAttribute(colorAttr, tv, true);
+    ((TextView)_add_word_btn).setTextColor(tv.data);
+  }
+
+  void clear_add_word_highlight()
+  {
+    _pending_word = null;
+    _pending_replacement = null;
+    set_add_word_highlight(false);
   }
 
   public void set_candidates(Suggestions s)
@@ -87,7 +142,9 @@ public class CandidatesView extends LinearLayout
     clear_candidates();
     // The status message indicates whether the dictionaries should be
     // installed.
-    if (config.current_dictionary == null)
+    boolean no_dict = config.current_dictionary == null
+      && (config.personal_dictionary == null || config.personal_dictionary.get_all().isEmpty());
+    if (no_dict)
       inflate_status_no_dict(config);
     else if (_status_no_dict != null)
       _status_no_dict.setVisibility(View.GONE);
@@ -143,7 +200,12 @@ public class CandidatesView extends LinearLayout
     {
       _status_no_dict = View.inflate(getContext(),
           R.layout.candidates_status_no_dict, null);
-      addView(_status_no_dict);
+      // Insert before the "+" button so it stays at the right edge.
+      int add_idx = (_add_word_btn != null) ? indexOfChild(_add_word_btn) : -1;
+      if (add_idx >= 0)
+        addView(_status_no_dict, add_idx);
+      else
+        addView(_status_no_dict);
     }
     Locale current_locale = (config.device_locales.default_ != null) ?
       Locale.forLanguageTag(config.device_locales.default_.lang_tag) : null;
@@ -154,6 +216,7 @@ public class CandidatesView extends LinearLayout
             current_locale.getDisplayName()));
     _status_no_dict.setVisibility(View.VISIBLE);
   }
+
 
   private void setup_item_view(final int item_index, int item_id)
   {
@@ -170,6 +233,31 @@ public class CandidatesView extends LinearLayout
         });
     v.setVisibility(View.GONE);
     _item_views[item_index] = v;
+  }
+
+  private void setup_add_word_button()
+  {
+    _add_word_btn = findViewById(R.id.candidates_add_word);
+    if (_add_word_btn == null)
+      return;
+    _add_word_btn.setVisibility(View.VISIBLE);
+    _add_word_btn.setOnClickListener(new View.OnClickListener()
+        {
+          @Override
+          public void onClick(View _v)
+          {
+            Intent i = new Intent(getContext(), PersonalDictionaryActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            String word = (_pending_word != null && !_pending_word.isEmpty())
+              ? _pending_word : _current_word;
+            if (word != null && !word.isEmpty())
+              i.putExtra(PersonalDictionaryActivity.EXTRA_WORD, word);
+            if (_pending_replacement != null)
+              i.putExtra(PersonalDictionaryActivity.EXTRA_REPLACEMENT, _pending_replacement);
+            clear_add_word_highlight();
+            getContext().startActivity(i);
+          }
+        });
   }
 
   /** Whether the candidates view should be shown for a given editor. */

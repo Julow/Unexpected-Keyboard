@@ -1,11 +1,15 @@
 package juloo.keyboard2;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import juloo.keyboard2.dict.DictionariesActivity;
+import juloo.keyboard2.dict.PersonalDictionaryActivity;
 
 public class SettingsActivity extends PreferenceActivity
 {
@@ -24,6 +28,9 @@ public class SettingsActivity extends PreferenceActivity
     catch (Exception _e) { fallbackEncrypted(); return; }
     addPreferencesFromResource(R.xml.settings);
 
+    wire_activity_pref("pref_manage_dictionaries", DictionariesActivity.class);
+    wire_activity_pref("pref_personal_dictionary", PersonalDictionaryActivity.class);
+
     boolean foldableDevice = FoldStateTracker.isFoldableDevice(this);
     findPreference("margin_bottom_portrait_unfolded").setEnabled(foldableDevice);
     findPreference("margin_bottom_landscape_unfolded").setEnabled(foldableDevice);
@@ -31,6 +38,19 @@ public class SettingsActivity extends PreferenceActivity
     findPreference("horizontal_margin_landscape_unfolded").setEnabled(foldableDevice);
     findPreference("keyboard_height_unfolded").setEnabled(foldableDevice);
     findPreference("keyboard_height_landscape_unfolded").setEnabled(foldableDevice);
+  }
+
+  void wire_activity_pref(String key, final Class<?> activity_class)
+  {
+    findPreference(key).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+        {
+          @Override
+          public boolean onPreferenceClick(Preference preference)
+          {
+            startActivity(new Intent(SettingsActivity.this, activity_class));
+            return true;
+          }
+        });
   }
 
   void fallbackEncrypted()

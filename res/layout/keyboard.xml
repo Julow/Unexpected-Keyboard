@@ -5,6 +5,7 @@
     <TextView android:id="@+id/candidates_left" style="@style/candidates_item"/>
     <TextView android:id="@+id/candidates_middle" style="@style/candidates_item"/>
     <TextView android:id="@+id/candidates_right" style="@style/candidates_item"/>
+    <TextView android:id="@+id/candidates_add_word" android:layout_width="36dp" android:layout_height="36dp" android:layout_gravity="center_vertical" android:layout_marginEnd="4dp" android:gravity="center" android:text="@string/candidates_add_word" android:textColor="?attr/colorLabel" android:textSize="18sp" android:visibility="visible" android:contentDescription="@string/candidates_add_word_desc"/>
   </juloo.keyboard2.suggestions.CandidatesView>
   <juloo.keyboard2.Keyboard2View android:id="@+id/keyboard_view" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </LinearLayout>
