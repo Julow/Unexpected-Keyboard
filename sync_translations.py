@@ -8,12 +8,20 @@ import glob, os, sys
 # The baseline is 'values/strings.xml', which is english.
 # Sync store title and descriptions to the metadata directory.
 
+# Map language codes to the codes that Google Play understands. Languages
+# mapped to [None] are not supported by Google Play.
 VALUE_DIR_TO_METADATA = {
+        "ar": "ar",
+        "ars": None,
+        "arz": None,
+        "bn-rBD": None,
+        "ca": "ca",
         "cs": "cs-CZ",
         "de": "de-DE",
         "en": "en-US",
         "es": "es-ES",
-        "fa": "fa-IR",
+        "et": "et",
+        "fa": None,
         "fil": "fil",
         "fr": "fr-FR",
         "in": "id",
@@ -21,15 +29,19 @@ VALUE_DIR_TO_METADATA = {
         "ja": "ja-JP",
         "ko": "ko-KR",
         "lv": "lv",
+        "my": None,
         "nl": "nl-NL",
         "pl": "pl-PL",
         "pt": "pt-BR",
         "ro": "ro",
         "ru": "ru-RU",
+        "th": "th",
+        "tok": None,
         "tr": "tr-TR",
         "uk": "uk",
         "vi": "vi",
         "zh-rCN": "zh-CN",
+        "zh-rTW": "zh-TW",
         }
 
 # Dict of strings. Key is the pair string name and product field (often None).
@@ -38,16 +50,15 @@ def parse_strings_file(file):
     resrcs = ET.parse(file).getroot()
     return { key(ent): ent for ent in resrcs if ent.tag == "string" }
 
-# Print the XML file back autoformatted. Takes the output of [sync].
-def write_updated_strings(out, strings):
-    out.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n')
-    for key, string, comment in strings:
-        out.write("    ")
-        if comment: out.write("<!-- ")
-        out.write(ET.tostring(string, "unicode").strip())
-        if comment: out.write(" -->")
-        out.write("\n")
-    out.write('</resources>\n')
+# # Print the XML file back autoformatted. Takes the output of [sync].
+# def write_updated_strings(out, strings):
+#     out.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n')
+#     for key, string, comment in strings:
+#         if comment: continue
+#         out.write("    ")
+#         out.write(ET.tostring(string, "unicode").strip())
+#         out.write("\n")
+#     out.write('</resources>\n')
 
 # Print whether string file is uptodate.
 def print_status(fname, strings):
@@ -69,7 +80,10 @@ def sync_metadata(value_dir, strings):
     locale = os.path.basename(value_dir).removeprefix("values-")
     if not locale in VALUE_DIR_TO_METADATA:
         raise Exception("Locale '%s' not known, please add it into sync_translations.py" % locale)
-    meta_dir = "fastlane/metadata/android/" + VALUE_DIR_TO_METADATA[locale]
+    metadata_name = VALUE_DIR_TO_METADATA[locale]
+    if metadata_name == None:
+        return # Not supported by the play store
+    meta_dir = "fastlane/metadata/android/" + metadata_name
     def sync_meta_file(fname, string_name):
         if string_name in strings:
             string = strings[string_name]
@@ -98,8 +112,9 @@ for value_dir in glob.glob("res/values-*"):
     if os.path.isfile(strings_file):
         local_strings = dict(parse_strings_file(strings_file))
         synced_strings = sync(baseline, local_strings)
-        with open(strings_file, "w", encoding="utf-8") as out:
-            write_updated_strings(out, synced_strings)
+        # Syncing translation files is no longer needed since we use Weblate.
+        # with open(strings_file, "w", encoding="utf-8") as out:
+        #     write_updated_strings(out, synced_strings)
         sync_metadata(value_dir, local_strings)
         print_status(strings_file, synced_strings)
 

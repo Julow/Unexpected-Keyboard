@@ -3,6 +3,8 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.Handler;
@@ -24,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.dict.PersonalDictionary;
@@ -31,7 +34,7 @@ import juloo.keyboard2.dict.PersonalDictionaryActivity;
 import juloo.keyboard2.dict.SupportedDictionaries;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
-import juloo.cdict.Cdict;
+import juloo.keyboard2.suggestions.Suggestions;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -46,7 +49,6 @@ public class Keyboard2 extends InputMethodService
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
   /** Installed and current locales. */
-  private DeviceLocales _device_locales;
   private Dictionaries _dictionaries;
   private PersonalDictionary _personal_dictionary;
   private ViewGroup _emojiPane = null;
@@ -165,14 +167,14 @@ public class Keyboard2 extends InputMethodService
   {
     _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
-    _device_locales = DeviceLocales.load(this);
-    if (_device_locales.default_ != null)
+    _config.device_locales = DeviceLocales.load(this);
+    if (_config.device_locales.default_ != null)
     {
-      String layout_name = _device_locales.default_.default_layout;
+      String layout_name = _config.device_locales.default_.default_layout;
       if (layout_name != null)
         default_layout = LayoutsPreference.layout_of_string(getResources(), layout_name);
     }
-    _config.extra_keys_subtype = _device_locales.extra_keys();
+    _config.extra_keys_subtype = _config.device_locales.extra_keys();
     if (default_layout == null)
       default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
@@ -181,6 +183,7 @@ public class Keyboard2 extends InputMethodService
   private void refresh_current_dictionary()
   {
     _config.current_dictionary = null;
+    _config.emoji_dictionary = null;
     String selected = _config.selected_dictionary;
     String dict_name;
     if (selected == null || selected.equals("auto"))
@@ -199,6 +202,7 @@ public class Keyboard2 extends InputMethodService
     if (dicts == null)
       return;
     _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
+    _config.emoji_dictionary = Dictionaries.find_by_name(dicts, "emoji");
   }
 
   private void refresh_candidates_view()
@@ -228,7 +232,9 @@ public class Keyboard2 extends InputMethodService
       setInputView(_keyboard_container_view);
     }
     // Set keyboard background opacity
-    _keyboard_container_view.getBackground().setAlpha(_config.keyboardOpacity);
+    Drawable bg = _keyboard_container_view.getBackground().mutate();
+    bg.setAlpha(_config.keyboardOpacity);
+    _keyboard_container_view.setBackground(bg);
     _keyboard_layout_view.reset();
     refresh_candidates_view();
   }
@@ -376,9 +382,15 @@ public class Keyboard2 extends InputMethodService
   @Override
   public boolean onEvaluateInputViewShown()
   {
-    super.onEvaluateInputViewShown();
-    // Return true regardless of the super call result to fix the keyboard not
-    // being visible on Android 16
+    // Since Android 16, this method returns [false] for unknown reasons.
+    if (super.onEvaluateInputViewShown())
+      return true;
+    if (getResources().getConfiguration().hardKeyboardHidden
+        == Configuration.HARDKEYBOARDHIDDEN_NO)
+    {
+      Logs.debug("Physical keyboard is present");
+      return false;
+    }
     return true;
   }
 
@@ -546,7 +558,7 @@ public class Keyboard2 extends InputMethodService
       return _handler;
     }
 
-    public void set_suggestions(List<String> suggestions)
+    public void set_suggestions(Suggestions suggestions)
     {
       _candidates_view.set_candidates(suggestions);
     }

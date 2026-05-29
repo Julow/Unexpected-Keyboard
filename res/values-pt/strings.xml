@@ -3,11 +3,9 @@
     <string name="app_name_release">Teclado Unexpected</string>
     <string name="app_name_debug">Teclado Unexpected (Depuração)</string>
     <string name="short_description">Um teclado virtual leve para desenvolvedores.</string>
-    <string name="store_description">A principal característica é que você pode digitar mais caracteres deslizando as teclas para os cantos.\n\nO app foi criado originalmente para desenvolvedores que usam Termux.\nAgora aperfeiçoado para o uso diário.\n\nEste aplicativo não contém anúncios, não faz nenhuma solicitação de rede e é Open Source.</string>
+    <string name="store_description">A principal característica é que você pode digitar mais caracteres deslizando as teclas para os cantos.\n\nO app foi criado originalmente para desenvolvedores que usam Termux.\nAgora aperfeiçoado para o uso diário.\n\nEste aplicativo não contém anúncios e é Open Source.</string>
     <string name="pref_portrait">No modo retrato</string>
-    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">No modo paisagem</string>
-    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Layout</string>
     <string name="pref_label_brightness">Ajustar brilho dos rótulos</string>
     <string name="pref_keyboard_opacity">Ajustar opacidade do fundo do teclado</string>
@@ -19,9 +17,6 @@
     <string name="pref_layouts_item">Layout %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Remover layout</string>
     <string name="pref_custom_layout_title">Layout personalizado</string>
-    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
-    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
-    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Mostrar Teclado Numérico</string>
     <string name="pref_show_numpad_never">Nunca</string>
     <string name="pref_show_numpad_landscape">Somente no modo paisagem</string>
@@ -44,14 +39,8 @@
     <string name="pref_category_behavior">Comportamento</string>
     <string name="pref_autocapitalisation_title">Capitalização automática</string>
     <string name="pref_autocapitalisation_summary">Aciona o shift no início de cada frase</string>
-    <string name="pref_switch_input_immediate_title">Alternar para o último teclado usado</string>
-    <string name="pref_switch_input_immediate_summary">Comportamento da tecla de troca de teclado</string>
     <string name="pref_vibrate_custom">Vibração personalizada</string>
     <string name="pref_vibrate_duration_title">Intensidade da vibração</string>
-    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
-    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
-    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
-    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Estilo</string>
     <string name="pref_margin_bottom_title">Margem inferior</string>
     <string name="pref_keyboard_height_title">Altura do teclado</string>
@@ -71,7 +60,7 @@
     <string name="pref_theme_e_monet">Monet (Sistema)</string>
     <string name="pref_theme_e_monetlight">Monet (Claro)</string>
     <string name="pref_theme_e_monetdark">Monet (Escuro)</string>
-    <string name="pref_theme_e_rosepine">Rosé Pine</string>
+    <string name="pref_theme_e_rosepine">Rosa Pinheiro</string>
     <string name="pref_swipe_dist_e_very_short">Bem curta</string>
     <string name="pref_swipe_dist_e_short">Curta</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
@@ -126,12 +115,8 @@
     <string name="key_descr_zwnj">Sem junta de largura zero</string>
     <string name="key_descr_nbsp">Espaço não separável</string>
     <string name="key_descr_nnbsp">Espaço não separável estreito</string>
-    <!-- <string name="key_descr_delete_word">Delete a word</string> -->
-    <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
-    <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Textos recém copiados</string>
     <string name="clipboard_pin_heading">Fixados</string>
     <string name="clipboard_remove_confirm">Remover esta cópia?</string>
     <string name="clipboard_remove_confirmed">Sim</string>
-    <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

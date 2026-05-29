@@ -84,10 +84,12 @@ public final class Config
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
+  public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
   public PersonalDictionary personal_dictionary = null; // Might be 'null'.
   /** "auto" means use the locale-based dictionary. */
   public String selected_dictionary;
+  public Cdict emoji_dictionary = null; // Might be 'null'.
   public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;

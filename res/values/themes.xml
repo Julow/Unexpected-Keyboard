@@ -35,6 +35,9 @@
     <!-- System integration -->
     <attr name="navigationBarColor" format="color"/>
     <attr name="windowLightNavigationBar" format="boolean"/>
+    <!-- Suggestions -->
+    <attr name="suggestions_background" format="color"/>
+    <attr name="suggestions_border_radius" format="dimension"/>
   </declare-styleable>
   <style name="BaseTheme">
     <item name="android:forceDarkAllowed">false</item>
@@ -49,6 +52,8 @@
     <item name="emoji_key_text" type="color">?attr/colorLabel</item>
     <item name="clipboard_divider_color" type="color">?attr/colorKey</item>
     <item name="clipboard_divider_height">1px</item>
+    <item name="suggestions_background">?attr/colorKeyboard</item>
+    <item name="suggestions_border_radius">?attr/keyBorderRadius</item>
   </style>
   <style name="Dark" parent="BaseTheme">
     <item name="android:isLightTheme">false</item>

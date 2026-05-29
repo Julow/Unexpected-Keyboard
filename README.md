@@ -1,5 +1,13 @@
 # Unexpected Keyboard [<img src="https://hosted.weblate.org/widget/unexpected-keyboard/svg-badge.svg" alt="État de la traduction" />](https://hosted.weblate.org/engage/unexpected-keyboard/)
 
+---
+
+⚠️ Google wants to kill the open-source Android community.
+
+See [keepandroidopen.org](https://keepandroidopen.org/) and the [F-Droid blog](https://f-droid.org/en/2025/09/29/google-developer-registration-decree.html).
+
+---
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/juloo.keyboard2/)
@@ -16,7 +24,7 @@ The main feature is that you can type more characters by swiping the keys toward
 This application was originally designed for programmers using Termux.
 Now perfect for everyday use.
 
-This application contains no ads, doesn't make any network requests and is open source.
+This application contains no ads and is open source.
 
 Usage: to apply the symbols located in the corners of each key, slide your finger in the direction of the symbols. For example, the Settings are opened by sliding in the left down corner.
 
@@ -34,3 +42,7 @@ Improve the application translations [using Weblate](https://hosted.weblate.org/
 
 For instructions on building the application, see
 [Contributing](CONTRIBUTING.md).
+
+## Acknowledgement
+
+The [NLnet foundation](https://nlnet.nl/) funded the work on the spell checking feature.

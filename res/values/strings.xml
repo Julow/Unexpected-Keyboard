@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string>
-    <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads, doesn\'t make any network requests and is Open Source.</string>
+    <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads and is Open Source.</string>
     <string name="pref_portrait">In portrait mode</string>
     <string name="pref_portrait_unfolded">In portrait mode unfolded</string>
     <string name="pref_landscape">In landscape mode</string>
@@ -163,6 +163,7 @@
     <string name="dictionaries_activity_not_enabled">You must first enable the keyboard to download dictionaries.</string>
     <string name="candidates_status_no_dict">No dictionary installed</string>
     <string name="candidates_status_install">Install</string>
+    <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string>
     <string name="candidates_add_word">+</string>
     <string name="candidates_add_word_desc">Add word to personal dictionary</string>
     <string name="pref_selected_dictionary_title">Active dictionary</string>

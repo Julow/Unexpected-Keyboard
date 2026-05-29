@@ -10,7 +10,6 @@ armn_kvertc: Layout includes some ASCII punctuation but not all, missing: !, ", 
 beng_assamese: Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', *, +, -, /, :, ;, <, =, >, ?, [, \, ], ^, _, `, {, |, }, ~
 beng_national: Layout includes some ASCII punctuation but not all, missing: $
 beng_provat: Layout includes some ASCII punctuation but not all, missing: $, &, *, ., /, <, >, [, \, ], `, {, |, }
-cyrl_jcuken_ru: Layout includes some ASCII punctuation but not all, missing: #, $, &, ', *, <, >, @, [, ], ^, `, {, }, ~
 cyrl_jiuken: Layout includes some ASCII punctuation but not all, missing: #, $, &, ', *, +, <, =, >, @, [, ], ^, _, `, {, }, ~
 cyrl_lynyertdz_mk: Layout includes some ASCII punctuation but not all, missing: "
 cyrl_yaverti: Layout includes some ASCII punctuation but not all, missing: ~
