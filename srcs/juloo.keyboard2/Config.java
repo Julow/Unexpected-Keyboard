@@ -57,6 +57,7 @@ public final class Config
   public int keyboard_rows_height_pixels;
   public int screenHeightPixels;
   public float horizontal_margin;
+  public boolean margin_for_display_cutout;
   public float key_vertical_margin;
   public float key_horizontal_margin;
   public int labelBrightness; // 0 - 255
@@ -183,6 +184,7 @@ public final class Config
     keyboard_rows_height_pixels = screenHeightPixels * keyboardHeightPercent / 395;
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
+    margin_for_display_cutout = _prefs.getBoolean("margin_for_display_cutout", false);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
     characterSize =
       _prefs.getFloat("character_size", 1.15f)

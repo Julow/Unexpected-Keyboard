@@ -63,6 +63,8 @@
     <string name="pref_margin_bottom_title">Margin bottom</string>
     <string name="pref_keyboard_height_title">Keyboard height</string>
     <string name="pref_horizontal_margin_title">Horizontal margin</string>
+    <string name="pref_margin_for_display_cutout_title">Margin for display cutout</string>
+    <string name="pref_margin_for_display_cutout_summary">Add extra margin to avoid drawing keys behind the camera cutout</string>
     <string name="pref_character_size_title">Label size</string>
     <string name="pref_character_size_summary">Size of characters displayed on the keyboard (%.2fx)</string>
     <string name="pref_theme">Theme</string>
