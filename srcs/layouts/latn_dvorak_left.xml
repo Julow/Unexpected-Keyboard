@@ -34,7 +34,7 @@
   <row height="0.95">
     <key width="0.5" c="" />
 
-    <key width="1.5" c="fn" nw="loc alt" ne="loc change_method" sw="switch_emoji" se="config"/>
+    <key width="1.5" c="fn" nw="switch_dictionary" ne="loc change_method" sw="switch_emoji" se="config"/>
     <key width="2.5" c="space" n="switch_forward" s="switch_backward" w="cursor_left" e="cursor_right"/>
     <key width="1.5" c="loc compose" n="up" e="right" w="left" s="down" nw="loc home" ne="loc page_up" sw="loc end" se="loc page_down"/>
   </row>
