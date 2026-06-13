@@ -294,7 +294,9 @@ public class Keyboard2View extends View
   {
     if (!changed)
       return;
-    if (VERSION.SDK_INT >= 29)
+    // Since SDK 30, this is done automatically:
+    // https://android.googlesource.com/platform/frameworks/base/+/android11-release/core/java/android/inputmethodservice/InputMethodService.java#852
+    if (VERSION.SDK_INT == 29)
     {
       // Disable the back-gesture on the keyboard area
       _cached_exclusion_rect.set(
