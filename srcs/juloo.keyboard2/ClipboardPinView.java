@@ -122,12 +122,6 @@ public final class ClipboardPinView extends NonScrollListView
                 public void onClick(View v){paste_entry(pos);}
               }
       );
-      v.findViewById(R.id.clipboard_pin_paste).setOnClickListener(
-          new View.OnClickListener()
-          {
-            @Override
-            public void onClick(View v) { paste_entry(pos); }
-          });
       v.findViewById(R.id.clipboard_pin_remove).setOnClickListener(
           new View.OnClickListener()
           {

@@ -103,32 +103,6 @@ public final class ClipboardHistoryView extends NonScrollListView
             @Override
             public void onClick(View v) { pin_entry(pos); }
           });
-      v.findViewById(R.id.clipboard_entry_paste).setOnClickListener(
-          new View.OnClickListener()
-          {
-            @Override
-            public void onClick(View v) { paste_entry(pos); }
-          });
-      // v.findViewById(R.id.clipboard_entry_removehist).setOnClickListener(
-      //     new View.OnClickListener()
-      //     {
-      //       @Override
-      //       public void onClick(View v)
-      //       {
-      //         AlertDialog d = new AlertDialog.Builder(getContext())
-      //           .setTitle(R.string.clipboard_remove_confirm)
-      //           .setPositiveButton(R.string.clipboard_remove_confirmed,
-      //               new DialogInterface.OnClickListener(){
-      //                 public void onClick(DialogInterface _dialog, int _which)
-      //                 {
-      //                   _service.remove_history_entry(_history.get(pos));
-      //                 }
-      //               })
-      //           .setNegativeButton(android.R.string.cancel, null)
-      //           .create();
-      //         Utils.show_dialog_on_ime(d, v.getWindowToken());
-      //       }
-      //     });
       return v;
     }
   }

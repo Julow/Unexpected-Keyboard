@@ -1,35 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:layout_weight="1"
-android:orientation="horizontal">
-
-<TextView
-    android:id="@+id/clipboard_entry_text_sno"
-    style="@style/clipboardEntry"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:maxLines="1" />
-
-<TextView
-    android:id="@+id/clipboard_entry_text"
-    style="@style/clipboardEntry"
-    android:layout_width="0dp"
-    android:layout_weight="150"
-    android:maxLines="3" />
-
-<LinearLayout style="@style/clipboardEntryButtons">
-
-    <View
-        android:id="@+id/clipboard_entry_paste"
-        style="@style/clipboardEntryButton"
-        android:background="@drawable/ic_clipboard_paste" />
-
-    <View
-        android:id="@+id/clipboard_entry_addpin"
-        style="@style/clipboardEntryButton"
-        android:background="@drawable/ic_clipboard_save" />
-</LinearLayout>
+android:layout_width="match_parent" android:layout_height="match_parent"
+android:layout_weight="1" android:orientation="horizontal">
+    <TextView
+        android:id="@+id/clipboard_entry_text_sno" style="@style/clipboardEntry"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
+        android:gravity="center_vertical" android:maxLines="1" />
+    <TextView
+        android:id="@+id/clipboard_entry_text" style="@style/clipboardEntry"
+        android:layout_width="0dp" android:layout_weight="150"
+        android:background="@drawable/rounded_corner" android:backgroundTint="#19FFEB3B"
+        android:maxLines="3" />
+    <LinearLayout style="@style/clipboardEntryButtons">
+        <View android:id="@+id/clipboard_entry_addpin" style="@style/clipboardEntryButton"
+            android:background="@drawable/ic_clipboard_save" />
+    </LinearLayout>
 </LinearLayout>
