@@ -85,6 +85,9 @@ public final class ClipboardHistoryView extends NonScrollListView
     {
       if (v == null)
         v = View.inflate(getContext(), R.layout.clipboard_history_entry, null);
+      String sno = Integer.toString(pos+1) + ".";
+      ((TextView)v.findViewById(R.id.clipboard_entry_text_sno))
+              .setText(sno);
       ((TextView)v.findViewById(R.id.clipboard_entry_text))
         .setText(_history.get(pos));
       v.findViewById(R.id.clipboard_entry_addpin).setOnClickListener(
