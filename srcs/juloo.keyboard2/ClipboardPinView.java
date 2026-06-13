@@ -46,7 +46,7 @@ public final class ClipboardPinView extends NonScrollListView
   /** Pin a clipboard and persist the change. */
   public void add_entry(String text)
   {
-    _entries.add(text);
+    _entries.add(0,text);
     _adapter.notifyDataSetChanged();
     persist();
     invalidate();
