@@ -1,5 +1,7 @@
 package juloo.keyboard2;
 
+import static android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -478,7 +480,7 @@ public class Keyboard2 extends InputMethodService
               Config.globalPrefs());
           break;
         case HIDE_SELF:
-          get_imm().toggleSoftInput(0,0);
+          Keyboard2.this.requestHideSelf(0);
           break;
       }
     }
