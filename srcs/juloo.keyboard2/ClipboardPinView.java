@@ -114,8 +114,14 @@ public final class ClipboardPinView extends NonScrollListView
       String sno = Integer.toString(pos+1) + ".";
       ((TextView)v.findViewById(R.id.clipboard_pin_text_sno))
               .setText(sno);
-      ((TextView)v.findViewById(R.id.clipboard_pin_text))
-        .setText(_entries.get(pos));
+      TextView text_view = v.findViewById(R.id.clipboard_pin_text);
+      text_view.setText(_entries.get(pos));
+      text_view.setOnClickListener(
+              new View.OnClickListener(){
+                @Override
+                public void onClick(View v){paste_entry(pos);}
+              }
+      );
       v.findViewById(R.id.clipboard_pin_paste).setOnClickListener(
           new View.OnClickListener()
           {
