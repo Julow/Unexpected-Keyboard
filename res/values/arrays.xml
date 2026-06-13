@@ -134,4 +134,12 @@
     <item>prev</item>
     <item>next</item>
   </string-array>
+  <string-array name="pref_physical_keyboard_behavior_entries">
+    <item>@string/pref_physical_keyboard_behavior_hide</item>
+    <item>@string/pref_physical_keyboard_behavior_show</item>
+  </string-array>
+  <string-array name="pref_physical_keyboard_behavior_values">
+    <item>hide</item>
+    <item>show</item>
+  </string-array>
 </resources>

@@ -368,7 +368,8 @@ public class Keyboard2 extends InputMethodService
     if (super.onEvaluateInputViewShown())
       return true;
     if (getResources().getConfiguration().hardKeyboardHidden
-        == Configuration.HARDKEYBOARDHIDDEN_NO)
+        == Configuration.HARDKEYBOARDHIDDEN_NO
+        && _config.physical_keyboard_hide)
     {
       Logs.debug("Physical keyboard is present");
       return false;
