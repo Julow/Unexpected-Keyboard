@@ -368,7 +368,8 @@ public class Keyboard2 extends InputMethodService
     if (super.onEvaluateInputViewShown())
       return true;
     if (getResources().getConfiguration().hardKeyboardHidden
-        == Configuration.HARDKEYBOARDHIDDEN_NO)
+        == Configuration.HARDKEYBOARDHIDDEN_NO
+        && _config.physical_keyboard_hide)
     {
       Logs.debug("Physical keyboard is present");
       return false;
@@ -475,6 +476,9 @@ public class Keyboard2 extends InputMethodService
         case SWITCH_VOICE_TYPING_CHOOSER:
           VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
               Config.globalPrefs());
+          break;
+        case HIDE_SELF:
+          Keyboard2.this.requestHideSelf(0);
           break;
       }
     }
