@@ -535,9 +535,19 @@ public final class KeyboardData
       return new Key(ks, anticircle, flags, width, shift, indication);
     }
 
+    public Key withWidth(float w)
+    {
+      return withWidthAndShift(w, shift);
+    }
+
     public Key withShift(float s)
     {
-      return new Key(keys, anticircle, keysflags, width, s, indication);
+      return withWidthAndShift(width, s);
+    }
+
+    public Key withWidthAndShift(float w, float s)
+    {
+      return new Key(keys, anticircle, keysflags, w, s, indication);
     }
 
     public boolean hasValue(KeyValue kv)
