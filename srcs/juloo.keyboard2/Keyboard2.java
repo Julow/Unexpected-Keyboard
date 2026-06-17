@@ -109,6 +109,12 @@ public class Keyboard2 extends InputMethodService
         current_layout_unmodified());
   }
 
+  KeyboardData loadNumericLayout()
+  {
+    return loadNumpad(_config.orientation_landscape ?
+        R.xml.numeric_landscape : R.xml.numeric);
+  }
+
   KeyboardData loadPinentry(int layout_id)
   {
     return LayoutModifier.modify_pinentry(KeyboardData.load(getResources(), layout_id),
@@ -227,8 +233,11 @@ public class Keyboard2 extends InputMethodService
     {
       switch (_config.selected_number_layout)
       {
-        case PIN: return loadPinentry(R.xml.pin);
-        case NUMBER: return loadNumpad(R.xml.numeric);
+        case PIN:
+          return loadPinentry(_config.orientation_landscape ?
+              R.xml.pin_landscape : R.xml.pin);
+        case NUMBER:
+          return loadNumericLayout();
       }
     }
     return null;
@@ -407,7 +416,7 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_NUMERIC:
-          setSpecialLayout(loadNumpad(R.xml.numeric));
+          setSpecialLayout(loadNumericLayout());
           break;
 
         case SWITCH_EMOJI:
