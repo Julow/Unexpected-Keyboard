@@ -32,38 +32,42 @@ public final class LayoutLandscapeModifier
     float off = 0f;
     int i = 0;
     int end = r.keys.size() - 1; // Exclude the last key to force a split
-    for (; i < end; i++)
+    for (; true; i++)
     {
       KeyboardData.Key k = r.keys.get(i);
       off += k.shift + k.width;
-      if (off > mid_start)
+      if (off > mid_start || i == end)
       {
         if (off > mid_end)
-          return split_at_index(r, i, true);
-        return split_at_index(r, i + 1, false);
+          return duplicate_at_index(r, i, off);
+        return split_at_index(r, i + 1);
       }
     }
-    return split_at_index(r, i, false);
   }
 
-  /** Insert [ADDED_WIDTH] empty space before the key at index [i]. If
-      [duplicate] is [true], the key at index [i] is duplicated on each side of
-      the added space. */
-  static KeyboardData.Row split_at_index(KeyboardData.Row r, int i,
-      boolean duplicate)
+  /** Insert [ADDED_WIDTH] empty space before the key at index [i]. */
+  static KeyboardData.Row split_at_index(KeyboardData.Row r, int i)
   {
     List<KeyboardData.Key> new_keys = new ArrayList<KeyboardData.Key>(r.keys);
     KeyboardData.Key k = new_keys.get(i);
-    if (duplicate)
-    {
-      // Reduce the size of the duplicated keys if they would add more than 1
-      // to the width.
-      float k_width = (k.width + 1.f) / 2;
-      new_keys.add(i + 1, k.withWidthAndShift(k_width, ADDED_WIDTH - 1));
-      new_keys.set(i, k.withWidth(k_width));
-    }
-    else
-      new_keys.set(i, k.withShift(k.shift + ADDED_WIDTH));
+    new_keys.set(i, k.withShift(k.shift + ADDED_WIDTH));
     return r.with_keys(new_keys);
   }
+
+  /** Duplicate the key at index [i] and insert [ADDED_WIDTH] empty space in
+      between. */
+  static KeyboardData.Row duplicate_at_index(KeyboardData.Row r, int i, float off)
+  {
+    List<KeyboardData.Key> new_keys = new ArrayList<KeyboardData.Key>(r.keys);
+    KeyboardData.Key k = new_keys.get(i);
+    // Reduce the size of the duplicated keys if they would add more than 1 to
+    // the width.
+    float k_width = (k.width + 1.f) / 2;
+    // Adjust the size on each sides when the key is not totally centered.
+    float mid_d = Math.min(off - (r.keysWidth + k.width) / 2, k_width - 1);
+    new_keys.add(i + 1, k.withWidthAndShift(k_width + mid_d, ADDED_WIDTH - 1));
+    new_keys.set(i, k.withWidth(k_width - mid_d));
+    return r.with_keys(new_keys);
+  }
+
 }
