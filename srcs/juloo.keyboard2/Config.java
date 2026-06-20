@@ -95,6 +95,8 @@ public final class Config
       [get_current_layout()] and [set_current_layout()]. */
   int current_layout_narrow;
   int current_layout_wide;
+  /** Whether to automatically split the layout. */
+  public boolean split_layout;
 
   private Config(SharedPreferences prefs, Resources res,
       Boolean foldableUnfolded, Dictionaries dicts)
@@ -132,10 +134,12 @@ public final class Config
         show_numpad = true;
       keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_landscape_unfolded" : "keyboard_height_landscape", 50);
       characterSizeScale = 1.25f;
+      split_layout = _prefs.getString("split_layout", "landscape").equals("landscape");
     }
     else
     {
       keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_unfolded" : "keyboard_height", 35);
+      split_layout = false;
     }
     layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");

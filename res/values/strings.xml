@@ -165,4 +165,7 @@
     <string name="pref_physical_keyboard_behavior">When a physical keyboard is connected</string>
     <string name="pref_physical_keyboard_behavior_hide">Hide everything</string>
     <string name="pref_physical_keyboard_behavior_show">Show everything</string>
+    <string name="pref_split_layout">Split layout</string>
+    <string name="pref_split_layout_never">Never</string>
+    <string name="pref_split_layout_landscape">In landscape orientation</string>
 </resources>
