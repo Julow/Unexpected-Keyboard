@@ -424,7 +424,8 @@ public final class KeyboardData
       role = role_;
     }
 
-    static final Key EMPTY = new Key(new KeyValue[9], null, 0, 1.f, 1.f, null);
+    static final Key EMPTY =
+      new Key(new KeyValue[9], null, 0, 1.f, 1.f, null, Role.Normal);
 
     /** Read a key value attribute that have a synonym. Having both synonyms
         present at the same time is an error.
