@@ -27,7 +27,7 @@
     <key key0="ø" key1="'" key3="&quot;"/>
   </row>
   <row>
-    <key shift="0.5" width="1.5" key0="shift" key2="loc capslock"/>
+    <key shift="0.5" width="1.5" role="action" key0="shift" key2="loc capslock"/>
     <key key0="z"/>
     <key key0="x" key2="loc †"/>
     <key key0="c"/>
@@ -35,7 +35,7 @@
     <key key0="b" key2=";" key4=","/>
     <key key0="n" key2=":" key4="."/>
     <key key0="m" key2="-" key4="_"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key width="1.5" role="action" key0="backspace" key2="delete"/>
   </row>
 
 </keyboard>

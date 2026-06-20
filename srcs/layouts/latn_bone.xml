@@ -114,7 +114,7 @@
 	-->
 	<row>
 		<!--left side-->
-		<key width="1.5" key0="shift" ne="loc capslock"
+		<key width="1.5" role="action" key0="shift" ne="loc capslock"
 		              se="\#"/>
 		<key key0="f" se="$"/>
 		<key key0="v" se="|"/>
@@ -125,7 +125,7 @@
 		<key key0="y" sw="%"/>
 		<key key0="z" sw="," nw="&quot;"/>
 		<key key0="k" sw="." nw="&apos;"/>
-		<key width="1.5" key0="backspace"
+		<key width="1.5" role="action" key0="backspace"
 		              sw=";" nw="delete"/>
 	</row>
 </keyboard>
