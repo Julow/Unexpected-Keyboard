@@ -120,10 +120,10 @@ public class SettingsActivity extends PreferenceActivity
         Object value = allPrefs.get(key);
         if (value == null) continue;
         String valueType = value.getClass().getSimpleName();
-        writer.write(key + "=" + value + ";" + valueType + "\n");
+        writer.write(key + "=" + valueType + ";" + value + "\n");
       }
 
-      post_toast(R.string.import_success);
+      post_toast(R.string.export_success);
     } catch (IOException e) {
       Log.e("Settings", "Error exporting prefs", e);
       post_toast(R.string.export_fail);
@@ -143,10 +143,10 @@ public class SettingsActivity extends PreferenceActivity
       while ((line = reader.readLine()) != null) {
         String[] keyValue = line.split("=", 2);
         if (keyValue.length == 2) {
-          String[] valueAndType = keyValue[1].split(";", 2);
-          if (valueAndType.length == 2) {
-            String value = valueAndType[0];
-            String type = valueAndType[1];
+          String[] typeAndValue = keyValue[1].split(";", 2);
+          if (typeAndValue.length == 2) {
+            String type = typeAndValue[0];
+            String value = typeAndValue[1];
             switch (type) {
               case "Integer":
                 editor.putInt(keyValue[0], Integer.parseInt(value));
