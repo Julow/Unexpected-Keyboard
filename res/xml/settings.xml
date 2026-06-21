@@ -67,4 +67,8 @@
   <PreferenceCategory android:title="@string/pref_category_clipboard">
     <ListPreference android:key="clipboard_history_duration" android:title="@string/pref_clipboard_history_duration" android:summary="%s" android:defaultValue="5" android:entries="@array/pref_clipboard_duration_entries" android:entryValues="@array/pref_clipboard_duration_values"/>
   </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_category_backup">
+    <Preference android:key="settings_import" android:title="@string/pref_settings_import"/>
+    <Preference android:key="settings_export" android:title="@string/pref_settings_export"/>
+  </PreferenceCategory>
 </PreferenceScreen>
