@@ -134,12 +134,10 @@ public final class Config
         show_numpad = true;
       keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_landscape_unfolded" : "keyboard_height_landscape", 50);
       characterSizeScale = 1.25f;
-      split_layout = _prefs.getString("split_layout", "landscape").equals("landscape");
     }
     else
     {
       keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_unfolded" : "keyboard_height", 35);
-      split_layout = false;
     }
     layouts = LayoutsPreference.load_from_preferences(res, _prefs);
     inverse_numpad = _prefs.getString("numpad_layout", "default").equals("low_first");
@@ -203,6 +201,7 @@ public final class Config
     physical_keyboard_hide = _prefs.getString("physical_keyboard_behavior", "hide").equals("hide");
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
+    split_layout = get_split_layout();
   }
 
   public int get_current_layout()
@@ -294,6 +293,16 @@ public final class Config
       case "next": return KeyValue.CHANGE_METHOD_NEXT;
       default:
       case "picker": return KeyValue.CHANGE_METHOD;
+    }
+  }
+
+  final boolean get_split_layout()
+  {
+    switch (_prefs.getString("split_layout", "wide"))
+    {
+      case "wide": return wide_screen;
+      case "landscape": return orientation_landscape;
+      default: return false;
     }
   }
 

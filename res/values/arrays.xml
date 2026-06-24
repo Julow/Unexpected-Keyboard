@@ -143,10 +143,12 @@
     <item>show</item>
   </string-array>
   <string-array name="pref_split_layout_entries">
+    <item>@string/pref_split_layout_wide</item>
     <item>@string/pref_split_layout_landscape</item>
     <item>@string/pref_split_layout_never</item>
   </string-array>
   <string-array name="pref_split_layout_values">
+    <item>wide</item>
     <item>landscape</item>
     <item>never</item>
   </string-array>
