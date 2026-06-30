@@ -192,6 +192,15 @@ Value                  | Meaning
 `shareText`            | Emit a share Intent for the selected text. **Oddity:** This is in CamelCase.
 `hide_self`            | Hide the keyboard.
 
+## Suggestions
+
+Value           | Meaning
+:----           | :------
+`complete_first`  | Enter the best suggestion (the one in the middle)
+`complete_second` | Enter the second best suggestion (the right one)
+`complete_third`  | Enter the third best suggestion (the left one)
+`complete_emoji`  | Enter the emoji suggestion
+
 ## Unused
 These keys are known to do nothing.
 
