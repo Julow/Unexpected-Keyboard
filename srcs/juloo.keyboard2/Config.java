@@ -74,6 +74,8 @@ public final class Config
   public int circle_sensitivity;
   public boolean clipboard_history_enabled;
   public int clipboard_history_duration;
+  public boolean space_bar_auto_complete;
+  public boolean physical_keyboard_hide;
 
   // Dynamically set
   /** Configuration options implied by the connected editor. */
@@ -82,7 +84,9 @@ public final class Config
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
+  public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
+  public Cdict emoji_dictionary = null; // Might be 'null'.
   public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;
@@ -91,6 +95,8 @@ public final class Config
       [get_current_layout()] and [set_current_layout()]. */
   int current_layout_narrow;
   int current_layout_wide;
+  /** Whether to automatically split the layout. */
+  public boolean split_layout;
 
   private Config(SharedPreferences prefs, Resources res,
       Boolean foldableUnfolded, Dictionaries dicts)
@@ -191,9 +197,11 @@ public final class Config
     circle_sensitivity = Integer.valueOf(_prefs.getString("circle_sensitivity", "2"));
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
     clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
-
+    space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
+    physical_keyboard_hide = _prefs.getString("physical_keyboard_behavior", "hide").equals("hide");
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
+    split_layout = get_split_layout();
   }
 
   public int get_current_layout()
@@ -281,10 +289,20 @@ public final class Config
   {
     switch (prefs.getString("change_method_key_replacement", "prev"))
     {
-      case "prev": return KeyValue.getKeyByName("change_method_prev");
-      case "next": return KeyValue.getKeyByName("change_method_next");
+      case "prev": return KeyValue.CHANGE_METHOD_PREV;
+      case "next": return KeyValue.CHANGE_METHOD_NEXT;
       default:
-      case "picker": return KeyValue.getKeyByName("change_method");
+      case "picker": return KeyValue.CHANGE_METHOD;
+    }
+  }
+
+  final boolean get_split_layout()
+  {
+    switch (_prefs.getString("split_layout", "wide"))
+    {
+      case "wide": return wide_screen;
+      case "landscape": return orientation_landscape;
+      default: return false;
     }
   }
 

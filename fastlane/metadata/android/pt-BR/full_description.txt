@@ -3,4 +3,4 @@ A principal característica é que você pode digitar mais caracteres deslizando
 O app foi criado originalmente para desenvolvedores que usam Termux.
 Agora aperfeiçoado para o uso diário.
 
-Este aplicativo não contém anúncios, não faz nenhuma solicitação de rede e é Open Source.
+Este aplicativo não contém anúncios e é Open Source.

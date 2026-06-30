@@ -3,11 +3,9 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (debug)</string>
     <string name="short_description">适用于 Android 的轻量级、注重隐私的虚拟键盘。</string>
-    <string name="store_description">此应用的主要功能是，通过将按键沿四角滑动，您可以输入更多字符。\n\n此应用最初是为使用 Termux 的程序员而设计的。\n现在对于日常使用来说也很完美。\n\n此应用没有广告，不会发送任何网络请求，而且是开源的。</string>
+    <string name="store_description">此应用的主要功能是，通过将按键沿四角滑动，您可以输入更多字符。\n\n此应用最初是为使用 Termux 的程序员而设计的。\n现在对于日常使用来说也很完美。</string>
     <string name="pref_portrait">在竖屏模式下</string>
-    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">在横屏模式下</string>
-    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">布局</string>
     <string name="pref_label_brightness">调整字母亮度</string>
     <string name="pref_keyboard_opacity">调整键盘背景透明度</string>
@@ -19,9 +17,6 @@
     <string name="pref_layouts_item">布局 %1$d：%2$s</string>
     <string name="pref_layouts_remove_custom">移除布局</string>
     <string name="pref_custom_layout_title">自定义布局</string>
-    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
-    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
-    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">显示数字小键盘</string>
     <string name="pref_show_numpad_never">从不</string>
     <string name="pref_show_numpad_landscape">只在横屏显示</string>
@@ -44,14 +39,8 @@
     <string name="pref_category_behavior">行为</string>
     <string name="pref_autocapitalisation_title">句首自动大写</string>
     <string name="pref_autocapitalisation_summary">在句子的开头自动按下Shift</string>
-    <string name="pref_switch_input_immediate_title">切换到最近使用的键盘</string>
-    <string name="pref_switch_input_immediate_summary">切换键盘按钮的行为</string>
     <string name="pref_vibrate_custom">自定义振动</string>
     <string name="pref_vibrate_duration_title">振动强度</string>
-    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
-    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
-    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
-    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">样式</string>
     <string name="pref_margin_bottom_title">键盘下边距</string>
     <string name="pref_keyboard_height_title">键盘高度</string>
@@ -126,12 +115,8 @@
     <string name="key_descr_zwnj">零宽连字符</string>
     <string name="key_descr_nbsp">不间断空格</string>
     <string name="key_descr_nnbsp">窄距不间断空格</string>
-    <!-- <string name="key_descr_delete_word">Delete a word</string> -->
-    <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
-    <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">最近剪贴内容</string>
     <string name="clipboard_pin_heading">已固定</string>
     <string name="clipboard_remove_confirm">确定移除此剪贴内容？</string>
     <string name="clipboard_remove_confirmed">确定</string>
-    <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

@@ -48,6 +48,11 @@ public class ComposeKeyTest
     int state = ComposeKeyData.shift;
     assertEquals(apply("𝕨", state), KeyValue.makeStringKey("𝕎"));
     assertEquals(apply("𝕩", state), KeyValue.makeStringKey("𝕏"));
+    state = ComposeKeyData.accent_small_caps;
+    assertEquals(apply("œ", state), KeyValue.makeStringKey("ɶ"));
+    assertEquals(apply("Œ", state), KeyValue.makeStringKey("ɶ"));
+    assertEquals(apply("ɹ", state), KeyValue.makeStringKey("ʁ"));
+    assertEquals(apply("ɠ", state), KeyValue.makeStringKey("ʛ"));
   }
 
   KeyValue apply(String seq)

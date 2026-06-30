@@ -7,9 +7,15 @@ Thanks for contributing :)
 The application uses Gradle and can be used with Android Studio, but using
 Android Studio is not required. The build dependencies are:
 - OpenJDK 17
-- Android SDK: build tools (minimum `28.0.1`), platform `30`
+- Android SDK: build tools, platform `36`
 
 Python 3 is required to update generated files but not to build the app.
+
+Make sure the Git submodules are initialized and point to the right revision:
+
+```sh
+git submodule update --init
+```
 
 For Android Studio users, no more setup is needed.
 

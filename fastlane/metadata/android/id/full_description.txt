@@ -3,4 +3,4 @@ Fitur utamanya adalah Anda dapat mengetik lebih banyak karakter dengan menggeser
 Aplikasi ini awalnya dirancang untuk programmer yang menggunakan Termux.
 Sekarang sempurna untuk penggunaan sehari-hari.
 
-Aplikasi ini tidak berisi iklan, tidak membuat permintaan jaringan dan Open Source.
+Aplikasi ini tidak berisi iklan dan Open Source.

@@ -28,7 +28,7 @@ Based on XKB Sinhala (phonetic) layout.
     <key nw="|" c="ල" sw="\\" ne="ළ" />
   </row>
   <row>
-    <key width="1.5" c="shift" ne="loc capslock" />
+    <key role="action" width="1.5" c="shift" ne="loc capslock" />
     <key c="ඤ" ne="ඥ" />
     <key nw="loc †" c="ඳ" ne="ඬ" />
     <key nw="&lt;" c="ච" sw="." ne="ඡ" />
@@ -36,7 +36,7 @@ Based on XKB Sinhala (phonetic) layout.
     <key nw="\?" c="බ" sw="/" ne="භ" />
     <key nw=":" c="න" sw=";" ne="ණ" />
     <key nw="&quot;" c="ම" sw="'" se="zwj" ne="ඹ" />
-    <key width="1.5" c="backspace" ne="delete" />
+    <key role="action" width="1.5" c="backspace" ne="delete" />
   </row>
   <modmap>
     <shift a="ඍ" b="&#x0DD8;" />

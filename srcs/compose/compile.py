@@ -198,6 +198,8 @@ def make_automata(tries):
             states.append((None, None))
         # Add nested nodes and fill the current node
         for c in sorted(t.keys()):
+            if len(c) > 1 or ord(c[0]) > 65535:
+                raise Exception("Char out of range: " + c)
             states[i] = (c, add_node(t[c]))
             i += 1
         return this_node_index

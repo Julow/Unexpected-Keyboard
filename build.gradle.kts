@@ -14,14 +14,14 @@ dependencies {
 
 android {
   namespace = "juloo.keyboard2"
-  compileSdkVersion = "android-35"
+  compileSdkVersion = "android-36"
 
   defaultConfig {
     applicationId = "juloo.keyboard2"
     minSdk = 21
-    targetSdk { version = release(35) }
-    versionCode = 50
-    versionName = "1.32.1"
+    targetSdk { version = release(36) }
+    versionCode = 55
+    versionName = "2.0.4"
   }
 
   sourceSets {
@@ -69,6 +69,9 @@ android {
   buildTypes {
     named("release") {
       isMinifyEnabled = true
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro")
       isShrinkResources = true
       isDebuggable = false
       resValue("string", "app_name", "@string/app_name_release")
@@ -90,6 +93,14 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+}
+
+
+// This raises an error with an informative message instead of the confusing
+// ndk-build errors that occur when submodules are not initialized.
+gradle.projectsEvaluated {
+  if (!file("vendor/cdict/java").exists())
+    throw GradleException("Git submodules not initialized. Run 'git submodule update --init'")
 }
 
 val buildKeyboardFont by tasks.registering(Exec::class) {

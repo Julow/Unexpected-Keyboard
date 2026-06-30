@@ -54,6 +54,9 @@ public class DictionaryListView extends LinearLayout
       }
     }
     refresh();
+    // The keyboard is not enabled and the list is empty, show a message.
+    if (locales.installed.size() == 0)
+      addView(View.inflate(ctx, R.layout.dictionary_status_not_enabled, null));
   }
 
   /** Update the "installed" status of item views. Meaning whether the
@@ -147,12 +150,12 @@ public class DictionaryListView extends LinearLayout
   }
 
   static final String DICT_REPO_URL =
-    "https://github.com/Julow/Unexpected-Keyboard-dictionaries/raw/refs/heads/main";
+    "https://raw.githubusercontent.com/Julow/Unexpected-Keyboard-dictionaries/refs/heads/main";
 
   static URL url_of_dictionary(String dict_name)
       throws MalformedURLException
   {
-    int format_version = 0;
+    int format_version = Cdict.format_version();
     return new URL(DICT_REPO_URL + "/v" + format_version + "/" + dict_name
         + ".dict");
   }

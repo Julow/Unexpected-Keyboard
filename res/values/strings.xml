@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string>
-    <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads, doesn\'t make any network requests and is Open Source.</string>
+    <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads and is Open Source.</string>
     <string name="pref_portrait">In portrait mode</string>
     <string name="pref_portrait_unfolded">In portrait mode unfolded</string>
     <string name="pref_landscape">In landscape mode</string>
@@ -36,6 +36,8 @@
     <string name="pref_category_suggestions">Suggestions</string>
     <string name="pref_suggestions_title">Suggestions</string>
     <string name="pref_suggestions_summary">Enable word completion and spell checking</string>
+    <string name="pref_space_bar_auto_complete_title">Autocomplete with the space bar</string>
+    <string name="pref_space_bar_auto_complete_summary">Enter the best suggestion by pressing space</string>
     <string name="pref_category_typing">Typing</string>
     <string name="pref_swipe_dist_title">Swiping distance</string>
     <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
@@ -158,6 +160,13 @@
     <string name="dictionaries_from_internet">Download a dictionary from the Internet</string>
     <string name="dictionaries_download_success">Dictionary installed</string>
     <string name="dictionaries_download_failed">Download failed</string>
-    <string name="candidates_status_no_dict">No dictionary installed</string>
-    <string name="candidates_status_install">Install</string>
+    <string name="dictionaries_activity_not_enabled">You must first enable the keyboard to download dictionaries.</string>
+    <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string>
+    <string name="pref_physical_keyboard_behavior">When a physical keyboard is connected</string>
+    <string name="pref_physical_keyboard_behavior_hide">Hide everything</string>
+    <string name="pref_physical_keyboard_behavior_show">Show everything</string>
+    <string name="pref_split_layout">Split layout</string>
+    <string name="pref_split_layout_never">Never</string>
+    <string name="pref_split_layout_landscape">In landscape orientation</string>
+    <string name="pref_split_layout_wide">On wide screens</string>
 </resources>

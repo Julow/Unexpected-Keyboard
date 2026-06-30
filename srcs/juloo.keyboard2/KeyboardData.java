@@ -43,7 +43,7 @@ public final class KeyboardData
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(this, rows_);
+    return with_rows(rows_);
   }
 
   /** Add keys from the given iterator into the keyboard. Preferred position is
@@ -61,7 +61,7 @@ public final class KeyboardData
     }
     for (KeyValue kv : unplaced_keys)
       add_key_to_preferred_pos(rows, kv, PreferredPos.ANYWHERE);
-    return new KeyboardData(this, rows);
+    return with_rows(rows);
   }
 
   /** Place a key on the keyboard according to its preferred position. Mutates
@@ -141,9 +141,9 @@ public final class KeyboardData
             keys.add(nps.get(i));
         }
       }
-      extendedRows.add(new Row(keys, row.height, row.shift));
+      extendedRows.add(row.with_keys(keys));
     }
-    return new KeyboardData(this, extendedRows);
+    return with_rows(extendedRows);
   }
 
   /** Insert the given row at the given indice. The row is scaled so that the
@@ -152,7 +152,7 @@ public final class KeyboardData
   {
     ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
     rows_.add(i, row.updateWidth(keysWidth));
-    return new KeyboardData(this, rows_);
+    return with_rows(rows_);
   }
 
   public Key findKeyWithValue(KeyValue kv)
@@ -304,10 +304,11 @@ public final class KeyboardData
   }
 
   /** Copies the fields of a keyboard, with rows changed. */
-  protected KeyboardData(KeyboardData src, List<Row> rows)
+  public KeyboardData with_rows(List<Row> rows_)
   {
-    this(rows, compute_max_width(rows), src.modmap, src.script,
-        src.numpad_script, src.name, src.bottom_row, src.embedded_number_row, src.locale_extra_keys);
+    return new KeyboardData(rows_, compute_max_width(rows_), modmap, script,
+        numpad_script, name, bottom_row, embedded_number_row,
+        locale_extra_keys);
   }
 
   public static class Row
@@ -347,7 +348,14 @@ public final class KeyboardData
 
     public Row copy()
     {
-      return new Row(new ArrayList<Key>(keys), height, shift);
+      return with_keys(new ArrayList<Key>(keys));
+    }
+
+    /** Copy the row with the keys changed. The list [keys] is not copied and
+        should be immutable. */
+    public Row with_keys(List<Key> keys)
+    {
+      return new Row(keys, height, shift);
     }
 
     public void getKeys(Map<KeyValue, KeyPos> dst, int row)
@@ -368,7 +376,7 @@ public final class KeyboardData
       ArrayList<Key> keys_ = new ArrayList<Key>();
       for (Key k : keys)
         keys_.add(f.apply(k));
-      return new Row(keys_, height, shift);
+      return with_keys(keys_);
     }
 
     /** Change the width of every keys so that the row is 's' units wide. */
@@ -406,12 +414,14 @@ public final class KeyboardData
     public final float shift;
     /** String printed on the keys. It has no other effect. */
     public final String indication;
+    /** Keys are rendered differently according to their role. */
+    public final Role role;
 
     /** Whether a key was declared with the 'loc' prefix. */
     public static final int F_LOC = 1;
     public static final int ALL_FLAGS = F_LOC;
 
-    protected Key(KeyValue[] ks, KeyValue antic, int f, float w, float s, String i)
+    protected Key(KeyValue[] ks, KeyValue antic, int f, float w, float s, String i, Role role_)
     {
       keys = ks;
       anticircle = antic;
@@ -419,9 +429,11 @@ public final class KeyboardData
       width = Math.max(w, 0f);
       shift = Math.max(s, 0f);
       indication = i;
+      role = role_;
     }
 
-    static final Key EMPTY = new Key(new KeyValue[9], null, 0, 1.f, 1.f, null);
+    static final Key EMPTY =
+      new Key(new KeyValue[9], null, 0, 1.f, 1.f, null, Role.Normal);
 
     /** Read a key value attribute that have a synonym. Having both synonyms
         present at the same time is an error.
@@ -489,9 +501,11 @@ public final class KeyboardData
       float width = attribute_float(parser, "width", 1f);
       float shift = attribute_float(parser, "shift", 0.f);
       String indication = parser.getAttributeValue(null, "indication");
+      String role_str = parser.getAttributeValue(null, "role");
+      Role role = (role_str == null) ? Role.Normal : Role.parse(role_str);
       while (parser.next() != XmlPullParser.END_TAG)
         continue;
-      return new Key(ks, anticircle, keysflags, width, shift, indication);
+      return new Key(ks, anticircle, keysflags, width, shift, indication, role);
     }
 
     /** Whether key at [index] as [flag]. */
@@ -503,7 +517,7 @@ public final class KeyboardData
     /** New key with the width multiplied by 's'. */
     public Key scaleWidth(float s)
     {
-      return new Key(keys, anticircle, keysflags, width * s, shift, indication);
+      return new Key(keys, anticircle, keysflags, width * s, shift, indication, role);
     }
 
     public void getKeys(Map<KeyValue, KeyPos> dst, int row, int col)
@@ -524,12 +538,22 @@ public final class KeyboardData
       for (int j = 0; j < keys.length; j++) ks[j] = keys[j];
       ks[i] = kv;
       int flags = (keysflags & ~(ALL_FLAGS << i));
-      return new Key(ks, anticircle, flags, width, shift, indication);
+      return new Key(ks, anticircle, flags, width, shift, indication, role);
+    }
+
+    public Key withWidth(float w)
+    {
+      return withWidthAndShift(w, shift);
     }
 
     public Key withShift(float s)
     {
-      return new Key(keys, anticircle, keysflags, width, s, indication);
+      return withWidthAndShift(width, s);
+    }
+
+    public Key withWidthAndShift(float w, float s)
+    {
+      return new Key(keys, anticircle, keysflags, w, s, indication, role);
     }
 
     public boolean hasValue(KeyValue kv)
@@ -538,6 +562,23 @@ public final class KeyboardData
         if (keys[i] != null && keys[i].equals(kv))
           return true;
       return false;
+    }
+
+    public static enum Role
+    {
+      Normal,
+      Action, // Generally Shift, Delete and keys on the bottom row
+      Space_bar;
+
+      public static Role parse(String str)
+      {
+        switch (str)
+        {
+          case "action": return Action;
+          case "space_bar": return Space_bar;
+          default: case "normal": return Normal;
+        }
+      }
     }
   }
 
@@ -555,7 +596,7 @@ public final class KeyboardData
       for (int i = 0; i < ks.length; i++)
         if (k.keys[i] != null)
           ks[i] = apply(k.keys[i], k.keyHasFlag(i, Key.F_LOC));
-      return new Key(ks, k.anticircle, k.keysflags, k.width, k.shift, k.indication);
+      return new Key(ks, k.anticircle, k.keysflags, k.width, k.shift, k.indication, k.role);
     }
   }
 

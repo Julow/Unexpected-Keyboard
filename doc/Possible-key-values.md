@@ -190,6 +190,7 @@ Value                  | Meaning
 `voice_typing`         | Begin voice typing.
 `voice_typing_chooser` | Shows a menu where you can choose which voice typing provider to use, then begins voice typing when you make a selection.
 `shareText`            | Emit a share Intent for the selected text. **Oddity:** This is in CamelCase.
+`hide_self`            | Hide the keyboard.
 
 ## Unused
 These keys are known to do nothing.
