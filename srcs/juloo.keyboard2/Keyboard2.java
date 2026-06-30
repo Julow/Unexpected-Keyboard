@@ -516,19 +516,13 @@ public class Keyboard2 extends InputMethodService
       _candidates_view.set_candidates(suggestions);
     }
 
-    String get_candidate(int i)
-    {
-      String c = _candidates_view.get_candidates()[i];
-      return (c == null) ? "" : c;
-    }
-
     public String provide_stateful_key_symbol(KeyValue.Stateful q)
     {
       switch (q)
       {
-        case Complete_first: return get_candidate(0);
-        case Complete_second: return get_candidate(1);
-        case Complete_third: return get_candidate(2);
+        case Complete_first: return _candidates_view.get_candidate(0);
+        case Complete_second: return _candidates_view.get_candidate(1);
+        case Complete_third: return _candidates_view.get_candidate(2);
       }
       return "";
     }

@@ -74,7 +74,7 @@ public class CandidatesView extends LinearLayout
   }
 
   /** Used by the complete key. */
-  public String[] get_candidates() { return _items; }
+  public String get_candidate(int i) { return _items[i]; }
 
   public void clear_candidates()
   {

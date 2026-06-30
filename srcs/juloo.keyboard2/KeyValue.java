@@ -943,7 +943,8 @@ public final class KeyValue implements Comparable<KeyValue>
     {
       if (_handler == null)
         return "";
-      return _handler.provide_stateful_key_symbol(this);
+      String s = _handler.provide_stateful_key_symbol(this);
+      return (s == null) ? "" : s;
     }
 
     @Override
