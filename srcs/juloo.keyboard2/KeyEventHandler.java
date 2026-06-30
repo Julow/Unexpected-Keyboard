@@ -36,14 +36,14 @@ public final class KeyEventHandler
   LastAction _last_action = null;
   LastAction _next_last_action = null;
 
-  public KeyEventHandler(IReceiver recv, Config config)
+  public KeyEventHandler(IReceiver recv, Suggestions sg)
   {
     _recv = recv;
     Handler handler = recv.getHandler();
     _autocap = new Autocapitalisation(handler,
         this.new Autocapitalisation_callback());
     _mods = Pointers.Modifiers.EMPTY;
-    _suggestions = new Suggestions(recv, config);
+    _suggestions = sg;
     _typedword = new CurrentlyTypedWord(handler, this);
   }
 

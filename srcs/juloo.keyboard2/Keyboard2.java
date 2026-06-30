@@ -39,6 +39,7 @@ public class Keyboard2 extends InputMethodService
   private ViewGroup _keyboard_container_view;
   private Keyboard2View _keyboard_layout_view;
   private CandidatesView _candidates_view;
+  private Suggestions _suggestions;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
@@ -127,7 +128,8 @@ public class Keyboard2 extends InputMethodService
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
     Receiver recvr = this.new Receiver();
-    _keyeventhandler = new KeyEventHandler(recvr, _config);
+    _suggestions = new Suggestions(recvr, _config);
+    _keyeventhandler = new KeyEventHandler(recvr, _suggestions);
     KeyValue.Stateful._handler = recvr;
     _config.handler = _keyeventhandler;
     prefs.registerOnSharedPreferenceChangeListener(this);
@@ -520,10 +522,10 @@ public class Keyboard2 extends InputMethodService
     {
       switch (q)
       {
-        case Complete_first: return _candidates_view.get_candidate(0);
-        case Complete_second: return _candidates_view.get_candidate(1);
-        case Complete_third: return _candidates_view.get_candidate(2);
-        case Complete_emoji: return _candidates_view.get_emoji_candidate();
+        case Complete_first: return _suggestions.suggestions[0];
+        case Complete_second: return _suggestions.suggestions[1];
+        case Complete_third: return _suggestions.suggestions[2];
+        case Complete_emoji: return _suggestions.emoji_suggestion;
       }
       return "";
     }
