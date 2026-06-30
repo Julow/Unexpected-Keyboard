@@ -75,6 +75,7 @@ public class CandidatesView extends LinearLayout
 
   /** Used by the complete key. */
   public String get_candidate(int i) { return _items[i]; }
+  public String get_emoji_candidate() { return _items[3]; }
 
   public void clear_candidates()
   {

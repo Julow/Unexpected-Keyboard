@@ -523,6 +523,7 @@ public class Keyboard2 extends InputMethodService
         case Complete_first: return _candidates_view.get_candidate(0);
         case Complete_second: return _candidates_view.get_candidate(1);
         case Complete_third: return _candidates_view.get_candidate(2);
+        case Complete_emoji: return _candidates_view.get_emoji_candidate();
       }
       return "";
     }

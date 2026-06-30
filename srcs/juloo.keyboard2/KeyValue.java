@@ -659,6 +659,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "complete_first": return statefulKey(Stateful.Complete_first);
       case "complete_second": return statefulKey(Stateful.Complete_second);
       case "complete_third": return statefulKey(Stateful.Complete_third);
+      case "complete_emoji": return statefulKey(Stateful.Complete_emoji);
       case "hide_self": return eventKey("⊻", Event.HIDE_SELF, FLAG_SMALLER_FONT);
 
       /* Key events */
@@ -936,7 +937,8 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     Complete_first,
     Complete_second,
-    Complete_third;
+    Complete_third,
+    Complete_emoji;
 
     @Override
     public String toString()

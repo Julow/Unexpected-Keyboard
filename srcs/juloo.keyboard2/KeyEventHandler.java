@@ -342,6 +342,7 @@ public final class KeyEventHandler
       case Complete_first:
       case Complete_second:
       case Complete_third:
+      case Complete_emoji:
         suggestion_entered(st.toString());
         break;
     }
