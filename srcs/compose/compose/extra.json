@@ -1,4 +1,8 @@
 {
+  " ": {
+    // Override the default space-space sequence to show the nbsp symbol
+    " ": "nbsp"
+  },
   "V": {
     "~": "Ṽ",
     "s": "Š",

@@ -62,8 +62,8 @@ public class ComposeKeyTest
     int state = ComposeKeyData.compose;
     assertEquals(apply("- ", state), str("~"));
     assertEquals(apply(" -", state), str("~"));
-    assertEquals(apply("  ", state), str(" "));
-    assertEquals(apply(apply(" "), key("space")), str(" "));
+    assertEquals(apply("  ", state), key("nbsp"));
+    assertEquals(apply(apply(" "), key("space")), key("nbsp"));
   }
 
   KeyValue apply(String seq)
