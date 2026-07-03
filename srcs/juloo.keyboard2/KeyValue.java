@@ -432,7 +432,7 @@ public final class KeyValue implements Comparable<KeyValue>
 
   private static KeyValue statefulKey(Stateful st)
   {
-    return new KeyValue(st, Kind.Stateful, 0, FLAG_SMALLER_FONT);
+    return new KeyValue(st, Kind.Stateful, 0, FLAG_SMALLER_FONT | FLAG_SPECIAL);
   }
 
   public static KeyValue makeStringKey(String str)
