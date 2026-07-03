@@ -159,6 +159,5 @@
     <string name="pref_dialog_edit_text">自定義</string>
     <string name="dictionaries_from_internet">從網路下載字典</string>
     <string name="dictionaries_download_success">字典已安裝</string>
-    <string name="dictionaries_download_failed">下載失敗</string>
     <string name="dictionaries_activity_not_enabled">需要啟用鍵盤才能下載字典。</string>
 </resources>

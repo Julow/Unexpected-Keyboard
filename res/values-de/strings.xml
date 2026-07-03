@@ -154,7 +154,6 @@
     <string name="pref_dialog_edit_text">eigene Definition</string>
     <string name="dictionaries_from_internet">Lade ein Wörterbuch aus dem Internet</string>
     <string name="dictionaries_download_success">Wörterbuch installiert</string>
-    <string name="dictionaries_download_failed">Herunterladen fehlgeschlagen</string>
     <string name="dictionaries_activity_not_enabled">Du musst die Tastatur aktivieren um Wörterbücher herunterzuladen.</string>
     <string name="pref_portrait_unfolded">im Hochformat aufgeklappt</string>
     <string name="pref_landscape_unfolded">Im Querformat aufgeklappt</string>

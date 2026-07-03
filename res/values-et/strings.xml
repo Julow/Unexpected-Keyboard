@@ -144,7 +144,6 @@
     <string name="key_descr_end">Lõpp</string>
     <string name="key_descr_ª">Järgarvu tunnus</string>
     <string name="dictionaries_download_success">Sõnastik on paigaldatud</string>
-    <string name="dictionaries_download_failed">Allalaadimine ei õnnestunud</string>
     <string name="dictionaries_activity_not_enabled">Sõnastike allalaadimiseks pead esmalt klahvistiku kasutusele võtma.</string>
     <string name="key_descr_clipboard">Lõikelaua haldur</string>
     <string name="key_descr_combining">Täpitähemärkide kombineerimine</string>
