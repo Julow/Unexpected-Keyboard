@@ -202,7 +202,8 @@ public class Keyboard2 extends InputMethodService
   {
     boolean should_show =
       _config.suggestions_enabled
-      && _config.editor_config.should_show_candidates_view;
+      && _config.editor_config.should_show_candidates_view
+      && !_config.split_layout;
     if (should_show)
       _candidates_view.refresh_config(_config);
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);

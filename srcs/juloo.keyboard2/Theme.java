@@ -111,6 +111,7 @@ public class Theme
     public final Key key_activated;
     public final Key key_action;
     public final Key key_space_bar;
+    public final Key key_suggestion;
 
     public Computed(Theme theme, Config config, float keyWidth, KeyboardData layout)
     {
@@ -128,6 +129,7 @@ public class Theme
       key_action = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Action);
       key_space_bar = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Space_bar);
       key_activated = new Key(theme, config, keyWidth, true, KeyboardData.Key.Role.Normal);
+      key_suggestion = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Suggestion);
       indication_paint = init_label_paint(config, null);
       indication_paint.setColor(theme.subLabelColor);
     }
@@ -169,6 +171,10 @@ public class Theme
             case Space_bar:
               bg_color = theme.colorKeySpaceBar;
               border_width = theme.keyBorderWidthSpaceBar;
+              break;
+            case Suggestion:
+              bg_color = 0;
+              border_width = 0;
               break;
             default:
               bg_color = theme.colorKey;
