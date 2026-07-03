@@ -45,7 +45,7 @@ public final class Suggestions
       clear();
     else
       query_suggestions(word);
-    set_suggestions();
+    _callback.set_suggestions(this);
   }
 
   void clear()
@@ -119,11 +119,6 @@ public final class Suggestions
       if (r != 0) b.setCharAt(i, r);
     }
     return b.toString();
-  }
-
-  void set_suggestions()
-  {
-    _callback.set_suggestions(this);
   }
 
   static final int[] NO_RESULTS = new int[0];

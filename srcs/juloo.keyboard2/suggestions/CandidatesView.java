@@ -73,7 +73,7 @@ public class CandidatesView extends LinearLayout
     }
   }
 
-  public void clear_candidates()
+  void clear_candidates()
   {
     for (int i = 0; i < _item_views.length; i++)
     {
