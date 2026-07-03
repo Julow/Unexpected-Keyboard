@@ -55,6 +55,16 @@ public class ComposeKeyTest
     assertEquals(apply("ɠ", state), KeyValue.makeStringKey("ʛ"));
   }
 
+  @Test
+  public void spaceKey() throws Exception
+  {
+    int state = ComposeKeyData.compose;
+    assertEquals(apply("- ", state), KeyValue.makeStringKey("~"));
+    assertEquals(apply(" -", state), KeyValue.makeStringKey("~"));
+    assertEquals(apply("  ", state), KeyValue.makeStringKey(" "));
+    assertEquals(apply(apply(" "), KeyValue.getKeyByName("space")), KeyValue.makeStringKey(" "));
+  }
+
   KeyValue apply(String seq)
   {
     return ComposeKey.apply(ComposeKeyData.compose, seq);
@@ -63,5 +73,12 @@ public class ComposeKeyTest
   KeyValue apply(String seq, int state)
   {
     return ComposeKey.apply(state, seq);
+  }
+
+  KeyValue apply(KeyValue prev, KeyValue next)
+  {
+    if (prev.getKind() != KeyValue.Kind.Compose_pending)
+      return null;
+    return ComposeKey.apply(prev.getPendingCompose(), next);
   }
 }
