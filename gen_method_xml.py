@@ -51,7 +51,7 @@ LOCALES = [
   loc("gl", "latin", "latn_qwerty_us"),
   loc("ha_NG", "latin", "latn_qwerty_us", extra_keys="₦|ɓ|ɗ|ƙ|’|ƴ|r̃"),
   loc("haw_US", "latin", "latn_qwerty_haw", extra_keys="ʻ@l|accent_macron:ā:ē:ī:ō:ū@m"),
-  loc("he_IL", "hebrew", "default_layout=hebr_1_il,extra_keys=₪@r|€"),
+  loc("he_IL", "hebrew", "hebr_1_il", extra_keys="₪@r"),
   loc("hi_IN", "devanagari", "deva_inscript", extra_keys="₹"),
   loc("hr", "latin", "latn_qwerty_us", extra_keys="č|ć|dž|đ|lj|nj|š|ž"),
   loc("hu_HU", "latin", "latn_qwertz_hu", extra_keys="accent_aigu:á:é:í:ó:ú@d|accent_trema:ö:ü@u|accent_ogonek@s|accent_double_aigu:ő:ű@k|€"),
