@@ -4,6 +4,7 @@ import juloo.keyboard2.ComposeKey;
 import juloo.keyboard2.ComposeKeyData;
 import juloo.keyboard2.KeyValue;
 import org.junit.Test;
+import static juloo.keyboard2.TestUtils.*;
 import static org.junit.Assert.*;
 
 public class ComposeKeyTest
@@ -14,55 +15,55 @@ public class ComposeKeyTest
   public void composeEquals() throws Exception
   {
     // From Compose.pre
-    assertEquals(apply("'e"), KeyValue.makeStringKey("é"));
-    assertEquals(apply("e'"), KeyValue.makeStringKey("é"));
+    assertEquals(apply("'e"), str("é"));
+    assertEquals(apply("e'"), str("é"));
     // From extra.json
-    assertEquals(apply("Vc"), KeyValue.makeStringKey("Č"));
-    assertEquals(apply("\\n"), KeyValue.getKeyByName("\\n"));
+    assertEquals(apply("Vc"), str("Č"));
+    assertEquals(apply("\\n"), key("\\n"));
     // From arabic.json
-    assertEquals(apply("اا"), KeyValue.getKeyByName("combining_alef_above"));
-    assertEquals(apply("ل۷"), KeyValue.makeStringKey("ڵ"));
-    assertEquals(apply("۷ل"), KeyValue.makeStringKey("ڵ"));
+    assertEquals(apply("اا"), key("combining_alef_above"));
+    assertEquals(apply("ل۷"), str("ڵ"));
+    assertEquals(apply("۷ل"), str("ڵ"));
     // From cyrillic.json
-    assertEquals(apply(",г"), KeyValue.makeStringKey("ӻ"));
-    assertEquals(apply("г,"), KeyValue.makeStringKey("ӻ"));
-    assertEquals(apply("ач"), KeyValue.getKeyByName("combining_aigu"));
+    assertEquals(apply(",г"), str("ӻ"));
+    assertEquals(apply("г,"), str("ӻ"));
+    assertEquals(apply("ач"), key("combining_aigu"));
   }
 
   @Test
   public void fnEquals() throws Exception
   {
     int state = ComposeKeyData.fn;
-    assertEquals(apply("<", state), KeyValue.makeStringKey("«"));
-    assertEquals(apply("{", state), KeyValue.makeStringKey("‹"));
+    assertEquals(apply("<", state), str("«"));
+    assertEquals(apply("{", state), str("‹"));
     // Named key
-    assertEquals(apply("1", state), KeyValue.getKeyByName("f1"));
-    assertEquals(apply(" ", state), KeyValue.getKeyByName("nbsp"));
+    assertEquals(apply("1", state), key("f1"));
+    assertEquals(apply(" ", state), key("nbsp"));
     // Named 1-char key
-    assertEquals(apply("ய", state), KeyValue.makeStringKey("௰", KeyValue.FLAG_SMALLER_FONT));
+    assertEquals(apply("ய", state), str("௰", KeyValue.FLAG_SMALLER_FONT));
   }
 
   @Test
   public void stringKeys() throws Exception
   {
     int state = ComposeKeyData.shift;
-    assertEquals(apply("𝕨", state), KeyValue.makeStringKey("𝕎"));
-    assertEquals(apply("𝕩", state), KeyValue.makeStringKey("𝕏"));
+    assertEquals(apply("𝕨", state), str("𝕎"));
+    assertEquals(apply("𝕩", state), str("𝕏"));
     state = ComposeKeyData.accent_small_caps;
-    assertEquals(apply("œ", state), KeyValue.makeStringKey("ɶ"));
-    assertEquals(apply("Œ", state), KeyValue.makeStringKey("ɶ"));
-    assertEquals(apply("ɹ", state), KeyValue.makeStringKey("ʁ"));
-    assertEquals(apply("ɠ", state), KeyValue.makeStringKey("ʛ"));
+    assertEquals(apply("œ", state), str("ɶ"));
+    assertEquals(apply("Œ", state), str("ɶ"));
+    assertEquals(apply("ɹ", state), str("ʁ"));
+    assertEquals(apply("ɠ", state), str("ʛ"));
   }
 
   @Test
   public void spaceKey() throws Exception
   {
     int state = ComposeKeyData.compose;
-    assertEquals(apply("- ", state), KeyValue.makeStringKey("~"));
-    assertEquals(apply(" -", state), KeyValue.makeStringKey("~"));
-    assertEquals(apply("  ", state), KeyValue.makeStringKey(" "));
-    assertEquals(apply(apply(" "), KeyValue.getKeyByName("space")), KeyValue.makeStringKey(" "));
+    assertEquals(apply("- ", state), str("~"));
+    assertEquals(apply(" -", state), str("~"));
+    assertEquals(apply("  ", state), str(" "));
+    assertEquals(apply(apply(" "), key("space")), str(" "));
   }
 
   KeyValue apply(String seq)
