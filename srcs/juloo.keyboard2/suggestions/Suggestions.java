@@ -51,7 +51,8 @@ public final class Suggestions
   void clear()
   {
     count = 0;
-    suggestions[0] = null;
+    for (int i = 0; i < MAX_COUNT; i++)
+      suggestions[i] = null;
     emoji_suggestion = null;
   }
 
