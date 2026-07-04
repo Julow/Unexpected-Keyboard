@@ -95,6 +95,8 @@ public final class Config
       [get_current_layout()] and [set_current_layout()]. */
   int current_layout_narrow;
   int current_layout_wide;
+  /** Whether to automatically split the layout. */
+  public boolean split_layout;
 
   private Config(SharedPreferences prefs, Resources res,
       Boolean foldableUnfolded, Dictionaries dicts)
@@ -199,6 +201,7 @@ public final class Config
     physical_keyboard_hide = _prefs.getString("physical_keyboard_behavior", "hide").equals("hide");
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
+    split_layout = get_split_layout();
   }
 
   public int get_current_layout()
@@ -290,6 +293,16 @@ public final class Config
       case "next": return KeyValue.CHANGE_METHOD_NEXT;
       default:
       case "picker": return KeyValue.CHANGE_METHOD;
+    }
+  }
+
+  final boolean get_split_layout()
+  {
+    switch (_prefs.getString("split_layout", "wide"))
+    {
+      case "wide": return wide_screen;
+      case "landscape": return orientation_landscape;
+      default: return false;
     }
   }
 

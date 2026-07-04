@@ -45,13 +45,14 @@ public final class Suggestions
       clear();
     else
       query_suggestions(word);
-    set_suggestions();
+    _callback.set_suggestions(this);
   }
 
   void clear()
   {
     count = 0;
-    suggestions[0] = null;
+    for (int i = 0; i < MAX_COUNT; i++)
+      suggestions[i] = null;
     emoji_suggestion = null;
   }
 
@@ -118,11 +119,6 @@ public final class Suggestions
       if (r != 0) b.setCharAt(i, r);
     }
     return b.toString();
-  }
-
-  void set_suggestions()
-  {
-    _callback.set_suggestions(this);
   }
 
   static final int[] NO_RESULTS = new int[0];

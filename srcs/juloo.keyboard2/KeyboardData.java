@@ -43,7 +43,7 @@ public final class KeyboardData
     ArrayList<Row> rows_ = new ArrayList<Row>();
     for (Row r : rows)
       rows_.add(r.mapKeys(f));
-    return new KeyboardData(this, rows_);
+    return with_rows(rows_);
   }
 
   /** Add keys from the given iterator into the keyboard. Preferred position is
@@ -61,7 +61,7 @@ public final class KeyboardData
     }
     for (KeyValue kv : unplaced_keys)
       add_key_to_preferred_pos(rows, kv, PreferredPos.ANYWHERE);
-    return new KeyboardData(this, rows);
+    return with_rows(rows);
   }
 
   /** Place a key on the keyboard according to its preferred position. Mutates
@@ -141,9 +141,9 @@ public final class KeyboardData
             keys.add(nps.get(i));
         }
       }
-      extendedRows.add(new Row(keys, row.height, row.shift));
+      extendedRows.add(row.with_keys(keys));
     }
-    return new KeyboardData(this, extendedRows);
+    return with_rows(extendedRows);
   }
 
   /** Insert the given row at the given indice. The row is scaled so that the
@@ -152,7 +152,7 @@ public final class KeyboardData
   {
     ArrayList<Row> rows_ = new ArrayList<Row>(this.rows);
     rows_.add(i, row.updateWidth(keysWidth));
-    return new KeyboardData(this, rows_);
+    return with_rows(rows_);
   }
 
   public Key findKeyWithValue(KeyValue kv)
@@ -304,10 +304,11 @@ public final class KeyboardData
   }
 
   /** Copies the fields of a keyboard, with rows changed. */
-  protected KeyboardData(KeyboardData src, List<Row> rows)
+  public KeyboardData with_rows(List<Row> rows_)
   {
-    this(rows, compute_max_width(rows), src.modmap, src.script,
-        src.numpad_script, src.name, src.bottom_row, src.embedded_number_row, src.locale_extra_keys);
+    return new KeyboardData(rows_, compute_max_width(rows_), modmap, script,
+        numpad_script, name, bottom_row, embedded_number_row,
+        locale_extra_keys);
   }
 
   public static class Row
@@ -347,7 +348,14 @@ public final class KeyboardData
 
     public Row copy()
     {
-      return new Row(new ArrayList<Key>(keys), height, shift);
+      return with_keys(new ArrayList<Key>(keys));
+    }
+
+    /** Copy the row with the keys changed. The list [keys] is not copied and
+        should be immutable. */
+    public Row with_keys(List<Key> keys)
+    {
+      return new Row(keys, height, shift);
     }
 
     public void getKeys(Map<KeyValue, KeyPos> dst, int row)
@@ -368,7 +376,7 @@ public final class KeyboardData
       ArrayList<Key> keys_ = new ArrayList<Key>();
       for (Key k : keys)
         keys_.add(f.apply(k));
-      return new Row(keys_, height, shift);
+      return with_keys(keys_);
     }
 
     /** Change the width of every keys so that the row is 's' units wide. */
@@ -533,9 +541,19 @@ public final class KeyboardData
       return new Key(ks, anticircle, flags, width, shift, indication, role);
     }
 
+    public Key withWidth(float w)
+    {
+      return withWidthAndShift(w, shift);
+    }
+
     public Key withShift(float s)
     {
-      return new Key(keys, anticircle, keysflags, width, s, indication, role);
+      return withWidthAndShift(width, s);
+    }
+
+    public Key withWidthAndShift(float w, float s)
+    {
+      return new Key(keys, anticircle, keysflags, w, s, indication, role);
     }
 
     public boolean hasValue(KeyValue kv)

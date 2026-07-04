@@ -105,6 +105,7 @@ public final class KeyValue implements Comparable<KeyValue>
     String, // [_payload] is also the string to output, value is unused.
     Slider, // [_payload] is a [KeyValue.Slider], value is slider repeatition.
     Macro, // [_payload] is a [KeyValue.Macro], value is unused.
+    Stateful, // [_payload] is a [KeyValue.Stateful], value is the query.
   }
 
   private static final int FLAGS_OFFSET = 20;
@@ -237,6 +238,12 @@ public final class KeyValue implements Comparable<KeyValue>
   public KeyValue[] getMacro()
   {
     return ((Macro)_payload).keys;
+  }
+
+  /** Defined only when [getKind() == Kind.Stateful]. */
+  public Stateful getStateful()
+  {
+    return (Stateful)_payload;
   }
 
   /* Update the char and the symbol. */
@@ -421,6 +428,11 @@ public final class KeyValue implements Comparable<KeyValue>
   {
     return new KeyValue(String.valueOf((char)symbol), Kind.Placeholder,
         id.ordinal(), flags | FLAG_KEY_FONT);
+  }
+
+  private static KeyValue statefulKey(Stateful st)
+  {
+    return new KeyValue(st, Kind.Stateful, 0, FLAG_SMALLER_FONT | FLAG_SPECIAL);
   }
 
   public static KeyValue makeStringKey(String str)
@@ -644,6 +656,10 @@ public final class KeyValue implements Comparable<KeyValue>
       case "capslock": return eventKey(0xE012, Event.CAPS_LOCK, 0);
       case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
       case "voice_typing_chooser": return VOICE_TYPING_CHOOSER;
+      case "complete_first": return statefulKey(Stateful.Complete_first);
+      case "complete_second": return statefulKey(Stateful.Complete_second);
+      case "complete_third": return statefulKey(Stateful.Complete_third);
+      case "complete_emoji": return statefulKey(Stateful.Complete_emoji);
       case "hide_self": return eventKey("⊻", Event.HIDE_SELF, FLAG_SMALLER_FONT);
 
       /* Key events */
@@ -914,4 +930,33 @@ public final class KeyValue implements Comparable<KeyValue>
       return _symbol.compareTo(snd._symbol);
     }
   };
+
+  /** Stateful keys are keys whose symbol must be constantly computed from the
+      app's state. */
+  public static enum Stateful implements Describe
+  {
+    Complete_first,
+    Complete_second,
+    Complete_third,
+    Complete_emoji;
+
+    @Override
+    public String toString()
+    {
+      if (_handler == null)
+        return "";
+      String s = _handler.provide_stateful_key_symbol(this);
+      return (s == null) ? "" : s;
+    }
+
+    @Override
+    public String describe() { return name(); }
+
+    public static Symbol_provider _handler = null;
+
+    public static interface Symbol_provider
+    {
+      public String provide_stateful_key_symbol(Stateful q);
+    }
+  }
 }

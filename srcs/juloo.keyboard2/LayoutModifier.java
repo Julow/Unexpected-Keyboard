@@ -46,11 +46,16 @@ public final class LayoutModifier
     else if (globalConfig.add_number_row && !kw.embedded_number_row) // The numpad removes the number row
     {
       added_number_row = modify_number_row(globalConfig.number_row_symbols ? number_row_symbols : number_row_no_symbols, kw);
+      if (globalConfig.split_layout)
+        added_number_row = LayoutLandscapeModifier.transform_number_row(added_number_row);
       remove_keys.addAll(added_number_row.getKeys(0).keySet());
     }
     // Add the bottom row before computing the extra keys
     if (kw.bottom_row)
       kw = kw.insert_row(bottom_row, kw.rows.size());
+    // Split the layout in landscape orientation
+    if (globalConfig.split_layout)
+      kw = LayoutLandscapeModifier.transform_to_landscape(kw);
     // Compose keys to add to the layout
     // 'extra_keys_keyset' reflects changes made to 'extra_keys'
     Set<KeyValue> extra_keys_keyset = extra_keys.keySet();
