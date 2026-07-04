@@ -271,6 +271,8 @@ public final class KeyEventHandler
     conn.beginBatchEdit();
     conn.deleteSurroundingText(remove_before, remove_after);
     conn.commitText(new_text, 1);
+    _typedword.remove_surrounding_text(remove_before, remove_after);
+    _typedword.typed(new_text);
     conn.endBatchEdit();
   }
 

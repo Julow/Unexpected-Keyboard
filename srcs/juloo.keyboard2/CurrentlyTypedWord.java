@@ -108,7 +108,30 @@ public final class CurrentlyTypedWord
   {
     if (!_enabled)
       return;
-    delayed_refresh();
+    switch (code)
+    {
+      case KeyEvent.KEYCODE_DEL:
+        if (meta == 0)
+          remove_surrounding_text(1, 0);
+        else
+          delayed_refresh();
+        break;
+      default:
+        delayed_refresh();
+        break;
+    }
+  }
+
+  public void remove_surrounding_text(int remove_before, int remove_after)
+  {
+    if (!_enabled)
+      return;
+    int len = _w.length();
+    int c = len + _w_cursor;
+    _w.delete(Math.max(c - remove_before, 0), Math.min(c + remove_after, len));
+    _cursor -= remove_before;
+    _w_cursor -= Math.min(remove_after, 0);
+    callback();
   }
 
   void callback()
