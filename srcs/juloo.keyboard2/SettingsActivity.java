@@ -14,6 +14,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,7 +67,7 @@ public class SettingsActivity extends PreferenceActivity
       Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
       intent.addCategory(Intent.CATEGORY_OPENABLE);
       intent.setType("text/plain");
-      intent.putExtra(Intent.EXTRA_TITLE, "prefs.txt");
+      intent.putExtra(Intent.EXTRA_TITLE, "unexpected-keyboard-prefs.txt");
       this.startActivityForResult(Intent.createChooser(intent, getString(R.string.pref_settings_export)), REQUEST_EXPORT);
 
       return true;
@@ -116,17 +119,22 @@ public class SettingsActivity extends PreferenceActivity
     try (OutputStream stream = this.getContentResolver().openOutputStream(uri);
          OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
       Map<String, ?> allPrefs = sharedPreferences.getAll();
+      JSONArray json = new JSONArray();
       for (String key : allPrefs.keySet()) {
         Object value = allPrefs.get(key);
         if (value == null) continue;
         String valueType = value.getClass().getSimpleName();
-        writer.write(key + "=" + valueType + ";" + value + "\n");
+        JSONObject entry = new JSONObject();
+        entry.put("key", key);
+        entry.put("type", valueType);
+        entry.put("value", value.toString());
+        json.put(entry);
       }
+      writer.write(json.toString(2));
 
-      post_toast(R.string.export_success);
-    } catch (IOException e) {
+    } catch (Exception e) {
       Log.e("Settings", "Error exporting prefs", e);
-      post_toast(R.string.export_fail);
+      post_toast(R.string.export_import_fail);
     }
   }
   private void importFromFile(Uri uri) {
@@ -138,35 +146,35 @@ public class SettingsActivity extends PreferenceActivity
       editor.clear();
       editor.apply();
 
-      editor = sharedPreferences.edit();
+      StringBuilder fileContent = new StringBuilder();
       String line;
       while ((line = reader.readLine()) != null) {
-        String[] keyValue = line.split("=", 2);
-        if (keyValue.length == 2) {
-          String[] typeAndValue = keyValue[1].split(";", 2);
-          if (typeAndValue.length == 2) {
-            String type = typeAndValue[0];
-            String value = typeAndValue[1];
-            switch (type) {
-              case "Integer":
-                editor.putInt(keyValue[0], Integer.parseInt(value));
-                break;
-              case "Float":
-                editor.putFloat(keyValue[0], Float.parseFloat(value));
-                break;
-              case "Boolean":
-                editor.putBoolean(keyValue[0], Boolean.parseBoolean(value));
-                break;
-              case "String":
-                editor.putString(keyValue[0], value);
-                break;
-            }
-          }
+        fileContent.append(line);
+      }
+
+      JSONArray json = new JSONArray(fileContent.toString());
+      for (int i = 0; i < json.length(); i++) {
+        JSONObject entry = json.getJSONObject(i);
+        String key = entry.getString("key");
+        String type = entry.getString("type");
+        String value = entry.getString("value");
+        switch (type) {
+          case "Integer":
+            editor.putInt(key, Integer.parseInt(value));
+            break;
+          case "Float":
+            editor.putFloat(key, Float.parseFloat(value));
+            break;
+          case "Boolean":
+            editor.putBoolean(key, Boolean.parseBoolean(value));
+            break;
+          case "String":
+            editor.putString(key, value);
+            break;
         }
       }
       editor.apply();
 
-      post_toast(R.string.import_success);
       // Restart app
       new Handler().postDelayed(
               () -> {
@@ -177,9 +185,9 @@ public class SettingsActivity extends PreferenceActivity
                 Runtime.getRuntime().exit(0);
               }, 2000
       );
-    } catch (IOException e) {
+    } catch (Exception e) {
       Log.e("Settings", "Error importing prefs", e);
-      post_toast(R.string.import_fail);
+      post_toast(R.string.export_import_fail);
     }
   }
 
