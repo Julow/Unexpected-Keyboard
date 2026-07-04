@@ -131,7 +131,6 @@
     <string name="pref_theme_e_epaperblack">ePapīrs melns</string>
     <string name="launcher_button_dictionaries">Uzstādīt vārdnīcas</string>
     <string name="dictionaries_download_success">Vārdnīca uzstādīta</string>
-    <string name="dictionaries_download_failed">Neizdevās lejupielādēt</string>
     <string name="key_descr_delete_word">Dzēst vārdu</string>
     <string name="pref_clipboard_history_duration">Starpliktuves glabāšanas ilgums</string>
     <string name="pref_change_method_key_replacement_e_prev">Pārslēgties uz pēdējo izmantoto</string>

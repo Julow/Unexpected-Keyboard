@@ -159,7 +159,6 @@
     <string name="pref_dialog_edit_text">Personnalisée</string>
     <string name="dictionaries_from_internet">Télécharger un dictionnaire depuis Internet</string>
     <string name="dictionaries_download_success">Dictionnaire installé</string>
-    <string name="dictionaries_download_failed">Le téléchargement a échoué</string>
     <string name="dictionaries_activity_not_enabled">Vous devez d\'abord activer le clavier.</string>
     <string name="candidates_status_click_to_install">Cliquez pour installer un dictionnaire pour le %s</string>
 </resources>

@@ -159,7 +159,7 @@
     <string name="pref_dialog_edit_text">Custom definition</string>
     <string name="dictionaries_from_internet">Download a dictionary from the Internet</string>
     <string name="dictionaries_download_success">Dictionary installed</string>
-    <string name="dictionaries_download_failed">Download failed</string>
+    <string name="dictionaries_download_failed">Download failed: Please allow internet access</string>
     <string name="dictionaries_activity_not_enabled">You must first enable the keyboard to download dictionaries.</string>
     <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string>
     <string name="pref_physical_keyboard_behavior">When a physical keyboard is connected</string>
