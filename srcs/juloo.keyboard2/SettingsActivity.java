@@ -143,8 +143,6 @@ public class SettingsActivity extends PreferenceActivity
 
       // Clear all existing preferences
       SharedPreferences.Editor editor = sharedPreferences.edit();
-      editor.clear();
-      editor.apply();
 
       StringBuilder fileContent = new StringBuilder();
       String line;
@@ -175,16 +173,8 @@ public class SettingsActivity extends PreferenceActivity
       }
       editor.apply();
 
-      // Restart app
-      new Handler().postDelayed(
-              () -> {
-                Intent intent = new Intent(this, SettingsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                this.startActivity(intent);
-                this.finish();
-                Runtime.getRuntime().exit(0);
-              }, 2000
-      );
+      // Refresh UI
+      onCreate(null);
     } catch (Exception e) {
       Log.e("Settings", "Error importing prefs", e);
       post_toast(R.string.export_import_fail);
