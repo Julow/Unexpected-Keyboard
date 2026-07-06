@@ -95,6 +95,14 @@
   // Tamil alternate characters
   "௹": "₨",
 
+  // Korean double consonants and iotized vowels
+  "ㄱ": ":ㄲ",
+  "ㄷ": ":ㄸ",
+  "ㅂ": ":ㅃ",
+  "ㅅ": ":ㅆ",
+  "ㅈ": ":ㅉ",
+  "ㅐ": ":ㅒ",
+  "ㅔ": ":ㅖ",
   // Modern Hindi and Sanskrit
   "अ": "आ",
   "इ": "ई",

@@ -11,7 +11,10 @@ public final class ComposeKey
     switch (kv.getKind())
     {
       case Char: return apply(state, kv.getChar());
-      case String: return apply(state, kv.getString());
+      case String:
+      case Hangul_initial:
+      case Hangul_medial:
+        return apply(state, kv.getString());
       case Editing:
         switch (kv.getEditing())
         {
