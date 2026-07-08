@@ -136,9 +136,9 @@ public final class KeyEventHandler
   {
     String old = _typedword.get();
     int cur_rel = _typedword.cursor_relative();
-    replace_surrounding_text(old.length() + cur_rel, -cur_rel, text + " ");
+    replace_surrounding_text(old.length() + cur_rel, -cur_rel, text);
     last_replaced_word = old;
-    last_replacement_word_len = text.length() + 1;
+    last_replacement_word_len = text.length();
     _next_last_action = LastAction.SUGGESTION_ENTERED;
   }
 
@@ -271,6 +271,8 @@ public final class KeyEventHandler
     conn.beginBatchEdit();
     conn.deleteSurroundingText(remove_before, remove_after);
     conn.commitText(new_text, 1);
+    _typedword.remove_surrounding_text(remove_before, remove_after);
+    _typedword.typed(new_text);
     conn.endBatchEdit();
   }
 
@@ -549,7 +551,7 @@ public final class KeyEventHandler
     if (_space_bar_auto_complete && _suggestions.count > 0
         && !_typedword.is_selection_not_empty()
         && _typedword.cursor_relative() == 0)
-      suggestion_entered(_suggestions.suggestions[0]);
+      suggestion_entered(_suggestions.suggestions[0] + " ");
     else
       send_text(" ");
   }
@@ -560,8 +562,7 @@ public final class KeyEventHandler
     if (_last_action == LastAction.SUGGESTION_ENTERED
         && last_replaced_word != null)
     {
-      replace_surrounding_text(last_replacement_word_len, 0,
-          last_replaced_word + " ");
+      replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word);
       last_replaced_word = null;
     }
     else
