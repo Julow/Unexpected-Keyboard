@@ -148,7 +148,6 @@
     <string name="pref_change_method_key_replacement_e_picker">Rādīt ievades metodes atlasītāju (ilgi nospiediet)</string>
     <string name="pref_change_method_key_replacement_e_next">Pārslēgties uz nākamo sarakstā</string>
     <string name="pref_number_entry_title">Izkārtojums skaitļu, datumu un tālruņu numuru ievadīšanai</string>
-    <string name="dictionaries_activity_not_enabled">Vispirms jāiespējo tastatūra, lai lejupielādētu vārdnīcas.</string>
     <string name="pref_number_entry_layout_pin">PIN ievadīšana</string>
     <string name="pref_number_entry_layout_number">Ciparnīca</string>
     <string name="pref_number_entry_layout_normal">Izmantot galveno izkārtojumu</string>

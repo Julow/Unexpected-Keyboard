@@ -159,5 +159,4 @@
     <string name="pref_dialog_edit_text">Definición personalizada</string>
     <string name="dictionaries_from_internet">Descargar un diccionario de internet</string>
     <string name="dictionaries_download_success">Diccionario instalado</string>
-    <string name="dictionaries_activity_not_enabled">Primero tienes que habilitar al teclado para descargar diccionarios.</string>
 </resources>
