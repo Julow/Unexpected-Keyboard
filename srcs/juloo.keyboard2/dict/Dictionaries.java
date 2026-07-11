@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import juloo.cdict.Cdict;
+import juloo.keyboard2.Config;
 import juloo.keyboard2.Logs;
 import juloo.keyboard2.Utils;
 
@@ -24,6 +25,21 @@ public final class Dictionaries
     if (_instance == null)
       _instance = new Dictionaries(ctx);
     return _instance;
+  }
+
+  /** Load the given dictionary and set it as the current dictionary in
+    [config]. If [name] is null, unset the current dictionary. */
+  public void set_current_dictionary(Config config, String name)
+  {
+    config.current_dictionary = null;
+    config.emoji_dictionary = null;
+    if (name == null)
+      return;
+    Cdict[] dicts = load(name);
+    if (dicts == null)
+      return;
+    config.current_dictionary = find_by_name(dicts, "main");
+    config.emoji_dictionary = find_by_name(dicts, "emoji");
   }
 
   /** Util for finding a dictionary by name. Returns [null] if not found. */

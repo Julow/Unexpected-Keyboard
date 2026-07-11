@@ -28,6 +28,7 @@ import java.util.Set;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
+import juloo.keyboard2.dict.DictionarySwitcher;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 import juloo.keyboard2.suggestions.Suggestions;
@@ -184,18 +185,9 @@ public class Keyboard2 extends InputMethodService
 
   private void refresh_current_dictionary()
   {
-    _config.current_dictionary = null;
-    _config.emoji_dictionary = null;
-    if (_config.device_locales.default_ == null)
-      return;
-    String current = _config.device_locales.default_.dictionary;
-    if (current == null)
-      return;
-    Cdict[] dicts = _dictionaries.load(current);
-    if (dicts == null)
-      return;
-    _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
-    _config.emoji_dictionary = Dictionaries.find_by_name(dicts, "emoji");
+    _dictionaries.set_current_dictionary(_config,
+        (_config.device_locales.default_ != null) ?
+        _config.device_locales.default_.dictionary : null);
   }
 
   private void refresh_candidates_view()
@@ -492,8 +484,17 @@ public class Keyboard2 extends InputMethodService
           VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
               Config.globalPrefs());
           break;
+
         case HIDE_SELF:
           Keyboard2.this.requestHideSelf(0);
+          break;
+
+        case SWITCH_DICTIONARY:
+          new DictionarySwitcher(Keyboard2.this, _config, _dictionaries,
+              new Runnable()
+              {
+                public void run() { refresh_candidates_view(); }
+              }).choose();
           break;
       }
     }

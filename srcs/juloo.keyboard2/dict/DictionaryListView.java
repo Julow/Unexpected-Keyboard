@@ -49,7 +49,7 @@ public class DictionaryListView extends LinearLayout
 
   void inflate_views_device_locales(Context ctx, DownloadBtnListener listener)
   {
-    SupportedDictionaries ds = new SupportedDictionaries(ctx.getResources());
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
     DeviceLocales locales = DeviceLocales.load(ctx);
     for (DeviceLocales.Loc loc : locales.installed)
     {
@@ -64,7 +64,7 @@ public class DictionaryListView extends LinearLayout
 
   void inflate_views_all(Context ctx, DownloadBtnListener listener)
   {
-    SupportedDictionaries ds = new SupportedDictionaries(ctx.getResources());
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
     for (int i = 0; i < ds.length(); i++)
       _dict_views.add(new DictView(ctx, ds, i, listener));
   }
