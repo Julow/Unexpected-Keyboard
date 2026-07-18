@@ -185,6 +185,8 @@ public class Keyboard2 extends InputMethodService
 
   private void refresh_current_dictionary()
   {
+    _config.should_show_dictionary_switch =
+      (_config.device_locales.installed.size() > 0);
     _dictionaries.set_current_dictionary(_config,
         (_config.device_locales.default_ != null) ?
         _config.device_locales.default_.dictionary : null);

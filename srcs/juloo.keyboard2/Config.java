@@ -87,6 +87,8 @@ public final class Config
   public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
   public Cdict emoji_dictionary = null; // Might be 'null'.
+  /** Whether to show the dictionary switching button in the candidates view. */
+  public boolean should_show_dictionary_switch = false;
   public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;
