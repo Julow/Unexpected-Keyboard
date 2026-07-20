@@ -11,16 +11,14 @@ import juloo.keyboard2.*;
 public final class DictionarySwitcher
 {
   InputMethodService _ims;
-  Config _config;
   Dictionaries _dicts;
   SupportedDictionaries _sd;
-  Runnable _callback;
+  Callback _callback;
 
-  public DictionarySwitcher(InputMethodService ims, Config config,
-      Dictionaries dicts, Runnable callback)
+  public DictionarySwitcher(InputMethodService ims, Dictionaries dicts,
+      Callback callback)
   {
     _ims = ims;
-    _config = config;
     _dicts = dicts;
     _sd = SupportedDictionaries.get(ims.getResources());
     _callback = callback;
@@ -38,7 +36,7 @@ public final class DictionarySwitcher
       .setAdapter(adapter, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface _d, int which)
         {
-          switch_(dict_names.get(which));
+          _callback.on_switch_dictionary(dict_names.get(which));
         }
       })
       .create();
@@ -46,9 +44,9 @@ public final class DictionarySwitcher
         _ims.getWindow().getWindow().getDecorView().getWindowToken());
   }
 
-  void switch_(String dict_name)
+  /** Called with the dictionary name chosen by the user. */
+  public interface Callback
   {
-    _dicts.set_current_dictionary(_config, dict_name);
-    _callback.run();
+    public void on_switch_dictionary(String dict_name);
   }
 }

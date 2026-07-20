@@ -64,6 +64,24 @@ public final class Dictionaries
 
   public Set<String> get_installed() { return _installed_dictionaries; }
 
+  /** The selected dictionary for the current layout. */
+  public String get_selected(Config config)
+  {
+    if (_shared_prefs == null)
+      return null;
+    return _shared_prefs.getString(dict_selection_pref_name(config), null);
+  }
+
+  /** Set the dictionary returned by [get_selected()] for the current layout. */
+  public void set_selected(Config config, String dict_name)
+  {
+    if (_shared_prefs == null)
+      return;
+    _shared_prefs.edit()
+      .putString(dict_selection_pref_name(config), dict_name)
+      .apply();
+  }
+
   public void install(String dict_name, byte[] data) throws IOException
   {
     FileOutputStream outp = _context.openFileOutput(dict_file_name(dict_name),
@@ -161,5 +179,12 @@ public final class Dictionaries
   static String dict_file_name(String dict_name)
   {
     return dict_name + ".dict";
+  }
+
+  static String dict_selection_pref_name(Config config)
+  {
+    String lang_tag = (config.device_locales.default_ != null) ?
+      config.device_locales.default_.lang_tag : "";
+    return "selection:" + lang_tag + "-" + config.get_current_layout();
   }
 }

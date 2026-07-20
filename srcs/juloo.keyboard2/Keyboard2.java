@@ -84,6 +84,9 @@ public class Keyboard2 extends InputMethodService
   {
     _config.set_current_layout(l);
     _currentSpecialLayout = null;
+    // The active dictionary depends on the current layout.
+    refresh_current_dictionary();
+    refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
   }
 
@@ -187,9 +190,20 @@ public class Keyboard2 extends InputMethodService
   {
     _config.should_show_dictionary_switch =
       (_config.device_locales.installed.size() > 0);
+    String selected = _dictionaries.get_selected(_config);
+    String fallback = (_config.device_locales.default_ != null) ?
+      _config.device_locales.default_.dictionary : null;
     _dictionaries.set_current_dictionary(_config,
-        (_config.device_locales.default_ != null) ?
-        _config.device_locales.default_.dictionary : null);
+        (selected != null) ? selected : fallback);
+  }
+
+  /** Remember and apply the dictionary chosen by the user for the current
+      context. */
+  private void select_dictionary(String dict_name)
+  {
+    _dictionaries.set_selected(_config, dict_name);
+    refresh_current_dictionary();
+    refresh_candidates_view();
   }
 
   private void refresh_candidates_view()
@@ -400,7 +414,7 @@ public class Keyboard2 extends InputMethodService
 
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver,
-         KeyValue.Stateful.Symbol_provider
+         KeyValue.Stateful.Symbol_provider, DictionarySwitcher.Callback
   {
     public void handle_event_key(KeyValue.Event ev)
     {
@@ -492,11 +506,7 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_DICTIONARY:
-          new DictionarySwitcher(Keyboard2.this, _config, _dictionaries,
-              new Runnable()
-              {
-                public void run() { refresh_candidates_view(); }
-              }).choose();
+          new DictionarySwitcher(Keyboard2.this, _dictionaries, this).choose();
           break;
       }
     }
@@ -541,6 +551,11 @@ public class Keyboard2 extends InputMethodService
         case Complete_emoji: return _suggestions.emoji_suggestion;
       }
       return "";
+    }
+
+    public void on_switch_dictionary(String dict_name)
+    {
+      select_dictionary(dict_name);
     }
   }
 
