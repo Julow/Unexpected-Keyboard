@@ -33,20 +33,31 @@ public final class DictionarySwitcher
     ArrayAdapter adapter =
       new ArrayAdapter(_ims, android.R.layout.simple_list_item_1, labels);
     AlertDialog dialog = new AlertDialog.Builder(_ims)
+      .setTitle(R.string.dictionary_switcher_title)
       .setAdapter(adapter, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface _d, int which)
         {
           _callback.on_switch_dictionary(dict_names.get(which));
         }
       })
+      .setPositiveButton(R.string.launcher_button_dictionaries,
+        new DialogInterface.OnClickListener(){
+          public void onClick(DialogInterface _d, int _which)
+          {
+            _callback.launch_dictionaries_activity();
+          }
+        })
+      .setNegativeButton(android.R.string.cancel, null)
       .create();
     Utils.show_dialog_on_ime(dialog,
         _ims.getWindow().getWindow().getDecorView().getWindowToken());
   }
 
-  /** Called with the dictionary name chosen by the user. */
   public interface Callback
   {
+    /** Called when the user switches dictionary. */
     public void on_switch_dictionary(String dict_name);
+    /** Open the dictionaries activity */
+    public void launch_dictionaries_activity();
   }
 }

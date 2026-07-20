@@ -399,10 +399,15 @@ public class Keyboard2 extends InputMethodService
     return true;
   }
 
+  public void launch_dictionaries_activity()
+  {
+    start_activity(DictionariesActivity.class);
+  }
+
   /** Called from [onClick] attributes. */
   public void launch_dictionaries_activity(View v)
   {
-    start_activity(DictionariesActivity.class);
+    launch_dictionaries_activity();
   }
 
   void start_activity(Class cls)
@@ -556,6 +561,11 @@ public class Keyboard2 extends InputMethodService
     public void on_switch_dictionary(String dict_name)
     {
       select_dictionary(dict_name);
+    }
+
+    public void launch_dictionaries_activity()
+    {
+      Keyboard2.this.launch_dictionaries_activity();
     }
   }
 
