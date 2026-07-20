@@ -49,8 +49,7 @@ public final class DictionarySwitcher
         })
       .setNegativeButton(android.R.string.cancel, null)
       .create();
-    Utils.show_dialog_on_ime(dialog,
-        _ims.getWindow().getWindow().getDecorView().getWindowToken());
+    Utils.show_dialog_on_ime(dialog, _ims);
   }
 
   public interface Callback
