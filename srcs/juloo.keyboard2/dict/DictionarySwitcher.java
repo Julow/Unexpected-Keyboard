@@ -37,7 +37,7 @@ public final class DictionarySwitcher
       .setAdapter(adapter, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface _d, int which)
         {
-          _callback.on_switch_dictionary(dict_names.get(which));
+          _callback.on_change_dictionary(dict_names.get(which));
         }
       })
       .setPositiveButton(R.string.launcher_button_dictionaries,
@@ -55,7 +55,7 @@ public final class DictionarySwitcher
   public interface Callback
   {
     /** Called when the user switches dictionary. */
-    public void on_switch_dictionary(String dict_name);
+    public void on_change_dictionary(String dict_name);
     /** Open the dictionaries activity */
     public void launch_dictionaries_activity();
   }

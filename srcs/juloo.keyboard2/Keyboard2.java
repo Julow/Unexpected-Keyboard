@@ -510,7 +510,7 @@ public class Keyboard2 extends InputMethodService
           Keyboard2.this.requestHideSelf(0);
           break;
 
-        case SWITCH_DICTIONARY:
+        case CHANGE_DICTIONARY:
           new DictionarySwitcher(Keyboard2.this, _dictionaries, this).choose();
           break;
       }
@@ -558,7 +558,7 @@ public class Keyboard2 extends InputMethodService
       return "";
     }
 
-    public void on_switch_dictionary(String dict_name)
+    public void on_change_dictionary(String dict_name)
     {
       select_dictionary(dict_name);
     }

@@ -171,7 +171,7 @@ public class CandidatesView extends LinearLayout
           public void onClick(View _v)
           {
             Config.globalConfig().handler.key_up(
-                KeyValue.getKeyByName("switch_dictionary"),
+                KeyValue.getKeyByName("change_dictionary"),
                 Pointers.Modifiers.EMPTY);
           }
         });

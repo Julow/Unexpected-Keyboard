@@ -29,13 +29,13 @@
     <item name="android:padding">@dimen/candidates_suggestions_padding</item>
     <item name="android:gravity">center</item>
   </style>
-  <style name="switch_dictionary">
+  <style name="change_dictionary">
     <item name="android:layout_width">@dimen/candidates_btn_width</item>
     <item name="android:layout_height">@dimen/candidates_btn_width</item>
     <item name="android:layout_weight">0</item>
     <item name="android:layout_gravity">center_vertical</item>
     <item name="android:padding">@dimen/candidates_suggestions_padding</item>
-    <item name="android:background">@drawable/btn_switch_dictionary</item>
+    <item name="android:background">@drawable/btn_change_dictionary</item>
     <item name="android:gravity">center</item>
   </style>
   <style name="candidates_status">
