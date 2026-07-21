@@ -140,7 +140,7 @@ def parse_sequences_dir(dname):
     compose_files = []
     xkb_char_extra_names = {}
     # Parse keysymdef.h first if present
-    for fbasename in os.listdir(dname):
+    for fbasename in sorted(os.listdir(dname)):
         fname = os.path.join(dname, fbasename)
         if fbasename == "keysymdef.h":
             xkb_char_extra_names = dict(parse_keysymdef_h(fname))
