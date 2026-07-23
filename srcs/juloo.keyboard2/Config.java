@@ -174,12 +174,11 @@ public final class Config
     customBorderRadius = _prefs.getInt("custom_border_radius", 0) / 100.f;
     customBorderLineWidth = get_dip_pref(dm, "custom_border_line_width", 0);
     screenHeightPixels = dm.heightPixels;
-    // Rows height is proportional to the screen height, meaning it doesn't
-    // change for layouts with more or less rows. 3.95 is the usual height of
-    // a layout in KeyboardData unit. The keyboard will be higher if the layout
-    // has more rows and smaller if it has less because rows stay the same
-    // height.
-    keyboard_rows_height_pixels = screenHeightPixels * keyboardHeightPercent / 395;
+    // Row height is proportional to the screen size.
+    // The keyboard is keyboardHeightPercent of the screen height on 16/9
+    // screens (or less) and with a 3.95 high layout (in KeyboardData unit)
+    float base_height = Math.min(dm.heightPixels, dm.widthPixels * 16.f / 9.f);
+    keyboard_rows_height_pixels = (int)(base_height * keyboardHeightPercent / 395);
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
