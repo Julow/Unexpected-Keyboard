@@ -74,6 +74,12 @@ public final class KeyEventHandler
   {
     if (key == null)
       return;
+    if (key.getKind() == KeyValue.Kind.Event
+        && key.getEvent() == KeyValue.Event.SWITCH_VOICE_TYPING_CHOOSER)
+    {
+      _recv.handle_event_key(KeyValue.Event.SWITCH_VOICE_TYPING_CHOOSER);
+      return;
+    }
     // Stop auto capitalisation when pressing some keys
     switch (key.getKind())
     {
@@ -112,7 +118,12 @@ public final class KeyEventHandler
     {
       case Char: send_text(String.valueOf(key.getChar())); break;
       case String: send_text(key.getString()); break;
-      case Event: _recv.handle_event_key(key.getEvent()); break;
+      case Event:
+        if (key.getEvent() == KeyValue.Event.SWITCH_VOICE_TYPING_CHOOSER)
+          _recv.handle_event_key(KeyValue.Event.STOP_VOICE_TYPING_HOLD);
+        else
+          _recv.handle_event_key(key.getEvent());
+        break;
       case Keyevent: send_key_down_up(key.getKeyevent()); break;
       case Modifier: break;
       case Editing: handle_editing_key(key.getEditing()); break;

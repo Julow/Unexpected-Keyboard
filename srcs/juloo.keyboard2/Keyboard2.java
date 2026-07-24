@@ -1,8 +1,10 @@
 package juloo.keyboard2;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
@@ -19,6 +21,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+import androidx.core.content.ContextCompat;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +32,7 @@ import java.util.Set;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
+import juloo.keyboard2.doubao.DoubaoVoiceInput;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 import juloo.keyboard2.suggestions.Suggestions;
@@ -50,6 +55,9 @@ public class Keyboard2 extends InputMethodService
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
   private Handler _handler;
+  private DoubaoVoiceInput _doubaoVoiceInput;
+  private boolean _startVoiceAfterPermission;
+  private boolean _voicePushToTalkActive;
 
   private Config _config;
 
@@ -134,6 +142,7 @@ public class Keyboard2 extends InputMethodService
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
     Receiver recvr = this.new Receiver();
+    _doubaoVoiceInput = new DoubaoVoiceInput(this, recvr);
     _suggestions = new Suggestions(recvr, _config);
     _keyeventhandler = new KeyEventHandler(recvr, _suggestions);
     KeyValue.Stateful._handler = recvr;
@@ -148,9 +157,10 @@ public class Keyboard2 extends InputMethodService
 
   @Override
   public void onDestroy() {
-    super.onDestroy();
-
+    _voicePushToTalkActive = false;
+    _doubaoVoiceInput.shutdown();
     _foldStateTracker.close();
+    super.onDestroy();
   }
 
   private void create_keyboard_view()
@@ -251,6 +261,8 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onStartInputView(EditorInfo info, boolean restarting)
   {
+    _voicePushToTalkActive = false;
+    _doubaoVoiceInput.cancel();
     _config.editor_config.refresh(info, getResources());
     refresh_config();
     _currentSpecialLayout = refresh_special_layout();
@@ -258,6 +270,12 @@ public class Keyboard2 extends InputMethodService
     _keyeventhandler.started(_config);
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
+    if (_startVoiceAfterPermission)
+    {
+      _startVoiceAfterPermission = false;
+      if (has_record_audio_permission())
+        _handler.post(() -> start_doubao_voice_input());
+    }
   }
 
   @Override
@@ -357,8 +375,88 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onFinishInputView(boolean finishingInput)
   {
+    _voicePushToTalkActive = false;
+    _doubaoVoiceInput.cancel();
     super.onFinishInputView(finishingInput);
     _keyboard_layout_view.reset();
+  }
+
+  private boolean has_record_audio_permission()
+  {
+    return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+      == PackageManager.PERMISSION_GRANTED;
+  }
+
+  private void toggle_doubao_voice_input()
+  {
+    _voicePushToTalkActive = false;
+    if (_doubaoVoiceInput.isActive())
+    {
+      run_doubao_voice_action(() -> _doubaoVoiceInput.toggle());
+      return;
+    }
+    if (!has_record_audio_permission())
+    {
+      _startVoiceAfterPermission = true;
+      Intent intent = new Intent(this, VoicePermissionActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
+      return;
+    }
+    _startVoiceAfterPermission = false;
+    run_doubao_voice_action(() -> _doubaoVoiceInput.start());
+  }
+
+  private void start_doubao_voice_input()
+  {
+    _voicePushToTalkActive = false;
+    run_doubao_voice_action(() -> _doubaoVoiceInput.start());
+  }
+
+  private void start_doubao_voice_hold()
+  {
+    if (_doubaoVoiceInput.isActive())
+    {
+      Log.i("Unexpected/DoubaoASR", "voice_hold_ignored_already_active");
+      return;
+    }
+    if (!has_record_audio_permission())
+    {
+      _startVoiceAfterPermission = false;
+      Intent intent = new Intent(this, VoicePermissionActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
+      return;
+    }
+    run_doubao_voice_action(() -> {
+      _doubaoVoiceInput.start();
+      _voicePushToTalkActive = true;
+    });
+  }
+
+  private void stop_doubao_voice_hold()
+  {
+    if (!_voicePushToTalkActive)
+      return;
+    _voicePushToTalkActive = false;
+    run_doubao_voice_action(() -> _doubaoVoiceInput.stop());
+  }
+
+  private void run_doubao_voice_action(Runnable action)
+  {
+    try
+    {
+      action.run();
+    }
+    catch (RuntimeException error)
+    {
+      Log.e("Unexpected/DoubaoASR", "Voice input action failed", error);
+      Toast.makeText(this,
+          getString(R.string.toast_voice_input_failed,
+            error.getMessage() == null
+              ? error.getClass().getSimpleName() : error.getMessage()),
+          Toast.LENGTH_LONG).show();
+    }
   }
 
   @Override
@@ -406,6 +504,7 @@ public class Keyboard2 extends InputMethodService
 
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver,
+         DoubaoVoiceInput.Host,
          KeyValue.Stateful.Symbol_provider
   {
     public void handle_event_key(KeyValue.Event ev)
@@ -483,14 +582,18 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_VOICE_TYPING:
-          if (!VoiceImeSwitcher.switch_to_voice_ime(Keyboard2.this, get_imm(),
-                Config.globalPrefs()))
-            _config.shouldOfferVoiceTyping = false;
+          Log.i("Unexpected/DoubaoASR", "voice_key_event=toggle");
+          toggle_doubao_voice_input();
           break;
 
         case SWITCH_VOICE_TYPING_CHOOSER:
-          VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
-              Config.globalPrefs());
+          Log.i("Unexpected/DoubaoASR", "voice_key_event=hold_start");
+          start_doubao_voice_hold();
+          break;
+
+        case STOP_VOICE_TYPING_HOLD:
+          Log.i("Unexpected/DoubaoASR", "voice_key_event=hold_stop");
+          stop_doubao_voice_hold();
           break;
         case HIDE_SELF:
           Keyboard2.this.requestHideSelf(0);
@@ -516,6 +619,34 @@ public class Keyboard2 extends InputMethodService
     public InputConnection getCurrentInputConnection()
     {
       return Keyboard2.this.getCurrentInputConnection();
+    }
+
+    public void onVoiceStateChanged(DoubaoVoiceInput.State state)
+    {
+      int message;
+      switch (state)
+      {
+        case CONNECTING:
+          message = R.string.toast_voice_connecting;
+          break;
+        case LISTENING:
+          message = R.string.toast_voice_listening;
+          break;
+        case FINISHING:
+          message = R.string.toast_voice_finishing;
+          break;
+        case IDLE:
+        default:
+          return;
+      }
+      Toast.makeText(Keyboard2.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onVoiceFailure(String message)
+    {
+      Toast.makeText(Keyboard2.this,
+          getString(R.string.toast_voice_input_failed, message),
+          Toast.LENGTH_LONG).show();
     }
 
     public Handler getHandler()

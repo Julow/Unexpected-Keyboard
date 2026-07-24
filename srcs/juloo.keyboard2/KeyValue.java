@@ -24,6 +24,7 @@ public final class KeyValue implements Comparable<KeyValue>
     CAPS_LOCK,
     SWITCH_VOICE_TYPING,
     SWITCH_VOICE_TYPING_CHOOSER,
+    STOP_VOICE_TYPING_HOLD,
     HIDE_SELF,
   }
 

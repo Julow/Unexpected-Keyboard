@@ -185,8 +185,18 @@ public final class Pointers implements Handler.Callback
 
   public void onTouchCancel()
   {
+    for (Pointer ptr : _ptrs)
+      if (isVoiceTypingHold(ptr.value))
+        _handler.onPointerUp(ptr.value, ptr.modifiers);
     clear();
     _handler.onPointerFlagsChanged(true);
+  }
+
+  private static boolean isVoiceTypingHold(KeyValue value)
+  {
+    return value != null
+      && value.getKind() == KeyValue.Kind.Event
+      && value.getEvent() == KeyValue.Event.SWITCH_VOICE_TYPING_CHOOSER;
   }
 
   /* Whether an other pointer is down on a non-special key. */

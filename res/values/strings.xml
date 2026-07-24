@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
+    <string name="app_name_doubao">Unexpected Keyboard (Doubao)</string>
     <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string>
     <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads and is Open Source.</string>
     <string name="pref_portrait">In portrait mode</string>
@@ -150,6 +151,12 @@
     <string name="clipboard_remove_confirm">Remove this clipboard item?</string>
     <string name="clipboard_remove_confirmed">Yes</string>
     <string name="toast_no_voice_input">No voice typing app installed</string>
+    <string name="toast_voice_connecting" tools:ignore="MissingTranslation">Connecting to Doubao voice input…</string>
+    <string name="toast_voice_listening" tools:ignore="MissingTranslation">Listening… Tap the voice key again to stop</string>
+    <string name="toast_voice_finishing" tools:ignore="MissingTranslation">Finishing voice input…</string>
+    <string name="toast_voice_permission_granted" tools:ignore="MissingTranslation">Microphone permission granted</string>
+    <string name="toast_voice_permission_denied" tools:ignore="MissingTranslation">Microphone permission is required for voice input</string>
+    <string name="toast_voice_input_failed" tools:ignore="MissingTranslation">Voice input failed: %1$s</string>
     <string name="pref_category_clipboard">Clipboard</string>
     <string name="pref_clipboard_history_duration">Clipboard memory duration</string>
     <string name="pref_clipboard_history_duration_1">At most 1 minute</string>

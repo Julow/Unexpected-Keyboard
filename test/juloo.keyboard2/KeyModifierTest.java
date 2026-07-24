@@ -17,4 +17,11 @@ public class KeyModifierTest
     assertEquals(eval("compose", "-", "space"), str("~"));
     assertEquals(eval("compose", "space", "-"), str("~"));
   }
+
+  @Test
+  public void longPressVoiceUsesHoldEvent()
+  {
+    assertEquals(KeyValue.VOICE_TYPING_CHOOSER,
+        KeyModifier.modify_long_press(KeyValue.getKeyByName("voice_typing")));
+  }
 }

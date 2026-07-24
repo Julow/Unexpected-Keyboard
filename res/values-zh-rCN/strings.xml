@@ -119,4 +119,10 @@
     <string name="clipboard_pin_heading">已固定</string>
     <string name="clipboard_remove_confirm">确定移除此剪贴内容？</string>
     <string name="clipboard_remove_confirmed">确定</string>
+    <string name="toast_voice_connecting">正在连接豆包语音输入…</string>
+    <string name="toast_voice_listening">正在聆听…再次点击语音键即可停止</string>
+    <string name="toast_voice_finishing">正在完成语音输入…</string>
+    <string name="toast_voice_permission_granted">已授予麦克风权限</string>
+    <string name="toast_voice_permission_denied">语音输入需要麦克风权限</string>
+    <string name="toast_voice_input_failed">语音输入失败：%1$s</string>
 </resources>

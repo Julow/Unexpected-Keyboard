@@ -9,6 +9,9 @@ dependencies {
   // Following versions of androidx.window require sdk version 23
   implementation("androidx.window:window-java:1.4.0")
   implementation("androidx.core:core:1.16.0") // Version 1.17.0 available with sdk 36
+  implementation("com.google.code.gson:gson:2.14.0")
+  implementation("com.squareup.okhttp3:okhttp:5.4.0")
+  implementation("io.github.jaredmdobson:concentus:1.0.2")
   testImplementation("junit:junit:4.13.2")
 }
 
@@ -17,7 +20,7 @@ android {
   compileSdkVersion = "android-36"
 
   defaultConfig {
-    applicationId = "juloo.keyboard2"
+    applicationId = "com.molaison.unexpectedkeyboard.doubao"
     minSdk = 21
     targetSdk { version = release(36) }
     versionCode = 55
@@ -74,7 +77,7 @@ android {
         "proguard-rules.pro")
       isShrinkResources = true
       isDebuggable = false
-      resValue("string", "app_name", "@string/app_name_release")
+      resValue("string", "app_name", "@string/app_name_doubao")
       signingConfig = signingConfigs["release"]
     }
 
@@ -82,8 +85,7 @@ android {
       isMinifyEnabled = false
       isShrinkResources = false
       isDebuggable = true
-      applicationIdSuffix = ".debug"
-      resValue("string", "app_name", "@string/app_name_debug")
+      resValue("string", "app_name", "@string/app_name_doubao")
       resValue("bool", "debug_logs", "true")
       signingConfig = signingConfigs["debug"]
     }
