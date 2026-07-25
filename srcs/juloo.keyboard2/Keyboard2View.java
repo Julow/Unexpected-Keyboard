@@ -32,6 +32,10 @@ public class Keyboard2View extends View
   /** Used to add fake pointers. */
   private KeyboardData.Key _compose_key;
 
+  /** Dedicated voice-typing action key. */
+  private KeyboardData.Key _voice_key;
+  private boolean _voice_input_active;
+
   private Pointers _pointers;
 
   private Pointers.Modifiers _mods;
@@ -109,6 +113,8 @@ public class Keyboard2View extends View
     _keyboard = kw;
     _shift_key = _keyboard.findKeyWithValue(KeyValue.SHIFT);
     _compose_key = _keyboard.findKeyWithValue(KeyValue.COMPOSE);
+    _voice_key =
+      _keyboard.findKeyWithValue(KeyValue.getKeyByName("voice_typing"));
     KeyModifier.set_modmap(_keyboard.modmap);
     reset();
   }
@@ -139,6 +145,12 @@ public class Keyboard2View extends View
   public void set_compose_pending(boolean pending)
   {
     set_fake_ptr_latched(_compose_key, KeyValue.COMPOSE, pending, false);
+  }
+
+  public void set_voice_input_active(boolean active)
+  {
+    _voice_input_active = active;
+    invalidate();
   }
 
   /** Called from [Keybard2.onUpdateSelection].  */
@@ -350,7 +362,8 @@ public class Keyboard2View extends View
       {
         x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _tc.horizontal_margin;
-        boolean isKeyDown = _pointers.isKeyDown(k);
+        boolean isKeyDown =
+          _pointers.isKeyDown(k) || (_voice_input_active && k == _voice_key);
         Theme.Computed.Key tc_key;
         if (isKeyDown)
           tc_key = _tc.key_activated;
@@ -417,6 +430,10 @@ public class Keyboard2View extends View
 
   private int labelColor(KeyValue k, boolean isKeyDown, boolean sublabel)
   {
+    if (_voice_input_active
+        && k.getKind() == KeyValue.Kind.Event
+        && k.getEvent() == KeyValue.Event.SWITCH_VOICE_TYPING)
+      return _theme.lockedColor;
     if (isKeyDown)
     {
       int flags = _pointers.getKeyFlags(k);

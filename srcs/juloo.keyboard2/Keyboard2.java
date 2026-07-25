@@ -58,6 +58,7 @@ public class Keyboard2 extends InputMethodService
   private DoubaoVoiceInput _doubaoVoiceInput;
   private boolean _startVoiceAfterPermission;
   private boolean _voicePushToTalkActive;
+  private Toast _voiceStateToast;
 
   private Config _config;
 
@@ -623,6 +624,14 @@ public class Keyboard2 extends InputMethodService
 
     public void onVoiceStateChanged(DoubaoVoiceInput.State state)
     {
+      _keyboard_layout_view.set_voice_input_active(
+          state == DoubaoVoiceInput.State.CONNECTING
+          || state == DoubaoVoiceInput.State.LISTENING);
+      if (_voiceStateToast != null)
+      {
+        _voiceStateToast.cancel();
+        _voiceStateToast = null;
+      }
       int message;
       switch (state)
       {
@@ -633,13 +642,13 @@ public class Keyboard2 extends InputMethodService
           message = R.string.toast_voice_listening;
           break;
         case FINISHING:
-          message = R.string.toast_voice_finishing;
-          break;
         case IDLE:
         default:
           return;
       }
-      Toast.makeText(Keyboard2.this, message, Toast.LENGTH_SHORT).show();
+      _voiceStateToast =
+        Toast.makeText(Keyboard2.this, message, Toast.LENGTH_SHORT);
+      _voiceStateToast.show();
     }
 
     public void onVoiceFailure(String message)

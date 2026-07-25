@@ -315,7 +315,7 @@ public final class DoubaoVoiceInput
         session.startSession();
         throwIfCancelledOrFailed();
         mainHandler.post(() -> {
-          if (isCurrent(this) && !cancelled)
+          if (isCurrent(this) && !cancelled && !stopRequested)
             host.onVoiceStateChanged(State.LISTENING);
         });
 

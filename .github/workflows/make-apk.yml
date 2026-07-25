@@ -1,10 +1,8 @@
-name: Make Apk CI
+name: Build Doubao APK
 
 on:
   workflow_dispatch:
   push:
-    branches:
-      - master
   pull_request:
 
 jobs:
@@ -41,10 +39,11 @@ jobs:
 
     - name: Run tests
       run: |
-        gradle test
+        gradle checkKeyboardLayouts testDebugUnitTest
         # Warn about outdated generated files.
-        if ! git diff --name-only; then
+        if ! git diff --quiet; then
           echo "Warning: Generated files are not uptodate. Run 'gradle test'."
+          git diff --name-only
         fi
 
     - name: Build debug APK
@@ -57,11 +56,12 @@ jobs:
 
     - name: Artifact naming
       run: |
-        artifact="${{github.repository_owner}} ${{github.ref_name}}"
+        artifact="Unexpected-Keyboard-Doubao ${{github.ref_name}}"
         artifact="${artifact//\//-}" # replace slashes
         echo "artifact=${artifact}" >> $GITHUB_ENV
     - name: Upload debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: "${{env.artifact}} debug_apk"
+        name: "${{env.artifact}} debug-apk"
         path: build/outputs/apk/debug/*.apk
+        if-no-files-found: error
