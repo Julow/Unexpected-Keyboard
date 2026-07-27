@@ -213,7 +213,10 @@ public class Keyboard2 extends InputMethodService
       && _config.editor_config.should_show_candidates_view
       && !_config.split_layout;
     if (should_show)
+    {
       _candidates_view.refresh_config(_config);
+      _keyeventhandler.dictionary_changed();
+    }
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -350,7 +353,6 @@ public class Keyboard2 extends InputMethodService
     refresh_current_dictionary();
     refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
-    _keyeventhandler.ime_subtype_changed();
   }
 
   @Override
