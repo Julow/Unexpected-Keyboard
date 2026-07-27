@@ -160,4 +160,13 @@
     <string name="dictionaries_download_success">Słownik zainstalowany</string>
     <string name="dictionaries_activity_not_enabled">Aby pobrać słowniki, najpierw włącz klawiaturę.</string>
     <string name="pref_dialog_edit_text">Własna definicja</string>
+    <string name="candidates_status_click_to_install">Naciśnij, aby zainstalować słownik dla %s</string>
+    <string name="dictionaries_download_failed">Błąd pobierania: Brak dostępu do internetu</string>
+    <string name="pref_physical_keyboard_behavior">Kiedy podłączono klawiaturę fizyczną</string>
+    <string name="pref_physical_keyboard_behavior_hide">Ukryj wszystko</string>
+    <string name="pref_physical_keyboard_behavior_show">Pokaż wszystko</string>
+    <string name="pref_split_layout">Podziel układ</string>
+    <string name="pref_split_layout_never">Nigdy</string>
+    <string name="pref_split_layout_landscape">W orientacji poziomej</string>
+    <string name="pref_split_layout_wide">Na szerokich ekranach</string>
 </resources>
