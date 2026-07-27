@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_release">அன்-எக்ஸ்பெக்டட் கீபோர்ட்</string>
+    <string name="short_description">குறைந்த எடையும், முழு தனியுரிமையும் கொண்ட ஆண்ட்ராய்டு கீபோர்டு</string>
+    <string name="store_description">கீகளை மூலைகளுக்கு ஸ்வைப் செய்வதன் மூலம் கூடுதல் எழுத்துக்களை டைப் செய்யலாம்.\n\nஇந்த ஆப் முதலில் டேர்மக்ஸ் (Termux) பயன்படுத்தும் புரோகிராமர்களுக்காக உருவாக்கப்பட்டது.\nஇப்போது அன்றாட பயன்பாட்டிற்கும் இது மிகச்சிறந்தது.\n\nஇதில் விளம்பரங்கள் இல்லை, இது ஒரு ஓப்பன் சோர்ஸ் (Open Source) ஆப்</string>
+    <string name="pref_portrait">போர்ட்ரெய்ட் மோடில் (செங்குத்து நிலையில்)</string>
+    <string name="pref_landscape_unfolded">விரித்த போர்ட்ரெய்ட் அமைப்பில்</string>
+    <string name="pref_category_layout">விசைப்பலகை அமைப்பு (Layout)</string>
+    <string name="pref_label_brightness">எழுத்துகளின் ஒளி அளவை மாற்றவும்</string>
+    <string name="pref_keyboard_opacity">கீபோர்டு பின்னணியின் ஒளி ஊடுருவும் அளவை மாற்றவும்</string>
+    <string name="pref_key_opacity">கீகளின் ஒளிபுகும் தன்மையை மாற்றவும்</string>
+    <string name="pref_layout_e_system">போன்/ஆண்ட்ராய்டு செட்டிங்ஸ்</string>
 </resources>
