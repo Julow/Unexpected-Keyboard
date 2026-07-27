@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_release">Unexpected Keyboard</string>
+    <string name="app_name_release">Teclado inesperado</string>
     <string name="app_name_debug">Unexpected Keyboard (Depuración)</string>
     <string name="short_description">Un teclado virtual ligero para Android consciente de su privacidad.</string>
     <string name="store_description">La característica principal es que hay acceso a más caractéres deslizando hacia las esquinas de las teclas.\n\nEsta aplicación fue originalmente diseñada para programadores que usaran Termux.\nAhora es perfecta para uso cotidiano.\n\nLa misma no contiene ningún anuncio/publicidad y es de Fuente Abierta.</string>
@@ -160,4 +160,13 @@
     <string name="dictionaries_from_internet">Descargar un diccionario de internet</string>
     <string name="dictionaries_download_success">Diccionario instalado</string>
     <string name="dictionaries_activity_not_enabled">Primero tienes que habilitar al teclado para descargar diccionarios.</string>
+    <string name="candidates_status_click_to_install">Haz clic para instalar un diccionario para %s</string>
+    <string name="pref_physical_keyboard_behavior">Cuando se conecta un teclado físico</string>
+    <string name="pref_physical_keyboard_behavior_hide">Ocultar todo</string>
+    <string name="pref_physical_keyboard_behavior_show">Mostrar todo</string>
+    <string name="pref_split_layout_never">Nunca</string>
+    <string name="pref_split_layout_landscape">En orientación horizontal</string>
+    <string name="pref_split_layout">Diseño dividido</string>
+    <string name="pref_split_layout_wide">En pantallas anchas</string>
+    <string name="dictionaries_download_failed">Error de descarga: Por favor, permite el acceso a Internet</string>
 </resources>
