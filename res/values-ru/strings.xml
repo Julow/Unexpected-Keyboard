@@ -161,4 +161,12 @@
     <string name="dictionaries_activity_not_enabled">Необходимо включить клавиатуру до загрузки словарей.</string>
     <string name="pref_dialog_edit_text">Собственное определение</string>
     <string name="candidates_status_click_to_install">Нажмите, чтобы установить словарь для %s</string>
+    <string name="pref_physical_keyboard_behavior">Если подключена физическая клавиатура</string>
+    <string name="pref_physical_keyboard_behavior_hide">Скрывать все</string>
+    <string name="pref_physical_keyboard_behavior_show">Показывать все</string>
+    <string name="pref_split_layout">Раздельное расположение</string>
+    <string name="pref_split_layout_never">Никогда</string>
+    <string name="pref_split_layout_landscape">В ландшафтном режиме</string>
+    <string name="pref_split_layout_wide">На широком экране</string>
+    <string name="dictionaries_download_failed">Ошибка загрузки: разрешите доступ к интернету</string>
 </resources>
