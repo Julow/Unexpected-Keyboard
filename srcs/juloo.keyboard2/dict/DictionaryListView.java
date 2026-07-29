@@ -39,15 +39,14 @@ public class DictionaryListView extends LinearLayout
     _dict_views = new ArrayList<DictView>();
     boolean device_locales =
       attrs.getAttributeBooleanValue(null, "device_locales", true);
-    DownloadBtnListener listener = this.new DownloadBtnListener();
     if (device_locales)
-      inflate_views_device_locales(ctx, listener);
+      inflate_views_device_locales(ctx);
     else
-      inflate_views_all(ctx, listener);
+      inflate_views_all(ctx);
     refresh();
   }
 
-  void inflate_views_device_locales(Context ctx, DownloadBtnListener listener)
+  void inflate_views_device_locales(Context ctx)
   {
     SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
     DeviceLocales locales = DeviceLocales.load(ctx);
@@ -57,24 +56,23 @@ public class DictionaryListView extends LinearLayout
       {
         int idx = ds.find(loc.dictionary);
         if (idx >= 0)
-          inflate_item(ctx, ds, idx, listener);
+          inflate_item(ctx, ds, idx);
       }
     }
   }
 
-  void inflate_views_all(Context ctx, DownloadBtnListener listener)
+  void inflate_views_all(Context ctx)
   {
     SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
     for (int i = 0; i < ds.length(); i++)
-      inflate_item(ctx, ds, i, listener);
+      inflate_item(ctx, ds, i);
   }
 
-  void inflate_item(Context ctx, SupportedDictionaries ds, int i,
-      DownloadBtnListener listener)
+  void inflate_item(Context ctx, SupportedDictionaries ds, int i)
   {
     View v = LayoutInflater.from(ctx)
       .inflate(R.layout.dictionary_download_item, this, false);
-    _dict_views.add(new DictView(v, ds, i, listener));
+    _dict_views.add(this.new DictView(v, ds, i));
     addView(v);
   }
 
@@ -128,24 +126,12 @@ public class DictionaryListView extends LinearLayout
     refresh();
   }
 
-  final class DownloadBtnListener implements View.OnClickListener
-  {
-    @Override
-    public void onClick(View v)
-    {
-      for (DictView dv : _dict_views)
-        if (dv.download_button == v)
-          toggle_installed(dv.dict_name);
-    }
-  }
-
-  static final class DictView
+  final class DictView implements View.OnClickListener
   {
     public final String dict_name;
     public final View download_button;
 
-    public DictView(View view, SupportedDictionaries ds, int dict_index,
-        DownloadBtnListener on_click)
+    public DictView(View view, SupportedDictionaries ds, int dict_index)
     {
       dict_name = ds.dict_name(dict_index);
       float size_mb = ds.size(dict_index) / 1048576.f;
@@ -154,7 +140,7 @@ public class DictionaryListView extends LinearLayout
       ((TextView)view.findViewById(R.id.dictionary_download_size))
         .setText(NumberFormat.getInstance().format(size_mb) + "MB");
       download_button = view.findViewById(R.id.dictionary_download_button);
-      download_button.setOnClickListener(on_click);
+      download_button.setOnClickListener(this);
     }
 
     public void refresh(Set<String> installed, Set<String> pending)
@@ -164,6 +150,12 @@ public class DictionaryListView extends LinearLayout
         installed.contains(dict_name) ? R.drawable.ic_delete :
         R.drawable.ic_download;
       ((ImageView)download_button).setImageResource(res);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+      toggle_installed(dict_name);
     }
   }
 
