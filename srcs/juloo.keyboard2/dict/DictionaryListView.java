@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import juloo.cdict.Cdict;
-import juloo.keyboard2.Config;
 import juloo.keyboard2.DeviceLocales;
 import juloo.keyboard2.Logs;
 import juloo.keyboard2.R;
@@ -29,7 +27,7 @@ public class DictionaryListView extends LinearLayout
 {
   List<DictView> _dict_views;
   Dictionaries _dictionaries;
-  Set<String> _pending = new HashSet();
+  Set<String> _pending = new HashSet<String>();
 
   public DictionaryListView(Context ctx, AttributeSet attrs)
   {
@@ -82,7 +80,7 @@ public class DictionaryListView extends LinearLayout
   {
     Set<String> installed = _dictionaries.get_installed();
     for (DictView d : _dict_views)
-      d.refresh(installed, _pending);
+      d.refresh(installed);
   }
 
   void toggle_installed(String dict_name)
@@ -129,7 +127,7 @@ public class DictionaryListView extends LinearLayout
   final class DictView implements View.OnClickListener
   {
     public final String dict_name;
-    public final View download_button;
+    public final ImageView download_button;
 
     public DictView(View view, SupportedDictionaries ds, int dict_index)
     {
@@ -139,17 +137,18 @@ public class DictionaryListView extends LinearLayout
         .setText(ds.display_name(dict_index));
       ((TextView)view.findViewById(R.id.dictionary_download_size))
         .setText(NumberFormat.getInstance().format(size_mb) + "MB");
-      download_button = view.findViewById(R.id.dictionary_download_button);
+      download_button =
+        (ImageView)view.findViewById(R.id.dictionary_download_button);
       download_button.setOnClickListener(this);
     }
 
-    public void refresh(Set<String> installed, Set<String> pending)
+    public void refresh(Set<String> installed)
     {
       int res =
-        pending.contains(dict_name) ? 0 :
+        _pending.contains(dict_name) ? 0 :
         installed.contains(dict_name) ? R.drawable.ic_delete :
         R.drawable.ic_download;
-      ((ImageView)download_button).setImageResource(res);
+      download_button.setImageResource(res);
     }
 
     @Override
