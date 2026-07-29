@@ -34,12 +34,21 @@ public final class DirectBootAwarePreferences
       copy_shared_preferences(src, get_protected_prefs(context));
   }
 
+  /** Load the default preferences. */
   static SharedPreferences get_protected_prefs(Context context)
   {
     String pref_name =
       PreferenceManager.getDefaultSharedPreferencesName(context);
-    return context.createDeviceProtectedStorageContext()
-      .getSharedPreferences(pref_name, Context.MODE_PRIVATE);
+    return get_protected_prefs(context, pref_name);
+  }
+
+  /** Load the specified preferences. */
+  public static SharedPreferences get_protected_prefs(Context context,
+      String pref_name)
+  {
+    if (VERSION.SDK_INT >= 24)
+      context = context.createDeviceProtectedStorageContext();
+    return context.getSharedPreferences(pref_name, Context.MODE_PRIVATE);
   }
 
   static void check_need_migration(Context app_context,
