@@ -5,7 +5,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:orientation">horizontal</item>
-    <item name="android:gravity">center</item>
+    <item name="android:gravity">end|center_vertical</item>
     <item name="android:paddingEnd">@dimen/candidates_gap</item>
   </style>
   <style name="candidates_item">
@@ -27,6 +27,15 @@
     <item name="android:layout_weight">0</item>
     <item name="android:layout_marginStart">@dimen/candidates_gap</item>
     <item name="android:padding">@dimen/candidates_suggestions_padding</item>
+    <item name="android:gravity">center</item>
+  </style>
+  <style name="change_dictionary">
+    <item name="android:layout_width">@dimen/candidates_btn_width</item>
+    <item name="android:layout_height">@dimen/candidates_btn_width</item>
+    <item name="android:layout_weight">0</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:padding">@dimen/candidates_suggestions_padding</item>
+    <item name="android:background">@drawable/btn_change_dictionary</item>
     <item name="android:gravity">center</item>
   </style>
   <style name="candidates_status">

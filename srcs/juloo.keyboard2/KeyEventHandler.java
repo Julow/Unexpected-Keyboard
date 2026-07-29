@@ -154,7 +154,7 @@ public final class KeyEventHandler
     _suggestions.currently_typed_word(word);
   }
 
-  public void ime_subtype_changed()
+  public void dictionary_changed()
   {
     // Refresh the suggestions immediately after dictionary changed.
     _suggestions.currently_typed_word(_typedword.get());

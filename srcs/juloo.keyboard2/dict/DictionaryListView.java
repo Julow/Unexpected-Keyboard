@@ -34,29 +34,39 @@ public class DictionaryListView extends LinearLayout
     super(ctx, attrs);
     setOrientation(LinearLayout.VERTICAL);
     _dictionaries = Dictionaries.instance(ctx);
-    inflate_views(ctx);
+    _dict_views = new ArrayList<DictView>();
+    boolean device_locales =
+      attrs.getAttributeBooleanValue(null, "device_locales", true);
+    DownloadBtnListener listener = this.new DownloadBtnListener();
+    if (device_locales)
+      inflate_views_device_locales(ctx, listener);
+    else
+      inflate_views_all(ctx, listener);
+    for (DictView dv : _dict_views)
+      addView(dv.view);
+    refresh();
   }
 
-  void inflate_views(Context ctx)
+  void inflate_views_device_locales(Context ctx, DownloadBtnListener listener)
   {
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
     DeviceLocales locales = DeviceLocales.load(ctx);
-    SupportedDictionaries ds = new SupportedDictionaries(ctx.getResources());
-    DownloadBtnListener listener = this.new DownloadBtnListener();
-    _dict_views = new ArrayList<DictView>();
     for (DeviceLocales.Loc loc : locales.installed)
     {
-      int idx = (loc.dictionary != null) ? ds.find(loc.dictionary) : -1;
-      if (idx >= 0)
+      if (loc.dictionary != null)
       {
-        DictView dv = new DictView(ctx, ds, idx, listener);
-        addView(dv.view);
-        _dict_views.add(dv);
+        int idx = ds.find(loc.dictionary);
+        if (idx >= 0)
+          _dict_views.add(new DictView(ctx, ds, idx, listener));
       }
     }
-    refresh();
-    // The keyboard is not enabled and the list is empty, show a message.
-    if (locales.installed.size() == 0)
-      addView(View.inflate(ctx, R.layout.dictionary_status_not_enabled, null));
+  }
+
+  void inflate_views_all(Context ctx, DownloadBtnListener listener)
+  {
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
+    for (int i = 0; i < ds.length(); i++)
+      _dict_views.add(new DictView(ctx, ds, i, listener));
   }
 
   /** Update the "installed" status of item views. Meaning whether the

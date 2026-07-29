@@ -132,5 +132,4 @@
     <string name="pref_clipboard_history_duration_stop">تا زمان بسته شدن برنامه</string>
     <string name="dictionaries_from_internet">دانلود دیکشنری از اینترنت</string>
     <string name="dictionaries_download_success">دیکشنری نصب شد</string>
-    <string name="dictionaries_activity_not_enabled">شما ابتدا باید صفحه کلید را برای دانلود دیکشنری ها فعال کنید.</string>
 </resources>
