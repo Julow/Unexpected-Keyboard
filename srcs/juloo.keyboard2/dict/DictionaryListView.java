@@ -159,10 +159,11 @@ public class DictionaryListView extends LinearLayout
 
     public void refresh(Set<String> installed, Set<String> pending)
     {
-      ((ImageView)download_button).setImageResource(installed.contains(dict_name)
-          ? R.drawable.ic_delete : R.drawable.ic_download);
-      download_button.setVisibility(pending.contains(dict_name)
-          ? View.GONE : View.VISIBLE);
+      int res =
+        pending.contains(dict_name) ? 0 :
+        installed.contains(dict_name) ? R.drawable.ic_delete :
+        R.drawable.ic_download;
+      ((ImageView)download_button).setImageResource(res);
     }
   }
 
