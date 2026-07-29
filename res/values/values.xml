@@ -11,6 +11,7 @@
   <dimen name="candidates_margin_vertical">8dp</dimen>
   <dimen name="candidates_emoji_width">40dp</dimen>
   <dimen name="candidates_btn_width">25dp</dimen>
+  <dimen name="dictionary_download_item_width">40dp</dimen>
   <!-- Will be overwritten automatically by Gradle for the debug build variant -->
   <bool name="debug_logs">false</bool>
   <!-- Color fallback for the Monet themes on Android API < 31. This makes the
