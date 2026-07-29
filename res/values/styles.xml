@@ -132,14 +132,13 @@
   <style name="dictionary_download_item">
     <item name="android:orientation">horizontal</item>
     <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginVertical">8dp</item>
+    <item name="android:layout_height">@dimen/dictionary_download_item_width</item>
     <item name="android:gravity">center</item>
     <item name="android:paddingHorizontal">48dp</item>
   </style>
   <style name="dictionary_download_locale">
     <item name="android:layout_weight">1</item>
-    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textSize">16sp</item>
   </style>
@@ -151,8 +150,10 @@
     <item name="android:textSize">12sp</item>
   </style>
   <style name="dictionary_download_button">
-    <item name="android:layout_width">24dp</item>
-    <item name="android:layout_height">24dp</item>
+    <item name="android:layout_width">@dimen/dictionary_download_item_width</item>
+    <item name="android:layout_height">@dimen/dictionary_download_item_width</item>
+    <item name="android:padding">8dp</item>
+    <item name="android:scaleType">fitCenter</item>
   </style>
   <style name="appTheme" parent="@android:style/Theme.Material.Light"/>
   <style name="settingsTheme" parent="appTheme">

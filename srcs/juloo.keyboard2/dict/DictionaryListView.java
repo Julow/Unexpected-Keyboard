@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -158,7 +159,7 @@ public class DictionaryListView extends LinearLayout
 
     public void refresh(Set<String> installed, Set<String> pending)
     {
-      download_button.setBackgroundResource(installed.contains(dict_name)
+      ((ImageView)download_button).setImageResource(installed.contains(dict_name)
           ? R.drawable.ic_delete : R.drawable.ic_download);
       download_button.setVisibility(pending.contains(dict_name)
           ? View.GONE : View.VISIBLE);
