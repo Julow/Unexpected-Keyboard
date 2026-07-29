@@ -2,6 +2,7 @@ package juloo.keyboard2.dict;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,8 +43,6 @@ public class DictionaryListView extends LinearLayout
       inflate_views_device_locales(ctx, listener);
     else
       inflate_views_all(ctx, listener);
-    for (DictView dv : _dict_views)
-      addView(dv.view);
     refresh();
   }
 
@@ -57,7 +56,7 @@ public class DictionaryListView extends LinearLayout
       {
         int idx = ds.find(loc.dictionary);
         if (idx >= 0)
-          _dict_views.add(new DictView(ctx, ds, idx, listener));
+          inflate_item(ctx, ds, idx, listener);
       }
     }
   }
@@ -66,7 +65,16 @@ public class DictionaryListView extends LinearLayout
   {
     SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
     for (int i = 0; i < ds.length(); i++)
-      _dict_views.add(new DictView(ctx, ds, i, listener));
+      inflate_item(ctx, ds, i, listener);
+  }
+
+  void inflate_item(Context ctx, SupportedDictionaries ds, int i,
+      DownloadBtnListener listener)
+  {
+    View v = LayoutInflater.from(ctx)
+      .inflate(R.layout.dictionary_download_item, this, false);
+    _dict_views.add(new DictView(v, ds, i, listener));
+    addView(v);
   }
 
   /** Update the "installed" status of item views. Meaning whether the
@@ -132,14 +140,12 @@ public class DictionaryListView extends LinearLayout
 
   static final class DictView
   {
-    public final View view;
     public final String dict_name;
     public final View download_button;
 
-    public DictView(Context ctx, SupportedDictionaries ds, int dict_index,
+    public DictView(View view, SupportedDictionaries ds, int dict_index,
         DownloadBtnListener on_click)
     {
-      view = View.inflate(ctx, R.layout.dictionary_download_item, null);
       dict_name = ds.dict_name(dict_index);
       float size_mb = ds.size(dict_index) / 1048576.f;
       ((TextView)view.findViewById(R.id.dictionary_download_locale))
