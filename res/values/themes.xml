@@ -332,4 +332,21 @@
     <item name="clipboard_divider_color">?colorLabel</item>
     <item name="clipboard_divider_height">2dp</item>
  </style>
+ <style name="Dracula" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#282A36</item>
+    <item name="colorKey">#343746</item>
+    <item name="colorKeyActivated">#44475A</item>
+    <item name="colorKeyAction">#7446A8</item>
+    <item name="colorKeySpaceBar">#343746</item>
+    <item name="colorLabel">#F8F8F2</item>
+    <item name="colorLabelActivated">#FF79C6</item>
+    <item name="colorLabelLocked">#50FA7B</item>
+    <item name="colorSubLabel">#6272A4</item>
+    <item name="keyBorderRadius">8dp</item>
+    <item name="keyBorderWidth">0dp</item>
+    <item name="keyBorderWidthActivated">0dp</item>
+    <item name="emoji_button_bg">#343746</item>
+    <item name="emoji_color">#F8F8F2</item>
+  </style>
 </resources>
