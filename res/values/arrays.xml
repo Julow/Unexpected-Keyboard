@@ -46,6 +46,7 @@
     <item>@string/pref_theme_e_cobalt</item>
     <item>@string/pref_theme_e_pine</item>
     <item>@string/pref_theme_e_epaperblack</item>
+    <item>@string/pref_theme_e_gradientpurplepink</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
@@ -65,6 +66,7 @@
     <item>cobalt</item>
     <item>pine</item>
     <item>epaperblack</item>
+    <item>gradientpurplepink</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>

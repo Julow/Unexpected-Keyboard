@@ -278,6 +278,7 @@ public final class Config
       case "cobalt": return R.style.Cobalt;
       case "pine": return R.style.Pine;
       case "epaperblack": return R.style.ePaperBlack;
+      case "gradientpurplepink": return R.style.GradientPurplePink;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
