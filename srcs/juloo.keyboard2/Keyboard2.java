@@ -29,6 +29,7 @@ import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.dict.DictionarySwitcher;
+import juloo.keyboard2.dict.SupportedDictionaries;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 import juloo.keyboard2.suggestions.Suggestions;
@@ -190,11 +191,13 @@ public class Keyboard2 extends InputMethodService
   {
     _config.should_show_dictionary_switch =
       (_config.device_locales.installed.size() > 0);
-    String selected = _dictionaries.get_selected(_config);
-    String fallback = (_config.device_locales.default_ != null) ?
-      _config.device_locales.default_.dictionary : null;
-    _dictionaries.set_current_dictionary(_config,
-        (selected != null) ? selected : fallback);
+    String dict_name = _dictionaries.get_selected(_config);
+    if (dict_name == null)
+      dict_name = (_config.device_locales.default_ != null) ?
+        _config.device_locales.default_.dictionary : null;
+    _dictionaries.set_current_dictionary(_config, dict_name);
+    _config.current_dictionary_name =
+      SupportedDictionaries.get(getResources()).get_display_name(dict_name);
   }
 
   /** Remember and apply the dictionary chosen by the user for the current

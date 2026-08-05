@@ -39,6 +39,8 @@ public class CandidatesView extends LinearLayout
   View _dictionary_switch_button;
   boolean should_show_dictionary_switch = false;
 
+  TextView _lang_name_view;
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -53,6 +55,7 @@ public class CandidatesView extends LinearLayout
     setup_item_view(2, R.id.candidates_left);
     setup_item_view(3, R.id.candidates_emoji);
     setup_dictionary_switch_button();
+    _lang_name_view = (TextView)findViewById(R.id.candidates_lang_name);
   }
 
   public void set_candidates(Suggestions s)
@@ -77,9 +80,10 @@ public class CandidatesView extends LinearLayout
         v.setVisibility(View.GONE);
       }
     }
-    _dictionary_switch_button.setVisibility(
-        (should_show_dictionary_switch && s.count == 0) ?
-        View.VISIBLE : View.GONE);
+    int dict_vis =
+      (should_show_dictionary_switch && s.count == 0) ? View.VISIBLE : View.GONE;
+    _dictionary_switch_button.setVisibility(dict_vis);
+    _lang_name_view.setVisibility(dict_vis);
   }
 
   void clear_candidates()
@@ -102,6 +106,7 @@ public class CandidatesView extends LinearLayout
       _status_no_dict.setVisibility(View.GONE);
     should_show_dictionary_switch = config.should_show_dictionary_switch;
     set_sizes(config);
+    _lang_name_view.setText(config.current_dictionary_name);
   }
 
   /** Set the height of the suggestion row and the text size. */

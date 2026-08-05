@@ -44,6 +44,13 @@
     <item name="android:gravity">center</item>
     <item name="android:textColor">?attr/colorLabel</item>
   </style>
+  <style name="candidates_lang_name">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">end|center_vertical</item>
+    <item name="android:textColor">?attr/colorSubLabel</item>
+    <item name="android:layout_marginEnd">@dimen/candidates_gap</item>
+  </style>
   <!-- Emoji pane -->
   <style name="emojiTypeButton">
     <item name="android:padding">1px</item>
