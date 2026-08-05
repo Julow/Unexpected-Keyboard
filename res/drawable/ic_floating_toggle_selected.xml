@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- From materialdesignicons.com "keyboard", highlighted when floating mode is active -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:fillColor="?attr/colorLabelActivated"
+      android:pathData="M20,5H4A2,2 0 0,0 2,7V17A2,2 0 0,0 4,19H20A2,2 0 0,0 22,17V7A2,2 0 0,0 20,5M20,17H4V7H20V17M8,9V11H6V9H8M12,9V11H10V9H12M16,9V11H14V9H16M5,15H19V17H5V15Z"/>
+</vector>

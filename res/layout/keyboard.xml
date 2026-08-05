@@ -7,6 +7,7 @@
     <TextView android:id="@+id/candidates_middle" style="@style/candidates_item"/>
     <TextView android:id="@+id/candidates_right" style="@style/candidates_item"/>
     <Button android:id="@+id/dictionary_switch" style="@style/change_dictionary"/>
+    <Button android:id="@+id/floating_toggle" style="@style/change_dictionary" android:background="@drawable/btn_floating_toggle" android:contentDescription="@string/floating_toggle_description"/>
   </juloo.keyboard2.suggestions.CandidatesView>
   <juloo.keyboard2.Keyboard2View android:id="@+id/keyboard_view" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </LinearLayout>

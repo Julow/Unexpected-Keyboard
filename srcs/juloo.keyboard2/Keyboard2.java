@@ -267,6 +267,18 @@ public class Keyboard2 extends InputMethodService
       handle.setVisibility(_config.floating_keyboard ? View.VISIBLE : View.GONE);
   }
 
+  /** Toggle floating keyboard mode on and off from the keyboard. */
+  private void toggleFloatingKeyboard()
+  {
+    Config.globalPrefs().edit()
+      .putBoolean("floating_keyboard", !_config.floating_keyboard)
+      .apply();
+    refresh_config();
+    _keyboard_layout_view.setKeyboard(current_layout());
+    updateSoftInputWindowLayoutParams();
+    updateFloatingHandleVisibility();
+  }
+
   private KeyboardData refresh_special_layout()
   {
     if (_config.editor_config.numeric_layout)
@@ -656,6 +668,10 @@ public class Keyboard2 extends InputMethodService
 
         case CHANGE_DICTIONARY:
           new DictionarySwitcher(Keyboard2.this, _dictionaries, this).choose();
+          break;
+
+        case TOGGLE_FLOATING:
+          toggleFloatingKeyboard();
           break;
       }
     }
