@@ -335,4 +335,29 @@
     <item name="clipboard_divider_color">?colorLabel</item>
     <item name="clipboard_divider_height">2dp</item>
  </style>
+ <style name="GradientPurplePink" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#251A3A</item>
+    <!-- Vertical Gradient -->
+    <item name="keyboardGradientStart">#8A2BE2</item>
+    <item name="keyboardGradientEnd">#AF6679</item>
+    <!-- Translucid keys : format #AARRGGBB -->
+    <item name="colorKey">#B3262033</item>
+    <item name="colorKeyActivated">#DD67527E</item>
+    <item name="colorKeyAction">#D13B2D50</item>
+    <item name="colorKeySpaceBar">#C72D253D</item>
+    <!-- Letters -->
+    <item name="colorLabel">#FFFFFFFF</item>
+    <item name="colorLabelPressed">#FFFFFFFF</item>
+    <item name="colorLabelActivated">#462563</item>
+    <item name="colorLabelLocked">#B9F6FF</item>
+    <item name="colorSubLabel">#B088D3</item>
+    <!-- Keys forms -->
+    <item name="keyBorderRadius">8dp</item>
+    <item name="keyBorderWidth">0dp</item>
+    <item name="keyBorderWidthActivated">0dp</item>
+    <!-- Emojis -->
+    <item name="emoji_button_bg">#3B2D50</item>
+    <item name="emoji_color">#FFFFFF</item>
+ </style>
 </resources>
