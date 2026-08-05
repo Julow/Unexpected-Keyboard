@@ -3,6 +3,9 @@
   <declare-styleable name="keyboard">
     <!-- The background of the keyboard -->
     <attr name="colorKeyboard" format="color"/>
+    <!-- Optional vertical gradient drawn behind the keys -->
+    <attr name="keyboardGradientStart" format="color"/>
+    <attr name="keyboardGradientEnd" format="color"/>
     <!-- Background of the keys -->
     <attr name="colorKey" format="color"/>
     <!-- Background of the keys when pressed -->

@@ -15,6 +15,11 @@ public class Theme
   public final int colorKeyAction;
   public final int colorKeySpaceBar;
 
+  // Optional keyboard background gradient
+  public final boolean hasKeyboardGradient;
+  public final int keyboardGradientStart;
+  public final int keyboardGradientEnd;
+
   // Label colors
   public final int lockedColor;
   public final int activatedColor;
@@ -42,6 +47,9 @@ public class Theme
   {
     getKeyFont(context); // _key_font will be accessed
     TypedArray s = context.getTheme().obtainStyledAttributes(attrs, R.styleable.keyboard, 0, 0);
+    hasKeyboardGradient = s.hasValue(R.styleable.keyboard_keyboardGradientStart) && s.hasValue(R.styleable.keyboard_keyboardGradientEnd);
+    keyboardGradientStart = s.getColor(R.styleable.keyboard_keyboardGradientStart, 0);
+    keyboardGradientEnd = s.getColor(R.styleable.keyboard_keyboardGradientEnd, 0);
     colorKey = s.getColor(R.styleable.keyboard_colorKey, 0);
     colorKeyActivated = s.getColor(R.styleable.keyboard_colorKeyActivated, 0);
     colorKeyAction = s.getColor(R.styleable.keyboard_colorKeyAction, colorKey);

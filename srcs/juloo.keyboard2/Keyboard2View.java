@@ -19,6 +19,8 @@ import android.view.WindowManager;
 import android.view.WindowMetrics;
 import java.util.Arrays;
 import java.util.List;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 
 public class Keyboard2View extends View
   implements View.OnTouchListener, Pointers.IPointerEventHandler
@@ -52,6 +54,8 @@ public class Keyboard2View extends View
 
   private Theme _theme;
   private Theme.Computed _tc;
+
+  private final Paint _keyboardBackgroundPaint = new Paint();
 
   private static RectF _tmpRect = new RectF();
 
@@ -338,8 +342,41 @@ public class Keyboard2View extends View
   };
 
   @Override
+  protected void onSizeChanged(int w, int h, int oldw, int oldh)
+  {
+    super.onSizeChanged(w, h, oldw, oldh);
+
+    if (_theme.hasKeyboardGradient && h > 0)
+    {
+      LinearGradient gradient = new LinearGradient(
+              0,
+              0,
+              0,
+              h,
+              _theme.keyboardGradientStart,
+              _theme.keyboardGradientEnd,
+              Shader.TileMode.CLAMP);
+
+      _keyboardBackgroundPaint.setShader(gradient);
+    }
+    else
+    {
+      _keyboardBackgroundPaint.setShader(null);
+    }
+  }
+
+  @Override
   protected void onDraw(Canvas canvas)
   {
+    if (_theme.hasKeyboardGradient)
+    {
+      canvas.drawRect(
+              0,
+              0,
+              getWidth(),
+              getHeight(),
+              _keyboardBackgroundPaint);
+    }
     float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {
