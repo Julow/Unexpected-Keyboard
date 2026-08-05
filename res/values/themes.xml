@@ -352,4 +352,24 @@
     <item name="emoji_button_bg">#343746</item>
     <item name="emoji_color">#F8F8F2</item>
   </style>
+  <style name="GradientPurplePink" parent="BaseTheme">
+    <item name="android:isLightTheme">false</item>
+    <item name="colorKeyboard">#251A3A</item>
+    <item name="keyboardGradientStart">#8A2BE2</item>
+    <item name="keyboardGradientEnd">#AF6679</item>
+    <item name="colorKey">#B3262033</item>
+    <item name="colorKeyActivated">#DD67527E</item>
+    <item name="colorKeyAction">#D13B2D50</item>
+    <item name="colorKeySpaceBar">#C72D253D</item>
+    <item name="colorLabel">#FFFFFFFF</item>
+    <item name="colorLabelPressed">#FFFFFFFF</item>
+    <item name="colorLabelActivated">#462563</item>
+    <item name="colorLabelLocked">#B9F6FF</item>
+    <item name="colorSubLabel">#B088D3</item>
+    <item name="keyBorderRadius">8dp</item>
+    <item name="keyBorderWidth">0dp</item>
+    <item name="keyBorderWidthActivated">0dp</item>
+    <item name="emoji_button_bg">#3B2D50</item>
+    <item name="emoji_color">#FFFFFF</item>
+  </style>
 </resources>
