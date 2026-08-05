@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
@@ -36,6 +37,12 @@ import juloo.keyboard2.suggestions.Suggestions;
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+  /** Preference keys storing the last floating window position. */
+  private static final String PREF_FLOATING_X = "floating_x";
+  private static final String PREF_FLOATING_Y = "floating_y";
+  /** Fraction of the screen height used as the default top offset. */
+  private static final float DEFAULT_FLOATING_Y_RATIO = 0.25f;
+
   /** The view containing the keyboard and candidates view. */
   private ViewGroup _keyboard_container_view;
   private Keyboard2View _keyboard_layout_view;
@@ -55,6 +62,12 @@ public class Keyboard2 extends InputMethodService
   private Config _config;
 
   private FoldStateTracker _foldStateTracker;
+
+  /** Drag state of the floating keyboard handle. */
+  private float _dragStartX;
+  private float _dragStartY;
+  private int _windowStartX;
+  private int _windowStartY;
 
   /** Layout currently visible before it has been modified. */
   KeyboardData current_layout_unmodified()
@@ -162,6 +175,8 @@ public class Keyboard2 extends InputMethodService
     _keyboard_container_view = (ViewGroup)inflate_view(R.layout.keyboard);
     _keyboard_layout_view = (Keyboard2View)_keyboard_container_view.findViewById(R.id.keyboard_view);
     _candidates_view = (CandidatesView)_keyboard_container_view.findViewById(R.id.candidates_view);
+    View handle = _keyboard_container_view.findViewById(R.id.floating_handle);
+    handle.setOnTouchListener(_floatingHandleTouchListener);
   }
 
   InputMethodManager get_imm()
@@ -240,7 +255,16 @@ public class Keyboard2 extends InputMethodService
     bg.setAlpha(_config.keyboardOpacity);
     _keyboard_container_view.setBackground(bg);
     _keyboard_layout_view.reset();
+    updateFloatingHandleVisibility();
     refresh_candidates_view();
+  }
+
+  /** Show or hide the floating keyboard drag handle. */
+  private void updateFloatingHandleVisibility()
+  {
+    View handle = _keyboard_container_view.findViewById(R.id.floating_handle);
+    if (handle != null)
+      handle.setVisibility(_config.floating_keyboard ? View.VISIBLE : View.GONE);
   }
 
   private KeyboardData refresh_special_layout()
@@ -289,12 +313,27 @@ public class Keyboard2 extends InputMethodService
   }
 
   private void updateSoftInputWindowLayoutParams() {
+    if (_config.floating_keyboard)
+    {
+      applyFloatingWindow();
+      return;
+    }
     final Window window = getWindow().getWindow();
+    // Restore the docked layout when leaving floating mode
+    WindowManager.LayoutParams wattrs = window.getAttributes();
+    if (wattrs.width != ViewGroup.LayoutParams.MATCH_PARENT
+        || wattrs.gravity != Gravity.BOTTOM)
+    {
+      wattrs.width = ViewGroup.LayoutParams.MATCH_PARENT;
+      wattrs.gravity = Gravity.BOTTOM;
+      wattrs.x = 0;
+      wattrs.y = 0;
+      window.setAttributes(wattrs);
+    }
     // On API >= 35, Keyboard2View behaves as edge-to-edge
     // APIs 30 to 34 have visual artifact when edge-to-edge is enabled
     if (VERSION.SDK_INT >= 35)
     {
-      WindowManager.LayoutParams wattrs = window.getAttributes();
       wattrs.layoutInDisplayCutoutMode =
         WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
       // Allow to draw behind system bars
@@ -312,6 +351,107 @@ public class Keyboard2 extends InputMethodService
     updateLayoutGravityOf((View) inputArea.getParent(), Gravity.BOTTOM);
 
   }
+
+  /** Make the IME window a small floating window at the stored position. */
+  private void applyFloatingWindow()
+  {
+    if (!_config.floating_keyboard)
+      return;
+    final Window window = getWindow().getWindow();
+    final WindowManager.LayoutParams lp = window.getAttributes();
+    Point pos = getFloatingPosition();
+    lp.gravity = Gravity.TOP | Gravity.START;
+    lp.width = floatingWindowWidth();
+    lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    lp.x = pos.x;
+    lp.y = pos.y;
+    window.setAttributes(lp);
+  }
+
+  /** Width of the floating keyboard window, in pixels. */
+  private int floatingWindowWidth()
+  {
+    android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+    return (int)Math.min(dm.widthPixels * Config.FLOATING_KEYBOARD_WIDTH_RATIO,
+        dm.density * Config.FLOATING_KEYBOARD_MAX_WIDTH_DP);
+  }
+
+  /** Position of the floating window, loaded from the preferences or a
+      default position (centered horizontally, ~25% from the top). */
+  private Point getFloatingPosition()
+  {
+    SharedPreferences prefs = Config.globalPrefs();
+    if (prefs.contains(PREF_FLOATING_X) && prefs.contains(PREF_FLOATING_Y))
+      return new Point(prefs.getInt(PREF_FLOATING_X, 0),
+          prefs.getInt(PREF_FLOATING_Y, 0));
+    android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+    int x = (dm.widthPixels - floatingWindowWidth()) / 2;
+    int y = (int)(dm.heightPixels * DEFAULT_FLOATING_Y_RATIO);
+    return new Point(x, y);
+  }
+
+  @Override
+  public void onConfigureWindow(Window window, boolean isFullscreen,
+      boolean isCandidatesOnly)
+  {
+    super.onConfigureWindow(window, isFullscreen, isCandidatesOnly);
+    applyFloatingWindow();
+  }
+
+  @Override
+  public void onComputeInsets(Insets outInsets)
+  {
+    super.onComputeInsets(outInsets);
+    // Report zero insets in floating mode so the app behind is not resized.
+    if (_config.floating_keyboard)
+    {
+      outInsets.contentTopInsets = 0;
+      outInsets.visibleTopInsets = 0;
+    }
+  }
+
+  /** Drag the floating window from its handle. */
+  private final View.OnTouchListener _floatingHandleTouchListener =
+    new View.OnTouchListener()
+    {
+      @Override
+      public boolean onTouch(View v, MotionEvent event)
+      {
+        switch (event.getActionMasked())
+        {
+          case MotionEvent.ACTION_DOWN:
+            _dragStartX = event.getRawX();
+            _dragStartY = event.getRawY();
+            WindowManager.LayoutParams lp = getWindow().getWindow().getAttributes();
+            _windowStartX = lp.x;
+            _windowStartY = lp.y;
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            return true;
+          case MotionEvent.ACTION_MOVE:
+            WindowManager wm = getWindow().getWindow().getWindowManager();
+            WindowManager.LayoutParams lp2 = getWindow().getWindow().getAttributes();
+            int dx = (int)(event.getRawX() - _dragStartX);
+            int dy = (int)(event.getRawY() - _dragStartY);
+            int winW = getWindow().getWindow().getDecorView().getWidth();
+            int winH = getWindow().getWindow().getDecorView().getHeight();
+            android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+            lp2.x = Math.max(0, Math.min(_windowStartX + dx, dm.widthPixels - winW));
+            lp2.y = Math.max(0, Math.min(_windowStartY + dy, dm.heightPixels - winH));
+            wm.updateViewLayout(getWindow().getWindow().getDecorView(), lp2);
+            return true;
+          case MotionEvent.ACTION_UP:
+          case MotionEvent.ACTION_CANCEL:
+            WindowManager.LayoutParams lp3 = getWindow().getWindow().getAttributes();
+            Config.globalPrefs().edit()
+              .putInt(PREF_FLOATING_X, lp3.x)
+              .putInt(PREF_FLOATING_Y, lp3.y)
+              .apply();
+            v.getParent().requestDisallowInterceptTouchEvent(false);
+            return true;
+        }
+        return false;
+      }
+    };
 
   private static void updateLayoutHeightOf(final Window window, final int layoutHeight) {
     final WindowManager.LayoutParams params = window.getAttributes();
@@ -376,6 +516,8 @@ public class Keyboard2 extends InputMethodService
   {
     refresh_config();
     _keyboard_layout_view.setKeyboard(current_layout());
+    updateSoftInputWindowLayoutParams();
+    updateFloatingHandleVisibility();
   }
 
   @Override

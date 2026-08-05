@@ -265,7 +265,16 @@ public class Keyboard2View extends View
   public void onMeasure(int wSpec, int hSpec)
   {
     DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-    int width = dm.widthPixels;
+    int width;
+    if (_config.floating_keyboard)
+    {
+      width = (int)Math.min(dm.widthPixels * Config.FLOATING_KEYBOARD_WIDTH_RATIO,
+          dm.density * Config.FLOATING_KEYBOARD_MAX_WIDTH_DP);
+    }
+    else
+    {
+      width = dm.widthPixels;
+    }
     _marginLeft = Math.max(_config.horizontal_margin, _insets_left);
     _marginRight = Math.max(_config.horizontal_margin, _insets_right);
     _marginBottom = _config.margin_bottom + _insets_bottom;
