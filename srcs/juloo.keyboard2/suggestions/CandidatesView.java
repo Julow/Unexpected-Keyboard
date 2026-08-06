@@ -191,7 +191,7 @@ public class CandidatesView extends LinearLayout
           public void onClick(View _v)
           {
             Config.globalConfig().handler.key_up(
-                KeyValue.getKeyByName("toggle_float"),
+                KeyValue.getKeyByName("toggle_floating"),
                 Pointers.Modifiers.EMPTY);
           }
         });
