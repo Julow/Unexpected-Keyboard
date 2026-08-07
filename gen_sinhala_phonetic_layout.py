@@ -25,8 +25,11 @@ conflicts e. g. when trying to move a symbol into occupied position.
   - Requires Python >= 3.11
 """
 
+# ruff: noqa: E501
+
 import argparse
 import logging
+import unicodedata
 from enum import StrEnum
 from pathlib import Path
 from xml.etree import ElementTree
@@ -44,36 +47,41 @@ class Placement(StrEnum):
     W = 'w'
 
 
+def vow(name: str) -> str:
+    """ Helper shotcut for Sinhala vowels unicode names"""
+    return unicodedata.lookup(f'Sinhala Vowel Sign {name}')
+
+
 # Based on XKB Sinhala (phonetic)
 KEYS_MAP: dict[str, tuple[str, str, str, str]] = {
     # Row 1 ###########################################
-    'q': ('ඍ', 'ඎ', '\u0DD8', '\u0DF2'),
-    'w': ('ඇ', 'ඈ', '\u0DD0', '\u0DD1'),
-    'e': ('එ', 'ඒ', '\u0DD9', '\u0DDA'),
+    'q': ('ඍ', 'ඎ', vow('Gaetta-Pilla'), vow('Diga Gaetta-Pilla')),
+    'w': ('ඇ', 'ඈ', vow('Ketti Aeda-Pilla'), vow('Diga Aeda-Pilla')),
+    'e': ('එ', 'ඒ', vow('Kombuva'), vow('Diga Kombuva')),
     'r': ('ර', '', '', ''),  # In XKB virama is on layer 2
     't': ('ත', 'ථ', 'ට', 'ඨ'),
     'y': ('ය', '', '', ''),  # In XKB virama is on layer 2
-    'u': ('උ', 'ඌ', '\u0DD4', '\u0DD6'),
-    'i': ('ඉ', 'ඊ', '\u0DD2', '\u0DD3'),
-    'o': ('ඔ', 'ඕ', '\u0DDC', '\u0DDD'),
+    'u': ('උ', 'ඌ', vow('Ketti Paa-Pilla'), vow('Diga Paa-Pilla')),
+    'i': ('ඉ', 'ඊ', vow('Ketti Is-Pilla'), vow('Diga Is-Pilla')),
+    'o': ('ඔ', 'ඕ', vow('Kombuva Haa Aela-Pilla'), vow('Kombuva Haa Diga Aela-Pilla')),
     'p': ('ප', 'ඵ', '', ''),
     # Row 2 ###########################################
-    'a': ('අ', 'ආ', '\u0DCA', '\u0DCF'),
+    'a': ('අ', 'ආ', '\N{Sinhala Sign Al-Lakuna}', vow('Aela-Pilla')),
     's': ('ස', 'ශ', 'ෂ', ''),
     'd': ('ද', 'ධ', 'ඩ', 'ඪ'),
-    'f': ('ෆ', '\u0D93', '', '\u0DDB'),  # In XKB aiyanna placed otherwise
+    'f': ('ෆ', '\N{Sinhala Letter Aiyanna}', '', vow('Kombu Deka')),  # In XKB aiyanna placed otherwise
     'g': ('ග', 'ඝ', 'ඟ', ''),
-    'h': ('හ', '\u0D83', '\u0DDE', 'ඖ'),
+    'h': ('හ', '\N{Sinhala Sign Visargaya}', vow('Kombuva Haa Gayanukitta'), 'ඖ'),
     'j': ('ජ', 'ඣ', 'ඦ', ''),
     'k': ('ක', 'ඛ', 'ඦ', 'ඐ'),
-    'l': ('ල', 'ළ', '\u0DDF', '\u0DF3'),
+    'l': ('ල', 'ළ', vow('Gayanukitta'), vow('Diga Gayanukitta')),
     # Row 3 ###########################################
     'z': ('ඤ', 'ඥ', '', ''),  # In XKB contains bar, broken bar
     'x': ('ඳ', 'ඬ', '', ''),
     'c': ('ච', 'ඡ', '', ''),
     'v': ('ව', '', '', ''),
     'b': ('බ', 'භ', '', ''),
-    'n': ('න', 'ණ', '\u0D82', 'ඞ'),
+    'n': ('න', 'ණ', '\N{Sinhala Sign Anusvaraya}', 'ඞ'),
     'm': ('ම', 'ඹ', '', ''),
 }
 
@@ -109,7 +117,7 @@ MODMAP_EXTRA: dict[str, dict[str, str]] = {
         # Kunddaliya
         '.': '෴',
         # Extra broken bar intead z key in XKB
-        '\u007C': '\u00A6',
+        '\N{Vertical Line}': '\N{Broken Bar}',
         # Special whitespaces
         'zwj': 'zwnj',
     },
@@ -135,8 +143,7 @@ MODMAP_EXTRA: dict[str, dict[str, str]] = {
         'ක': '𑇲',  # 90
         'ල': '𑇳',  # 100
         'ළ': '𑇴',  # 1000
-        # Sinhala candrabindu for Sanskrit
-        'ණ': '\u0D81',
+        'ණ': '\N{Sinhala Sign Candrabindu}',
     },
 }
 
