@@ -204,6 +204,7 @@ TRANSITIONS_MAP: dict[tuple[str, Placement], tuple[str, Placement | None]] = {
 CHARS_EXTRA = {
     # In XKB ZWJ is on `/` key, and ZWNJ is on spacebar
     'zwj': ('m', Placement.SE),
+    '\N{Sinhala Sign Al-Lakuna}': ('r', Placement.NE),
 }
 
 
