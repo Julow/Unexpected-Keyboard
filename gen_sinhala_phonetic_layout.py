@@ -27,7 +27,6 @@ conflicts e. g. when trying to move a symbol into occupied position.
 
 import argparse
 import logging
-
 from enum import StrEnum
 from pathlib import Path
 from xml.etree import ElementTree
@@ -302,7 +301,7 @@ class LayoutBuilder:
 
     @staticmethod
     def _parse_reference_layout() -> list[ElementTree.Element]:
-        return ElementTree.parse(REFERENCE_LAYOUT_FILE).findall('row')
+        return ElementTree.parse(REFERENCE_LAYOUT_FILE).findall('row')  # noqa: S314
 
     @staticmethod
     def _move_untransited_to_new_map(
@@ -339,7 +338,10 @@ class LayoutBuilder:
             row_num, key_num = to_coord
             key = new_map[row_num][key_num]
             if (existing := key.get(to_plc)) is not None:
-                msg = f'Trying to add char to <{to_key_name}:{to_plc}>, but already contains "{existing}"'
+                msg = (
+                    f'Trying to add char to <{to_key_name}:{to_plc}>, '
+                    f'but already contains "{existing}"'
+                )
                 raise LayoutGenError(msg)
             key.set(to_plc, char)
             LOGGER.info(
@@ -382,7 +384,7 @@ class LayoutBuilder:
                 val = from_key.attrib.pop(from_plc)
             except KeyError:
                 msg = f'No value in key {from_key_name}, placement {from_plc} to move'
-                raise LayoutGenError(msg)
+                raise LayoutGenError(msg) from None
             if to_plc is not None:
                 if to_key.get(to_plc):
                     msg = f'Second transition to key {to_key_name}, placement {to_plc}'
