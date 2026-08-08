@@ -39,6 +39,8 @@ public class CandidatesView extends LinearLayout
   View _dictionary_switch_button;
   boolean should_show_dictionary_switch = false;
 
+  View _floating_toggle_button;
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -53,6 +55,7 @@ public class CandidatesView extends LinearLayout
     setup_item_view(2, R.id.candidates_left);
     setup_item_view(3, R.id.candidates_emoji);
     setup_dictionary_switch_button();
+    setup_floating_toggle_button();
   }
 
   public void set_candidates(Suggestions s)
@@ -101,6 +104,8 @@ public class CandidatesView extends LinearLayout
     else if (_status_no_dict != null)
       _status_no_dict.setVisibility(View.GONE);
     should_show_dictionary_switch = config.should_show_dictionary_switch;
+    _floating_toggle_button.setSelected(config.floating_keyboard);
+    _floating_toggle_button.setVisibility(View.VISIBLE);
     set_sizes(config);
   }
 
@@ -172,6 +177,21 @@ public class CandidatesView extends LinearLayout
           {
             Config.globalConfig().handler.key_up(
                 KeyValue.getKeyByName("change_dictionary"),
+                Pointers.Modifiers.EMPTY);
+          }
+        });
+  }
+
+  void setup_floating_toggle_button()
+  {
+    _floating_toggle_button = findViewById(R.id.floating_toggle);
+    _floating_toggle_button.setOnClickListener(new View.OnClickListener()
+        {
+          @Override
+          public void onClick(View _v)
+          {
+            Config.globalConfig().handler.key_up(
+                KeyValue.getKeyByName("toggle_floating"),
                 Pointers.Modifiers.EMPTY);
           }
         });

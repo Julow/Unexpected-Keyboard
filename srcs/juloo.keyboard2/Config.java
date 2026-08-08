@@ -25,6 +25,13 @@ public final class Config
    */
   public static final int WIDE_DEVICE_THRESHOLD = 600;
 
+  /** Ratio of the screen width used by the floating keyboard window. */
+  public static final float FLOATING_KEYBOARD_WIDTH_RATIO = 0.7f;
+  /** Maximum width of the floating keyboard window, in dp. */
+  public static final int FLOATING_KEYBOARD_MAX_WIDTH_DP = 700;
+  /** Height scale applied to the rows of the keyboard in floating mode. */
+  public static final float FLOATING_KEYBOARD_HEIGHT_SCALE = 0.75f;
+
   private final SharedPreferences _prefs;
 
   // From resources
@@ -76,6 +83,7 @@ public final class Config
   public int clipboard_history_duration;
   public boolean space_bar_auto_complete;
   public boolean physical_keyboard_hide;
+  public boolean floating_keyboard;
 
   // Dynamically set
   /** Configuration options implied by the connected editor. */
@@ -180,7 +188,10 @@ public final class Config
     // The keyboard is keyboardHeightPercent of the screen height on 16/9
     // screens (or less) and with a 3.95 high layout (in KeyboardData unit)
     float base_height = Math.min(dm.heightPixels, dm.widthPixels * 16.f / 9.f);
+    floating_keyboard = _prefs.getBoolean("floating_keyboard", false);
     keyboard_rows_height_pixels = (int)(base_height * keyboardHeightPercent / 395);
+    if (floating_keyboard)
+      keyboard_rows_height_pixels *= FLOATING_KEYBOARD_HEIGHT_SCALE;
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
