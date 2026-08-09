@@ -283,7 +283,12 @@ public abstract class ListGroupPreference<E> extends PreferenceGroup
 
   public static class StringSerializer implements Serializer<String>
   {
-    public String load_item(Object obj) { return (String)obj; }
+    public String load_item(Object obj) throws JSONException
+    {
+      if (!(obj instanceof String))
+        throw new JSONException("Expected a string");
+      return (String)obj;
+    }
     public Object save_item(String v) { return v; }
   }
 }

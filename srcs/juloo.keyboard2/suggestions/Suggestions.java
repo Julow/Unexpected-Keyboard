@@ -7,6 +7,7 @@ import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.ComposeKey;
 import juloo.keyboard2.ComposeKeyData;
+import juloo.keyboard2.PersonalDictionary;
 
 /** Keep track of the word being typed and provide suggestions for
     [CandidatesView]. */
@@ -67,14 +68,16 @@ public final class Suggestions
     boolean first_char_upper = Character.isUpperCase(word.charAt(0));
     String subst = apply_substitutions(word);
     Cdict dict = _config.current_dictionary;
-    // Personal dictionary first. When a dictionary is installed, leave one
-    // slot for it so personal words can't hide it entirely.
-    if (_config.personal_dictionary != null)
+    // Personal dictionary entries are matched against the raw typed word;
+    // they are normalized with the same substitutions when the dictionary is
+    // loaded. Shortcut expansions take the first slots; personal word
+    // matches fill the slots left unused by the compiled dictionary.
+    PersonalDictionary pd = _config.personal_dictionary;
+    if (pd != null)
     {
-      int budget = (dict != null) ? MAX_COUNT - 1 : MAX_COUNT;
-      List<String> personal = _config.personal_dictionary.query(subst, budget);
-      for (int j = 0; j < personal.size() && i < MAX_COUNT; j++)
-        suggestions[i++] = personal.get(j);
+      List<String> shortcuts = pd.query_shortcuts(word, MAX_COUNT);
+      for (int j = 0; j < shortcuts.size() && i < MAX_COUNT; j++)
+        suggestions[i++] = shortcuts.get(j);
     }
     if (dict != null && i < MAX_COUNT)
     {
@@ -101,6 +104,16 @@ public final class Suggestions
           cw = cw.substring(0, 1).toUpperCase() + cw.substring(1);
         if (!contains_ignore_case(i, cw))
           suggestions[i++] = cw;
+      }
+    }
+    if (pd != null && i < MAX_COUNT)
+    {
+      List<String> word_matches =
+        pd.query_word_matches(word, first_char_upper, MAX_COUNT);
+      for (int j = 0; j < word_matches.size() && i < MAX_COUNT; j++)
+      {
+        if (!contains_ignore_case(i, word_matches.get(j)))
+          suggestions[i++] = word_matches.get(j);
       }
     }
     emoji_suggestion = query_emoji(subst);

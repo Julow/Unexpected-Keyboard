@@ -61,19 +61,51 @@ public class PersonalDictionaryPreference
       word_input.setText(old_value.word);
       shortcut_input.setText(old_value.shortcut);
     }
-    new AlertDialog.Builder(getContext())
+    final AlertDialog dialog = new AlertDialog.Builder(getContext())
       .setView(content)
-      .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-        public void onClick(DialogInterface dialog, int which)
+      .setPositiveButton(android.R.string.ok, null)
+      .setNegativeButton(android.R.string.cancel, null)
+      .show();
+    // Override the OK button to keep the dialog open on invalid input.
+    dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+      .setOnClickListener(new View.OnClickListener(){
+        public void onClick(View v)
         {
           String w = word_input.getText().toString().trim();
           String s = shortcut_input.getText().toString().trim();
-          if (!w.equals(""))
-            callback.select(new PersonalDictionary.Entry(w, s));
+          if (w.equals(""))
+          {
+            word_input.setError(
+                getContext().getString(R.string.pref_personal_dict_word_hint));
+            return;
+          }
+          int invalid = invalid_shortcut_error(s);
+          if (invalid != 0)
+          {
+            shortcut_input.setError(getContext().getString(invalid));
+            return;
+          }
+          callback.select(new PersonalDictionary.Entry(w, s));
+          dialog.dismiss();
         }
-      })
-      .setNegativeButton(android.R.string.cancel, null)
-      .show();
+      });
+  }
+
+  /** [0] when [s] is a shortcut that can actually be typed, else the
+      resource of a string explaining why it can never fire. An empty
+      shortcut is valid and means the entry has no shortcut. */
+  static int invalid_shortcut_error(String s)
+  {
+    if (s.isEmpty())
+      return 0;
+    if (s.length() < 2)
+      return R.string.pref_personal_dict_shortcut_too_short;
+    for (int i = 0; i < s.length(); i++)
+    {
+      if (!CurrentlyTypedWord.is_word_char(s.charAt(i)))
+        return R.string.pref_personal_dict_shortcut_invalid_chars;
+    }
+    return 0;
   }
 
   @Override

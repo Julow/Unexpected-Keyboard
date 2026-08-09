@@ -13,42 +13,83 @@ public final class PersonalDictionary
 
   public PersonalDictionary(List<Entry> entries)
   {
-    _entries = (entries != null) ? entries : new ArrayList<Entry>();
+    _entries = new ArrayList<Entry>();
+    if (entries == null)
+      return;
+    for (Entry e : entries)
+    {
+      // Pre-normalize for matching: lower-cased with the same substitutions
+      // that are applied to the typed text and the compiled dictionaries.
+      _entries.add(new Entry(e.word, normalized(e.word),
+          e.shortcut, normalized(e.shortcut)));
+    }
   }
 
   public boolean is_empty() { return _entries.isEmpty(); }
 
-  /** Up to [max] words matching [typed]. Ranked: words whose shortcut is
-      exactly [typed] (case-insensitive), then words equal to [typed], then
-      words starting with [typed], in insertion order. Word matches are
-      capitalized when [typed] starts with an upper-case letter; shortcut
-      expansions are always returned verbatim. Case-insensitive duplicates
-      are returned once. */
-  public List<String> query(String typed, int max)
+  /** Up to [max] expansions of shortcuts exactly equal to [typed]
+      (case-insensitive), returned verbatim in insertion order.
+      Case-insensitive duplicates are returned once. */
+  public List<String> query_shortcuts(String typed, int max)
   {
     List<String> out = new ArrayList<String>();
     if (max <= 0 || typed.length() == 0)
       return out;
-    List<String> shortcut = new ArrayList<String>();
-    List<String> exact = new ArrayList<String>();
-    List<String> prefix = new ArrayList<String>();
-    String t = typed.toLowerCase();
-    boolean capitalize = Character.isUpperCase(typed.charAt(0));
+    String t = normalized(typed);
     for (Entry e : _entries)
     {
-      if (!e.shortcut.isEmpty() && e.shortcut.equalsIgnoreCase(typed))
-      {
-        shortcut.add(e.word);
+      if (e.norm_shortcut.isEmpty() || !e.norm_shortcut.equals(t))
         continue;
-      }
-      String lw = e.word.toLowerCase();
-      if (lw.equals(t)) exact.add(capitalized(e.word, capitalize));
-      else if (lw.startsWith(t)) prefix.add(capitalized(e.word, capitalize));
+      add_unique(out, e.word);
+      if (out.size() >= max)
+        return out;
     }
-    for (String w : shortcut) { add_unique(out, w); if (out.size() >= max) return out; }
-    for (String w : exact) { add_unique(out, w); if (out.size() >= max) return out; }
-    for (String w : prefix) { add_unique(out, w); if (out.size() >= max) return out; }
     return out;
+  }
+
+  /** Up to [max] words matching [typed]: words equal to [typed] first, then
+      words starting with [typed], in insertion order. Matching is
+      case-insensitive and uses the same substitutions as the compiled
+      dictionaries; word matches are capitalized when [capitalize] is set.
+      Case-insensitive duplicates are returned once. */
+  public List<String> query_word_matches(String typed, boolean capitalize,
+      int max)
+  {
+    List<String> out = new ArrayList<String>();
+    if (max <= 0 || typed.length() == 0)
+      return out;
+    List<String> prefix = new ArrayList<String>();
+    String t = normalized(typed);
+    for (Entry e : _entries)
+    {
+      if (e.norm_word.equals(t))
+        add_unique(out, capitalized(e.word, capitalize));
+      else if (e.norm_word.startsWith(t))
+        prefix.add(e.word);
+      if (out.size() >= max)
+        return out;
+    }
+    for (String w : prefix)
+    {
+      add_unique(out, capitalized(w, capitalize));
+      if (out.size() >= max)
+        return out;
+    }
+    return out;
+  }
+
+  /** [w] lower-cased and transformed with the same character substitutions
+      that were applied when building the compiled dictionaries. */
+  static String normalized(String w)
+  {
+    StringBuilder b = new StringBuilder(w.toLowerCase());
+    for (int i = 0; i < b.length(); i++)
+    {
+      char r =
+        ComposeKey.transform_char(ComposeKeyData.substitutions, b.charAt(i));
+      if (r != 0) b.setCharAt(i, r);
+    }
+    return b.toString();
   }
 
   static String capitalized(String w, boolean capitalize)
@@ -64,17 +105,31 @@ public final class PersonalDictionary
     out.add(w);
   }
 
-  /** A word and its optional shortcut. */
+  /** A word and its optional shortcut. [norm_word] and [norm_shortcut] are
+      the normalized forms used for matching. */
   public static final class Entry
   {
     public final String word;
     /** Empty string when no shortcut is attached. */
     public final String shortcut;
+    final String norm_word;
+    final String norm_shortcut;
 
+    /** An entry to be stored; normalization happens in the enclosing
+        dictionary. */
     public Entry(String word, String shortcut)
+    {
+      this(word, null, shortcut, null);
+    }
+
+    Entry(String word, String norm_word, String shortcut, String norm_shortcut)
     {
       this.word = word;
       this.shortcut = (shortcut != null) ? shortcut : "";
+      this.norm_word =
+        (norm_word != null) ? norm_word : ((word != null) ? word : "");
+      this.norm_shortcut =
+        (norm_shortcut != null) ? norm_shortcut : this.shortcut;
     }
   }
 }
