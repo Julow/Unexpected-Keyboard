@@ -64,18 +64,20 @@ public final class Suggestions
   {
     clear();
     int i = 0;
-    // Personal dictionary first; stored casing preserved.
+    boolean first_char_upper = Character.isUpperCase(word.charAt(0));
+    String subst = apply_substitutions(word);
+    Cdict dict = _config.current_dictionary;
+    // Personal dictionary first. When a dictionary is installed, leave one
+    // slot for it so personal words can't hide it entirely.
     if (_config.personal_dictionary != null)
     {
-      List<String> personal = _config.personal_dictionary.query(word, MAX_COUNT);
+      int budget = (dict != null) ? MAX_COUNT - 1 : MAX_COUNT;
+      List<String> personal = _config.personal_dictionary.query(subst, budget);
       for (int j = 0; j < personal.size() && i < MAX_COUNT; j++)
         suggestions[i++] = personal.get(j);
     }
-    Cdict dict = _config.current_dictionary;
     if (dict != null && i < MAX_COUNT)
     {
-      boolean first_char_upper = Character.isUpperCase(word.charAt(0));
-      String subst = apply_substitutions(word);
       Cdict.Result r = dict.find(subst);
       String[] cdict_words = new String[MAX_COUNT];
       int c = 0;
@@ -101,7 +103,7 @@ public final class Suggestions
           suggestions[i++] = cw;
       }
     }
-    emoji_suggestion = query_emoji(apply_substitutions(word));
+    emoji_suggestion = query_emoji(subst);
     count = i;
     return i;
   }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+  <EditText android:id="@+id/personal_dict_word" android:hint="@string/pref_personal_dict_word_hint" android:inputType="text" android:importantForAutofill="no" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+  <EditText android:id="@+id/personal_dict_shortcut" android:hint="@string/pref_personal_dict_shortcut_hint" android:inputType="text" android:importantForAutofill="no" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+</LinearLayout>

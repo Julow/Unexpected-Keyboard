@@ -7,19 +7,24 @@ import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import juloo.keyboard2.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-/** Lets the user enter custom words suggested when their prefix is typed.
-    Shows at the top of the "Personal dictionary" settings screen. */
-public class PersonalDictionaryPreference extends ListGroupPreference<String>
+/** Lets the user enter custom words suggested when their prefix or an
+    optional shortcut is typed. Shows at the top of the "Personal dictionary"
+    settings screen. */
+public class PersonalDictionaryPreference
+  extends ListGroupPreference<PersonalDictionary.Entry>
 {
-  /** This pref stores a list of strings encoded as JSON. */
+  /** This pref stores a list encoded as JSON. Items are either a plain
+      string (a word with no shortcut) or an object with the keys [word] and
+      [shortcut]. */
   static final String KEY = "personal_dictionary";
-  static final ListGroupPreference.Serializer<String> SERIALIZER =
-    new ListGroupPreference.StringSerializer();
+  static final ListGroupPreference.Serializer<PersonalDictionary.Entry>
+    SERIALIZER = new EntrySerializer();
 
   public PersonalDictionaryPreference(Context context, AttributeSet attrs)
   {
@@ -27,29 +32,44 @@ public class PersonalDictionaryPreference extends ListGroupPreference<String>
     setKey(KEY);
   }
 
-  /** The stored words. Never [null]. */
-  public static List<String> get(SharedPreferences prefs)
+  /** The stored entries. Never [null]. */
+  public static List<PersonalDictionary.Entry> get(SharedPreferences prefs)
   {
-    List<String> words = load_from_preferences(KEY, prefs, null, SERIALIZER);
-    return (words != null) ? words : new ArrayList<String>();
+    List<PersonalDictionary.Entry> entries =
+      load_from_preferences(KEY, prefs, null, SERIALIZER);
+    return (entries != null) ? entries : new ArrayList<PersonalDictionary.Entry>();
   }
 
-  String label_of_value(String value, int i) { return value; }
+  String label_of_value(PersonalDictionary.Entry value, int i)
+  {
+    return value.shortcut.isEmpty() ? value.word
+      : value.shortcut + " \u2192 " + value.word;
+  }
 
   @Override
-  void select(final SelectionCallback<String> callback, String old_value)
+  void select(final SelectionCallback<PersonalDictionary.Entry> callback,
+      PersonalDictionary.Entry old_value)
   {
-    View content = View.inflate(getContext(), R.layout.dialog_edit_text, null);
-    ((TextView)content.findViewById(R.id.text)).setText(old_value);
+    View content =
+      View.inflate(getContext(), R.layout.dialog_personal_dict_entry, null);
+    final EditText word_input =
+      (EditText)content.findViewById(R.id.personal_dict_word);
+    final EditText shortcut_input =
+      (EditText)content.findViewById(R.id.personal_dict_shortcut);
+    if (old_value != null)
+    {
+      word_input.setText(old_value.word);
+      shortcut_input.setText(old_value.shortcut);
+    }
     new AlertDialog.Builder(getContext())
       .setView(content)
       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
         public void onClick(DialogInterface dialog, int which)
         {
-          EditText input = (EditText)((AlertDialog)dialog).findViewById(R.id.text);
-          final String w = input.getText().toString().trim();
+          String w = word_input.getText().toString().trim();
+          String s = shortcut_input.getText().toString().trim();
           if (!w.equals(""))
-            callback.select(w);
+            callback.select(new PersonalDictionary.Entry(w, s));
         }
       })
       .setNegativeButton(android.R.string.cancel, null)
@@ -57,5 +77,28 @@ public class PersonalDictionaryPreference extends ListGroupPreference<String>
   }
 
   @Override
-  Serializer<String> get_serializer() { return SERIALIZER; }
+  Serializer<PersonalDictionary.Entry> get_serializer() { return SERIALIZER; }
+
+  static class EntrySerializer
+    implements ListGroupPreference.Serializer<PersonalDictionary.Entry>
+  {
+    public PersonalDictionary.Entry load_item(Object obj) throws JSONException
+    {
+      if (obj instanceof String)
+        return new PersonalDictionary.Entry((String)obj, "");
+      JSONObject o = (JSONObject)obj;
+      return new PersonalDictionary.Entry(o.getString("word"),
+          o.optString("shortcut", ""));
+    }
+
+    public Object save_item(PersonalDictionary.Entry v) throws JSONException
+    {
+      if (v.shortcut.isEmpty())
+        return v.word;
+      JSONObject o = new JSONObject();
+      o.put("word", v.word);
+      o.put("shortcut", v.shortcut);
+      return o;
+    }
+  }
 }
