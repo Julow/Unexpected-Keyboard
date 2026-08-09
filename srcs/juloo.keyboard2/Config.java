@@ -13,6 +13,7 @@ import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.prefs.CustomExtraKeysPreference;
 import juloo.keyboard2.prefs.ExtraKeysPreference;
 import juloo.keyboard2.prefs.LayoutsPreference;
+import juloo.keyboard2.prefs.PersonalDictionaryPreference;
 
 public final class Config
 {
@@ -87,6 +88,7 @@ public final class Config
   public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
   public Cdict emoji_dictionary = null; // Might be 'null'.
+  public PersonalDictionary personal_dictionary = null;
   /** Whether to show the dictionary switching button in the candidates view. */
   public boolean should_show_dictionary_switch = false;
   public IKeyEventHandler handler;
@@ -199,6 +201,7 @@ public final class Config
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
     clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
     space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
+    personal_dictionary = new PersonalDictionary(PersonalDictionaryPreference.get(_prefs));
     physical_keyboard_hide = _prefs.getString("physical_keyboard_behavior", "hide").equals("hide");
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
