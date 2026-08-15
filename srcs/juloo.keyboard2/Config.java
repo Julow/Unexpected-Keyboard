@@ -87,6 +87,7 @@ public final class Config
   public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
   public Cdict emoji_dictionary = null; // Might be 'null'.
+  public String current_dictionary_name = null; // Display name for the current language
   /** Whether to show the dictionary switching button in the candidates view. */
   public boolean should_show_dictionary_switch = false;
   public IKeyEventHandler handler;
