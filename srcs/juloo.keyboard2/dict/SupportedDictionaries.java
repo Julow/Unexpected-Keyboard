@@ -29,6 +29,8 @@ public class SupportedDictionaries
   /** Find the index for a given dictionary name. Return [-1] if not found. */
   public int find(String dict_name)
   {
+    if (dict_name == null)
+      return -1;
     int i = Arrays.binarySearch(locales, dict_name);
     return (i < 0) ? -1 : i;
   }
