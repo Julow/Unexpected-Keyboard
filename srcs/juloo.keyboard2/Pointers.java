@@ -455,7 +455,7 @@ public final class Pointers implements Handler.Callback
     // For every other keys, key-repeat
     if (_config.keyrepeat_enabled)
     {
-      _handler.onPointerHold(kv, ptr.modifiers);
+      _handler.onPointerHold(kv, ptr.modifiers, false);
       _longpress_handler.sendEmptyMessageDelayed(ptr.timeoutWhat,
           _config.longPressInterval);
     }
@@ -615,6 +615,8 @@ public final class Pointers implements Handler.Callback
     /** Make horizontal sliders slower while ctrl is held (which typically
         means movement happens by whole words instead of characters) */
     static final float SPEED_WORD_MULT = 0.25f;
+    /** Vibration are not generated faster than this. */
+    static final float VIBRATION_MAX_SPEED = 1.5f;
 
     public void onTouchMove(Pointer ptr, float x, float y)
     {
@@ -643,8 +645,9 @@ public final class Pointers implements Handler.Callback
       if (d_ != 0)
       {
         d -= d_;
+        boolean should_vibrate = (speed < VIBRATION_MAX_SPEED);
         _handler.onPointerHold(KeyValue.sliderKey(slider, d_),
-            ptr.modifiers);
+            ptr.modifiers, should_vibrate);
       }
     }
 
@@ -820,6 +823,6 @@ public final class Pointers implements Handler.Callback
     public void onPointerFlagsChanged(boolean shouldVibrate);
 
     /** Key is repeating. */
-    public void onPointerHold(KeyValue k, Modifiers mods);
+    public void onPointerHold(KeyValue k, Modifiers mods, boolean shouldVibrate);
   }
 }
