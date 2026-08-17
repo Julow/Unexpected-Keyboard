@@ -128,9 +128,12 @@ public final class CurrentlyTypedWord
       return;
     int len = _w.length();
     int c = len + _w_cursor;
-    _w.delete(Math.max(c - remove_before, 0), Math.min(c + remove_after, len));
+    assert remove_before >= 0 && remove_after >= 0;
+    _w.delete(Math.max(c - remove_before, 0), Math.clamp(c + remove_after, 0, len));
     _cursor -= remove_before;
-    _w_cursor -= Math.min(remove_after, 0);
+    _w_cursor += remove_after;
+    if (_w.length() == 0)
+        _w_cursor = 0;
     callback();
   }
 
@@ -150,13 +153,16 @@ public final class CurrentlyTypedWord
       int c = Character.codePointAt(s, i);
       i += Character.charCount(c);
       _cursor++;
-      // [i >= end] might happen when the cursor is in the middle of a
+      // [i > end] might happen when the cursor is in the middle of a
       // surrogate pair
       if (!is_word_char(c) && i <= end)
         insert_start = i;
     }
     if (insert_start > 0)
+    {
       _w.setLength(0);
+      _w_cursor = 0;
+    }
     _w.insert(Math.max(_w.length() + _w_cursor, 0), s, insert_start, end);
   }
 
