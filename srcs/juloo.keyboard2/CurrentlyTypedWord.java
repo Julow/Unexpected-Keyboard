@@ -128,9 +128,9 @@ public final class CurrentlyTypedWord
       return;
     int len = _w.length();
     int c = len + _w_cursor;
-    _w.delete(Math.max(c - remove_before, 0), Math.min(c + remove_after, len));
+    _w.delete(Math.max(c - remove_before, 0), Math.max(Math.min(c + remove_after, len), 0));
     _cursor -= remove_before;
-    _w_cursor -= Math.min(remove_after, 0);
+    _w_cursor -= remove_after;
     callback();
   }
 
