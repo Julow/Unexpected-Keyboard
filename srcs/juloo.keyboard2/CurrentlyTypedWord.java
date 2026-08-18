@@ -112,6 +112,7 @@ public final class CurrentlyTypedWord
     {
       case KeyEvent.KEYCODE_DEL:
         if (meta == 0)
+          // TODO: delete a selection or a grapheme cluster
           remove_surrounding_text(1, 0);
         else
           delayed_refresh();
@@ -128,13 +129,21 @@ public final class CurrentlyTypedWord
       return;
     int len = _w.length();
     int c = len + _w_cursor;
-    assert remove_before >= 0 && remove_after >= 0;
-    _w.delete(Math.max(c - remove_before, 0), Math.clamp(c + remove_after, 0, len));
-    _cursor -= remove_before;
-    _w_cursor += remove_after;
-    if (_w.length() == 0)
-        _w_cursor = 0;
-    callback();
+    assert c >= 0;
+    // Removing beyond the boundary means there's a word delimiter,
+    // or the initial surrounding text has run out.
+    if (remove_before > c || _w_cursor + remove_after > 0
+        // Currently this function is only called when taking suggestions
+        // or hitting backspace.
+        || remove_before == 1 && !is_word_char(_w.codePointBefore(c)))
+      delayed_refresh();
+    else
+    {
+      _w.delete(c - remove_before, c + remove_after);
+      _cursor -= remove_before;
+      _w_cursor += remove_after;
+      callback();
+    }
   }
 
   void callback()
@@ -148,22 +157,22 @@ public final class CurrentlyTypedWord
   {
     int insert_start = 0;
     // Iterate over code points as that's the unit of [_cursor].
-    for (int i = start; i < end;)
+    int i = start;
+    while (i < end)
     {
       int c = Character.codePointAt(s, i);
       i += Character.charCount(c);
-      _cursor++;
       // [i > end] might happen when the cursor is in the middle of a
       // surrogate pair
       if (!is_word_char(c) && i <= end)
         insert_start = i;
     }
+    _cursor += i - start;
+    // We alreay guarantee this, no need for real check
+    assert _w.length() + _w_cursor >= 0;
     if (insert_start > 0)
-    {
-      _w.setLength(0);
-      _w_cursor = 0;
-    }
-    _w.insert(Math.max(_w.length() + _w_cursor, 0), s, insert_start, end);
+      _w.delete(0, _w.length() + _w_cursor);
+    _w.insert(_w.length() + _w_cursor, s, insert_start, end);
   }
 
   void type_chars(CharSequence s)
