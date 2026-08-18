@@ -157,7 +157,6 @@
     <string name="dictionaries_from_internet">从互联网下载词典</string>
     <string name="dictionaries_download_success">词典安装成功</string>
     <string name="dictionaries_download_failed">下载失败: 请授予网络访问权限</string>
-    <string name="dictionaries_activity_not_enabled">你必须先启用输入法才能下载词典.</string>
     <string name="pref_split_layout_wide">在宽屏上</string>
     <string name="pref_category_suggestions">建议</string>
     <string name="pref_theme_e_everforestlight">Everforest Light</string>
