@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import juloo.keyboard2.Config;
+import juloo.keyboard2.KeyValue;
+import juloo.keyboard2.Pointers;
 import juloo.keyboard2.R;
 
 public class CandidatesView extends LinearLayout
@@ -34,6 +36,11 @@ public class CandidatesView extends LinearLayout
       shown. Might be [null]. */
   View _status_no_dict = null;
 
+  View _dictionary_switch_button;
+  boolean should_show_dictionary_switch = false;
+
+  TextView _lang_name_view;
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -47,6 +54,8 @@ public class CandidatesView extends LinearLayout
     setup_item_view(1, R.id.candidates_right);
     setup_item_view(2, R.id.candidates_left);
     setup_item_view(3, R.id.candidates_emoji);
+    setup_dictionary_switch_button();
+    _lang_name_view = (TextView)findViewById(R.id.candidates_lang_name);
   }
 
   public void set_candidates(Suggestions s)
@@ -71,6 +80,10 @@ public class CandidatesView extends LinearLayout
         v.setVisibility(View.GONE);
       }
     }
+    int dict_vis =
+      (should_show_dictionary_switch && s.count == 0) ? View.VISIBLE : View.GONE;
+    _dictionary_switch_button.setVisibility(dict_vis);
+    _lang_name_view.setVisibility(dict_vis);
   }
 
   void clear_candidates()
@@ -91,7 +104,9 @@ public class CandidatesView extends LinearLayout
       inflate_status_no_dict(config);
     else if (_status_no_dict != null)
       _status_no_dict.setVisibility(View.GONE);
+    should_show_dictionary_switch = config.should_show_dictionary_switch;
     set_sizes(config);
+    _lang_name_view.setText(config.current_dictionary_name);
   }
 
   /** Set the height of the suggestion row and the text size. */
@@ -115,26 +130,6 @@ public class CandidatesView extends LinearLayout
         v.setAutoSizeTextTypeUniformWithConfiguration(
             (int)(text_size / 2.), (int)text_size, 1, TypedValue.COMPLEX_UNIT_PX);
     }
-  }
-
-  /** Show or hide a status view and inflate it if needed. */
-  View inflate_and_show(View v, boolean show, int layout_id)
-  {
-    if (!show)
-    {
-      if (v != null)
-        v.setVisibility(View.GONE);
-    }
-    else
-    {
-      if (v == null)
-      {
-        v = View.inflate(getContext(), layout_id, null);
-        addView(v);
-      }
-      v.setVisibility(View.VISIBLE);
-    }
-    return v;
   }
 
   void inflate_status_no_dict(Config config)
@@ -170,6 +165,21 @@ public class CandidatesView extends LinearLayout
         });
     v.setVisibility(View.GONE);
     _item_views[item_index] = v;
+  }
+
+  void setup_dictionary_switch_button()
+  {
+    _dictionary_switch_button = findViewById(R.id.dictionary_switch);
+    _dictionary_switch_button.setOnClickListener(new View.OnClickListener()
+        {
+          @Override
+          public void onClick(View _v)
+          {
+            Config.globalConfig().handler.key_up(
+                KeyValue.getKeyByName("change_dictionary"),
+                Pointers.Modifiers.EMPTY);
+          }
+        });
   }
 
   /** Whether the candidates view should be shown for a given editor. */

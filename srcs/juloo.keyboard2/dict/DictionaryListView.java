@@ -2,11 +2,12 @@ package juloo.keyboard2.dict;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import juloo.cdict.Cdict;
-import juloo.keyboard2.Config;
 import juloo.keyboard2.DeviceLocales;
 import juloo.keyboard2.Logs;
 import juloo.keyboard2.R;
@@ -27,36 +27,51 @@ public class DictionaryListView extends LinearLayout
 {
   List<DictView> _dict_views;
   Dictionaries _dictionaries;
-  Set<String> _pending = new HashSet();
+  Set<String> _pending = new HashSet<String>();
 
   public DictionaryListView(Context ctx, AttributeSet attrs)
   {
     super(ctx, attrs);
     setOrientation(LinearLayout.VERTICAL);
     _dictionaries = Dictionaries.instance(ctx);
-    inflate_views(ctx);
+    _dict_views = new ArrayList<DictView>();
+    boolean device_locales =
+      attrs.getAttributeBooleanValue(null, "device_locales", true);
+    if (device_locales)
+      inflate_views_device_locales(ctx);
+    else
+      inflate_views_all(ctx);
+    refresh();
   }
 
-  void inflate_views(Context ctx)
+  void inflate_views_device_locales(Context ctx)
   {
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
     DeviceLocales locales = DeviceLocales.load(ctx);
-    SupportedDictionaries ds = new SupportedDictionaries(ctx.getResources());
-    DownloadBtnListener listener = this.new DownloadBtnListener();
-    _dict_views = new ArrayList<DictView>();
     for (DeviceLocales.Loc loc : locales.installed)
     {
-      int idx = (loc.dictionary != null) ? ds.find(loc.dictionary) : -1;
-      if (idx >= 0)
+      if (loc.dictionary != null)
       {
-        DictView dv = new DictView(ctx, ds, idx, listener);
-        addView(dv.view);
-        _dict_views.add(dv);
+        int idx = ds.find(loc.dictionary);
+        if (idx >= 0)
+          inflate_item(ctx, ds, idx);
       }
     }
-    refresh();
-    // The keyboard is not enabled and the list is empty, show a message.
-    if (locales.installed.size() == 0)
-      addView(View.inflate(ctx, R.layout.dictionary_status_not_enabled, null));
+  }
+
+  void inflate_views_all(Context ctx)
+  {
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
+    for (int i = 0; i < ds.length(); i++)
+      inflate_item(ctx, ds, i);
+  }
+
+  void inflate_item(Context ctx, SupportedDictionaries ds, int i)
+  {
+    View v = LayoutInflater.from(ctx)
+      .inflate(R.layout.dictionary_download_item, this, false);
+    _dict_views.add(this.new DictView(v, ds, i));
+    addView(v);
   }
 
   /** Update the "installed" status of item views. Meaning whether the
@@ -65,7 +80,7 @@ public class DictionaryListView extends LinearLayout
   {
     Set<String> installed = _dictionaries.get_installed();
     for (DictView d : _dict_views)
-      d.refresh(installed, _pending);
+      d.refresh(installed);
   }
 
   void toggle_installed(String dict_name)
@@ -109,43 +124,37 @@ public class DictionaryListView extends LinearLayout
     refresh();
   }
 
-  final class DownloadBtnListener implements View.OnClickListener
+  final class DictView implements View.OnClickListener
   {
-    @Override
-    public void onClick(View v)
-    {
-      for (DictView dv : _dict_views)
-        if (dv.download_button == v)
-          toggle_installed(dv.dict_name);
-    }
-  }
-
-  static final class DictView
-  {
-    public final View view;
     public final String dict_name;
-    public final View download_button;
+    public final ImageView download_button;
 
-    public DictView(Context ctx, SupportedDictionaries ds, int dict_index,
-        DownloadBtnListener on_click)
+    public DictView(View view, SupportedDictionaries ds, int dict_index)
     {
-      view = View.inflate(ctx, R.layout.dictionary_download_item, null);
       dict_name = ds.dict_name(dict_index);
       float size_mb = ds.size(dict_index) / 1048576.f;
       ((TextView)view.findViewById(R.id.dictionary_download_locale))
         .setText(ds.display_name(dict_index));
       ((TextView)view.findViewById(R.id.dictionary_download_size))
         .setText(NumberFormat.getInstance().format(size_mb) + "MB");
-      download_button = view.findViewById(R.id.dictionary_download_button);
-      download_button.setOnClickListener(on_click);
+      download_button =
+        (ImageView)view.findViewById(R.id.dictionary_download_button);
+      download_button.setOnClickListener(this);
     }
 
-    public void refresh(Set<String> installed, Set<String> pending)
+    public void refresh(Set<String> installed)
     {
-      download_button.setBackgroundResource(installed.contains(dict_name)
-          ? R.drawable.ic_delete : R.drawable.ic_download);
-      download_button.setVisibility(pending.contains(dict_name)
-          ? View.GONE : View.VISIBLE);
+      int res =
+        _pending.contains(dict_name) ? 0 :
+        installed.contains(dict_name) ? R.drawable.ic_delete :
+        R.drawable.ic_download;
+      download_button.setImageResource(res);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+      toggle_installed(dict_name);
     }
   }
 

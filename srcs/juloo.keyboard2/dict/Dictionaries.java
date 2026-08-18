@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import juloo.cdict.Cdict;
+import juloo.keyboard2.Config;
+import juloo.keyboard2.DirectBootAwarePreferences;
 import juloo.keyboard2.Logs;
 import juloo.keyboard2.Utils;
 
@@ -22,8 +24,29 @@ public final class Dictionaries
   public static Dictionaries instance(Context ctx)
   {
     if (_instance == null)
-      _instance = new Dictionaries(ctx);
+    {
+      // Device protected storage so the installed dictionaries are known during
+      // direct boot, when credential protected storage is locked.
+      SharedPreferences prefs =
+        DirectBootAwarePreferences.get_protected_prefs(ctx, "dictionaries");
+      _instance = new Dictionaries(ctx, prefs);
+    }
     return _instance;
+  }
+
+  /** Load the given dictionary and set it as the current dictionary in
+    [config]. If [name] is null, unset the current dictionary. */
+  public void set_current_dictionary(Config config, String name)
+  {
+    config.current_dictionary = null;
+    config.emoji_dictionary = null;
+    if (name == null)
+      return;
+    Cdict[] dicts = load(name);
+    if (dicts == null)
+      return;
+    config.current_dictionary = find_by_name(dicts, "main");
+    config.emoji_dictionary = find_by_name(dicts, "emoji");
   }
 
   /** Util for finding a dictionary by name. Returns [null] if not found. */
@@ -47,6 +70,20 @@ public final class Dictionaries
   }
 
   public Set<String> get_installed() { return _installed_dictionaries; }
+
+  /** The selected dictionary for the current layout. */
+  public String get_selected(Config config)
+  {
+    return _shared_prefs.getString(dict_selection_pref_name(config), null);
+  }
+
+  /** Set the dictionary returned by [get_selected()] for the current layout. */
+  public void set_selected(Config config, String dict_name)
+  {
+    _shared_prefs.edit()
+      .putString(dict_selection_pref_name(config), dict_name)
+      .apply();
+  }
 
   public void install(String dict_name, byte[] data) throws IOException
   {
@@ -85,7 +122,6 @@ public final class Dictionaries
 
   Context _context;
   Set<String> _installed_dictionaries;
-  /** Might be 'null' when safe storage is not available. */
   SharedPreferences _shared_prefs;
   Map<String, Cdict[]> _loaded_dictionaries;
 
@@ -93,29 +129,15 @@ public final class Dictionaries
 
   static final String PREF_INSTALLED_DICTS = "installed";
 
-  Dictionaries(Context ctx)
+  Dictionaries(Context ctx, SharedPreferences prefs)
   {
     _context = ctx;
     _installed_dictionaries = new HashSet();
+    _shared_prefs = prefs;
     _loaded_dictionaries = new TreeMap<String, Cdict[]>();
-    load_prefs();
-  }
-
-  void load_prefs()
-  {
-    _shared_prefs = null;
-    try
-    {
-      _shared_prefs =
-        _context.getSharedPreferences("dictionaries", Context.MODE_PRIVATE);
-      Set<String> s = _shared_prefs.getStringSet(PREF_INSTALLED_DICTS, null);
-      if (s != null)
-        _installed_dictionaries.addAll(s);
-    }
-    catch (Exception e)
-    {
-      Logs.exn("", e);
-    }
+    Set<String> installed = prefs.getStringSet(PREF_INSTALLED_DICTS, null);
+    if (installed != null)
+      _installed_dictionaries.addAll(installed);
   }
 
   Cdict[] load_uncached(String dict_name)
@@ -135,8 +157,6 @@ public final class Dictionaries
 
   void save()
   {
-    if (_shared_prefs == null)
-      return;
     _shared_prefs.edit()
       .putStringSet(PREF_INSTALLED_DICTS, _installed_dictionaries)
       .commit();
@@ -145,5 +165,12 @@ public final class Dictionaries
   static String dict_file_name(String dict_name)
   {
     return dict_name + ".dict";
+  }
+
+  static String dict_selection_pref_name(Config config)
+  {
+    String lang_tag = (config.device_locales.default_ != null) ?
+      config.device_locales.default_.lang_tag : "";
+    return "selection:" + lang_tag + "-" + config.get_current_layout();
   }
 }

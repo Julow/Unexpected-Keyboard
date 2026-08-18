@@ -158,7 +158,6 @@
     <string name="pref_clipboard_history_duration_stop">Do zatrzymania aplikacji</string>
     <string name="dictionaries_from_internet">Pobierz słownik z internetu</string>
     <string name="dictionaries_download_success">Słownik zainstalowany</string>
-    <string name="dictionaries_activity_not_enabled">Aby pobrać słowniki, najpierw włącz klawiaturę.</string>
     <string name="pref_dialog_edit_text">Własna definicja</string>
     <string name="candidates_status_click_to_install">Naciśnij, aby zainstalować słownik dla %s</string>
     <string name="dictionaries_download_failed">Błąd pobierania: Brak dostępu do internetu</string>
