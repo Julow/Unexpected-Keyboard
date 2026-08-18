@@ -160,7 +160,6 @@
     <string name="dictionaries_from_internet">Baixe um dicionário da internet</string>
     <string name="dictionaries_download_success">Dicionário instalado</string>
     <string name="dictionaries_download_failed">Falha ao baixar: Permita o acesso à internet</string>
-    <string name="dictionaries_activity_not_enabled">Primeiro você precisa habilitar o teclado para baixar os dicionários.</string>
     <string name="candidates_status_click_to_install">Clique para instalar um dicionário para %s</string>
     <string name="pref_physical_keyboard_behavior">Quando um teclado físico está conectado</string>
     <string name="pref_physical_keyboard_behavior_hide">Esconda tudo</string>
