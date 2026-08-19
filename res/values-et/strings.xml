@@ -168,4 +168,6 @@
     <string name="pref_split_layout_landscape">Rõhtvaates</string>
     <string name="pref_split_layout_wide">Laia ekraani puhul</string>
     <string name="dictionaries_download_failed">Allalaadimine ei õnnestunud: palun luba internetiühenduse kasutamine</string>
+    <string name="pref_theme_e_dracula">Dracula</string>
+    <string name="dictionary_switcher_title">Vaheta keelt</string>
 </resources>
