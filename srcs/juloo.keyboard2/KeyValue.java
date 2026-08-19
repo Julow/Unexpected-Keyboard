@@ -266,7 +266,9 @@ public final class KeyValue implements Comparable<KeyValue>
 
   public KeyValue withSymbol(String symbol)
   {
-    int flags = getFlags() & ~(FLAG_KEY_FONT | FLAG_SMALLER_FONT);
+    int flags = getFlags() & ~FLAG_SMALLER_FONT;
+    if (symbol.length() == 0 || Character.getType(symbol.codePointAt(0)) != Character.PRIVATE_USE)
+      flags &= ~FLAG_KEY_FONT;
     switch (getKind())
     {
       case Char:
@@ -282,6 +284,8 @@ public final class KeyValue implements Comparable<KeyValue>
           flags |= FLAG_SMALLER_FONT;
         return new KeyValue(symbol, _code, _code, flags);
       case Slider:
+        if (symbol.length() > 1)
+          flags |= FLAG_SMALLER_FONT;
         return new KeyValue(new SliderWithSymbol(getSlider(), symbol), _code, _code, flags);
       case Macro:
         return makeMacro(symbol, getMacro(), flags);
