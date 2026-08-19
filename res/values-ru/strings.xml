@@ -168,4 +168,6 @@
     <string name="pref_split_layout_landscape">В ландшафтном режиме</string>
     <string name="pref_split_layout_wide">На широком экране</string>
     <string name="dictionaries_download_failed">Ошибка загрузки: разрешите доступ к интернету</string>
+    <string name="dictionary_switcher_title">Изменить язык</string>
+    <string name="pref_theme_e_dracula">Дракула</string>
 </resources>
