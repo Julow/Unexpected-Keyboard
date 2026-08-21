@@ -168,4 +168,6 @@
     <string name="pref_split_layout_never">Ніколи</string>
     <string name="pref_split_layout_landscape">У альбомній орієнтації</string>
     <string name="pref_split_layout_wide">На широких екранах</string>
+    <string name="pref_theme_e_dracula">Дракула</string>
+    <string name="dictionary_switcher_title">Змінити мову</string>
 </resources>
