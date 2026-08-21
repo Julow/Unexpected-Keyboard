@@ -159,9 +159,15 @@
     <string name="pref_dialog_edit_text">Definisi kustom</string>
     <string name="dictionaries_from_internet">Unduh kamus dari Internet</string>
     <string name="dictionaries_download_success">Kamus terinstal</string>
-    <string name="dictionaries_download_failed">Pengunduhan gagal</string>
+    <string name="dictionaries_download_failed">Pengunduhan gagal: Harap izinkan akses internet</string>
     <string name="candidates_status_click_to_install">Klik untuk menginstal kamus untuk %s</string>
     <string name="pref_physical_keyboard_behavior">Ketika terhubung ke keyboard fisik</string>
     <string name="pref_physical_keyboard_behavior_hide">Sembunyikan semua</string>
     <string name="pref_physical_keyboard_behavior_show">Tampakkan semua</string>
+    <string name="pref_theme_e_dracula">Dracula</string>
+    <string name="dictionary_switcher_title">Ganti bahasa</string>
+    <string name="pref_split_layout">Tata letak terpisah</string>
+    <string name="pref_split_layout_never">Jangan pernah</string>
+    <string name="pref_split_layout_landscape">Pada orientasi landscape</string>
+    <string name="pref_split_layout_wide">Pada layar lebar</string>
 </resources>
