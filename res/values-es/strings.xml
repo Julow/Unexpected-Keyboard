@@ -168,4 +168,6 @@
     <string name="pref_split_layout">Diseño dividido</string>
     <string name="pref_split_layout_wide">En pantallas anchas</string>
     <string name="dictionaries_download_failed">Error de descarga: Por favor, permite el acceso a Internet</string>
+    <string name="dictionary_switcher_title">Cambiar idioma</string>
+    <string name="pref_theme_e_dracula">Drácula</string>
 </resources>
