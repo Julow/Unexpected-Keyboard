@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name_release">Neparedzēta tastatūra</string>
     <string name="app_name_debug">Neparedzēta tastatūra (atkļūdošana)</string>
-    <string name="short_description">Mazizmēra un privātumu ievērojoša virtuālā Android tastatūra.</string>
+    <string name="short_description">Mazizmēra un privātumu ievērojoša virtuāla Android tastatūra.</string>
     <string name="store_description">Tastatūras galvenā iespēja — viegli ievadīt jebkuru ASCII rakstzīmi ar pavilkšanu uz taustiņu stūriem.\n\nSākotnēji šī lietotne tika izstrādāta programmētājiem, kas izmanto Termux.\nTagad tā lieliski piemērota arī ikdienas lietošanai.\n\nLietotne nesatur reklāmas, un tās pirmkods ir pieejams visiem.</string>
     <string name="pref_portrait">Vertikālajā orientācijā</string>
     <string name="pref_landscape">Horizontālajā orientācijā</string>
@@ -167,4 +167,7 @@
     <string name="pref_split_layout">Sadalīts izkārtojums</string>
     <string name="pref_split_layout_never">Nekad</string>
     <string name="pref_split_layout_landscape">Horizontālā orientācijā</string>
+    <string name="dictionary_switcher_title">Mainīt valodu</string>
+    <string name="pref_theme_e_dracula">Drakula</string>
+    <string name="dictionaries_download_failed">Lejupielāde neizdevās: lūgums atļaut piekļuvi internetam</string>
 </resources>
