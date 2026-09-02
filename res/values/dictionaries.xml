@@ -3,6 +3,7 @@
   <string name="dict_name_af">Afrikaans</string>
   <string name="dict_name_ar">العربية</string>
   <string name="dict_name_as">অসমীয়া</string>
+  <string name="dict_name_az">Azərbaycan</string>
   <string name="dict_name_be">Беларуская</string>
   <string name="dict_name_bg">Български</string>
   <string name="dict_name_bn">বাংলা</string>
@@ -26,6 +27,7 @@
   <string name="dict_name_fa_ir">فارسی (ایران)</string>
   <string name="dict_name_fi">Suomi</string>
   <string name="dict_name_fr">Français</string>
+  <string name="dict_name_ga">Gaeilge</string>
   <string name="dict_name_gl">Galego</string>
   <string name="dict_name_gom">कोंकणी (देवनागरी, भारत)</string>
   <string name="dict_name_gu">ગુજરાતી</string>
@@ -35,6 +37,7 @@
   <string name="dict_name_hr">Hrvatski</string>
   <string name="dict_name_hu">Magyar</string>
   <string name="dict_name_hy">Հայերեն</string>
+  <string name="dict_name_hy_east">Հայերեն</string>
   <string name="dict_name_id">Indonesia</string>
   <string name="dict_name_is">Íslenska</string>
   <string name="dict_name_it">Italiano</string>
@@ -50,11 +53,14 @@
   <string name="dict_name_lt">Lietuvių</string>
   <string name="dict_name_lv">Latviešu</string>
   <string name="dict_name_mai">मैथिली</string>
+  <string name="dict_name_mg">Malagasy</string>
+  <string name="dict_name_mk">Македонски</string>
   <string name="dict_name_ml">മലയാളം</string>
   <string name="dict_name_mr">मराठी</string>
   <string name="dict_name_nb">Norsk Bokmål</string>
   <string name="dict_name_ne">नेपाली</string>
   <string name="dict_name_nl">Nederlands</string>
+  <string name="dict_name_nn">Norsk Nynorsk</string>
   <string name="dict_name_or">ଓଡ଼ିଆ</string>
   <string name="dict_name_pa">ਪੰਜਾਬੀ</string>
   <string name="dict_name_pl">Polski</string>
@@ -64,6 +70,7 @@
   <string name="dict_name_ru">Русский</string>
   <string name="dict_name_sa">संस्कृत भाषा</string>
   <string name="dict_name_sat">ᱥᱟᱱᱛᱟᱲᱤ</string>
+  <string name="dict_name_sc">Sardu</string>
   <string name="dict_name_sd">سنڌي</string>
   <string name="dict_name_sk">Slovenčina</string>
   <string name="dict_name_sl">Slovenščina</string>
@@ -72,6 +79,7 @@
   <string name="dict_name_sv">Svenska</string>
   <string name="dict_name_ta">தமிழ்</string>
   <string name="dict_name_te">తెలుగు</string>
+  <string name="dict_name_th">ไทย</string>
   <string name="dict_name_tl">Filipino (Pilipinas)</string>
   <string name="dict_name_tok">Toki Pona</string>
   <string name="dict_name_tr">Türkçe</string>
@@ -84,6 +92,7 @@
     <item>af</item>
     <item>ar</item>
     <item>as</item>
+    <item>az</item>
     <item>be</item>
     <item>bg</item>
     <item>bn</item>
@@ -107,6 +116,7 @@
     <item>fa_IR</item>
     <item>fi</item>
     <item>fr</item>
+    <item>ga</item>
     <item>gl</item>
     <item>gom</item>
     <item>gu</item>
@@ -116,6 +126,7 @@
     <item>hr</item>
     <item>hu</item>
     <item>hy</item>
+    <item>hy_east</item>
     <item>id</item>
     <item>is</item>
     <item>it</item>
@@ -131,11 +142,14 @@
     <item>lt</item>
     <item>lv</item>
     <item>mai</item>
+    <item>mg</item>
+    <item>mk</item>
     <item>ml</item>
     <item>mr</item>
     <item>nb</item>
     <item>ne</item>
     <item>nl</item>
+    <item>nn</item>
     <item>or</item>
     <item>pa</item>
     <item>pl</item>
@@ -145,6 +159,7 @@
     <item>ru</item>
     <item>sa</item>
     <item>sat</item>
+    <item>sc</item>
     <item>sd</item>
     <item>sk</item>
     <item>sl</item>
@@ -153,6 +168,7 @@
     <item>sv</item>
     <item>ta</item>
     <item>te</item>
+    <item>th</item>
     <item>tl</item>
     <item>tok</item>
     <item>tr</item>
@@ -166,6 +182,7 @@
     <item>@string/dict_name_af</item>
     <item>@string/dict_name_ar</item>
     <item>@string/dict_name_as</item>
+    <item>@string/dict_name_az</item>
     <item>@string/dict_name_be</item>
     <item>@string/dict_name_bg</item>
     <item>@string/dict_name_bn</item>
@@ -189,6 +206,7 @@
     <item>@string/dict_name_fa_ir</item>
     <item>@string/dict_name_fi</item>
     <item>@string/dict_name_fr</item>
+    <item>@string/dict_name_ga</item>
     <item>@string/dict_name_gl</item>
     <item>@string/dict_name_gom</item>
     <item>@string/dict_name_gu</item>
@@ -198,6 +216,7 @@
     <item>@string/dict_name_hr</item>
     <item>@string/dict_name_hu</item>
     <item>@string/dict_name_hy</item>
+    <item>@string/dict_name_hy_east</item>
     <item>@string/dict_name_id</item>
     <item>@string/dict_name_is</item>
     <item>@string/dict_name_it</item>
@@ -213,11 +232,14 @@
     <item>@string/dict_name_lt</item>
     <item>@string/dict_name_lv</item>
     <item>@string/dict_name_mai</item>
+    <item>@string/dict_name_mg</item>
+    <item>@string/dict_name_mk</item>
     <item>@string/dict_name_ml</item>
     <item>@string/dict_name_mr</item>
     <item>@string/dict_name_nb</item>
     <item>@string/dict_name_ne</item>
     <item>@string/dict_name_nl</item>
+    <item>@string/dict_name_nn</item>
     <item>@string/dict_name_or</item>
     <item>@string/dict_name_pa</item>
     <item>@string/dict_name_pl</item>
@@ -227,6 +249,7 @@
     <item>@string/dict_name_ru</item>
     <item>@string/dict_name_sa</item>
     <item>@string/dict_name_sat</item>
+    <item>@string/dict_name_sc</item>
     <item>@string/dict_name_sd</item>
     <item>@string/dict_name_sk</item>
     <item>@string/dict_name_sl</item>
@@ -235,6 +258,7 @@
     <item>@string/dict_name_sv</item>
     <item>@string/dict_name_ta</item>
     <item>@string/dict_name_te</item>
+    <item>@string/dict_name_th</item>
     <item>@string/dict_name_tl</item>
     <item>@string/dict_name_tok</item>
     <item>@string/dict_name_tr</item>
@@ -245,85 +269,93 @@
     <item>@string/dict_name_zgh_zz</item>
   </string-array>
   <integer-array name="dictionaries_size">
-    <item>1458539</item>
-    <item>1077292</item>
-    <item>311112</item>
-    <item>11487846</item>
-    <item>2211253</item>
-    <item>301784</item>
-    <item>906326</item>
-    <item>407170</item>
-    <item>214151</item>
-    <item>1568998</item>
-    <item>1546716</item>
-    <item>2255836</item>
-    <item>14333207</item>
-    <item>2266732</item>
-    <item>2238294</item>
-    <item>965128</item>
-    <item>1072238</item>
-    <item>965329</item>
-    <item>975297</item>
-    <item>161945</item>
-    <item>1052729</item>
-    <item>5019714</item>
-    <item>414036</item>
-    <item>8351837</item>
-    <item>1658585</item>
-    <item>1605664</item>
-    <item>357847</item>
-    <item>523830</item>
-    <item>481771</item>
-    <item>335482</item>
-    <item>470063</item>
-    <item>1180294</item>
-    <item>1321154</item>
-    <item>707030</item>
-    <item>928493</item>
-    <item>683724</item>
-    <item>2292011</item>
-    <item>893066</item>
-    <item>353376</item>
-    <item>488110</item>
-    <item>737650</item>
-    <item>6718570</item>
-    <item>263418</item>
-    <item>286778</item>
-    <item>40344</item>
-    <item>568604</item>
-    <item>697624</item>
-    <item>1516546</item>
-    <item>1979217</item>
-    <item>459935</item>
-    <item>354845</item>
-    <item>495624</item>
-    <item>1082569</item>
-    <item>2231616</item>
-    <item>1084717</item>
-    <item>364229</item>
-    <item>107132</item>
-    <item>1447993</item>
-    <item>1139131</item>
-    <item>1829662</item>
-    <item>2101184</item>
-    <item>2253446</item>
-    <item>610950</item>
-    <item>323065</item>
-    <item>535713</item>
-    <item>5515032</item>
-    <item>373039</item>
-    <item>1770217</item>
-    <item>1272020</item>
-    <item>1587792</item>
-    <item>297746</item>
-    <item>304874</item>
-    <item>70021</item>
-    <item>1609</item>
-    <item>1497533</item>
-    <item>7456277</item>
-    <item>573464</item>
-    <item>116462</item>
-    <item>628174</item>
-    <item>1134067</item>
+    <item>1459395</item>
+    <item>1065727</item>
+    <item>305248</item>
+    <item>361931</item>
+    <item>11487817</item>
+    <item>2239764</item>
+    <item>556287</item>
+    <item>904528</item>
+    <item>397095</item>
+    <item>210101</item>
+    <item>1535079</item>
+    <item>1508529</item>
+    <item>2222601</item>
+    <item>14360208</item>
+    <item>2231642</item>
+    <item>2212678</item>
+    <item>953539</item>
+    <item>1070265</item>
+    <item>953253</item>
+    <item>962870</item>
+    <item>158413</item>
+    <item>1031292</item>
+    <item>5020064</item>
+    <item>415547</item>
+    <item>8399442</item>
+    <item>1607469</item>
+    <item>1580052</item>
+    <item>8236475</item>
+    <item>349036</item>
+    <item>519886</item>
+    <item>478303</item>
+    <item>335479</item>
+    <item>466048</item>
+    <item>1169751</item>
+    <item>1274754</item>
+    <item>704518</item>
+    <item>887655</item>
+    <item>438029</item>
+    <item>690443</item>
+    <item>2279624</item>
+    <item>861937</item>
+    <item>332906</item>
+    <item>478446</item>
+    <item>728093</item>
+    <item>6748356</item>
+    <item>263410</item>
+    <item>279787</item>
+    <item>40217</item>
+    <item>554917</item>
+    <item>699647</item>
+    <item>1479011</item>
+    <item>1958833</item>
+    <item>454756</item>
+    <item>51874</item>
+    <item>2461690</item>
+    <item>349895</item>
+    <item>491496</item>
+    <item>1057667</item>
+    <item>2244500</item>
+    <item>1055918</item>
+    <item>9473630</item>
+    <item>357497</item>
+    <item>105128</item>
+    <item>1407128</item>
+    <item>1085492</item>
+    <item>1801818</item>
+    <item>2015008</item>
+    <item>2214915</item>
+    <item>608002</item>
+    <item>316860</item>
+    <item>358966</item>
+    <item>531682</item>
+    <item>7097862</item>
+    <item>358218</item>
+    <item>1736842</item>
+    <item>1239986</item>
+    <item>1553292</item>
+    <item>290728</item>
+    <item>298644</item>
+    <item>641028</item>
+    <item>68377</item>
+    <item>1592</item>
+    <item>1468143</item>
+    <item>7457735</item>
+    <item>570834</item>
+    <item>116349</item>
+    <item>629040</item>
+    <item>1134704</item>
   </integer-array>
 </resources>
