@@ -159,4 +159,15 @@
     <string name="clipboard_remove_confirm">Kas eemaldad selle objekti lõikelaualt?</string>
     <string name="clipboard_remove_confirmed">Jah</string>
     <string name="toast_no_voice_input">Ühtegi häälsisestusrakendust pole paigaldatud</string>
+    <string name="candidates_status_click_to_install">Klõpsa paigaldamaks sõnastikku: %s</string>
+    <string name="pref_physical_keyboard_behavior">Kui füüsiline klahvistik on ühendatud</string>
+    <string name="pref_physical_keyboard_behavior_hide">Peida kõik</string>
+    <string name="pref_physical_keyboard_behavior_show">Näita kõike</string>
+    <string name="pref_split_layout">Poolitatud paigutus</string>
+    <string name="pref_split_layout_never">Mitte kunagi</string>
+    <string name="pref_split_layout_landscape">Rõhtvaates</string>
+    <string name="pref_split_layout_wide">Laia ekraani puhul</string>
+    <string name="dictionaries_download_failed">Allalaadimine ei õnnestunud: palun luba internetiühenduse kasutamine</string>
+    <string name="pref_theme_e_dracula">Dracula</string>
+    <string name="dictionary_switcher_title">Vaheta keelt</string>
 </resources>
