@@ -3,7 +3,9 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
@@ -14,6 +16,11 @@ public class Theme
   public final int colorKeyActivated;
   public final int colorKeyAction;
   public final int colorKeySpaceBar;
+
+  // Optional keyboard background gradient
+  public final boolean hasKeyboardGradient;
+  public final int keyboardGradientStart;
+  public final int keyboardGradientEnd;
 
   // Label colors
   public final int lockedColor;
@@ -42,6 +49,9 @@ public class Theme
   {
     getKeyFont(context); // _key_font will be accessed
     TypedArray s = context.getTheme().obtainStyledAttributes(attrs, R.styleable.keyboard, 0, 0);
+    hasKeyboardGradient = s.hasValue(R.styleable.keyboard_keyboardGradientStart) && s.hasValue(R.styleable.keyboard_keyboardGradientEnd);
+    keyboardGradientStart = s.getColor(R.styleable.keyboard_keyboardGradientStart, 0);
+    keyboardGradientEnd = s.getColor(R.styleable.keyboard_keyboardGradientEnd, 0);
     colorKey = s.getColor(R.styleable.keyboard_colorKey, 0);
     colorKeyActivated = s.getColor(R.styleable.keyboard_colorKeyActivated, 0);
     colorKeyAction = s.getColor(R.styleable.keyboard_colorKeyAction, colorKey);
@@ -105,6 +115,7 @@ public class Theme
     public final float margin_top;
     public final float margin_left;
     public final float row_height;
+    public final Paint keyboard_background_paint;
     public final Paint indication_paint;
 
     public final Key key;
@@ -125,6 +136,7 @@ public class Theme
       // added on the right and on the bottom of every keys.
       margin_top = config.marginTop + vertical_margin / 2;
       margin_left = horizontal_margin / 2;
+      keyboard_background_paint = init_keyboard_background_paint(theme, margin_top + row_height * layout.keysHeight + config.margin_bottom);
       key = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Normal);
       key_action = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Action);
       key_space_bar = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Space_bar);
@@ -132,6 +144,23 @@ public class Theme
       key_suggestion = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Suggestion);
       indication_paint = init_label_paint(config, null);
       indication_paint.setColor(theme.subLabelColor);
+    }
+
+    static Paint init_keyboard_background_paint(Theme theme, float height)
+    {
+      if (!theme.hasKeyboardGradient)
+        return null;
+
+      Paint p = new Paint();
+      p.setShader(new LinearGradient(
+              0,
+              0,
+              0,
+              height,
+              theme.keyboardGradientStart,
+              theme.keyboardGradientEnd,
+              Shader.TileMode.CLAMP));
+      return p;
     }
 
     public static final class Key
