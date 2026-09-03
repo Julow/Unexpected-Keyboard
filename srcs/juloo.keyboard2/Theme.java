@@ -132,11 +132,11 @@ public class Theme
           (config.screenHeightPixels - config.keyboard_rows_height_pixels) / layout.keysHeight);
       vertical_margin = config.key_vertical_margin * row_height;
       horizontal_margin = config.key_horizontal_margin * keyWidth;
-      keyboard_background_paint = init_keyboard_background_paint(theme, config.marginTop + row_height * layout.keysHeight + config.margin_bottom);
       // Add half of the key margin on the left and on the top as it's also
       // added on the right and on the bottom of every keys.
       margin_top = config.marginTop + vertical_margin / 2;
       margin_left = horizontal_margin / 2;
+      keyboard_background_paint = init_keyboard_background_paint(theme, margin_top + row_height * layout.keysHeight + config.margin_bottom);
       key = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Normal);
       key_action = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Action);
       key_space_bar = new Key(theme, config, keyWidth, false, KeyboardData.Key.Role.Space_bar);
