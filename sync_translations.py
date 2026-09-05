@@ -35,6 +35,7 @@ VALUE_DIR_TO_METADATA = {
         "pt": "pt-BR",
         "ro": "ro",
         "ru": "ru-RU",
+        "ta": "ta-IN",
         "th": "th",
         "tok": None,
         "tr": "tr-TR",
