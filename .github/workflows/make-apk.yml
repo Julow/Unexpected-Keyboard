@@ -40,28 +40,26 @@ jobs:
         gradle-version: 8.14.4
 
     - name: Run tests
-      run: |
-        gradle test
-        # Warn about outdated generated files.
-        if ! git diff --name-only; then
-          echo "Warning: Generated files are not uptodate. Run 'gradle test'."
-        fi
+      run: gradle test
 
     - name: Build debug APK
-      run: ./gradlew assembleDebug
+      run: |
+        gradle assembleDebug
+        artifact="${{github.repository_owner}} ${{github.ref_name}}"
+        artifact="${artifact//\//-}" # replace slashes
+        echo "artifact=${artifact}" >> $GITHUB_ENV
       env:
         DEBUG_KEYSTORE: "debug.keystore"
         DEBUG_KEYSTORE_PASSWORD: debug0
         DEBUG_KEY_ALIAS: debug
         DEBUG_KEY_PASSWORD: debug0
 
-    - name: Artifact naming
-      run: |
-        artifact="${{github.repository_owner}} ${{github.ref_name}}"
-        artifact="${artifact//\//-}" # replace slashes
-        echo "artifact=${artifact}" >> $GITHUB_ENV
     - name: Upload debug APK
       uses: actions/upload-artifact@v4
       with:
         name: "${{env.artifact}} debug_apk"
         path: build/outputs/apk/debug/*.apk
+
+    - name: Check generated files
+      run:
+        git diff --name-only --exit-code
