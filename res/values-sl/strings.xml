@@ -1,3 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="app_name_release">Nenavadna tipkovnica</string>
+    <string name="app_name_debug">Nenavadna tipkovnica (razhroščevanje)</string>
+    <string name="short_description">Lahka in zasebnostno ozaveščena virtualna tipkovnica za Android.</string>
+    <string name="store_description">Glavna značilnost je, da lahko vnesete več znakov tako, da tipke povlečete proti vogalom.\n\nTa aplikacija je bila prvotno zasnovana za programerje, ki uporabljajo Termux.\nZdaj je odlična za vsakodnevno uporabo.\n\nTa aplikacija ne vsebuje oglasov in je odprtokodna.</string>
+    <string name="pref_portrait">V pokončnem načinu</string>
+    <string name="pref_portrait_unfolded">V razgrnjenem pokončnwm načinu</string>
+    <string name="pref_landscape">V ležečem načinu</string>
+    <string name="pref_landscape_unfolded">V razgrnjenem ležečem načinu</string>
+    <string name="pref_category_layout">Postavitev</string>
+    <string name="pref_label_brightness">Prilagodi svetlost oznak</string>
+    <string name="pref_keyboard_opacity">Prilagodi motnost ozadja tipkovnice</string>
+    <string name="pref_key_opacity">Prilagodi motnost tipk</string>
+    <string name="pref_key_activated_opacity">Prilagodi motnost pritisnjene tipke</string>
+    <string name="pref_layout_e_system">Sistemske nastavitve</string>
+    <string name="pref_layout_e_custom">Postavitev po meri</string>
+    <string name="pref_layouts_add">Dodaj alternativno postavitev</string>
+    <string name="pref_layouts_item">Postavitev %1$d: %2$s</string>
+    <string name="pref_layouts_remove_custom">Odstrani postavitev</string>
+    <string name="pref_custom_layout_title">Postavitev po meri</string>
+    <string name="pref_show_number_row_no_number_row">Brez vrstice s številkami</string>
+    <string name="pref_show_number_row_no_symbols">Številska vrstica brez simbolov</string>
+    <string name="pref_show_number_row_symbols">Številska vrstica s simboli</string>
+    <string name="pref_show_numpad_title">Prikaži številsko tipkovnico</string>
+    <string name="pref_show_numpad_never">Nikoli</string>
+    <string name="pref_show_numpad_landscape">Samo v ležečem načinu</string>
+    <string name="pref_show_numpad_always">Vedno</string>
+    <string name="pref_number_row_title">Prikaži vrstico s številkami</string>
+    <string name="pref_numpad_layout">Razporeditev številske tipkovnice</string>
+    <string name="pref_numpad_layout_e_high_first">Najprej visoke števke</string>
+    <string name="pref_numpad_layout_e_low_first">Najprej nizke števke</string>
+    <string name="pref_extra_keys_title">Dodajanje tipk na tipkovnico</string>
+    <string name="pref_extra_keys_custom">Dodajanje tipk po meri</string>
+    <string name="pref_extra_keys_internal">Izberite tipke, ki jih želite dodati na tipkovnico</string>
+    <string name="pref_category_suggestions">Predlogi</string>
+</resources>
