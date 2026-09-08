@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_release">Nenavadna tipkovnica</string>
-    <string name="app_name_debug">Nenavadna tipkovnica (razhroščevanje)</string>
+    <string name="app_name_debug">Nenavadna tipkovnica (debug)</string>
     <string name="short_description">Lahka in zasebnostno ozaveščena virtualna tipkovnica za Android.</string>
     <string name="store_description">Glavna značilnost je, da lahko vnesete več znakov tako, da tipke povlečete proti vogalom.\n\nTa aplikacija je bila prvotno zasnovana za programerje, ki uporabljajo Termux.\nZdaj je odlična za vsakodnevno uporabo.\n\nTa aplikacija ne vsebuje oglasov in je odprtokodna.</string>
     <string name="pref_portrait">V pokončnem načinu</string>
@@ -34,4 +34,38 @@
     <string name="pref_extra_keys_custom">Dodajanje tipk po meri</string>
     <string name="pref_extra_keys_internal">Izberite tipke, ki jih želite dodati na tipkovnico</string>
     <string name="pref_category_suggestions">Predlogi</string>
+    <string name="pref_suggestions_title">Predlogi</string>
+    <string name="pref_suggestions_summary">Omogoči dokončanje besed in preverjanje črkovanja</string>
+    <string name="pref_space_bar_auto_complete_title">Samodokončaj s preslednico</string>
+    <string name="pref_space_bar_auto_complete_summary">Vnesite najboljši predlog s pritiskom na preslednico</string>
+    <string name="pref_category_typing">Tipkanje</string>
+    <string name="pref_swipe_dist_title">Razdalja drsenja</string>
+    <string name="pref_swipe_dist_summary">Razdalja znakov v kotih tipk (%s)</string>
+    <string name="pref_long_timeout_title">Časovna omejitev za dolgi pritisk</string>
+    <string name="pref_long_interval_title">Interval ponavljanja tipke</string>
+    <string name="pref_keyrepeat_enabled">Ponavljanje tipke ob dolgem pritisku</string>
+    <string name="pref_lock_double_tap_title">Dvakrat pritisnite tipko Shift za Caps Lock</string>
+    <string name="pref_lock_double_tap_summary">Vsak modifikator lahko zaklenete tako, da ga držite</string>
+    <string name="pref_category_behavior">Vedenje</string>
+    <string name="pref_autocapitalisation_title">Samodejna uporaba velikih začetnic</string>
+    <string name="pref_autocapitalisation_summary">Pritisnite tipko Shift na začetku stavka</string>
+    <string name="pref_change_method_key_replacement_title">Preklapljanje med načini vnosa</string>
+    <string name="pref_change_method_key_replacement_e_picker">Prikaži izbirnik vnosne metode (dolgi pritisk)</string>
+    <string name="pref_change_method_key_replacement_e_prev">Preklopi na nazadnje uporabljeno</string>
+    <string name="pref_change_method_key_replacement_e_next">Preklopi na naslednjega na seznamu</string>
+    <string name="pref_vibrate_custom">Vibracije po meri</string>
+    <string name="pref_vibrate_duration_title">Intenzivnost vibracij</string>
+    <string name="pref_number_entry_title">Postavitev pri vnašanju številk, datumov in telefonskih številk</string>
+    <string name="pref_number_entry_layout_pin">Vnos PIN-a</string>
+    <string name="pref_number_entry_layout_number">Podokno s številkami</string>
+    <string name="pref_number_entry_layout_normal">Uporabite glavno postavitev</string>
+    <string name="pref_category_style">Stil</string>
+    <string name="pref_margin_bottom_title">Spodnji rob</string>
+    <string name="pref_keyboard_height_title">Višina tipkovnice</string>
+    <string name="pref_horizontal_margin_title">Vodoravni rob</string>
+    <string name="pref_character_size_title">Velikost oznake</string>
+    <string name="pref_character_size_summary">Velikost znakov, prikazanih na tipkovnici (%.2fx)</string>
+    <string name="pref_theme">Tema</string>
+    <string name="pref_theme_e_system">Sistemske nastavitve</string>
+    <string name="pref_theme_e_dark">Temna</string>
 </resources>
