@@ -455,7 +455,7 @@ public final class KeyModifier
           case Cursor_left: name = "selection_cursor_left"; break;
           case Cursor_right: name = "selection_cursor_right"; break;
         }
-        break;
+        return (name == null) ? k : KeyValue.getSpecialKeyByName(name).withSymbol(k.getString());
       case Keyevent:
         switch (k.getKeyevent())
         {
