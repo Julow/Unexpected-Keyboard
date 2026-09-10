@@ -168,4 +168,6 @@
     <string name="pref_split_layout_never">Nigdy</string>
     <string name="pref_split_layout_landscape">W orientacji poziomej</string>
     <string name="pref_split_layout_wide">Na szerokich ekranach</string>
+    <string name="pref_theme_e_dracula">Drakula</string>
+    <string name="dictionary_switcher_title">Zmień język</string>
 </resources>
