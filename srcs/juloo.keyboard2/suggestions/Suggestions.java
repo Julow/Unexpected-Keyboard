@@ -56,11 +56,12 @@ public final class Suggestions
     emoji_suggestion = null;
   }
 
-  int query_suggestions(String word)
+  int query_suggestions(String orig_word)
   {
     Cdict dict = _config.current_dictionary;
-    boolean first_char_upper = Character.isUpperCase(word.charAt(0));
-    word = apply_substitutions(word);
+    boolean first_char_upper = Character.isUpperCase(orig_word.charAt(0));
+    String word_with_sequences = apply_unicode_sequences(orig_word);
+    String word = apply_substitutions(word_with_sequences);
     Cdict.Result r = dict.find(word);
     int i = 0;
     if (r.found)
@@ -76,6 +77,8 @@ public final class Suggestions
       if (dist.length > j && i < MAX_COUNT)
         suggestions[i++] = dict.word(dist[j]);
     }
+    if (i < MAX_COUNT)
+      suggestions[i++] = word_with_sequences;
     if (first_char_upper)
       capitalize_results();
     emoji_suggestion = query_emoji(word); // word with substitutions applied
@@ -119,6 +122,41 @@ public final class Suggestions
       if (r != 0) b.setCharAt(i, r);
     }
     return b.toString();
+  }
+
+  /** Transform decimal numbers into the corresponding unicode character. */
+  public static String apply_unicode_sequences(String w)
+  {
+    final int len = w.length();
+    int i = 0;
+    for (; true; i++) // Avoid allocations when there's no sequence
+    {
+      if (i >= len) return w; // No sequence found
+      if (char_at_digit(w, i)) break;
+    }
+    StringBuilder out = new StringBuilder(len);
+    int written = 0;
+    while (true)
+    {
+      out.append(w, written, i);
+      written = i;
+      while (i < len && char_at_digit(w, i)) i++;
+      if (i == written) break;
+      try
+      {
+        out.appendCodePoint(Integer.parseInt(w.substring(written, i)));
+        written = i; // If parsing fails, the number will be outputed verbatim
+      }
+      catch (Exception e) {}
+      while (i < len && !char_at_digit(w, i)) i++;
+    }
+    return out.toString();
+  }
+
+  static boolean char_at_digit(String s, int i)
+  {
+    char c = s.charAt(i);
+    return (c >= '0' && c <= '9');
   }
 
   static final int[] NO_RESULTS = new int[0];
