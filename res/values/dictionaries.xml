@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+  <!-- Dictionaries are built and hosted at
+       https://github.com/Julow/Unexpected-Keyboard-dictionaries
+       Checksums are reproducible. -->
   <string name="dict_name_af">Afrikaans</string>
   <string name="dict_name_ar">العربية</string>
   <string name="dict_name_as">অসমীয়া</string>
@@ -275,7 +278,7 @@
     <item>361931</item>
     <item>11487817</item>
     <item>2239764</item>
-    <item>556287</item>
+    <item>556196</item>
     <item>904528</item>
     <item>397095</item>
     <item>210101</item>
@@ -305,7 +308,7 @@
     <item>1169751</item>
     <item>1274754</item>
     <item>704518</item>
-    <item>887655</item>
+    <item>887663</item>
     <item>438029</item>
     <item>690443</item>
     <item>2279624</item>
@@ -358,4 +361,94 @@
     <item>629040</item>
     <item>1134704</item>
   </integer-array>
+  <string-array name="dictionaries_sha256">
+    <item>hE2vM2+cSZjq74p9BoPevTLN3bPmaU5g70elveG7zn4=</item>
+    <item>aeGs/rSNhPjnMPHsDu7nAfaEVhVlKTEmJGxv8LYsZKk=</item>
+    <item>3YSkkwShAIYrvNyZ1URYYUVyuMw6ZzK0H6RXTryPK70=</item>
+    <item>CXrQ3P6Y19itERwTR2DyfS8hU6/FNGinOxPk0KYQg+s=</item>
+    <item>nhX3DJvITZdwpYJ/KPzCzEsH5hB+0QxnUJyb6FJ6QFk=</item>
+    <item>MR8503CvkaD3afPvAz0u09sPu/OZ8hTxSRzjuMot5/w=</item>
+    <item>Vo+S4AELaOHAuRSWNMhC7AD6yAUrxtJf6Uzu/QWR+js=</item>
+    <item>IcT381JpdLx8WwZs7RHHxrOEKlEyiETE27E8BpvIUv8=</item>
+    <item>PA7NEReaodIRRJD6jCNbvyAGCWe/IiaiOxju+ZWdEec=</item>
+    <item>xRX60LU3QBMxVbhctityQja/tAiHbF9guTYiLHa1NT8=</item>
+    <item>89o314J/U0SSfEh/dKLGffuax/9ZPePhGe7JFxaa2oQ=</item>
+    <item>yrfOqYj7DtxOiz9kFBLWa6uCcDQmKpX2+xeUwu3NByc=</item>
+    <item>ATeZ4HbF0siQYAJdTriCQ8Kdm9jptxUf2oF/dsMZfxs=</item>
+    <item>zS3W31urTYdfEPjdtHG07HZWPWmtZU6ZmC+Ow4ylb+U=</item>
+    <item>KwvKuL/EfBG2tY1LRL4UAkhUPk4lo/1K5FW3s7qQKfk=</item>
+    <item>BHle1SY1JJlbr9Xi7DyCEG7HVAKokZsoO+Qfyf+p55M=</item>
+    <item>vYHTPvniTc9CTroJqdYs697f05onx8jrI4f3iH7jbXw=</item>
+    <item>/2zGWc+f8AQIBvRjLzjogoOUcA2RCI9GFNHG6cl6RfQ=</item>
+    <item>7dLWouU8llOgu5hsuxe+81prNlWfYmYboe6G2hA9Seo=</item>
+    <item>HkEWTCnKT6HjONfw/quL9k06aJPErlEM7eGxSukCW20=</item>
+    <item>5B8ZpuJ8luD/1Ye6l6bWU88jgIUrGesz5mg2p0qg3wg=</item>
+    <item>iR/Bu4jb0Q6pj+wfTTV6IJduROcJWbGKKEVRKU6HW1A=</item>
+    <item>e6g0NTy7f8IuO8rOLg/sW5GmKBvccydxdE7djQ+rid0=</item>
+    <item>vwaJ5n7Vioyl5YYZtAYCiodoFfoS4hMlFs6JDKbt84I=</item>
+    <item>PK3We2HHZPdjy4KtNRWACU91k3+TkHnohPced9syJtM=</item>
+    <item>WfYHaW+Qe+nxOdraG+Xmk/7VpiwSqUtVJDfejwzbMX4=</item>
+    <item>AL2CjVn5a+x3iaCgSWz8OrWvbNDpE4Lq7EgyVXBcaXI=</item>
+    <item>22pY7FMTwVLXlj6PSTOQdh3ZMbbjHKtuKzyvMvzEZPU=</item>
+    <item>iluUkSCld7hVjM590O1HZcYprFKl0oAUPQwVSAXfu+s=</item>
+    <item>CrpWGu+OudzB090md9Cr+IPO+MoFSyBWUN2L4qEZqqY=</item>
+    <item>GqRIOPf1vfp0pFJixsg1yM5jh6kTg2ABzFdw3xAXhMk=</item>
+    <item>bjmch+VZKtLXDPwQsljE34dkanJ+KYbDDvrQTrSIl68=</item>
+    <item>nDdZIjLr2UgzmwL8vNil+w3C0baFeFKmzxk8PPqKp+A=</item>
+    <item>FpSeu/pMpjJPjp+Pxp6oxsnsuwkLioTI5+Y1Kfoo2ls=</item>
+    <item>jwBmDaDy7VOTqYvTBLuFeyeraFaFiqZvGaHPkFy44tU=</item>
+    <item>uD2l85iuAhjBhSMIKmlyaInvCijP9kH8eV3K9joIlZI=</item>
+    <item>binie0BCJai9j1nbLQPVF3ZMbBOFLGx38bxQ4nbsb7c=</item>
+    <item>Lo2JpVfJUW9y8lERgBQJdoXOcwpjpcn59K6s8I3uDVA=</item>
+    <item>YhjXnmfg5W/ghXZcI/J/3gJCI4OH9DbsBmhR0lwr6w4=</item>
+    <item>ioI5ijwjGka+1tW8Il+QzVcyJh731vumCM/aQQtE/M0=</item>
+    <item>FYTHWpp7gafPAHcwBTzi7BvIkpzYBHhVg2Be5LiVVsM=</item>
+    <item>jLWXn6zjkgzycbsPRkSJGXQexOsMODbUaa7GIKxIyYc=</item>
+    <item>btfWrmNzIIOiEysitFaxF9a2zL8wjzRO5sggno66Vto=</item>
+    <item>Y75ws1VuaUIlRbM0Tm4qW6FRhAuVXvPK8/hDDt5P2Dk=</item>
+    <item>5hTpjU2tNWlxLdccouWO01vdFFvjg2QhK9xdH/yas0U=</item>
+    <item>PfdC6hbCJ+5AMT1Lg0lW3sC2R7y5GG5Zwkt4MVak88g=</item>
+    <item>3+//lFiHZv89jWhIWI5SStQ5QgI+8a0OtyJYMI95ftU=</item>
+    <item>zNQ1h2BBM2cCRNxI8BOwFbE3c3FHWQoku/3jpOxA208=</item>
+    <item>nIfrvy2bky0fs8tj7pRbKifsuXrJc2dVk/AnBRUsk/s=</item>
+    <item>ZYwVTLw+PrhqiNaosEeEwvpfpy145vulwPy7SGdQFJ0=</item>
+    <item>8DoqTgRuu+C1jG634xQFdUeoFd93oc/eUQ8dwoQ9VNM=</item>
+    <item>gA5qly5mJ9HPpvIuJ0CGM3WAHnvpLnkGkSHpntnZuh8=</item>
+    <item>DH5OlM0lmL53d7EgZvL48FRCZuZGLVDZdIMbWaRAjmw=</item>
+    <item>yErrWPuRoEFvPaUlMHrUfhX13mlAvd5i5yiP1svta0A=</item>
+    <item>fxAAYTeCAmvyB/n1CXNW9eqnnQHfXPzYXB2jNOF07lg=</item>
+    <item>B/Op/2+tMnQAU0Bmrk2/NcALBiGQbb/EyfXWJ4OtLcM=</item>
+    <item>e1aYUvdAYELev/lGyCxm/0ZodWPZPgavD5LFUpzn414=</item>
+    <item>0iXxqc5QaypC+eZiKIrSxrhwd9+DutsxupXA2ak04oo=</item>
+    <item>CuOKk2KhIsT0Bv+LJ2KCAlEFrRg7Ee+LTFVBwaO2hiI=</item>
+    <item>WM3pgzOYP29kHv78yMqM0LU3e0vuvgdjBKbubkOJI2g=</item>
+    <item>K/szsiSXEG+jok13V1Pn9jSMARP4hduf9RVm3UMKmsk=</item>
+    <item>KZFhKqyEwSFIkByhA8SFurl3q2NeWQ4N9+KlhQ6MHhA=</item>
+    <item>Kh7s3cdLzFVFzDnq+TZDNTZeCv+e+2d9cNx5q/ol6CY=</item>
+    <item>VG2EPMxAdsL/VKoaQsEtaHAxrvG+s/J9pLjl/zddUsw=</item>
+    <item>JA3rGk24BCZWyJRBA5ao9DuzAYT1OpvnVIyozRlLDGo=</item>
+    <item>Pen6jbq6pceP3GaULLURZG2shvPhBfSzX/cVrJs2R1I=</item>
+    <item>LWieIdx0mBywf+Rhr10dpf0src2cGUzNIfBC1Ao+K9g=</item>
+    <item>SYuNQKtC64RvVli8DRHqxuY110zsikIaFS9U/uI17F4=</item>
+    <item>Dtrr/eWgw12iuYZ7lzH0MWJJQnLt7Ub8QNohUgZcRkQ=</item>
+    <item>oFuFlblJVsKgD/KZ+X6XRyaoMFldtwj6EjIGZGXZad4=</item>
+    <item>OiC2GjtvgWD/4HANXY6Fl3COxc0nOykvQ/CcuCZ7tLQ=</item>
+    <item>5QjbIhxg/HWR/NXuG2h98Lfd8WKjr/4Y36alWuKxcJI=</item>
+    <item>yA2LtR5u6N5XXjSwqNbdfZdvuXFvqJHhP7muWwBq/XE=</item>
+    <item>eOe74E6dXQ5T20VD5xKTm5HqqpJbF8M45FJoGgXdPk0=</item>
+    <item>pdpiW9S8eFMaE8RnBMOesAJCPXIB0p/wUkw9OlGv9TA=</item>
+    <item>C1CSROA0K1ai+u6jMJJA6/qvgw875QYkSNncoOBI8Iw=</item>
+    <item>GRrHmINmb+GjJIvv1g3qPg61mU4yIXTCBvK/zwpOk/E=</item>
+    <item>GVqve6y5nkbK/z5CreoAan82o2B9JaeNE3jQ8xoBDu4=</item>
+    <item>+neNPCFZFXN9bbayxocV3RBSipURQh19HKu3H/pk2gI=</item>
+    <item>SBiiPcLgvMIyC63GOGWfx0H+Mg/tkJzFO14YoJAgzuA=</item>
+    <item>3SaBpF00Y9YLpPw541RSCBQ7sRtme22FlF//K+uJUB8=</item>
+    <item>b7K6rB25OCrbO8qz8lzzSopodPN6Q91PV+TbkYbZVFQ=</item>
+    <item>nMpKis8Qcp7KFM1hfE/G73SFlM5MNLfKsBe5CsQiOGw=</item>
+    <item>YMsjhWV/v7Lptx8soTEEHWAioIotXhBXUk72HnhOGYU=</item>
+    <item>xVImlSIGY35tNFtS9LYQgVXrSjfIVftTi3uWImZMjrU=</item>
+    <item>b38J0EQrz8MYTP0oniabOpfRPcZd7RjurE/QDw4xRZI=</item>
+    <item>mbLRxZ34MTQlRp0YLYACP/2liP85sVRuvczJc+B4Rjs=</item>
+    <item>kxN+ITN4WG1hhSTcnyQCO6RfZ7tx4uL0Zf6VlqCMHEY=</item>
+  </string-array>
 </resources>

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.MessageDigest;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -179,15 +180,29 @@ public class DictionaryListView extends LinearLayout
       URLConnection con = url_of_dictionary(dict_name).openConnection();
       con.setRequestProperty("Accept-Encoding", "identity");
       byte[] data = Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
+      checksum(dict_name, data);
       Cdict.of_bytes(data); // Check that the dictionary can load.
       _dictionaries.install(dict_name, data);
       return true;
     }
     catch (Exception e)
     {
-      Logs.exn("", e);
+      Logs.exn("Dictionary install failed for " + dict_name, e);
       return false;
     }
+  }
+
+  void checksum(String dict_name, byte[] data) throws Exception
+  {
+    SupportedDictionaries ds = SupportedDictionaries.get(getResources());
+    byte[] expected = ds.get_sha256(dict_name);
+    if (expected == null)
+      throw new Exception("Unknown dict name");
+    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    md.update(data);
+    byte[] got = md.digest();
+    if (!MessageDigest.isEqual(expected, got))
+      throw new Exception("Checksum mismatch");
   }
 
   void post_toast(int msg_id)

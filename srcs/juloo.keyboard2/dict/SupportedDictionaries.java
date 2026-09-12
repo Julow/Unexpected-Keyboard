@@ -1,6 +1,7 @@
 package juloo.keyboard2.dict;
 
 import android.content.res.Resources;
+import android.util.Base64;
 import java.util.Arrays;
 import juloo.keyboard2.R;
 
@@ -10,12 +11,14 @@ public class SupportedDictionaries
   public String[] locales;
   public String[] names;
   public int[] sizes;
+  public String[] sha256;
 
   SupportedDictionaries(Resources res)
   {
     locales = res.getStringArray(R.array.dictionaries_locale);
     names = res.getStringArray(R.array.dictionaries_name);
     sizes = res.getIntArray(R.array.dictionaries_size);
+    sha256 = res.getStringArray(R.array.dictionaries_sha256);
   }
 
   public static SupportedDictionaries get(Resources res)
@@ -45,5 +48,15 @@ public class SupportedDictionaries
   {
     int i = find(dict_name);
     return (i >= 0) ? names[i] : dict_name;
+  }
+
+  /** SHA-256 hash of the dictionary in binary format. Return [null] if not
+      found. */
+  public byte[] get_sha256(String dict_name)
+  {
+    int i = find(dict_name);
+    if (i < 0)
+      return null;
+    return Base64.decode(sha256[i], Base64.DEFAULT);
   }
 }
