@@ -102,4 +102,22 @@
     <string name="pref_slider_sensitivity_title">Občutljivost drsnika za preslednico</string>
     <string name="pref_slider_sensitivity_slow">Počasna</string>
     <string name="pref_slider_sensitivity_medium">Srednja</string>
+    <string name="pref_slider_sensitivity_fast">Hitro</string>
+    <string name="key_action_next">Naslednje</string>
+    <string name="key_action_done">Končano</string>
+    <string name="key_action_go">Pojdi</string>
+    <string name="key_action_prev">Prejšnji</string>
+    <string name="key_action_search">Iskanje</string>
+    <string name="key_action_send">Pošlji</string>
+    <string name="launcher_button_imesettings">Omogoči tipkovnico</string>
+    <string name="launcher_button_imepicker">Izberi tipkovnico</string>
+    <string name="launcher_button_dictionaries">Namesti slovarje</string>
+    <string name="launcher_description">Ta aplikacija je navidezna tipkovnica. Pojdite v sistemske nastavitve s klikom na spodnji gumb in omogočite Nenavadno tipkovnico (Unexpected-Keyboard).</string>
+    <string name="launcher_sourcecode">To je svobodna in odprtokodna aplikacija. Izvorno kodo lahko najdete ali napake prijavite na GitHubu.</string>
+    <string name="launcher_tryhere">Po omogočanju lahko tipkovnico preizkusite tukaj:</string>
+    <string name="launcher_tryhere_hint">Poskusite tukaj</string>
+    <string name="key_descr_capslock">Zaklepanje tipk</string>
+    <string name="key_descr_compose">Sestavlanje</string>
+    <string name="key_descr_switch_greekmath">Grški in matematični simboli</string>
+    <string name="key_descr_change_method">Zamenjaj tipkovnico</string>
 </resources>
