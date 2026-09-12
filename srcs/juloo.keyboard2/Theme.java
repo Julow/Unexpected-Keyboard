@@ -182,11 +182,10 @@ public class Theme
           KeyboardData.Key.Role role)
       {
         border_radius = config.borderConfig ? config.customBorderRadius * keyWidth : theme.keyBorderRadius;
-        int bg_color;
         if (activated)
         {
-          bg_color = theme.colorKeyActivated;
           border_width = theme.keyBorderWidthActivated;
+          bg_paint.setColor(theme.colorKeyActivated);
           bg_paint.setAlpha(config.keyActivatedOpacity);
         }
         else
@@ -194,25 +193,24 @@ public class Theme
           switch (role)
           {
             case Action:
-              bg_color = theme.colorKeyAction;
+              bg_paint.setColor(theme.colorKeyAction);
               border_width = theme.keyBorderWidthAction;
               break;
             case Space_bar:
-              bg_color = theme.colorKeySpaceBar;
+              bg_paint.setColor(theme.colorKeySpaceBar);
               border_width = theme.keyBorderWidthSpaceBar;
               break;
             case Suggestion:
-              bg_color = 0;
+              bg_paint.setColor(0);
               border_width = 0;
               break;
             default:
-              bg_color = theme.colorKey;
+              bg_paint.setColor(theme.colorKey);
               border_width = config.borderConfig ? config.customBorderLineWidth : theme.keyBorderWidth;
               break;
           }
           bg_paint.setAlpha(config.keyOpacity);
         }
-        bg_paint.setColor(bg_color);
         border_left_paint = init_border_paint(config, border_width, theme.keyBorderColorLeft);
         border_top_paint = init_border_paint(config, border_width, theme.keyBorderColorTop);
         border_right_paint = init_border_paint(config, border_width, theme.keyBorderColorRight);
