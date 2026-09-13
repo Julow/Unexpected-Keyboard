@@ -10,15 +10,17 @@ public class SupportedDictionaries
 {
   public String[] locales;
   public String[] names;
-  public int[] sizes;
-  public String[] sha256;
+
+  Resources _res;
+  // Computed on demand
+  int[] _sizes = null;
+  String[] _sha256 = null;
 
   SupportedDictionaries(Resources res)
   {
     locales = res.getStringArray(R.array.dictionaries_locale);
     names = res.getStringArray(R.array.dictionaries_name);
-    sizes = res.getIntArray(R.array.dictionaries_size);
-    sha256 = res.getStringArray(R.array.dictionaries_sha256);
+    _res = res;
   }
 
   public static SupportedDictionaries get(Resources res)
@@ -42,7 +44,7 @@ public class SupportedDictionaries
 
   public String dict_name(int i) { return locales[i]; }
   public String display_name(int i) { return names[i]; }
-  public int size(int i) { return sizes[i]; }
+  public int size(int i) { return get_sizes()[i]; }
 
   public String get_display_name(String dict_name)
   {
@@ -57,6 +59,20 @@ public class SupportedDictionaries
     int i = find(dict_name);
     if (i < 0)
       return null;
-    return Base64.decode(sha256[i], Base64.DEFAULT);
+    return Base64.decode(get_sha256s()[i], Base64.DEFAULT);
+  }
+
+  int[] get_sizes()
+  {
+    if (_sizes == null)
+      _sizes = _res.getIntArray(R.array.dictionaries_size);
+    return _sizes;
+  }
+
+  String[] get_sha256s()
+  {
+    if (_sha256 == null)
+      _sha256 = _res.getStringArray(R.array.dictionaries_sha256);
+    return _sha256;
   }
 }
