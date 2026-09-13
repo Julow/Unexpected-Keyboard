@@ -92,10 +92,20 @@ public class DictionaryListView extends LinearLayout
           {
             if (_dictionaries.get_installed().contains(dict_name))
               _dictionaries.uninstall(dict_name);
-            else if (install_dictionary_from_internet(dict_name))
-              post_toast(R.string.dictionaries_download_success);
             else
-              post_toast(R.string.dictionaries_download_failed);
+            {
+              try
+              {
+                install_dictionary_from_internet(dict_name);
+                post_toast(getContext().getString(R.string.dictionaries_download_success));
+              }
+              catch (Exception e)
+              {
+                Logs.exn(dict_name, e);
+                post_toast(getContext().getString(R.string.dictionaries_download_failed)
+                    + " (" + e.getMessage() + ")");
+              }
+            }
           }
         });
   }
@@ -170,26 +180,16 @@ public class DictionaryListView extends LinearLayout
         + ".dict");
   }
 
-  /** Returns [true] on success. */
-  boolean install_dictionary_from_internet(String dict_name)
+  void install_dictionary_from_internet(String dict_name) throws Exception
   {
-    try
-    {
-      // Remote files are compressed with gzip at rest. Do not use server side
-      // compression and force decompression.
-      URLConnection con = url_of_dictionary(dict_name).openConnection();
-      con.setRequestProperty("Accept-Encoding", "identity");
-      byte[] data = Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
-      checksum(dict_name, data);
-      Cdict.of_bytes(data); // Check that the dictionary can load.
-      _dictionaries.install(dict_name, data);
-      return true;
-    }
-    catch (Exception e)
-    {
-      Logs.exn("Dictionary install failed for " + dict_name, e);
-      return false;
-    }
+    // Remote files are compressed with gzip at rest. Do not use server side
+    // compression and force decompression.
+    URLConnection con = url_of_dictionary(dict_name).openConnection();
+    con.setRequestProperty("Accept-Encoding", "identity");
+    byte[] data = Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
+    checksum(dict_name, data);
+    Cdict.of_bytes(data); // Check that the dictionary can load.
+    _dictionaries.install(dict_name, data);
   }
 
   void checksum(String dict_name, byte[] data) throws Exception
@@ -205,13 +205,13 @@ public class DictionaryListView extends LinearLayout
       throw new Exception("Checksum mismatch");
   }
 
-  void post_toast(int msg_id)
+  void post_toast(String msg)
   {
     post(new Runnable()
         {
           public void run()
           {
-            Toast.makeText(getContext(), msg_id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
           }
         });
   }
