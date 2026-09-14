@@ -153,4 +153,21 @@
     <string name="toast_no_voice_input">Ni nameščene aplikacije za glasovno tipkanje</string>
     <string name="pref_category_clipboard">Odložišče</string>
     <string name="pref_clipboard_history_duration">Trajanje hrambe v odložišču</string>
+    <string name="pref_clipboard_history_duration_1">Največ 1 minuto</string>
+    <string name="pref_clipboard_history_duration_5">Največ 5 minut</string>
+    <string name="pref_clipboard_history_duration_30">Največ 30 minut</string>
+    <string name="pref_clipboard_history_duration_stop">Dokler se aplikacija ne ustavi</string>
+    <string name="pref_dialog_edit_text">Določitev po meri</string>
+    <string name="dictionaries_from_internet">Prenesi slovar iz interneta</string>
+    <string name="dictionaries_download_success">Slovar je nameščen</string>
+    <string name="dictionaries_download_failed">Prenos ni uspel: Omogočite dostop do interneta</string>
+    <string name="candidates_status_click_to_install">Kliknite za namestitev slovarja za %s</string>
+    <string name="dictionary_switcher_title">Spremeni jezik</string>
+    <string name="pref_physical_keyboard_behavior">Ko je priključena fizična tipkovnica</string>
+    <string name="pref_physical_keyboard_behavior_hide">Skrij vse</string>
+    <string name="pref_physical_keyboard_behavior_show">Prikaži vse</string>
+    <string name="pref_split_layout">Razdeljena postavitev</string>
+    <string name="pref_split_layout_never">Nikoli</string>
+    <string name="pref_split_layout_landscape">V ležeči usmerjenosti</string>
+    <string name="pref_split_layout_wide">Na širokih zaslonih</string>
 </resources>
