@@ -115,7 +115,7 @@ def check_locales_for_dictionaries(locales):
             warn("Dictionary '%s' is attached to no locale" % d)
 
 def subtype_elem(root, loc):
-    tag = loc["tag"].replace("_", "-")
+    tag = loc["name"].replace("_", "-")
     extra_keys = ",extra_keys=" + loc["extra_keys"] if "extra_keys" in loc else ""
     dictionaries = ",dictionary=" + loc["dictionary"] if loc["dictionary"] != None else ""
     extra_value = f'script={loc["script"]},default_layout={loc["default_layout"]}{dictionaries}{extra_keys}'
@@ -128,36 +128,36 @@ def subtype_elem(root, loc):
         "android:imeSubtypeExtraValue": extra_value
         })
 
-# Return locales with the "tag" and "dictionary" attributes added.
-def compute_attrs():
+# Add default locales for each languages and pair dictionaries.
+def process_locales(locales):
     locales_grouped = {} # Locales grouped by language tag
     def lang(loc):
         return loc["name"].split("_")[0]
-    def find_locale(name):
-        l = name.split("_")[0]
-        return next(( loc for loc in locales_grouped[l] if loc["name"] == name ), None)
-    for loc in LOCALES:
-        locales_grouped.setdefault(lang(loc), []).append(loc)
-    def tag(loc):
-        l = lang(loc)
-        if loc["name"] == l: return l # Locales like "en"
-        if loc["name"] == f"{l}_{l.upper()}": return l # Locales like "fr_FR"
-        # Return a short tag when it's not shared between several locales
-        return l if len(locales_grouped[l]) == 1 else loc["name"]
-    def dictionary(loc):
+    def find_locale(locs, name):
+        for loc in locs:
+            if loc["name"] == name: return loc
+        return None
+    def dictionary(loc, def_loc):
         if loc is None: return None
         if "dictionary" in loc: return loc["dictionary"]
         if loc["name"] in available_dictionaries: return loc["name"]
         l = lang(loc)
         if l in available_dictionaries: return l
-        if l != loc["name"]: return dictionary(find_locale(l))
+        if def_loc is not None and "dictionary" in def_loc: return def_loc["dictionary"]
         return None
-    def add_attrs(loc):
-        loc = dict(**loc)
-        loc["tag"] = tag(loc)
-        loc["dictionary"] = dictionary(loc)
-        return loc
-    return map(add_attrs, LOCALES)
+    for loc in locales:
+        locales_grouped.setdefault(lang(loc), []).append(dict(**loc))
+    for l, locs in locales_grouped.items():
+        # Set the language with a country code equal to the lang as the first
+        # in order (eg. "de_DE" comes before "de_BE")
+        def_loc = find_locale(locs, f"{l}_{l.upper()}")
+        if def_loc is not None:
+            def_loc["default_for_lang"] = True
+        else:
+            def_loc = find_locale(locs, l)
+        for loc in locs:
+            loc["dictionary"] = dictionary(loc, def_loc)
+            yield loc
 
 def sort_locales(locales):
     # The default locale for a language (eg. "en") might shadow the exact
@@ -165,11 +165,11 @@ def sort_locales(locales):
     # ones.
     def key(l):
         s = l["name"].split("_")
-        return (l["name"] != DEFAULT_LOCALE), s[0], (len(s) == 1), s[1:]
+        return (l["name"] != DEFAULT_LOCALE), s[0], (not l.get("default_for_lang", False)), (len(s) == 1), s[1:]
     return sorted(locales, key=key)
 
 def gen():
-    locales = sort_locales(compute_attrs())
+    locales = sort_locales(process_locales(LOCALES))
     check_locales_for_dictionaries(locales)
     root = ET.Element("input-method", attrib={
         "xmlns:android": "http://schemas.android.com/apk/res/android",
