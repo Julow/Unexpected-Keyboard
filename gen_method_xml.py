@@ -33,7 +33,7 @@ LOCALES = [
   loc("el", "latin", "grek_qwerty", extra_keys="£@l|€"),
   loc("en", "latin", "latn_qwerty_us", dictionary="en_GB"),
   loc("en_AU", "latin", "latn_qwerty_us"),
-  loc("en_CA", "latin", "latn_qwerty_us", dictionary="en_US"),
+  loc("en_CA", "latin", "latn_qwerty_us"),
   loc("en_GB", "latin", "latn_qwerty_gb", extra_keys="£@l"),
   loc("en_IN", "latin", "latn_qwerty_us"),
   loc("en_NG", "latin", "latn_qwerty_us", extra_keys="₦"),
@@ -99,6 +99,9 @@ LOCALES = [
 # The locale that is at the beginning of the list.
 DEFAULT_LOCALE = "en_GB"
 
+# The default attributes for incomplete locales
+DEFAULT_LOC_FOR_COPY = loc("en", "latin", "latn_qwerty_us")
+
 def parse_dictionaries():
     tree = ET.parse("res/values/dictionaries.xml")
     root = tree.getroot()
@@ -106,13 +109,6 @@ def parse_dictionaries():
 
 # Available dictionares of the form "de" or "de_CH".
 available_dictionaries = parse_dictionaries()
-
-# Warn when a dictionary is attached to no locale
-def check_locales_for_dictionaries(locales):
-    used = { l["dictionary"] for l in locales if "dictionary" in l }
-    for d in available_dictionaries:
-        if d not in used:
-            warn("Dictionary '%s' is attached to no locale" % d)
 
 def subtype_elem(root, loc):
     tag = loc["name"].replace("_", "-")
@@ -130,13 +126,26 @@ def subtype_elem(root, loc):
 
 # Add default locales for each languages and pair dictionaries.
 def process_locales(locales):
-    locales_grouped = {} # Locales grouped by language tag
     def lang(loc):
         return loc["name"].split("_")[0]
     def find_locale(locs, name):
         for loc in locs:
             if loc["name"] == name: return loc
         return None
+    def find_default_locale_in_group(l, locs):
+        for loc in locs:
+            if "default_for_lang" in loc and loc["default_for_lang"]:
+                return loc
+        # Set the language with a country code equal to the lang as the first
+        # in order (eg. "de_DE" comes before "de_BE")
+        def_loc = find_locale(locs, f"{l}_{l.upper()}")
+        if def_loc is not None:
+            def_loc["default_for_lang"] = True
+        else:
+            def_loc = find_locale(locs, l)
+            if def_loc is None and len(locs) == 1:
+                def_loc = locs[0]
+        return def_loc
     def dictionary(loc, def_loc):
         if loc is None: return None
         if "dictionary" in loc: return loc["dictionary"]
@@ -145,19 +154,26 @@ def process_locales(locales):
         if l in available_dictionaries: return l
         if def_loc is not None and "dictionary" in def_loc: return def_loc["dictionary"]
         return None
+    locales_grouped = {} # Locales grouped by language tag
     for loc in locales:
         locales_grouped.setdefault(lang(loc), []).append(dict(**loc))
+    # Set "default_for_lang" and "dictionary"
+    used_dicts = set()
     for l, locs in locales_grouped.items():
-        # Set the language with a country code equal to the lang as the first
-        # in order (eg. "de_DE" comes before "de_BE")
-        def_loc = find_locale(locs, f"{l}_{l.upper()}")
-        if def_loc is not None:
-            def_loc["default_for_lang"] = True
-        else:
-            def_loc = find_locale(locs, l)
+        def_loc = find_default_locale_in_group(l, locs)
         for loc in locs:
             loc["dictionary"] = dictionary(loc, def_loc)
-            yield loc
+            used_dicts.add(loc["dictionary"])
+    # Add locales for dictionaries not yet attached
+    for dict_ in available_dictionaries:
+        if dict_ not in used_dicts:
+            l = dict_.split("_")[0]
+            locs = locales_grouped.setdefault(l, [])
+            if find_locale(locs, dict_) is None:
+                def_loc = find_default_locale_in_group(l, locs) or DEFAULT_LOC_FOR_COPY
+                locs.append({ **def_loc, "name": dict_, "dictionary": dict_ })
+    for _l, locs in locales_grouped.items():
+        yield from locs
 
 def sort_locales(locales):
     # The default locale for a language (eg. "en") might shadow the exact
@@ -170,7 +186,6 @@ def sort_locales(locales):
 
 def gen():
     locales = sort_locales(process_locales(LOCALES))
-    check_locales_for_dictionaries(locales)
     root = ET.Element("input-method", attrib={
         "xmlns:android": "http://schemas.android.com/apk/res/android",
         "android:settingsActivity": "juloo.keyboard2.SettingsActivity",
