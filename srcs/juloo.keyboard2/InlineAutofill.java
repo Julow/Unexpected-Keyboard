@@ -30,11 +30,24 @@ import java.util.List;
 public class InlineAutofill {
   private HorizontalScrollView _autofillContainer;
   private LinearLayout _autofillSuggestions;
+  private boolean visible = true;
+  private boolean hasSuggestions = false;
 
   public void onInflate(View keyboardViewParent)
   {
     _autofillContainer = keyboardViewParent.findViewById(R.id.autofill_container);
     _autofillSuggestions = keyboardViewParent.findViewById(R.id.autofill_suggestions);
+  }
+
+  public void setVisibility(boolean isVisible)
+  {
+    this.visible = isVisible;
+    updateVisibility();
+  }
+
+  private void updateVisibility()
+  {
+    _autofillContainer.setVisibility(visible && hasSuggestions ? View.VISIBLE : View.GONE);
   }
 
   @Nullable
@@ -67,7 +80,8 @@ public class InlineAutofill {
     Size autofillSize = new Size(ViewGroup.LayoutParams.WRAP_CONTENT, ((int) height));
 
     _autofillSuggestions.removeAllViews();
-    _autofillContainer.setVisibility(inlineSuggestions.isEmpty() ? View.GONE : View.VISIBLE);
+    hasSuggestions = !inlineSuggestions.isEmpty();
+    updateVisibility();
 
     for (InlineSuggestion inlineSuggestion : inlineSuggestions)
     {
