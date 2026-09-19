@@ -2,38 +2,45 @@ import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import java.io.FileOutputStream
 
 plugins {
-  id("com.android.application") version "8.13.0"
+  id("com.android.application") version "8.13.2"
 }
 
 dependencies {
-  implementation("androidx.window:window-java:1.3.0")
-  implementation("androidx.core:core:1.16.0")
+  // Following versions of androidx.window require sdk version 23
+  implementation("androidx.window:window-java:1.4.0")
+  implementation("androidx.core:core:1.16.0") // Version 1.17.0 available with sdk 36
   implementation("androidx.autofill:autofill:1.3.0")
   testImplementation("junit:junit:4.13.2")
 }
 
 android {
   namespace = "juloo.keyboard2"
-  compileSdkVersion = "android-35"
+  compileSdkVersion = "android-36"
 
   defaultConfig {
     applicationId = "juloo.keyboard2"
     minSdk = 21
-    targetSdk { version = release(35) }
-    versionCode = 50
-    versionName = "1.32.1"
+    targetSdk { version = release(36) }
+    versionCode = 56
+    versionName = "2.1.0"
   }
 
   sourceSets {
     named("main") {
       manifest.srcFile("AndroidManifest.xml")
-      java.srcDirs("srcs/juloo.keyboard2")
+      java.srcDirs("srcs/juloo.keyboard2", "vendor/cdict/java/juloo.cdict")
       res.srcDirs("res", "build/generated-resources")
       assets.srcDirs("assets")
     }
 
     named("test") {
       java.srcDirs("test")
+    }
+  }
+
+  externalNativeBuild {
+    ndkBuild {
+      path = file("vendor/Android.mk")
     }
   }
 
@@ -63,6 +70,9 @@ android {
   buildTypes {
     named("release") {
       isMinifyEnabled = true
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro")
       isShrinkResources = true
       isDebuggable = false
       resValue("string", "app_name", "@string/app_name_release")
@@ -84,6 +94,14 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+}
+
+
+// This raises an error with an informative message instead of the confusing
+// ndk-build errors that occur when submodules are not initialized.
+gradle.projectsEvaluated {
+  if (!file("vendor/cdict/java").exists())
+    throw GradleException("Git submodules not initialized. Run 'git submodule update --init'")
 }
 
 val buildKeyboardFont by tasks.registering(Exec::class) {
@@ -113,6 +131,17 @@ val genLayoutsList by tasks.registering(Exec::class) {
   commandLine("python", "gen_layouts.py")
 }
 
+val genMethodXml by tasks.registering(Exec::class) {
+  val out = projectDir.resolve("res/xml/method.xml")
+  inputs.file(projectDir.resolve("gen_method_xml.py"))
+  inputs.file(projectDir.resolve("res/values/dictionaries.xml"))
+  outputs.file(out)
+  doFirst { println("\nGenerating res/xml/method.xml") }
+  doFirst { standardOutput = FileOutputStream(out) }
+  workingDir = projectDir
+  commandLine("python", "gen_method_xml.py")
+}
+
 val checkKeyboardLayouts by tasks.registering(Exec::class) {
   inputs.dir(projectDir.resolve("srcs/layouts"))
   inputs.file(projectDir.resolve("srcs/juloo.keyboard2/KeyValue.java"))
@@ -137,7 +166,7 @@ val compileComposeSequences by tasks.registering(Exec::class) {
 }
 
 tasks.withType(Test::class).configureEach {
-  dependsOn(genLayoutsList, checkKeyboardLayouts, compileComposeSequences)
+  dependsOn(genLayoutsList, checkKeyboardLayouts, compileComposeSequences, genMethodXml)
 }
 
 val initDebugKeystore by tasks.registering(Exec::class) {
@@ -165,5 +194,5 @@ tasks.named("preBuild") {
   // Gradle) but doesn't create a dependency. These rules update files that are
   // checked in the repository that don't need to be updated during regular
   // builds.
-  mustRunAfter(genEmojis, genLayoutsList, compileComposeSequences)
+  mustRunAfter(genEmojis, genLayoutsList, compileComposeSequences, genMethodXml)
 }

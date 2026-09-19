@@ -14,6 +14,8 @@ public final class LayoutModifier
   static KeyboardData.Row number_row_no_symbols;
   static KeyboardData.Row number_row_symbols;
   static KeyboardData num_pad;
+  // Not used in this file but defined here for convenience.
+  public static KeyboardData.Row split_middle_column;
 
   /** Update the layout according to the configuration.
    *  - Remove the switching key if it isn't needed
@@ -31,7 +33,7 @@ public final class LayoutModifier
     final Set<KeyValue> remove_keys = new HashSet<KeyValue>();
     // Make sure the config key is accessible to avoid being locked in a custom
     // layout.
-    extra_keys.put(KeyValue.getKeyByName("config"), KeyboardData.PreferredPos.ANYWHERE);
+    extra_keys.put(KeyValue.CONFIG, KeyboardData.PreferredPos.ANYWHERE);
     extra_keys.putAll(globalConfig.extra_keys_param);
     extra_keys.putAll(globalConfig.extra_keys_custom);
     // Number row and numpads are added after the modification pass to allow
@@ -46,11 +48,16 @@ public final class LayoutModifier
     else if (globalConfig.add_number_row && !kw.embedded_number_row) // The numpad removes the number row
     {
       added_number_row = modify_number_row(globalConfig.number_row_symbols ? number_row_symbols : number_row_no_symbols, kw);
+      if (globalConfig.split_layout)
+        added_number_row = LayoutLandscapeModifier.transform_number_row(added_number_row);
       remove_keys.addAll(added_number_row.getKeys(0).keySet());
     }
     // Add the bottom row before computing the extra keys
     if (kw.bottom_row)
       kw = kw.insert_row(bottom_row, kw.rows.size());
+    // Split the layout in landscape orientation
+    if (globalConfig.split_layout)
+      kw = LayoutLandscapeModifier.transform_to_landscape(kw);
     // Compose keys to add to the layout
     // 'extra_keys_keyset' reflects changes made to 'extra_keys'
     Set<KeyValue> extra_keys_keyset = extra_keys.keySet();
@@ -156,16 +163,9 @@ public final class LayoutModifier
         switch (orig.getEvent())
         {
           case CHANGE_METHOD_PICKER:
-            if (globalConfig.switch_input_immediate)
-              return KeyValue.getKeyByName("change_method_prev");
-            break;
+            return globalConfig.change_method_key_replacement;
           case ACTION:
-            String action_label = ec.actionLabel;
-            if (action_label == null)
-              return null; // Remove the action key
-            if (ec.swapEnterActionKey)
-              return KeyValue.getKeyByName("enter");
-            return KeyValue.makeActionKey(action_label);
+            return ec.action_key_replacement;
           case SWITCH_FORWARD:
             return (globalConfig.layouts.size() > 1) ? orig : null;
           case SWITCH_BACKWARD:
@@ -179,8 +179,8 @@ public final class LayoutModifier
         switch (orig.getKeyevent())
         {
           case KeyEvent.KEYCODE_ENTER:
-            if (ec.swapEnterActionKey && ec.actionLabel != null)
-              return KeyValue.makeActionKey(ec.actionLabel);
+            if (ec.enter_key_replacement != null)
+              return ec.enter_key_replacement;
             break;
         }
         break;
@@ -211,6 +211,7 @@ public final class LayoutModifier
       number_row_symbols = KeyboardData.load_row(res, R.xml.number_row);
       bottom_row = KeyboardData.load_row(res, R.xml.bottom_row);
       num_pad = KeyboardData.load_num_pad(res);
+      split_middle_column = KeyboardData.load_row(res, R.xml.split_middle_column);
     }
     catch (Exception e)
     {

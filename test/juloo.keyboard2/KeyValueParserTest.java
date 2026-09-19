@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import juloo.keyboard2.KeyValue;
 import juloo.keyboard2.KeyValueParser;
 import org.junit.Test;
+import static juloo.keyboard2.TestUtils.*;
 import static org.junit.Assert.*;
 
 public class KeyValueParserTest
@@ -12,15 +13,15 @@ public class KeyValueParserTest
   @Test
   public void parse_key_value() throws Exception
   {
-    Utils.parse("'", KeyValue.makeStringKey("'"));
-    Utils.parse("\\'", KeyValue.makeStringKey("\\'"));
-    Utils.parse("\\,", KeyValue.makeStringKey("\\,"));
-    Utils.parse("a\\'b", KeyValue.makeStringKey("a\\'b"));
-    Utils.parse("a\\,b", KeyValue.makeStringKey("a\\,b"));
-    Utils.parse("a", KeyValue.makeStringKey("a"));
-    Utils.parse("abc", KeyValue.makeStringKey("abc"));
+    Utils.parse("'", str("'"));
+    Utils.parse("\\'", str("\\'"));
+    Utils.parse("\\,", str("\\,"));
+    Utils.parse("a\\'b", str("a\\'b"));
+    Utils.parse("a\\,b", str("a\\,b"));
+    Utils.parse("a", str("a"));
+    Utils.parse("abc", str("abc"));
     Utils.parse("shift", KeyValue.getSpecialKeyByName("shift"));
-    Utils.parse("'a", KeyValue.makeStringKey("'a"));
+    Utils.parse("'a", str("'a"));
   }
 
   @Test
@@ -28,27 +29,27 @@ public class KeyValueParserTest
   {
     Utils.parse("copy:ctrl,a,ctrl,c", KeyValue.makeMacro("copy", new KeyValue[]{
       KeyValue.getSpecialKeyByName("ctrl"),
-      KeyValue.makeStringKey("a"),
+      str("a"),
       KeyValue.getSpecialKeyByName("ctrl"),
-      KeyValue.makeStringKey("c")
+      str("c")
     }, 0));
     Utils.parse("macro:abc,\\'", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("abc"),
-      KeyValue.makeStringKey("'")
+      str("abc"),
+      str("'")
     }, 0));
     Utils.parse("macro:abc,\\,", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("abc"),
-      KeyValue.makeStringKey(",")
+      str("abc"),
+      str(",")
     }, 0));
     Utils.parse("<2:ctrl,backspace", KeyValue.makeMacro("<2", new KeyValue[]{
       KeyValue.getSpecialKeyByName("ctrl"),
       KeyValue.getSpecialKeyByName("backspace")
     }, 0));
     Utils.parse("symbol:a,'\\\\abc','abc','a\\\\bc'", KeyValue.makeMacro("symbol", new KeyValue[]{
-      KeyValue.makeStringKey("a"),
-      KeyValue.makeStringKey("\\abc"),
-      KeyValue.makeStringKey("abc"),
-      KeyValue.makeStringKey("a\\bc")
+      str("a"),
+      str("\\abc"),
+      str("abc"),
+      str("a\\bc")
     }, 0));
     Utils.expect_error("symbol:");
     Utils.expect_error("unterminated_string:'");
@@ -62,38 +63,38 @@ public class KeyValueParserTest
   public void parse_non_macro() throws Exception
   {
     Utils.parse("a:b", KeyValue.makeCharKey('b', "a", 0));
-    Utils.parse("symbol:abc", KeyValue.makeStringKey("abc").withSymbol("symbol"));
-    Utils.parse("symbol:\\abc", KeyValue.makeStringKey("abc").withSymbol("symbol"));
-    Utils.parse("symbol:a\\bc", KeyValue.makeStringKey("abc").withSymbol("symbol"));
-    Utils.parse("symbol:\\\\abc", KeyValue.makeStringKey("\\abc").withSymbol("symbol"));
-    Utils.parse("symbol:a\\\\bc", KeyValue.makeStringKey("a\\bc").withSymbol("symbol"));
+    Utils.parse("symbol:abc", str("abc").withSymbol("symbol"));
+    Utils.parse("symbol:\\abc", str("abc").withSymbol("symbol"));
+    Utils.parse("symbol:a\\bc", str("abc").withSymbol("symbol"));
+    Utils.parse("symbol:\\\\abc", str("\\abc").withSymbol("symbol"));
+    Utils.parse("symbol:a\\\\bc", str("a\\bc").withSymbol("symbol"));
   }
 
   @Test
   public void parse_string_key() throws Exception
   {
     Utils.parse("symbol:'str'", KeyValue.makeMacro("symbol", new KeyValue[]{
-      KeyValue.makeStringKey("str")
+      str("str")
     }, 0));
     Utils.parse("symbol:'str\\''", KeyValue.makeMacro("symbol", new KeyValue[]{
-      KeyValue.makeStringKey("str'")
+      str("str'")
     }, 0));
     Utils.parse("macro:'str',abc", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("str"),
-      KeyValue.makeStringKey("abc")
+      str("str"),
+      str("abc")
     }, 0));
     Utils.parse("macro:abc,'str'", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("abc"),
-      KeyValue.makeStringKey("str")
+      str("abc"),
+      str("str")
     }, 0));
     Utils.parse("macro:\\',\\,", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("'"),
-      KeyValue.makeStringKey(","),
+      str("'"),
+      str(","),
     }, 0));
     Utils.parse("macro:a\\'b,a\\,b,a\\xb", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("a'b"),
-      KeyValue.makeStringKey("a,b"),
-      KeyValue.makeStringKey("axb")
+      str("a'b"),
+      str("a,b"),
+      str("axb")
     }, 0));
     Utils.expect_error("symbol:'");
     Utils.expect_error("symbol:'foo");
@@ -106,10 +107,10 @@ public class KeyValueParserTest
     Utils.parse("symbol:keyevent:85", KeyValue.keyeventKey("symbol", 85, KeyValue.FLAG_SMALLER_FONT));
     Utils.parse("macro:keyevent:85,abc", KeyValue.makeMacro("macro", new KeyValue[]{
       KeyValue.keyeventKey("", 85, 0),
-      KeyValue.makeStringKey("abc")
+      str("abc")
     }, 0));
     Utils.parse("macro:abc,keyevent:85", KeyValue.makeMacro("macro", new KeyValue[]{
-      KeyValue.makeStringKey("abc"),
+      str("abc"),
       KeyValue.keyeventKey("", 85, 0)
     }, 0));
     Utils.expect_error("symbol:keyevent:");
@@ -119,12 +120,12 @@ public class KeyValueParserTest
   @Test
   public void parse_old_syntax() throws Exception
   {
-    Utils.parse(":str:'Foo'", KeyValue.makeStringKey("Foo"));
-    Utils.parse(":str flags='dim':'Foo'", KeyValue.makeStringKey("Foo", KeyValue.FLAG_SECONDARY));
-    Utils.parse(":str symbol='Symbol':'Foo'", KeyValue.makeStringKey("Foo").withSymbol("Symbol"));
-    Utils.parse(":str symbol='Symbol' flags='dim':'f'", KeyValue.makeStringKey("f").withSymbol("Symbol").withFlags(KeyValue.FLAG_SECONDARY | KeyValue.FLAG_SMALLER_FONT));
-    Utils.parse(":str flags='dim,small':'Foo'", KeyValue.makeStringKey("Foo", KeyValue.FLAG_SECONDARY | KeyValue.FLAG_SMALLER_FONT));
-    Utils.parse(":str flags=',,':'Foo'", KeyValue.makeStringKey("Foo")); // Unintentional
+    Utils.parse(":str:'Foo'", str("Foo"));
+    Utils.parse(":str flags='dim':'Foo'", str("Foo", KeyValue.FLAG_SECONDARY));
+    Utils.parse(":str symbol='Symbol':'Foo'", str("Foo").withSymbol("Symbol"));
+    Utils.parse(":str symbol='Symbol' flags='dim':'f'", str("f").withSymbol("Symbol").withFlags(KeyValue.FLAG_SECONDARY | KeyValue.FLAG_SMALLER_FONT));
+    Utils.parse(":str flags='dim,small':'Foo'", str("Foo", KeyValue.FLAG_SECONDARY | KeyValue.FLAG_SMALLER_FONT));
+    Utils.parse(":str flags=',,':'Foo'", str("Foo")); // Unintentional
     Utils.expect_error(":unknown:Foo"); // Unknown kind
     Utils.expect_error(":str:Foo"); // Unquoted string
     Utils.expect_error(":str flags:'Foo'"); // Malformed flags

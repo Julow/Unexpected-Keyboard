@@ -2,9 +2,9 @@
 <!-- The bottom row used in the emoji pane. -->
 <keyboard bottom_row="false">
   <row height="0.95">
-    <key key0="switch_back_emoji"/>
-    <key width="3" key0="space" key5="cursor_left" key6="cursor_right"/>
-    <key key0="backspace" key2="delete"/>
-    <key key0="enter" key2="action"/>
+    <key role="action" key0="switch_back_emoji"/>
+    <key role="space_bar" width="3" key0="space" key5="cursor_left" key6="cursor_right"/>
+    <key role="action" key0="backspace" key2="delete"/>
+    <key role="action" key0="enter" key2="action"/>
   </row>
 </keyboard>

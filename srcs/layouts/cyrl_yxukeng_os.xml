@@ -27,7 +27,7 @@
     <key key0="э" key7="/" key8="|" />
   </row>
   <row scale="11">
-    <key width="1.22" key0="shift" />
+    <key width="1.22" role="action" key0="shift" />
     <key key0="ꙗ" key7="combining_breve" key8=";" />
     <key key0="ч" key7="combining_pokrytie" key8=":" />
     <key key0="с" key7="combining_inverted_breve" key8="`" />

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard bottom_row="false">
     <row>
-        <key key0="7"/>
-        <key key0="8"/>
-        <key key0="9"/>
-        <key key0="/"/>
+        <key role="action" key0="7"/>
+        <key role="action" key0="8"/>
+        <key role="action" key0="9"/>
+        <key role="action" key0="/"/>
     </row>
     <row>
-        <key key0="4"/>
-        <key key0="5"/>
-        <key key0="6"/>
-        <key key0="*"/>
+        <key role="action" key0="4"/>
+        <key role="action" key0="5"/>
+        <key role="action" key0="6"/>
+        <key role="action" key0="*"/>
     </row>
     <row>
-        <key key0="1"/>
-        <key key0="2"/>
-        <key key0="3"/>
-        <key key0="-"/>
+        <key role="action" key0="1"/>
+        <key role="action" key0="2"/>
+        <key role="action" key0="3"/>
+        <key role="action" key0="-"/>
     </row>
     <row height="0.95">
-        <key key0="0"/>
-        <key key0="."/>
-        <key key0="="/>
-        <key key0="+"/>
+        <key role="action" key0="0"/>
+        <key role="action" key0="."/>
+        <key role="action" key0="="/>
+        <key role="action" key0="+"/>
     </row>
 </keyboard>

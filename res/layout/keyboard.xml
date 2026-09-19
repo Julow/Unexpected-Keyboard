@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:hardwareAccelerated="false" android:background="?attr/colorKeyboard">
-  <HorizontalScrollView
-    android:id="@+id/autofill_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="gone">
-    <LinearLayout
-      android:id="@+id/autofill_suggestions"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:padding="4dp"
-      android:orientation="horizontal" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:hardwareAccelerated="false" android:orientation="vertical" android:background="?attr/colorKeyboard">
+  <HorizontalScrollView android:id="@+id/autofill_container" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone">
+    <LinearLayout android:id="@+id/autofill_suggestions" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="4dp" android:orientation="horizontal" />
   </HorizontalScrollView>
-  <juloo.keyboard2.Keyboard2View android:id="@+id/keyboard_view" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+  <juloo.keyboard2.suggestions.CandidatesView android:id="@+id/candidates_view" style="@style/candidates_view">
+    <TextView android:id="@+id/candidates_emoji" style="@style/candidates_emoji"/>
+    <TextView android:id="@+id/candidates_left" style="@style/candidates_item"/>
+    <TextView android:id="@+id/candidates_middle" style="@style/candidates_item"/>
+    <TextView android:id="@+id/candidates_right" style="@style/candidates_item"/>
+    <TextView android:id="@+id/candidates_lang_name" style="@style/candidates_lang_name"/>
+    <Button android:id="@+id/dictionary_switch" style="@style/change_dictionary"/>
+  </juloo.keyboard2.suggestions.CandidatesView>
+  <juloo.keyboard2.Keyboard2View android:id="@+id/keyboard_view" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </LinearLayout>

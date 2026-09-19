@@ -73,7 +73,7 @@ class VoiceImeSwitcher
       .create();
     if (ime_display_names.size() == 0)
       dialog.setMessage(ims.getResources().getString(R.string.toast_no_voice_input));
-    Utils.show_dialog_on_ime(dialog, ims.getWindow().getWindow().getDecorView().getWindowToken());
+    Utils.show_dialog_on_ime(dialog, ims);
   }
 
   static void switch_input_method(InputMethodService ims, IME ime)

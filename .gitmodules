@@ -1,0 +1,3 @@
+[submodule "vendor/cdict"]
+	path = vendor/cdict
+	url = https://github.com/Julow/cdict

@@ -3,4 +3,4 @@ Diese Tastatur zeichnet sich dadurch aus, dass man zusätzliche Zeichen durch Wi
 Die Anwendung wurde ursprünglich für das Programmieren in Termux entwickelt.
 Mittlerweile ist sie auch für den täglichen Gebrauch perfekt geeignet.
 
-Diese App enthält keine Werbung, benötigt keinen Netzwerkzugriff und ist quelloffen.
+Diese App enthält keine Werbung und ist quelloffen.

@@ -612,6 +612,9 @@ public final class Pointers implements Handler.Callback
         slider slower, as we have less visibility and do smaller movements in
         that direction. */
     static final float SPEED_VERTICAL_MULT = 0.5f;
+    /** Make horizontal sliders slower while ctrl is held (which typically
+        means movement happens by whole words instead of characters) */
+    static final float SPEED_WORD_MULT = 0.25f;
 
     public void onTouchMove(Pointer ptr, float x, float y)
     {
@@ -625,9 +628,15 @@ public final class Pointers implements Handler.Callback
           return;
         last_move_ms = System.currentTimeMillis();
       }
-      d += ((x - last_x) * speed * direction_x
-          + (y - last_y) * speed * SPEED_VERTICAL_MULT * direction_y)
-        / _config.slide_step_px;
+      float current_speed = speed / _config.slide_step_px;
+      if (slider.isVertical()) {
+        d += (y - last_y) * current_speed * direction_y * SPEED_VERTICAL_MULT;
+      } else {
+        if (ptr.modifiers.has(KeyValue.Modifier.CTRL))
+          current_speed *= SPEED_WORD_MULT;
+        d += (x - last_x) * current_speed * direction_x;
+      }
+
       update_speed(travelled, x, y);
       // Send an event when [abs(d)] exceeds [1].
       int d_ = (int)d;

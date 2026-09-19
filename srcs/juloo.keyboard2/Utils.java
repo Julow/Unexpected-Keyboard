@@ -3,12 +3,15 @@ package juloo.keyboard2;
 import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.graphics.Insets;
+import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.IBinder;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowManager;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Locale;
@@ -27,6 +30,13 @@ public final class Utils
 
   /** Like [dialog.show()] but properly configure layout params when called
       from an IME. [token] is the input view's [getWindowToken()]. */
+  public static void show_dialog_on_ime(AlertDialog dialog,
+      InputMethodService ims)
+  {
+    show_dialog_on_ime(dialog,
+        ims.getWindow().getWindow().getDecorView().getWindowToken());
+  }
+
   public static void show_dialog_on_ime(AlertDialog dialog, IBinder token)
   {
     Window win = dialog.getWindow();
@@ -48,5 +58,15 @@ public final class Utils
     while ((l = reader.read(buff, 0, buff_length)) != -1)
       out.append(buff, 0, l);
     return out.toString();
+  }
+
+  public static byte[] read_all_bytes(InputStream inp) throws IOException
+  {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    byte[] buff = new byte[128000];
+    int l;
+    while ((l = inp.read(buff)) != -1)
+      out.write(buff, 0, l);
+    return out.toByteArray();
   }
 }

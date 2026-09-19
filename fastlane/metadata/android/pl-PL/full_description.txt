@@ -3,4 +3,4 @@ Główną cechą tej klawiatury jest możliwość wprowadzania więcej znaków p
 Ta aplikacja została pierwotnie zaprojektowana z myślą o programistach używających Termuxa.
 Obecnie nadaje się doskonale do codziennego użytku.
 
-Aplikacja nie zawiera reklam, nie żąda dostępu do internetu, a jej kod źródłowy jest dostępny publicznie.
+Aplikacja nie zawiera reklam, a jej kod źródłowy jest dostępny publicznie.

@@ -1,0 +1,6 @@
+Spell checking and autocorrect are here !
+
+This releases comes with a very large number of improvements,
+support for many languages and new themes!
+
+Huge thanks to the contributors: @10Develops @anaskaejdar @andyca111100 @Autissima @bqv @cillyvms @domportera @dzaima @exzombie @Harry-Ais0 @Houfalafel @JeelsBoobz @JFronny @Julow @lan700ng @malbajun @matejdro @n-ce @skynetcat @sperareine @Spike-from-NH @xxcavemanxx

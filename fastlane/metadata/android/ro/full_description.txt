@@ -3,4 +3,4 @@ Funcționalitatea principală este accesul rapid la o mulțime de caractere ASCI
 Această aplicație a fost concepută inițial pentru programatori care folosec Termux.
 Este perfectă pentru uzul cotidian.
 
-Această aplicație nu conține publicitate, nu folosește rețeaua deloc și e Open Source.
+Această aplicație nu conține publicitate și e Open Source.

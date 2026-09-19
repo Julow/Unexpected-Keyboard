@@ -3,7 +3,7 @@
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string>
-    <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads, doesn\'t make any network requests and is Open Source.</string>
+    <string name="store_description">The main feature is that you can type more characters by swiping the keys towards the corners.\n\nThis application was originally designed for programmers using Termux.\nNow perfect for everyday use.\n\nThis application contains no ads and is Open Source.</string>
     <string name="pref_portrait">In portrait mode</string>
     <string name="pref_portrait_unfolded">In portrait mode unfolded</string>
     <string name="pref_landscape">In landscape mode</string>
@@ -27,13 +27,17 @@
     <string name="pref_show_numpad_landscape">Only in landscape mode</string>
     <string name="pref_show_numpad_always">Always</string>
     <string name="pref_number_row_title">Show number row</string>
-    <string name="pref_number_row_summary">Add a number row at the top of the keyboard when the numpad is hidden</string>
     <string name="pref_numpad_layout">NumPad layout</string>
     <string name="pref_numpad_layout_e_high_first">High digits first</string>
     <string name="pref_numpad_layout_e_low_first">Low digits first</string>
     <string name="pref_extra_keys_title">Add keys to the keyboard</string>
     <string name="pref_extra_keys_custom">Add custom keys</string>
     <string name="pref_extra_keys_internal">Select keys to add to the keyboard</string>
+    <string name="pref_category_suggestions">Suggestions</string>
+    <string name="pref_suggestions_title">Suggestions</string>
+    <string name="pref_suggestions_summary">Enable word completion and spell checking</string>
+    <string name="pref_space_bar_auto_complete_title">Autocomplete with the space bar</string>
+    <string name="pref_space_bar_auto_complete_summary">Enter the best suggestion by pressing space</string>
     <string name="pref_category_typing">Typing</string>
     <string name="pref_swipe_dist_title">Swiping distance</string>
     <string name="pref_swipe_dist_summary">Distance of characters in the corners of the keys (%s)</string>
@@ -45,8 +49,10 @@
     <string name="pref_category_behavior">Behavior</string>
     <string name="pref_autocapitalisation_title">Automatic capitalisation</string>
     <string name="pref_autocapitalisation_summary">Press Shift at the beginning of a sentence</string>
-    <string name="pref_switch_input_immediate_title">Switch to the last used keyboard</string>
-    <string name="pref_switch_input_immediate_summary">Behavior of the keyboard-switching key</string>
+    <string name="pref_change_method_key_replacement_title">Switching between input methods</string>
+    <string name="pref_change_method_key_replacement_e_picker">Show the input method picker (long press)</string>
+    <string name="pref_change_method_key_replacement_e_prev">Switch to last used</string>
+    <string name="pref_change_method_key_replacement_e_next">Switch to the next in the list</string>
     <string name="pref_vibrate_custom">Custom vibration</string>
     <string name="pref_vibrate_duration_title">Vibration intensity</string>
     <string name="pref_number_entry_title">Layout when typing numbers, dates, and phone numbers</string>
@@ -77,6 +83,8 @@
     <string name="pref_theme_e_cobalt">Cobalt</string>
     <string name="pref_theme_e_pine">Pine</string>
     <string name="pref_theme_e_epaperblack">ePaper Black</string>
+    <string name="pref_theme_e_dracula">Dracula</string>
+    <string name="pref_theme_e_gradientpurplepink">Purple Pink Gradient</string>
     <string name="pref_swipe_dist_e_very_short">Very short</string>
     <string name="pref_swipe_dist_e_short">Short</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
@@ -104,6 +112,7 @@
     <string name="key_action_send">Send</string>
     <string name="launcher_button_imesettings">Enable keyboard</string>
     <string name="launcher_button_imepicker">Select keyboard</string>
+    <string name="launcher_button_dictionaries">Install dictionaries</string>
     <string name="launcher_description">This application is a virtual keyboard. Go to the system settings by clicking on the button below and enable Unexpected-Keyboard.</string>
     <string name="launcher_sourcecode">This is a free and open source application. You can find the source code or report bugs on GitHub.</string>
     <string name="launcher_tryhere">After enabling, you can try the keyboard here:</string>
@@ -149,4 +158,17 @@
     <string name="pref_clipboard_history_duration_5">At most 5 minutes</string>
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
     <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
+    <string name="pref_dialog_edit_text">Custom definition</string>
+    <string name="dictionaries_from_internet">Download a dictionary from the Internet</string>
+    <string name="dictionaries_download_success">Dictionary installed</string>
+    <string name="dictionaries_download_failed">Download failed: Please allow internet access</string>
+    <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string>
+    <string name="dictionary_switcher_title">Change language</string>
+    <string name="pref_physical_keyboard_behavior">When a physical keyboard is connected</string>
+    <string name="pref_physical_keyboard_behavior_hide">Hide everything</string>
+    <string name="pref_physical_keyboard_behavior_show">Show everything</string>
+    <string name="pref_split_layout">Split layout</string>
+    <string name="pref_split_layout_never">Never</string>
+    <string name="pref_split_layout_landscape">In landscape orientation</string>
+    <string name="pref_split_layout_wide">On wide screens</string>
 </resources>

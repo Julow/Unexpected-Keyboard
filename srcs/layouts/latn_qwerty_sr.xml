@@ -33,7 +33,7 @@
     <key key0="č" ne="`" sw="|"/>    
   </row>
   <row>
-    <key width="1.5" key0="shift" nw="loc superscript" ne="loc capslock" sw="loc subscript"/>
+    <key width="1.5" role="action" key0="shift" nw="loc superscript" ne="loc capslock" sw="loc subscript"/>
     <key key0="z" nw="loc undo" ne="ž"/>
     <key key0="x" nw="loc cut"/>
     <key key0="c" nw="loc copy" ne="ć"/>
@@ -41,6 +41,6 @@
     <key key0="b" nw="!" ne="\?" sw="/"/>
     <key key0="n" ne=";" sw=","/>
     <key key0="m" ne=":" sw="."/>    
-    <key width="1.5" key0="backspace" ne="delete"/>
+    <key width="1.5" role="action" key0="backspace" ne="delete"/>
   </row>
 </keyboard>

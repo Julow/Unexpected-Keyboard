@@ -3,4 +3,4 @@ La fonctionnalité principale est l'accès rapide à plus de caractères en bala
 Cette application a été conçue à l'origine pour les programmeurs utilisant Termux.
 Elle est maintenant parfaite pour une utilisation quotidienne.
 
-Cette application ne contient pas de publicité, n'accède pas au réseau et est Open Source.
+Cette application ne contient pas de publicité et est Open Source.

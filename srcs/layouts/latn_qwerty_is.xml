@@ -28,7 +28,7 @@
     <key c="ö" nw="ø"/>
   </row>
   <row>
-    <key c="shift" ne="loc capslock"/>
+    <key role="action" c="shift" ne="loc capslock"/>
     <key c="z"/>
     <key c="x" ne="loc †"/>
     <key c="c" ne="&lt;" sw="."/>
@@ -38,6 +38,6 @@
     <key c="m" ne="&quot;" sw="'"/>
     <key c="accent_aigu" ne="accent_trema" nw="accent_grave" sw="accent_circonflexe" se="accent_ring"/>
     <key c="þ"/>
-    <key c="backspace" ne="delete"/>
+    <key role="action" c="backspace" ne="delete"/>
   </row>
 </keyboard>
