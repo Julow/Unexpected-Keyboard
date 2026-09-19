@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
+import android.os.Build;
 import android.os.Build.VERSION;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.InputType;
@@ -14,11 +16,16 @@ import android.util.Log;
 import android.util.LogPrinter;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InlineSuggestionsRequest;
+import android.view.inputmethod.InlineSuggestionsResponse;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +49,7 @@ public class Keyboard2 extends InputMethodService
   private Keyboard2View _keyboard_layout_view;
   private CandidatesView _candidates_view;
   private Suggestions _suggestions;
+  private InlineAutofill _inlineAutofill;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
@@ -138,6 +146,7 @@ public class Keyboard2 extends InputMethodService
     Config.initGlobalConfig(prefs, getResources(),
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
+    _inlineAutofill = new InlineAutofill();
     Receiver recvr = this.new Receiver();
     _suggestions = new Suggestions(recvr, _config);
     _keyeventhandler = new KeyEventHandler(recvr, _suggestions);
@@ -161,6 +170,7 @@ public class Keyboard2 extends InputMethodService
   private void create_keyboard_view()
   {
     _keyboard_container_view = (ViewGroup)inflate_view(R.layout.keyboard);
+    _inlineAutofill.onInflate(_keyboard_container_view);
     _keyboard_layout_view = (Keyboard2View)_keyboard_container_view.findViewById(R.id.keyboard_view);
     _candidates_view = (CandidatesView)_keyboard_container_view.findViewById(R.id.candidates_view);
   }
@@ -221,6 +231,7 @@ public class Keyboard2 extends InputMethodService
       _keyeventhandler.dictionary_changed();
     }
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
+    _inlineAutofill.setVisibility(true);
   }
 
   /** Might re-create the keyboard view. [_keyboard_layout_view.setKeyboard()] and
@@ -270,6 +281,7 @@ public class Keyboard2 extends InputMethodService
     _currentSpecialLayout = refresh_special_layout();
     _keyboard_layout_view.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
+    _inlineAutofill.setVisibility(true);
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
   }
@@ -549,6 +561,7 @@ public class Keyboard2 extends InputMethodService
     public void set_suggestions(Suggestions suggestions)
     {
       _candidates_view.set_candidates(suggestions);
+      _inlineAutofill.setVisibility(suggestions.count == 0);
     }
 
     public String provide_stateful_key_symbol(KeyValue.Stateful q)
@@ -582,5 +595,20 @@ public class Keyboard2 extends InputMethodService
   private View inflate_view(int layout)
   {
     return View.inflate(new ContextThemeWrapper(this, _config.theme), layout, null);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.R)
+  @Nullable
+  @Override
+  public InlineSuggestionsRequest onCreateInlineSuggestionsRequest(@NonNull Bundle uiExtras)
+  {
+    return _inlineAutofill.onCreateInlineSuggestionsRequest(uiExtras);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.R)
+  @Override
+  public boolean onInlineSuggestionsResponse(@NonNull InlineSuggestionsResponse response)
+  {
+    return _inlineAutofill.onInlineSuggestionsResponse(this, response);
   }
 }
