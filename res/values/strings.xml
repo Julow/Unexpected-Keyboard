@@ -171,4 +171,8 @@
     <string name="pref_split_layout_never">Never</string>
     <string name="pref_split_layout_landscape">In landscape orientation</string>
     <string name="pref_split_layout_wide">On wide screens</string>
+    <string name="pref_category_backup">Backup</string>
+    <string name="pref_settings_import">Import settings</string>
+    <string name="pref_settings_export">Export settings</string>
+    <string name="export_import_fail">Operation failed</string>
 </resources>
