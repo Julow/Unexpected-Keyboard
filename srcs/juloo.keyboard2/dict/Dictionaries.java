@@ -35,9 +35,10 @@ public final class Dictionaries
   }
 
   /** Load the given dictionary and set it as the current dictionary in
-    [config]. If [name] is null, unset the current dictionary. */
+      [config]. If [name] is null, unset the current dictionary. */
   public void set_current_dictionary(Config config, String name)
   {
+    config.current_dictionary_name = null;
     config.current_dictionary = null;
     config.emoji_dictionary = null;
     if (name == null)
@@ -45,6 +46,7 @@ public final class Dictionaries
     Cdict[] dicts = load(name);
     if (dicts == null)
       return;
+    config.current_dictionary_name = name;
     config.current_dictionary = find_by_name(dicts, "main");
     config.emoji_dictionary = find_by_name(dicts, "emoji");
   }
