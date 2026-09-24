@@ -272,6 +272,11 @@ public class Keyboard2 extends InputMethodService
   }
 
   @Override
+  public void setExtractViewShown(boolean shown){
+      super.setExtractViewShown(false);
+  }
+
+  @Override
   public void setInputView(View v)
   {
     ViewParent parent = v.getParent();
