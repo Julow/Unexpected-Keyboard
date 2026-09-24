@@ -171,10 +171,13 @@ public class Keyboard2View extends View
     invalidate();
   }
 
-  public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
+  public void onPointerHold(KeyValue k, Pointers.Modifiers mods,
+      boolean should_vibrate)
   {
     _config.handler.key_up(k, mods);
     updateFlags();
+    if (should_vibrate)
+      vibrate();
   }
 
   public void onPointerFlagsChanged(boolean shouldVibrate)
