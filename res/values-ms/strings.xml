@@ -1,3 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="short_description">Papan kekunci maya yang ringan dan perihatin-privasi untuk Android.</string>
+    <string name="store_description">Aplikasi ini membolehkan anda menaip lebih banyak aksara dengan meleret (swipe) kekunci ke arah penjuru.\n\nAplikasi ini pada asalnya direka untuk pengaturcara (programmer) yang menggunakan Termux.\nKini sesuai untuk kegunaan harian.\n\nAplikasi ini bebas iklan dan merupakan Sumber Terbuka (Open Source).</string>
+    <string name="pref_portrait">Dalam mod potret</string>
+    <string name="app_name_release">Papan Kekunci Luar Biasa</string>
+    <string name="app_name_debug">Papan Kekunci Luar Biasa (Debug)</string>
+    <string name="pref_portrait_unfolded">Dalam mod potret (terbuka)</string>
+    <string name="pref_landscape">Dalam mod landskap</string>
+    <string name="pref_landscape_unfolded">Dalam mod landskap terbuka</string>
+    <string name="pref_category_layout">Susunan</string>
+    <string name="pref_label_brightness">Pelarasan kecerahan label</string>
+    <string name="pref_keyboard_opacity">Pelarasan kejelasan latar belakang papan kekunci</string>
+    <string name="pref_key_opacity">Pelarasan kejelasan kekunci</string>
+    <string name="pref_key_activated_opacity">Pelarasan kejelasan kekunci ditekan</string>
+    <string name="pref_layout_e_system">Tetapan sistem</string>
+    <string name="pref_layout_e_custom">Susunan khas</string>
+    <string name="pref_layouts_add">Tambah susunan alternatif</string>
+    <string name="pref_layouts_item">Susunan %1$d: %2$s</string>
+    <string name="pref_layouts_remove_custom">Buang susunan</string>
+    <string name="pref_custom_layout_title">Susunan khas</string>
+    <string name="pref_show_number_row_no_number_row">Tiada baris nombor</string>
+    <string name="pref_show_number_row_no_symbols">Baris nombor tanpa simbol</string>
+    <string name="pref_show_number_row_symbols">Baris nombor dengan simbol</string>
+    <string name="pref_show_numpad_title">Tunjuk PadNombor</string>
+    <string name="pref_show_numpad_never">Jangan</string>
+    <string name="pref_show_numpad_landscape">Hanya dalam mod landskap</string>
+    <string name="pref_show_numpad_always">Sentiasa</string>
+    <string name="pref_number_row_title">Tunjuk baris nombor</string>
+    <string name="pref_numpad_layout">Susunan PadNombor</string>
+    <string name="pref_numpad_layout_e_high_first">Nombor besar dahulu</string>
+    <string name="pref_numpad_layout_e_low_first">Nombor kecil dahulu</string>
+    <string name="pref_extra_keys_title">Tambah kekunci pada papan kekunci</string>
+    <string name="pref_extra_keys_custom">Tambah kekunci khas</string>
+    <string name="pref_extra_keys_internal">Pilih kekunci untuk ditambah pada papan kekunci</string>
+    <string name="pref_category_suggestions">Cadangan</string>
+    <string name="pref_suggestions_title">Cadangan</string>
+    <string name="pref_suggestions_summary">Aktifkan penyempurnaan perkataan dan semakan ejaan</string>
+    <string name="pref_space_bar_auto_complete_title">Lengkapkan automatik dengan bar ruang</string>
+    <string name="pref_space_bar_auto_complete_summary">Isi cadangan terbaik dengan menekan bar ruang</string>
 </resources>
