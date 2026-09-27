@@ -115,9 +115,9 @@
     <string name="key_descr_zwnj">فاصل بعرض صفر</string>
     <string name="key_descr_nbsp">مسافة غير فاصلة</string>
     <string name="key_descr_nnbsp">مسافة ضيّقة غير فاصلة</string>
-    <string name="clipboard_history_heading">نص تمّ نسخه مؤخّرًا</string>
-    <string name="clipboard_pin_heading">المثبّتة</string>
-    <string name="clipboard_remove_confirm">هل أنت متأكّد من إزالة هذه الحافظة؟</string>
+    <string name="clipboard_history_heading">نصٌّ تم نسخه مؤخرًا</string>
+    <string name="clipboard_pin_heading">المُثبَّتة</string>
+    <string name="clipboard_remove_confirm">هل تريد إزالة هذا العنصر من الحافظة؟</string>
     <string name="clipboard_remove_confirmed">نعم</string>
     <string name="pref_portrait_unfolded">في الوضع الرأسي، غير مطويّ</string>
     <string name="pref_landscape_unfolded">في الوضع الأفقي، غير مطويّ</string>
@@ -137,4 +137,6 @@
     <string name="pref_number_entry_layout_pin">إدخال رمز PIN</string>
     <string name="pref_number_entry_layout_number">لوحة الأرقام</string>
     <string name="pref_number_entry_layout_normal">استخدام التصميم الرئيس</string>
+    <string name="candidates_status_click_to_install">انقر لتثبيت قاموسٍ لـ %s</string>
+    <string name="dictionaries_download_failed">فشل التنزيل: يُرجى السماح بالوصول إلى الإنترنت</string>
 </resources>
