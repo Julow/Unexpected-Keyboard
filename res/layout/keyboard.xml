@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:hardwareAccelerated="false" android:orientation="vertical" android:background="?attr/colorKeyboard">
+  <HorizontalScrollView android:id="@+id/autofill_container" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone">
+    <LinearLayout android:id="@+id/autofill_suggestions" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="4dp" android:orientation="horizontal" />
+  </HorizontalScrollView>
   <juloo.keyboard2.suggestions.CandidatesView android:id="@+id/candidates_view" style="@style/candidates_view">
     <TextView android:id="@+id/candidates_emoji" style="@style/candidates_emoji"/>
     <TextView android:id="@+id/candidates_left" style="@style/candidates_item"/>

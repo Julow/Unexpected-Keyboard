@@ -9,6 +9,7 @@ dependencies {
   // Following versions of androidx.window require sdk version 23
   implementation("androidx.window:window-java:1.4.0")
   implementation("androidx.core:core:1.16.0") // Version 1.17.0 available with sdk 36
+  implementation("androidx.autofill:autofill:1.3.0")
   testImplementation("junit:junit:4.13.2")
 }
 
