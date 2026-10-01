@@ -14,6 +14,8 @@ public final class LayoutModifier
   static KeyboardData.Row number_row_no_symbols;
   static KeyboardData.Row number_row_symbols;
   static KeyboardData num_pad;
+  // Not used in this file but defined here for convenience.
+  public static KeyboardData.Row split_middle_column;
 
   /** Update the layout according to the configuration.
    *  - Remove the switching key if it isn't needed
@@ -209,6 +211,7 @@ public final class LayoutModifier
       number_row_symbols = KeyboardData.load_row(res, R.xml.number_row);
       bottom_row = KeyboardData.load_row(res, R.xml.bottom_row);
       num_pad = KeyboardData.load_num_pad(res);
+      split_middle_column = KeyboardData.load_row(res, R.xml.split_middle_column);
     }
     catch (Exception e)
     {

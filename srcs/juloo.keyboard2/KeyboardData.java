@@ -568,7 +568,8 @@ public final class KeyboardData
     {
       Normal,
       Action, // Generally Shift, Delete and keys on the bottom row
-      Space_bar;
+      Space_bar,
+      Suggestion;
 
       public static Role parse(String str)
       {
@@ -576,6 +577,7 @@ public final class KeyboardData
         {
           case "action": return Action;
           case "space_bar": return Space_bar;
+          case "suggestion": return Suggestion;
           default: case "normal": return Normal;
         }
       }

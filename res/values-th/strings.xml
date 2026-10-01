@@ -119,4 +119,8 @@
     <string name="clipboard_pin_heading">ข้อความที่ปักหมุดไหว้</string>
     <string name="clipboard_remove_confirm">ต้องการนำออกใช่ไหม?</string>
     <string name="clipboard_remove_confirmed">ใช่</string>
+    <string name="pref_show_number_row_no_number_row">ไม่เอาแถวตัวเลข</string>
+    <string name="pref_show_number_row_no_symbols">แถวตัวเลขแบบไม่มีสัญลักษณ์</string>
+    <string name="pref_show_number_row_symbols">แถวตัวเลขแบบมีสัญลักษณ์</string>
+    <string name="key_descr_forward_delete_word">ลบคำด้านขวา</string>
 </resources>

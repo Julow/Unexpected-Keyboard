@@ -340,6 +340,16 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
+    if (_tc.keyboard_background_paint != null)
+    {
+      canvas.drawRect(
+              0,
+              0,
+              getWidth(),
+              getHeight(),
+              _tc.keyboard_background_paint);
+    }
+
     float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {
@@ -359,6 +369,7 @@ public class Keyboard2View extends View
           {
             case Action: tc_key = _tc.key_action; break;
             case Space_bar: tc_key = _tc.key_space_bar; break;
+            case Suggestion: tc_key = _tc.key_suggestion; break;
             default:
             case Normal: tc_key = _tc.key; break;
           }

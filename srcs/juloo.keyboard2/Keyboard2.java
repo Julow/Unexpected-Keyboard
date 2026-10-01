@@ -28,6 +28,7 @@ import java.util.Set;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
+import juloo.keyboard2.dict.DictionarySwitcher;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 import juloo.keyboard2.suggestions.Suggestions;
@@ -83,6 +84,9 @@ public class Keyboard2 extends InputMethodService
   {
     _config.set_current_layout(l);
     _currentSpecialLayout = null;
+    // The active dictionary depends on the current layout.
+    refresh_current_dictionary();
+    refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
   }
 
@@ -184,27 +188,35 @@ public class Keyboard2 extends InputMethodService
 
   private void refresh_current_dictionary()
   {
-    _config.current_dictionary = null;
-    _config.emoji_dictionary = null;
-    if (_config.device_locales.default_ == null)
-      return;
-    String current = _config.device_locales.default_.dictionary;
-    if (current == null)
-      return;
-    Cdict[] dicts = _dictionaries.load(current);
-    if (dicts == null)
-      return;
-    _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
-    _config.emoji_dictionary = Dictionaries.find_by_name(dicts, "emoji");
+    _config.should_show_dictionary_switch =
+      (_config.device_locales.installed.size() > 0);
+    String dict_name = _dictionaries.get_selected(_config);
+    if (dict_name == null)
+      dict_name = (_config.device_locales.default_ != null) ?
+        _config.device_locales.default_.dictionary : null;
+    _dictionaries.set_current_dictionary(_config, dict_name);
+  }
+
+  /** Remember and apply the dictionary chosen by the user for the current
+      context. */
+  private void select_dictionary(String dict_name)
+  {
+    _dictionaries.set_selected(_config, dict_name);
+    refresh_current_dictionary();
+    refresh_candidates_view();
   }
 
   private void refresh_candidates_view()
   {
     boolean should_show =
       _config.suggestions_enabled
-      && _config.editor_config.should_show_candidates_view;
+      && _config.editor_config.should_show_candidates_view
+      && !_config.split_layout;
     if (should_show)
+    {
       _candidates_view.refresh_config(_config);
+      _keyeventhandler.dictionary_changed();
+    }
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -257,6 +269,11 @@ public class Keyboard2 extends InputMethodService
     _keyeventhandler.started(_config);
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
+  }
+
+  @Override
+  public void setExtractViewShown(boolean shown){
+      super.setExtractViewShown(false);
   }
 
   @Override
@@ -341,7 +358,6 @@ public class Keyboard2 extends InputMethodService
     refresh_current_dictionary();
     refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
-    _keyeventhandler.ime_subtype_changed();
   }
 
   @Override
@@ -390,10 +406,15 @@ public class Keyboard2 extends InputMethodService
     return true;
   }
 
+  public void launch_dictionaries_activity()
+  {
+    start_activity(DictionariesActivity.class);
+  }
+
   /** Called from [onClick] attributes. */
   public void launch_dictionaries_activity(View v)
   {
-    start_activity(DictionariesActivity.class);
+    launch_dictionaries_activity();
   }
 
   void start_activity(Class cls)
@@ -405,7 +426,7 @@ public class Keyboard2 extends InputMethodService
 
   /** Not static */
   public class Receiver implements KeyEventHandler.IReceiver,
-         KeyValue.Stateful.Symbol_provider
+         KeyValue.Stateful.Symbol_provider, DictionarySwitcher.Callback
   {
     public void handle_event_key(KeyValue.Event ev)
     {
@@ -491,8 +512,13 @@ public class Keyboard2 extends InputMethodService
           VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
               Config.globalPrefs());
           break;
+
         case HIDE_SELF:
           Keyboard2.this.requestHideSelf(0);
+          break;
+
+        case CHANGE_DICTIONARY:
+          new DictionarySwitcher(Keyboard2.this, _dictionaries, this).choose();
           break;
       }
     }
@@ -537,6 +563,16 @@ public class Keyboard2 extends InputMethodService
         case Complete_emoji: return _suggestions.emoji_suggestion;
       }
       return "";
+    }
+
+    public void on_change_dictionary(String dict_name)
+    {
+      select_dictionary(dict_name);
+    }
+
+    public void launch_dictionaries_activity()
+    {
+      Keyboard2.this.launch_dictionaries_activity();
     }
   }
 

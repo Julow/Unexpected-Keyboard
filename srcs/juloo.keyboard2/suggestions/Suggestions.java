@@ -77,17 +77,16 @@ public final class Suggestions
         suggestions[i++] = dict.word(dist[j]);
     }
     if (first_char_upper)
-      capitalize_results();
+      capitalize_results(suggestions, i);
     emoji_suggestion = query_emoji(word); // word with substitutions applied
     count = i;
     return i;
   }
 
-  void capitalize_results()
+  static void capitalize_results(String[] s, int count)
   {
     for (int i = 0; i < count; i++)
-      suggestions[i] = suggestions[i].substring(0, 1).toUpperCase()
-        + suggestions[i].substring(1);
+      s[i] = s[i].substring(0, 1).toUpperCase() + s[i].substring(1);
   }
 
   String query_emoji(String word)

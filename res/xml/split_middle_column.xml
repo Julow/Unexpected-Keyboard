@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file define a row but it's layed out as a column instead in
+     [LayoutLandscapeModifier]. -->
+<row>
+  <key role="suggestion" width="1" c="complete_emoji"/>
+  <key role="suggestion" width="3" c="complete_first"/>
+  <key role="suggestion" width="3" c="complete_second"/>
+  <key role="suggestion" width="3" c="complete_third"/>
+</row>
