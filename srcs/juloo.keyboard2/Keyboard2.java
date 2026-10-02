@@ -88,6 +88,7 @@ public class Keyboard2 extends InputMethodService
     refresh_current_dictionary();
     refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
+    refresh_composer();
   }
 
   void incrTextLayout(int delta)
@@ -100,6 +101,14 @@ public class Keyboard2 extends InputMethodService
   {
     _currentSpecialLayout = l;
     _keyboard_layout_view.setKeyboard(l);
+    refresh_composer();
+  }
+
+  /** Select the input method that goes with the script of the current layout.
+      The numeric, emoji and other special layouts do not compose text. */
+  void refresh_composer()
+  {
+    _keyeventhandler.set_layout_script(current_layout().script);
   }
 
   KeyboardData loadLayout(int layout_id)
@@ -266,6 +275,7 @@ public class Keyboard2 extends InputMethodService
     refresh_config();
     _currentSpecialLayout = refresh_special_layout();
     _keyboard_layout_view.setKeyboard(current_layout());
+    refresh_composer();
     _keyeventhandler.started(_config);
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
@@ -358,6 +368,7 @@ public class Keyboard2 extends InputMethodService
     refresh_current_dictionary();
     refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
+    refresh_composer();
   }
 
   @Override
@@ -381,6 +392,7 @@ public class Keyboard2 extends InputMethodService
   {
     refresh_config();
     _keyboard_layout_view.setKeyboard(current_layout());
+    refresh_composer();
   }
 
   @Override
@@ -439,6 +451,7 @@ public class Keyboard2 extends InputMethodService
         case SWITCH_TEXT:
           _currentSpecialLayout = null;
           _keyboard_layout_view.setKeyboard(current_layout());
+          refresh_composer();
           break;
 
         case SWITCH_NUMERIC:
