@@ -306,7 +306,62 @@ public final class KeyEventHandler
       case SELECTION_CANCEL: cancel_selection(); break;
       case SPACE_BAR: handle_space_bar(); break;
       case BACKSPACE: handle_backspace(); break;
+      case UPPERCASE: recase_selection(Recase.Style.UPPER); break;
+      case LOWERCASE: recase_selection(Recase.Style.LOWER); break;
+      case SMALL_CAPS: recase_selection(Recase.Style.SMALL_CAPS); break;
+      case LETTER_SPACED: recase_selection(Recase.Style.SPACED); break;
     }
+  }
+
+  static ExtractedTextRequest _recase_req = null;
+
+  /** Return the text selected in the editor or [null] if there is no
+      selection. */
+  CharSequence get_selected_text(InputConnection conn)
+  {
+    CharSequence selection = conn.getSelectedText(0);
+    if (selection != null && selection.length() > 0)
+      return selection;
+    /* A few editors do not implement [getSelectedText] at all, fallback to the
+       extracted text which contains the selection offsets. */
+    if (_recase_req == null)
+      _recase_req = new ExtractedTextRequest();
+    ExtractedText et = conn.getExtractedText(_recase_req, 0);
+    if (et == null || et.text == null)
+      return null;
+    // The selection offsets are relative to the whole text.
+    int start = et.selectionStart - et.startOffset;
+    int end = et.selectionEnd - et.startOffset;
+    if (start > end)
+    {
+      int tmp = start;
+      start = end;
+      end = tmp;
+    }
+    if (start < 0) start = 0;
+    if (end > et.text.length()) end = et.text.length();
+    if (start >= end)
+      return null;
+    return et.text.subSequence(start, end);
+  }
+
+  /** Replace the selected text by its [style] variant. This does not send key
+      events and does nothing if there is no selection. */
+  void recase_selection(Recase.Style style)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    CharSequence selection = get_selected_text(conn);
+    if (selection == null)
+      return;
+    String text = selection.toString();
+    String recased = Recase.apply(text, style);
+    if (recased.equals(text))
+      return;
+    conn.beginBatchEdit();
+    conn.commitText(recased, 1);
+    conn.endBatchEdit();
   }
 
   static ExtractedTextRequest _move_cursor_req = null;
