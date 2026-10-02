@@ -42,6 +42,7 @@
   <string name="dict_name_is">Íslenska</string>
   <string name="dict_name_it">Italiano</string>
   <string name="dict_name_iw">עברית (ישראל)</string>
+  <string name="dict_name_ja">日本語</string>
   <string name="dict_name_ka">ქართული</string>
   <string name="dict_name_kab">Taqbaylit</string>
   <string name="dict_name_kk">Қазақ Тілі</string>
@@ -131,6 +132,7 @@
     <item>is</item>
     <item>it</item>
     <item>iw</item>
+    <item>ja</item>
     <item>ka</item>
     <item>kab</item>
     <item>kk</item>
@@ -221,6 +223,7 @@
     <item>@string/dict_name_is</item>
     <item>@string/dict_name_it</item>
     <item>@string/dict_name_iw</item>
+    <item>@string/dict_name_ja</item>
     <item>@string/dict_name_ka</item>
     <item>@string/dict_name_kab</item>
     <item>@string/dict_name_kk</item>
@@ -268,7 +271,7 @@
     <item>@string/dict_name_zgh</item>
     <item>@string/dict_name_zgh_zz</item>
   </string-array>
-  <integer-array name="dictionaries_size">
+<integer-array name="dictionaries_size">
     <item>1459395</item>
     <item>1065727</item>
     <item>305248</item>
@@ -311,6 +314,7 @@
     <item>2279624</item>
     <item>861937</item>
     <item>332906</item>
+    <item>842960</item>
     <item>478446</item>
     <item>728093</item>
     <item>6748356</item>

@@ -56,6 +56,19 @@ public final class Suggestions
     emoji_suggestion = null;
   }
 
+  /** Show the candidates of the composing input method instead of the
+      dictionary suggestions. The candidates replace the whole composition,
+      which is why they are not capitalized like word suggestions are. */
+  public void composition_candidates(List<String> candidates)
+  {
+    clear();
+    int n = Math.min(candidates.size(), MAX_COUNT);
+    for (int i = 0; i < n; i++)
+      suggestions[i] = candidates.get(i);
+    count = n;
+    _callback.set_suggestions(this);
+  }
+
   int query_suggestions(String word)
   {
     Cdict dict = _config.current_dictionary;

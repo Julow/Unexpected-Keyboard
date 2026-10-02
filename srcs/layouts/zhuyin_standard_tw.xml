@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file defines the Zhuyin (Bopomofo) layout, as standard on Taiwanese
+keyboards.
+
+The keys write Bopomofo symbols; they are turned into Chinese characters by the
+Zhuyin input method and the candidates are shown above the keyboard. Press the
+space bar to enter the best candidate. The tone marks are on the number row:
+ˇ ˋ ˊ ˙, the first tone is left out. Swiping up on a key writes the latin
+letter printed on a Taiwanese keyboard.
+
+Symbols prefixed with 'loc ' are not visible on the keyboard. They are used to
+specify a place for a key, if it needed to be added to the layout later.
+(for example, by the "Add keys to keyboard" option)
+
+Useful links.
+
+- Full guide on how to edit the layout.
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/doc/Custom-layouts.md
+
+- Current definition of the bottom row (for easy importing).
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/res/xml/bottom_row.xml
+
+-->
+<keyboard name="注音 (Zhuyin)" script="zhuyin">
+  <row>
+    <key key0="ㄅ" key3="1"/>
+    <key key0="ㄉ" key3="2"/>
+    <key key0="ˇ" key3="3"/>
+    <key key0="ˋ" key3="4"/>
+    <key key0="ㄓ" key3="5"/>
+    <key key0="ˊ" key3="6"/>
+    <key key0="˙" key3="7"/>
+    <key key0="ㄚ" key3="8"/>
+    <key key0="ㄞ" key3="9"/>
+    <key key0="ㄢ" key3="0"/>
+    <key key0="ㄦ" key3="-"/>
+  </row>
+  <row>
+    <key shift="0.5" key0="ㄆ" key1="q" key3="loc tab"/>
+    <key key0="ㄊ" key1="w"/>
+    <key key0="ㄍ" key1="e"/>
+    <key key0="ㄐ" key1="r"/>
+    <key key0="ㄔ" key1="t"/>
+    <key key0="ㄗ" key1="y"/>
+    <key key0="ㄧ" key1="u"/>
+    <key key0="ㄛ" key1="i"/>
+    <key key0="ㄟ" key1="o"/>
+    <key key0="ㄣ" key1="p"/>
+  </row>
+  <row>
+    <key shift="0.5" key0="ㄇ" key1="a"/>
+    <key key0="ㄋ" key1="s"/>
+    <key key0="ㄎ" key1="d"/>
+    <key key0="ㄑ" key1="f"/>
+    <key key0="ㄕ" key1="g"/>
+    <key key0="ㄘ" key1="h"/>
+    <key key0="ㄨ" key1="j"/>
+    <key key0="ㄜ" key1="k"/>
+    <key key0="ㄠ" key1="l"/>
+    <key key0="ㄤ" key1=";"/>
+  </row>
+  <row>
+    <key width="1.5" role="action" key0="shift" key2="loc capslock"/>
+    <key key0="ㄈ" key1="z"/>
+    <key key0="ㄌ" key1="x"/>
+    <key key0="ㄏ" key1="c"/>
+    <key key0="ㄒ" key1="v"/>
+    <key key0="ㄖ" key1="b"/>
+    <key key0="ㄙ" key1="n"/>
+    <key key0="ㄩ" key1="m"/>
+    <key key0="ㄝ" key1=","/>
+    <key key0="ㄡ" key1="."/>
+    <key key0="ㄥ" key1="/"/>
+    <key width="1.5" role="action" key0="backspace" key2="delete"/>
+  </row>
+</keyboard>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file defines the 12-key (テンキー) Japanese layout, the layout used on
+Japanese phones.
+
+Every key writes a column of the gojuuon: tap the key for the first kana and
+swipe towards a direction for the others, for example the "あ" key writes あ, い
+(swipe left), う (up), え (right) and お (down). The small kana are on the
+diagonal swipes. The "゛" key adds a dakuten to the kana typed before it.
+
+Hold Shift for the katakana.
+
+The kana typed are converted to kanji: the characters that the reading can be
+converted to are shown above the keyboard and the space bar enters the best
+one.
+
+Symbols prefixed with 'loc ' are not visible on the keyboard. They are used to
+specify a place for a key, if it needed to be added to the layout later.
+
+Useful links.
+
+- Full guide on how to edit the layout.
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/doc/Custom-layouts.md
+
+- Current definition of the bottom row (for easy importing).
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/res/xml/bottom_row.xml
+
+-->
+<keyboard name="テンキー (Japanese)" script="kana">
+  <modmap>
+    <shift a="あ" b="ア"/>
+    <shift a="い" b="イ"/>
+    <shift a="う" b="ウ"/>
+    <shift a="え" b="エ"/>
+    <shift a="お" b="オ"/>
+    <shift a="か" b="カ"/>
+    <shift a="き" b="キ"/>
+    <shift a="く" b="ク"/>
+    <shift a="け" b="ケ"/>
+    <shift a="こ" b="コ"/>
+    <shift a="さ" b="サ"/>
+    <shift a="し" b="シ"/>
+    <shift a="す" b="ス"/>
+    <shift a="せ" b="セ"/>
+    <shift a="そ" b="ソ"/>
+    <shift a="た" b="タ"/>
+    <shift a="ち" b="チ"/>
+    <shift a="つ" b="ツ"/>
+    <shift a="て" b="テ"/>
+    <shift a="と" b="ト"/>
+    <shift a="な" b="ナ"/>
+    <shift a="に" b="ニ"/>
+    <shift a="ぬ" b="ヌ"/>
+    <shift a="ね" b="ネ"/>
+    <shift a="の" b="ノ"/>
+    <shift a="は" b="ハ"/>
+    <shift a="ひ" b="ヒ"/>
+    <shift a="ふ" b="フ"/>
+    <shift a="へ" b="ヘ"/>
+    <shift a="ほ" b="ホ"/>
+    <shift a="ま" b="マ"/>
+    <shift a="み" b="ミ"/>
+    <shift a="む" b="ム"/>
+    <shift a="め" b="メ"/>
+    <shift a="も" b="モ"/>
+    <shift a="や" b="ヤ"/>
+    <shift a="ゆ" b="ユ"/>
+    <shift a="よ" b="ヨ"/>
+    <shift a="ら" b="ラ"/>
+    <shift a="り" b="リ"/>
+    <shift a="る" b="ル"/>
+    <shift a="れ" b="レ"/>
+    <shift a="ろ" b="ロ"/>
+    <shift a="わ" b="ワ"/>
+    <shift a="を" b="ヲ"/>
+    <shift a="ん" b="ン"/>
+    <shift a="ぁ" b="ァ"/>
+    <shift a="ぃ" b="ィ"/>
+    <shift a="ぅ" b="ゥ"/>
+    <shift a="ぇ" b="ェ"/>
+    <shift a="ぉ" b="ォ"/>
+    <shift a="っ" b="ッ"/>
+    <shift a="ゃ" b="ャ"/>
+    <shift a="ゅ" b="ュ"/>
+    <shift a="ょ" b="ョ"/>
+  </modmap>
+
+  <row>
+    <key width="1.3333" c="あ" w="い" n="う" e="え" s="お" nw="ぁ" ne="ぃ" sw="ぅ" se="ぇ"/>
+    <key width="1.3333" c="か" w="き" n="く" e="け" s="こ"/>
+    <key width="1.3333" c="さ" w="し" n="す" e="せ" s="そ"/>
+  </row>
+  <row>
+    <key width="1.3333" c="た" w="ち" n="つ" e="て" s="と"/>
+    <key width="1.3333" c="な" w="に" n="ぬ" e="ね" s="の"/>
+    <key width="1.3333" c="は" w="ひ" n="ふ" e="へ" s="ほ"/>
+  </row>
+  <row>
+    <key width="1.3333" c="ま" w="み" n="む" e="め" s="も"/>
+    <key width="1.3333" c="や" n="ゆ" s="よ"/>
+    <key width="1.3333" c="ら" w="り" n="る" e="れ" s="ろ"/>
+  </row>
+  <row>
+    <key c="゛" w="゜"/>
+    <key c="わ" w="を" n="ん" e="ー" s="～"/>
+    <key c="っ" w="ゃ" n="ゅ" e="ょ" s="ぉ"/>
+    <key role="action" c="backspace" n="delete"/>
+  </row>
+</keyboard>

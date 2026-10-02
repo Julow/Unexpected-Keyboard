@@ -17,6 +17,7 @@ import juloo.keyboard2.Config;
 import juloo.keyboard2.DirectBootAwarePreferences;
 import juloo.keyboard2.Logs;
 import juloo.keyboard2.Utils;
+import juloo.keyboard2.staged.KanjiDictionary;
 
 /** Manage and load installed dictionaries. */
 public final class Dictionaries
@@ -41,14 +42,58 @@ public final class Dictionaries
     config.current_dictionary_name = null;
     config.current_dictionary = null;
     config.emoji_dictionary = null;
-    if (name == null)
-      return;
-    Cdict[] dicts = load(name);
+    Cdict[] dicts = (name == null) ? null : load(name);
+    set_composing_dictionary(dicts);
     if (dicts == null)
       return;
     config.current_dictionary_name = name;
     config.current_dictionary = find_by_name(dicts, "main");
     config.emoji_dictionary = find_by_name(dicts, "emoji");
+  }
+
+  /** The name of the dictionary that converts kana to kanji, followed by the
+      number of entries it holds. cdict has no way to tell how many words a
+      dictionary has and [KanjiDictionary] needs it to read them all, so the
+      number is written into the name by `srcs/japanese/build_cdict.py`. */
+  static final String COMPOSING_PREFIX = "kanji:";
+
+  /** Hand the kana to kanji entries of an installed dictionary over to the
+      composing input methods, or forget the previous ones. A dictionary that
+      has no such entry, which is every dictionary but the Japanese one, leaves
+      the input methods without kanji conversion. */
+  void set_composing_dictionary(Cdict[] dicts)
+  {
+    Cdict kanji = null;
+    int count = 0;
+    if (dicts != null)
+      for (Cdict d : dicts)
+      {
+        if (!d.name.startsWith(COMPOSING_PREFIX))
+          continue;
+        try
+        {
+          int n = Integer.parseInt(d.name.substring(COMPOSING_PREFIX.length()));
+          if (n > 0)
+          {
+            kanji = d;
+            count = n;
+          }
+        }
+        catch (NumberFormatException e)
+        {
+          Logs.debug("Bad dictionary name: " + d.name);
+        }
+      }
+    if (kanji == null)
+    {
+      KanjiDictionary.load("");
+      return;
+    }
+    // One line per entry, the format that [KanjiDictionary] reads.
+    StringBuilder b = new StringBuilder(count * 24);
+    for (int i = 0; i < count; i++)
+      b.append(kanji.word(i)).append('\n');
+    KanjiDictionary.load(b.toString());
   }
 
   /** Util for finding a dictionary by name. Returns [null] if not found. */

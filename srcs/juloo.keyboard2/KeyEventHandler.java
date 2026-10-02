@@ -8,7 +8,14 @@ import android.view.KeyEvent;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
+import juloo.keyboard2.staged.Composer;
+import juloo.keyboard2.staged.Hangul;
+import juloo.keyboard2.staged.Kana;
+import juloo.keyboard2.staged.Pinyin;
+import juloo.keyboard2.staged.Zhuyin;
 import juloo.keyboard2.suggestions.Suggestions;
 
 public final class KeyEventHandler
@@ -35,6 +42,10 @@ public final class KeyEventHandler
   /** Remember the action that was handled. This is used by autocorrect. */
   LastAction _last_action = null;
   LastAction _next_last_action = null;
+  /** The input method that composes the text of the scripts that need more
+      than one key per character, such as Hangul, Kana and Chinese. It is
+      selected by the `script` attribute of the current layout. */
+  Composer _composer = Composer.NONE;
 
   public KeyEventHandler(IReceiver recv, Suggestions sg)
   {
@@ -58,6 +69,73 @@ public final class KeyEventHandler
       conf.editor_config.should_move_cursor_force_fallback;
     _space_bar_auto_complete = conf.space_bar_auto_complete;
     _last_action = null;
+    _composer.reset();
+  }
+
+  /** Select the composer of the current layout. A composer that is already
+      handling the same script is kept, so that the composition is not lost
+      when the layout is refreshed. */
+  public void set_layout_script(String script)
+  {
+    Composer composer = composer_of(script);
+    if (composer.getClass() == _composer.getClass())
+      return;
+    finish_composition();
+    _composer = composer;
+  }
+
+  static Composer composer_of(String script)
+  {
+    if (script == null)
+      return Composer.NONE;
+    switch (script)
+    {
+      case "hangul": return new Hangul();
+      case "kana": return new Kana();
+      case "pinyin": return new Pinyin();
+      case "zhuyin": return new Zhuyin();
+      default: return Composer.NONE;
+    }
+  }
+
+  /** Whether a composition is ongoing. */
+  boolean has_composition()
+  {
+    return _composer.text().length() > 0;
+  }
+
+  /** Write the composition to the editor as composing text, so that it can be
+      replaced by the next key. The composing text is not committed: the editor
+      shows it as being edited. */
+  void send_composition()
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    String text = _composer.text();
+    if (text.length() == 0)
+      conn.finishComposingText();
+    else
+      conn.setComposingText(text, 1);
+    _suggestions.composition_candidates(_composer.candidates());
+  }
+
+  /** Commit the composition and forget it, leaving the editor with the
+      dictionary suggestions. */
+  void finish_composition()
+  {
+    String text = _composer.text();
+    if (text.length() == 0)
+      return;
+    _composer.reset();
+    _suggestions.composition_candidates(Collections.<String>emptyList());
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    // Committing text replaces the composing text, the text of the editor does
+    // not change. [CurrentlyTypedWord] reads it back from the editor.
+    _autocap.typed(text);
+    conn.commitText(text, 1);
   }
 
   /** Selection has been updated. */
@@ -108,6 +186,25 @@ public final class KeyEventHandler
     _next_last_action = LastAction.OTHER;
     Pointers.Modifiers old_mods = _mods;
     update_meta_state(mods);
+    /* Keys that are not part of a composition commit it. The keys that type
+       text or that are consumed by the composer are handled below. */
+    switch (key.getKind())
+    {
+      case Char:
+      case String:
+      case Modifier:
+        break;
+      case Editing:
+        switch (key.getEditing())
+        {
+          case SPACE_BAR:
+          case BACKSPACE:
+            break;
+          default: finish_composition(); break;
+        }
+        break;
+      default: finish_composition(); break;
+    }
     switch (key.getKind())
     {
       case Char: send_text(String.valueOf(key.getChar())); break;
@@ -134,6 +231,18 @@ public final class KeyEventHandler
   @Override
   public void suggestion_entered(String text)
   {
+    /* A candidate of the composition replaces it in place. */
+    if (has_composition())
+    {
+      InputConnection conn = _recv.getCurrentInputConnection();
+      _composer.reset();
+      _suggestions.composition_candidates(Collections.<String>emptyList());
+      last_replaced_word = null;
+      last_replacement_word_len = 0;
+      if (conn != null)
+        conn.commitText(text, 1);
+      return;
+    }
     String old = _typedword.get();
     int cur_rel = _typedword.cursor_relative();
     replace_surrounding_text(old.length() + cur_rel, -cur_rel, text);
@@ -151,6 +260,13 @@ public final class KeyEventHandler
   @Override
   public void currently_typed_word(String word)
   {
+    /* While a composition is ongoing, the candidates come from the composer
+       and not from the dictionary. */
+    if (has_composition())
+    {
+      _suggestions.composition_candidates(_composer.candidates());
+      return;
+    }
     _suggestions.currently_typed_word(word);
   }
 
@@ -257,6 +373,12 @@ public final class KeyEventHandler
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
+    if (_composer.type(text))
+    {
+      send_composition();
+      return;
+    }
+    finish_composition();
     _autocap.typed(text);
     _typedword.typed(text);
     conn.commitText(text, 1);
@@ -548,6 +670,17 @@ public final class KeyEventHandler
   /** Implement autocorrect when enabled in the settings. */
   void handle_space_bar()
   {
+    /* The space bar enters the best candidate of a composition. */
+    if (has_composition())
+    {
+      List<String> candidates = _composer.candidates();
+      if (candidates.size() > 0)
+      {
+        suggestion_entered(candidates.get(0));
+        return;
+      }
+      finish_composition();
+    }
     if (_space_bar_auto_complete && _suggestions.count > 0
         && !_typedword.is_selection_not_empty()
         && _typedword.cursor_relative() == 0)
@@ -559,6 +692,11 @@ public final class KeyEventHandler
   /** Undo the last autocorrect. */
   void handle_backspace()
   {
+    if (_composer.backspace())
+    {
+      send_composition();
+      return;
+    }
     if (_last_action == LastAction.SUGGESTION_ENTERED
         && last_replaced_word != null)
     {
