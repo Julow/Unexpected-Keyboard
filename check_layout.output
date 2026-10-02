@@ -30,3 +30,4 @@ latn_qwertz_cz_multifunctional: Layout includes some ASCII punctuation but not a
 latn_qwertz_sk: Layout includes some ASCII punctuation but not all, missing: `
 latn_qzerty_it: Layout includes some ASCII punctuation but not all, missing: #, $, \, `, ~
 urdu_phonetic_ur: Layout includes some ASCII punctuation but not all, missing: <, >, ?, `, |, ~
+zhuyin_standard_tw: Layout includes some ASCII punctuation but not all, missing: !, ", #, $, %, &, ', (, ), *, +, :, <, =, >, ?, @, [, \, ], ^, _, `, {, |, }, ~

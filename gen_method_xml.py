@@ -59,6 +59,7 @@ LOCALES = [
   loc("ig_NG", "latin", "latn_qwerty_us", extra_keys="₦|ṅ|ọ|ụ"),
   loc("is_IS", "latin", "latn_qwerty_is", extra_keys="ð|þ|æ|accent_trema:ö@o|accent_aigu:á:é:í:ó:ú:ý@d|accent_circonflexe|accent_ring|accent_grave"),
   loc("it_IT", "latin", "latn_qwerty_us", extra_keys="accent_grave:à:è:ì:ò:ù@f|accent_aigu:é:ó@d|accent_circonflexe:î@f|€|ə"),
+  loc("ja_JP", "kana", "kana_tenkey_jp"),
   loc("ka_GE", "latin", "georgian_mes"),
   loc("kk_KZ", "cyrillic", "cyrl_jcuken_kk"),
   loc("kn_IN", "kannada", "kann_kannada"),
@@ -93,7 +94,10 @@ LOCALES = [
   loc("ur", "persian", "arab_pc_ir"),
   loc("uz_UZ", "latin", "latn_qwerty_uz", extra_keys="ʻ|ʼ"),
   loc("vi_VN", "latin", "latn_qwerty_vi"),
-  loc("yo_NG", "latin", "latn_qwerty_us", extra_keys="₦|ẹ|ọ|ṣ")
+  loc("yo_NG", "latin", "latn_qwerty_us", extra_keys="₦|ẹ|ọ|ṣ"),
+  loc("zh_CN", "pinyin", "latn_pinyin_zh"),
+  loc("zh_SG", "pinyin", "latn_pinyin_zh"),
+  loc("zh_TW", "zhuyin", "zhuyin_standard_tw")
 ]
 
 # The locale that is at the beginning of the list.
