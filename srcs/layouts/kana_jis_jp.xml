@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- This file defines the JIS kana layout, the layout of a Japanese keyboard.
+
+Every key writes a kana; hold Shift for the katakana. The romaji are printed on
+the keys to help learning them and are typed by swiping up on a key.
+
+The kana typed are converted to kanji: the characters that the reading can be
+converted to are shown above the keyboard and the space bar enters the best
+one. The "\u309b" key adds a dakuten to the kana typed before it.
+
+Symbols prefixed with 'loc ' are not visible on the keyboard.
+
+Useful links.
+
+- Full guide on how to edit the layout.
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/doc/Custom-layouts.md
+
+- Current definition of the bottom row (for easy importing).
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/res/xml/bottom_row.xml
+
+-->
 <keyboard name="かな入力 (日本)" script="kana">
   <modmap>
     <shift a="あ" b="ア"/>

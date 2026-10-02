@@ -98,7 +98,11 @@ public final class Kana implements Composer
   @Override
   public List<String> candidates()
   {
-    return Collections.emptyList();
+    /* The kana typed so far are offered as kanji. A pending romaji sequence is
+       not converted: the user is still spelling it. */
+    if (_romaji.length() > 0)
+      return Collections.emptyList();
+    return Kanji.candidates(_kana.toString(), Syllables.MAX_CANDIDATES);
   }
 
   @Override
