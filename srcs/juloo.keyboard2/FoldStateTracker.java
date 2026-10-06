@@ -2,6 +2,7 @@ package juloo.keyboard2;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build.VERSION;
 import androidx.window.java.layout.WindowInfoTrackerCallbackAdapter;
 import androidx.window.layout.DisplayFeature;
 import androidx.window.layout.FoldingFeature;
@@ -24,6 +25,8 @@ public class FoldStateTracker {
     }
 
     public static boolean isFoldableDevice(Context context) {
+        if (VERSION.SDK_INT < 30)
+          return false;
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_HINGE_ANGLE);
     }
 

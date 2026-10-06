@@ -60,7 +60,7 @@ public final class KeyValueParser
     if (KEYDEF_TOKEN != null)
       return;
     KEYDEF_TOKEN = Pattern.compile("'|,|keyevent:|(?:[^\\\\',]+|\\\\.)+");
-    QUOTED_PAT = Pattern.compile("((?:[^'\\\\]+|\\\\')*)'");
+    QUOTED_PAT = Pattern.compile("((?:[^'\\\\]+|\\\\.)*)'");
     WORD_PAT = Pattern.compile("[a-zA-Z0-9_]+|.");
   }
 
@@ -119,16 +119,17 @@ public final class KeyValueParser
   {
     if (!s.contains("\\"))
       return s;
-    StringBuilder out = new StringBuilder(s.length());
     final int len = s.length();
+    StringBuilder out = new StringBuilder(len);
     int prev = 0, i = 0;
     for (; i < len; i++)
       if (s.charAt(i) == '\\')
       {
         out.append(s, prev, i);
         prev = i + 1;
+        i++;
       }
-    out.append(s, prev, i);
+    out.append(s, prev, len);
     return out.toString();
   }
 

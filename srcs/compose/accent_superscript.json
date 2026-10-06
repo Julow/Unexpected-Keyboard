@@ -16,9 +16,10 @@
   "=": "⁼",
   "(": "⁽",
   ")": "⁾",
+
   // latin
   "n": "ⁿ",
-  
+
   // since there are no more "superscript" characters,
   // we substitute with "modifier letter small"s which looks the same
   // latin
@@ -77,6 +78,7 @@
   "ʃ": "ᶴ",
   "ʒ": "ᶾ",
   "ʍ": "ꭩ",
+  "Ħ": "ꟸ",
   // greek
   "ɒ": "ᶛ",
   "β": "ᵝ",
@@ -89,5 +91,10 @@
   "ʌ": "ᶺ",
   "θ": "ᶿ",
   // cyrillic
-  "ө": "ᶱ"
+  "ө": "ᶱ",
+
+  // Other with modifier
+  "ʕ": "ˤ",
+  "ʔ": "ˀ",
+  "ʋ": "ᶹ"
 }

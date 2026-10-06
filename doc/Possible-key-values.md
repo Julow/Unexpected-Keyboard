@@ -128,6 +128,7 @@ Value                | Meaning
 `accent_horn`        | Horn accent. `ơ`
 `accent_hook_above`  | Hook accent. `ả`
 `accent_double_grave`  | Double grave accent. `ȁ`
+`accent_small_caps`  | Small capital letters. `ᴀ`
 `superscript`        | Superscript. `ᵃ`
 `subscript`          | Subscript. `ₐ`
 `ordinal`            | Turns `a` and `o` into `ª` and `º`.
@@ -189,6 +190,17 @@ Value                  | Meaning
 `voice_typing`         | Begin voice typing.
 `voice_typing_chooser` | Shows a menu where you can choose which voice typing provider to use, then begins voice typing when you make a selection.
 `shareText`            | Emit a share Intent for the selected text. **Oddity:** This is in CamelCase.
+`hide_self`            | Hide the keyboard.
+`change_dictionary`    | Open the dialog for changing dictionary.
+
+## Suggestions
+
+Value           | Meaning
+:----           | :------
+`complete_first`  | Enter the best suggestion (the one in the middle)
+`complete_second` | Enter the second best suggestion (the right one)
+`complete_third`  | Enter the third best suggestion (the left one)
+`complete_emoji`  | Enter the emoji suggestion
 
 ## Unused
 These keys are known to do nothing.

@@ -1,6 +1,5 @@
 package juloo.keyboard2;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
@@ -22,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import juloo.keyboard2.dict.DictionariesActivity;
+import juloo.keyboard2.R;
 
 public class LauncherActivity extends Activity implements Handler.Callback
 {
@@ -97,13 +98,17 @@ public class LauncherActivity extends Activity implements Handler.Callback
     imm.showInputMethodPicker();
   }
 
+  public void launch_dictionaries_activity(View v)
+  {
+    startActivity(new Intent(this, DictionariesActivity.class));
+  }
+
   Animatable find_anim(int id)
   {
     ImageView img = (ImageView)findViewById(id);
     return (Animatable)img.getDrawable();
   }
 
-  @TargetApi(28)
   final class Tryhere_OnUnhandledKeyEventListener implements View.OnUnhandledKeyEventListener
   {
     public boolean onUnhandledKeyEvent(View v, KeyEvent ev)

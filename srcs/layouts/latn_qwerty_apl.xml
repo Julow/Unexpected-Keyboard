@@ -37,7 +37,7 @@
     <key c=";"         n="⋄"                  s=","/>
   </row>
   <row>
-    <key c="shift" e="loc capslock"/>
+    <key role="action" c="shift" e="loc capslock"/>
     <key c="z" nw="⊂"               se="⍝"/>
     <key c="x" nw="⊃"/>
     <key c="c" nw="∩" ne="⍛"                  sw="." se=":"/>
@@ -45,6 +45,6 @@
     <key c="b" nw="⊥" ne="⍎" sw="⌿" se="⍀"/>
     <key c="n" nw="⊤" ne="⍕"                  sw="/" se="\\"/>
     <key c="m" nw="≡" ne="≢" sw="∥" se="⍠"/>
-    <key width="2" c="backspace" e="delete"/>
+    <key role="action" width="2" c="backspace" e="delete"/>
   </row>
 </keyboard>

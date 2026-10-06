@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- Candidates view -->
+  <style name="candidates_view">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:gravity">end|center_vertical</item>
+    <item name="android:paddingEnd">@dimen/candidates_gap</item>
+  </style>
+  <style name="candidates_item">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_marginStart">@dimen/candidates_gap</item>
+    <item name="android:layout_marginTop">@dimen/candidates_margin_vertical</item>
+    <item name="android:layout_marginBottom">@dimen/candidates_margin_vertical</item>
+    <item name="android:padding">@dimen/candidates_suggestions_padding</item>
+    <item name="android:gravity">center</item>
+    <item name="android:background">@drawable/suggestions_item_background</item>
+    <item name="android:textColor">?attr/colorLabel</item>
+    <item name="android:maxLines">1</item>
+  </style>
+  <style name="candidates_emoji">
+    <item name="android:layout_width">@dimen/candidates_emoji_width</item>
+    <item name="android:layout_height">@dimen/candidates_emoji_width</item>
+    <item name="android:layout_weight">0</item>
+    <item name="android:layout_marginStart">@dimen/candidates_gap</item>
+    <item name="android:padding">@dimen/candidates_suggestions_padding</item>
+    <item name="android:gravity">center</item>
+  </style>
+  <style name="change_dictionary">
+    <item name="android:layout_width">@dimen/candidates_btn_width</item>
+    <item name="android:layout_height">@dimen/candidates_btn_width</item>
+    <item name="android:layout_weight">0</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:padding">@dimen/candidates_suggestions_padding</item>
+    <item name="android:background">@drawable/btn_change_dictionary</item>
+    <item name="android:gravity">center</item>
+  </style>
+  <style name="candidates_status">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">?attr/colorLabel</item>
+  </style>
+  <style name="candidates_lang_name">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">end|center_vertical</item>
+    <item name="android:textColor">?attr/colorSubLabel</item>
+    <item name="android:layout_marginEnd">@dimen/candidates_gap</item>
+  </style>
   <!-- Emoji pane -->
   <style name="emojiTypeButton">
     <item name="android:padding">1px</item>
@@ -53,7 +104,7 @@
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginVertical">8dp</item>
-    <item name="android:layout_marginHorizontal">16dp</item>
+    <item name="android:layout_marginHorizontal">24dp</item>
     <item name="android:layout_gravity">center</item>
   </style>
   <style name="anim">
@@ -78,6 +129,38 @@
     <item name="android:layout_marginVertical">16dp</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:orientation">horizontal</item>
+  </style>
+  <!-- Dictionaries activity -->
+  <style name="dictionary_list_view">
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginVertical">24dp</item>
+  </style>
+  <style name="dictionary_download_item">
+    <item name="android:orientation">horizontal</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">@dimen/dictionary_download_item_width</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingHorizontal">48dp</item>
+  </style>
+  <style name="dictionary_download_locale">
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+  <style name="dictionary_download_size">
+    <item name="android:layout_weight">0</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginRight">8dp</item>
+    <item name="android:textSize">12sp</item>
+  </style>
+  <style name="dictionary_download_button">
+    <item name="android:layout_width">@dimen/dictionary_download_item_width</item>
+    <item name="android:layout_height">@dimen/dictionary_download_item_width</item>
+    <item name="android:padding">8dp</item>
+    <item name="android:scaleType">fitCenter</item>
   </style>
   <style name="appTheme" parent="@android:style/Theme.DeviceDefault.DayNight"/>
   <style name="settingsTheme" parent="appTheme">

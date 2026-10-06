@@ -28,7 +28,7 @@
     <key key0="ჩ" key1="ჭ"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" key2="loc capslock"/>
+    <key width="1.5" role="action" key0="shift" key2="loc capslock"/>
     <key  key0="ზ" key1="ჵ"/>
     <key key0="ხ" key1="ჴ" key2="loc †"/>
     <key key0="ც" key2="&lt;" key3="."/>
@@ -38,6 +38,6 @@
     <key key0="მ" key2="&quot;" key3="'"/>
     <key key0="ძ"/>
     <key key0="ჟ"/>
-    <key width="1.5" key0="backspace" key2="delete"/>
+    <key width="1.5" role="action" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

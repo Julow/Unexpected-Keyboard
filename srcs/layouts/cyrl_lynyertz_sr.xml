@@ -62,7 +62,7 @@
     <key key0="ћ" ne="`" sw="|"/>
   </row>
   <row>
-    <key width="1.5" key0="shift" nw="loc superscript" ne="loc capslock" sw="loc subscript"/>
+    <key width="1.5" role="action" key0="shift" nw="loc superscript" ne="loc capslock" sw="loc subscript"/>
     <key key0="ж" nw="loc undo" ne="loc redo" sw="&lt;" se="&gt;"/>
     <key key0="џ" ne="loc cut"/>
     <key key0="ц" ne="loc copy"/>
@@ -71,6 +71,6 @@
     <key key0="н" nw="!" ne="\?" sw="/"/>
     <key key0="м" ne=";" sw=","/>
     <key key0="ђ" ne=":" sw="."/>
-    <key width="1.5" key0="backspace" ne="delete"/>
+    <key width="1.5" role="action" key0="backspace" ne="delete"/>
   </row>
 </keyboard>
