@@ -16,6 +16,7 @@ public final class KeyEventHandler
              ClipboardHistoryService.ClipboardPasteCallback,
              CurrentlyTypedWord.Callback
 {
+  Config _config;
   IReceiver _recv;
   Autocapitalisation _autocap;
   Suggestions _suggestions;
@@ -30,14 +31,13 @@ public final class KeyEventHandler
   /** Whether to force sending arrow keys to move the cursor when
       [setSelection] could be used instead. */
   boolean _move_cursor_force_fallback = false;
-  /** Whether the space bar automatically enters the best suggestion. */
-  boolean _space_bar_auto_complete = false;
   /** Remember the action that was handled. This is used by autocorrect. */
   LastAction _last_action = null;
   LastAction _next_last_action = null;
 
-  public KeyEventHandler(IReceiver recv, Suggestions sg)
+  public KeyEventHandler(Config conf, IReceiver recv, Suggestions sg)
   {
+    _config = conf;
     _recv = recv;
     Handler handler = recv.getHandler();
     _autocap = new Autocapitalisation(handler,
@@ -48,15 +48,14 @@ public final class KeyEventHandler
   }
 
   /** Editing just started. */
-  public void started(Config conf)
+  public void started()
   {
     InputConnection ic = _recv.getCurrentInputConnection();
-    _autocap.started(conf, ic);
-    _typedword.started(conf, ic);
+    _autocap.started(_config, ic);
+    _typedword.started(_config, ic);
     _suggestions.started();
     _move_cursor_force_fallback =
-      conf.editor_config.should_move_cursor_force_fallback;
-    _space_bar_auto_complete = conf.space_bar_auto_complete;
+      _config.editor_config.should_move_cursor_force_fallback;
     _last_action = null;
   }
 
@@ -548,9 +547,10 @@ public final class KeyEventHandler
   /** Implement autocorrect when enabled in the settings. */
   void handle_space_bar()
   {
-    if (_space_bar_auto_complete && _suggestions.count > 0
+    if (_config.space_bar_auto_complete && _suggestions.count > 0
         && !_typedword.is_selection_not_empty()
-        && _typedword.cursor_relative() == 0)
+        && _typedword.cursor_relative() == 0
+        && _last_action == LastAction.OTHER)
       suggestion_entered(_suggestions.suggestions[0] + " ");
     else
       send_text(" ");
@@ -562,8 +562,9 @@ public final class KeyEventHandler
     if (_last_action == LastAction.SUGGESTION_ENTERED
         && last_replaced_word != null)
     {
-      replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word);
+      replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word + " ");
       last_replaced_word = null;
+      _next_last_action = LastAction.SUGGESTION_UNDO;
     }
     else
     {
@@ -596,6 +597,7 @@ public final class KeyEventHandler
   public static enum LastAction
   {
     SUGGESTION_ENTERED,
+    SUGGESTION_UNDO,
     OTHER
   }
 }
