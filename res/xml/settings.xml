@@ -16,6 +16,7 @@
   <PreferenceCategory android:title="@string/pref_category_suggestions">
     <CheckBoxPreference android:key="suggestions" android:title="@string/pref_suggestions_title" android:summary="@string/pref_suggestions_summary" android:defaultValue="true"/>
     <CheckBoxPreference android:key="space_bar_auto_complete" android:title="@string/pref_space_bar_auto_complete_title" android:summary="@string/pref_space_bar_auto_complete_summary" android:defaultValue="false"/>
+    <CheckBoxPreference android:key="suggestions_add_space" android:title="@string/pref_suggestions_add_space_title" android:summary="@string/pref_suggestions_add_space_summary" android:defaultValue="true"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_typing">
     <ListPreference android:key="swipe_dist" android:title="@string/pref_swipe_dist_title" android:summary="@string/pref_swipe_dist_summary" android:defaultValue="15" android:entries="@array/pref_swipe_dist_entries" android:entryValues="@array/pref_swipe_dist_values"/>
