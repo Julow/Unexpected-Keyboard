@@ -549,7 +549,8 @@ public final class KeyEventHandler
   {
     if (_config.space_bar_auto_complete && _suggestions.count > 0
         && !_typedword.is_selection_not_empty()
-        && _typedword.cursor_relative() == 0)
+        && _typedword.cursor_relative() == 0
+        && _last_action == LastAction.OTHER)
       suggestion_entered(_suggestions.suggestions[0] + " ");
     else
       send_text(" ");
@@ -563,6 +564,7 @@ public final class KeyEventHandler
     {
       replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word);
       last_replaced_word = null;
+      _next_last_action = LastAction.SUGGESTION_UNDO;
     }
     else
     {
@@ -595,6 +597,7 @@ public final class KeyEventHandler
   public static enum LastAction
   {
     SUGGESTION_ENTERED,
+    SUGGESTION_UNDO,
     OTHER
   }
 }
