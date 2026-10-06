@@ -141,23 +141,19 @@ public final class KeyModifier
   {
     switch (kv.getKind())
     {
-      case Char:
-      case String:
+      /* These keys are not greyed. */
+      case Event:
+      case Modifier:
+        return kv;
+      /* Tapping compose again exits the pending sequence. */
+      case Compose_pending:
+        return KeyValue.COMPOSE_CANCEL;
+      default:
         KeyValue res = ComposeKey.apply(state, kv);
         // Grey-out characters not part of any sequence.
         if (res == null)
           return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
         return res;
-      /* Tapping compose again exits the pending sequence. */
-      case Compose_pending:
-        return KeyValue.COMPOSE_CANCEL;
-      /* These keys are not greyed. */
-      case Event:
-      case Modifier:
-        return kv;
-      /* Other keys cannot be part of sequences. */
-      default:
-        return kv.withFlags(kv.getFlags() | KeyValue.FLAG_GREYED);
     }
   }
 
@@ -404,13 +400,6 @@ public final class KeyModifier
   private static KeyValue apply_gesture(KeyValue k)
   {
     KeyValue modified = apply_shift(k);
-    if (_modmap != null)
-    {
-      modified = _modmap.get(Modmap.M.Fn, k);
-      if (modified != null)
-        return modified;
-    }
-    modified = apply_shift(k);
     if (modified != null && !modified.equals(k))
       return modified;
     modified = apply_fn(k);
@@ -535,9 +524,17 @@ public final class KeyModifier
       case Hangul_initial:
         // Finals that can also be initials have this kind.
         return combine_hangul_medial(kv, kv.getString().charAt(0), precomposed);
-      default:
-        return kv;
+      case Editing:
+        switch (kv.getEditing())
+        {
+          case SPACE_BAR:
+            return combine_hangul_medial(kv, ' ', precomposed);
+          default: break;
+        }
+        break;
+      default: break;
     }
+    return kv;
   }
 
   private static KeyValue combine_hangul_medial(KeyValue kv, char c,

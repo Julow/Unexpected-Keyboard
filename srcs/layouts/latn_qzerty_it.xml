@@ -25,13 +25,13 @@
     <key c="m" ne="·" sw="*"/>
   </row>
   <row>
-    <key width="2" c="shift" ne="loc capslock"/>
+    <key role="action" width="2" c="shift" ne="loc capslock"/>
     <key c="w" sw="&lt;" se="&gt;"/>
     <key c="x"/>
     <key c="c" ne="ç" sw="," se="\?"/>
     <key c="v" sw=";" se="."/>
     <key c="b" sw=":" se="/"/>
     <key c="n" nw="loc accent_tilde" ne="|" se="!"/>
-    <key width="2" c="backspace" ne="delete"/>
+    <key role="action" width="2" c="backspace" ne="delete"/>
   </row>
 </keyboard>

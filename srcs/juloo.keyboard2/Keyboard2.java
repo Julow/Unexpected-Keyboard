@@ -3,6 +3,8 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.Handler;
@@ -23,11 +25,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
+import juloo.keyboard2.dict.DictionarySwitcher;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
-import juloo.cdict.Cdict;
+import juloo.keyboard2.suggestions.Suggestions;
 
 public class Keyboard2 extends InputMethodService
   implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -36,13 +40,13 @@ public class Keyboard2 extends InputMethodService
   private ViewGroup _keyboard_container_view;
   private Keyboard2View _keyboard_layout_view;
   private CandidatesView _candidates_view;
+  private Suggestions _suggestions;
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
   /** Installed and current locales. */
-  private DeviceLocales _device_locales;
   private Dictionaries _dictionaries;
   private ViewGroup _emojiPane = null;
   private ViewGroup _clipboard_pane = null;
@@ -80,6 +84,9 @@ public class Keyboard2 extends InputMethodService
   {
     _config.set_current_layout(l);
     _currentSpecialLayout = null;
+    // The active dictionary depends on the current layout.
+    refresh_current_dictionary();
+    refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
   }
 
@@ -107,6 +114,12 @@ public class Keyboard2 extends InputMethodService
         current_layout_unmodified());
   }
 
+  KeyboardData loadNumericLayout()
+  {
+    return loadNumpad(_config.orientation_landscape ?
+        R.xml.numeric_landscape : R.xml.numeric);
+  }
+
   KeyboardData loadPinentry(int layout_id)
   {
     return LayoutModifier.modify_pinentry(KeyboardData.load(getResources(), layout_id),
@@ -124,7 +137,10 @@ public class Keyboard2 extends InputMethodService
     Config.initGlobalConfig(prefs, getResources(),
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
-    _keyeventhandler = new KeyEventHandler(this.new Receiver(), _config);
+    Receiver recvr = this.new Receiver();
+    _suggestions = new Suggestions(recvr, _config);
+    _keyeventhandler = new KeyEventHandler(_config, recvr, _suggestions);
+    KeyValue.Stateful._handler = recvr;
     _config.handler = _keyeventhandler;
     prefs.registerOnSharedPreferenceChangeListener(this);
     Logs.set_debug_logs(getResources().getBoolean(R.bool.debug_logs));
@@ -157,14 +173,14 @@ public class Keyboard2 extends InputMethodService
   {
     _config.shouldOfferVoiceTyping = true;
     KeyboardData default_layout = null;
-    _device_locales = DeviceLocales.load(this);
-    if (_device_locales.default_ != null)
+    _config.device_locales = DeviceLocales.load(this);
+    if (_config.device_locales.default_ != null)
     {
-      String layout_name = _device_locales.default_.default_layout;
+      String layout_name = _config.device_locales.default_.default_layout;
       if (layout_name != null)
         default_layout = LayoutsPreference.layout_of_string(getResources(), layout_name);
     }
-    _config.extra_keys_subtype = _device_locales.extra_keys();
+    _config.extra_keys_subtype = _config.device_locales.extra_keys();
     if (default_layout == null)
       default_layout = loadLayout(R.xml.latn_qwerty_us);
     _localeTextLayout = default_layout;
@@ -172,23 +188,35 @@ public class Keyboard2 extends InputMethodService
 
   private void refresh_current_dictionary()
   {
-    _config.current_dictionary = null;
-    String current = _device_locales.default_.dictionary;
-    if (current == null)
-      return;
-    Cdict[] dicts = _dictionaries.load(current);
-    if (dicts == null)
-      return;
-    _config.current_dictionary = Dictionaries.find_by_name(dicts, "main");
+    _config.should_show_dictionary_switch =
+      (_config.device_locales.installed.size() > 0);
+    String dict_name = _dictionaries.get_selected(_config);
+    if (dict_name == null)
+      dict_name = (_config.device_locales.default_ != null) ?
+        _config.device_locales.default_.dictionary : null;
+    _dictionaries.set_current_dictionary(_config, dict_name);
+  }
+
+  /** Remember and apply the dictionary chosen by the user for the current
+      context. */
+  private void select_dictionary(String dict_name)
+  {
+    _dictionaries.set_selected(_config, dict_name);
+    refresh_current_dictionary();
+    refresh_candidates_view();
   }
 
   private void refresh_candidates_view()
   {
     boolean should_show =
       _config.suggestions_enabled
-      && _config.editor_config.should_show_candidates_view;
+      && _config.editor_config.should_show_candidates_view
+      && !_config.split_layout;
     if (should_show)
+    {
       _candidates_view.refresh_config(_config);
+      _keyeventhandler.dictionary_changed();
+    }
     _candidates_view.setVisibility(should_show ? View.VISIBLE : View.GONE);
   }
 
@@ -208,7 +236,9 @@ public class Keyboard2 extends InputMethodService
       setInputView(_keyboard_container_view);
     }
     // Set keyboard background opacity
-    _keyboard_container_view.getBackground().setAlpha(_config.keyboardOpacity);
+    Drawable bg = _keyboard_container_view.getBackground().mutate();
+    bg.setAlpha(_config.keyboardOpacity);
+    _keyboard_container_view.setBackground(bg);
     _keyboard_layout_view.reset();
     refresh_candidates_view();
   }
@@ -219,8 +249,11 @@ public class Keyboard2 extends InputMethodService
     {
       switch (_config.selected_number_layout)
       {
-        case PIN: return loadPinentry(R.xml.pin);
-        case NUMBER: return loadNumpad(R.xml.numeric);
+        case PIN:
+          return loadPinentry(_config.orientation_landscape ?
+              R.xml.pin_landscape : R.xml.pin);
+        case NUMBER:
+          return loadNumericLayout();
       }
     }
     return null;
@@ -233,9 +266,14 @@ public class Keyboard2 extends InputMethodService
     refresh_config();
     _currentSpecialLayout = refresh_special_layout();
     _keyboard_layout_view.setKeyboard(current_layout());
-    _keyeventhandler.started(_config);
+    _keyeventhandler.started();
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
+  }
+
+  @Override
+  public void setExtractViewShown(boolean shown){
+      super.setExtractViewShown(false);
   }
 
   @Override
@@ -317,6 +355,7 @@ public class Keyboard2 extends InputMethodService
   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype)
   {
     refreshSubtypeImm();
+    refresh_current_dictionary();
     refresh_candidates_view();
     _keyboard_layout_view.setKeyboard(current_layout());
   }
@@ -354,16 +393,28 @@ public class Keyboard2 extends InputMethodService
   @Override
   public boolean onEvaluateInputViewShown()
   {
-    super.onEvaluateInputViewShown();
-    // Return true regardless of the super call result to fix the keyboard not
-    // being visible on Android 16
+    // Since Android 16, this method returns [false] for unknown reasons.
+    if (super.onEvaluateInputViewShown())
+      return true;
+    if (getResources().getConfiguration().hardKeyboardHidden
+        == Configuration.HARDKEYBOARDHIDDEN_NO
+        && _config.physical_keyboard_hide)
+    {
+      Logs.debug("Physical keyboard is present");
+      return false;
+    }
     return true;
+  }
+
+  public void launch_dictionaries_activity()
+  {
+    start_activity(DictionariesActivity.class);
   }
 
   /** Called from [onClick] attributes. */
   public void launch_dictionaries_activity(View v)
   {
-    start_activity(DictionariesActivity.class);
+    launch_dictionaries_activity();
   }
 
   void start_activity(Class cls)
@@ -374,7 +425,8 @@ public class Keyboard2 extends InputMethodService
   }
 
   /** Not static */
-  public class Receiver implements KeyEventHandler.IReceiver
+  public class Receiver implements KeyEventHandler.IReceiver,
+         KeyValue.Stateful.Symbol_provider, DictionarySwitcher.Callback
   {
     public void handle_event_key(KeyValue.Event ev)
     {
@@ -390,7 +442,7 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_NUMERIC:
-          setSpecialLayout(loadNumpad(R.xml.numeric));
+          setSpecialLayout(loadNumericLayout());
           break;
 
         case SWITCH_EMOJI:
@@ -460,6 +512,14 @@ public class Keyboard2 extends InputMethodService
           VoiceImeSwitcher.choose_voice_ime(Keyboard2.this, get_imm(),
               Config.globalPrefs());
           break;
+
+        case HIDE_SELF:
+          Keyboard2.this.requestHideSelf(0);
+          break;
+
+        case CHANGE_DICTIONARY:
+          new DictionarySwitcher(Keyboard2.this, _dictionaries, this).choose();
+          break;
       }
     }
 
@@ -488,9 +548,31 @@ public class Keyboard2 extends InputMethodService
       return _handler;
     }
 
-    public void set_suggestions(List<String> suggestions)
+    public void set_suggestions(Suggestions suggestions)
     {
       _candidates_view.set_candidates(suggestions);
+    }
+
+    public String provide_stateful_key_symbol(KeyValue.Stateful q)
+    {
+      switch (q)
+      {
+        case Complete_first: return _suggestions.suggestions[0];
+        case Complete_second: return _suggestions.suggestions[1];
+        case Complete_third: return _suggestions.suggestions[2];
+        case Complete_emoji: return _suggestions.emoji_suggestion;
+      }
+      return "";
+    }
+
+    public void on_change_dictionary(String dict_name)
+    {
+      select_dictionary(dict_name);
+    }
+
+    public void launch_dictionaries_activity()
+    {
+      Keyboard2.this.launch_dictionaries_activity();
     }
   }
 

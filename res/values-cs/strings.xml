@@ -3,11 +3,9 @@
     <string name="app_name_release">Klávesnice Unexpected</string>
     <string name="app_name_debug">Klávesnice Unexpected (pro ladění)</string>
     <string name="short_description">Nenáročná virtuální klávesnice pro vývojáře.</string>
-    <string name="store_description">Hlavní funkcí je možnost psát více znaků posunutím kláves směrem k rohům.\n\nTato aplikace byla původně navržena pro programátory používající Termux.\nNyní je ideální pro každodenní použití.\n\nTato aplikace neobsahuje žádné reklamy, nevyužívá připojení k síti a je Open Source.</string>
+    <string name="store_description">Hlavní funkcí je možnost psát více znaků posunutím kláves směrem k rohům.\n\nTato aplikace byla původně navržena pro programátory používající Termux.\nNyní je ideální pro každodenní použití.\n\nTato aplikace neobsahuje žádné reklamy a je Open Source.</string>
     <string name="pref_portrait">V režimu na výšku</string>
-    <!-- <string name="pref_portrait_unfolded">In portrait mode unfolded</string> -->
     <string name="pref_landscape">V režimu na šířku</string>
-    <!-- <string name="pref_landscape_unfolded">In landscape mode unfolded</string> -->
     <string name="pref_category_layout">Rozvržení</string>
     <string name="pref_label_brightness">Upravit jas nápisu</string>
     <string name="pref_keyboard_opacity">Upravit průhlednost pozadí klávesnice</string>
@@ -19,9 +17,6 @@
     <string name="pref_layouts_item">Rozložení %1$d: %2$s</string>
     <string name="pref_layouts_remove_custom">Odebrat rozložení</string>
     <string name="pref_custom_layout_title">Vlastní rozložení</string>
-    <!-- <string name="pref_show_number_row_no_number_row">No number row</string> -->
-    <!-- <string name="pref_show_number_row_no_symbols">Number row without symbols</string> -->
-    <!-- <string name="pref_show_number_row_symbols">Number row with symbols</string> -->
     <string name="pref_show_numpad_title">Zobrazit NumPad</string>
     <string name="pref_show_numpad_never">Nikdy</string>
     <string name="pref_show_numpad_landscape">Pouze v režimu na šířku</string>
@@ -44,14 +39,8 @@
     <string name="pref_category_behavior">Chování</string>
     <string name="pref_autocapitalisation_title">Automatická kapitalizace</string>
     <string name="pref_autocapitalisation_summary">Stiskne Shift na začátku věty</string>
-    <string name="pref_switch_input_immediate_title">Přepnout na posledně užívanou klávesnici</string>
-    <string name="pref_switch_input_immediate_summary">Jak bude klávesa pro přepnutí klávesnice reagovat</string>
     <string name="pref_vibrate_custom">Vlastní vibrace</string>
     <string name="pref_vibrate_duration_title">Síla vibrace</string>
-    <!-- <string name="pref_number_entry_title">Layout when typing numbers, dates and phone numbers</string> -->
-    <!-- <string name="pref_number_entry_layout_pin">PIN Entry</string> -->
-    <!-- <string name="pref_number_entry_layout_number">Number pane</string> -->
-    <!-- <string name="pref_number_entry_layout_normal">Use the main layout</string> -->
     <string name="pref_category_style">Styl</string>
     <string name="pref_margin_bottom_title">Spodní odsazení</string>
     <string name="pref_keyboard_height_title">Výška klávesnice</string>
@@ -126,12 +115,8 @@
     <string name="key_descr_zwnj">ne-Spojka nulové šířky (ZWNJ)</string>
     <string name="key_descr_nbsp">Nezlomitelná mezera</string>
     <string name="key_descr_nnbsp">Úzká nezlomitelná mezera</string>
-    <!-- <string name="key_descr_delete_word">Delete a word</string> -->
-    <!-- <string name="key_descr_forward_delete_word">Delete a word on the right</string> -->
-    <!-- <string name="key_descr_gesture">Gesture</string> -->
     <string name="clipboard_history_heading">Nedávno kopírovaný text</string>
     <string name="clipboard_pin_heading">Připnout</string>
     <string name="clipboard_remove_confirm">Odebrat ze schránky?</string>
     <string name="clipboard_remove_confirmed">Ano</string>
-    <!-- <string name="toast_no_voice_input">No voice typing app installed</string> -->
 </resources>

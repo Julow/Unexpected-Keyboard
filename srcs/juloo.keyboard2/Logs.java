@@ -1,5 +1,6 @@
 package juloo.keyboard2;
 
+import android.text.InputType;
 import android.util.Log;
 import android.util.LogPrinter;
 import android.view.inputmethod.EditorInfo;
@@ -23,6 +24,9 @@ public final class Logs
     info.dump(_debug_logs, "");
     if (info.extras != null)
       _debug_logs.println("extras: "+info.extras.toString());
+    _debug_logs.println("class: "+(info.inputType & InputType.TYPE_MASK_CLASS));
+    _debug_logs.println("flags: "+(info.inputType & InputType.TYPE_MASK_FLAGS));
+    _debug_logs.println("variation: "+(info.inputType & InputType.TYPE_MASK_VARIATION));
   }
 
   public static void debug_config_migration(int from_version, int to_version)

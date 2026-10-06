@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.graphics.Insets;
+import android.inputmethodservice.InputMethodService;
 import android.os.Build.VERSION;
 import android.os.IBinder;
 import android.view.View;
@@ -29,6 +30,13 @@ public final class Utils
 
   /** Like [dialog.show()] but properly configure layout params when called
       from an IME. [token] is the input view's [getWindowToken()]. */
+  public static void show_dialog_on_ime(AlertDialog dialog,
+      InputMethodService ims)
+  {
+    show_dialog_on_ime(dialog,
+        ims.getWindow().getWindow().getDecorView().getWindowToken());
+  }
+
   public static void show_dialog_on_ime(AlertDialog dialog, IBinder token)
   {
     Window win = dialog.getWindow();

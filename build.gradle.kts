@@ -20,8 +20,8 @@ android {
     applicationId = "juloo.keyboard2"
     minSdk = 21
     targetSdk { version = release(36) }
-    versionCode = 50
-    versionName = "1.32.1"
+    versionCode = 56
+    versionName = "2.1.0"
   }
 
   sourceSets {
@@ -69,6 +69,9 @@ android {
   buildTypes {
     named("release") {
       isMinifyEnabled = true
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro")
       isShrinkResources = true
       isDebuggable = false
       resValue("string", "app_name", "@string/app_name_release")

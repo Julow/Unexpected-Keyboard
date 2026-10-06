@@ -114,11 +114,11 @@ public final class ClipboardHistoryService
     if (!Config.globalConfig().clipboard_history_enabled)
       return;
     int size = _history.size();
-    if (clip.equals("") || (size > 0 && _history.get(size - 1).content.equals(clip)))
+    if (clip.equals("") || (size > 0 && _history.get(0).content.equals(clip)))
       return;
     if (size >= MAX_HISTORY_SIZE)
-      _history.remove(0);
-    _history.add(new HistoryEntry(clip));
+      _history.remove(size - 1);
+    _history.add(0,new HistoryEntry(clip));
     if (_listener != null)
       _listener.on_clipboard_history_change();
   }

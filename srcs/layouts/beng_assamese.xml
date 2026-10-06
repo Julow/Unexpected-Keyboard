@@ -35,6 +35,6 @@
     <key c="," sw="ষ" ne="("/>
     <key c="." sw="।" ne=")"/>
     <key c="য়" sw="য"/>
-    <key width="1.5" c="backspace" ne="delete"/>
+    <key role="action" width="1.5" c="backspace" ne="delete"/>
   </row>
 </keyboard>

@@ -1,0 +1,6 @@
+Peamine omadus on see, et saad sisestada rohkem märke, viibates klahve nurkade suunas.
+
+See rakendus loodi algselt Termuxit kasutavatele programmeerijatele.
+Nüüd sobib see ideaalselt igapäevaseks kasutamiseks.
+
+Rakendus ei sisalda reklaame ja on avatud lähtekoodiga.

@@ -22,14 +22,14 @@ public final class ComposeKey
     return null;
   }
 
-  /** Apply the pending compose sequence to char [c]. Returns [null] if no
+  /** Apply a char to the pending compose sequence. Returns [null] if no
       sequence matched. */
-  public static KeyValue apply(int prev, char c)
+  public static KeyValue apply(int state, char c)
   {
     char[] states = ComposeKeyData.states;
     char[] edges = ComposeKeyData.edges;
-    int prev_length = edges[prev];
-    int next = Arrays.binarySearch(states, prev + 1, prev + prev_length, c);
+    int state_length = edges[state];
+    int next = Arrays.binarySearch(states, state + 1, state + state_length, c);
     if (next < 0)
       return null;
     next = edges[next];
@@ -44,6 +44,25 @@ public final class ComposeKey
     }
     else // Character final state.
       return KeyValue.makeCharKey((char)next_header);
+  }
+
+  /** Apply char [c] to the pending compose sequence. If the application resolves
+      to a final char state, return it, otherwise return [0]. This is faster
+      than [apply] but do not support sequences of more than 1 char. Used to
+      apply substitutions for word suggestions. */
+  public static char transform_char(int state, char c)
+  {
+    char[] states = ComposeKeyData.states;
+    char[] edges = ComposeKeyData.edges;
+    int state_length = edges[state];
+    int next = Arrays.binarySearch(states, state + 1, state + state_length, c);
+    if (next < 0)
+      return 0;
+    next = edges[next];
+    int next_header = states[next];
+    if (next_header == 0 || next_header == 0xFFFF)
+      return 0;
+    return (char)next_header;
   }
 
   /** Apply each char of a string to a sequence. Returns [null] if no sequence

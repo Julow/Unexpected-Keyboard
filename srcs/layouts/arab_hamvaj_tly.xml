@@ -37,6 +37,6 @@
     <key key0="و" key1="ۋ" key4="ۊ"/>
     <key key0="چ"/>
     <key key0="ٚ" key1="ٛ"/>
-    <key key0="backspace" key2="delete"/>
+    <key role="action" key0="backspace" key2="delete"/>
   </row>
 </keyboard>

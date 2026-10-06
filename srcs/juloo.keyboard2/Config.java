@@ -45,6 +45,7 @@ public final class Config
   public float swipe_dist_px;
   public float slide_step_px;
   public boolean suggestions_enabled;
+  public boolean suggestions_add_space;
   // Let the system handle vibration when false.
   public boolean vibrate_custom;
   // Control the vibration if [vibrate_custom] is true.
@@ -75,6 +76,7 @@ public final class Config
   public boolean clipboard_history_enabled;
   public int clipboard_history_duration;
   public boolean space_bar_auto_complete;
+  public boolean physical_keyboard_hide;
 
   // Dynamically set
   /** Configuration options implied by the connected editor. */
@@ -83,7 +85,12 @@ public final class Config
   public ExtraKeys extra_keys_subtype;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_param;
   public Map<KeyValue, KeyboardData.PreferredPos> extra_keys_custom;
+  public DeviceLocales device_locales = null;
   public Cdict current_dictionary = null; // Might be 'null'.
+  public Cdict emoji_dictionary = null; // Might be 'null'.
+  public String current_dictionary_name = null; // Internal name for the current dictionary
+  /** Whether to show the dictionary switching button in the candidates view. */
+  public boolean should_show_dictionary_switch = false;
   public IKeyEventHandler handler;
   public boolean orientation_landscape = false;
   public boolean foldable_unfolded = false;
@@ -92,6 +99,8 @@ public final class Config
       [get_current_layout()] and [set_current_layout()]. */
   int current_layout_narrow;
   int current_layout_wide;
+  /** Whether to automatically split the layout. */
+  public boolean split_layout;
 
   private Config(SharedPreferences prefs, Resources res,
       Boolean foldableUnfolded, Dictionaries dicts)
@@ -140,6 +149,7 @@ public final class Config
     add_number_row = !number_row.equals("no_number_row");
     number_row_symbols = number_row.equals("symbols");
     suggestions_enabled = _prefs.getBoolean("suggestions", true);
+    suggestions_add_space = _prefs.getBoolean("suggestions_add_space", true);
     // The baseline for the swipe distance correspond to approximately the
     // width of a key in portrait mode, as most layouts have 10 columns.
     // Multipled by the DPI ratio because most swipes are made in the diagonals.
@@ -169,12 +179,11 @@ public final class Config
     customBorderRadius = _prefs.getInt("custom_border_radius", 0) / 100.f;
     customBorderLineWidth = get_dip_pref(dm, "custom_border_line_width", 0);
     screenHeightPixels = dm.heightPixels;
-    // Rows height is proportional to the screen height, meaning it doesn't
-    // change for layouts with more or less rows. 3.95 is the usual height of
-    // a layout in KeyboardData unit. The keyboard will be higher if the layout
-    // has more rows and smaller if it has less because rows stay the same
-    // height.
-    keyboard_rows_height_pixels = screenHeightPixels * keyboardHeightPercent / 395;
+    // Row height is proportional to the screen size.
+    // The keyboard is keyboardHeightPercent of the screen height on 16/9
+    // screens (or less) and with a 3.95 high layout (in KeyboardData unit)
+    float base_height = Math.min(dm.heightPixels, dm.widthPixels * 16.f / 9.f);
+    keyboard_rows_height_pixels = (int)(base_height * keyboardHeightPercent / 395);
     horizontal_margin =
       get_dip_pref_oriented(dm, "horizontal_margin", 3, 28);
     double_tap_lock_shift = _prefs.getBoolean("lock_double_tap", false);
@@ -193,9 +202,10 @@ public final class Config
     clipboard_history_enabled = _prefs.getBoolean("clipboard_history_enabled", false);
     clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
     space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
-
+    physical_keyboard_hide = _prefs.getString("physical_keyboard_behavior", "hide").equals("hide");
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
+    split_layout = get_split_layout();
   }
 
   public int get_current_layout()
@@ -271,6 +281,8 @@ public final class Config
       case "cobalt": return R.style.Cobalt;
       case "pine": return R.style.Pine;
       case "epaperblack": return R.style.ePaperBlack;
+      case "dracula": return R.style.Dracula;
+      case "gradientpurplepink": return R.style.GradientPurplePink;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)
@@ -287,6 +299,16 @@ public final class Config
       case "next": return KeyValue.CHANGE_METHOD_NEXT;
       default:
       case "picker": return KeyValue.CHANGE_METHOD;
+    }
+  }
+
+  final boolean get_split_layout()
+  {
+    switch (_prefs.getString("split_layout", "wide"))
+    {
+      case "wide": return wide_screen;
+      case "landscape": return orientation_landscape;
+      default: return false;
     }
   }
 

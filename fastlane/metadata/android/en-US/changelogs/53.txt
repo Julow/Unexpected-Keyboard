@@ -1,0 +1,3 @@
+Bug fixes
+
+Huge thanks to the contributors: @alotbsol555 @FlippingBinary

@@ -267,13 +267,11 @@ public class Keyboard2View extends View
   @Override
   public void onMeasure(int wSpec, int hSpec)
   {
-    int width;
     DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-    width = dm.widthPixels;
+    int width = dm.widthPixels;
     _marginLeft = Math.max(_config.horizontal_margin, _insets_left);
     _marginRight = Math.max(_config.horizontal_margin, _insets_right);
     _marginBottom = _config.margin_bottom + _insets_bottom;
-    width += _insets_left + _insets_right;
     _keyWidth = (width - _marginLeft - _marginRight) / _keyboard.keysWidth;
     _tc = new Theme.Computed(_theme, _config, _keyWidth, _keyboard);
     // Compute the size of labels based on the width or the height of keys. The
@@ -299,7 +297,9 @@ public class Keyboard2View extends View
   {
     if (!changed)
       return;
-    if (VERSION.SDK_INT >= 29)
+    // Since SDK 30, this is done automatically:
+    // https://android.googlesource.com/platform/frameworks/base/+/android11-release/core/java/android/inputmethodservice/InputMethodService.java#852
+    if (VERSION.SDK_INT == 29)
     {
       // Disable the back-gesture on the keyboard area
       _cached_exclusion_rect.set(
@@ -343,6 +343,16 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
+    if (_tc.keyboard_background_paint != null)
+    {
+      canvas.drawRect(
+              0,
+              0,
+              getWidth(),
+              getHeight(),
+              _tc.keyboard_background_paint);
+    }
+
     float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {
@@ -354,7 +364,18 @@ public class Keyboard2View extends View
         x += k.shift * _keyWidth;
         float keyW = _keyWidth * k.width - _tc.horizontal_margin;
         boolean isKeyDown = _pointers.isKeyDown(k);
-        Theme.Computed.Key tc_key = isKeyDown ? _tc.key_activated : _tc.key;
+        Theme.Computed.Key tc_key;
+        if (isKeyDown)
+          tc_key = _tc.key_activated;
+        else
+          switch (k.role)
+          {
+            case Action: tc_key = _tc.key_action; break;
+            case Space_bar: tc_key = _tc.key_space_bar; break;
+            case Suggestion: tc_key = _tc.key_suggestion; break;
+            default:
+            case Normal: tc_key = _tc.key; break;
+          }
         drawKeyFrame(canvas, x, y, keyW, keyH, tc_key);
         if (k.keys[0] != null)
           drawLabel(canvas, k.keys[0], keyW / 2f + x, y, keyH, isKeyDown, tc_key);
