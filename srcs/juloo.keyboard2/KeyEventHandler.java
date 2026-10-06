@@ -562,7 +562,7 @@ public final class KeyEventHandler
     if (_last_action == LastAction.SUGGESTION_ENTERED
         && last_replaced_word != null)
     {
-      replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word);
+      replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word + " ");
       last_replaced_word = null;
       _next_last_action = LastAction.SUGGESTION_UNDO;
     }
