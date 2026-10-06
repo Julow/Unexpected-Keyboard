@@ -56,12 +56,6 @@ public final class Autocapitalisation
 
   public void event_sent(int code, int meta)
   {
-    if (meta != 0)
-    {
-      _should_enable_shift = false;
-      _should_update_caps_mode = false;
-      return;
-    }
     switch (code)
     {
       case KeyEvent.KEYCODE_DEL:
@@ -70,6 +64,17 @@ public final class Autocapitalisation
         break;
       case KeyEvent.KEYCODE_ENTER:
         _cursor++;
+        break;
+      // Ignore shift key events to avoid interferences when it is disabled.
+      case KeyEvent.KEYCODE_SHIFT_LEFT:
+        return;
+      default:
+        if (meta != 0)
+        {
+          _should_enable_shift = false;
+          _should_update_caps_mode = false;
+          return;
+        }
         break;
     }
     callback(true);
