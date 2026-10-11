@@ -618,10 +618,8 @@ public final class Pointers implements Handler.Callback
     /** Make horizontal sliders slower while ctrl is held (which typically
         means movement happens by whole words instead of characters) */
     static final float SPEED_WORD_MULT = 0.25f;
-    /** Gradually reduce vibration strength from 1 to VIBRATION_MIN_STRENGTH
-        up to when speed is VIBRATION_MAX_SPEED. */
-    static final float VIBRATION_MAX_SPEED = 2f;
-    static final float VIBRATION_MIN_STRENGTH = 0.1f;
+    /** Speed above which to use SLIDING vibrations. */
+    static final float VIBRATION_SPEED_CUTOFF = 1.5f;
 
     public void onTouchMove(Pointer ptr, float x, float y)
     {
@@ -650,11 +648,9 @@ public final class Pointers implements Handler.Callback
       if (d_ != 0)
       {
         d -= d_;
-        float range = (speed - 1) / (VIBRATION_MAX_SPEED - 1);
-        range = Math.min(Math.max(0, 1 - range), 1);
-        float vibrate_strength = VIBRATION_MIN_STRENGTH + range * (1 - VIBRATION_MIN_STRENGTH);
         VibratorCompat.Mode mode =
-          vibrate_strength < 0.5 ? VibratorCompat.Mode.SLIDING : VibratorCompat.Mode.TAP;
+          (speed > VIBRATION_SPEED_CUTOFF) ?
+          VibratorCompat.Mode.SLIDING : VibratorCompat.Mode.TAP;
         _handler.onPointerHold(KeyValue.sliderKey(slider, d_), ptr.modifiers, mode);
       }
     }
