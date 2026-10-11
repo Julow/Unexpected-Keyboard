@@ -171,10 +171,12 @@ public class Keyboard2View extends View
     invalidate();
   }
 
-  public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
+  public void onPointerHold(KeyValue k, Pointers.Modifiers mods,
+      float vibrateStrength)
   {
     _config.handler.key_up(k, mods);
     updateFlags();
+    vibrate(vibrateStrength);
   }
 
   public void onPointerFlagsChanged(boolean shouldVibrate)
@@ -256,9 +258,14 @@ public class Keyboard2View extends View
     return null;
   }
 
+  private void vibrate(float strength)
+  {
+    VibratorCompat.vibrate(this, _config, strength);
+  }
+  
   private void vibrate()
   {
-    VibratorCompat.vibrate(this, _config);
+    VibratorCompat.vibrate(this, _config, 1);
   }
 
   @Override

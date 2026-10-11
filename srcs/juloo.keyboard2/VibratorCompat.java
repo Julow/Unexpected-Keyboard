@@ -7,12 +7,12 @@ import android.view.View;
 
 public final class VibratorCompat
 {
-  public static void vibrate(View v, Config config)
+  public static void vibrate(View v, Config config, float strength)
   {
     if (config.vibrate_custom)
     {
-      if (config.vibrate_duration > 0)
-        vibrator_vibrate(v, config.vibrate_duration);
+      if (config.vibrate_duration > 0 && strength > 0)
+        vibrator_vibrate(v, (long) Math.ceil(config.vibrate_duration * strength));
     }
     else
     {
