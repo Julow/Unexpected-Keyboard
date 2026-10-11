@@ -119,4 +119,15 @@
     <string name="clipboard_pin_heading">Připnout</string>
     <string name="clipboard_remove_confirm">Odebrat ze schránky?</string>
     <string name="clipboard_remove_confirmed">Ano</string>
+    <string name="pref_show_number_row_no_number_row">Žádná číselná řada</string>
+    <string name="pref_show_number_row_no_symbols">Číselná řada bez symbolů</string>
+    <string name="pref_show_number_row_symbols">Číselná řada se symboly</string>
+    <string name="pref_category_suggestions">Doporučení</string>
+    <string name="pref_suggestions_title">Doporučení</string>
+    <string name="pref_suggestions_summary">Povolit dokončování slov a kontrolu pravopisu</string>
+    <string name="pref_space_bar_auto_complete_title">Dokončit mezerníkem</string>
+    <string name="pref_space_bar_auto_complete_summary">Zadej nejlepší doporučení stisknutím mezerníku</string>
+    <string name="pref_change_method_key_replacement_title">Měnění vstupních metod</string>
+    <string name="pref_change_method_key_replacement_e_picker">Zobrazit měnič vstupních metod (dlouhé stisknutí)</string>
+    <string name="pref_change_method_key_replacement_e_prev">Změnit na poslední použité</string>
 </resources>
