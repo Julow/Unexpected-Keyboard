@@ -143,4 +143,6 @@
     <string name="dictionaries_from_internet">نزّل قاموسًا من الإنترنت</string>
     <string name="dictionary_switcher_title">غيّر اللغة</string>
     <string name="key_descr_delete_word">احذف كلمةً</string>
+    <string name="key_descr_forward_delete_word">احذف كلمةً من اليمين</string>
+    <string name="key_descr_gesture">إيماء</string>
 </resources>
