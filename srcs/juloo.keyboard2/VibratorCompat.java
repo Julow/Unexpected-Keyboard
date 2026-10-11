@@ -30,7 +30,7 @@ public final class VibratorCompat
       case SLIDING:
         if (config.vibrate_custom)
           vibrator_vibrate(v, config.vibrate_duration / 2);
-        else if (VERSION.SDK_INT >= 26)
+        else if (VERSION.SDK_INT >= 29)
           get_vibrator(v).vibrate(get_effect_tick());
         else
           vibrator_vibrate(v, 10);
