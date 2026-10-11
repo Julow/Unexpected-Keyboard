@@ -558,9 +558,16 @@ public final class KeyEventHandler
         && !_typedword.is_selection_not_empty()
         && _typedword.cursor_relative() == 0
         && _last_action == LastAction.OTHER)
-      suggestion_entered(_suggestions.suggestions[0], true);
-    else
-      send_text(" ");
+    {
+      // Don't replace the typed word if unecessary to avoid flickering
+      String w = _suggestions.suggestions[0];
+      if (!w.equals(_typedword.get()))
+      {
+        suggestion_entered(w, true);
+        return;
+      }
+    }
+    send_text(" ");
   }
 
   /** Undo the last autocorrect. */
