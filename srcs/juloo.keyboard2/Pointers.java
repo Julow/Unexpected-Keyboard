@@ -455,7 +455,7 @@ public final class Pointers implements Handler.Callback
     // For every other keys, key-repeat
     if (_config.keyrepeat_enabled)
     {
-      _handler.onPointerHold(kv, ptr.modifiers, 0);
+      _handler.onPointerHold(kv, ptr.modifiers, VibratorCompat.Mode.NONE);
       _longpress_handler.sendEmptyMessageDelayed(ptr.timeoutWhat,
           _config.longPressInterval);
     }
@@ -653,9 +653,9 @@ public final class Pointers implements Handler.Callback
         float range = (speed - 1) / (VIBRATION_MAX_SPEED - 1);
         range = Math.min(Math.max(0, 1 - range), 1);
         float vibrate_strength = VIBRATION_MIN_STRENGTH + range * (1 - VIBRATION_MIN_STRENGTH);
-        
-        _handler.onPointerHold(KeyValue.sliderKey(slider, d_),
-            ptr.modifiers, vibrate_strength);
+        VibratorCompat.Mode mode =
+          vibrate_strength < 0.5 ? VibratorCompat.Mode.SLIDING : VibratorCompat.Mode.TAP;
+        _handler.onPointerHold(KeyValue.sliderKey(slider, d_), ptr.modifiers, mode);
       }
     }
 
@@ -833,6 +833,6 @@ public final class Pointers implements Handler.Callback
     public void onPointerFlagsChanged(boolean shouldVibrate);
 
     /** Key is repeating. */
-    public void onPointerHold(KeyValue k, Modifiers mods, float vibrateStrength);
+    public void onPointerHold(KeyValue k, Modifiers mods, VibratorCompat.Mode vibrateStrength);
   }
 }
