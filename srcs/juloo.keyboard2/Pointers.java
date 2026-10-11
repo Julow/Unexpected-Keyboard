@@ -455,7 +455,7 @@ public final class Pointers implements Handler.Callback
     // For every other keys, key-repeat
     if (_config.keyrepeat_enabled)
     {
-      _handler.onPointerHold(kv, ptr.modifiers);
+      _handler.onPointerHold(kv, ptr.modifiers, VibratorCompat.Mode.NONE);
       _longpress_handler.sendEmptyMessageDelayed(ptr.timeoutWhat,
           _config.longPressInterval);
     }
@@ -605,7 +605,10 @@ public final class Pointers implements Handler.Callback
       direction_y = diry;
     }
 
-    static final float SPEED_SMOOTHING = 0.7f;
+    /** In one millisecond, what fraction of previous speed should be kept.
+        0.95 means that, in e.g. 16ms, pow(0.95,16)=0.44 indicates that the
+        new speed should be 0.44 * prev_speed + (1 - 0.44) * target_speed */
+    static final float SPEED_SMOOTHING = 0.95f;
     /** Avoid absurdly large values. */
     static final float SPEED_MAX = 4.f;
     /** Make vertical sliders slower. The intention is to make the up/down
@@ -615,6 +618,8 @@ public final class Pointers implements Handler.Callback
     /** Make horizontal sliders slower while ctrl is held (which typically
         means movement happens by whole words instead of characters) */
     static final float SPEED_WORD_MULT = 0.25f;
+    /** Speed above which to use SLIDING vibrations. */
+    static final float VIBRATION_SPEED_CUTOFF = 1.5f;
 
     public void onTouchMove(Pointer ptr, float x, float y)
     {
@@ -643,8 +648,10 @@ public final class Pointers implements Handler.Callback
       if (d_ != 0)
       {
         d -= d_;
-        _handler.onPointerHold(KeyValue.sliderKey(slider, d_),
-            ptr.modifiers);
+        VibratorCompat.Mode mode =
+          (speed > VIBRATION_SPEED_CUTOFF) ?
+          VibratorCompat.Mode.SLIDING : VibratorCompat.Mode.TAP;
+        _handler.onPointerHold(KeyValue.sliderKey(slider, d_), ptr.modifiers, mode);
       }
     }
 
@@ -663,9 +670,11 @@ public final class Pointers implements Handler.Callback
     void update_speed(float travelled, float x, float y)
     {
       long now = System.currentTimeMillis();
-      float instant_speed = Math.min(SPEED_MAX,
-          travelled / (float)(now - last_move_ms) + 1.f);
-      speed = speed + (instant_speed - speed) * SPEED_SMOOTHING;
+      float delta_ms = (float)(now - last_move_ms);
+      float instant_speed = Math.min(SPEED_MAX, travelled / delta_ms + 1.f);
+      
+      float speed0 = speed;
+      speed = speed + (instant_speed - speed) * (1 - (float)Math.pow(SPEED_SMOOTHING, delta_ms));
       last_move_ms = now;
       last_x = x;
       last_y = y;
@@ -820,6 +829,6 @@ public final class Pointers implements Handler.Callback
     public void onPointerFlagsChanged(boolean shouldVibrate);
 
     /** Key is repeating. */
-    public void onPointerHold(KeyValue k, Modifiers mods);
+    public void onPointerHold(KeyValue k, Modifiers mods, VibratorCompat.Mode vibrateStrength);
   }
 }
