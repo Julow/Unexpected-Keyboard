@@ -88,6 +88,7 @@
   <string name="dict_name_vi">Tiếng Việt</string>
   <string name="dict_name_zgh">ⵜⴰⵎⴰⵣⵉⵖⵜ</string>
   <string name="dict_name_zgh_zz">ⵜⴰⵎⴰⵣⵉⵖⵜ (ⵍⵎⵖⵔⵉⴱ)</string>
+  <string name="dict_name_zh">中文</string>
   <string-array name="dictionaries_locale">
     <item>af</item>
     <item>ar</item>
@@ -177,6 +178,7 @@
     <item>vi</item>
     <item>zgh</item>
     <item>zgh_ZZ</item>
+    <item>zh</item>
   </string-array>
   <string-array name="dictionaries_name">
     <item>@string/dict_name_af</item>
@@ -267,6 +269,7 @@
     <item>@string/dict_name_vi</item>
     <item>@string/dict_name_zgh</item>
     <item>@string/dict_name_zgh_zz</item>
+    <item>@string/dict_name_zh</item>
   </string-array>
   <integer-array name="dictionaries_size">
     <item>1459395</item>
@@ -357,5 +360,6 @@
     <item>116349</item>
     <item>629040</item>
     <item>1134704</item>
+    <item>3046233</item>
   </integer-array>
 </resources>

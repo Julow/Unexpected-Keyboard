@@ -4,7 +4,7 @@
 Usage:
     python3 -B srcs/pinyin/from_unihan.py Unihan_Readings.txt Unihan_Variants.txt srcs/pinyin
 
-Writes two files into the output directory:
+Writes three files into the output directory:
 
 - `syllables.txt`: one line per toneless Hanyu Pinyin syllable, the syllable, a
   space, then the characters written with that syllable (at most 16, most
@@ -15,6 +15,9 @@ Writes two files into the output directory:
 - `variants.txt`: the traditional variant of the characters of `syllables.txt`,
   one `simplified+traditional` pair per line, taken from the
   `kTraditionalVariant` field of `Unihan_Variants.txt`.
+- `tones.txt`: one line per character of the tables, the character, a space, then
+  the tone of its heaviest reading. It is what gives the words of the `zh`
+  dictionary the tones of their syllables; see `srcs/chinese/README.md`.
 
 Characters that are the traditional form of another character are ranked after
 the simplified form when both have the same frequency, so that the tables read
@@ -36,6 +39,13 @@ SYLLABLES_HEADER = (
 VARIANTS_HEADER = (
     "# Simplified character followed by its traditional variant, for the characters of syllables.txt.\n"
     "# Derived from the Unihan database (kTraditionalVariant field), (c) Unicode, Inc. See README.md.\n"
+)
+TONES_HEADER = (
+    "# The tone of the heaviest reading of every character of the tables, 1 to 4 and 5 for\n"
+    "# the neutral tone. A character read with several tones keeps the one of the reading it\n"
+    "# is the most frequent with, so the tone of a character inside a word is an\n"
+    "# approximation. Used by srcs/chinese/build_dict.py.\n"
+    "# Derived from the Unihan database (kHanyuPinlu field), (c) Unicode, Inc. See README.md.\n"
 )
 
 MAX_CHARS = 16
@@ -195,6 +205,23 @@ def render_variants(total, traditional_of):
     return "".join(out)
 
 
+def render_tones(total):
+    """The tone of the heaviest reading of every character of the tables.
+
+    A character read with several tones, in one syllable or in several, keeps
+    the tone of the reading it carries the most weight with."""
+    heaviest = {}
+    for reads in total.values():
+        for char, entry in reads.items():
+            weight, tone = entry[0], entry[2]
+            if char not in heaviest or weight > heaviest[char][0]:
+                heaviest[char] = (weight, tone)
+    out = [TONES_HEADER]
+    for char in sorted(heaviest):
+        out.append("%s %d\n" % (char, heaviest[char][1]))
+    return "".join(out)
+
+
 def main():
     if len(sys.argv) != 4:
         sys.stderr.write(
@@ -205,10 +232,13 @@ def main():
     total = parse_readings(readings_path)
     syllables = render_syllables(total, simplified_of)
     variants = render_variants(total, traditional_of)
+    tones = render_tones(total)
     with open(os.path.join(out_dir, "syllables.txt"), "w", encoding="utf-8") as f:
         f.write(syllables)
     with open(os.path.join(out_dir, "variants.txt"), "w", encoding="utf-8") as f:
         f.write(variants)
+    with open(os.path.join(out_dir, "tones.txt"), "w", encoding="utf-8") as f:
+        f.write(tones)
     return 0
 
 

@@ -15,15 +15,22 @@ These tables hold the characters that the Pinyin and Zhuyin input methods offer
 - `variants.txt` — one line per character: a simplified character followed by
   its traditional variant. The Zhuyin input method uses it to offer the
   traditional characters.
-- `from_unihan.py` — builds the two files above from the Unicode Unihan
+- `tones.txt` — one line per character: the character, a space, then the tone of
+  its heaviest reading (1 to 4, and 5 for the neutral tone). It is what gives the
+  words of the `zh` dictionary the tone of their syllables, character by
+  character; a character read with several tones keeps the tone of the reading it
+  is the most frequent with, so the tone of a character inside a word is an
+  approximation. See `srcs/chinese/README.md`.
+- `from_unihan.py` — builds the three files above from the Unicode Unihan
   database.
 - `compile.py` — generates `srcs/juloo.keyboard2/staged/PinyinData.java`,
-  including the Zhuyin spelling of every syllable, which it computes.
+  including the Zhuyin spelling of every syllable, which it computes. It reads
+  `syllables.txt` and `variants.txt` only: `tones.txt` is for the dictionary.
 
 ## Regenerating
 
-The generated Java file only depends on the two committed tables and is checked
-by CI:
+The generated Java file only depends on the committed tables and is checked by
+CI:
 
     python3 -B srcs/pinyin/compile.py
 
