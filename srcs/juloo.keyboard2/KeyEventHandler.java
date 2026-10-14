@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import juloo.keyboard2.staged.Composer;
+import juloo.keyboard2.staged.Hangul;
 import juloo.keyboard2.suggestions.Suggestions;
 
 public final class KeyEventHandler
@@ -84,7 +85,13 @@ public final class KeyEventHandler
       one key at a time do not compose. */
   static Composer composer_of(String script)
   {
-    return Composer.NONE;
+    if (script == null)
+      return Composer.NONE;
+    switch (script)
+    {
+      case "hangul": return new Hangul();
+      default: return Composer.NONE;
+    }
   }
 
   /** Whether a composition is ongoing. */
