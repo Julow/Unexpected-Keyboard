@@ -52,6 +52,16 @@
     <item name="android:background">@drawable/btn_change_dictionary</item>
     <item name="android:gravity">center</item>
   </style>
+  <style name="candidates_rubytext">
+    <item name="android:layout_width">@dimen/candidates_btn_width</item>
+    <item name="android:layout_height">@dimen/candidates_btn_width</item>
+    <item name="android:layout_weight">0</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:gravity">center</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:textColor">?attr/colorSubLabel</item>
+    <item name="android:background">?android:attr/selectableItemBackground</item>
+  </style>
   <style name="candidates_status">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>

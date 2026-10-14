@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:hardwareAccelerated="false" android:orientation="vertical" android:background="?attr/colorKeyboard">
   <juloo.keyboard2.suggestions.CandidatesView android:id="@+id/candidates_view" style="@style/candidates_view">
+    <TextView android:id="@+id/rubytext_toggle" style="@style/candidates_rubytext" android:contentDescription="@string/candidates_rubytext_toggle"/>
     <juloo.keyboard2.suggestions.CandidatesScrollView android:id="@+id/candidates_scroll" style="@style/candidates_scroll">
       <LinearLayout android:id="@+id/candidates_row" style="@style/candidates_row"/>
     </juloo.keyboard2.suggestions.CandidatesScrollView>

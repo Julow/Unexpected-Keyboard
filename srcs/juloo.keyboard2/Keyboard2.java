@@ -390,6 +390,11 @@ public class Keyboard2 extends InputMethodService
   @Override
   public void onSharedPreferenceChanged(SharedPreferences _prefs, String _key)
   {
+    /* The rubytext toggle redraws the candidates itself. Reloading everything
+       for its preference would clear the row and refill it, which blanks it
+       for a frame at the instant of the tap. */
+    if (Config.is_annotations_pref(_key))
+      return;
     refresh_config();
     _keyboard_layout_view.setKeyboard(current_layout());
     refresh_composer();

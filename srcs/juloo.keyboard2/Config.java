@@ -310,6 +310,38 @@ public final class Config
     }
   }
 
+  /** Whether the candidates of the current language are drawn with the
+      reading of the words above them. One preference per language, next to
+      the dictionary selection. */
+  public boolean annotations()
+  {
+    return _prefs.getBoolean(annotations_pref_name(), true);
+  }
+
+  /** Show or hide the reading of the candidates of the current language. */
+  public void set_annotations(boolean on)
+  {
+    _prefs.edit().putBoolean(annotations_pref_name(), on).apply();
+  }
+
+  /** The prefix of the preference [annotations] reads. The rubytext toggle
+      writes that preference and redraws its own row; [Keyboard2] must not
+      reload everything for it, or the candidates are emptied for a frame. */
+  public static final String ANNOTATIONS_PREFIX = "annotations:";
+
+  public static boolean is_annotations_pref(String key)
+  {
+    return key != null && key.startsWith(ANNOTATIONS_PREFIX);
+  }
+
+  String annotations_pref_name()
+  {
+    String lang_tag =
+      (device_locales != null && device_locales.default_ != null) ?
+        device_locales.default_.lang_tag : "";
+    return ANNOTATIONS_PREFIX + lang_tag;
+  }
+
   private static Config _globalConfig = null;
 
   public static void initGlobalConfig(SharedPreferences prefs, Resources res,

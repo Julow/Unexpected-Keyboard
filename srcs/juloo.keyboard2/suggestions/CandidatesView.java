@@ -3,6 +3,9 @@ package juloo.keyboard2.suggestions;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -51,6 +54,13 @@ public class CandidatesView extends LinearLayout
 
   TextView _lang_name_view;
 
+  /** The control that shows and toggles the reading of the candidates. Hidden
+      for a language whose candidates carry no reading. */
+  TextView _rubytext_toggle;
+  /** The candidate the control samples: the first one that carries a reading,
+      or [null] when there is none. */
+  Composer.Candidate _ruby_sample = null;
+
   /** Label size of a candidate and of its annotation, or 0 before
       [set_sizes]. */
   float _text_size = 0;
@@ -70,6 +80,21 @@ public class CandidatesView extends LinearLayout
     _scroll.set_on_scroll(this);
     setup_dictionary_switch_button();
     _lang_name_view = (TextView)findViewById(R.id.candidates_lang_name);
+    _rubytext_toggle = (TextView)findViewById(R.id.rubytext_toggle);
+    _rubytext_toggle.setOnClickListener(new View.OnClickListener()
+        {
+          @Override
+          public void onClick(View _v)
+          {
+            Config c = Config.globalConfig();
+            c.set_annotations(!c.annotations());
+            /* Redraw in place: [Keyboard2] ignores this preference, so nothing
+               reloads, and the row keeps its candidates while the readings
+               appear or disappear. */
+            update_rubytext_toggle();
+            redraw_annotations();
+          }
+        });
   }
 
   @Override
@@ -125,6 +150,15 @@ public class CandidatesView extends LinearLayout
     if (s.emoji_suggestion != null)
       cs.add(new Composer.Candidate(s.emoji_suggestion));
     _candidates = cs;
+    /* The rubytext control samples the first candidate that carries a
+       reading; a language whose candidates have none does not show it. */
+    _ruby_sample = null;
+    for (Composer.Candidate c : cs)
+      if (c.annotation != null)
+      {
+        _ruby_sample = c;
+        break;
+      }
     _row.removeAllViews();
     _shown = 0;
     add_cells(CELLS_PER_PAGE);
@@ -137,6 +171,58 @@ public class CandidatesView extends LinearLayout
       (should_show_dictionary_switch && cs.size() == 0) ? View.VISIBLE : View.GONE;
     _dictionary_switch_button.setVisibility(dict_vis);
     _lang_name_view.setVisibility(dict_vis);
+    update_rubytext_toggle();
+  }
+
+  /** Draw the rubytext control in the state of the preference. Hidden when
+      the language has no candidate that carries a reading. */
+  void update_rubytext_toggle()
+  {
+    if (_ruby_sample == null)
+    {
+      _rubytext_toggle.setVisibility(View.GONE);
+      return;
+    }
+    _rubytext_toggle.setVisibility(View.VISIBLE);
+    String text = _ruby_sample.text;
+    String reading = _ruby_sample.annotation;
+    if (Config.globalConfig().annotations() && reading != null
+        && reading.length() > 0)
+    {
+      /* One string, the character followed by its reading, smaller. */
+      SpannableString s = new SpannableString(text + reading);
+      s.setSpan(new RelativeSizeSpan(0.5f), text.length(),
+          text.length() + reading.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+      _rubytext_toggle.setText(s);
+    }
+    else
+      _rubytext_toggle.setText(text);
+  }
+
+  /** Whether the annotation of a candidate cell is drawn. When the readings
+      are on, the line is kept even for a candidate that has no reading so
+      that the cells stay aligned; when they are off, the line goes so that
+      the row does not keep a blank one. */
+  int annotation_visibility()
+  {
+    return Config.globalConfig().annotations() ? View.VISIBLE : View.GONE;
+  }
+
+  /** Show or hide the readings of the cells that are already drawn. The cells
+      are not re-created: rebuilding them would blank the row for a frame, and
+      the toggle has to show the same candidates in the other state. Their text
+      is unchanged, only the annotation line goes or comes back. */
+  void redraw_annotations()
+  {
+    int vis = annotation_visibility();
+    for (int i = 0; i < _row.getChildCount(); i++)
+    {
+      TextView annotation =
+        (TextView)_row.getChildAt(i).findViewById(R.id.candidate_annotation);
+      if (annotation != null)
+        annotation.setVisibility(vis);
+    }
+    _row.requestLayout();
   }
 
   /** Add up to [count] more candidate cells. */
@@ -157,6 +243,7 @@ public class CandidatesView extends LinearLayout
          cells are centred on their own height, so a cell that hides the line
          would draw its text at a different height than its neighbours. */
       annotation.setText(candidate.annotation);
+      annotation.setVisibility(annotation_visibility());
       set_text_size(text, _text_size, true);
       set_text_size(annotation, _annotation_size, false);
       cell.setOnClickListener(new View.OnClickListener()
@@ -188,8 +275,11 @@ public class CandidatesView extends LinearLayout
   void clear_candidates()
   {
     _candidates = Collections.emptyList();
+    _ruby_sample = null;
     _shown = 0;
     _row.removeAllViews();
+    if (_rubytext_toggle != null)
+      _rubytext_toggle.setVisibility(View.GONE);
   }
 
   public void refresh_config(Config config)
@@ -223,6 +313,8 @@ public class CandidatesView extends LinearLayout
     // Match the size of labels on the keyboard.
     _text_size = row_height * config.characterSize * config.labelTextSize;
     _annotation_size = _text_size * 0.4f;
+    if (_rubytext_toggle != null)
+      set_text_size(_rubytext_toggle, _annotation_size * 1.5f, false);
     for (int i = 0; i < _row.getChildCount(); i++)
     {
       View cell = _row.getChildAt(i);
