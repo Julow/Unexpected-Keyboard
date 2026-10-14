@@ -108,9 +108,12 @@ public final class KeyEventHandler
       conn.setComposingText(text, 1);
     List<Composer.Candidate> candidates = _composer.candidates();
     /* Keep the dictionary suggestions when the composer has none: the row
-       belongs to the dictionary then. */
+       belongs to the dictionary then. The word composed so far is used, not
+       the one the editor last reported, which lags a keystroke behind. */
     if (candidates.size() > 0)
       _suggestions.composition_candidates(candidates);
+    else
+      _suggestions.currently_typed_word(text);
   }
 
   /** Commit the composition and forget it, leaving the editor with the
@@ -134,6 +137,10 @@ public final class KeyEventHandler
     // not change. [CurrentlyTypedWord] reads it back from the editor.
     _autocap.typed(text);
     conn.commitText(text, 1);
+    /* The composition is the word in the editor now. Read it back and query
+       the dictionary: without this no query is issued and the row stays empty
+       until the next keystroke. */
+    _typedword.refresh_current_word();
   }
 
   /** Selection has been updated. */
@@ -239,7 +246,12 @@ public final class KeyEventHandler
       last_replaced_word = null;
       last_replacement_word_len = 0;
       if (conn != null)
+      {
         conn.commitText(text, 1);
+        /* The candidate is the word in the editor now: read it back and query
+           the dictionary, so that the row shows its suggestions right away. */
+        _typedword.refresh_current_word();
+      }
       return;
     }
     String old = _typedword.get();
