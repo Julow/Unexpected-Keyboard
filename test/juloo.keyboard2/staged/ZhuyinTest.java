@@ -173,38 +173,6 @@ public class ZhuyinTest
   }
 
   @Test
-  public void only_the_keys_that_can_continue_are_accepted()
-  {
-    // Nothing is composed: every key is accepted, so nothing is greyed out.
-    Zhuyin empty = new Zhuyin();
-    assertTrue(empty.accepts("ㄅ"));
-    assertTrue(empty.accepts("?"));
-    // ㄅ can take a medial or a final, but not another initial.
-    Zhuyin zhuyin = typed("ㄅ");
-    assertTrue(zhuyin.accepts("ㄚ"));
-    assertTrue(zhuyin.accepts("ㄨ"));
-    assertFalse(zhuyin.accepts("ㄆ"));
-    assertFalse(zhuyin.accepts("ㄩ"));
-    assertFalse(zhuyin.accepts("ˇ"));
-    assertFalse(zhuyin.accepts("1"));
-    // accepts() does not modify the composition.
-    assertEquals("ㄅ", zhuyin.text());
-  }
-
-  @Test
-  public void accepts_follows_the_composition()
-  {
-    Zhuyin zhuyin = typed("ㄋㄧ");
-    assertTrue(zhuyin.accepts("ˇ"));
-    assertTrue(zhuyin.accepts("ㄏ"));
-    assertFalse(zhuyin.accepts("a"));
-    assertTrue(zhuyin.type("ㄏ"));
-    // ㄏ cannot take another initial.
-    assertFalse(zhuyin.accepts("ㄅ"));
-    assertEquals("ㄋㄧㄏ", zhuyin.text());
-  }
-
-  @Test
   public void the_longest_spelling_is_read_first()
   {
     assertEquals("[bie]", typed("ㄅㄧㄝ").syllables().toString());

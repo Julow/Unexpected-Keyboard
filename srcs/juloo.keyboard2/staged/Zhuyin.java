@@ -43,16 +43,6 @@ public final class Zhuyin implements Composer
     return true;
   }
 
-  /** Whether the key that writes [s] can extend the composition. This is the
-      check that [type] applies without modifying anything, so that the
-      keyboard can grey out the keys that cannot continue the composition.
-      Every key is accepted while nothing is composed: there is nothing to
-      continue, and the key starts a new composition or is typed as usual. */
-  public boolean accepts(String s)
-  {
-    return (_keys.length() == 0) || extends_composition(_keys, s);
-  }
-
   /** Whether appending [s] to [keys] gives a valid composition. */
   private static boolean extends_composition(CharSequence keys, String s)
   {
@@ -101,7 +91,7 @@ public final class Zhuyin implements Composer
     _keys.setLength(0);
   }
 
-  static boolean is_symbol(char c)
+  private static boolean is_symbol(char c)
   {
     return INITIALS.indexOf(c) >= 0 || MEDIALS.indexOf(c) >= 0
       || FINALS.indexOf(c) >= 0 || TONES.indexOf(c) >= 0;
@@ -110,7 +100,7 @@ public final class Zhuyin implements Composer
   /** Whether [s] has the shape of a spelling, that is an initial, a medial and
       a final, each optional and in this order. Whether the spelling is a
       syllable of the language is decided by the table. */
-  static boolean is_spelling(CharSequence s)
+  private static boolean is_spelling(CharSequence s)
   {
     int i = 0;
     if (i < s.length() && INITIALS.indexOf(s.charAt(i)) >= 0)

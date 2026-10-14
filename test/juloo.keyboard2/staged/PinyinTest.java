@@ -3,6 +3,9 @@ package juloo.keyboard2.staged;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -73,6 +76,52 @@ public class PinyinTest
     // "xian" is both 先 and 西 + 安.
     assertEquals("[xian]", typed("xian").syllables().toString());
     assertEquals("[fang, an]", typed("fangan").syllables().toString());
+  }
+
+  @Test
+  public void syllables_backtrack_to_a_reading()
+  {
+    // The longest syllable at a position does not always leave a valid tail:
+    // "hen" is the longest syllable of "heni", but it leaves "i", which is not
+    // a syllable. The reading is "he" followed by "ni", so a parser that only
+    // ever takes the longest syllable reads nothing at all here.
+    assertEquals("[he, ni]", typed("heni").syllables().toString());
+  }
+
+  @Test
+  public void every_two_syllable_combination_parses() throws Exception
+  {
+    // A concatenation of two syllables is always a sequence of syllables, so
+    // syllables() must never fail on one. Reading only the longest syllable at
+    // each position (no backtracking) failed on 1252 of these pairs, "heni"
+    // among them. The list is the committed table that PinyinData is generated
+    // from, so this walks what the composer actually knows.
+    File table = new File("srcs/pinyin/syllables.txt");
+    assertTrue("missing " + table.getAbsolutePath(), table.exists());
+    List<String> syllables = new ArrayList<String>();
+    BufferedReader in = new BufferedReader(new FileReader(table));
+    try
+    {
+      String line;
+      while ((line = in.readLine()) != null)
+      {
+        // The table opens with comment lines.
+        if (line.length() == 0 || line.charAt(0) == '#')
+          continue;
+        int sep = line.indexOf(' ');
+        if (sep > 0)
+          syllables.add(line.substring(0, sep));
+      }
+    }
+    finally
+    {
+      in.close();
+    }
+    assertTrue("table read as empty", syllables.size() > 300);
+    for (String first : syllables)
+      for (String second : syllables)
+        assertFalse("did not parse: " + first + "+" + second,
+            typed(first + second).syllables().isEmpty());
   }
 
   @Test
