@@ -47,6 +47,7 @@
   <string name="dict_name_kk">Қазақ Тілі</string>
   <string name="dict_name_km">ខ្មែរ</string>
   <string name="dict_name_kn">ಕನ್ನಡ</string>
+  <string name="dict_name_ko">한국어</string>
   <string name="dict_name_ks">کٲشُر</string>
   <string name="dict_name_la">Latina</string>
   <string name="dict_name_lb">Lëtzebuergesch</string>
@@ -136,6 +137,7 @@
     <item>kk</item>
     <item>km</item>
     <item>kn</item>
+    <item>ko</item>
     <item>ks</item>
     <item>la</item>
     <item>lb</item>
@@ -226,6 +228,7 @@
     <item>@string/dict_name_kk</item>
     <item>@string/dict_name_km</item>
     <item>@string/dict_name_kn</item>
+    <item>@string/dict_name_ko</item>
     <item>@string/dict_name_ks</item>
     <item>@string/dict_name_la</item>
     <item>@string/dict_name_lb</item>
@@ -316,6 +319,7 @@
     <item>6748356</item>
     <item>263410</item>
     <item>279787</item>
+    <item>221823</item>
     <item>40217</item>
     <item>554917</item>
     <item>699647</item>
