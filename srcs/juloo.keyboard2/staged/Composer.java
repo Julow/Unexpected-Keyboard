@@ -23,9 +23,28 @@ import java.util.List;
     be tested without a device. */
 public interface Composer
 {
-  /** The number of candidates that the candidates view can show at once.
-      Compositions should not offer more candidates than this. */
-  public static final int MAX_CANDIDATES = 3;
+  /** One text that can replace the whole composition, with an optional short
+      string that the keyboard shows above it. */
+  public static final class Candidate
+  {
+    /** The text that replaces the composition. */
+    public final String text;
+    /** A short string shown above [text] by the keyboard, or [null]. This is
+        the tone of a Chinese syllable, the reading of a Japanese word, etc. */
+    public final String annotation;
+
+    public Candidate(String text, String annotation)
+    {
+      this.text = text;
+      this.annotation = annotation;
+    }
+
+    /** A candidate that has no annotation. */
+    public Candidate(String text)
+    {
+      this(text, null);
+    }
+  }
 
   /** A key that writes [s] was pressed. Return [true] when the key was
       consumed by the composition, in which case the caller sends
@@ -43,14 +62,15 @@ public interface Composer
   public String text();
 
   /** Candidates that can replace the whole composition, the best one first.
-  /** Candidates that can replace the whole composition, the best one first.
-      Empty when the composition does not have candidates, which is the case
-      of scripts that are typed character by character.
+      The list is not bounded: the candidates view shows as many of them as it
+      can and scrolls through the rest. Empty when the composition does not
+      have candidates, which is the case of scripts that are typed character by
+      character.
 
       An empty list is meaningful rather than a failure: the candidates view
       then shows the word-level suggestions of the dictionary, and a composer
       must not claim that view unless it has candidates for it. */
-  public List<String> candidates();
+  public List<Candidate> candidates();
 
   /** Forget the composition without committing it. */
   public void reset();
@@ -62,7 +82,7 @@ public interface Composer
     public boolean type(String s) { return false; }
     public boolean backspace() { return false; }
     public String text() { return ""; }
-    public List<String> candidates() { return Collections.emptyList(); }
+    public List<Candidate> candidates() { return Collections.emptyList(); }
     public void reset() {}
   };
 }

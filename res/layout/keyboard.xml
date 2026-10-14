@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:hardwareAccelerated="false" android:orientation="vertical" android:background="?attr/colorKeyboard">
   <juloo.keyboard2.suggestions.CandidatesView android:id="@+id/candidates_view" style="@style/candidates_view">
-    <TextView android:id="@+id/candidates_emoji" style="@style/candidates_emoji"/>
-    <TextView android:id="@+id/candidates_left" style="@style/candidates_item"/>
-    <TextView android:id="@+id/candidates_middle" style="@style/candidates_item"/>
-    <TextView android:id="@+id/candidates_right" style="@style/candidates_item"/>
+    <juloo.keyboard2.suggestions.CandidatesScrollView android:id="@+id/candidates_scroll" style="@style/candidates_scroll">
+      <LinearLayout android:id="@+id/candidates_row" style="@style/candidates_row"/>
+    </juloo.keyboard2.suggestions.CandidatesScrollView>
     <TextView android:id="@+id/candidates_lang_name" style="@style/candidates_lang_name"/>
     <Button android:id="@+id/dictionary_switch" style="@style/change_dictionary"/>
   </juloo.keyboard2.suggestions.CandidatesView>

@@ -570,12 +570,19 @@ public class Keyboard2 extends InputMethodService
     {
       switch (q)
       {
-        case Complete_first: return _suggestions.suggestions[0];
-        case Complete_second: return _suggestions.suggestions[1];
-        case Complete_third: return _suggestions.suggestions[2];
+        case Complete_first: return candidate_text(0);
+        case Complete_second: return candidate_text(1);
+        case Complete_third: return candidate_text(2);
         case Complete_emoji: return _suggestions.emoji_suggestion;
       }
       return "";
+    }
+
+    /** The text of the [i]th candidate, or [null] when there are less. */
+    String candidate_text(int i)
+    {
+      return (i < _suggestions.candidates.size()) ?
+        _suggestions.candidates.get(i).text : null;
     }
 
     public void on_change_dictionary(String dict_name)

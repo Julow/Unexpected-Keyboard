@@ -1,12 +1,14 @@
 package juloo.keyboard2.suggestions;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.ComposeKey;
 import juloo.keyboard2.ComposeKeyData;
+import juloo.keyboard2.staged.Composer;
 
 /** Keep track of the word being typed and provide suggestions for
     [CandidatesView]. */
@@ -16,13 +18,11 @@ public final class Suggestions
   Config _config;
   boolean _enabled;
 
-  /** Current suggestions. The best suggestion is at index [0]. */
-  public String[] suggestions = new String[MAX_COUNT];
-  /** Number of suggestions at the beginning of the [suggestions] array that
-      are not [null]. */
-  public int count = 0;
+  /** Current candidates. The best one is at index [0]. Composition candidates
+      are not bounded, this can be longer than [MAX_COUNT]. */
+  public List<Composer.Candidate> candidates = Collections.emptyList();
   public String emoji_suggestion = null;
-  /** Number of suggestions in [suggestions]. */
+  /** Number of suggestions the dictionary offers. */
   public static final int MAX_COUNT = 3;
 
   public Suggestions(Callback c, Config conf)
@@ -50,22 +50,17 @@ public final class Suggestions
 
   void clear()
   {
-    count = 0;
-    for (int i = 0; i < MAX_COUNT; i++)
-      suggestions[i] = null;
+    candidates = Collections.emptyList();
     emoji_suggestion = null;
   }
 
   /** Show the candidates of the composing input method instead of the
       dictionary suggestions. The candidates replace the whole composition,
       which is why they are not capitalized like word suggestions are. */
-  public void composition_candidates(List<String> candidates)
+  public void composition_candidates(List<Composer.Candidate> candidates)
   {
-    clear();
-    int n = Math.min(candidates.size(), MAX_COUNT);
-    for (int i = 0; i < n; i++)
-      suggestions[i] = candidates.get(i);
-    count = n;
+    this.candidates = candidates;
+    emoji_suggestion = null;
     _callback.set_suggestions(this);
   }
 
@@ -75,31 +70,37 @@ public final class Suggestions
     boolean first_char_upper = Character.isUpperCase(word.charAt(0));
     word = apply_substitutions(word);
     Cdict.Result r = dict.find(word);
-    int i = 0;
+    List<Composer.Candidate> out =
+      new ArrayList<Composer.Candidate>(MAX_COUNT);
     if (r.found)
-      suggestions[i++] = dict.word(r.index);
+      out.add(new Composer.Candidate(dict.word(r.index)));
     int[] suffixes = dict.suffixes(r, MAX_COUNT);
     // Disable distance search for small words
-    int[] dist = (word.length() < 3 || i + 1 >= MAX_COUNT) ? NO_RESULTS :
+    int[] dist = (word.length() < 3 || out.size() + 1 >= MAX_COUNT) ? NO_RESULTS :
       dict.distance(word, 1, MAX_COUNT);
-    for (int j = 0; j < MAX_COUNT && i < MAX_COUNT; j++)
+    for (int j = 0; j < MAX_COUNT && out.size() < MAX_COUNT; j++)
     {
       if (suffixes.length > j)
-        suggestions[i++] = dict.word(suffixes[j]);
-      if (dist.length > j && i < MAX_COUNT)
-        suggestions[i++] = dict.word(dist[j]);
+        out.add(new Composer.Candidate(dict.word(suffixes[j])));
+      if (dist.length > j && out.size() < MAX_COUNT)
+        out.add(new Composer.Candidate(dict.word(dist[j])));
     }
     if (first_char_upper)
-      capitalize_results(suggestions, i);
+      capitalize_results(out);
+    candidates = out;
     emoji_suggestion = query_emoji(word); // word with substitutions applied
-    count = i;
-    return i;
+    return out.size();
   }
 
-  static void capitalize_results(String[] s, int count)
+  static void capitalize_results(List<Composer.Candidate> s)
   {
-    for (int i = 0; i < count; i++)
-      s[i] = s[i].substring(0, 1).toUpperCase() + s[i].substring(1);
+    for (int i = 0; i < s.size(); i++)
+    {
+      Composer.Candidate c = s.get(i);
+      s.set(i, new Composer.Candidate(
+            c.text.substring(0, 1).toUpperCase() + c.text.substring(1),
+            c.annotation));
+    }
   }
 
   String query_emoji(String word)

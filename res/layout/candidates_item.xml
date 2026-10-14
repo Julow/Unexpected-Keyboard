@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/candidates_item"
+    android:orientation="vertical">
+  <TextView android:id="@+id/candidate_annotation" style="@style/candidates_annotation"/>
+  <TextView android:id="@+id/candidate_text" style="@style/candidates_text"/>
+</LinearLayout>

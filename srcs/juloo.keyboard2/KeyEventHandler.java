@@ -117,7 +117,8 @@ public final class KeyEventHandler
     if (text.length() == 0)
       return;
     _composer.reset();
-    _suggestions.composition_candidates(Collections.<String>emptyList());
+    _suggestions.composition_candidates(
+        Collections.<Composer.Candidate>emptyList());
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
@@ -225,7 +226,8 @@ public final class KeyEventHandler
     {
       InputConnection conn = _recv.getCurrentInputConnection();
       _composer.reset();
-      _suggestions.composition_candidates(Collections.<String>emptyList());
+      _suggestions.composition_candidates(
+          Collections.<Composer.Candidate>emptyList());
       last_replaced_word = null;
       last_replacement_word_len = 0;
       if (conn != null)
@@ -662,18 +664,18 @@ public final class KeyEventHandler
     /* The space bar enters the best candidate of a composition. */
     if (has_composition())
     {
-      List<String> candidates = _composer.candidates();
+      List<Composer.Candidate> candidates = _composer.candidates();
       if (candidates.size() > 0)
       {
-        suggestion_entered(candidates.get(0));
+        suggestion_entered(candidates.get(0).text);
         return;
       }
       finish_composition();
     }
-    if (_space_bar_auto_complete && _suggestions.count > 0
+    if (_space_bar_auto_complete && _suggestions.candidates.size() > 0
         && !_typedword.is_selection_not_empty()
         && _typedword.cursor_relative() == 0)
-      suggestion_entered(_suggestions.suggestions[0] + " ");
+      suggestion_entered(_suggestions.candidates.get(0).text + " ");
     else
       send_text(" ");
   }

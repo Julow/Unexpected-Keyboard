@@ -5,12 +5,14 @@ import android.os.Build.VERSION;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import juloo.keyboard2.Config;
@@ -18,20 +20,24 @@ import juloo.keyboard2.KeyValue;
 import juloo.keyboard2.Pointers;
 import juloo.keyboard2.R;
 import juloo.keyboard2.dict.SupportedDictionaries;
+import juloo.keyboard2.staged.Composer;
 
 public class CandidatesView extends LinearLayout
+  implements CandidatesScrollView.OnScroll
 {
-  static final int NUM_CANDIDATES = 4;
+  /** Number of cells added at a time. The next ones are added when the row is
+      scrolled near its end, so that a long list of candidates is shown without
+      creating every view. */
+  static final int CELLS_PER_PAGE = 4;
 
-  /** Candidates currently visible. Entries can be [null] when there are less
-      than [NUM_CANDIDATES] suggestions.
-      - Entries at indexes [0] to [2] are word suggestions.
-      - Entry at index [3] is the emoji suggestion. */
-  String[] _items = new String[NUM_CANDIDATES];
+  /** The candidates to show. The emoji suggestion, when there is one, is the
+      last entry and has no annotation. */
+  List<Composer.Candidate> _candidates = Collections.emptyList();
+  /** Number of entries of [_candidates] that have a cell. */
+  int _shown = 0;
 
-  /** Text views showing the candidates in [_items]. Text views visibility is
-      set to [GONE] when there are less than [NUM_CANDIDATES] suggestions. */
-  TextView[] _item_views = new TextView[NUM_CANDIDATES];
+  CandidatesScrollView _scroll;
+  LinearLayout _row;
 
   /** Message when no dictionary is installed. Visible when no candidates are
       shown. Might be [null]. */
@@ -42,6 +48,11 @@ public class CandidatesView extends LinearLayout
 
   TextView _lang_name_view;
 
+  /** Label size of a candidate and of its annotation, or 0 before
+      [set_sizes]. */
+  float _text_size = 0;
+  float _annotation_size = 0;
+
   public CandidatesView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
@@ -51,49 +62,81 @@ public class CandidatesView extends LinearLayout
   protected void onFinishInflate()
   {
     super.onFinishInflate();
-    setup_item_view(0, R.id.candidates_middle);
-    setup_item_view(1, R.id.candidates_right);
-    setup_item_view(2, R.id.candidates_left);
-    setup_item_view(3, R.id.candidates_emoji);
+    _scroll = (CandidatesScrollView)findViewById(R.id.candidates_scroll);
+    _row = (LinearLayout)findViewById(R.id.candidates_row);
+    _scroll.set_on_scroll(this);
     setup_dictionary_switch_button();
     _lang_name_view = (TextView)findViewById(R.id.candidates_lang_name);
   }
 
   public void set_candidates(Suggestions s)
   {
-    int s_count = s.count;
-    for (int i = 0; i < Suggestions.MAX_COUNT; i++)
-      _items[i] = (i < s_count) ? s.suggestions[i] : null;
-    _items[3] = s.emoji_suggestion;
+    List<Composer.Candidate> cs = new ArrayList<Composer.Candidate>();
+    cs.addAll(s.candidates);
+    if (s.emoji_suggestion != null)
+      cs.add(new Composer.Candidate(s.emoji_suggestion));
+    _candidates = cs;
+    _row.removeAllViews();
+    _shown = 0;
+    add_cells(CELLS_PER_PAGE);
+    _scroll.scrollTo(0, 0);
     // Hide the status message when showing candidates.
-    if (s_count != 0 && _status_no_dict != null)
+    if (cs.size() != 0 && _status_no_dict != null)
       _status_no_dict.setVisibility(View.GONE);
-    for (int i = 0; i < _item_views.length; i++)
-    {
-      TextView v = _item_views[i];
-      if (_items[i] != null)
-      {
-        v.setText(_items[i]);
-        v.setVisibility(View.VISIBLE);
-      }
-      else
-      {
-        v.setVisibility(View.GONE);
-      }
-    }
     int dict_vis =
-      (should_show_dictionary_switch && s.count == 0) ? View.VISIBLE : View.GONE;
+      (should_show_dictionary_switch && cs.size() == 0) ? View.VISIBLE : View.GONE;
     _dictionary_switch_button.setVisibility(dict_vis);
     _lang_name_view.setVisibility(dict_vis);
   }
 
+  /** Add up to [count] more candidate cells. */
+  void add_cells(int count)
+  {
+    int end = Math.min(_shown + count, _candidates.size());
+    if (end <= _shown)
+      return;
+    LayoutInflater inflater = LayoutInflater.from(getContext());
+    while (_shown < end)
+    {
+      final Composer.Candidate candidate = _candidates.get(_shown);
+      View cell = inflater.inflate(R.layout.candidates_item, _row, false);
+      TextView text = (TextView)cell.findViewById(R.id.candidate_text);
+      TextView annotation = (TextView)cell.findViewById(R.id.candidate_annotation);
+      text.setText(candidate.text);
+      /* The annotation always keeps its line, even when there is none: the
+         cells are centred on their own height, so a cell that hides the line
+         would draw its text at a different height than its neighbours. */
+      annotation.setText(candidate.annotation);
+      set_text_size(text, _text_size, true);
+      set_text_size(annotation, _annotation_size, false);
+      cell.setOnClickListener(new View.OnClickListener()
+          {
+            @Override
+            public void onClick(View _v)
+            {
+              Config.globalConfig().handler.suggestion_entered(candidate.text);
+            }
+          });
+      _row.addView(cell);
+      _shown++;
+    }
+  }
+
+  /** Called when the row is scrolled: add the next cells near the end. */
+  @Override
+  public void on_scroll(int scrollX, int scrollY)
+  {
+    if (_shown < _candidates.size()
+        && scrollX + _scroll.getWidth() + _scroll.getWidth() / 2
+           >= _row.getWidth())
+      add_cells(CELLS_PER_PAGE);
+  }
+
   void clear_candidates()
   {
-    for (int i = 0; i < _item_views.length; i++)
-    {
-      _items[i] = null;
-      _item_views[i].setVisibility(View.GONE);
-    }
+    _candidates = Collections.emptyList();
+    _shown = 0;
+    _row.removeAllViews();
   }
 
   public void refresh_config(Config config)
@@ -125,17 +168,29 @@ public class CandidatesView extends LinearLayout
     p.height = (int)row_height;
     setLayoutParams(p);
     // Match the size of labels on the keyboard.
-    float text_size = row_height * config.characterSize * config.labelTextSize;
-    for (int i = 0; i < NUM_CANDIDATES; i++)
+    _text_size = row_height * config.characterSize * config.labelTextSize;
+    _annotation_size = _text_size * 0.4f;
+    for (int i = 0; i < _row.getChildCount(); i++)
     {
-      TextView v = _item_views[i];
-      // Set text size and enable auto size if supported.
-      if (VERSION.SDK_INT < 26)
-        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size);
-      else
-        v.setAutoSizeTextTypeUniformWithConfiguration(
-            (int)(text_size / 2.), (int)text_size, 1, TypedValue.COMPLEX_UNIT_PX);
+      View cell = _row.getChildAt(i);
+      set_text_size((TextView)cell.findViewById(R.id.candidate_text),
+          _text_size, true);
+      set_text_size((TextView)cell.findViewById(R.id.candidate_annotation),
+          _annotation_size, false);
     }
+  }
+
+  /** Set the text size of a candidate or of its annotation. Auto sizing is
+      only used for the candidate itself. */
+  void set_text_size(TextView v, float size, boolean autosize)
+  {
+    if (size <= 0)
+      return;
+    if (VERSION.SDK_INT < 26 || !autosize)
+      v.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+    else
+      v.setAutoSizeTextTypeUniformWithConfiguration(
+          (int)(size / 2.), (int)size, 1, TypedValue.COMPLEX_UNIT_PX);
   }
 
   void inflate_status_no_dict(Config config)
@@ -154,23 +209,6 @@ public class CandidatesView extends LinearLayout
             R.string.candidates_status_click_to_install,
             current_locale.getDisplayName()));
     _status_no_dict.setVisibility(View.VISIBLE);
-  }
-
-  private void setup_item_view(final int item_index, int item_id)
-  {
-    TextView v = (TextView)findViewById(item_id);
-    v.setOnClickListener(new View.OnClickListener()
-        {
-          @Override
-          public void onClick(View _v)
-          {
-            String it = _items[item_index];
-            if (it != null)
-              Config.globalConfig().handler.suggestion_entered(it);
-          }
-        });
-    v.setVisibility(View.GONE);
-    _item_views[item_index] = v;
   }
 
   void setup_dictionary_switch_button()
