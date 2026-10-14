@@ -236,7 +236,7 @@ public class KanaTest
   public void text_is_never_null()
   {
     assertEquals("", _kana.text());
-    List<String> c = _kana.candidates();
+    List<Composer.Candidate> c = _kana.candidates();
     assertNotNull(c);
   }
 }

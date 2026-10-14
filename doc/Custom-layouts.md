@@ -43,6 +43,8 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 
   `kana` needs several keys per character: the keyboard keeps the kana that were typed in the composing region of the app and rewrites them as more keys arrive, which is what makes the dakuten (`゛` and `゜`) and the small kana work. The romaji are accepted as well, so a latin layout can be used to type kana.
 
+  The kana typed are converted to kanji: the characters that the reading can be converted to are shown above the keyboard and the space bar enters the best one. The words are read from a dictionary that is installed on demand, like the other dictionaries.
+
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. It defaults to the same as `script`.
 
 * `bottom_row`: Whether or not to show the built-in bottom row. It accepts `true` or `false`, and defaults to `true`. If your custom layout defines the bottom row, then specify `bottom_row="false"` to disable the built-in bottom row.

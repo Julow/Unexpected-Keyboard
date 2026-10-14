@@ -96,9 +96,13 @@ public final class Kana implements Composer
   }
 
   @Override
-  public List<String> candidates()
+  public List<Composer.Candidate> candidates()
   {
-    return Collections.emptyList();
+    /* The kana typed so far are offered as kanji. A pending romaji sequence is
+       not converted: the user is still spelling it. */
+    if (_romaji.length() > 0)
+      return Collections.emptyList();
+    return Kanji.candidates(_kana.toString());
   }
 
   @Override
@@ -211,13 +215,16 @@ public final class Kana implements Composer
       _kana.setCharAt(len - 1, combined);
   }
 
+  /** The kana that a dakuten voices. */
+  private static final String DAKUTEN_BASE =
+    "うかきくけこさしすせそたちつてとはひふへほゝ"
+    + "ワヰヱヲウカキクケコサシスセソタチツテトハヒフヘホヽ";
+  /** The kana that a handakuten turns into a p kana. */
+  private static final String HANDAKUTEN_BASE = "はひふへほハヒフヘホ";
   /** The kana that a dakuten voices, followed by those that a handakuten
       turns into a p kana, and the kana they are turned into. The two strings
       are read in parallel. */
-  private static final String MARK_BASE =
-    "うかきくけこさしすせそたちつてとはひふへほゝ"
-    + "ワヰヱヲウカキクケコサシスセソタチツテトハヒフヘホヽ"
-    + "はひふへほハヒフヘホ";
+  private static final String MARK_BASE = DAKUTEN_BASE + HANDAKUTEN_BASE;
   private static final String MARK_COMBINED =
     "ゔがぎぐげござじずぜぞだぢづでどばびぶべぼゞ"
     + "ヷヸヹヺヴガギグゲゴザジズゼゾダヂヅデドバビブベボヾ"
@@ -225,10 +232,7 @@ public final class Kana implements Composer
 
   /** Index of the first kana that a handakuten applies to in [MARK_BASE]. The
       kana before it are the ones that take the dakuten. */
-  private static final int HANDAKUTEN_START =
-      "うかきくけこさしすせそたちつてとはひふへほゝ"
-      .length()
-      + "ワヰヱヲウカキクケコサシスセソタチツテトハヒフヘホヽ".length();
+  private static final int HANDAKUTEN_START = DAKUTEN_BASE.length();
 
   /** The kana made of [base] and [mark], or [0] when they do not combine. */
   static char combine_mark(char base, char mark)

@@ -9,6 +9,10 @@ diagonal swipes. The "゛" key adds a dakuten to the kana typed before it.
 
 Hold Shift for the katakana.
 
+The kana typed are converted to kanji: the characters that the reading can be
+converted to are shown above the keyboard and the space bar enters the best
+one.
+
 Symbols prefixed with 'loc ' are not visible on the keyboard. They are used to
 specify a place for a key, if it needed to be added to the layout later.
 
