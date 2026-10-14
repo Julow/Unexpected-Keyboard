@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import juloo.keyboard2.staged.Composer;
+import juloo.keyboard2.staged.Pinyin;
+import juloo.keyboard2.staged.Zhuyin;
 import juloo.keyboard2.suggestions.Suggestions;
 
 public final class KeyEventHandler
@@ -84,7 +86,14 @@ public final class KeyEventHandler
       one key at a time do not compose. */
   static Composer composer_of(String script)
   {
-    return Composer.NONE;
+    if (script == null)
+      return Composer.NONE;
+    switch (script)
+    {
+      case "pinyin": return new Pinyin();
+      case "zhuyin": return new Zhuyin();
+      default: return Composer.NONE;
+    }
   }
 
   /** Whether a composition is ongoing. */

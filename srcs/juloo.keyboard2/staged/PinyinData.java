@@ -1847,6 +1847,7 @@ final class PinyinData
   private static final Map<String, String> _syllables = new HashMap<String, String>();
   private static final Map<String, String> _zhuyin = new HashMap<String, String>();
   private static final Map<Character, Character> _variants = new HashMap<Character, Character>();
+  private static final Map<Character, Character> _simplified = new HashMap<Character, Character>();
 
   static
   {
@@ -1856,7 +1857,10 @@ final class PinyinData
       _syllables.put(line.substring(0, sep), line.substring(sep + 1));
     }
     for (String line : VARIANTS.split("\n"))
+    {
       _variants.put(line.charAt(0), line.charAt(1));
+      _simplified.put(line.charAt(1), line.charAt(0));
+    }
     for (String line : ZHUYIN.split("\n"))
     {
       int sep = line.indexOf('\t');
@@ -1878,10 +1882,27 @@ final class PinyinData
     return _zhuyin.get(zhuyin);
   }
 
+  /** Whether [prefix] is the beginning of a complete Zhuyin spelling, so that
+      it is still a valid composition while it is being typed. */
+  static boolean is_spelling_prefix(String prefix)
+  {
+    for (String spelling : _zhuyin.keySet())
+      if (spelling.startsWith(prefix))
+        return true;
+    return false;
+  }
+
   /** The traditional variant of [c], or [c] itself when it has none. */
   static char traditional(char c)
   {
     Character t = _variants.get(c);
     return (t == null) ? c : t.charValue();
+  }
+
+  /** The simplified variant of [c], or [c] itself when it has none. */
+  static char simplified(char c)
+  {
+    Character s = _simplified.get(c);
+    return (s == null) ? c : s.charValue();
   }
 }

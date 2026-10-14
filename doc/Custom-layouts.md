@@ -39,7 +39,9 @@ The `<keyboard>`...`</keyboard>` pair follows the declaration tag and encloses t
 
 * `name`: The name of the keyboard. The name you specify will appear in the Settings menu. If not present, the layout will just appear as “Custom layout”.
 
-* `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `shavian`, and `urdu`. It defaults to `latin`.
+* `script`: The (main) writing system that the keyboard supports. The possible values are `arabic`, `armenian`, `bengali`, `cyrillic`, `devanagari`, `gujarati`, `hangul`, `hebrew`, `latin`, `persian`, `pinyin`, `shavian`, `urdu`, and `zhuyin`. It defaults to `latin`.
+
+  `pinyin` and `zhuyin` need several keys per character: the keyboard keeps the syllables that were typed in the composing region of the app and shows the characters they can be written with above the keyboard. The space bar enters the best one, the other ones are entered from the candidates view. `pinyin` is used with a latin layout, the keys are read as Hanyu Pinyin and the tones are not typed; `zhuyin` is used with a Zhuyin layout, the keys are the bopomofo letters. `pinyin` enters the simplified characters and `zhuyin` the traditional ones, both from the same tables.
 
 * `numpad_script`: The script to use for the numpad. This is useful for scripts where a different, non-ASCII set of numerals is used, like Devanagari and Arabic. It defaults to the same as `script`.
 
