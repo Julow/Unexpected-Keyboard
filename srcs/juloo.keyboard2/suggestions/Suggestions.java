@@ -70,18 +70,49 @@ public final class Suggestions
     boolean first_char_upper = Character.isUpperCase(word.charAt(0));
     word = apply_substitutions(word);
     Cdict.Result r = dict.find(word);
+    int[] suffixes = dict.suffixes(r, MAX_COUNT);
+    /* Chinese and Japanese are written without spaces between the words, and
+       the editor reports every character typed since the last space as a
+       single word. As soon as one word follows another, the run is longer than
+       any word of the dictionary and the lookup finds nothing; the word being
+       completed is the longest tail of the run that the dictionary knows. */
+    boolean shortened = false;
+    if (suffixes.length == 0)
+    {
+      final Cdict queried = dict;
+      String tail = unspaced_tail(word, new Known()
+          {
+            @Override
+            public boolean has_prefix(String prefix)
+            {
+              return queried.suffixes(queried.find(prefix), 1).length > 0;
+            }
+          });
+      if (tail != null)
+      {
+        shortened = true;
+        word = tail;
+        r = dict.find(word);
+        suffixes = dict.suffixes(r, MAX_COUNT);
+      }
+    }
     List<Composer.Candidate> out =
       new ArrayList<Composer.Candidate>(MAX_COUNT);
-    if (r.found)
+    /* The word itself is not worth suggesting when the user has just typed
+       it, which is the case of the tail that was looked up. */
+    if (r.found && !shortened)
       out.add(new Composer.Candidate(dict.word(r.index)));
-    int[] suffixes = dict.suffixes(r, MAX_COUNT);
     // Disable distance search for small words
     int[] dist = (word.length() < 3 || out.size() + 1 >= MAX_COUNT) ? NO_RESULTS :
       dict.distance(word, 1, MAX_COUNT);
     for (int j = 0; j < MAX_COUNT && out.size() < MAX_COUNT; j++)
     {
       if (suffixes.length > j)
-        out.add(new Composer.Candidate(dict.word(suffixes[j])));
+      {
+        String longer = dict.word(suffixes[j]);
+        if (!longer.equals(word))
+          out.add(new Composer.Candidate(longer));
+      }
       if (dist.length > j && out.size() < MAX_COUNT)
         out.add(new Composer.Candidate(dict.word(dist[j])));
     }
@@ -90,6 +121,43 @@ public final class Suggestions
     candidates = out;
     emoji_suggestion = query_emoji(word); // word with substitutions applied
     return out.size();
+  }
+
+  /** Whether the dictionary has a word that starts with a prefix, which is
+      what the suggestion lookup asks of it. Kept apart from cdict so that the
+      shortening of a word written without spaces is testable on a plain
+      JVM. */
+  interface Known
+  {
+    public boolean has_prefix(String prefix);
+  }
+
+  /** The longest tail of [word] that the dictionary has a word for, or [null]
+      when [word] does not end with a script that is written without spaces, or
+      when no tail is known at all.
+
+      The last word of a run is the longest tail that the dictionary knows:
+      中国 in the run 我爱中国. */
+  static String unspaced_tail(String word, Known known)
+  {
+    int start = word.length();
+    while (start > 0 && is_unspaced(word.charAt(start - 1)))
+      start--;
+    for (int i = start; i < word.length(); i++)
+      if (known.has_prefix(word.substring(i)))
+        return word.substring(i);
+    return null;
+  }
+
+  /** Whether [c] belongs to a script that is written without spaces between
+      the words, Chinese and Japanese. Korean is written with spaces and the
+      editor does report its words. */
+  static boolean is_unspaced(char c)
+  {
+    return (c >= 0x3040 && c <= 0x30ff)   // Hiragana and Katakana
+      || (c >= 0x3400 && c <= 0x4dbf)     // CJK Unified Ideographs Extension A
+      || (c >= 0x4e00 && c <= 0x9fff)     // CJK Unified Ideographs
+      || (c >= 0xf900 && c <= 0xfaff);    // CJK Compatibility Ideographs
   }
 
   static void capitalize_results(List<Composer.Candidate> s)
