@@ -8,13 +8,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import juloo.cdict.Cdict;
@@ -161,12 +164,30 @@ public class DictionaryListView extends LinearLayout
   static final String DICT_REPO_URL =
     "https://raw.githubusercontent.com/Julow/Unexpected-Keyboard-dictionaries/refs/heads/main";
 
-  static URL url_of_dictionary(String dict_name)
+  /** Where to find a dictionary that the repository above doesn't have yet.
+      The Japanese dictionary is not published in the repository, it is hosted
+      with the [ja-dict-v1] pre-release on this fork. Remove the entry once
+      `v<format version>/ja.dict` is published in the repository. */
+  static final Map<String, String> FALLBACK_URLS = new HashMap<String, String>();
+  static
+  {
+    FALLBACK_URLS.put("ja",
+        "https://github.com/bqv/Unexpected-Keyboard/releases/download/ja-dict-v1/ja.dict.gz");
+  }
+
+  /** The URLs to try, in order, to download [dict_name]. The dictionary files
+      in the repository are stored gzipped. */
+  static URL[] urls_of_dictionary(String dict_name)
       throws MalformedURLException
   {
     int format_version = Cdict.format_version();
-    return new URL(DICT_REPO_URL + "/v" + format_version + "/" + dict_name
-        + ".dict");
+    List<URL> urls = new ArrayList<URL>();
+    urls.add(new URL(DICT_REPO_URL + "/v" + format_version + "/" + dict_name
+        + ".dict"));
+    String fallback = FALLBACK_URLS.get(dict_name);
+    if (fallback != null)
+      urls.add(new URL(fallback));
+    return urls.toArray(new URL[urls.size()]);
   }
 
   /** Returns [true] on success. */
@@ -174,11 +195,7 @@ public class DictionaryListView extends LinearLayout
   {
     try
     {
-      // Remote files are compressed with gzip at rest. Do not use server side
-      // compression and force decompression.
-      URLConnection con = url_of_dictionary(dict_name).openConnection();
-      con.setRequestProperty("Accept-Encoding", "identity");
-      byte[] data = Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
+      byte[] data = download_dictionary(urls_of_dictionary(dict_name));
       Cdict.of_bytes(data); // Check that the dictionary can load.
       _dictionaries.install(dict_name, data);
       return true;
@@ -188,6 +205,30 @@ public class DictionaryListView extends LinearLayout
       Logs.exn("", e);
       return false;
     }
+  }
+
+  /** Download the first reachable URL in [urls] and return its decompressed
+      content. Remote files are compressed with gzip at rest, do not ask the
+      server for its own compression. Throw the last error if all fail. */
+  static byte[] download_dictionary(URL[] urls) throws IOException
+  {
+    IOException error = null;
+    for (URL url : urls)
+    {
+      try
+      {
+        URLConnection con = url.openConnection();
+        con.setRequestProperty("Accept-Encoding", "identity");
+        return Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
+      }
+      catch (IOException e)
+      {
+        error = e;
+      }
+    }
+    if (error == null)
+      throw new IOException("No URL to download the dictionary from");
+    throw error;
   }
 
   void post_toast(int msg_id)
