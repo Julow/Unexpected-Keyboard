@@ -106,7 +106,11 @@ public final class KeyEventHandler
       conn.finishComposingText();
     else
       conn.setComposingText(text, 1);
-    _suggestions.composition_candidates(_composer.candidates());
+    List<Composer.Candidate> candidates = _composer.candidates();
+    /* Keep the dictionary suggestions when the composer has none: the row
+       belongs to the dictionary then. */
+    if (candidates.size() > 0)
+      _suggestions.composition_candidates(candidates);
   }
 
   /** Commit the composition and forget it, leaving the editor with the
@@ -116,9 +120,13 @@ public final class KeyEventHandler
     String text = _composer.text();
     if (text.length() == 0)
       return;
+    List<Composer.Candidate> candidates = _composer.candidates();
     _composer.reset();
-    _suggestions.composition_candidates(
-        Collections.<Composer.Candidate>emptyList());
+    /* Only give the row back when the composer had taken it: for Hangul it
+       belongs to the dictionary between compositions as well. */
+    if (candidates.size() > 0)
+      _suggestions.composition_candidates(
+          Collections.<Composer.Candidate>emptyList());
     InputConnection conn = _recv.getCurrentInputConnection();
     if (conn == null)
       return;
@@ -251,11 +259,13 @@ public final class KeyEventHandler
   @Override
   public void currently_typed_word(String word)
   {
-    /* While a composition is ongoing, the candidates come from the composer
-       and not from the dictionary. */
-    if (has_composition())
+    /* A composer that offers no candidate, Hangul for instance, leaves the row
+       to the dictionary, so that words are still suggested while the
+       composition is live. */
+    List<Composer.Candidate> candidates = _composer.candidates();
+    if (candidates.size() > 0)
     {
-      _suggestions.composition_candidates(_composer.candidates());
+      _suggestions.composition_candidates(candidates);
       return;
     }
     _suggestions.currently_typed_word(word);
