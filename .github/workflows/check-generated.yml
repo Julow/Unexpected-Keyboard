@@ -47,3 +47,13 @@ jobs:
     - run: python3 gen_method_xml.py > res/xml/method.xml
     - name: "Run 'gradle test' to update the generated files."
       run: git diff --exit-code
+
+  check-pinyin:
+    name: Pinyin data
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - run: python3 srcs/pinyin/compile.py
+    - name: "Run 'python3 srcs/pinyin/compile.py' to update the generated files."
+      run: git diff --exit-code
