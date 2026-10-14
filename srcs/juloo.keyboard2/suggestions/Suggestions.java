@@ -101,7 +101,7 @@ public final class Suggestions
     /* The word itself is not worth suggesting when the user has just typed
        it, which is the case of the tail that was looked up. */
     if (r.found && !shortened)
-      out.add(new Composer.Candidate(dict.word(r.index)));
+      out.add(candidate_for(dict.word(r.index), word));
     // Disable distance search for small words
     int[] dist = (word.length() < 3 || out.size() + 1 >= MAX_COUNT) ? NO_RESULTS :
       dict.distance(word, 1, MAX_COUNT);
@@ -109,18 +109,63 @@ public final class Suggestions
     {
       if (suffixes.length > j)
       {
-        String longer = dict.word(suffixes[j]);
-        if (!longer.equals(word))
-          out.add(new Composer.Candidate(longer));
+        String stored = dict.word(suffixes[j]);
+        if (!word_text(stored).equals(word))
+          out.add(candidate_for(stored, word));
       }
       if (dist.length > j && out.size() < MAX_COUNT)
-        out.add(new Composer.Candidate(dict.word(dist[j])));
+        out.add(candidate_for(dict.word(dist[j]), word));
     }
     if (first_char_upper)
       capitalize_results(out);
     candidates = out;
     emoji_suggestion = query_emoji(word); // word with substitutions applied
     return out.size();
+  }
+
+  /** The text of a word of the dictionary, without the reading that the
+      Chinese dictionary stores after a tab (see srcs/chinese/README.md). */
+  static String word_text(String word)
+  {
+    int tab = word.indexOf('\t');
+    return (tab < 0) ? word : word.substring(0, tab);
+  }
+
+  /** A candidate for a word of the dictionary. The tone drawn above it is the
+      one of the first character it adds after [typed], or of its last syllable
+      when it adds nothing; a word stored without a reading has none. */
+  static Composer.Candidate candidate_for(String word, String typed)
+  {
+    String text = word_text(word);
+    int tab = word.indexOf('\t');
+    if (tab < 0)
+      return new Composer.Candidate(text);
+    String tones = word.substring(tab + 1);
+    int i = 0;
+    while (i < typed.length() && i < text.length()
+        && typed.charAt(i) == text.charAt(i))
+      i++;
+    if (i >= text.length())
+      i = text.length() - 1;
+    String mark = (i < 0 || i >= tones.length()) ? null
+      : tone_mark(tones.charAt(i));
+    return (mark == null) ? new Composer.Candidate(text)
+      : new Composer.Candidate(text, mark);
+  }
+
+  /** The mark of a tone digit, or [null] when it is not one. The first tone
+      has its own mark, which Zhuyin leaves out when typing. */
+  static String tone_mark(char digit)
+  {
+    switch (digit)
+    {
+      case '1': return "\u02c9";
+      case '2': return "\u02ca";
+      case '3': return "\u02c7";
+      case '4': return "\u02cb";
+      case '5': return "\u02d9";
+      default: return null;
+    }
   }
 
   /** Whether the dictionary has a word that starts with a prefix, which is
