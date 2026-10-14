@@ -103,7 +103,7 @@ public final class KeyEventHandler
       return;
     String text = _composer.text();
     if (text.length() == 0)
-      conn.finishComposingText();
+      conn.commitText("", 1);
     else
       conn.setComposingText(text, 1);
     List<Composer.Candidate> candidates = _composer.candidates();
