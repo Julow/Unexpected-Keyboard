@@ -85,6 +85,11 @@ public final class KeyValue implements Comparable<KeyValue>
     SELECTION_CANCEL,
     SPACE_BAR,
     BACKSPACE,
+    // Replace the selected text by a different letter case.
+    UPPERCASE,
+    LOWERCASE,
+    SMALL_CAPS,
+    LETTER_SPACED,
   }
 
   public static enum Placeholder
@@ -754,6 +759,11 @@ public final class KeyValue implements Comparable<KeyValue>
       case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN, 0);
       case "undo": return editingKey(0xE036, Editing.UNDO, 0);
       case "redo": return editingKey(0xE037, Editing.REDO, 0);
+      /* Replace the selected text by a different letter case. */
+      case "uppercase": return editingKey("AA", Editing.UPPERCASE, FLAG_SMALLER_FONT);
+      case "lowercase": return editingKey("aa", Editing.LOWERCASE, FLAG_SMALLER_FONT);
+      case "smallcaps": return editingKey("ᴀᴀ", Editing.SMALL_CAPS, FLAG_KEY_FONT);
+      case "letterspaced": return editingKey("A B", Editing.LETTER_SPACED, FLAG_SMALLER_FONT);
       case "delete_word": return editingKey(0xE01B, Editing.DELETE_WORD, 0);
       case "forward_delete_word": return editingKey(0xE01C, Editing.FORWARD_DELETE_WORD, 0);
       case "cursor_left": return sliderKey(Slider.Cursor_left, 1);

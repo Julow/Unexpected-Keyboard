@@ -94,6 +94,17 @@ Value                 | Meaning
 `delete_word`         | Delete the word to the left of the cursor.
 `forward_delete_word` | Delete the word to the right of the cursor.
 
+The following keys replace the text that is currently selected in the app.
+They do nothing when there is no selection and do not send key events to the
+app.
+
+Value                 | Meaning
+:-------------------- | :------
+`uppercase`           | Replace the selection by its uppercase version.
+`lowercase`           | Replace the selection by its lowercase version.
+`smallcaps`           | Replace the selection by its small capitals version, the same substitutions as `accent_small_caps`.
+`letterspaced`        | Replace the selection by a version where the letters are spaced apart.
+
 The values with `cursor_` are new in v1.31.0. Previous custom layouts specified the slider with `slider="true"`, which should be removed.
 
 ## Whitespace
