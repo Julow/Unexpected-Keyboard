@@ -5,6 +5,8 @@ import android.os.Build.VERSION;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.style.CharacterStyle;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.KeyValue;
+import juloo.keyboard2.KeyboardData;
 import juloo.keyboard2.Pointers;
 import juloo.keyboard2.R;
 import juloo.keyboard2.dict.SupportedDictionaries;
@@ -57,9 +60,6 @@ public class CandidatesView extends LinearLayout
   /** The control that shows and toggles the reading of the candidates. Hidden
       for a language whose candidates carry no reading. */
   TextView _rubytext_toggle;
-  /** The candidate the control samples: the first one that carries a reading,
-      or [null] when there is none. */
-  Composer.Candidate _ruby_sample = null;
 
   /** Label size of a candidate and of its annotation, or 0 before
       [set_sizes]. */
@@ -150,15 +150,6 @@ public class CandidatesView extends LinearLayout
     if (s.emoji_suggestion != null)
       cs.add(new Composer.Candidate(s.emoji_suggestion));
     _candidates = cs;
-    /* The rubytext control samples the first candidate that carries a
-       reading; a language whose candidates have none does not show it. */
-    _ruby_sample = null;
-    for (Composer.Candidate c : cs)
-      if (c.annotation != null)
-      {
-        _ruby_sample = c;
-        break;
-      }
     _row.removeAllViews();
     _shown = 0;
     add_cells(CELLS_PER_PAGE);
@@ -174,25 +165,151 @@ public class CandidatesView extends LinearLayout
     update_rubytext_toggle();
   }
 
-  /** Draw the rubytext control in the state of the preference. Hidden when
-      the language has no candidate that carries a reading. */
+  /** The one character the control shows and the reading that goes above it, in
+      that order, or [null] for a language whose candidates never carry a
+      reading.
+
+      One fixed exemplar per language rather than a candidate of the current
+      row. A sample of the row changes on every keystroke, so the control could
+      never become a symbol the user learns; for Japanese the reading belongs
+      to the word, so a sample drawn from a multi-character candidate pairs a
+      character with a reading it does not have; and sampling also made the
+      control disappear whenever the row happened to hold no reading, which
+      loses the switch mid-typing.
+
+      Japanese draws the character whose reading is the language's own name for
+      a reading written above a character - a true pair, and it says what the
+      control shows. Chinese draws the character for writing, with its rising
+      second tone above it.
+
+      The two are deliberately not the same glyph: no user ever sees both, since
+      the control is per language, so parallelism between them buys nothing and
+      each glyph earns its place on its own grounds.
+
+      The Chinese one was chosen against two criteria, in this order. The control
+      exists to show a reading, so the mark it carries has to be legible at the
+      control's reading size - three quarters of the control's size, which is the
+      annotation size - and the flat first tone is the faintest of the four
+      marks, so a character that takes it demonstrates the worst case rather than
+      the best: that is what ruled out the character for China. And the glyph has
+      to be the same in simplified and traditional, because the build ships
+      zh_CN, zh_SG and zh_TW: that is what ruled out the character for language,
+      which was otherwise the most apt, as it would have needed two glyphs picked
+      by subtype. This one takes the rising tone, which is unmistakable, and is
+      script-invariant. Anything else, Korean included, has no reading to show. */
+  static String[] rubytext_exemplar()
+  {
+    switch (current_script())
+    {
+      case "kana":
+        return new String[]{ "\u97f3", "\u304a\u3093" }; /* sound, "on" */
+      case "pinyin":
+      case "zhuyin":
+        return new String[]{ "\u6587", "\u02ca" }; /* writing, rising tone */
+      default:
+        return null;
+    }
+  }
+
+  /** The script the layout in front of the user declares - "kana", "pinyin",
+      "zhuyin", "hangul" - or "" when there is none.
+
+      Not the app's language. [DeviceLocales.OFFERED] is a table the build pins,
+      so the language reads "ja_JP" on every layout; a script comes from the
+      layout file, and changing layout changes it. Nothing pins a layout file.
+
+      Read from the layout, not from the composer, so an idle row - no
+      composition, only dictionary suggestions - still knows what it is showing
+      and keeps the control. */
+  static String current_script()
+  {
+    Config config = Config.globalConfig();
+    int i = config.get_current_layout();
+    if (i < 0 || i >= config.layouts.size())
+      return "";
+    KeyboardData layout = config.layouts.get(i);
+    return layout == null ? "" : layout.script;
+  }
+
+  /** Whether the layout in front of the user annotates with a tone mark. An
+      empty script - the system layout - is not a language that annotates. */
+  static boolean is_chinese()
+  {
+    String script = current_script();
+    return script.equals("pinyin") || script.equals("zhuyin");
+  }
+
+  /** How much larger than its line a Chinese tone mark is drawn. The marks are
+      spacing modifier letters - U+02C9, U+02CA, U+02C7 and U+02CB - whose ink
+      is a thin stroke high in the line: measured in the pinyin row it was 5px
+      against a main text of 30px; the Chinese session measured that the hinted ink plateaus below 2x. 2.2x puts it at 10px, measured on the device. */
+  static final float MARK_SCALE = 2.2f;
+  /* Measured, not extrapolated: the mark is a thin stroke and hinting quantises
+     its growth away. U+02CA in this box: 13.6px em -> 2px ink, 23.1px (1.7x) -> 4px,
+     27.2px (2.0x) -> 4px, 40px -> 6px. Bold thickens the stroke without raising the
+     ink. 2.2x is the chosen scale; 2.0x is the floor. The rows still show what the
+     capture measures. */
+
+  /** Draws a mark larger and in a heavier stroke than its line is laid out
+      with. Deliberately a drawing-only span rather than a relative size span:
+      a span that changed the metrics would make every cell taller and move the
+      text inside it, which is the alignment trap of 44c396a. */
+  static class HeavierMark extends CharacterStyle
+  {
+    float _scale;
+
+    HeavierMark(float scale)
+    {
+      _scale = scale;
+    }
+
+    @Override
+    public void updateDrawState(TextPaint tp)
+    {
+      tp.setTextSize(tp.getTextSize() * _scale);
+      tp.setFakeBoldText(true);
+    }
+  }
+
+  /** The annotation as it is drawn. Japanese readings are kana and are read
+      well enough at the annotation size; Chinese tone marks are not, so they
+      are drawn bigger and bolder. */
+  CharSequence shown_annotation(String annotation)
+  {
+    if (annotation == null || !is_chinese())
+      return annotation;
+    SpannableString s = new SpannableString(annotation);
+    s.setSpan(new HeavierMark(MARK_SCALE), 0, annotation.length(),
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    return s;
+  }
+
+  /** Draw the rubytext control in the state of the preference. Shown for a
+      language that annotates its candidates, from the moment the keyboard is
+      up rather than as the candidates come and go. */
   void update_rubytext_toggle()
   {
-    if (_ruby_sample == null)
+    String[] exemplar = rubytext_exemplar();
+    if (exemplar == null)
     {
       _rubytext_toggle.setVisibility(View.GONE);
       return;
     }
     _rubytext_toggle.setVisibility(View.VISIBLE);
-    String text = _ruby_sample.text;
-    String reading = _ruby_sample.annotation;
-    if (Config.globalConfig().annotations() && reading != null
-        && reading.length() > 0)
+    String text = exemplar[0];
+    String reading = exemplar[1];
+    if (Config.globalConfig().annotations() && reading.length() > 0)
     {
-      /* One string, the character followed by its reading, smaller. */
-      SpannableString s = new SpannableString(text + reading);
-      s.setSpan(new RelativeSizeSpan(0.5f), text.length(),
-          text.length() + reading.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+      /* One string, the reading small above the character. A Chinese tone mark
+         gets a little more room than a kana reading would, and is drawn in a
+         heavier stroke: it is a single thin letter, not a word. */
+      boolean chinese = is_chinese();
+      SpannableString s = new SpannableString(reading + "\n" + text);
+      s.setSpan(new RelativeSizeSpan(chinese ? 0.6f : 0.5f), 0,
+          reading.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+      if (chinese)
+        s.setSpan(new HeavierMark(chinese ? MARK_SCALE : 1f), 0, reading.length(),
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
       _rubytext_toggle.setText(s);
     }
     else
@@ -242,7 +359,18 @@ public class CandidatesView extends LinearLayout
       /* The annotation always keeps its line, even when there is none: the
          cells are centred on their own height, so a cell that hides the line
          would draw its text at a different height than its neighbours. */
-      annotation.setText(candidate.annotation);
+      annotation.setText(shown_annotation(candidate.annotation));
+        /* The Chinese mark is a spacing modifier letter: its ink sits at the top
+           of the line box, so the descent is wasted space that grows the cell past
+           the bar and clips the text. Trim it for Chinese only, and put the trim
+           back on every bind because the cells are recycled - kana fills its line
+           and would be clipped by the same trim. */
+        boolean chinese_mark = is_chinese();
+        annotation.setIncludeFontPadding(!chinese_mark);
+        android.view.ViewGroup.LayoutParams alp = annotation.getLayoutParams();
+        alp.height = chinese_mark ? (int)(_annotation_size * 1.5f)
+                                  : android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+        annotation.setLayoutParams(alp);
       annotation.setVisibility(annotation_visibility());
       set_text_size(text, _text_size, true);
       set_text_size(annotation, _annotation_size, false);
@@ -275,11 +403,12 @@ public class CandidatesView extends LinearLayout
   void clear_candidates()
   {
     _candidates = Collections.emptyList();
-    _ruby_sample = null;
     _shown = 0;
     _row.removeAllViews();
+    /* The control follows the language, not the row: an empty row does not
+       take the switch away while the keyboard is up. */
     if (_rubytext_toggle != null)
-      _rubytext_toggle.setVisibility(View.GONE);
+      update_rubytext_toggle();
   }
 
   public void refresh_config(Config config)
@@ -314,7 +443,10 @@ public class CandidatesView extends LinearLayout
     _text_size = row_height * config.characterSize * config.labelTextSize;
     _annotation_size = _text_size * 0.4f;
     if (_rubytext_toggle != null)
-      set_text_size(_rubytext_toggle, _annotation_size * 1.5f, false);
+      /* The control is one key wide and shows two lines, the reading above the
+         character: a character at the full label size does not leave room for
+         the reading line inside the control's box. */
+      set_text_size(_rubytext_toggle, _annotation_size, false);
     for (int i = 0; i < _row.getChildCount(); i++)
     {
       View cell = _row.getChildAt(i);
