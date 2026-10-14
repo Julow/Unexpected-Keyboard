@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file defines the Pinyin (Chinese) layout.
+
+The keys are a US QWERTY keyboard for writing Hanyu Pinyin: the letters are
+turned into Chinese characters by the Pinyin input method and the candidates
+are shown above the keyboard. Press the space bar to enter the best candidate.
+
+Hold Shift to type Chinese punctuation. English text cannot be typed in this
+layout, add another layout to the enabled layouts to type it.
+
+Symbols prefixed with 'loc ' are not visible on the keyboard. They are used to
+specify a place for a key, if it needed to be added to the layout later.
+(for example, by the "Add keys to keyboard" option)
+
+Useful links.
+
+- Web based editor that will simplify editing of this file.
+  https://unexpected-keyboard-layout-editor.lixquid.com
+
+- Full guide on how to edit the layout.
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/doc/Custom-layouts.md
+
+- Current definition of the bottom row (for easy importing).
+  https://github.com/Julow/Unexpected-Keyboard/tree/master/res/xml/bottom_row.xml
+
+-->
+<keyboard name="QWERTY (Pinyin)" script="pinyin">
+  <modmap>
+    <shift a="," b="，"/>
+    <shift a="." b="。"/>
+    <shift a="\?" b="？"/>
+    <shift a="!" b="！"/>
+    <shift a=":" b="："/>
+    <shift a=";" b="；"/>
+    <shift a="(" b="（"/>
+    <shift a=")" b="）"/>
+    <shift a="&lt;" b="《"/>
+    <shift a="&gt;" b="》"/>
+    <shift a="'" b="’"/>
+    <shift a="&quot;" b="”"/>
+  </modmap>
+  <row>
+    <key c="q" ne="1" se="loc esc"/>
+    <key c="w" nw="~" ne="2" sw="\@"/>
+    <key c="e" nw="!" ne="3" sw="\#" se="loc €"/>
+    <key c="r" ne="4" sw="$"/>
+    <key c="t" ne="5" sw="%"/>
+    <key c="y" ne="6" sw="^"/>
+    <key c="u" ne="7" sw="&amp;"/>
+    <key c="i" ne="8" sw="*"/>
+    <key c="o" ne="9" sw="(" se=")"/>
+    <key c="p" ne="0"/>
+  </row>
+  <row>
+    <key shift="0.5" c="a" nw="loc tab" ne="`"/>
+    <key c="s" ne="loc ，" sw="loc 。"/>
+    <key c="d"/>
+    <key c="f"/>
+    <key c="g" ne="-" sw="_"/>
+    <key c="h" ne="=" sw="+"/>
+    <key c="j" se="}" sw="{"/>
+    <key c="k" sw="[" se="]"/>
+    <key c="l" ne="|" sw="\\"/>
+  </row>
+  <row>
+    <key width="1.5" role="action" c="shift" ne="loc capslock"/>
+    <key c="z"/>
+    <key c="x" ne="loc ？"/>
+    <key c="c" ne="&lt;" sw="."/>
+    <key c="v" ne="&gt;" sw=","/>
+    <key c="b" ne="\?" sw="/"/>
+    <key c="n" ne=":" sw=";"/>
+    <key c="m" ne="&quot;" sw="'"/>
+    <key width="1.5" role="action" c="backspace" ne="delete"/>
+  </row>
+</keyboard>

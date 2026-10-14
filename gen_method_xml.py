@@ -93,7 +93,10 @@ LOCALES = [
   loc("ur", "persian", "arab_pc_ir"),
   loc("uz_UZ", "latin", "latn_qwerty_uz", extra_keys="ʻ|ʼ"),
   loc("vi_VN", "latin", "latn_qwerty_vi"),
-  loc("yo_NG", "latin", "latn_qwerty_us", extra_keys="₦|ẹ|ọ|ṣ")
+  loc("yo_NG", "latin", "latn_qwerty_us", extra_keys="₦|ẹ|ọ|ṣ"),
+  loc("zh_CN", "pinyin", "latn_pinyin_zh"),
+  loc("zh_SG", "pinyin", "latn_pinyin_zh"),
+  loc("zh_TW", "zhuyin", "zhuyin_standard_tw")
 ]
 
 # The locale that is at the beginning of the list.
