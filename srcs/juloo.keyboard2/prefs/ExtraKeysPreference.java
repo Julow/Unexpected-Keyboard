@@ -191,6 +191,7 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "lowercase": id = R.string.key_descr_lowercase; break;
       case "smallcaps": id = R.string.key_descr_smallcaps; break;
       case "letterspaced": id = R.string.key_descr_letterspaced; break;
+      case "accent_small_caps": id = R.string.key_descr_accent_small_caps; break;
       case "delete_word":
         id = R.string.key_descr_delete_word;
         additional_info = format_key_combination_gesture(res, "backspace");
@@ -232,7 +233,6 @@ public class ExtraKeysPreference extends PreferenceCategory
       case "accent_hook_above":
       case "accent_horn":
       case "accent_double_grave":
-      case "accent_small_caps":
         id = R.string.key_descr_dead_key;
         break;
 

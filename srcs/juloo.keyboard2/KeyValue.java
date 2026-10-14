@@ -133,7 +133,10 @@ public final class KeyValue implements Comparable<KeyValue>
   public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5);
   // Dimmer symbol
   public static final int FLAG_SECONDARY = (1 << FLAGS_OFFSET << 6);
-  // Free: (1 << FLAGS_OFFSET << 7)
+  // Key stays activated until pressed again. Unlike [FLAG_LATCH], a modifier
+  // with this flag is locked when latched and is not cleared by typing other
+  // keys.
+  public static final int FLAG_STICKY = (1 << FLAGS_OFFSET << 7);
 
   // Ranges for the different components
   private static final int FLAGS_BITS = (0b11111111 << FLAGS_OFFSET); // 8 bits wide
@@ -384,6 +387,13 @@ public final class KeyValue implements Comparable<KeyValue>
         FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
   }
 
+  /** A modifier that stays activated until pressed again. */
+  private static KeyValue sticky_diacritic(String symbol, Modifier m)
+  {
+    KeyValue k = diacritic(symbol, m);
+    return k.withFlags(k.getFlags() | FLAG_STICKY);
+  }
+
   private static KeyValue eventKey(String symbol, Event e, int flags)
   {
     return new KeyValue(symbol, Kind.Event, e.ordinal(), flags | FLAG_SPECIAL | FLAG_SECONDARY);
@@ -587,7 +597,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
       case "accent_double_grave": return diacritic(0xE063, Modifier.DOUBLE_GRAVE);
-      case "accent_small_caps": return diacritic("Aᴀ", Modifier.SMALL_CAPS);
+      case "accent_small_caps": return sticky_diacritic("Aᴀ", Modifier.SMALL_CAPS);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);

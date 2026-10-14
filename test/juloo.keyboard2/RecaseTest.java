@@ -66,6 +66,19 @@ public class RecaseTest
     assertEditing("letterspaced", KeyValue.Editing.LETTER_SPACED);
   }
 
+  /** Small caps stays activated until pressed again. */
+  @Test
+  public void smallCapsIsSticky() throws Exception
+  {
+    KeyValue k = KeyValue.getKeyByName("accent_small_caps");
+    assertTrue(k.hasFlagsAny(KeyValue.FLAG_STICKY));
+    assertTrue(k.hasFlagsAny(KeyValue.FLAG_LATCH));
+    // Other modifiers are not sticky.
+    assertFalse(KeyValue.getKeyByName("accent_aigu")
+        .hasFlagsAny(KeyValue.FLAG_STICKY));
+    assertFalse(KeyValue.SHIFT.hasFlagsAny(KeyValue.FLAG_STICKY));
+  }
+
   void assertEditing(String name, KeyValue.Editing editing)
   {
     KeyValue k = KeyValue.getKeyByName(name);

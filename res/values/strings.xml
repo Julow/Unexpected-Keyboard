@@ -150,6 +150,7 @@
     <string name="key_descr_lowercase">Lowercase the selected text</string>
     <string name="key_descr_smallcaps">Small capitals for the selected text</string>
     <string name="key_descr_letterspaced">Space out the letters of the selected text</string>
+    <string name="key_descr_accent_small_caps">Small capitals, stays on until pressed again</string>
     <string name="key_descr_gesture">Gesture</string>
     <string name="clipboard_history_heading">Recently copied text</string>
     <string name="clipboard_pin_heading">Pinned</string>

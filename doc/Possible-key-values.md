@@ -139,7 +139,7 @@ Value                | Meaning
 `accent_horn`        | Horn accent. `ơ`
 `accent_hook_above`  | Hook accent. `ả`
 `accent_double_grave`  | Double grave accent. `ȁ`
-`accent_small_caps`  | Small capital letters. `ᴀ`
+`accent_small_caps`  | Small capital letters. `ᴀ` This modifier stays activated until it is pressed again.
 `superscript`        | Superscript. `ᵃ`
 `subscript`          | Subscript. `ₐ`
 `ordinal`            | Turns `a` and `o` into `ª` and `º`.
