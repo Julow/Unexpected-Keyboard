@@ -60,9 +60,9 @@ public final class Pinyin implements Composer
   }
 
   @Override
-  public List<String> candidates()
+  public List<Composer.Candidate> candidates()
   {
-    return Syllables.candidates(syllables(), false);
+    return Syllables.candidates(syllables(), null, false);
   }
 
   @Override

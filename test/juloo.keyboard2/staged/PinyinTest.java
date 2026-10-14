@@ -3,6 +3,7 @@ package juloo.keyboard2.staged;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 
@@ -17,9 +18,40 @@ public class PinyinTest
     return pinyin;
   }
 
-  static List<String> candidates(String keys)
+  static List<Composer.Candidate> candidates(String keys)
   {
     return typed(keys).candidates();
+  }
+
+  /** The text of every candidate. */
+  static List<String> texts(List<Composer.Candidate> candidates)
+  {
+    List<String> out = new ArrayList<String>();
+    for (Composer.Candidate c : candidates)
+      out.add(c.text);
+    return out;
+  }
+
+  static List<String> texts(String keys)
+  {
+    return texts(candidates(keys));
+  }
+
+  /** The annotation of the candidate whose text is [text], or [null]. */
+  static String annotation_of(List<Composer.Candidate> candidates, String text)
+  {
+    for (Composer.Candidate c : candidates)
+      if (c.text.equals(text))
+        return c.annotation;
+    return null;
+  }
+
+  @Test
+  public void candidates_carry_their_tone()
+  {
+    List<Composer.Candidate> ying = candidates("ying");
+    assertEquals("ˊ", annotation_of(ying, "营")); // yíng
+    assertEquals("ˇ", annotation_of(ying, "影")); // yǐng
   }
 
   @Test
@@ -27,7 +59,7 @@ public class PinyinTest
   {
     Pinyin pinyin = typed("ni");
     assertEquals("ni", pinyin.text());
-    assertEquals("你", candidates("ni").get(0));
+    assertEquals("你", texts("ni").get(0));
   }
 
   @Test
@@ -46,9 +78,9 @@ public class PinyinTest
   @Test
   public void candidates_of_several_syllables()
   {
-    assertEquals("你好", candidates("nihao").get(0));
-    assertEquals("中国", candidates("zhongguo").get(0));
-    assertEquals("你号", candidates("nihao").get(1));
+    assertEquals("你好", texts("nihao").get(0));
+    assertEquals("中国", texts("zhongguo").get(0));
+    assertEquals("你号", texts("nihao").get(1));
   }
 
   @Test
@@ -65,16 +97,16 @@ public class PinyinTest
   @Test
   public void umlaut_is_typed_with_v()
   {
-    assertEquals("女", candidates("nv").get(0));
-    assertTrue(candidates("lv").contains("绿"));
+    assertEquals("女", texts("nv").get(0));
+    assertTrue(texts("lv").contains("绿"));
     // After j, q and x the umlaut is written with a plain u.
-    assertEquals("去", candidates("qu").get(0));
+    assertEquals("去", texts("qu").get(0));
   }
 
   @Test
   public void both_scripts_are_offered_with_simplified_first()
   {
-    List<String> ying = candidates("ying");
+    List<String> ying = texts("ying");
     // The list is not capped: 英 is reachable, it is not among the three most
     // frequent characters of "ying".
     assertTrue(ying.size() > 3);
@@ -91,7 +123,7 @@ public class PinyinTest
     Pinyin pinyin = typed("nih");
     assertTrue(pinyin.backspace());
     assertEquals("ni", pinyin.text());
-    assertEquals("你", pinyin.candidates().get(0));
+    assertEquals("你", pinyin.candidates().get(0).text);
     pinyin.reset();
     assertEquals("", pinyin.text());
     assertFalse(pinyin.backspace());
@@ -111,7 +143,7 @@ public class PinyinTest
   public void upper_case_letters_are_accepted()
   {
     // Auto capitalisation must not break pinyin.
-    assertEquals("你", candidates("Ni").get(0));
+    assertEquals("你", texts("Ni").get(0));
     assertEquals("nihao", typed("Nihao").text());
   }
 }

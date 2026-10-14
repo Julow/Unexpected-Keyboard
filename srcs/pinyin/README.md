@@ -7,9 +7,11 @@ These tables hold the characters that the Pinyin and Zhuyin input methods offer
 
 - `syllables.txt` — one line per toneless Hanyu Pinyin syllable: the syllable, a
   space, then the characters written with that syllable, most frequent first (at
-  most 16 per syllable). Characters that are the traditional form of another
-  character come after it when both have the same frequency, so that the table
-  reads naturally for Simplified Chinese.
+  most 16 per syllable), a space, then one tone digit per character, in the same
+  order (1 to 4, and 5 for the neutral tone). Characters that are the traditional
+  form of another character come after it when both have the same frequency, so
+  that the table reads naturally for Simplified Chinese. A character that has
+  several readings in the same syllable keeps the tone of its heaviest reading.
 - `variants.txt` — one line per character: a simplified character followed by
   its traditional variant. The Zhuyin input method uses it to offer the
   traditional characters.

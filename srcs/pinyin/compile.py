@@ -114,7 +114,8 @@ import java.util.Map;
 final class PinyinData
 {
   /** One line per syllable: a toneless pinyin syllable, a space, then the
-      characters written with it, most frequent first. */
+      characters written with it, most frequent first, a space, then one tone
+      digit per character (1 to 4, and 5 for the neutral tone). */
   private static final String SYLLABLES =
 %s;
 
@@ -129,6 +130,7 @@ final class PinyinData
 %s;
 
   private static final Map<String, String> _syllables = new HashMap<String, String>();
+  private static final Map<String, String> _tones = new HashMap<String, String>();
   private static final Map<String, String> _zhuyin = new HashMap<String, String>();
   private static final Map<Character, Character> _variants = new HashMap<Character, Character>();
   private static final Map<Character, Character> _simplified = new HashMap<Character, Character>();
@@ -138,7 +140,9 @@ final class PinyinData
     for (String line : SYLLABLES.split("\\n"))
     {
       int sep = line.indexOf(' ');
-      _syllables.put(line.substring(0, sep), line.substring(sep + 1));
+      int tones = line.indexOf(' ', sep + 1);
+      _syllables.put(line.substring(0, sep), line.substring(sep + 1, tones));
+      _tones.put(line.substring(0, sep), line.substring(tones + 1));
     }
     for (String line : VARIANTS.split("\\n"))
     {
@@ -157,6 +161,14 @@ final class PinyinData
   static String chars(String syllable)
   {
     return _syllables.get(syllable);
+  }
+
+  /** The tone of every character that [chars] returns for [syllable], as one
+      digit per character, or [null] when the syllable is unknown. 1 to 4 are
+      the tones and 5 is the neutral tone. */
+  static String tones(String syllable)
+  {
+    return _tones.get(syllable);
   }
 
   /** The pinyin syllable that the Zhuyin spelling [zhuyin] stands for, or

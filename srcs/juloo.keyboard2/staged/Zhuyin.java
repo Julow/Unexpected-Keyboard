@@ -63,7 +63,7 @@ public final class Zhuyin implements Composer
         return false;
     StringBuilder candidate = new StringBuilder(keys);
     candidate.append(s);
-    return parse(candidate, 0, true) != null;
+    return parse(candidate, 0, true, new ArrayList<Integer>()) != null;
   }
 
   @Override
@@ -83,9 +83,16 @@ public final class Zhuyin implements Composer
   }
 
   @Override
-  public List<String> candidates()
+  public List<Composer.Candidate> candidates()
   {
-    return Syllables.candidates(syllables(), true);
+    List<Integer> tones = new ArrayList<Integer>();
+    List<String> syllables = parse(_keys, 0, false, tones);
+    if (syllables == null)
+      return Collections.emptyList();
+    int[] t = new int[tones.size()];
+    for (int i = 0; i < t.length; i++)
+      t[i] = tones.get(i).intValue();
+    return Syllables.candidates(syllables, t, true);
   }
 
   @Override
@@ -125,8 +132,12 @@ public final class Zhuyin implements Composer
 
       [partial] accepts a last, incomplete spelling as long as it is the
       beginning of one, which is what the keys look like while a syllable is
-      being typed. */
-  private static List<String> parse(CharSequence keys, int i, boolean partial)
+      being typed.
+
+      The tone typed after every syllable, [0] when none was, is prepended to
+      [tones]. */
+  private static List<String> parse(CharSequence keys, int i, boolean partial,
+      List<Integer> tones)
   {
     if (i == keys.length())
       return new ArrayList<String>();
@@ -140,12 +151,17 @@ public final class Zhuyin implements Composer
       if (syllable != null)
       {
         int next = i + len;
+        int tone = 0;
         if (next < keys.length() && TONES.indexOf(keys.charAt(next)) >= 0)
+        {
+          tone = TONES.indexOf(keys.charAt(next)) + 1;
           next++;
-        List<String> rest = parse(keys, next, partial);
+        }
+        List<String> rest = parse(keys, next, partial, tones);
         if (rest != null)
         {
           rest.add(0, syllable);
+          tones.add(0, Integer.valueOf(tone));
           return rest;
         }
       }
@@ -160,7 +176,7 @@ public final class Zhuyin implements Composer
       the keys are not a sequence of complete syllables. */
   List<String> syllables()
   {
-    List<String> syllables = parse(_keys, 0, false);
+    List<String> syllables = parse(_keys, 0, false, new ArrayList<Integer>());
     return (syllables == null) ? Collections.<String>emptyList() : syllables;
   }
 }

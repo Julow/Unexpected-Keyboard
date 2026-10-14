@@ -3,6 +3,7 @@ package juloo.keyboard2.staged;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 
@@ -19,9 +20,55 @@ public class ZhuyinTest
     return zhuyin;
   }
 
-  static List<String> candidates(String symbols)
+  static List<Composer.Candidate> candidates(String symbols)
   {
     return typed(symbols).candidates();
+  }
+
+  /** The text of every candidate. */
+  static List<String> texts(List<Composer.Candidate> candidates)
+  {
+    List<String> out = new ArrayList<String>();
+    for (Composer.Candidate c : candidates)
+      out.add(c.text);
+    return out;
+  }
+
+  static List<String> texts(String symbols)
+  {
+    return texts(candidates(symbols));
+  }
+
+  /** The annotation of the candidate whose text is [text], or [null]. */
+  static String annotation_of(List<Composer.Candidate> candidates, String text)
+  {
+    for (Composer.Candidate c : candidates)
+      if (c.text.equals(text))
+        return c.annotation;
+    return null;
+  }
+
+  @Test
+  public void candidates_carry_their_tone()
+  {
+    List<Composer.Candidate> ying = candidates("ㄧㄥ");
+    // 應 is read yīng: the first tone is shown with its own mark, ˉ, which is
+    // not typed.
+    assertEquals("ˉ", annotation_of(ying, "應"));
+    // The tone of the other characters is shown above them.
+    assertEquals("ˊ", annotation_of(ying, "營")); // yíng
+    assertEquals("ˇ", annotation_of(ying, "影")); // yǐng
+    assertEquals("ˋ", annotation_of(ying, "映")); // yìng
+  }
+
+  @Test
+  public void a_typed_tone_pins_the_character()
+  {
+    // ㄧㄥˇ is yǐng, whose common character is 影 alone.
+    List<Composer.Candidate> ying = candidates("ㄧㄥˇ");
+    assertEquals(1, ying.size());
+    assertEquals("影", ying.get(0).text);
+    assertEquals("ˇ", ying.get(0).annotation);
   }
 
   @Test
@@ -29,7 +76,7 @@ public class ZhuyinTest
   {
     Zhuyin zhuyin = typed("ㄋㄧ");
     assertEquals("ㄋㄧ", zhuyin.text());
-    assertEquals("你", candidates("ㄋㄧ").get(0));
+    assertEquals("你", texts("ㄋㄧ").get(0));
   }
 
   @Test
@@ -46,9 +93,9 @@ public class ZhuyinTest
   public void tone_marks_end_a_syllable()
   {
     assertEquals("[ni]", typed("ㄋㄧˇ").syllables().toString());
-    assertEquals("你", candidates("ㄋㄧˇ").get(0));
+    assertEquals("你", texts("ㄋㄧˇ").get(0));
     assertEquals("[ni, hao]", typed("ㄋㄧˇㄏㄠˇ").syllables().toString());
-    assertEquals("你好", candidates("ㄋㄧˇㄏㄠˇ").get(0));
+    assertEquals("你好", texts("ㄋㄧˇㄏㄠˇ").get(0));
     assertEquals("[ma]", typed("ㄇㄚ˙").syllables().toString());
   }
 
@@ -57,17 +104,17 @@ public class ZhuyinTest
   {
     // The table is ordered for Simplified Chinese, Zhuyin offers the
     // traditional variant.
-    assertEquals("愛", candidates("ㄞ").get(0));
-    assertEquals("國", candidates("ㄍㄨㄛ").get(0));
+    assertEquals("愛", texts("ㄞ").get(0));
+    assertEquals("國", texts("ㄍㄨㄛ").get(0));
     // 是 is the same character in both scripts and stays first.
-    assertEquals("是", candidates("ㄕ").get(0));
-    assertEquals("時", candidates("ㄕ").get(1));
+    assertEquals("是", texts("ㄕ").get(0));
+    assertEquals("時", texts("ㄕ").get(1));
   }
 
   @Test
   public void both_scripts_are_offered_with_traditional_first()
   {
-    List<String> ying = candidates("ㄧㄥ");
+    List<String> ying = texts("ㄧㄥ");
     // The list is not capped: 英 is reachable, it is not among the three most
     // frequent characters of "ying".
     assertTrue(ying.size() > 3);
@@ -122,7 +169,7 @@ public class ZhuyinTest
     assertEquals(0, zhuyin.candidates().size());
     assertTrue(zhuyin.type("ㄧ"));
     assertTrue(zhuyin.type("ˇ"));
-    assertEquals("你", zhuyin.candidates().get(0));
+    assertEquals("你", zhuyin.candidates().get(0).text);
   }
 
   @Test
@@ -174,7 +221,7 @@ public class ZhuyinTest
     Zhuyin zhuyin = typed("ㄋㄧㄏ");
     assertTrue(zhuyin.backspace());
     assertEquals("ㄋㄧ", zhuyin.text());
-    assertEquals("你", zhuyin.candidates().get(0));
+    assertEquals("你", zhuyin.candidates().get(0).text);
     zhuyin.reset();
     assertEquals("", zhuyin.text());
     assertFalse(zhuyin.backspace());

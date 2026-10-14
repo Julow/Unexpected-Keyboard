@@ -8,8 +8,10 @@ Writes two files into the output directory:
 
 - `syllables.txt`: one line per toneless Hanyu Pinyin syllable, the syllable, a
   space, then the characters written with that syllable (at most 16, most
-  frequent first). Characters whose reading comes from the `kHanyuPinlu` field
-  of `Unihan_Readings.txt`; every other field is ignored.
+  frequent first), a space, then one tone digit per character, in the same
+  order. The digits are 1 to 4 for the tones and 5 for the neutral tone.
+  Characters and tones come from the `kHanyuPinlu` field of
+  `Unihan_Readings.txt`; every other field is ignored.
 - `variants.txt`: the traditional variant of the characters of `syllables.txt`,
   one `simplified+traditional` pair per line, taken from the
   `kTraditionalVariant` field of `Unihan_Variants.txt`.
@@ -17,7 +19,8 @@ Writes two files into the output directory:
 Characters that are the traditional form of another character are ranked after
 the simplified form when both have the same frequency, so that the tables read
 naturally for Simplified Chinese. Traditional Chinese candidates are obtained by
-substituting the pairs of `variants.txt`.
+substituting the pairs of `variants.txt`. A character that has several readings
+in the same syllable keeps the tone of its heaviest reading.
 """
 
 import os
@@ -27,6 +30,7 @@ import unicodedata
 
 SYLLABLES_HEADER = (
     "# Chinese characters by toneless pinyin syllable, ordered by frequency.\n"
+    "# <syllable> <characters> <one tone digit per character, 1-4 and 5 for neutral>.\n"
     "# Derived from the Unihan database (kHanyuPinlu field), (c) Unicode, Inc. See README.md.\n"
 )
 VARIANTS_HEADER = (
@@ -35,6 +39,15 @@ VARIANTS_HEADER = (
 )
 
 MAX_CHARS = 16
+
+# The combining marks that carry a tone, in NFD. The first tone is written with
+# a macron, the neutral tone with nothing at all.
+TONE_MARKS = {
+    "\u0304": 1,  # macron
+    "\u0301": 2,  # acute
+    "\u030c": 3,  # caron
+    "\u0300": 4,  # grave
+}
 
 # "ü" and its toned forms, replaced by "v" BEFORE accents are stripped, so that
 # "lǜ" becomes "lv" and not "lu".
@@ -69,8 +82,20 @@ def toneless(reading):
     return stripped
 
 
+def tone_of(reading):
+    """The tone of one pinyin reading: 1 to 4, or 5 when it is not marked."""
+    for ch in unicodedata.normalize("NFD", reading):
+        tone = TONE_MARKS.get(ch)
+        if tone is not None:
+            return tone
+    return 5
+
+
 def parse_readings(path):
-    """Return {syllable: {character: total weight}} from the Unihan file."""
+    """Return {syllable: {character: [weight, heaviest, tone]}}.
+
+    The weight is the total of every reading of the character in that syllable;
+    the tone is the one of its heaviest reading."""
     total = {}
     with open(path, encoding="utf-8") as f:
         for line in f:
@@ -91,8 +116,16 @@ def parse_readings(path):
                 if syllable is None:
                     continue
                 weight = int(match.group(2))
-                counts = total.setdefault(syllable, {})
-                counts[char] = counts.get(char, 0) + weight
+                tone = tone_of(match.group(1))
+                reads = total.setdefault(syllable, {})
+                entry = reads.get(char)
+                if entry is None:
+                    reads[char] = [weight, weight, tone]
+                else:
+                    entry[0] += weight
+                    if weight > entry[1]:
+                        entry[1] = weight
+                        entry[2] = tone
     return total
 
 
@@ -141,10 +174,13 @@ def render_syllables(total, simplified_of):
     among the ones that have the same frequency. """
     out = [SYLLABLES_HEADER]
     for syllable in sorted(total):
-        counts = total[syllable]
-        ranked = sorted(counts.items(),
-            key=lambda kv: (-kv[1], kv[0] in simplified_of, ord(kv[0])))
-        out.append(syllable + " " + "".join(c for c, _w in ranked[:MAX_CHARS]) + "\n")
+        reads = total[syllable]
+        ranked = sorted(reads.items(),
+            key=lambda kv: (-kv[1][0], kv[0] in simplified_of, ord(kv[0])))
+        ranked = ranked[:MAX_CHARS]
+        chars = "".join(c for c, _e in ranked)
+        tones = "".join("%d" % e[2] for _c, e in ranked)
+        out.append(syllable + " " + chars + " " + tones + "\n")
     return "".join(out)
 
 
