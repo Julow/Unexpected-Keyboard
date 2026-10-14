@@ -36,6 +36,9 @@ public class CandidatesView extends LinearLayout
   /** Number of entries of [_candidates] that have a cell. */
   int _shown = 0;
 
+  /** The width available to the row, or 0 before the first layout. */
+  int _width = 0;
+
   CandidatesScrollView _scroll;
   LinearLayout _row;
 
@@ -69,6 +72,52 @@ public class CandidatesView extends LinearLayout
     _lang_name_view = (TextView)findViewById(R.id.candidates_lang_name);
   }
 
+  @Override
+  protected void onSizeChanged(int w, int h, int oldw, int oldh)
+  {
+    super.onSizeChanged(w, h, oldw, oldh);
+    if (w != oldw)
+    {
+      _width = w;
+      layout_cells();
+    }
+  }
+
+  /** Spread the candidates across the row: every cell takes an equal share of
+      the width, never narrower than [candidates_min_width]. Past that the cells
+      keep their minimum width and the row is scrolled instead. Enough cells are
+      added for the row to reach the end of the screen, since the others are
+      only reachable by scrolling. */
+  void layout_cells()
+  {
+    int n = _candidates.size();
+    if (n == 0 || _width == 0)
+      return;
+    int avail = _width - getPaddingEnd();
+    int gap = getResources().getDimensionPixelSize(R.dimen.candidates_gap);
+    int min = getResources().getDimensionPixelSize(R.dimen.candidates_min_width);
+    /* The pitch is the share of one of the cells that fit, not of every
+       candidate: a list longer than the row would otherwise take the minimum
+       width for every cell and leave the row short of its end. */
+    int slot = Math.max(min, avail / Math.min(n, Math.max(1, avail / min)));
+    /* Every candidate keeps a cell; the ones past the end of the row are
+       reached by scrolling. */
+    int needed = n;
+    if (needed > _shown)
+      add_cells(needed - _shown);
+    int width = Math.max(0, slot - gap);
+    for (int i = 0; i < _row.getChildCount(); i++)
+    {
+      View cell = _row.getChildAt(i);
+      ViewGroup.LayoutParams lp = cell.getLayoutParams();
+      if (lp.width != width)
+      {
+        lp.width = width;
+        cell.setLayoutParams(lp);
+      }
+    }
+  }
+
   public void set_candidates(Suggestions s)
   {
     List<Composer.Candidate> cs = new ArrayList<Composer.Candidate>();
@@ -79,6 +128,7 @@ public class CandidatesView extends LinearLayout
     _row.removeAllViews();
     _shown = 0;
     add_cells(CELLS_PER_PAGE);
+    layout_cells();
     _scroll.scrollTo(0, 0);
     // Hide the status message when showing candidates.
     if (cs.size() != 0 && _status_no_dict != null)
@@ -129,7 +179,10 @@ public class CandidatesView extends LinearLayout
     if (_shown < _candidates.size()
         && scrollX + _scroll.getWidth() + _scroll.getWidth() / 2
            >= _row.getWidth())
+    {
       add_cells(CELLS_PER_PAGE);
+      layout_cells();
+    }
   }
 
   void clear_candidates()
