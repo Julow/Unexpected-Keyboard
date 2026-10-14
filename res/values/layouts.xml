@@ -41,6 +41,8 @@
     <item>hang_dubeolsik_kr</item>
     <item>hebr_1_il</item>
     <item>hebr_2_il</item>
+    <item>kana_jis_jp</item>
+    <item>kana_tenkey_jp</item>
     <item>kann_kannada</item>
     <item>latin_kbdtuf_tr</item>
     <item>latn_azerty_be</item>
@@ -135,6 +137,8 @@
     <item>두벌식 (Korean)</item>
     <item>Hebrew 1</item>
     <item>Hebrew 2</item>
+    <item>かな入力 (日本)</item>
+    <item>テンキー (Japanese)</item>
     <item>ಕನ್ನಡ - Kannada</item>
     <item>Turkish F</item>
     <item>AZERTY (Belgian)</item>
@@ -229,6 +233,8 @@
     <item>@xml/hang_dubeolsik_kr</item>
     <item>@xml/hebr_1_il</item>
     <item>@xml/hebr_2_il</item>
+    <item>@xml/kana_jis_jp</item>
+    <item>@xml/kana_tenkey_jp</item>
     <item>@xml/kann_kannada</item>
     <item>@xml/latin_kbdtuf_tr</item>
     <item>@xml/latn_azerty_be</item>
