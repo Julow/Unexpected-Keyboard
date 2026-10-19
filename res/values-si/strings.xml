@@ -78,4 +78,6 @@
     <string name="pref_theme_e_monetlight">මොනේ (ආලෝකය)</string>
     <string name="pref_theme_e_monetdark">මොනේ (අඳුරු)</string>
     <string name="pref_theme_e_rosepine">රෝස පයින්</string>
+    <string name="pref_space_bar_auto_complete_summary">space එබීමෙන් හොඳම යෝජනාව ඇතුළත් කරන්න</string>
+    <string name="pref_theme_e_everforestlight">එවර්ෆොරස්ට් ආලෝකය</string>
 </resources>
