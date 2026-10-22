@@ -212,6 +212,9 @@ public final class Pointers implements Handler.Callback
     Pointer ptr = make_pointer(pointerId, key, value, x, y, mods);
     _ptrs.add(ptr);
     startLongPress(ptr);
+    // Immediate feedback uses the initial selection. A later swipe or cancel
+    // cannot retract it, and release must not produce a second click.
+    _handler.onPointerFeedback(value);
     _handler.onPointerDown(value, false);
   }
 
@@ -455,6 +458,7 @@ public final class Pointers implements Handler.Callback
     // For every other keys, key-repeat
     if (_config.keyrepeat_enabled)
     {
+      _handler.onPointerFeedback(kv);
       _handler.onPointerHold(kv, ptr.modifiers);
       _longpress_handler.sendEmptyMessageDelayed(ptr.timeoutWhat,
           _config.longPressInterval);
@@ -821,5 +825,10 @@ public final class Pointers implements Handler.Callback
 
     /** Key is repeating. */
     public void onPointerHold(KeyValue k, Modifiers mods);
+
+    /** Feedback for initial touch-down or a key repeat. Excludes release,
+        selection changes, slider movement and automatic modifier changes.
+        Cancellation cannot undo feedback already sent. [k] may be null. */
+    public void onPointerFeedback(KeyValue k);
   }
 }
