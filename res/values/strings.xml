@@ -26,6 +26,8 @@
     <string name="pref_show_numpad_never">Never</string>
     <string name="pref_show_numpad_landscape">Only in landscape mode</string>
     <string name="pref_show_numpad_always">Always</string>
+    <string name="pref_keep_numpad_symbols_title">Keep symbols on keyboard with NumPad</string>
+    <string name="pref_keep_numpad_symbols_summary">Do not remove swipe symbols from the main keyboard when the NumPad is shown</string>
     <string name="pref_number_row_title">Show number row</string>
     <string name="pref_numpad_layout">NumPad layout</string>
     <string name="pref_numpad_layout_e_high_first">High digits first</string>
