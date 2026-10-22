@@ -589,6 +589,8 @@ public final class Pointers implements Handler.Callback
     /** [System.currentTimeMillis()] at the time of the last move. Equals to
       [-1] when the sliding hasn't started yet. */
     long last_move_ms = -1;
+    /** Used to throttle move events and vibrations. */
+    long last_event_ms = 0;
     /** The property which is being slided. */
     KeyValue.Slider slider;
     /** Direction of the initial movement, positive if sliding to the right and
@@ -620,6 +622,8 @@ public final class Pointers implements Handler.Callback
     static final float SPEED_WORD_MULT = 0.25f;
     /** Speed above which to use SLIDING vibrations. */
     static final float VIBRATION_SPEED_CUTOFF = 1.5f;
+    /** Time between two sliding events. */
+    static final long EVENT_INTERVAL_MS = 20;
 
     public void onTouchMove(Pointer ptr, float x, float y)
     {
@@ -643,11 +647,12 @@ public final class Pointers implements Handler.Callback
       }
 
       update_speed(travelled, x, y);
-      // Send an event when [abs(d)] exceeds [1].
+      // Send an event when [abs(d)] exceeds [1] throttled by [EVENT_INTERVAL_MS].
       int d_ = (int)d;
-      if (d_ != 0)
+      if (d_ != 0 && last_move_ms - last_event_ms >= EVENT_INTERVAL_MS)
       {
         d -= d_;
+        last_event_ms = last_move_ms;
         VibratorCompat.Mode mode =
           (speed > VIBRATION_SPEED_CUTOFF) ?
           VibratorCompat.Mode.SLIDING : VibratorCompat.Mode.TAP;
