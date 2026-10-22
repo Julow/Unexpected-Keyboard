@@ -672,8 +672,6 @@ public final class Pointers implements Handler.Callback
       long now = System.currentTimeMillis();
       float delta_ms = (float)(now - last_move_ms);
       float instant_speed = Math.min(SPEED_MAX, travelled / delta_ms + 1.f);
-      
-      float speed0 = speed;
       speed = speed + (instant_speed - speed) * (1 - (float)Math.pow(SPEED_SMOOTHING, delta_ms));
       last_move_ms = now;
       last_x = x;
