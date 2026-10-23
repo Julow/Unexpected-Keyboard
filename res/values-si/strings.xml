@@ -80,4 +80,17 @@
     <string name="pref_theme_e_rosepine">රෝස පයින්</string>
     <string name="pref_space_bar_auto_complete_summary">space එබීමෙන් හොඳම යෝජනාව ඇතුළත් කරන්න</string>
     <string name="pref_theme_e_everforestlight">එවර්ෆොරස්ට් ආලෝකය</string>
+    <string name="pref_theme_e_cobalt">කොබෝල්ට්</string>
+    <string name="pref_theme_e_pine">පයින්</string>
+    <string name="pref_theme_e_epaperblack">ඊ-කඩදාසි</string>
+    <string name="pref_theme_e_dracula">ඩ්‍රැකියුලා</string>
+    <string name="pref_swipe_dist_e_very_short">ඉතා කෙටි</string>
+    <string name="pref_swipe_dist_e_short">කෙටි</string>
+    <string name="pref_swipe_dist_e_default">සාමාන්‍ය</string>
+    <string name="pref_swipe_dist_e_far">දුර</string>
+    <string name="pref_swipe_dist_e_very_far">ඉතා දුරයි</string>
+    <string name="pref_key_horizontal_space">යතුරු අතර තිරස් පරතරය</string>
+    <string name="pref_key_vertical_space">යතුරු අතර සිරස් පරතරය</string>
+    <string name="pref_border_config_title">අභිරුචිකරණය කරන්න</string>
+    <string name="pref_border_width_title">මායිම් පළල</string>
 </resources>
