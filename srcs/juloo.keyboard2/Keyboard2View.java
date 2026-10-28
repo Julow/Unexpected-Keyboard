@@ -39,6 +39,7 @@ public class Keyboard2View extends View
   private static int _currentWhat = 0;
 
   private Config _config;
+  private KeypressSound _keypress_sound;
 
   private float _keyWidth;
   private float _mainLabelSize;
@@ -67,6 +68,7 @@ public class Keyboard2View extends View
     super(context, attrs);
     _theme = new Theme(getContext(), attrs);
     _config = Config.globalConfig();
+    _keypress_sound = new KeypressSound(context);
     _pointers = new Pointers(this, _config);
     refresh_navigation_bar(context);
     setOnTouchListener(this);
@@ -115,6 +117,7 @@ public class Keyboard2View extends View
 
   public void reset()
   {
+    _keypress_sound.prepare(_config.sound_on_keypress, _config.sound_volume);
     _mods = Pointers.Modifiers.EMPTY;
     _pointers.clear();
     requestLayout();
@@ -183,6 +186,11 @@ public class Keyboard2View extends View
     invalidate();
     if (shouldVibrate)
       vibrate();
+  }
+
+  public void onPointerFeedback(KeyValue k)
+  {
+    _keypress_sound.play(k, _config.sound_on_keypress, _config.sound_volume);
   }
 
   private void updateFlags()
