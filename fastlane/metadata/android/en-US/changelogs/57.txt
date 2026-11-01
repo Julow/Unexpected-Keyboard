@@ -1,0 +1,6 @@
+Improve dictionary selection
+Fix autocorrect
+Layout improvements
+Bug fixes
+
+Many thanks to the contributors: @akaoio @bergentroll @granitrocky @HaleyHalcyon @sjeulu @VadosG
