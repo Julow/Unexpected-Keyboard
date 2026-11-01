@@ -1,0 +1,6 @@
+Hovedfunktionen er at du kan skrive flere karakterer ved at stryge over tasterne mod hjørnerne.
+
+Denne applikation blev originalt designet til programmering med Termux.
+Nu er den perfekt til hverdagsbrug.
+
+Denne applikation indeholder ingen reklamer og er Open Source.

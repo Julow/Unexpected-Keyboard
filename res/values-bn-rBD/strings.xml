@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_release">অপ্রত্যাশিত কীবোর্ড</string>
-    <string name="app_name_debug">অপ্রত্যাশিত কিবোর্ড (ডিবাগ)</string>
-    <string name="short_description">অ্যান্ড্রোয়েডের জন্য হালকা এবং গোপনীয়তা-সচেতন ভার্চুয়াল কিবোর্ড।</string>
-    <string name="store_description">এর প্রধান বৈশিষ্ট্য হলো, কি-গুলোর কোণার দিকে সোয়াইপ করে আপনি আরও বেশি অক্ষর টাইপ করতে পারবেন।\n\nএই অ্যাপ্লিকেশনটি মূলত টার্মাক্স (Termux) ব্যবহারকারী প্রোগ্রামারদের জন্য ডিজাইন করা হয়েছিল।\nএখন এটি দৈনন্দিন ব্যবহারের জন্য উপযুক্ত।</string>
-    <string name="pref_portrait">পোর্ট্রেড বিন্যাসে</string>
+    <string name="app_name_debug">অপ্রত্যাশিত কীবোর্ড (ডিবাগ)</string>
+    <string name="short_description">অ্যান্ড্রোয়েডের জন্য হালকা এবং গোপনীয়তা-সচেতন ভার্চুয়াল কীবোর্ড।</string>
+    <string name="store_description">এর মূল বৈশিষ্ট্য হলো, কী-গুলো কোণার দিকে সোয়াইপ করে আপনি আরও বেশি অক্ষর টাইপ করতে পারবেন।\n\nএই অ্যাপ্লিকেশনটি মূলত টার্মাক্স (Termux) ব্যবহারকারী প্রোগ্রামারদের জন্য ডিজাইন করা হয়েছিল।\nএখন এটি দৈনন্দিন ব্যবহারের জন্য উপযুক্ত।\n\nএই অ্যাপ্লিকেশনে কোনো বিজ্ঞাপন নেই এবং এটি ওপেন সোর্স।</string>
+    <string name="pref_portrait">পোর্ট্রেট বিন্যাসে</string>
     <string name="pref_landscape">ল্যান্ডস্কেপ বিন্যাসে</string>
     <string name="pref_category_layout">বিন্যাস</string>
     <string name="pref_label_brightness">লেবেলের উজ্জ্বলতা নির্ধারণ করুন</string>
-    <string name="pref_keyboard_opacity">কিবোর্ডের পৃষ্ঠভূমির গাঢ়ত্ব নির্ধারণ করুন</string>
-    <string name="pref_key_opacity">কি-এর গাঢ়ত্ব নির্ধারণ করুন</string>
-    <string name="pref_key_activated_opacity">চেপে ধরা কি-এর গাঢ়ত্ব নির্ধারণ করুন</string>
+    <string name="pref_keyboard_opacity">কীবোর্ডের পৃষ্ঠভূমির গাঢ়ত্ব নির্ধারণ করুন</string>
+    <string name="pref_key_opacity">কী-এর গাঢ়ত্ব নির্ধারণ করুন</string>
+    <string name="pref_key_activated_opacity">চেপে ধরা কী-এর গাঢ়ত্ব নির্ধারণ করুন</string>
     <string name="pref_layout_e_system">সিস্টেম সেটিংস</string>
     <string name="pref_layout_e_custom">অপ্রাথমিক বিন্যাস</string>
     <string name="pref_layouts_add">একটি বিকল্প লেআউট যোগ করুন</string>
@@ -19,7 +19,7 @@
     <string name="pref_custom_layout_title">কাস্টম লেআউট</string>
     <string name="pref_show_numpad_title">নামপ্যাড দেখান</string>
     <string name="pref_show_numpad_never">কখনো না</string>
-    <string name="pref_show_numpad_landscape">শুধুমাত্র ল্যান্ডস্কেপ মোডে</string>
+    <string name="pref_show_numpad_landscape">শুধুমাত্র ল্যান্ডস্কেপ বিন্যাসে</string>
     <string name="pref_show_numpad_always">সর্বদা</string>
     <string name="pref_number_row_title">নম্বর সারি দেখান</string>
     <string name="pref_numpad_layout">নামপ্যাড লেআউট</string>
@@ -119,4 +119,9 @@
     <string name="clipboard_pin_heading">পিন করা</string>
     <string name="clipboard_remove_confirm">এই ক্লিপবোর্ডটি সরাবেন?</string>
     <string name="clipboard_remove_confirmed">হ্যা</string>
+    <string name="pref_portrait_unfolded">পোর্ট্রেট বিন্যাসে খোলা অবস্থায়</string>
+    <string name="pref_landscape_unfolded">ল্যান্ডস্কেপ বিন্যাসে খোলা অবস্থায়</string>
+    <string name="pref_show_number_row_no_number_row">নম্বর সারি নেই</string>
+    <string name="pref_show_number_row_no_symbols">প্রতীক ছাড়া নম্বর সারি</string>
+    <string name="pref_show_number_row_symbols">প্রতীক সহ নম্বর সারি</string>
 </resources>
