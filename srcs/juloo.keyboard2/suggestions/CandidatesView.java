@@ -17,6 +17,7 @@ import juloo.keyboard2.Config;
 import juloo.keyboard2.KeyValue;
 import juloo.keyboard2.Pointers;
 import juloo.keyboard2.R;
+import juloo.keyboard2.dict.SupportedDictionaries;
 
 public class CandidatesView extends LinearLayout
 {
@@ -106,7 +107,12 @@ public class CandidatesView extends LinearLayout
       _status_no_dict.setVisibility(View.GONE);
     should_show_dictionary_switch = config.should_show_dictionary_switch;
     set_sizes(config);
-    _lang_name_view.setText(config.current_dictionary_name);
+    SupportedDictionaries sd = SupportedDictionaries.get(getResources());
+    if (config.current_dictionary_name == null)
+      _lang_name_view.setText(R.string.dictionary_switcher_title);
+    else
+      _lang_name_view.setText(
+          sd.get_display_name(config.current_dictionary_name));
   }
 
   /** Set the height of the suggestion row and the text size. */

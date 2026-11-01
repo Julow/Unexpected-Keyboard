@@ -29,7 +29,6 @@ import juloo.cdict.Cdict;
 import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.dict.DictionariesActivity;
 import juloo.keyboard2.dict.DictionarySwitcher;
-import juloo.keyboard2.dict.SupportedDictionaries;
 import juloo.keyboard2.prefs.LayoutsPreference;
 import juloo.keyboard2.suggestions.CandidatesView;
 import juloo.keyboard2.suggestions.Suggestions;
@@ -140,7 +139,7 @@ public class Keyboard2 extends InputMethodService
     _config = Config.globalConfig();
     Receiver recvr = this.new Receiver();
     _suggestions = new Suggestions(recvr, _config);
-    _keyeventhandler = new KeyEventHandler(recvr, _suggestions);
+    _keyeventhandler = new KeyEventHandler(_config, recvr, _suggestions);
     KeyValue.Stateful._handler = recvr;
     _config.handler = _keyeventhandler;
     prefs.registerOnSharedPreferenceChangeListener(this);
@@ -196,8 +195,6 @@ public class Keyboard2 extends InputMethodService
       dict_name = (_config.device_locales.default_ != null) ?
         _config.device_locales.default_.dictionary : null;
     _dictionaries.set_current_dictionary(_config, dict_name);
-    _config.current_dictionary_name =
-      SupportedDictionaries.get(getResources()).get_display_name(dict_name);
   }
 
   /** Remember and apply the dictionary chosen by the user for the current
@@ -269,9 +266,14 @@ public class Keyboard2 extends InputMethodService
     refresh_config();
     _currentSpecialLayout = refresh_special_layout();
     _keyboard_layout_view.setKeyboard(current_layout());
-    _keyeventhandler.started(_config);
+    _keyeventhandler.started();
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
+  }
+
+  @Override
+  public void setExtractViewShown(boolean shown){
+      super.setExtractViewShown(false);
   }
 
   @Override

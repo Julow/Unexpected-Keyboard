@@ -1,0 +1,6 @@
+Aplikasi ini membolehkan anda menaip lebih banyak aksara dengan meleret (swipe) kekunci ke arah penjuru.
+
+Aplikasi ini pada asalnya direka untuk pengaturcara (programmer) yang menggunakan Termux.
+Kini sesuai untuk kegunaan harian.
+
+Aplikasi ini bebas iklan dan merupakan Sumber Terbuka (Open Source).

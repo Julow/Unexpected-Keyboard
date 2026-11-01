@@ -171,10 +171,12 @@ public class Keyboard2View extends View
     invalidate();
   }
 
-  public void onPointerHold(KeyValue k, Pointers.Modifiers mods)
+  public void onPointerHold(KeyValue k, Pointers.Modifiers mods,
+      VibratorCompat.Mode vibration_mode)
   {
     _config.handler.key_up(k, mods);
     updateFlags();
+    VibratorCompat.vibrate(this, _config, vibration_mode);
   }
 
   public void onPointerFlagsChanged(boolean shouldVibrate)
@@ -258,7 +260,7 @@ public class Keyboard2View extends View
 
   private void vibrate()
   {
-    VibratorCompat.vibrate(this, _config);
+    VibratorCompat.vibrate(this, _config, VibratorCompat.Mode.TAP);
   }
 
   @Override
@@ -340,6 +342,16 @@ public class Keyboard2View extends View
   @Override
   protected void onDraw(Canvas canvas)
   {
+    if (_tc.keyboard_background_paint != null)
+    {
+      canvas.drawRect(
+              0,
+              0,
+              getWidth(),
+              getHeight(),
+              _tc.keyboard_background_paint);
+    }
+
     float y = _tc.margin_top;
     for (KeyboardData.Row row : _keyboard.rows)
     {

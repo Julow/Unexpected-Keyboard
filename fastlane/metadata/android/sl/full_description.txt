@@ -1,0 +1,6 @@
+Glavna značilnost je, da lahko vnesete več znakov tako, da tipke povlečete proti vogalom.
+
+Ta aplikacija je bila prvotno zasnovana za programerje, ki uporabljajo Termux.
+Zdaj je odlična za vsakodnevno uporabo.
+
+Ta aplikacija ne vsebuje oglasov in je odprtokodna.

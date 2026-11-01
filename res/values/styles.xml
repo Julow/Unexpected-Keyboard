@@ -162,7 +162,7 @@
     <item name="android:padding">8dp</item>
     <item name="android:scaleType">fitCenter</item>
   </style>
-  <style name="appTheme" parent="@android:style/Theme.Material.Light"/>
+  <style name="appTheme" parent="@android:style/Theme.DeviceDefault.DayNight"/>
   <style name="settingsTheme" parent="appTheme">
     <!-- Setting this in the activity theme so it propagate to nested
          preference screens. -->

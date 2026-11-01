@@ -30,7 +30,7 @@
     <key width="1.5" role="action" key0="switch_text" key2="ctrl"/>
     <key width="1.5" key0="0"/>
     <key width="0.75" role="action" key0="." key1=":" key2="," key3=";"/>
-    <key width="0.75" role="action" key0="action" key1="&quot;" key2="'" key3="loc compose" key4="_"/>
+    <key width="0.75" role="action" key0="space" key1="&quot;" key2="'" key3="loc compose" key4="_"/>
     <key width="1.5" role="action" key0="enter" key1="±" key2="action" key3="="/>
   </row>
 </keyboard>

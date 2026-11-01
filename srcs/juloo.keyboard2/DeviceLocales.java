@@ -32,6 +32,7 @@ public final class DeviceLocales
 
   public static final class Loc
   {
+    /** Equal to ["unknown"] on API below 24. */
     public final String lang_tag;
     public final String script;
     public final String default_layout; // Might be [null]
@@ -40,7 +41,7 @@ public final class DeviceLocales
 
     public Loc(InputMethodSubtype st)
     {
-      lang_tag = st.getLanguageTag();
+      lang_tag = (VERSION.SDK_INT < 24) ? "unknown" : st.getLanguageTag();
       script = st.getExtraValueOf("script");
       default_layout = st.getExtraValueOf("default_layout");
       String extra_keys_s = st.getExtraValueOf("extra_keys");
