@@ -283,6 +283,15 @@ public final class Config
       case "epaperblack": return R.style.ePaperBlack;
       case "dracula": return R.style.Dracula;
       case "gradientpurplepink": return R.style.GradientPurplePink;
+      case "tokyonight": return R.style.TokyoNight;
+      case "tokyonightstorm": return R.style.TokyoNightStorm;
+      case "tokyonightday": return R.style.TokyoNightDay;
+      case "catppuccinmocha": return R.style.CatppuccinMocha;
+      case "catppuccinmacchiato": return R.style.CatppuccinMacchiato;
+      case "catppuccinfrappe": return R.style.CatppuccinFrappe;
+      case "catppuccinlatte": return R.style.CatppuccinLatte;
+      case "gruvboxdark": return R.style.GruvboxDark;
+      case "gruvboxlight": return R.style.GruvboxLight;
       default:
       case "system":
         if ((night_mode & Configuration.UI_MODE_NIGHT_NO) != 0)

@@ -87,6 +87,15 @@
     <string name="pref_theme_e_epaperblack">ePaper Black</string>
     <string name="pref_theme_e_dracula">Dracula</string>
     <string name="pref_theme_e_gradientpurplepink">Purple Pink Gradient</string>
+    <string name="pref_theme_e_tokyonight">Tokyo Night</string>
+    <string name="pref_theme_e_tokyonightstorm">Tokyo Night Storm</string>
+    <string name="pref_theme_e_tokyonightday">Tokyo Night Day</string>
+    <string name="pref_theme_e_catppuccinmocha">Catppuccin Mocha</string>
+    <string name="pref_theme_e_catppuccinmacchiato">Catppuccin Macchiato</string>
+    <string name="pref_theme_e_catppuccinfrappe">Catppuccin Frappé</string>
+    <string name="pref_theme_e_catppuccinlatte">Catppuccin Latte</string>
+    <string name="pref_theme_e_gruvboxdark">Gruvbox Dark</string>
+    <string name="pref_theme_e_gruvboxlight">Gruvbox Light</string>
     <string name="pref_swipe_dist_e_very_short">Very short</string>
     <string name="pref_swipe_dist_e_short">Short</string>
     <string name="pref_swipe_dist_e_default">Normal</string>
