@@ -38,6 +38,7 @@ public final class Config
   /** [null] represent the [system] layout. */
   public List<KeyboardData> layouts;
   public boolean show_numpad = false;
+  public boolean keep_numpad_symbols = true;
   // From the 'numpad_layout' option, also apply to the numeric pane.
   public boolean inverse_numpad = false;
   public boolean add_number_row;
@@ -131,6 +132,7 @@ public final class Config
     float characterSizeScale = 1.f;
     String show_numpad_s = _prefs.getString("show_numpad", "never");
     show_numpad = "always".equals(show_numpad_s);
+    keep_numpad_symbols = _prefs.getBoolean("keep_numpad_symbols", true);
     int keyboardHeightPercent;
     if (orientation_landscape)
     {
