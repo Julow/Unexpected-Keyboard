@@ -85,6 +85,11 @@ public final class KeyValue implements Comparable<KeyValue>
     SELECTION_CANCEL,
     SPACE_BAR,
     BACKSPACE,
+    // Replace the selected text by a different letter case.
+    UPPERCASE,
+    LOWERCASE,
+    SMALL_CAPS,
+    LETTER_SPACED,
   }
 
   public static enum Placeholder
@@ -128,7 +133,10 @@ public final class KeyValue implements Comparable<KeyValue>
   public static final int FLAG_SMALLER_FONT = (1 << FLAGS_OFFSET << 5);
   // Dimmer symbol
   public static final int FLAG_SECONDARY = (1 << FLAGS_OFFSET << 6);
-  // Free: (1 << FLAGS_OFFSET << 7)
+  // Key stays activated until pressed again. Unlike [FLAG_LATCH], a modifier
+  // with this flag is locked when latched and is not cleared by typing other
+  // keys.
+  public static final int FLAG_STICKY = (1 << FLAGS_OFFSET << 7);
 
   // Ranges for the different components
   private static final int FLAGS_BITS = (0b11111111 << FLAGS_OFFSET); // 8 bits wide
@@ -379,6 +387,13 @@ public final class KeyValue implements Comparable<KeyValue>
         FLAG_LATCH | FLAG_SPECIAL | FLAG_KEY_FONT);
   }
 
+  /** A modifier that stays activated until pressed again. */
+  private static KeyValue sticky_diacritic(String symbol, Modifier m)
+  {
+    KeyValue k = diacritic(symbol, m);
+    return k.withFlags(k.getFlags() | FLAG_STICKY);
+  }
+
   private static KeyValue eventKey(String symbol, Event e, int flags)
   {
     return new KeyValue(symbol, Kind.Event, e.ordinal(), flags | FLAG_SPECIAL | FLAG_SECONDARY);
@@ -582,7 +597,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "accent_horn": return diacritic(0xE061, Modifier.HORN);
       case "accent_hook_above": return diacritic(0xE062, Modifier.HOOK_ABOVE);
       case "accent_double_grave": return diacritic(0xE063, Modifier.DOUBLE_GRAVE);
-      case "accent_small_caps": return diacritic("Aᴀ", Modifier.SMALL_CAPS);
+      case "accent_small_caps": return sticky_diacritic("Aᴀ", Modifier.SMALL_CAPS);
       case "superscript": return modifierKey("Sup", Modifier.SUPERSCRIPT, 0);
       case "subscript": return modifierKey("Sub", Modifier.SUBSCRIPT, 0);
       case "ordinal": return modifierKey("Ord", Modifier.ORDINAL, 0);
@@ -754,6 +769,11 @@ public final class KeyValue implements Comparable<KeyValue>
       case "pasteAsPlainText": return editingKey(0xE035, Editing.PASTE_PLAIN, 0);
       case "undo": return editingKey(0xE036, Editing.UNDO, 0);
       case "redo": return editingKey(0xE037, Editing.REDO, 0);
+      /* Replace the selected text by a different letter case. */
+      case "uppercase": return editingKey("AA", Editing.UPPERCASE, FLAG_SMALLER_FONT);
+      case "lowercase": return editingKey("aa", Editing.LOWERCASE, FLAG_SMALLER_FONT);
+      case "smallcaps": return editingKey("ᴀᴀ", Editing.SMALL_CAPS, FLAG_KEY_FONT);
+      case "letterspaced": return editingKey("A B", Editing.LETTER_SPACED, FLAG_SMALLER_FONT);
       case "delete_word": return editingKey(0xE01B, Editing.DELETE_WORD, 0);
       case "forward_delete_word": return editingKey(0xE01C, Editing.FORWARD_DELETE_WORD, 0);
       case "cursor_left": return sliderKey(Slider.Cursor_left, 1);
