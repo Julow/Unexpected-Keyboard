@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name_release">Unexpected Keyboard</string>
     <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">Lightweight and privacy-conscious virtual keyboard for Android.</string>
@@ -56,9 +56,10 @@
     <string name="pref_change_method_key_replacement_e_prev">Switch to last used</string>
     <string name="pref_change_method_key_replacement_e_next">Switch to the next in the list</string>
     <string name="pref_vibrate_custom">Custom vibration</string>
-    <string name="pref_sound_on_keypress">Sound on keypress</string>
-    <string name="pref_sound_on_keypress_summary">Play native keypress sounds on touch, independently of system touch sounds. Silent and vibrate modes are respected.</string>
-    <string name="pref_sound_volume">Keypress sound volume</string>
+    <!-- Pending Weblate translations; keep these strings translatable and use English fallback. -->
+    <string name="pref_sound_on_keypress" tools:ignore="MissingTranslation">Sound on keypress</string>
+    <string name="pref_sound_on_keypress_summary" tools:ignore="MissingTranslation">Play native keypress sounds on touch, independently of system touch sounds. Silent and vibrate modes are respected.</string>
+    <string name="pref_sound_volume" tools:ignore="MissingTranslation">Keypress sound volume</string>
     <string name="pref_vibrate_duration_title">Vibration intensity</string>
     <string name="pref_number_entry_title">Layout when typing numbers, dates, and phone numbers</string>
     <string name="pref_number_entry_layout_pin">PIN Entry</string>

@@ -15,7 +15,7 @@ def loc(loc_name, script, default_layout, **kwargs):
 # following block:
 
 LOCALES = [
-  loc("ar", "arabic", "arab_pc_hindu"),
+  loc("ar", "arabic", "arab_pc"),
   loc("ar_TN", "arabic", "arab_pc"),
   loc("as", "beng", "beng_assamese"),
   loc("az_AZ", "latin", "latn_qwerty_az", extra_keys="accent_trema:ü:ö@w|accent_cedille:ç:ş@s|ğ@g|ı@k|ə@l"),

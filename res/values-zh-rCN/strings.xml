@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_release">Unexpected Keyboard</string>
-    <string name="app_name_debug">Unexpected Keyboard (debug)</string>
+    <string name="app_name_debug">Unexpected Keyboard (Debug)</string>
     <string name="short_description">适用于 Android 的轻量级、注重隐私的虚拟键盘。</string>
-    <string name="store_description">此应用的主要功能是，通过将按键沿四角滑动，您可以输入更多字符。\n\n此应用最初是为使用 Termux 的程序员而设计的。\n现在对于日常使用来说也很完美。</string>
+    <string name="store_description">你可以通过向角落滑动按键，输出更多字符。\n此应用程序最初是为 Termux 的使用者设计的。\n现在非常适合日常使用。\n\n此应用程序不包含广告，是开源的。</string>
     <string name="pref_portrait">在竖屏模式下</string>
     <string name="pref_landscape">在横屏模式下</string>
     <string name="pref_category_layout">布局</string>
@@ -148,8 +148,8 @@
     <string name="launcher_button_dictionaries">安装词典</string>
     <string name="pref_slider_sensitivity_title">空格键滑动灵敏度</string>
     <string name="toast_no_voice_input">未安装语音输入程序</string>
-    <string name="pref_category_clipboard">剪切板</string>
-    <string name="pref_clipboard_history_duration">剪切板保存时间</string>
+    <string name="pref_category_clipboard">剪贴板</string>
+    <string name="pref_clipboard_history_duration">剪贴板内容保存时间</string>
     <string name="pref_clipboard_history_duration_1">最多一分钟</string>
     <string name="pref_clipboard_history_duration_5">最多五分钟</string>
     <string name="pref_clipboard_history_duration_30">最多半小时</string>

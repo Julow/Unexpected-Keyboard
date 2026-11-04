@@ -61,6 +61,20 @@ public class ConfigTest
   }
 
   @Test
+  public void saved_sound_settings_are_read_by_a_new_config() throws Exception
+  {
+    preferences.put("sound_on_keypress", true);
+    preferences.put("sound_volume", 0);
+    assertTrue(create().sound_on_keypress);
+    assertEquals(0, create().sound_volume);
+    preferences.put("sound_volume", 100);
+    assertEquals(100, create().sound_volume);
+    preferences.put("sound_on_keypress", false);
+    assertFalse(create().sound_on_keypress);
+    assertEquals(100, create().sound_volume);
+  }
+
+  @Test
   public void preference_defaults_off_without_vibration_dependency() throws Exception
   {
     NodeList nodes = DocumentBuilderFactory.newInstance().newDocumentBuilder()

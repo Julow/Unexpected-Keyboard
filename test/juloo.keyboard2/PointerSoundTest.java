@@ -25,6 +25,7 @@ public class PointerSoundTest implements Pointers.IPointerEventHandler
   List<KeyValue> emitted = new ArrayList<KeyValue>();
   List<Pointers.Modifiers> emittedModifiers = new ArrayList<Pointers.Modifiers>();
   List<Boolean> vibrationFlags = new ArrayList<Boolean>();
+  List<VibratorCompat.Mode> holdVibrations = new ArrayList<VibratorCompat.Mode>();
   int downs = 0;
   int flags = 0;
 
@@ -192,6 +193,9 @@ public class PointerSoundTest implements Pointers.IPointerEventHandler
       assertTrue(scheduler.fireNext());
       assertTrue(scheduler.fireNext());
       assertEquals(4, playback.effects.size());
+      assertEquals(Arrays.asList(VibratorCompat.Mode.NONE, VibratorCompat.Mode.NONE,
+            VibratorCompat.Mode.NONE), holdVibrations);
+      holdVibrations.clear();
       pointers.onTouchUp(1); // Existing behavior emits one more key here.
       assertEquals(4, emitted.size());
       assertEquals(emitted, activated);
@@ -260,6 +264,34 @@ public class PointerSoundTest implements Pointers.IPointerEventHandler
     assertFalse(emitted.isEmpty());
     assertEquals(Arrays.asList(key("space")), activated);
     assertEquals(Arrays.asList(AudioManager.FX_KEYPRESS_SPACEBAR), playback.effects);
+  }
+
+  @Test
+  public void sliding_preserves_upstream_vibration_modes_without_sound() throws Exception
+  {
+    for (boolean fast : new boolean[]{false, true})
+    {
+      pointers.clear();
+      holdVibrations.clear();
+      playback.effects.clear();
+      down(1, layout("space", "cursor_left"));
+      pointers.onTouchMove(50, 50, 1);
+      Field ptrs = Pointers.class.getDeclaredField("_ptrs");
+      ptrs.setAccessible(true);
+      Object ptr = ((List<?>)ptrs.get(pointers)).get(0);
+      Field slidingField = ptr.getClass().getDeclaredField("sliding");
+      slidingField.setAccessible(true);
+      Pointers.Sliding sliding = (Pointers.Sliding)slidingField.get(ptr);
+      // Control elapsed time and distance without sleeping or changing production timing.
+      sliding.last_move_ms = System.currentTimeMillis() - 1000;
+      sliding.last_event_ms = 0;
+      pointers.onTouchMove(fast ? -10000 : -50, 50, 1);
+      assertEquals(Arrays.asList(fast ? VibratorCompat.Mode.SLIDING : VibratorCompat.Mode.TAP),
+          holdVibrations);
+      pointers.onTouchUp(1);
+      assertEquals(Arrays.asList(AudioManager.FX_KEYPRESS_SPACEBAR), playback.effects);
+      assertFalse(scheduler.fireNext());
+    }
   }
 
   @Test
@@ -396,7 +428,11 @@ public class PointerSoundTest implements Pointers.IPointerEventHandler
     emitted.add(k);
     emittedModifiers.add(mods);
   }
-  public void onPointerHold(KeyValue k, Pointers.Modifiers mods) { onPointerUp(k, mods); }
+  public void onPointerHold(KeyValue k, Pointers.Modifiers mods, VibratorCompat.Mode mode)
+  {
+    holdVibrations.add(mode);
+    onPointerUp(k, mods);
+  }
   public void onPointerFeedback(KeyValue k)
   {
     activated.add(k);

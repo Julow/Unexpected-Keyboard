@@ -26,4 +26,5 @@ COPY --chown=gradle:gradle . .
 RUN rm -rf build .gradle .idea
 
 CMD sh -c 'gradle clean assembleRelease && \
-  cp build/outputs/apk/release/Unexpected-Keyboard-release.apk /release'
+  cp build/outputs/apk/release/Unexpected-Keyboard-release.apk \
+    build/outputs/mapping/release/mapping.txt /release'
