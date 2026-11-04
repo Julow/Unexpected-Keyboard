@@ -170,4 +170,7 @@
     <string name="dictionaries_download_failed">Download fehlgeschlagen: Bitte Internetzugriff erlauben</string>
     <string name="pref_theme_e_dracula">Dracula</string>
     <string name="dictionary_switcher_title">Sprache ändern</string>
+    <string name="pref_suggestions_add_space_title">Leerzeichen automatisch hinzufügen</string>
+    <string name="pref_suggestions_add_space_summary">Ein Leerzeichen hinter dem ausgewählten Wort einfügen</string>
+    <string name="pref_theme_e_gradientpurplepink">Lila-Rosa-Farbverlauf</string>
 </resources>
