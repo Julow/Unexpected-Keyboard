@@ -3,6 +3,7 @@ package juloo.keyboard2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,18 @@ public class EmojiGridView extends GridView
     Emoji.init(context.getResources());
     setOnItemClickListener(this);
     loadLastUsed();
-    setEmojiGroup((_lastUsed.size() == 0) ? 0 : GROUP_LAST_USE);
+  }
+
+  @Override
+  protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+
+    setEmojiGroup(getDefaultEmojiGroup());
+  }
+
+  public int getDefaultEmojiGroup()
+  {
+    return (_lastUsed.isEmpty()) ? 0 : GROUP_LAST_USE;
   }
 
   public void setEmojiGroup(int group)
