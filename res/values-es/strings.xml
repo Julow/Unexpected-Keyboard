@@ -170,4 +170,7 @@
     <string name="dictionaries_download_failed">Error de descarga: Por favor, permite el acceso a Internet</string>
     <string name="dictionary_switcher_title">Cambiar idioma</string>
     <string name="pref_theme_e_dracula">Drácula</string>
+    <string name="pref_suggestions_add_space_title">Añadir un espacio automáticamente</string>
+    <string name="pref_suggestions_add_space_summary">Añadir un carácter de espacio después de la palabra seleccionada</string>
+    <string name="pref_theme_e_gradientpurplepink">Degradado de morado a rosa</string>
 </resources>

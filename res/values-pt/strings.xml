@@ -168,4 +168,9 @@
     <string name="pref_split_layout_never">Nunca</string>
     <string name="pref_split_layout_landscape">Na orientação paisagem</string>
     <string name="pref_split_layout_wide">Em telas largas</string>
+    <string name="pref_suggestions_add_space_title">Adicionar um espaço automaticamente</string>
+    <string name="pref_suggestions_add_space_summary">Adicione um caractere de espaço após a palavra selecionada</string>
+    <string name="pref_theme_e_dracula">Drácula</string>
+    <string name="pref_theme_e_gradientpurplepink">Degradê de Roxo e Rosa</string>
+    <string name="dictionary_switcher_title">Alterar idioma</string>
 </resources>

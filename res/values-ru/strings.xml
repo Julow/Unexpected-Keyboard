@@ -37,7 +37,7 @@
     <string name="pref_lock_double_tap_title">CapsLock двойным нажатием Shift</string>
     <string name="pref_lock_double_tap_summary">Также можно активировать модификатор долгим нажатием</string>
     <string name="pref_category_behavior">Поведение</string>
-    <string name="pref_autocapitalisation_title">Автоматическая смена регистра</string>
+    <string name="pref_autocapitalisation_title">Автосмена регистра</string>
     <string name="pref_autocapitalisation_summary">Автоматическое нажатие Shift в начале каждого предложения</string>
     <string name="pref_vibrate_custom">Настройка вибрации</string>
     <string name="pref_vibrate_duration_title">Интенсивность вибрации</string>
@@ -170,4 +170,7 @@
     <string name="dictionaries_download_failed">Ошибка загрузки: разрешите доступ к интернету</string>
     <string name="dictionary_switcher_title">Изменить язык</string>
     <string name="pref_theme_e_dracula">Дракула</string>
+    <string name="pref_suggestions_add_space_title">Автодобавление пробела</string>
+    <string name="pref_suggestions_add_space_summary">Добавить пробел после выбранного слова</string>
+    <string name="pref_theme_e_gradientpurplepink">Фиолетово-розовый градиент</string>
 </resources>
