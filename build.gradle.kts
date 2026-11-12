@@ -22,6 +22,7 @@ android {
     targetSdk { version = release(36) }
     versionCode = 57
     versionName = "2.2.0"
+    vectorDrawables.generatedDensities() // Reproducibility
   }
 
   sourceSets {
@@ -76,6 +77,7 @@ android {
       isDebuggable = false
       resValue("string", "app_name", "@string/app_name_release")
       signingConfig = signingConfigs["release"]
+      isCrunchPngs = false // Reproducibility
     }
 
     named("debug") {
