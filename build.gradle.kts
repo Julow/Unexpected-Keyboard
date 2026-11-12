@@ -20,8 +20,8 @@ android {
     applicationId = "juloo.keyboard2"
     minSdk = 21
     targetSdk { version = release(36) }
-    versionCode = 57
-    versionName = "2.2.0"
+    versionCode = 58
+    versionName = "2.2.1"
     vectorDrawables.generatedDensities() // Reproducibility
   }
 

@@ -1,0 +1,3 @@
+Bug fixes
+
+Many thanks to the contributors: @PatchezTheCat @selkij
