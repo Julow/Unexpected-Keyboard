@@ -6,6 +6,11 @@ import juloo.keyboard2.KeyValue;
 /** Utils to make writing tests easier. */
 public final class TestUtils
 {
+  /** JVM repeat scheduler exposed without depending on extra Android methods
+      during incremental compilation against the SDK's Handler class. */
+  public interface Scheduler { boolean fireNext(); }
+  public static Scheduler scheduler;
+
   /** Evaluate a macro and return the last key. Used to test KeyModifier.
       Similar to [KeyEventHandler.evaluate_macro]. */
   public static KeyValue eval(String... ks)
