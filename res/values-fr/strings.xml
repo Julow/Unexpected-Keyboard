@@ -170,4 +170,6 @@
     <string name="pref_split_layout_wide">Sur un écran large</string>
     <string name="pref_theme_e_dracula">Dracula</string>
     <string name="dictionary_switcher_title">Changer de langue</string>
+    <string name="pref_suggestions_add_space_title">Automatiquement ajouter un espace</string>
+    <string name="pref_suggestions_add_space_summary">Ajouter un espace après le mot sélectionné</string>
 </resources>
