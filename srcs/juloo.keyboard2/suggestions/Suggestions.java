@@ -51,10 +51,12 @@ public final class Suggestions
     {
       Bigrams bg = _config.current_bigrams;
       int context = (bg == null) ? -1 : context_index(bg, previous_word);
-      if (context < 0)
-        query_suggestions(word);
-      else
+      if (context >= 0)
         query_suggestions_in_context(word, bg, context);
+      // Ranking in context might find nothing, for example when the typed
+      // word is not in the bigrams file.
+      if (context < 0 || count == 0)
+        query_suggestions(word);
     }
     _callback.set_suggestions(this);
   }
