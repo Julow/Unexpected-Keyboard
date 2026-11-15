@@ -157,13 +157,14 @@ public final class KeyEventHandler
   @Override
   public void currently_typed_word(String word)
   {
-    _suggestions.currently_typed_word(word);
+    _suggestions.currently_typed_word(word, _typedword.previous_word());
   }
 
   public void dictionary_changed()
   {
     // Refresh the suggestions immediately after dictionary changed.
-    _suggestions.currently_typed_word(_typedword.get());
+    _suggestions.currently_typed_word(_typedword.get(),
+        _typedword.previous_word());
   }
 
   /** Update [_mods] to be consistent with the [mods], sending key events if
