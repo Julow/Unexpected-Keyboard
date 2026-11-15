@@ -132,6 +132,11 @@ public final class CurrentlyTypedWord
     _cursor -= remove_before;
     _w_cursor -= remove_after;
     callback();
+    // The removed text goes beyond the current word, for example backspace
+    // after a space. The current word is now part of the previous word, which
+    // is not known locally. Query the editor once it has applied the change.
+    if (c - remove_before < 0 || c + remove_after > len)
+      delayed_refresh();
   }
 
   void callback()
