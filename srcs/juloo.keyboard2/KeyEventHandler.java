@@ -109,7 +109,7 @@ public final class KeyEventHandler
     update_meta_state(mods);
     switch (key.getKind())
     {
-      case Char: send_text(String.valueOf(key.getChar())); break;
+      case Char: handle_char(key.getChar()); break;
       case String: send_text(key.getString()); break;
       case Event: _recv.handle_event_key(key.getEvent()); break;
       case Keyevent: send_key_down_up(key.getKeyevent()); break;
@@ -145,6 +145,7 @@ public final class KeyEventHandler
     replace_surrounding_text(old.length() + cur_rel, -cur_rel, text);
     last_replaced_word = old;
     last_replacement_word_len = text.length();
+    last_replacement_suffix = " ";
     _next_last_action = LastAction.SUGGESTION_ENTERED;
   }
 
@@ -550,24 +551,62 @@ public final class KeyEventHandler
   /** Length of the text before the cursor that should be replaced by
       backspace. */
   int last_replacement_word_len = 0;
+  /** Text added after [last_replaced_word] when undoing the replacement. */
+  String last_replacement_suffix = " ";
 
   /** Implement autocorrect when enabled in the settings. */
   void handle_space_bar()
   {
-    if (_config.space_bar_auto_complete && _suggestions.count > 0
-        && !_typedword.is_selection_not_empty()
-        && _typedword.cursor_relative() == 0
-        && _last_action == LastAction.OTHER)
+    String w = autocorrection();
+    if (w != null)
+      suggestion_entered(w, true);
+    else
+      send_text(" ");
+  }
+
+  /** Punctuation that ends a word also triggers autocorrect, like the space
+      bar. */
+  void handle_char(char c)
+  {
+    String w = (is_autocorrect_punctuation(c) && _meta_state == 0) ?
+      autocorrection() : null;
+    if (w == null)
     {
-      // Don't replace the typed word if unecessary to avoid flickering
-      String w = _suggestions.suggestions[0];
-      if (!w.equals(_typedword.get()))
-      {
-        suggestion_entered(w, true);
-        return;
-      }
+      send_text(String.valueOf(c));
+      return;
     }
-    send_text(" ");
+    String old = _typedword.get();
+    String text = w + c;
+    replace_surrounding_text(old.length(), 0, text);
+    last_replaced_word = old;
+    last_replacement_word_len = text.length();
+    last_replacement_suffix = String.valueOf(c);
+    _next_last_action = LastAction.SUGGESTION_ENTERED;
+  }
+
+  static boolean is_autocorrect_punctuation(char c)
+  {
+    switch (c)
+    {
+      case '.': case ',': case ';': case ':': case '!': case '?':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /** The word that should replace the currently typed word when it ends or
+      [null] if autocorrect shouldn't happen. */
+  String autocorrection()
+  {
+    if (!_config.space_bar_auto_complete || _suggestions.count == 0
+        || _typedword.is_selection_not_empty()
+        || _typedword.cursor_relative() != 0
+        || _last_action != LastAction.OTHER)
+      return null;
+    String w = _suggestions.suggestions[0];
+    // Don't replace the typed word if unecessary to avoid flickering
+    return w.equals(_typedword.get()) ? null : w;
   }
 
   /** Undo the last autocorrect. */
@@ -576,7 +615,8 @@ public final class KeyEventHandler
     if (_last_action == LastAction.SUGGESTION_ENTERED
         && last_replaced_word != null)
     {
-      replace_surrounding_text(last_replacement_word_len, 0, last_replaced_word + " ");
+      replace_surrounding_text(last_replacement_word_len, 0,
+          last_replaced_word + last_replacement_suffix);
       last_replaced_word = null;
       _next_last_action = LastAction.SUGGESTION_UNDO;
     }
