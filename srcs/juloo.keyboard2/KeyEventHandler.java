@@ -312,7 +312,29 @@ public final class KeyEventHandler
       case SELECTION_CANCEL: cancel_selection(); break;
       case SPACE_BAR: handle_space_bar(); break;
       case BACKSPACE: handle_backspace(); break;
+      case UPPERCASE: recase_selection(Recase.Style.UPPER); break;
+      case LOWERCASE: recase_selection(Recase.Style.LOWER); break;
+      case SMALL_CAPS: recase_selection(Recase.Style.SMALL_CAPS); break;
+      case LETTER_SPACED: recase_selection(Recase.Style.SPACED); break;
     }
+  }
+
+  /** Replace the text selected in the editor by its [style] variant. This does
+      not send key events and does nothing if there is no selection. */
+  void recase_selection(Recase.Style style)
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn == null)
+      return;
+    /* Every editor that can select text implements this: [BaseInputConnection]
+       reads the selection of the editable it is attached to. */
+    CharSequence selection = conn.getSelectedText(0);
+    if (selection == null || selection.length() == 0)
+      return;
+    String text = selection.toString();
+    String recased = Recase.apply(text, style);
+    if (!recased.equals(text))
+      conn.commitText(recased, 1);
   }
 
   static ExtractedTextRequest _move_cursor_req = null;
