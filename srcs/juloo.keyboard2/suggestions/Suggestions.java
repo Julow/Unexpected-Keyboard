@@ -80,7 +80,8 @@ public final class Suggestions
     if (first_char_upper)
       capitalize_results(suggestions, i);
     // word with substitutions applied
-    emoji_suggestion = Emoji.withSkinTone(query_emoji(word), _config.emoji_skin_tone);
+    emoji_suggestion = Emoji.withSkinToneAndGender(query_emoji(word),
+        _config.emoji_skin_tone, _config.emoji_gender);
     count = i;
     return i;
   }

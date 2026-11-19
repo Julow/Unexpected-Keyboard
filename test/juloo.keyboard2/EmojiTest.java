@@ -60,6 +60,17 @@ public class EmojiTest
   }
 
   @Test
+  public void groups_contain_no_gender_variants()
+  {
+    List<Emoji> all = allEmojis();
+    assertTrue(all.contains(emoji("🏃")));
+    assertFalse(all.contains(emoji("🏃‍♂️")));
+    assertFalse(all.contains(emoji("🏃‍♀️")));
+    assertFalse(all.contains(emoji("👨‍👩‍👦")));
+    assertFalse(all.contains(emoji("👫")));
+  }
+
+  @Test
   public void group_boundaries()
   {
     assertEquals("😀", str(Emoji.getEmojisByGroup(0).get(0)));
@@ -67,70 +78,161 @@ public class EmojiTest
     assertEquals("🏁", str(Emoji.getEmojisByGroup(8).get(0)));
   }
 
+  static String variant(String emoji, int skinTone, int gender)
+  {
+    return str(emoji(emoji).withSkinToneAndGender(skinTone, gender));
+  }
+
   @Test
   public void emoji_without_variants()
   {
     Emoji e = emoji("😀");
     assertFalse(e.hasVariants());
-    assertSame(e, e.withSkinTone(Emoji.NO_SKIN_TONE));
-    assertSame(e, e.withSkinTone(3));
+    assertSame(e, e.withSkinToneAndGender(Emoji.NO_SKIN_TONE, Emoji.NON_SPECIFIC_GENDER));
+    assertSame(e, e.withSkinToneAndGender(3, Emoji.FEMALE));
   }
 
   @Test
-  public void single_tone_variants()
+  public void skin_tone_variants()
   {
     Emoji e = emoji("👋");
     assertTrue(e.hasVariants());
     assertEquals(6, e.variants().size());
-    assertSame(e, e.withSkinTone(Emoji.NO_SKIN_TONE));
-    assertEquals("👋🏻", str(e.withSkinTone(1)));
-    assertEquals("👋🏼", str(e.withSkinTone(2)));
-    assertEquals("👋🏽", str(e.withSkinTone(3)));
-    assertEquals("👋🏾", str(e.withSkinTone(4)));
-    assertEquals("👋🏿", str(e.withSkinTone(5)));
+    assertEquals("👋", variant("👋", Emoji.NO_SKIN_TONE, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("👋🏻", variant("👋", 1, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("👋🏽", variant("👋", 3, Emoji.MALE));
+    assertEquals("👋🏿", variant("👋", 5, Emoji.FEMALE));
   }
 
   @Test
   public void base_with_variation_selector()
   {
     // The base contains U+FE0F but its toned variants don't.
-    Emoji e = emoji("🖐️");
-    assertEquals("🖐🏽", str(e.withSkinTone(3)));
+    assertEquals("🖐🏽", variant("🖐️", 3, Emoji.NON_SPECIFIC_GENDER));
   }
 
   @Test
-  public void multi_person_variants()
+  public void gender_variants()
+  {
+    assertEquals(3, emoji("🧞").variants().size());
+    assertFalse(emoji("🧞").hasSkinTones());
+    assertEquals("🧞", variant("🧞", 3, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("🧞‍♂️", variant("🧞", 3, Emoji.MALE));
+    assertEquals("🧞‍♀️", variant("🧞", 3, Emoji.FEMALE));
+  }
+
+  @Test
+  public void skin_tone_and_gender_variants()
+  {
+    assertEquals(18, emoji("🏃").variants().size());
+    assertTrue(emoji("🏃").hasSkinTones());
+    assertEquals("🏃‍♂️", variant("🏃", Emoji.NO_SKIN_TONE, Emoji.MALE));
+    assertEquals("🏃🏽‍♀️", variant("🏃", 3, Emoji.FEMALE));
+    assertEquals("🧑🏻‍⚕️", variant("🧑‍⚕️", 1, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("👨🏻‍⚕️", variant("🧑‍⚕️", 1, Emoji.MALE));
+    assertEquals("👩🏿‍⚕️", variant("🧑‍⚕️", 5, Emoji.FEMALE));
+  }
+
+  @Test
+  public void variants_ordered_by_skin_tone_then_gender()
+  {
+    List<Emoji> vs = emoji("🏃").variants();
+    String[] expected = { "🏃", "🏃‍♂️", "🏃‍♀️", "🏃🏻", "🏃🏻‍♂️", "🏃🏻‍♀️" };
+    for (int i = 0; i < expected.length; i++)
+      assertEquals(expected[i], str(vs.get(i)));
+  }
+
+  @Test
+  public void irregular_gender_names()
+  {
+    assertEquals("👦🏼", variant("🧒", 2, Emoji.MALE));
+    assertEquals("👵", variant("🧓", Emoji.NO_SKIN_TONE, Emoji.FEMALE));
+    assertEquals("🤴🏾", variant("🫅", 4, Emoji.MALE));
+    assertEquals("🧜‍♀️", variant("🧜", Emoji.NO_SKIN_TONE, Emoji.FEMALE));
+    // The non-specific version comes after the gendered ones in Unicode.
+    assertEquals("🎅🏻", variant("🧑‍🎄", 1, Emoji.MALE));
+    assertEquals("🤶", variant("🧑‍🎄", Emoji.NO_SKIN_TONE, Emoji.FEMALE));
+    assertEquals("👱🏻‍♀️", variant("👱", 1, Emoji.FEMALE));
+    assertEquals("🧔‍♂️", variant("🧔", Emoji.NO_SKIN_TONE, Emoji.MALE));
+  }
+
+  @Test
+  public void dancers_are_not_grouped()
+  {
+    assertEquals(6, emoji("🕺").variants().size());
+    assertEquals(6, emoji("💃").variants().size());
+    assertEquals("💃", variant("💃", Emoji.NO_SKIN_TONE, Emoji.MALE));
+  }
+
+  @Test
+  public void multi_person_skin_tones()
   {
     Emoji e = emoji("🤝");
     assertEquals(26, e.variants().size());
-    assertEquals("🤝🏻", str(e.withSkinTone(1)));
-    assertEquals("🤝🏿", str(e.withSkinTone(5)));
+    assertEquals("🤝🏻", variant("🤝", 1, Emoji.NON_SPECIFIC_GENDER));
     assertTrue(e.variants().contains(emoji("🫱🏻‍🫲🏼")));
     Emoji bunny = emoji("👯");
-    assertEquals(26, bunny.variants().size());
+    assertEquals(26 * 3, bunny.variants().size());
     assertTrue(bunny.variants().contains(emoji("🧑🏻‍🐰‍🧑🏼")));
+    assertEquals("👯🏻‍♀️", variant("👯", 1, Emoji.FEMALE));
+  }
+
+  @Test
+  public void couples_ignore_default_gender()
+  {
+    Emoji kiss = emoji("💏");
+    assertEquals(26 * 4, kiss.variants().size());
+    assertEquals("💏🏼", variant("💏", 2, Emoji.MALE));
+    assertEquals("💑", variant("💑", Emoji.NO_SKIN_TONE, Emoji.FEMALE));
+    assertEquals("🧑🏻‍🤝‍🧑🏻", variant("🧑‍🤝‍🧑", 1, Emoji.MALE));
+    assertTrue(kiss.variants().contains(emoji("👩🏽‍❤️‍💋‍👨🏿")));
+    assertTrue(emoji("🧑‍🤝‍🧑").variants().contains(emoji("👫🏾")));
+  }
+
+  @Test
+  public void families()
+  {
+    Emoji family = emoji("👪");
+    assertEquals(30, family.variants().size());
+    assertEquals("👪", variant("👪", 3, Emoji.MALE));
+    assertTrue(family.variants().contains(emoji("👨‍👩‍👧‍👦")));
+    assertTrue(family.variants().contains(emoji("🧑‍🧑‍🧒")));
   }
 
   @Test
   public void variant_shares_variants_of_its_base()
   {
-    Emoji base = emoji("👋");
-    Emoji variant = emoji("👋🏽");
+    Emoji base = emoji("🏃");
+    Emoji variant = emoji("🏃🏽‍♀️");
     assertNotSame(base, variant);
     assertTrue(variant.hasVariants());
     assertSame(base.variants(), variant.variants());
-    assertSame(base, variant.withSkinTone(Emoji.NO_SKIN_TONE));
+    assertEquals(base.rowWidth(), variant.rowWidth());
   }
 
   @Test
-  public void skin_tone_of_string()
+  public void specified_variations_are_kept()
   {
-    assertEquals("👋🏽", Emoji.withSkinTone("👋", 3));
-    assertEquals("👋", Emoji.withSkinTone("👋", Emoji.NO_SKIN_TONE));
-    assertEquals("👋🏿", Emoji.withSkinTone("👋🏻", 5));
-    assertEquals("😀", Emoji.withSkinTone("😀", 3));
-    assertEquals("not an emoji", Emoji.withSkinTone("not an emoji", 3));
-    assertNull(Emoji.withSkinTone(null, 3));
+    assertEquals("🏃🏻‍♂️", variant("🏃🏻‍♂️", 5, Emoji.FEMALE));
+    assertEquals("🏃🏽‍♀️", variant("🏃‍♀️", 3, Emoji.MALE));
+    assertEquals("🏃🏻‍♀️", variant("🏃🏻", 5, Emoji.FEMALE));
+    assertEquals("👸", variant("👸", Emoji.NO_SKIN_TONE, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("👩🏽", variant("👩", 3, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("👨‍👩‍👦", variant("👨‍👩‍👦", 3, Emoji.MALE));
+    assertEquals("👩🏼‍❤️‍💋‍👩🏼", variant("👩‍❤️‍💋‍👩", 2, Emoji.MALE));
+    assertEquals("🫱🏻‍🫲🏼", variant("🫱🏻‍🫲🏼", 5, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("🧑🏻‍❤️‍💋‍🧑🏼", variant("🧑🏻‍❤️‍💋‍🧑🏼", 3, Emoji.FEMALE));
+  }
+
+  @Test
+  public void variant_of_string()
+  {
+    assertEquals("👋🏽", Emoji.withSkinToneAndGender("👋", 3, Emoji.MALE));
+    assertEquals("🏃🏿‍♀️", Emoji.withSkinToneAndGender("🏃", 5, Emoji.FEMALE));
+    assertEquals("👸🏻", Emoji.withSkinToneAndGender("👸", 1, Emoji.NON_SPECIFIC_GENDER));
+    assertEquals("😀", Emoji.withSkinToneAndGender("😀", 3, Emoji.MALE));
+    assertEquals("not an emoji", Emoji.withSkinToneAndGender("not an emoji", 3, Emoji.MALE));
+    assertNull(Emoji.withSkinToneAndGender(null, 3, Emoji.MALE));
   }
 
   @Test
@@ -138,15 +240,18 @@ public class EmojiTest
   {
     for (Emoji e : allEmojis())
     {
-      if (!e.hasVariants())
+      if (!e.hasSkinTones())
         continue;
       for (int tone = 1; tone <= 5; tone++)
       {
         int modifier = 0x1F3FA + tone;
-        String s = str(e.withSkinTone(tone));
-        assertTrue(s, s.codePoints().allMatch(c ->
-              c == modifier || !isSkinToneModifier(c)));
-        assertTrue(s, hasSkinToneModifier(s));
+        for (int gender = 0; gender < Emoji.GENDERS; gender++)
+        {
+          String s = str(e.withSkinToneAndGender(tone, gender));
+          assertTrue(s, s.codePoints().allMatch(c ->
+                c == modifier || !isSkinToneModifier(c)));
+          assertTrue(s, hasSkinToneModifier(s));
+        }
       }
     }
   }

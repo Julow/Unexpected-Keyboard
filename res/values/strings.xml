@@ -68,6 +68,10 @@
     <string name="pref_emoji_skin_tone_medium">Medium</string>
     <string name="pref_emoji_skin_tone_medium_dark">Medium-dark</string>
     <string name="pref_emoji_skin_tone_dark">Dark</string>
+    <string name="pref_emoji_gender_title">Default emoji gender</string>
+    <string name="pref_emoji_gender_non_specific">Non-specific</string>
+    <string name="pref_emoji_gender_male">Male</string>
+    <string name="pref_emoji_gender_female">Female</string>
     <string name="pref_category_style">Style</string>
     <string name="pref_margin_bottom_title">Margin bottom</string>
     <string name="pref_keyboard_height_title">Keyboard height</string>

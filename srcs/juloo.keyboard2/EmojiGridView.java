@@ -28,12 +28,13 @@ public class EmojiGridView extends GridView
 
   private static final String LAST_USE_PREF = "emoji_last_use";
 
-  /** The base emoji and the 5 uniform skin tones fit on the first row. */
+  /** For emojis that only have skin tone variants, the base emoji and the 5
+      uniform skin tones fit on the first row. */
   private static final int SKIN_TONE_POPUP_COLUMNS = 6;
 
   private List<Emoji> _emojiArray;
   private HashMap<Emoji, Integer> _lastUsed;
-  private PopupWindow _skinTonePopup = null;
+  private PopupWindow _variantsPopup = null;
 
   /*
    ** TODO: adapt column width and emoji size
@@ -58,8 +59,8 @@ public class EmojiGridView extends GridView
   @Override
   protected void onDetachedFromWindow()
   {
-    if (_skinTonePopup != null)
-      _skinTonePopup.dismiss();
+    if (_variantsPopup != null)
+      _variantsPopup.dismiss();
     super.onDetachedFromWindow();
   }
 
@@ -70,7 +71,7 @@ public class EmojiGridView extends GridView
 
   public void setEmojiGroup(int group)
   {
-    _emojiArray = (group == GROUP_LAST_USE) ? getLastEmojis() : withDefaultSkinTone(Emoji.getEmojisByGroup(group));
+    _emojiArray = (group == GROUP_LAST_USE) ? getLastEmojis() : withDefaultVariant(Emoji.getEmojisByGroup(group));
     setAdapter(new EmojiViewAdpater(getContext(), _emojiArray));
   }
 
@@ -84,7 +85,7 @@ public class EmojiGridView extends GridView
     Emoji emoji = _emojiArray.get(pos);
     if (!emoji.hasVariants())
       return false;
-    showSkinTonePopup(v, emoji.variants());
+    showVariantsPopup(v, emoji);
     return true;
   }
 
@@ -97,25 +98,28 @@ public class EmojiGridView extends GridView
     saveLastUsed(); // TODO: opti
   }
 
-  private static List<Emoji> withDefaultSkinTone(List<Emoji> emojis)
+  private static List<Emoji> withDefaultVariant(List<Emoji> emojis)
   {
-    int skinTone = Config.globalConfig().emoji_skin_tone;
-    List<Emoji> toned = new ArrayList<>(emojis.size());
+    Config config = Config.globalConfig();
+    List<Emoji> variants = new ArrayList<>(emojis.size());
     for (Emoji emoji : emojis)
-      toned.add(emoji.withSkinTone(skinTone));
-    return toned;
+      variants.add(emoji.withSkinToneAndGender(config.emoji_skin_tone, config.emoji_gender));
+    return variants;
   }
 
-  /** Cells have the same size as [anchor]. */
-  private void showSkinTonePopup(View anchor, List<Emoji> variants)
+  /** Cells have the same size as [anchor]. The popup scrolls if it is taller
+      than the grid. */
+  private void showVariantsPopup(View anchor, Emoji emoji)
   {
-    if (_skinTonePopup != null)
-      _skinTonePopup.dismiss();
-    GridView grid = (GridView)View.inflate(getContext(), R.layout.emoji_skin_tone_popup, null);
-    int columns = Math.min(SKIN_TONE_POPUP_COLUMNS, getNumColumns());
+    if (_variantsPopup != null)
+      _variantsPopup.dismiss();
+    List<Emoji> variants = emoji.variants();
+    GridView grid = (GridView)View.inflate(getContext(), R.layout.emoji_variants_popup, null);
+    int rowWidth = (emoji.rowWidth() > 1) ? emoji.rowWidth() : SKIN_TONE_POPUP_COLUMNS;
+    int columns = Math.min(rowWidth, getNumColumns());
     int rows = (variants.size() + columns - 1) / columns;
-    PopupWindow popup = new PopupWindow(grid,
-        columns * anchor.getWidth(), rows * anchor.getHeight());
+    PopupWindow popup = new PopupWindow(grid, columns * anchor.getWidth(),
+        Math.min(rows * anchor.getHeight(), getHeight()));
     grid.setNumColumns(columns);
     grid.setAdapter(new EmojiViewAdpater(getContext(), variants));
     grid.setOnItemClickListener((parent, v, pos, id) -> {
@@ -126,7 +130,7 @@ public class EmojiGridView extends GridView
     popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     popup.setOutsideTouchable(true);
     popup.showAsDropDown(anchor);
-    _skinTonePopup = popup;
+    _variantsPopup = popup;
   }
 
   private List<Emoji> getLastEmojis()

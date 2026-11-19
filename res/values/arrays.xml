@@ -122,6 +122,16 @@
     <item>4</item>
     <item>5</item>
   </string-array>
+  <string-array name="pref_emoji_gender_entries">
+    <item>@string/pref_emoji_gender_non_specific</item>
+    <item>@string/pref_emoji_gender_male</item>
+    <item>@string/pref_emoji_gender_female</item>
+  </string-array>
+  <string-array name="pref_emoji_gender_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
   <string-array name="pref_slider_sensitivity_entries">
     <item>@string/pref_slider_sensitivity_slow</item>
     <item>@string/pref_slider_sensitivity_medium</item>

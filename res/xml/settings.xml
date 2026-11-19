@@ -35,6 +35,7 @@
     <juloo.keyboard2.prefs.IntSlideBarPreference android:dependency="vibrate_custom" android:key="vibrate_duration" android:title="@string/pref_vibrate_duration_title" android:summary="%sms" android:defaultValue="20" min="0" max="100"/>
     <ListPreference android:key="number_entry_layout" android:title="@string/pref_number_entry_title" android:summary="%s" android:defaultValue="pin" android:entries="@array/pref_number_entry_entries" android:entryValues="@array/pref_number_entry_values"/>
     <ListPreference android:key="emoji_skin_tone" android:title="@string/pref_emoji_skin_tone_title" android:summary="%s" android:defaultValue="0" android:entries="@array/pref_emoji_skin_tone_entries" android:entryValues="@array/pref_emoji_skin_tone_values"/>
+    <ListPreference android:key="emoji_gender" android:title="@string/pref_emoji_gender_title" android:summary="%s" android:defaultValue="0" android:entries="@array/pref_emoji_gender_entries" android:entryValues="@array/pref_emoji_gender_values"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_category_style">
     <ListPreference android:key="theme" android:title="@string/pref_theme" android:summary="%s" android:defaultValue="system" android:entries="@array/pref_theme_entries" android:entryValues="@array/pref_theme_values"/>
