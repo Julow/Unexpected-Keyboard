@@ -138,6 +138,7 @@ public class Keyboard2 extends InputMethodService
         _foldStateTracker.isUnfolded(), _dictionaries);
     _config = Config.globalConfig();
     Receiver recvr = this.new Receiver();
+    Emoji.init(getResources()); // Used by emoji suggestions
     _suggestions = new Suggestions(recvr, _config);
     _keyeventhandler = new KeyEventHandler(_config, recvr, _suggestions);
     KeyValue.Stateful._handler = recvr;
