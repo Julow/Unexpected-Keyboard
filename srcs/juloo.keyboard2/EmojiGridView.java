@@ -2,6 +2,8 @@ package juloo.keyboard2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,14 +22,18 @@ import java.util.List;
 import java.util.Set;
 
 public class EmojiGridView extends GridView
-  implements GridView.OnItemClickListener
+  implements GridView.OnItemClickListener, GridView.OnItemLongClickListener
 {
   public static final int GROUP_LAST_USE = -1;
 
   private static final String LAST_USE_PREF = "emoji_last_use";
 
+  /** The base emoji and the 5 uniform skin tones fit on the first row. */
+  private static final int SKIN_TONE_POPUP_COLUMNS = 6;
+
   private List<Emoji> _emojiArray;
   private HashMap<Emoji, Integer> _lastUsed;
+  private PopupWindow _skinTonePopup = null;
 
   /*
    ** TODO: adapt column width and emoji size
@@ -37,6 +44,7 @@ public class EmojiGridView extends GridView
     super(context, attrs);
     Emoji.init(context.getResources());
     setOnItemClickListener(this);
+    setOnItemLongClickListener(this);
     loadLastUsed();
   }
 
@@ -47,6 +55,14 @@ public class EmojiGridView extends GridView
     setEmojiGroup(getDefaultEmojiGroup());
   }
 
+  @Override
+  protected void onDetachedFromWindow()
+  {
+    if (_skinTonePopup != null)
+      _skinTonePopup.dismiss();
+    super.onDetachedFromWindow();
+  }
+
   public int getDefaultEmojiGroup()
   {
     return (_lastUsed.isEmpty()) ? 0 : GROUP_LAST_USE;
@@ -54,17 +70,63 @@ public class EmojiGridView extends GridView
 
   public void setEmojiGroup(int group)
   {
-    _emojiArray = (group == GROUP_LAST_USE) ? getLastEmojis() : Emoji.getEmojisByGroup(group);
+    _emojiArray = (group == GROUP_LAST_USE) ? getLastEmojis() : withDefaultSkinTone(Emoji.getEmojisByGroup(group));
     setAdapter(new EmojiViewAdpater(getContext(), _emojiArray));
   }
 
   public void onItemClick(AdapterView<?> parent, View v, int pos, long id)
   {
+    sendEmoji(_emojiArray.get(pos));
+  }
+
+  public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id)
+  {
+    Emoji emoji = _emojiArray.get(pos);
+    if (!emoji.hasVariants())
+      return false;
+    showSkinTonePopup(v, emoji.variants());
+    return true;
+  }
+
+  private void sendEmoji(Emoji emoji)
+  {
     Config config = Config.globalConfig();
-    Integer used = _lastUsed.get(_emojiArray.get(pos));
-    _lastUsed.put(_emojiArray.get(pos), (used == null) ? 1 : used.intValue() + 1);
-    config.handler.key_up(_emojiArray.get(pos).kv(), Pointers.Modifiers.EMPTY);
+    Integer used = _lastUsed.get(emoji);
+    _lastUsed.put(emoji, (used == null) ? 1 : used.intValue() + 1);
+    config.handler.key_up(emoji.kv(), Pointers.Modifiers.EMPTY);
     saveLastUsed(); // TODO: opti
+  }
+
+  private static List<Emoji> withDefaultSkinTone(List<Emoji> emojis)
+  {
+    int skinTone = Config.globalConfig().emoji_skin_tone;
+    List<Emoji> toned = new ArrayList<>(emojis.size());
+    for (Emoji emoji : emojis)
+      toned.add(emoji.withSkinTone(skinTone));
+    return toned;
+  }
+
+  /** Cells have the same size as [anchor]. */
+  private void showSkinTonePopup(View anchor, List<Emoji> variants)
+  {
+    if (_skinTonePopup != null)
+      _skinTonePopup.dismiss();
+    GridView grid = (GridView)View.inflate(getContext(), R.layout.emoji_skin_tone_popup, null);
+    int columns = Math.min(SKIN_TONE_POPUP_COLUMNS, getNumColumns());
+    int rows = (variants.size() + columns - 1) / columns;
+    PopupWindow popup = new PopupWindow(grid,
+        columns * anchor.getWidth(), rows * anchor.getHeight());
+    grid.setNumColumns(columns);
+    grid.setAdapter(new EmojiViewAdpater(getContext(), variants));
+    grid.setOnItemClickListener((parent, v, pos, id) -> {
+      sendEmoji(variants.get(pos));
+      popup.dismiss();
+    });
+    // A background is required for outside touches to dismiss the popup.
+    popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    popup.setOutsideTouchable(true);
+    popup.showAsDropDown(anchor);
+    _skinTonePopup = popup;
   }
 
   private List<Emoji> getLastEmojis()

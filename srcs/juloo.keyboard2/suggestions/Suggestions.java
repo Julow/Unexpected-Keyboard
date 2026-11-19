@@ -7,6 +7,7 @@ import juloo.keyboard2.dict.Dictionaries;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.ComposeKey;
 import juloo.keyboard2.ComposeKeyData;
+import juloo.keyboard2.Emoji;
 
 /** Keep track of the word being typed and provide suggestions for
     [CandidatesView]. */
@@ -78,7 +79,8 @@ public final class Suggestions
     }
     if (first_char_upper)
       capitalize_results(suggestions, i);
-    emoji_suggestion = query_emoji(word); // word with substitutions applied
+    // word with substitutions applied
+    emoji_suggestion = Emoji.withSkinTone(query_emoji(word), _config.emoji_skin_tone);
     count = i;
     return i;
   }

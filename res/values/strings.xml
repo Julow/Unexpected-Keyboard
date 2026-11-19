@@ -61,6 +61,13 @@
     <string name="pref_number_entry_layout_pin">PIN Entry</string>
     <string name="pref_number_entry_layout_number">Number pane</string>
     <string name="pref_number_entry_layout_normal">Use the main layout</string>
+    <string name="pref_emoji_skin_tone_title">Default emoji skin tone</string>
+    <string name="pref_emoji_skin_tone_none">Default (yellow)</string>
+    <string name="pref_emoji_skin_tone_light">Light</string>
+    <string name="pref_emoji_skin_tone_medium_light">Medium-light</string>
+    <string name="pref_emoji_skin_tone_medium">Medium</string>
+    <string name="pref_emoji_skin_tone_medium_dark">Medium-dark</string>
+    <string name="pref_emoji_skin_tone_dark">Dark</string>
     <string name="pref_category_style">Style</string>
     <string name="pref_margin_bottom_title">Margin bottom</string>
     <string name="pref_keyboard_height_title">Keyboard height</string>
