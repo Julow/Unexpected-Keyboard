@@ -133,10 +133,11 @@ public final class KeyEventHandler
   @Override
   public void suggestion_entered(String text)
   {
-    suggestion_entered(text, _config.suggestions_add_space);
+    suggestion_entered(text,
+        _config.suggestions_add_space && _typedword.is_eol());
   }
 
-  public void suggestion_entered(String text, boolean add_space_after)
+  void suggestion_entered(String text, boolean add_space_after)
   {
     if (add_space_after)
       text = text + " ";
