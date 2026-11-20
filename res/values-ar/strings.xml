@@ -170,4 +170,7 @@
     <string name="pref_split_layout_never">أبداً</string>
     <string name="pref_split_layout_landscape">في الوضع الأفقي</string>
     <string name="pref_split_layout_wide">على الشاشات العريضة</string>
+    <string name="pref_suggestions_add_space_summary">أضف مسافة بعد الكلمة المختارة</string>
+    <string name="pref_suggestions_add_space_title">إضافة مسافة تلقائيا</string>
+    <string name="pref_theme_e_gradientpurplepink">تدرج بنفسجي وردي</string>
 </resources>
