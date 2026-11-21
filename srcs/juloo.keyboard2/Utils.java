@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Locale;
 
 public final class Utils
@@ -50,23 +49,21 @@ public final class Utils
 
   public static String read_all_utf8(InputStream inp) throws Exception
   {
-    InputStreamReader reader = new InputStreamReader(inp, "UTF-8");
-    StringBuilder out = new StringBuilder();
-    int buff_length = 8000;
-    char[] buff = new char[buff_length];
-    int l;
-    while ((l = reader.read(buff, 0, buff_length)) != -1)
-      out.append(buff, 0, l);
-    return out.toString();
+    return new String(read_all_bytes(inp), "UTF-8");
   }
 
+  /** Read all bytes of [inp] then close it. */
   public static byte[] read_all_bytes(InputStream inp) throws IOException
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
-    byte[] buff = new byte[128000];
-    int l;
-    while ((l = inp.read(buff)) != -1)
-      out.write(buff, 0, l);
+    try
+    {
+      byte[] buff = new byte[128000];
+      int l;
+      while ((l = inp.read(buff)) != -1)
+        out.write(buff, 0, l);
+    }
+    finally { inp.close(); }
     return out.toByteArray();
   }
 }

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-import java.io.InputStream;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 import juloo.cdict.Cdict;
@@ -129,10 +128,8 @@ public class DictionariesActivity extends Activity
   {
     SupportedDictionaries ds = SupportedDictionaries.get(getResources());
     // Dictionaries are always compressed.
-    InputStream inp =
-      new GZIPInputStream(getContentResolver().openInputStream(uri));
-    byte[] data = Utils.read_all_bytes(inp);
-    inp.close();
+    byte[] data = Utils.read_all_bytes(
+        new GZIPInputStream(getContentResolver().openInputStream(uri)));
     String dict_name = ds.find_by_checksum(data);
     if (dict_name == null)
       throw new Exception("Unknown dictionary hash");
