@@ -19,6 +19,7 @@ public class DictionariesActivity extends Activity
   static final int IMPORT_FILE_REQUEST = 1;
 
   Dictionaries _dictionaries;
+  DictionaryListView _list_installed;
   DictionaryListView _list_locales;
   DictionaryListView _list_all;
 
@@ -28,6 +29,8 @@ public class DictionariesActivity extends Activity
     super.onCreate(savedInstanceState);
     _dictionaries = Dictionaries.instance(this);
     setContentView(R.layout.dictionaries_activity);
+    _list_installed =
+      (DictionaryListView)findViewById(R.id.dictionaries_list_installed);
     _list_locales =
       (DictionaryListView)findViewById(R.id.dictionaries_list_locales);
     _list_all = (DictionaryListView)findViewById(R.id.dictionaries_list_all);
@@ -51,6 +54,7 @@ public class DictionariesActivity extends Activity
   void refresh_lists()
   {
     Set<String> installed = _dictionaries.get_installed();
+    _list_installed.refresh(installed);
     _list_locales.refresh(installed);
     _list_all.refresh(installed);
   }

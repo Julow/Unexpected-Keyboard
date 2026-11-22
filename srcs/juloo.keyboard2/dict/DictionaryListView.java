@@ -16,6 +16,7 @@ import juloo.keyboard2.R;
 
 public class DictionaryListView extends LinearLayout
 {
+  Content _content;
   List<DictView> _dict_views;
 
   public DictionaryListView(Context ctx, AttributeSet attrs)
@@ -23,12 +24,13 @@ public class DictionaryListView extends LinearLayout
     super(ctx, attrs);
     setOrientation(LinearLayout.VERTICAL);
     _dict_views = new ArrayList<DictView>();
-    boolean device_locales =
-      attrs.getAttributeBooleanValue(null, "device_locales", true);
-    if (device_locales)
-      inflate_views_device_locales(ctx);
-    else
-      inflate_views_all(ctx);
+    _content = content_of_attrs(attrs);
+    switch (_content)
+    {
+      case INSTALLED: break; // Inflated on [refresh]
+      case LOCALES: inflate_views_device_locales(ctx); break;
+      case ALL: inflate_views_all(ctx); break;
+    }
   }
 
   DictionariesActivity get_activity()
@@ -58,6 +60,15 @@ public class DictionaryListView extends LinearLayout
       inflate_item(ctx, ds, i);
   }
 
+  void inflate_views_installed(Context ctx, Set<String> installed)
+  {
+    removeAllViews();
+    _dict_views.clear();
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
+    for (String name : installed)
+      inflate_item(ctx, ds, ds.find(name));
+  }
+
   void inflate_item(Context ctx, SupportedDictionaries ds, int i)
   {
     View v = LayoutInflater.from(ctx)
@@ -66,42 +77,71 @@ public class DictionaryListView extends LinearLayout
     addView(v);
   }
 
-  /** Update the "installed" status of item views. Meaning whether the
-      "download" or "delete" button is shown. */
+  /** Update the "installed" status of item views. */
   void refresh(Set<String> installed)
   {
-    for (DictView d : _dict_views)
-      d.refresh(installed);
+    switch (_content)
+    {
+      case INSTALLED:
+        inflate_views_installed(getContext(), installed);
+        break;
+      case LOCALES:
+      case ALL:
+        for (DictView d : _dict_views)
+          d.hide_if_installed(installed);
+        break;
+    }
   }
 
   final class DictView implements View.OnClickListener
   {
     public final String dict_name;
-    public final ImageView download_button;
+    public final View view;
 
     public DictView(View view, SupportedDictionaries ds, int dict_index)
     {
+      this.view = view;
       dict_name = ds.dict_name(dict_index);
       float size_mb = ds.size(dict_index) / 1048576.f;
       ((TextView)view.findViewById(R.id.dictionary_download_locale))
         .setText(ds.display_name(dict_index));
       ((TextView)view.findViewById(R.id.dictionary_download_size))
         .setText(NumberFormat.getInstance().format(size_mb) + "MB");
-      download_button =
+      ImageView button =
         (ImageView)view.findViewById(R.id.dictionary_download_button);
-      download_button.setOnClickListener(this);
+      button.setImageResource((_content == Content.INSTALLED) ?
+          R.drawable.ic_delete : R.drawable.ic_download);
+      button.setOnClickListener(this);
     }
 
-    public void refresh(Set<String> installed)
+    public void hide_if_installed(Set<String> installed)
     {
-      download_button.setImageResource(installed.contains(dict_name) ?
-          R.drawable.ic_delete : R.drawable.ic_download);
+      view.setVisibility(installed.contains(dict_name) ?
+          View.GONE : View.VISIBLE);
     }
 
     @Override
     public void onClick(View v)
     {
       get_activity().toggle_installed(dict_name);
+    }
+  }
+
+  enum Content
+  {
+    INSTALLED,
+    LOCALES,
+    ALL
+  }
+
+  static Content content_of_attrs(AttributeSet attrs)
+  {
+    switch (attrs.getAttributeValue(null, "content"))
+    {
+      case "installed": return Content.INSTALLED;
+      case "locales": return Content.LOCALES;
+      default:
+      case "all": return Content.ALL;
     }
   }
 }

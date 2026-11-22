@@ -3,7 +3,8 @@
   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
     <TextView style="@style/paragraph" android:text="@string/dictionaries_from_internet"/>
     <Button android:id="@+id/dictionaries_import_button" style="@style/dictionary_import_button" android:text="@string/dictionaries_import_button"/>
-    <juloo.keyboard2.dict.DictionaryListView android:id="@+id/dictionaries_list_locales" device_locales="true" style="@style/dictionary_list_view"/>
-    <juloo.keyboard2.dict.DictionaryListView android:id="@+id/dictionaries_list_all" device_locales="false" style="@style/dictionary_list_view"/>
+    <juloo.keyboard2.dict.DictionaryListView android:id="@+id/dictionaries_list_installed" content="installed" style="@style/dictionary_list_view"/>
+    <juloo.keyboard2.dict.DictionaryListView android:id="@+id/dictionaries_list_locales" content="locales" style="@style/dictionary_list_view"/>
+    <juloo.keyboard2.dict.DictionaryListView android:id="@+id/dictionaries_list_all" content="all" style="@style/dictionary_list_view"/>
   </LinearLayout>
 </ScrollView>
