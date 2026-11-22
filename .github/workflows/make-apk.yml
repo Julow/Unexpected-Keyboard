@@ -76,14 +76,13 @@ jobs:
           const body = 'Debug build: ${{ steps.upload.outputs.artifact-url }}';
           // Update the existing comment if there's one
           const comments = await github.paginate(github.rest.issues.listComments, args);
-          console.log(comments);
           for (const cmt of comments)
           {
-            if (cmt.user.login == 'github-actions' && cmt.body.includes("Debug build: "))
+            if (cmt.user.login == 'github-actions[bot]' && cmt.body.includes("Debug build: "))
             {
-              github.rest.issues.updateComment({ ...args, comment_id: cmt.id, body: body });
+              await github.rest.issues.updateComment({ ...args, comment_id: cmt.id, body: body });
               return;
             }
           }
           // Post comment
-          github.rest.issues.createComment({ ...args, body: body })
+          await github.rest.issues.createComment({ ...args, body: body })
