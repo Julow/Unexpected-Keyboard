@@ -170,4 +170,7 @@
     <string name="pref_split_layout_never">Nikoli</string>
     <string name="pref_split_layout_landscape">V ležeči usmerjenosti</string>
     <string name="pref_split_layout_wide">Na širokih zaslonih</string>
+    <string name="pref_suggestions_add_space_title">Samodejno dodaj presledek</string>
+    <string name="pref_suggestions_add_space_summary">Za izbrano besedo dodajte znak za presledek</string>
+    <string name="pref_theme_e_gradientpurplepink">Vijolično-roza preliv</string>
 </resources>
