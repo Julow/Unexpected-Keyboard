@@ -43,11 +43,7 @@ jobs:
       run: gradle test
 
     - name: Build debug APK
-      run: |
-        gradle assembleDebug
-        artifact="${{github.repository_owner}} ${{github.ref_name}}"
-        artifact="${artifact//\//-}" # replace slashes
-        echo "artifact=${artifact}" >> $GITHUB_ENV
+      run: gradle assembleDebug
       env:
         DEBUG_KEYSTORE: "debug.keystore"
         DEBUG_KEYSTORE_PASSWORD: debug0
@@ -58,13 +54,14 @@ jobs:
       id: upload
       uses: actions/upload-artifact@v7
       with:
-        name: "${{env.artifact}} debug_apk"
+        name: "Unexpected-Keyboard-debug-${{ github.sha }}"
         path: build/outputs/apk/debug/*.apk
 
     - name: Check generated files
       run:
         git diff --name-only --exit-code
 
+    # Post link to debug APK as a comment
     - name: Post artifact
       uses: actions/github-script@v9
       if: ${{ github.event_name == 'pull_request' }}
