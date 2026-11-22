@@ -43,11 +43,7 @@ jobs:
       run: gradle test
 
     - name: Build debug APK
-      run: |
-        gradle assembleDebug
-        artifact="${{github.repository_owner}} ${{github.ref_name}}"
-        artifact="${artifact//\//-}" # replace slashes
-        echo "artifact=${artifact}" >> $GITHUB_ENV
+      run: gradle assembleDebug
       env:
         DEBUG_KEYSTORE: "debug.keystore"
         DEBUG_KEYSTORE_PASSWORD: debug0
@@ -55,11 +51,38 @@ jobs:
         DEBUG_KEY_PASSWORD: debug0
 
     - name: Upload debug APK
+      id: upload
       uses: actions/upload-artifact@v7
       with:
-        name: "${{env.artifact}} debug_apk"
+        name: "Unexpected-Keyboard-debug-${{ github.sha }}"
         path: build/outputs/apk/debug/*.apk
 
     - name: Check generated files
       run:
         git diff --name-only --exit-code
+
+    # Post link to debug APK as a comment
+    # https://octokit.github.io/rest.js/v22/
+    - name: Post artifact
+      uses: actions/github-script@v9
+      if: ${{ github.event_name == 'pull_request' }}
+      with:
+        script: |
+          const args = {
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          };
+          const body = 'Debug build (${{ github.event.pull_request.head.sha }}): ${{ steps.upload.outputs.artifact-url }}';
+          // Update the existing comment if there's one
+          const comments = await github.paginate(github.rest.issues.listComments, args);
+          for (const cmt of comments)
+          {
+            if (cmt.user.login == 'github-actions[bot]' && cmt.body.includes("Debug build "))
+            {
+              await github.rest.issues.updateComment({ ...args, comment_id: cmt.id, body: body });
+              return;
+            }
+          }
+          // Post comment
+          await github.rest.issues.createComment({ ...args, body: body })
