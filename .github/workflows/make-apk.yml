@@ -73,12 +73,12 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo
           };
-          const body = 'Debug build: ${{ steps.upload.outputs.artifact-url }}';
+          const body = 'Debug build (${{ github.event.pull_request.head.sha }}): ${{ steps.upload.outputs.artifact-url }}';
           // Update the existing comment if there's one
           const comments = await github.paginate(github.rest.issues.listComments, args);
           for (const cmt of comments)
           {
-            if (cmt.user.login == 'github-actions[bot]' && cmt.body.includes("Debug build: "))
+            if (cmt.user.login == 'github-actions[bot]' && cmt.body.includes("Debug build "))
             {
               await github.rest.issues.updateComment({ ...args, comment_id: cmt.id, body: body });
               return;
