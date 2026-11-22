@@ -2,6 +2,7 @@ package juloo.keyboard2.dict;
 
 import android.content.res.Resources;
 import android.util.Base64;
+import java.security.MessageDigest;
 import java.util.Arrays;
 import juloo.keyboard2.R;
 
@@ -52,14 +53,16 @@ public class SupportedDictionaries
     return (i >= 0) ? names[i] : dict_name;
   }
 
-  /** SHA-256 hash of the dictionary in binary format. Return [null] if not
-      found. */
-  public byte[] get_sha256(String dict_name)
+  /** Return the name of the dictionary if it is known, [null] otherwise. */
+  public String find_by_checksum(byte[] data) throws Exception
   {
-    int i = find(dict_name);
-    if (i < 0)
-      return null;
-    return Base64.decode(get_sha256s()[i], Base64.DEFAULT);
+    String hash = Base64.encodeToString(
+        MessageDigest.getInstance("SHA-256").digest(data), Base64.NO_WRAP);
+    String[] hashes = get_sha256s();
+    for (int i = 0; i < hashes.length; i++)
+      if (hashes[i].equals(hash))
+        return locales[i];
+    return null;
   }
 
   int[] get_sizes()

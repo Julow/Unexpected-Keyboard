@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
@@ -148,9 +146,8 @@ public final class Dictionaries
       return null;
     try
     {
-      FileInputStream inp = _context.openFileInput(dict_file_name(dict_name));
-      byte[] data = Utils.read_all_bytes(inp);
-      inp.close();
+      byte[] data = Utils.read_all_bytes(
+          _context.openFileInput(dict_file_name(dict_name)));
       return Cdict.of_bytes(data);
     }
     catch (IOException e) { return null; }

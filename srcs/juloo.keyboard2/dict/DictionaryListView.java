@@ -7,42 +7,35 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.security.MessageDigest;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.zip.GZIPInputStream;
-import juloo.cdict.Cdict;
 import juloo.keyboard2.DeviceLocales;
-import juloo.keyboard2.Logs;
 import juloo.keyboard2.R;
-import juloo.keyboard2.Utils;
 
 public class DictionaryListView extends LinearLayout
 {
+  Content _content;
   List<DictView> _dict_views;
-  Dictionaries _dictionaries;
-  Set<String> _pending = new HashSet<String>();
 
   public DictionaryListView(Context ctx, AttributeSet attrs)
   {
     super(ctx, attrs);
     setOrientation(LinearLayout.VERTICAL);
-    _dictionaries = Dictionaries.instance(ctx);
     _dict_views = new ArrayList<DictView>();
-    boolean device_locales =
-      attrs.getAttributeBooleanValue(null, "device_locales", true);
-    if (device_locales)
-      inflate_views_device_locales(ctx);
-    else
-      inflate_views_all(ctx);
-    refresh();
+    _content = content_of_attrs(attrs);
+    switch (_content)
+    {
+      case INSTALLED: break; // Inflated on [refresh]
+      case LOCALES: inflate_views_device_locales(ctx); break;
+      case ALL: inflate_views_all(ctx); break;
+    }
+  }
+
+  DictionariesActivity get_activity()
+  {
+    return (DictionariesActivity)getContext();
   }
 
   void inflate_views_device_locales(Context ctx)
@@ -67,6 +60,15 @@ public class DictionaryListView extends LinearLayout
       inflate_item(ctx, ds, i);
   }
 
+  void inflate_views_installed(Context ctx, Set<String> installed)
+  {
+    removeAllViews();
+    _dict_views.clear();
+    SupportedDictionaries ds = SupportedDictionaries.get(ctx.getResources());
+    for (String name : installed)
+      inflate_item(ctx, ds, ds.find(name));
+  }
+
   void inflate_item(Context ctx, SupportedDictionaries ds, int i)
   {
     View v = LayoutInflater.from(ctx)
@@ -75,144 +77,71 @@ public class DictionaryListView extends LinearLayout
     addView(v);
   }
 
-  /** Update the "installed" status of item views. Meaning whether the
-      "download" or "delete" button is shown. */
-  void refresh()
+  /** Update the "installed" status of item views. */
+  void refresh(Set<String> installed)
   {
-    Set<String> installed = _dictionaries.get_installed();
-    for (DictView d : _dict_views)
-      d.refresh(installed);
-  }
-
-  void toggle_installed(String dict_name)
-  {
-    run_dictionary_action(dict_name, new Runnable()
-        {
-          public void run()
-          {
-            if (_dictionaries.get_installed().contains(dict_name))
-              _dictionaries.uninstall(dict_name);
-            else
-            {
-              try
-              {
-                install_dictionary_from_internet(dict_name);
-                post_toast(getContext().getString(R.string.dictionaries_download_success));
-              }
-              catch (Exception e)
-              {
-                Logs.exn(dict_name, e);
-                post_toast(getContext().getString(R.string.dictionaries_download_failed)
-                    + " (" + e.getMessage() + ")");
-              }
-            }
-          }
-        });
-  }
-
-  /** Run action [r] for dictionary [name] if no action is already running for
-      that dictionary. Calls [refresh] after the action completed. */
-  void run_dictionary_action(String name, Runnable r)
-  {
-    if (_pending.contains(name))
-      return;
-    _pending.add(name);
-    (new Thread()
-     {
-       public void run()
-       {
-         r.run();
-         post(new Runnable()
-             {
-               public void run()
-               {
-                 _pending.remove(name);
-                 refresh();
-               }
-             });
-       }
-     }).start();
-    refresh();
+    switch (_content)
+    {
+      case INSTALLED:
+        inflate_views_installed(getContext(), installed);
+        break;
+      case LOCALES:
+      case ALL:
+        for (DictView d : _dict_views)
+          d.hide_if_installed(installed);
+        break;
+    }
   }
 
   final class DictView implements View.OnClickListener
   {
     public final String dict_name;
-    public final ImageView download_button;
+    public final View view;
 
     public DictView(View view, SupportedDictionaries ds, int dict_index)
     {
+      this.view = view;
       dict_name = ds.dict_name(dict_index);
       float size_mb = ds.size(dict_index) / 1048576.f;
       ((TextView)view.findViewById(R.id.dictionary_download_locale))
         .setText(ds.display_name(dict_index));
       ((TextView)view.findViewById(R.id.dictionary_download_size))
         .setText(NumberFormat.getInstance().format(size_mb) + "MB");
-      download_button =
+      ImageView button =
         (ImageView)view.findViewById(R.id.dictionary_download_button);
-      download_button.setOnClickListener(this);
+      button.setImageResource((_content == Content.INSTALLED) ?
+          R.drawable.ic_delete : R.drawable.ic_download);
+      button.setOnClickListener(this);
     }
 
-    public void refresh(Set<String> installed)
+    public void hide_if_installed(Set<String> installed)
     {
-      int res =
-        _pending.contains(dict_name) ? 0 :
-        installed.contains(dict_name) ? R.drawable.ic_delete :
-        R.drawable.ic_download;
-      download_button.setImageResource(res);
+      view.setVisibility(installed.contains(dict_name) ?
+          View.GONE : View.VISIBLE);
     }
 
     @Override
     public void onClick(View v)
     {
-      toggle_installed(dict_name);
+      get_activity().toggle_installed(dict_name);
     }
   }
 
-  static final String DICT_REPO_URL =
-    "https://raw.githubusercontent.com/Julow/Unexpected-Keyboard-dictionaries/refs/heads/main";
-
-  static URL url_of_dictionary(String dict_name)
-      throws MalformedURLException
+  enum Content
   {
-    int format_version = Cdict.format_version();
-    return new URL(DICT_REPO_URL + "/v" + format_version + "/" + dict_name
-        + ".dict");
+    INSTALLED,
+    LOCALES,
+    ALL
   }
 
-  void install_dictionary_from_internet(String dict_name) throws Exception
+  static Content content_of_attrs(AttributeSet attrs)
   {
-    // Remote files are compressed with gzip at rest. Do not use server side
-    // compression and force decompression.
-    URLConnection con = url_of_dictionary(dict_name).openConnection();
-    con.setRequestProperty("Accept-Encoding", "identity");
-    byte[] data = Utils.read_all_bytes(new GZIPInputStream(con.getInputStream()));
-    checksum(dict_name, data);
-    Cdict.of_bytes(data); // Check that the dictionary can load.
-    _dictionaries.install(dict_name, data);
-  }
-
-  void checksum(String dict_name, byte[] data) throws Exception
-  {
-    SupportedDictionaries ds = SupportedDictionaries.get(getResources());
-    byte[] expected = ds.get_sha256(dict_name);
-    if (expected == null)
-      throw new Exception("Unknown dict name");
-    MessageDigest md = MessageDigest.getInstance("SHA-256");
-    md.update(data);
-    byte[] got = md.digest();
-    if (!MessageDigest.isEqual(expected, got))
-      throw new Exception("Checksum mismatch");
-  }
-
-  void post_toast(String msg)
-  {
-    post(new Runnable()
-        {
-          public void run()
-          {
-            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-          }
-        });
+    switch (attrs.getAttributeValue(null, "content"))
+    {
+      case "installed": return Content.INSTALLED;
+      case "locales": return Content.LOCALES;
+      default:
+      case "all": return Content.ALL;
+    }
   }
 }

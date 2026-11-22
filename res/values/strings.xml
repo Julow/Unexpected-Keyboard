@@ -161,9 +161,12 @@
     <string name="pref_clipboard_history_duration_30">At most 30 minutes</string>
     <string name="pref_clipboard_history_duration_stop">Until the app stops</string>
     <string name="pref_dialog_edit_text">Custom definition</string>
-    <string name="dictionaries_from_internet">Download a dictionary from the Internet</string>
-    <string name="dictionaries_download_success">Dictionary installed</string>
-    <string name="dictionaries_download_failed">Download failed: Please allow internet access</string>
+    <string name="dictionaries_installed">Installed dictionaries:</string>
+    <string name="dictionaries_available">The keyboard has no Internet access, so you\'ll have to download it using your web browser. Follow these two steps:\n\n1. Tap a language below to download it to your device.\n2. Tap the button above to import it.\n\nAvailable dictionaries:</string>
+    <string name="dictionaries_download_failed">Download failed</string>
+    <string name="dictionaries_import_button">Import dictionary file</string>
+    <string name="dictionaries_import_success">Dictionary imported</string>
+    <string name="dictionaries_import_failed">Import failed: Not a valid dictionary</string>
     <string name="candidates_status_click_to_install">Click to install a dictionary for %s</string>
     <string name="dictionary_switcher_title">Change language</string>
     <string name="pref_physical_keyboard_behavior">When a physical keyboard is connected</string>
