@@ -94,7 +94,8 @@ public final class EditorConfig
     /* CurrentlyTypedWord */
     if (VERSION.SDK_INT >= 30)
     {
-      initial_text_before_cursor = info.getInitialTextBeforeCursor(20, 0);
+      initial_text_before_cursor = info.getInitialTextBeforeCursor(
+          CurrentlyTypedWord.TEXT_BEFORE_CURSOR_LENGTH, 0);
       initial_text_after_cursor = info.getInitialTextAfterCursor(20, 0);
     }
     initial_sel_start = info.initialSelStart;

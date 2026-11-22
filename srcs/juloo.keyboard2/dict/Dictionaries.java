@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import juloo.cdict.Cdict;
+import juloo.keyboard2.suggestions.Bigrams;
 import juloo.keyboard2.Config;
 import juloo.keyboard2.DirectBootAwarePreferences;
 import juloo.keyboard2.Logs;
@@ -41,6 +42,7 @@ public final class Dictionaries
     config.current_dictionary_name = null;
     config.current_dictionary = null;
     config.emoji_dictionary = null;
+    config.current_bigrams = null;
     if (name == null)
       return;
     Cdict[] dicts = load(name);
@@ -49,6 +51,32 @@ public final class Dictionaries
     config.current_dictionary_name = name;
     config.current_dictionary = find_by_name(dicts, "main");
     config.emoji_dictionary = find_by_name(dicts, "emoji");
+    config.current_bigrams = load_bigrams(name);
+  }
+
+  /** Load the optional bigrams file installed along a dictionary, for
+      example 'ca.bigrams' along 'ca.dict'. Returns [null] if there is none. */
+  Bigrams load_bigrams(String dict_name)
+  {
+    if (_loaded_bigrams.containsKey(dict_name))
+      return _loaded_bigrams.get(dict_name);
+    Bigrams bg = null;
+    String file_name = dict_name + ".bigrams";
+    if (_context.getFileStreamPath(file_name).exists())
+    {
+      try
+      {
+        FileInputStream inp = _context.openFileInput(file_name);
+        bg = Bigrams.of_bytes(Utils.read_all_bytes(inp));
+        inp.close();
+      }
+      catch (Exception e)
+      {
+        Logs.exn("Load " + file_name, e);
+      }
+    }
+    _loaded_bigrams.put(dict_name, bg);
+    return bg;
   }
 
   /** Util for finding a dictionary by name. Returns [null] if not found. */
@@ -109,14 +137,17 @@ public final class Dictionaries
   {
     _installed_dictionaries.add(dict_name);
     _loaded_dictionaries.remove(dict_name);
+    _loaded_bigrams.remove(dict_name);
     save();
   }
 
   public void uninstall(String dict_name)
   {
     _context.deleteFile(dict_file_name(dict_name));
+    _context.deleteFile(dict_name + ".bigrams");
     _installed_dictionaries.remove(dict_name);
     _loaded_dictionaries.remove(dict_name);
+    _loaded_bigrams.remove(dict_name);
     save();
   }
 
@@ -126,6 +157,7 @@ public final class Dictionaries
   Set<String> _installed_dictionaries;
   SharedPreferences _shared_prefs;
   Map<String, Cdict[]> _loaded_dictionaries;
+  Map<String, Bigrams> _loaded_bigrams = new TreeMap<String, Bigrams>();
 
   static Dictionaries _instance = null;
 

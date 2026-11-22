@@ -18,6 +18,9 @@ public final class CurrentlyTypedWord
 
   /** The currently typed word. */
   StringBuilder _w = new StringBuilder();
+  /** The word before the current word if they are separated by a space or a
+      hyphen, [null] otherwise. */
+  String _prev_w = null;
   /** This can be disabled if the editor doesn't support looking at the text
       before the cursor. */
   boolean _enabled = false;
@@ -44,6 +47,12 @@ public final class CurrentlyTypedWord
   public String get()
   {
     return _w.toString();
+  }
+
+  /** The word before the current word in the same phrase or [null]. */
+  public String previous_word()
+  {
+    return _has_selection ? null : _prev_w;
   }
 
   public boolean is_selection_not_empty()
@@ -132,6 +141,11 @@ public final class CurrentlyTypedWord
     _cursor -= remove_before;
     _w_cursor -= remove_after;
     callback();
+    // The removed text goes beyond the current word, for example backspace
+    // after a space. The current word is now part of the previous word, which
+    // is not known locally. Query the editor once it has applied the change.
+    if (c - remove_before < 0 || c + remove_after > len)
+      delayed_refresh();
   }
 
   void callback()
@@ -143,22 +157,73 @@ public final class CurrentlyTypedWord
   /** Estimate the currently typed word after [chars] has been typed. */
   void type_chars(CharSequence s, int start, int end)
   {
-    int insert_start = 0;
+    int insert_start = start;
+    boolean word_ended = false;
+    // The previous word is only tracked when typing at the end of the word.
+    StringBuilder typed_word = (_w_cursor == 0) ? new StringBuilder(_w) : null;
     // Iterate over code points as that's the unit of [_cursor].
     for (int i = start; i < end;)
     {
       int c = Character.codePointAt(s, i);
       i += Character.charCount(c);
       _cursor++;
+      boolean wc = is_word_char(c);
       // [i >= end] might happen when the cursor is in the middle of a
       // surrogate pair
-      if (!is_word_char(c) && i <= end)
+      if (!wc && i <= end)
+      {
         insert_start = i;
+        word_ended = true;
+      }
+      if (typed_word != null)
+      {
+        if (wc)
+          typed_word.appendCodePoint(c);
+        else
+        {
+          word_separator_typed(typed_word, c);
+          typed_word.setLength(0);
+        }
+      }
     }
-    if (insert_start > 0)
+    if (word_ended)
       _w.setLength(0);
     _w.insert(Math.max(_w.length() + _w_cursor, 0), s, insert_start, end);
   }
+
+  /** Update [_prev_w] after a word separator is typed. Words separated by a
+      space or a hyphen ("fer-ho") are in the same phrase. Other separators
+      like punctuation start a new phrase. */
+  void word_separator_typed(CharSequence word, int sep)
+  {
+    if (sep == ' ' || sep == '-' || sep == '\u00A0')
+    {
+      if (word.length() > 0)
+        _prev_w = word.toString();
+    }
+    else
+      _prev_w = null;
+  }
+
+  /** Index after the first word in [s] if [s] has been truncated by the
+      editor, as it is then possibly incomplete. */
+  static int skip_partial_word(CharSequence s, int end)
+  {
+    if (end < TEXT_BEFORE_CURSOR_LENGTH)
+      return 0;
+    for (int i = 0; i < end;)
+    {
+      int c = Character.codePointAt(s, i);
+      if (!is_word_char(c))
+        return i;
+      i += Character.charCount(c);
+    }
+    return 0;
+  }
+
+  /** Number of characters before the cursor that are queried to find the
+      current and previous words. */
+  public static final int TEXT_BEFORE_CURSOR_LENGTH = 40;
 
   void type_chars(CharSequence s)
   {
@@ -195,19 +260,23 @@ public final class CurrentlyTypedWord
     if (_has_selection)
       set_current_word("");
     else if (VERSION.SDK_INT >= 31)
-      set_current_word(_ic.getSurroundingText(20, 20, 0));
+      set_current_word(_ic.getSurroundingText(TEXT_BEFORE_CURSOR_LENGTH, 20,
+            0));
     else
-      set_current_word(_ic.getTextBeforeCursor(20, 0));
+      set_current_word(_ic.getTextBeforeCursor(TEXT_BEFORE_CURSOR_LENGTH, 0));
   }
 
   /** Refresh the current word by immediately querying the editor. */
   void set_current_word(CharSequence text_before_cursor)
   {
     _w.setLength(0);
+    _prev_w = null;
     if (text_before_cursor == null)
       return;
     int saved_cursor = _cursor;
-    type_chars(text_before_cursor.toString());
+    int len = text_before_cursor.length();
+    type_chars(text_before_cursor, skip_partial_word(text_before_cursor, len),
+        len);
     _cursor = saved_cursor;
     callback();
   }
@@ -216,12 +285,13 @@ public final class CurrentlyTypedWord
   void set_current_word(SurroundingText st)
   {
     _w.setLength(0);
+    _prev_w = null;
     if (st == null)
       return;
     int saved_cursor = _cursor;
     int st_sel = st.getSelectionStart();
     CharSequence st_text = st.getText();
-    type_chars(st_text, 0, st_sel);
+    type_chars(st_text, skip_partial_word(st_text, st_sel), st_sel);
     _w_cursor = -append_chars(st_text, st_sel, st_text.length());
     _cursor = saved_cursor;
     callback();
