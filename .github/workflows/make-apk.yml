@@ -62,14 +62,28 @@ jobs:
         git diff --name-only --exit-code
 
     # Post link to debug APK as a comment
+    # https://octokit.github.io/rest.js/v22/
     - name: Post artifact
       uses: actions/github-script@v9
       if: ${{ github.event_name == 'pull_request' }}
       with:
         script: |
-          github.rest.issues.createComment({
+          const args = {
             issue_number: context.issue.number,
             owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: 'Debug build: ${{ steps.upload.outputs.artifact-url }}'
-          })
+            repo: context.repo.repo
+          };
+          const body = 'Debug build: ${{ steps.upload.outputs.artifact-url }}';
+          // Update the existing comment if there's one
+          const comments = await github.paginate(github.rest.issues.listComments(args));
+          for (const cmt of comments)
+          {
+            console.log(cmt);
+            if (cmt.user.login == 'github-actions' && cmt.body.includes("Debug build: "))
+            {
+              github.rest.issues.updateComment({ ...args, comment_id: cmt.id, body: body });
+              return;
+            }
+          }
+          // Post comment
+          github.rest.issues.createComment({ ...args, body: body })
