@@ -8,6 +8,10 @@ See [keepandroidopen.org](https://keepandroidopen.org/) and the [F-Droid blog](h
 
 ---
 
+<p align="center">
+<img src="./logo.hex.svg" alt="logo" width="250"/>
+</p>
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/juloo.keyboard2/)
@@ -45,4 +49,6 @@ For instructions on building the application, see
 
 ## Acknowledgement
 
-The [NLnet foundation](https://nlnet.nl/) funded the work on the spell checking feature.
+The spell checking feature has been funded through through [NGI Mobifree Fund](https://nlnet.nl/mobifree), a fund established by [NLnet](https://nlnet.nl) with financial support from the European Commission's [Next Generation Internet](https://ngi.eu) program. Learn more at the [NLnet project page](https://nlnet.nl/project/UnexpectedKeyboard).
+
+[<img src="https://nlnet.nl/logo/banner.png" alt="NLnet foundation logo" width="20%" />](https://nlnet.nl)
