@@ -8,6 +8,10 @@ See [keepandroidopen.org](https://keepandroidopen.org/) and the [F-Droid blog](h
 
 ---
 
+<p align="center">
+<img src="./logo.hex.svg" alt="logo" width="250"/>
+</p>
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/juloo.keyboard2/)
