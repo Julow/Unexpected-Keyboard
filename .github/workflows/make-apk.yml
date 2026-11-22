@@ -75,7 +75,7 @@ jobs:
           };
           const body = 'Debug build: ${{ steps.upload.outputs.artifact-url }}';
           // Update the existing comment if there's one
-          const comments = await github.paginate(github.rest.issues.listComments(args));
+          const comments = await github.paginate(github.rest.issues.listComments, args);
           console.log(comments);
           for (const cmt of comments)
           {
