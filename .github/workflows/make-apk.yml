@@ -55,6 +55,7 @@ jobs:
         DEBUG_KEY_PASSWORD: debug0
 
     - name: Upload debug APK
+      id: upload
       uses: actions/upload-artifact@v7
       with:
         name: "${{env.artifact}} debug_apk"
@@ -63,3 +64,15 @@ jobs:
     - name: Check generated files
       run:
         git diff --name-only --exit-code
+
+    - name: Post artifact
+      uses: actions/github-script@v9
+      if: ${{ github.event_name == 'pull_request' }}
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Debug build: ${{ steps.upload.outputs.artifact-url }}'
+          })
