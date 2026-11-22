@@ -4,8 +4,8 @@
     <string name="app_name_debug">Neparedzēta tastatūra (atkļūdošana)</string>
     <string name="short_description">Mazizmēra un privātumu ievērojoša virtuāla Android tastatūra.</string>
     <string name="store_description">Tastatūras galvenā iespēja — viegli ievadīt jebkuru ASCII rakstzīmi ar pavilkšanu uz taustiņu stūriem.\n\nSākotnēji šī lietotne tika izstrādāta programmētājiem, kas izmanto Termux.\nTagad tā lieliski piemērota arī ikdienas lietošanai.\n\nLietotne nesatur reklāmas, un tās pirmkods ir pieejams visiem.</string>
-    <string name="pref_portrait">Vertikālajā orientācijā</string>
-    <string name="pref_landscape">Horizontālajā orientācijā</string>
+    <string name="pref_portrait">Stateniskajā novietojumā</string>
+    <string name="pref_landscape">Guleniskajā novietojumā</string>
     <string name="pref_category_layout">Izkārtojums</string>
     <string name="pref_label_brightness">Pielāgot iezīmju spilgtumu</string>
     <string name="pref_keyboard_opacity">Pielāgot tastatūras fona necaurredzamību</string>
@@ -19,7 +19,7 @@
     <string name="pref_custom_layout_title">Pielāgots izkārtojums</string>
     <string name="pref_show_numpad_title">Rādīt ciparnīcu</string>
     <string name="pref_show_numpad_never">Nekad</string>
-    <string name="pref_show_numpad_landscape">Tikai horizontālajā orientācijā</string>
+    <string name="pref_show_numpad_landscape">Tikai līmeniskajā novietojumā</string>
     <string name="pref_show_numpad_always">Vienmēr</string>
     <string name="pref_number_row_title">Rādīt ciparu rindu</string>
     <string name="pref_numpad_layout">Ciparnīcas izkārtojums</string>
@@ -166,8 +166,11 @@
     <string name="pref_physical_keyboard_behavior_show">Rādīt visu</string>
     <string name="pref_split_layout">Sadalīts izkārtojums</string>
     <string name="pref_split_layout_never">Nekad</string>
-    <string name="pref_split_layout_landscape">Horizontālā orientācijā</string>
+    <string name="pref_split_layout_landscape">Līmeniskā novietojumā</string>
     <string name="dictionary_switcher_title">Mainīt valodu</string>
     <string name="pref_theme_e_dracula">Drakula</string>
     <string name="dictionaries_download_failed">Lejupielāde neizdevās: lūgums atļaut piekļuvi internetam</string>
+    <string name="pref_suggestions_add_space_title">Automātiski pievienot atstarpi</string>
+    <string name="pref_suggestions_add_space_summary">Pievienot atstarpi pēc atlasītā vārda</string>
+    <string name="pref_theme_e_gradientpurplepink">Purpura rozā krāsu pāreja</string>
 </resources>
