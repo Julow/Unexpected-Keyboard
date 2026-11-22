@@ -190,6 +190,7 @@ public class Theme
         }
         else
         {
+          int bg_opacity = config.keyOpacity;
           switch (role)
           {
             case Action:
@@ -203,13 +204,14 @@ public class Theme
             case Suggestion:
               bg_paint.setColor(0);
               border_width = 0;
+              bg_opacity = 0;
               break;
             default:
               bg_paint.setColor(theme.colorKey);
               border_width = config.borderConfig ? config.customBorderLineWidth : theme.keyBorderWidth;
               break;
           }
-          bg_paint.setAlpha(config.keyOpacity);
+          bg_paint.setAlpha(bg_opacity);
         }
         border_left_paint = init_border_paint(config, border_width, theme.keyBorderColorLeft);
         border_top_paint = init_border_paint(config, border_width, theme.keyBorderColorTop);
