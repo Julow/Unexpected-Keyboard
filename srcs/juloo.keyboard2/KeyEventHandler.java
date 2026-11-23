@@ -291,17 +291,36 @@ public final class KeyEventHandler
     conn.performContextMenuAction(id);
   }
 
+  /** Paste the clipboard into the editor. Editors which don't support the
+      context menu action (see [EditorConfig.should_paste_using_commit_text])
+      get the text inserted with [commitText], like the clipboard pane does. */
+  void paste(int context_menu_action_id)
+  {
+    if (_config.editor_config.should_paste_using_commit_text)
+      paste_from_system_clipboard();
+    else
+      send_context_menu_action(context_menu_action_id);
+  }
+
+  /** Insert the text currently in the system clipboard. */
+  void paste_from_system_clipboard()
+  {
+    String text = ClipboardHistoryService.get_clipboard_text();
+    if (text != null && !text.isEmpty())
+      send_text(text);
+  }
+
   @SuppressLint("InlinedApi")
   void handle_editing_key(KeyValue.Editing ev)
   {
     switch (ev)
     {
       case COPY: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;
-      case PASTE: send_context_menu_action(android.R.id.paste); break;
+      case PASTE: paste(android.R.id.paste); break;
       case CUT: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.cut); break;
       case SELECT_ALL: send_context_menu_action(android.R.id.selectAll); break;
       case SHARE: send_context_menu_action(android.R.id.shareText); break;
-      case PASTE_PLAIN: send_context_menu_action(android.R.id.pasteAsPlainText); break;
+      case PASTE_PLAIN: paste(android.R.id.pasteAsPlainText); break;
       case UNDO: send_context_menu_action(android.R.id.undo); break;
       case REDO: send_context_menu_action(android.R.id.redo); break;
       case REPLACE: send_context_menu_action(android.R.id.replaceText); break;

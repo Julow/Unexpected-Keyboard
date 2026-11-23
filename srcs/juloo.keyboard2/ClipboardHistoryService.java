@@ -154,6 +154,21 @@ public final class ClipboardHistoryService
     }
   }
 
+  /** Read the text currently in the system clipboard. Returns [null] when the
+      clipboard is empty or can't be read. */
+  static String get_clipboard_text()
+  {
+    if (_service == null)
+      return null;
+    ClipData clip = null;
+    // getPrimaryClip might throw when the keyboard is disconnected.
+    try { clip = _service._cm.getPrimaryClip(); } catch (Exception _e) {}
+    if (clip == null || clip.getItemCount() == 0)
+      return null;
+    CharSequence text = clip.getItemAt(0).getText();
+    return text == null ? null : text.toString();
+  }
+
   int get_history_ttl_minutes() {
     return Config.globalConfig().clipboard_history_duration;
   }
