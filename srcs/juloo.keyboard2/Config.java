@@ -77,6 +77,9 @@ public final class Config
   public int clipboard_history_duration;
   public boolean space_bar_auto_complete;
   public boolean physical_keyboard_hide;
+  // See [Emoji.withSkinToneAndGender()]
+  public int emoji_skin_tone;
+  public int emoji_gender;
 
   // Dynamically set
   /** Configuration options implied by the connected editor. */
@@ -203,6 +206,8 @@ public final class Config
     clipboard_history_duration = Integer.parseInt(_prefs.getString("clipboard_history_duration", "5"));
     space_bar_auto_complete = _prefs.getBoolean("space_bar_auto_complete", false);
     physical_keyboard_hide = _prefs.getString("physical_keyboard_behavior", "hide").equals("hide");
+    emoji_skin_tone = Integer.parseInt(_prefs.getString("emoji_skin_tone", "0"));
+    emoji_gender = Integer.parseInt(_prefs.getString("emoji_gender", "0"));
     float screen_width_dp = dm.widthPixels / dm.density;
     wide_screen = screen_width_dp >= WIDE_DEVICE_THRESHOLD;
     split_layout = get_split_layout();
