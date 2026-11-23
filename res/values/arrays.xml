@@ -48,6 +48,15 @@
     <item>@string/pref_theme_e_epaperblack</item>
     <item>@string/pref_theme_e_dracula</item>
     <item>@string/pref_theme_e_gradientpurplepink</item>
+    <item>@string/pref_theme_e_tokyonight</item>
+    <item>@string/pref_theme_e_tokyonightstorm</item>
+    <item>@string/pref_theme_e_tokyonightday</item>
+    <item>@string/pref_theme_e_catppuccinmocha</item>
+    <item>@string/pref_theme_e_catppuccinmacchiato</item>
+    <item>@string/pref_theme_e_catppuccinfrappe</item>
+    <item>@string/pref_theme_e_catppuccinlatte</item>
+    <item>@string/pref_theme_e_gruvboxdark</item>
+    <item>@string/pref_theme_e_gruvboxlight</item>
   </string-array>
   <string-array name="pref_theme_values">
     <item>system</item>
@@ -69,6 +78,15 @@
     <item>epaperblack</item>
     <item>dracula</item>
     <item>gradientpurplepink</item>
+    <item>tokyonight</item>
+    <item>tokyonightstorm</item>
+    <item>tokyonightday</item>
+    <item>catppuccinmocha</item>
+    <item>catppuccinmacchiato</item>
+    <item>catppuccinfrappe</item>
+    <item>catppuccinlatte</item>
+    <item>gruvboxdark</item>
+    <item>gruvboxlight</item>
   </string-array>
   <string-array name="pref_swipe_dist_entries">
     <item>@string/pref_swipe_dist_e_very_short</item>
