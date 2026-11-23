@@ -478,6 +478,13 @@ public final class Pointers implements Handler.Callback
   /** Return the [FLAG_P_*] flags that correspond to pressing [kv]. */
   int pointer_flags_of_kv(KeyValue kv)
   {
+    return pointer_flags_of_kv(kv, _config.double_tap_lock_shift);
+  }
+
+  /** Return the [FLAG_P_*] flags that correspond to pressing [kv].
+      [double_tap_lock_shift] is the configuration value of the same name. */
+  static int pointer_flags_of_kv(KeyValue kv, boolean double_tap_lock_shift)
+  {
     int flags = 0;
     if (kv.hasFlagsAny(KeyValue.FLAG_LATCH))
     {
@@ -486,7 +493,11 @@ public final class Pointers implements Handler.Callback
         flags |= FLAG_P_CLEAR_LATCHED | FLAG_P_CANT_LOCK;
       flags |= FLAG_P_LATCHABLE;
     }
-    if (_config.double_tap_lock_shift &&
+    // Sticky keys are locked as soon as they are latched, so that they stay
+    // activated until pressed again.
+    if (kv.hasFlagsAny(KeyValue.FLAG_STICKY))
+      flags |= FLAG_P_LOCKED;
+    if (double_tap_lock_shift &&
         kv.hasFlagsAny(KeyValue.FLAG_DOUBLE_TAP_LOCK))
       flags |= FLAG_P_DOUBLE_TAP_LOCK;
     return flags;
