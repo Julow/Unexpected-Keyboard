@@ -22,6 +22,11 @@ public final class EditorConfig
   /** Workaround some apps which answers to [getExtractedText] but do not react
       to [setSelection] while returning [true]. */
   public boolean should_move_cursor_force_fallback = false;
+  /** Whether to insert the clipboard text with [commitText] instead of the
+      [performContextMenuAction] action. The return value of that method is not
+      reliable: it reports whether the call was sent, not whether the editor
+      handled it. */
+  public boolean should_paste_using_commit_text = false;
 
   /** Autocapitalisation. */
   public int caps_mode; // Argument for [getCursorCapsMode()]
@@ -49,6 +54,9 @@ public final class EditorConfig
     /* Selection mode.
        Editors with [TYPE_NULL] are for example Termux and Emacs. */
     selection_mode_enabled = inputType != InputType.TYPE_NULL;
+    /* These editors use a custom [InputConnection] which doesn't react to the
+       [performContextMenuAction] action, insert the clipboard text instead. */
+    should_paste_using_commit_text = inputType == InputType.TYPE_NULL;
     enter_key_replacement = null;
     /* Action key. Looks at [info.actionLabel] first. */
     if (info.actionLabel != null)
