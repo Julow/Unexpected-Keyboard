@@ -35,6 +35,9 @@ public final class CurrentlyTypedWord
       word in chars. Equal to [0] when the cursor is at the end of the word. */
   int _w_cursor;
 
+  /** Char after the current word. ['\0'] if it's the end of the input. */
+  char _char_after = '\0';
+
   public CurrentlyTypedWord(Handler h, Callback cb)
   {
     _handler = h;
@@ -57,6 +60,17 @@ public final class CurrentlyTypedWord
     return _w_cursor;
   }
 
+  /** Whether the current word is followed by the end of the line. */
+  public boolean is_eol()
+  {
+    switch (_char_after)
+    {
+      case '\0':
+      case '\n': return true;
+      default: return false;
+    }
+  }
+
   public void started(Config conf, InputConnection ic)
   {
     _ic = ic;
@@ -66,11 +80,7 @@ public final class CurrentlyTypedWord
     _cursor = e.initial_sel_start;
     _w_cursor = 0;
     if (!_has_selection)
-    {
-      set_current_word(e.initial_text_before_cursor);
-      _w_cursor = (e.initial_text_after_cursor == null) ? 0 :
-        -append_chars(e.initial_text_after_cursor); 
-    }
+      set_current_word(e.initial_text_before_cursor, e.initial_text_after_cursor);
   }
 
   public void typed(String s)
@@ -193,36 +203,46 @@ public final class CurrentlyTypedWord
     _refresh_pending = false;
     _w_cursor = 0;
     if (_has_selection)
-      set_current_word("");
+      set_current_word(null);
     else if (VERSION.SDK_INT >= 31)
       set_current_word(_ic.getSurroundingText(20, 20, 0));
     else
-      set_current_word(_ic.getTextBeforeCursor(20, 0));
+      set_current_word(_ic.getTextBeforeCursor(20, 0),
+          _ic.getTextAfterCursor(20, 0));
   }
 
-  /** Refresh the current word by immediately querying the editor. */
-  void set_current_word(CharSequence text_before_cursor)
+  /** [before] and [after] can be null. */
+  void set_current_word(CharSequence before, CharSequence after)
   {
-    _w.setLength(0);
-    if (text_before_cursor == null)
-      return;
-    int saved_cursor = _cursor;
-    type_chars(text_before_cursor.toString());
-    _cursor = saved_cursor;
-    callback();
+    set_current_word(before, (before == null) ? 0 : before.length(), after, 0);
   }
 
-  /** Like above but take the text after the cursor into account. */
   void set_current_word(SurroundingText st)
   {
-    _w.setLength(0);
     if (st == null)
+    {
+      set_current_word(null, 0, null, 0);
+      return;
+    }
+    CharSequence text = st.getText();
+    int sel = st.getSelectionStart();
+    set_current_word(text, sel, text, sel);
+  }
+
+  void set_current_word(CharSequence before, int before_len, CharSequence after, int after_start)
+  {
+    _w.setLength(0);
+    _w_cursor = 0;
+    _char_after = '\0';
+    if (before == null)
       return;
     int saved_cursor = _cursor;
-    int st_sel = st.getSelectionStart();
-    CharSequence st_text = st.getText();
-    type_chars(st_text, 0, st_sel);
-    _w_cursor = -append_chars(st_text, st_sel, st_text.length());
+    type_chars(before, 0, before_len);
+    if (after != null && after_start < after.length())
+    {
+      _w_cursor = -append_chars(after, after_start, after.length());
+      _char_after = after.charAt(after_start);
+    }
     _cursor = saved_cursor;
     callback();
   }
