@@ -112,7 +112,7 @@
     <string name="key_descr_combining">Składający znak diakrytyczny</string>
     <string name="key_descr_dead_key">Martwy klawisz</string>
     <string name="key_descr_zwj">Łącznik zerowej szerokości (ZWJ)</string>
-    <string name="key_descr_zwnj">Rozdzielający łącznik zerowej szerokości (ZWNJ)</string>
+    <string name="key_descr_zwnj">Znak niełączący o zerowej szerokości (ZWNJ)</string>
     <string name="key_descr_nbsp">Spacja niełamiąca</string>
     <string name="key_descr_nnbsp">Wąska spacja niełamiąca</string>
     <string name="clipboard_history_heading">Ostatnio skopiowane elementy</string>
@@ -161,7 +161,7 @@
     <string name="pref_dialog_edit_text">Własna definicja</string>
     <string name="candidates_status_click_to_install">Naciśnij, aby zainstalować słownik dla %s</string>
     <string name="dictionaries_download_failed">Błąd pobierania: Brak dostępu do internetu</string>
-    <string name="pref_physical_keyboard_behavior">Kiedy podłączono klawiaturę fizyczną</string>
+    <string name="pref_physical_keyboard_behavior">Kiedy podłączona jest fizyczna klawiatura</string>
     <string name="pref_physical_keyboard_behavior_hide">Ukryj wszystko</string>
     <string name="pref_physical_keyboard_behavior_show">Pokaż wszystko</string>
     <string name="pref_split_layout">Podziel układ</string>
@@ -170,4 +170,7 @@
     <string name="pref_split_layout_wide">Na szerokich ekranach</string>
     <string name="pref_theme_e_dracula">Drakula</string>
     <string name="dictionary_switcher_title">Zmień język</string>
+    <string name="pref_suggestions_add_space_title">Automatycznie dodaj spację</string>
+    <string name="pref_suggestions_add_space_summary">Dodaj spację po wybranym słowie</string>
+    <string name="pref_theme_e_gradientpurplepink">Fioletowo-Różowy Gradient</string>
 </resources>
