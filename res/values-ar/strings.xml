@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_release">الكيبورد المفاجئ</string>
-    <string name="app_name_debug">الكيبورد المفاجئ (تصحيح الأخطاء)</string>
+    <string name="app_name_release">لوحة المفاتيح المفاجئة</string>
+    <string name="app_name_debug">لوحة المفاتيح المفاجئة (تصحيح الأخطاء)</string>
     <string name="short_description">لوحة مفاتيح افتراضية خفيفة الوزن ومراعية للخصوصية لنظام أندرويد.</string>
     <string name="store_description">الميزة الرئيسة هي إمكانية كتابة المزيد من الأحرف عن طريق تمرير المفاتيح نحو الزوايا.\n\nصُمم هذا التطبيق في الأصل للمبرمجين الذين يستخدمون ترمكس.\nأصبح الآن مثاليًّا للاستخدام اليومي.\n\nهذا التطبيق خالٍ من الإعلانات ومفتوح المصدر.</string>
     <string name="pref_portrait">في الوضع الرأسي</string>
